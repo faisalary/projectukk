@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>{{ $setting->company_name }}</title>
+<title>Register</title>
 
 <!-- Stylesheets -->
 <link href="{{ asset('front/assets/landing/css/bootstrap.css')}}" rel="stylesheet">
@@ -28,26 +28,7 @@
     <div class="preloader"></div>
 
     <!-- Main Header-->
-    <!-- <header class="main-header">
-        <div class="container-fluid" style="padding: 0!important;"> -->
-            <!-- Main box -->
-            <!-- <div class="main-box" style="display: flex; align-items: center; justify-content: right;"> -->
-                <!--Nav Outer -->
-                <!-- <div class="nav-outer m-4">
-                    <a href="{{ url('/') }}"><img src="{{ $setting->logo_url }}" alt="" title="" style="height: 26px; width: auto;"></a>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- Mobile Header -->
-        <!-- <div class="mobile-header">
-            <div class="logo"><a href="{{ url('/') }}"><img src="{{ $setting->logo_url }}" alt="" title="" style="height: 26px; width: auto;"></a></div>
-        </div> -->
-
-        <!-- Mobile Nav -->
-        <!-- <div id="nav-mobile"></div>
-    </header> -->
-    <!--End Main Header -->
+    
 
     <!-- Info Section -->
     <div class="login-section">
@@ -57,7 +38,7 @@
             <div class="login-form default-form">
                 <div class="form-inner text-left">
                     <div>
-                        <a href="{{ url('/login') }}"><img src="{{ $setting->logo_url }}" alt="" title="" style="width: 300px; height: auto;"></a>
+                        <a href="{{ url('/login') }}"></a>
                     </div>
                     <div class="mb-4 text-left">
                         <h3 style="font-weight: 600; font-size: 28px; margin-bottom: 0!important;">
@@ -65,6 +46,8 @@
                         </h3>
                         <p class="text-muted">@lang('auth.page.detailsRegister')</p>
                     </div>
+                    <div>
+     
                     @yield('conten')
                     <div class="bottom-box">
                         <div class="text-center">@lang('auth.page.haveAccount') <a href="login">@lang('auth.page.signin')</a></div>
