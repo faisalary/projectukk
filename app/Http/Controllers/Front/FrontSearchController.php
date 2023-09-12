@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\ApplicationSetting;
-use App\Company;
-use App\FooterSetting;
+use App\Models\ApplicationSetting;
+use App\Models\Company;
+use App\Models\FooterSetting;
 use App\Helper\Files;
 use App\Helper\Reply;
 use App\Http\Requests\FrontJobApplication;
-use App\Job;
-use App\JobApplication;
-use App\JobApplicationAnswer;
-use App\JobApplicationExperience;
-use App\JobCategory;
-use App\JobLocation;
+use App\Models\Job;
+use App\Models\JobApplication;
+use App\Models\JobApplicationAnswer;
+use App\Models\JobApplicationExperience;
+use App\Models\JobCategory;
+use App\Models\JobLocation;
 use App\Notifications\NewJobApplication;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\LinkedInSetting;
+use App\Models\LinkedInSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;

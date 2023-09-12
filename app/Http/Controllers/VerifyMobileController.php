@@ -6,7 +6,7 @@ use App\Helper\Reply;
 use App\Http\Requests\Sms\SendVerificationCode;
 use App\Http\Requests\Sms\VerifyOTPCode;
 use App\Traits\SmsSettings;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Nexmo\Client\Exception\Exception;

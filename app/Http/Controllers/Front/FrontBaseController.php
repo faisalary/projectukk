@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\CompanySetting;
-use App\FooterSetting;
-use App\LanguageSetting;
-use App\ThemeSetting;
-use Carbon\Carbon;
+use App\Models\CompanySetting;
+use App\Models\FooterSetting;
+use App\Models\LanguageSetting;
+use App\Models\ThemeSetting;
+use Carbon\Models\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;

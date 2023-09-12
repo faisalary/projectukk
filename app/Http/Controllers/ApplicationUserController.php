@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ApplicationStatus;
+use App\Models\ApplicationStatus;
 use App\Http\Controllers\Controller;
-use App\JobApplication;
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helper\Reply;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\ThemeSetting;
+use App\Models\ThemeSetting;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
