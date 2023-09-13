@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,9 +26,7 @@
     <!-- Preloader -->
     <div class="preloader"></div>
 
-    <!-- Main Header-->
-    
-
+ 
     <!-- Info Section -->
     <div class="login-section">
         <div class="image-layer " style="background-image: url({{asset('assets/images/background/register.svg')}}); background-size: 800px; margin-left: 20px;"></div>
