@@ -1,9 +1,8 @@
-
 @extends('layouts.front_layout')
 <!-- Banner Section-->
 @section('content-main')
 {{--<title>{{$companyName}}</title>--}}
-{{-- <span class="header-span"></span> --}}
+{{--<span class="header-span"></span>--}}
 
 <section class="banner-section-four" style="background-image: url({{asset('assets/images/background/bgEllipse.svg')}});">
     <div class="auto-container">
@@ -14,7 +13,7 @@
             </div>
             @yield('header-text')
             <!-- Job Search Form -->
-            {{-- <div class="job-search-form wow fadeInUp navbar bg-body-tertiary container-fluid" data-wow-delay="1000ms">
+            <div class="job-search-form wow fadeInUp navbar bg-body-tertiary container-fluid" data-wow-delay="1000ms">
                 <form method="post" action="job-list-v10.html">
                     <div class="row">
                         <!-- Form Group -->
@@ -51,11 +50,11 @@
                         </div>
                     </div>
                 </form>
-            </div> --}}
+            </div>
             <!-- Job Search Form -->
 
             <!-- Popular Search -->
-            {{-- <div class="popular-searches wow fadeInUp" data-wow-delay="1500ms">
+            <div class="popular-searches wow fadeInUp" data-wow-delay="1500ms">
                 <span class="title">Popular Searches : </span>
                 <a href="#">Designer</a>, 
                 <a href="#">Developer</a>, 
@@ -64,7 +63,7 @@
                 <a href="#">PHP</a>,
                 <a href="#">Senior</a>,
                 <a href="#">Engineer</a>,
-            </div> --}}
+            </div>
             <!-- End Popular Search -->
         </div>
     </div>
