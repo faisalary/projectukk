@@ -94,7 +94,8 @@
         <div class="main-box mx-4">
             <!--Nav Outer -->
             <div class="logo-box mr-3">
-                <div class="logo mr-3"><a href="{{ url('/') }}"></a></div>
+                <div class="logo mr-3"><a href="{{ url('/') }}"><img src={{asset('assets/images/app-logo.png') }} alt="icon" title="" width="154px" height="50px"></a></div>
+            
             
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav" >
