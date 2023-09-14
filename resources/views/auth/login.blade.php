@@ -1,136 +1,68 @@
-@extends('layouts.auth_baru')
-
-@section('content')
-    <form action="{{ route('login') }}" id="loginform" method="post">
-        @csrf
-
-        <div class="form-group mb-3">
-            <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                   placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required autofocus>
-            @if ($errors->has('email'))
-                <span class="invalid-feedback">{{ $errors->first('email') }}</span>
-            @endif
-        </div>
-        <div class="form-group mb-3">
-            <input id="password" type="password" placeholder="{{ __('Password') }}"
-                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-            @if ($errors->has('password'))
-                <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-            @endif
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="checkbox icheck">
-                    <label>
-                        <div class="icheckbox_flat-green" aria-checked="false" aria-disabled="false" style="position: relative;">
-                            <input  type="checkbox" {{ old('remember') ? 'checked' : '' }}  name="remember_me" id="remember_me" class="flat-red"  style="position: absolute; opacity: 0;">
-                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
-                        </div>
-                        {{  __('Remember Me') }}
-                    </label>
-                </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-12 mt-4">
-                <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
-            </div>
-            <!-- /.col -->
-        </div>
-
-        <p class="mb-1 mt-4">
-            <a href="#" id="to-recover">I forgot my password</a>
-        </p>
-    </form>
-
-    {{-- <form class="form-horizontal" method="post" id="recoverform" style="display: none"
-        action="{{ route('password.email') }}">
-        {{ csrf_field() }}
-
-        @if (session('status'))
-            <div class="alert alert-success m-t-10">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        <div class="form-group ">
-            <div class="col-xs-12">
-                <h3>@lang('app.recoverPassword')</h3>
-                <p class="text-muted">@lang('app.enterEmailInstruction')</p>
-            </div>
-        </div>
-        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-            <div class="col-xs-12">
-                <input class="form-control" type="email" id="email" name="email" required=""
-                placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}">
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                        {{ $errors->first('email') }}
-                    </span>
-                @endif
-            </div>
-        </div>
-        <div class="form-group text-center m-t-20">
-            <div class="col-xs-12">
-                <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
-                        type="submit">@lang('app.sendPasswordLink')</button>
-            </div>
-        </div>
-
-        <div class="form-group m-b-0">
-            <div class="col-sm-12 text-center">
-                <p><a href="{{ route('login') }}" class="text-primary m-l-5"><b>{{ __('Login') }}</b></a></p>
-            </div>
-        </div>
-
-    </form> --}}
-@endsection
-
+@extends('layouts.login')
 
 @section('conten')
-    
-    <form action="{{ route('login') }}" id="loginform" method="post">
-        @csrf
-        <div class="form-group">
-            <label>@lang('auth.page.email')</label>
-            <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="@lang('auth.page.email')" value="{{ old('email') }}"  required autofocus>
-            @if ($errors->has('email'))
-                <span class="invalid-feedback">{{ $errors->first('email') }}</span>
-            @endif
-        </div>
-        
-        <div class="form-group">
-            <label>@lang('auth.page.password')</label>
-            <input id="password" type="password" placeholder="@lang('auth.page.password')"
-            class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autocomplete="new-password">
-            @if ($errors->has('password'))
-                <span class="invalid-feedback">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
-        </div>
 
-        <div class="form-group">
-            <div class="field-outer">
-                <div class="input-group checkboxes square" >
-                    {{-- <input type="checkbox" {{ old('remember') ? 'checked' : '' }} name="remember_me" value="" id="remember_me">
-                     --}}
-                     <input  type="checkbox"  name="remember_me" id="remember_me" class="flat-red"  style="position: absolute; opacity: 0;">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                    {{-- <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 100;"></ins> --}}
-                    <label for="remember_me" class="remember"><span class="custom-checkbox"></span>@lang('auth.page.rememberMe')</label>
+                        <div class="form-group mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                            <div class="col">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                            <div class="col">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 ">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="col-sm-12 mt-4">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    {{ __('Login') }}
+                                </button>
+
+                                
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="bottom-box">
-                    <div class="text-right">
-                    {{-- <a href="#" class="pwd">@lang('auth.page.forgotPassword')</a> --}} 
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <button style="border-radius: 6px; background: var(--primary-500-base, #4EA971);" class="theme-btn btn-style-one" type="submit" name="log-in">@lang('auth.page.signin')</button>
-        </div>
-    </form>
-
 @endsection
