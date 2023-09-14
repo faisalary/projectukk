@@ -139,11 +139,11 @@
 
     @yield('content-main')
 
-    @if(url()->current() != route('profile.setup'))
+    
     <!-- Main Footer -->
     @include('layouts.front_footer')
     <!-- End Main Footer -->
-    @endif
+    
     
 
 </div><!-- End Page Wrapper -->
