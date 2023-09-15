@@ -142,6 +142,7 @@
     @include('layouts.front_footer')
     <!-- End Main Footer -->
   
+   
     
 
 </div><!-- End Page Wrapper -->
