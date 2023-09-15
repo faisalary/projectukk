@@ -14,7 +14,7 @@
             </div>
             @yield('header-text')
             <!-- Job Search Form -->
-            <div class="job-search-form wow fadeInUp navbar bg-body-tertiary container-fluid" data-wow-delay="1000ms">
+            <div class="job-search-form " data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: auto; width: auto;">
                 <form method="post" action="job-list-v10.html">
                     <div class="row">
                         <!-- Form Group -->
@@ -47,25 +47,12 @@
 
                         <!-- Form Group -->
                         <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right">
-                            <button type="submit" class="theme-btn btn-style-two">Find Jobs</button>
+                            <button type="submit" class="btn-success btn-style-two">Find Jobs</button>
                         </div>
                     </div>
                 </form>
             </div>
             <!-- Job Search Form -->
-
-            <!-- Popular Search -->
-            <div class="popular-searches wow fadeInUp" data-wow-delay="1500ms">
-                <span class="title">Popular Searches : </span>
-                <a href="#">Designer</a>, 
-                <a href="#">Developer</a>, 
-                <a href="#">Web</a>, 
-                <a href="#">IOS</a>,
-                <a href="#">PHP</a>,
-                <a href="#">Senior</a>,
-                <a href="#">Engineer</a>,
-            </div>
-            <!-- End Popular Search -->
         </div>
     </div>
 </section>
