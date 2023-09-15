@@ -196,26 +196,10 @@
                                 </div>
                             </a>
                             <ul>
-                                @if($user && $user->roles && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name == 'applicant')
-                                @if($user->profile)
-                                <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
-                                <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My Applications</a></li>
-                                @else
-                                <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a></li>
-                                @endif
-                                @else
-                                
-                                {{-- di komen dulu ya --}}
-                                {{-- <li><a href="{{route('admin.dashboard')}}">Dashboard</a></li> --}}
-                                @endif
-                                @if($user->profile)
-                                <hr class="my-2">
-                                @if(request()->url() != url('search'))
-                                <li><a href="{{ url('search') }}">Search Jobs</a></li>
-                                @else
-                                <li><a href="{{ url('/') }}">Front Page</a></li>
-                                @endif
-                                @endif
+                             
+                                <li>
+                                    <a>Profile Saya</a>
+                                </a>
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout
@@ -223,6 +207,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </a>
+                                  
                                 </li>
                             </ul>
                         </li>
