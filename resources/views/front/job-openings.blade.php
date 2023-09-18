@@ -11,23 +11,7 @@
 
 @section('header-text')
     {{-- <h1 class="hidden-sm-down"><i class="icon-ribbon"></i> @lang('modules.front.homeHeader') </h1>
-    <h4 class="hidden-sm-up"><i class="icon-ribbon"></i> @lang('modules.front.homeHeader') </h4>
-    <!-- <form>
-        <div class="row">
-            <div class="col-5">
-                <input type="text" class="form-control autocomplete" name="job" autocomplete="off" placeholder="Search jobs" data-url="{{url('/fetch-jobs')}}" value="{{request()->job}}" />
-            </div>
-            <div class="col-5">
-                <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}" value="{{request()->loc}}"/>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-secondary">Find</button>
-            </div>
-        </div>
-        <div class="col-6">
-            <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}" />
-        </div>
-    </form>-->--}}
+    <h4 class="hidden-sm-up"><i class="icon-ribbon"></i> @lang('modules.front.homeHeader') </h4>--}}
     <div class="" data-wow-delay="1000ms">
        
         <form action="{{url("/search")}}" method="GET">
@@ -79,141 +63,9 @@
        
         </form>
     </div>
- 
- 
-@endsection
-
-@section('content')
+ @endsection
 
 
-
-    <!--
-    |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-    | Working at TheThemeio
-    |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-    !--
-    <section class="section bg-gray py-60">
-        <div class="container">
-
-            <div class="row gap-y align-items-center">
-
-                <div class="col-12">
-                    {{-- <h3>@if(!is_null($frontTheme->welcome_title)) {{ $frontTheme->welcome_title }} @else @lang('modules.front.jobOpeningHeading') @endif</h3>
-                    <p>@if(!is_null($frontTheme->welcome_sub_title)) {!! $frontTheme->welcome_sub_title !!}  @else @lang('modules.front.jobOpeningText') @endif</p> --}}
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>-->
-
-@endsection
-
-@section('openings')
-    <!--
-    |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-    | Open positions
-    |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-    !-->
- 
-                <!-- Ui lama di komen ya -->
-
-            <!-- <div data-provide="shuffle"> -->
-                <!-- {{-- <div class="text-center gap-multiline-items-2 job-filters" data-shuffle="filter">
-                    @if(request()->loc == '')
-                        <button class="btn btn-w-md btn-outline btn-round btn-primary active" data-shuffle="button">All
-                        </button>
-                    @endif --}}
-                    {{-- @foreach($locations as $location)
-                        <button class="btn  btn-outline btn-round btn-primary" data-shuffle="button"
-                                data-group="{{ $location->location }}">{{ ucwords($location->location) }}</button>
-                    @endforeach
-                    <p>&nbsp;</p>
-                    @foreach($categories as $category)
-                        <button class="btn btn-xs btn-outline btn-round btn-dark" data-shuffle="button"
-                                data-group="{{ $category->name }}">{{ ucwords($category->name) }}</button>
-                    @endforeach
-                </div> --}}
-
-                <div data-provide="shuffle" class="tabs-content wow fadeInUp">
-                    <div class="container">
-                        @if(count($jobs) > 0)
-                        <div class="row">
-                        @else
-                        <div class="row" style="display: flex; align-items: center; justify-content: center;">
-                        @endif
-                            @php
-                                $count = 1;
-                            @endphp
-                            @foreach($jobs as $job)
-                                @if($count <= 5)
-                                    {{-- @foreach ($companies as $item) --}}
-                                    <div class="col-xl-6 col-lg-6 jobs-all">
-                                        <a href="{{ route('jobs.jobDetail', [$job->slug]) }}">
-                                            <div class="job-block" data-shuffle="list" data-groups="{{ $job->location->location.','.$job->category->name }}">
-                                                <div class="inner-box" >
-                                                    
-                                                    <div class="content">
-                                                        {{-- <span class="company-logo"><img src="{{ ucwords($item->logo) }}" alt=""></span> --}}
-                                                        <span class="company-logo"><img src="{{ asset("user-uploads/company-logo/".$job->company->logo) }}" alt=""></span>
-                                                        <h4 class="text-truncate">{{ ucwords($job->title) }}</h4>
-                                                        <ul class="job-info">
-                                                            <li><span class="icon flaticon-briefcase"></span>{{ ucwords($job->category->name) }}</li>
-                                                            <li><span class="icon flaticon-map-locator"></span>{{ ucwords($job->location->location)}}</li>
-                                                            <li><span class="icon flaticon-worldwide"></span>{{ ucwords($job->location->country->country_name)}}</li>
-                                                        </ul>
-                                                        {{-- <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button> --}}
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                        </a>            
-                                    </div>
-                                    {{-- <div class="job-block" data-shuffle="list" data-groups="{{ $job->location->location.','.$job->category->name }}">
-                                        <div class="inner-box">
-                                            <div class="content">
-                                                <span class="company-logo"><img src="images/resource/company-logo/1-9.png" alt=""></span>
-                                                <h4><a href="#">Product Manager, Studio</a></h4>
-                                                <ul class="job-info">
-                                                    <li><span class="icon flaticon-briefcase"></span> Segment</li>
-                                                    <li><span class="icon flaticon-map-locator"></span> London, UK</li>
-                                                    <li><span class="icon flaticon-clock-3"></span> 11 hours ago</li>
-                                                    <li><span class="icon flaticon-money"></span> $35k - $45k</li>
-                                                </ul>
-                                                <ul class="job-other-info">
-                                                    <li class="time">Full Time</li>
-                                                    <li class="privacy">Private</li>
-                                                    <li class="required">Urgent</li>
-                                                </ul>
-                                                <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>
-                                            </div>
-                                        </div>
-                                    </div> --}} -->
-                                    <!-- {{-- @endforeach --}}
-                                @endif
-                                @php
-                                    $count++;
-                                @endphp
-                            @endforeach
-                             -->
-                            <!-- <div class="col-xl-6 col-lg-6 jobs-all">
-                                <a onclick="goToSearch(null)">
-                                    <div class="job-block" data-shuffle="list">
-                                        <div class="inner-box">
-                                            <div class="content px-0" style="display: flex; align-items: center; justify-content: center; padding: 19.5px 0 20px 0;">
-                                                <i class="material-symbols-outlined mr-2" style="font-size: 24px; margin-top: 2.5px;">add_circle</i>
-                                                @lang('modules.module.todos.viewAll')
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </a>            
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-    
-@endsection
 @section('foryou')
     @foreach($companies as $company) 
     <div class="row">

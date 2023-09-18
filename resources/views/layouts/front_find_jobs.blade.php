@@ -3,18 +3,11 @@
 @section('content-main')
 <title>Find Jobs</title>
 <span class="header-span"></span>
+
 <!--Page Title-->
 <section class="page-title style-three" style="background-image: url({{asset('assets/images/background/bgEllipse.svg')}});">
     <div class="auto-container">
-        <!-- <div class="title-outer">
-            <h1>Find Jobs</h1>
-            <ul class="page-breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li>Jobs</li>
-            </ul> 
-        </div> -->
-
-        <!-- Job Search Form -->
+      
         <div class="job-search-form" >
             {{-- <form method="post" action="job-list-v10.html">
                 

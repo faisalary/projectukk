@@ -94,7 +94,8 @@
         <div class="main-box mx-4">
             <!--Nav Outer -->
             <div class="logo-box mr-3">
-                <div class="logo mr-3"><a href="{{ url('/') }}"></a></div>
+                <div class="logo mr-3 "><a href="{{ url('/') }}"><img src={{asset('assets/images/app-logo.png') }} alt="icon" title="" width="154px" height="50px"></a></div>
+            
             
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav" >
@@ -158,7 +159,7 @@
             @else
             <div class="outer-box">
                 <!-- Notifications Dropdown Menu -->
-                @if($user->roles[0]->name != 'applicant' || $user->profile)
+                @if($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant' || $user->profile)
                 <li class="nav-item dropdown" id="top-notification-dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell-o" style="color:black;"></i>
@@ -189,30 +190,16 @@
                                 </div>
                                 <div style="line-height: normal;">
                                     <span style="color:black;">{{ ucwords($user->name) }}<br></span>
-                                    @if($user->roles[0]->name != 'applicant')
+                                    @if($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant')
                                     <span class="text-muted" style="font-size: 12px;">{{ $user->roles[0]->name }}</span>
                                     @endif
                                 </div>
                             </a>
                             <ul>
-                                @if($user->roles[0]->name == 'applicant')
-                                @if($user->profile)
-                                <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
-                                <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My Applications</a></li>
-                                @else
-                                <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a></li>
-                                @endif
-                                @else
-                                <li><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                                @endif
-                                @if($user->profile)
-                                <hr class="my-2">
-                                @if(request()->url() != url('search'))
-                                <li><a href="{{ url('search') }}">Search Jobs</a></li>
-                                @else
-                                <li><a href="{{ url('/') }}">Front Page</a></li>
-                                @endif
-                                @endif
+                             
+                                <li>
+                                    <a>Profile Saya</a>
+                                </a>
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout
@@ -220,6 +207,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </a>
+                                  
                                 </li>
                             </ul>
                         </li>

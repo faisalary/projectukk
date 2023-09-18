@@ -39,7 +39,7 @@
     }
     
     .text-primary {
-        color: 'red';
+       
     }
 
     .bg-primary {
@@ -47,12 +47,10 @@
     }
 
     .bg-primary, .label-primary {
-        background-color: 'red';
-    }
+        }
 
     .btn-primary {
-        background-color: 'red';
-        color: #fff !important;
+        
     }
     #diseluruh {
             display: flex;
@@ -139,11 +137,12 @@
 
     @yield('content-main')
 
-    @if(url()->current() != route('profile.setup'))
+ 
     <!-- Main Footer -->
     @include('layouts.front_footer')
     <!-- End Main Footer -->
-    @endif
+  
+   
     
 
 </div><!-- End Page Wrapper -->
