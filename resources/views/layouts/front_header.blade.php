@@ -94,7 +94,7 @@
         <div class="main-box mx-4">
             <!--Nav Outer -->
             <div class="logo-box mr-3">
-                <div class="logo mr-3 "><a href="{{ url('/') }}"><img src={{asset('assets/images/app-logo.png') }} alt="icon" title="" width="154px" height="50px"></a></div>
+                <div class="logo mr-3"> <img src="{{ asset('front/assets/img/logo.svg') }}" class="img-fluid" alt="" ><a href="{{ url('/') }}"></a></div>
             
             
                 <div id="navbarNavAltMarkup">
@@ -147,13 +147,12 @@
                    
                     <!-- Login/Register -->
                     <a href="{{ route('login')}}">
-                        <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>
-                                    
-                        
+                        <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>             
                     </a>
                     <a href="{{ route('register')}}">
                         <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
                     </a>
+                    <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
                 </div>
             </div>
             @else
