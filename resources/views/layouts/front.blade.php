@@ -12,8 +12,8 @@
         <div class="cotnent-box">
             <div class="title-box wow fadeInUp" data-wow-delay="500ms">
                 <h3 style="color: var(--primary-500-base, var(--primary-500-base, #4EA971));">Selangkah Lebih Dekat
-                    Dengan Pekerjaan Impianmu<h3>
-                        <h4>Temukan dan wujudkan semua karir impianmu hanya dengan satu klik bersama Talentern</h4>
+                    Dengan <br>Pekerjaan Impianmu<h3>
+                        <h4>Temukan dan wujudkan semua karir impianmu hanya dengan satu klik <br>bersama Talentern</h4>
             </div>
             @yield('header-text')
             <!-- Job Search Form -->
@@ -107,7 +107,7 @@
                 <div class="text">Temukan berbagai lowongan kerja yang kamu inginkan</div>
                 <div class="btn"
                     style="border-radius: 10px; border: 2px solid var(--semantic-color-success-900, #28C76F); background: #FFF;">
-                    <button id="btnTerbaru" class="btn btn-success me-2 ml-2" type="button">Lowongan Terbaru</button>
+                    <button id="btnTerbaru" class="btn btn-outline-success me-2 ml-2" type="button">Lowongan Terbaru</button>
                     <button id="btnPopuler" class="btn btn-outline-success me-2 ml-2" type="button">Lowongan
                         Populer</button>
                 </div>
@@ -334,71 +334,95 @@
         </header>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- Design & Creative -->
-        <div class="card" style="margin-left: 50px; width: 380px; height: 120px; border-radius: 15px;">
-            <div class="container">
-                <div class="row" style="display: flex; align-items: center; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 348 13" fill="none">
-                        <path d="M0 10C0 4.47715 4.47715 0 10 0H338C343.523 0 348 4.47715 348 10V13H0V10Z"
-                            fill="#4EA971" />
-                    </svg>
-                    <div class="text-center" style="margin: 15px;">
-                        <h5>Design & Creative</h5>
-                        <ul class="job-info" style="display: flex; list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-right: 20px;"><span class="icon flaticon-map-locator"> 34 lokasi</span>
-                            </li>
-                            <li><span class="icon flaticon-briefcase"> 56 Lowongan</span></li>
-                        </ul>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-4">
+                <div class="bg-white"
+                    style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                    <div class="text-center p-4">
+                        <h5 class="font-weight-semibold">Development & IT</h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <span class="icon flaticon-map-locator"> 24 lokasi</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="icon flaticon-briefcase"> 70 Lowongan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="bg-white"
+                    style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                    <div class="text-center p-4">
+                        <h5 class="font-weight-semibold">Design & Creatives</h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <span class="icon flaticon-map-locator"> 34 lokasi</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="icon flaticon-briefcase"> 56 Lowongan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="bg-white"
+                    style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                    <div class="text-center p-4">
+                        <h5 class="font-weight-semibold">Finance & Accounting </h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <span class="icon flaticon-map-locator"> 14 lokasi</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="icon flaticon-briefcase"> 26 Lowongan</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Development -->
-        <div class="card" style="margin-left: 50px; width: 380px; height: 120px; border-radius: 15px;">
-            <div class="container">
-                <div class="row" style="display: flex; align-items: center; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 348 13" fill="none">
-                        <path d="M0 10C0 4.47715 4.47715 0 10 0H338C343.523 0 348 4.47715 348 10V13H0V10Z"
-                            fill="#4EA971" />
-                    </svg>
-                    <div class="text-center" style="margin: 15px;">
-                        <h5>Development</h5>
-                        <ul class="job-info" style="display: flex; list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-right: 20px;"><span class="icon flaticon-map-locator"> 34 lokasi</span>
-                            </li>
-                            <li><span class="icon flaticon-briefcase"> 56 Lowongan</span></li>
-                        </ul>
+        <div class="row text-center justify-content-center">
+            <div class="col-4">
+                <div class="bg-white"
+                    style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                    <div class="text-center p-4">
+                        <h5 class="font-weight-semibold">Writing & Editor</h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <span class="icon flaticon-map-locator"> 30 lokasi</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="icon flaticon-briefcase"> 56 Lowongan</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Finance & Accounting -->
-        <div class="card"
-            style="margin-left: 50px; margin-top: 50px; width: 380px; height: 120px; border-radius: 15px;">
-            <div class="container">
-                <div class="row" style="display: flex; align-items: center; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 348 13" fill="none">
-                        <path d="M0 10C0 4.47715 4.47715 0 10 0H338C343.523 0 348 4.47715 348 10V13H0V10Z"
-                            fill="#4EA971" />
-                    </svg>
-                    <div class="text-center" style="margin: 15px;">
-                        <h5>Finance & Accounting</h5>
-                        <ul class="job-info" style="display: flex; list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-right: 20px;"><span class="icon flaticon-map-locator"> 34 lokasi</span>
-                            </li>
-                            <li><span class="icon flaticon-briefcase"> 56 Lowongan</span></li>
-                        </ul>
+            <div class="col-4">
+                <div class="bg-white"
+                    style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                    <div class="text-center p-4">
+                        <h5 class="font-weight-semibold">Business & Sales</h5>
+                        <div class="row text-center mt-3">
+                            <div class="col-6">
+                                <span class="icon flaticon-map-locator"> 34 lokasi</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="icon flaticon-briefcase"> 56 Lowongan</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="text-center" style="margin: 20px;">
-        <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan Lainya <span
-                class="icon flaticon-chevron-right"></span></a>
+        <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan
+            Lainya > <span class="icon flaticon-chevron-right"></span></a>
     </div>
 </section>
 
@@ -482,14 +506,16 @@
                 <div class="col-3">
                     <div class="row">
                         <div class="col-12">
-                            <img src="{{ asset('front/assets/img/Bali.png') }}" class="img-fluid" alt="bali" style="height: 510px;">
+                            <img src="{{ asset('front/assets/img/Bali.png') }}" class="img-fluid" alt="bali"
+                                style="height: 510px;">
                         </div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="row">
                         <div class="col-12">
-                            <img src="{{ asset('front/assets/img/Yogya.png') }}" class="img-fluid" alt="yogya" style="height: 255px;" width="610px">
+                            <img src="{{ asset('front/assets/img/Yogya.png') }}" class="img-fluid" alt="yogya"
+                                style="height: 255px;" width="610px">
                         </div>
                         <div class="col-6">
                             <img src="{{ asset('front/assets/img/Rectangle.png') }}" class="img-fluid" alt="bandung">
@@ -503,7 +529,8 @@
 
 
             <div class="text-center" style="margin: 20px;">
-                <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan Lainnya >
+                <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan Lainnya
+                    >
                     <span class="icon flaticon-chevron-right"></span></a>
             </div>
         </div>
@@ -513,29 +540,35 @@
     <div class="auto-container">
         <div class="widgets-section">
             <div class="newsletter-form wow fadeInUp"></div>
-            <div class="row">
-                <div class="big-column col-lg-5 col-sm-12">
+            <div class="row margin-right:400px; margin-left:400px;">
+                <div class="col-6">
                     <div style="margin-top: 100px; color: #4EA971; ">
-                        <h5>Bagaimana Cara Melamar Pekerjaan di Talentern?</h5>
+                        <h4>Bagaimana Cara Melamar Pekerjaan di Talentern?</h4>
                     </div>
                     <div class="sec-title">
-                        <h1>5 Langkah Melamar Pekerjaan di Talentern<h1>
+                        <h1>5 Langkah Melamar <br> Pekerjaan di Talentern<h1>
                                 <p>Sodales mauris quam faucibus scelerisque risus malesuada nulla. Cursus enim quis
                                     elementum feugiat ut. Phasellus a viverra facilisis eu purus. Et risus magna dis
                                     nisl nulla sed diam.</p>
                     </div>
+
                     <button type="button" class="btn btn-success" style="margin-bottom: 50px ">Cari Lowongan
                         Sekarang</button>
-                </div>
-                <div class="big-column col-lg-5 col-sm-12">
-                    <div class="footer-column about-widget">
-
+                    <div class="big-column">
+                        <div class="footer-column about-widget">
+                        </div>
                     </div>
                 </div>
+                <div class="col-6">
+                <div style="margin-top: 30px; margin-bottom: 30px;">
+                    <img src="{{ asset('front/assets/img/background_pekerjaan.svg') }}" class="img-fluid" alt=""
+                        style="height: 500px;" width="700px">
+                </div>
+                </div>
+
             </div>
         </div>
     </div>
-
 </section>
 <!-- End Top Companies -->
 @endsection
