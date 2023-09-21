@@ -53,30 +53,77 @@
                 </form>
             </div>
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div id="diseluruh" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-
-                        <h5 class="card-title">Diseluruh Indonesia</h5>
-                        <p class="card-text">Lorem Ipsum</p>
-                    </div>
+                <div id="diseluruh" class="card" style="max-width: 17rem; height: auto;">
+                    <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1.5H47V46.5H2V1.5Z" stroke="white" stroke-opacity="0.2" stroke-width="2.8125"/>
+                        <circle cx="24.5" cy="24" r="16.875" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.74902 18.375H40.249" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.74902 18.375H40.249" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.74902 29.625H40.249" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.74902 29.625H40.249" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5619 7.125C17.1174 17.4521 17.1174 30.5479 23.5619 40.875" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5619 7.125C17.1174 17.4521 17.1174 30.5479 23.5619 40.875" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M25.4375 7.125C31.882 17.4521 31.882 30.5479 25.4375 40.875" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg></span>
+                    <h5 class="card-title m-2">Diseluruh Indonesia</h5>
+                    <p class="card-text m-2">Lorem Ipsum</p>
+                    
+                    
                 </div>
-                <div id="kemudahan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Kemudahan Melamar</h5> 
-                        <p class="card-text">Lorem Ipsum</p>
-                    </div>
+                <div id="kemudahan" class="card" style="max-width: 17rem; height: auto;">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1.5H47V46.5H2V1.5Z" stroke="white" stroke-opacity="0.2" stroke-width="2.8125"/>
+                                <path d="M28.25 7.125V14.625C28.25 15.6605 29.0895 16.5 30.125 16.5H37.625" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M28.25 7.125V14.625C28.25 15.6605 29.0895 16.5 30.125 16.5H37.625" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M33.875 40.875H15.125C13.0539 40.875 11.375 39.1961 11.375 37.125V10.875C11.375 8.80393 13.0539 7.125 15.125 7.125H28.25L37.625 16.5V37.125C37.625 39.1961 35.9461 40.875 33.875 40.875Z" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M33.875 40.875H15.125C13.0539 40.875 11.375 39.1961 11.375 37.125V10.875C11.375 8.80393 13.0539 7.125 15.125 7.125H28.25L37.625 16.5V37.125C37.625 39.1961 35.9461 40.875 33.875 40.875Z" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M24.5 22.125V33.375" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M24.5 22.125V33.375" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.875 27.75L24.5 22.125L30.125 27.75" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg></span>    
+               
+                    <h5 class="card-title m-2">Kemudahan Melamar</h5> 
+                    <p class="card-text m-2">Lorem Ipsum</p>
+                
                 </div>
-                <div id="Blowongan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">1000+ Lowongan</h5>
-                        <p class="card-text">Lorem Ipsum</p>
+                <div id="Blowongan" class="card" style="max-width: 17rem; height: auto;">
+                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1.5H47V46.5H2V1.5Z" stroke="white" stroke-opacity="0.2" stroke-width="2.8125"/>
+                    <rect x="7.625" y="14.625" width="33.75" height="24.375" rx="3.75" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 14.625V10.875C17 8.80393 18.6789 7.125 20.75 7.125H28.25C30.3211 7.125 32 8.80393 32 10.875V14.625" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 14.625V10.875C17 8.80393 18.6789 7.125 20.75 7.125H28.25C30.3211 7.125 32 8.80393 32 10.875V14.625" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24.5 24V24.0188" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24.5 24V24.0188" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.625 25.875C18.2393 31.2236 30.7607 31.2236 41.375 25.875" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.625 25.875C18.2393 31.2236 30.7607 31.2236 41.375 25.875" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                    
+                        <h5 class="card-title m-2">1000+ Lowongan</h5>
+                        <p class="card-text m-2">Tersedia 1000+ lowongan pekerjaan di Talentern</p>
                         
-                    </div>
+                    
                 </div>
-                <div id="Bperusahaan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">300+ Perusahaan</h5>
-                        <p class="card-text">Lorem Ipsum</p>
+                <div id="Bperusahaan" class="card" style="max-width: 17rem; height: auto;">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1.5H47V46.5H2V1.5Z" stroke="white" stroke-opacity="0.2" stroke-width="2.8125"/>
+                    <path d="M7.625 40.875H41.375" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7.625 40.875H41.375" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11.375 40.875V14.625L26.375 7.125V40.875" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11.375 40.875V14.625L26.375 7.125V40.875" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M37.625 40.875V22.125L26.375 14.625" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M37.625 40.875V22.125L26.375 14.625" stroke="white" stroke-opacity="0.2" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.875 18.375V18.3938" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.875 24V24.0188" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.875 29.625V29.6438" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.875 35.25V35.2688" stroke="#4EA971" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                        <h5 class="card-title m-2">300+ Perusahaan</h5>
+                        <p class="card-text m-2">Lebih dari 300 perusahaan terdaftar di Talentern</p>
                     </div>
                 </div>
             </div>
@@ -109,6 +156,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
+                        
                         <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
                         <h4 class="name">company_name</h4>
                         
