@@ -112,6 +112,7 @@
                     <a id="Perusahaan" class="nav-link" href="#">Tentang Kami</a>
                     </div>
                 </div>
+                
             </div>
           
     
@@ -197,9 +198,26 @@
                             </a>
                             <ul>
                              
-                                <li>
-                                    <a>Profile Saya</a>
-                                </a>
+                            @if(isset($user) && isset($user->roles) && count($user->roles) > 0 && $user->roles[0]->name == 'applicant')
+                                @if($user->profile)
+                                    <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
+                                    <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My Applications</a></li>
+                                @else
+                                    <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a></li>
+                                @endif
+                            @else
+                            
+                                <li><a href="">Dashboard</a></li>
+                                
+                            @endif
+                            @if($user->profile)
+                                <hr class="my-2">
+                                @if(request()->url() != url('search'))
+                                    <li><a href="{{ url('search') }}">Search Jobs</a></li>
+                                @else
+                                    <li><a href="{{ url('/') }}">Front Page</a></li>
+                                @endif
+                            @endif
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout

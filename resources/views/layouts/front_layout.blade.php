@@ -66,6 +66,7 @@
             background: linear-gradient(180deg, rgba(254, 254, 254, 0.70) 0%, rgba(254, 254, 254, 0.10) 100%);
             box-shadow: 0px 0px 6.257999897003174px 0px #E8E8E8 inset, 0px 0px 14px 0px #E8E8E8 inset, 0px 0px 9px 0px #4EA971 inset;
             backdrop-filter: blur(1px);
+            
         }
         #kemudahan {
             display: flex;
