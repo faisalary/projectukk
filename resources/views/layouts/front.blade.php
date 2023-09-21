@@ -89,44 +89,8 @@
 <main class="main-content">
 
     @yield('content')
-    
-
-
-<!-- Process Section -->
-<!-- <section class="process-section pt-0">
-<div class="row row-cols-1 row-cols-md-3 g-4">
-                <div id="diseluruh" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-
-                        <h5 class="card-title">Diseluruh Indonesia</h5>
-                        <p class="card-text">Lorem Ipsum</p>
-                    </div>
-                </div>
-                <div id="kemudahan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">Kemudahan Melamar</h5> 
-                        <p class="card-text">Lorem Ipsum</p>
-                    </div>
-                </div>
-                <div id="Blowongan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">1000+ Lowongan</h5>
-                        <p class="card-text">Lorem Ipsum</p>
-                        
-                    </div>
-                </div>
-                <div id="Bperusahaan" class="card" style="max-width: 17rem; height: 201px;">
-                    <div class="card-body">
-                        <h5 class="card-title">300+ Perusahaan</h5>
-                        <p class="card-text">Lorem Ipsum</p>
-                    </div>
-                </div>
-    </div>
-</section> -->
-
-
-
-<section class="top-companies style-two">
+ 
+<section class="top-companies " style="background: #FFFFFF;">
     <div class="auto-container">
         <div class="sec-title text-center">
             <h2>Lowongan Untuk Kamu</h2>
