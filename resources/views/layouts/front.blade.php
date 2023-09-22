@@ -53,7 +53,7 @@
                     </div>
                 </form>
             </div>
-<<<<<<< HEAD
+
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div id="diseluruh" class="card" style="max-width: 17rem; height: auto;">
                     <span class="icon">
@@ -147,251 +147,169 @@
             <div class="btn" style="border-radius: 10px; border: 2px solid var(--semantic-color-success-900, #28C76F); background: #FFF;">
                 <button id="btnTerbaru" class="btn btn-success me-2 ml-2" type="button">Lowongan Terbaru</button>
                 <button id="btnPopuler" class="btn btn-outline-success me-2 ml-2" type="button">Lowongan Populer</button>
-=======
-            <!-- Job Search Form -->
+            </div>
+        </div>
+
+        <div class="carousel-outer wow fadeInUp">
+
+        <div class="row">
+
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+            <!-- Company-Block  -->
+            <div class="company-block">
+                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <h4 class="name">company_name</h4>
+                        
+                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
+                        <div class="button-container" >
+                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
+                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
         </div>
     </div>
 </section>
-
-<!-- End Banner Section-->
-<main class="main-content">
-    <!-- Process Section -->
-    <section class="process-section pt-0">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div id="diseluruh" class="card" style="max-width: 17rem; height: 201px;">
-                <div class="card-body">
-
-                    <h5 class="card-title">Diseluruh Indonesia</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                </div>
-            </div>
-            <div id="kemudahan" class="card" style="max-width: 17rem; height: 201px;">
-                <div class="card-body">
-                    <h5 class="card-title">Kemudahan Melamar</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                </div>
-            </div>
-            <div id="Blowongan" class="card" style="max-width: 17rem; height: 201px;">
-                <div class="card-body">
-                    <h5 class="card-title">1000+ Lowongan</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-
-                </div>
-            </div>
-            <div id="Bperusahaan" class="card" style="max-width: 17rem; height: 201px;">
-                <div class="card-body">
-                    <h5 class="card-title">300+ Perusahaan</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="top-companies style-two">
-        <div class="auto-container">
-            <div class="sec-title text-center">
-                <h2>Lowongan Untuk Kamu</h2>
-                <div class="text">Temukan berbagai lowongan kerja yang kamu inginkan</div>
-                <div class="btn" style="border-radius: 10px; border: 2px solid var(--semantic-color-success-900, #28C76F); background: #FFF;">
-                    <button id="btnTerbaru" class="btn btn-outline-success me-2 ml-2" type="button">Lowongan Terbaru</button>
-                    <button id="btnPopuler" class="btn btn-outline-success me-2 ml-2" type="button">Lowongan
-                        Populer</button>
-                </div>
-            </div>
-
-            <div class="carousel-outer wow fadeInUp">
-                <div class="">
-                    @yield('foryou')
-                </div>
->>>>>>> hanum
-            </div>
-        </div>
-    </section>
-
-<!-- Company Block -->
-        {{-- <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image"><img src="images/resource/company-1.png" alt=""></figure>
-                    <h4 class="name">Udemy</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i> London, UK</div>
-                    <a href="#" class="theme-btn btn-style-three">15 Open Position</a>
-                </div>
-            </div>
-        <div class="row">
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-            <!-- Company-Block  -->
-            <div class="company-block">
-                <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
-                    <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                        <h4 class="name">company_name</h4>
-                        
-                        <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
-                        <div class="button-container" >
-                            <a  class="btn btn-success text-white" style="margin-left : 20px; border-radius: 8px;">Lamar</a>
-                            <a  class="btn btn-outline-success" style="margin-left: 20px; border-radius: 8px;">Detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Company Block -->
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image"><img src="images/resource/company-3.png" alt=""></figure>
-                    <h4 class="name">Dropbox</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i> London, UK</div>
-                    <a href="#" class="theme-btn btn-style-three">22 Open Position</a>
-                </div>
-            </div>
-
-            <!-- Company Block -->
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image"><img src="images/resource/company-4.png" alt=""></figure>
-                    <h4 class="name">Figma</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i> London, UK</div>
-                    <a href="#" class="theme-btn btn-style-three">22 Open Position</a>
-                </div>
-            </div>
-        </div> --}}
 
 @yield('categori')
 
