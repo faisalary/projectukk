@@ -158,7 +158,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -175,7 +175,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -192,7 +192,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -209,7 +209,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -226,7 +226,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -243,7 +243,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -260,7 +260,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -277,7 +277,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -294,7 +294,7 @@
             <div class="company-block">
                 <div class="inner-box" style="display: flex; width: 343px; height: 427px; padding: 40px 28px 41px 28px; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;">
                     <div>
-                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
                         <h4 class="name">company_name</h4>
                         
                         <div class="location"><i class="flaticon-map-locator"></i>company_addres</div>
@@ -423,36 +423,83 @@
         <div class="row">
             @yield('partners')
             <!-- Company Block -->
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                    <h4 class="name">company_name</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i>company_adress</div>
-                    <a class="btn btn-outline-success ">Lihat Perusahaan</a>
+              
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                    <h4 class="name">company_name</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i>company_adress</div>
-                    <a class="btn btn-outline-success">Lihat Perusahaan</a>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                    <h4 class="name">company_name</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i>company_adress</div>
-                    <a class="btn btn-outline-success">Lihat Perusahaan</a>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div class="company-block">
-                <div class="inner-box">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt=""></figure>
-                    <h4 class="name">company_name</h4>
-                    <div class="location"><i class="flaticon-map-locator"></i>company_adress</div>
-                    <a class="btn btn-outline-success">Lihat Perusahaan</a>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 405px; height: 349px; flex-shrink: 0;">
+                        <div>
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                            <h4>Uniqlo Co., Ltd</h4>
+                            
+                            <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                            <div class="button-container" >
+                            <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
