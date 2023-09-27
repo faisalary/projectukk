@@ -4291,6 +4291,7 @@ Page Title
 
 .page-title .job-search-form{
     margin-bottom: 0;
+ 
 }
 
 /* Style Tgree */
@@ -4503,17 +4504,6 @@ Banner Section
 .banner-section .popular-searches a{
     color: inherit;
     font-size: 14px;
-}
-
-.job-search-form {
-    position: relative;
-    background: #FFFFFF;
-    border: 1px solid #ECEDF2;
-    -webkit-box-shadow: 0px 7px 18px rgba(64, 79, 104, 0.05);
-    box-shadow: 0px 7px 18px rgba(64, 79, 104, 0.05);
-    border-radius: 10px;
-    min-width: 740px;
-    margin-bottom: 22px;
 }
 
 .job-search-form form {
@@ -18978,4 +18968,67 @@ Chat Widget
     margin-right: 10px;
     min-width: auto;
     color: rgba(25, 103, 210, 1);
+}
+.dropdown-find {
+    display: inline-block;
+    margin-right: 10px; 
+    position: relative;
+  }
+  
+  .dropdown-toggle-find{
+    width: 300px;
+    text-align: left;
+  }
+  
+  .dropdown-menu{
+  
+    left: 0;
+    right: auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+  }
+  
+  .form-range-find{
+    width: 80%; 
+    margin: 20px;
+    
+  }
+ 
+  .dropdown-item-find {
+    max-width: 100%;
+    margin : 10px;
+    text-align: center;
+  }
+  .dropdown-item .title {
+    max-width: 100%;
+    padding: 5px; 
+  }
+  .text-center-find{
+    text-align: center;
+}
+  .btn-dropdown-gaji{
+    display: flex;
+    padding: auto;
+    align-items: flex-start;
+    position: absolute;
+    left: 20px;
+ 
+    border-radius: 4px;
+    background: var(--light-opacity-color-gray-gray-16, rgba(75, 70, 92, 0.16));    
+}
+.btn-right-dropdown-gaji {
+    float: right;
+    left: 20px;  
+    border-radius: 4px;
+    margin-right: 20px;
+    background: var(--light-opacity-color-gray-gray-16, rgba(75, 70, 92, 0.16));   
+}
+
+.btn-outline-warning{
+    display: flex;
+    padding: auto;
+    align-items: flex-start;
+    position: absolute;
+    left: 20px;
 }

@@ -18,7 +18,7 @@ use App\Notifications\NewJobApplication;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\LinkedInSetting;
-use Carbon\Models\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -71,9 +71,7 @@ class FrontSearchController extends FrontBaseController
         $this->rows_sort = array(3=>"show 3", 5=>"show 5");
 
             return view('layouts.front_find_jobs' , $this->data);
-        
-        
-        
+
     }
 }
 

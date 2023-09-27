@@ -16,7 +16,8 @@
             @yield('header-text')
             <!-- Job Search Form -->
             <div class="job-search-form " data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: auto; width: auto;">
-                <form method="post" action="job-list-v10.html">
+                <form method="post" action="{{url('/search')}}">
+                    @csrf
                     <div class="row">
                         <!-- Form Group -->
                         <div class="form-group col-lg-4 col-md-12 col-sm-12">
@@ -47,9 +48,11 @@
                         </div>
 
                         <!-- Form Group -->
+                       
                         <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right">
                             <button type="submit" class="btn-success btn-style-two">Find Jobs</button>
                         </div>
+                        
                     </div>
                 </form>
             </div>
@@ -309,6 +312,9 @@
             </div>
         </div>
     </div>
+    <div class="text-center">
+        <a class="btn" style="margin-top: 20px">lihat Perusahaan Lainya ></a> 
+    </div>
 </section>
 
 @yield('categori')
@@ -504,6 +510,9 @@
             </div>
         </div>
     </div>
+    <div class="text-center">
+        <a class="btn" style="margin-top: 20px">lihat Perusahaan Lainya ></a> 
+    </div>
 </section>
 
 <section class="section" style="background-image: url({{ asset('front/assets/landing/images/background/blue.png')}}); ; background-size: cover; background-repeat: no-repeat;">
@@ -550,8 +559,7 @@
 
 
             <div class="text-center" style="margin: 20px;">
-                <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan Lainnya
-                    >
+                <a class="" type="button" class="btn btn-outline-success" style="color: white;">Lihat Kemampuan Lainnya >                   >
                     <span class="icon flaticon-chevron-right"></span></a>
             </div>
         </div>

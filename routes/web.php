@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isApplicant;
 
@@ -24,7 +25,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
     //profile user
     Route::group(['middleware' => isApplicant::class], function () {
         Route::get('/profile/setup', 'ProfileUserController@index')->name('profile.setup');
@@ -36,6 +36,16 @@ Route::get('/dashboard', function () {
         Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
     });
 
+    // Route::group(
+    //     ['namespace' => 'Front', 'as' => 'Jobs.'], function () {
+    //     Route::post('/search', 'FrontSearchController@searchOpenings')->name('searchOpenings');
+    //     }
+    // );
+
 require __DIR__.'/auth.php';
 
+
+
+Route::post('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
+    
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

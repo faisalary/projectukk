@@ -5,11 +5,11 @@
 <span class="header-span"></span>
 
 <!--Page Title-->
-<section class="page-title style-three" style="background-image: url({{asset('assets/images/background/bgEllipse.svg')}});">
+<section class="page-title style-three" style="background-image: url({{asset('assets/images/background/bgEllipse.png')}});">
     <div class="auto-container">
       
-        <div class="job-search-form" >
-            {{-- <form method="post" action="job-list-v10.html">
+        <div class="" >
+            {{-- <form method="post" action="{{url('/search')}}">
                 
                 <div class="row">
                     <!-- Form Group -->
@@ -50,26 +50,62 @@
                 
                 <div class="row">
                     <!-- Form Group -->
-                    <div class="form-group col-lg-5 col-md-12 col-sm-12">
-                        <span class="icon flaticon-search-1"></span>
-                        <input type="text" class="form-control autocomplete" name="job" autocomplete="off" placeholder="Search jobs" data-url="{{url('/fetch-jobs')}}"  value="{{request()->job}}">
+                    <div class="form m-3">
+                        <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
+                            <div class="form-group col-md-12 col-sm-12">
+                                <span class="icon flaticon-search-1"></span>
+                                <input type="text" class="form-control autocomplete" name="job" autocomplete="off" placeholder="Search jobs" data-url="{{url('/fetch-jobs')}}"  value="{{request()->job}}">
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Form Group -->
-                    <div class="form-group col-lg-5 col-md-12 col-sm-12 location">
-                        <span class="icon flaticon-map-locator"></span>
-                        <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}"  value="{{request()->loc}}">
+                    <div class="form m-3">
+                        <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
+                            <div class="form-group col-md-12 col-sm-12 location">
+                                <span class="icon flaticon-map-locator"></span>
+                                <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}"  value="{{request()->loc}}">
+                            </div>
+                        </div>
                     </div>
                     <!-- Form Group -->
-                    <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right">
-                        <button  class="btn-success btn-style-two">Find Jobs</button>
+                    <div class="form m-3">
+                        <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right m-1">
+                            <button  class="btn-success btn-style-two">Find Jobs</button>
+                        </div>
                     </div>
                 </div>
                 
             </form>
         </div>
-        <!-- Job Search Form -->
     </div>
+<div class="row">
+    <div class="dropdown-find">
+        <button class="btn dropdown-toggle-find" type="button" data-toggle="dropdown">
+        Gaji
+        </button>
+        <ul class="dropdown-menu">
+            <div class="text-center dropdown-item-find">
+                <li><a class="">Silahkan Masukkan rentang Gaji Perbulan Pada Posisi Yang Anda Inginkan</a></li>
+            </div>
+            <div class="btn-dropdown-gaji">
+                <button type="button" class="" disabled>Rp. 0</button>
+            </div>
+            <div class="btn-right-dropdown-gaji">
+                <button type="button" class="" disabled>Rp. 100 juta</button>
+            </div>
+            <div>
+                <li><a><label for="customRange3" class="form-label"></label>
+                    <input type="range" class="form-range-find" min="0" max="5" step="0.5" id="customRange3">
+                </label></a></li> 
+            </div>
+            <div class="btn btn-outline-warning" style="padding">
+                <button type="button" class="" disabled>Terapkan</button>
+            </div>   
+        </ul>
+    </div>
+    
+</div>
 </section>
 <!--End Page Title-->
 
@@ -239,11 +275,8 @@
                     <!-- ls Switcher -->
                     <div class="ls-switcher">
                         <div class="showing-result">
-                            @php
-                                $rows = request()->row ? request()->row : 3;
-                                $showed_data = $rows >= $jobs->total() ? $jobs->total() : $rows;
-                            @endphp
-                            <div class="text">Showing <strong>{{$showed_data}}</strong> of <strong>{{$jobs->total()}}</strong> jobs</div>
+                          
+                            <div class="text">Showing <strong></strong> of <strong></strong> jobs</div>
                         </div>
                         <div class="sort-by">
                             {{-- <select class="chosen-select">
@@ -257,9 +290,9 @@
                             </select> --}}
 
                             <select class="chosen-select" id="select_row" >
-                                @foreach ($rows_sort as $index=>$item)
-                                <option value="{{$index}}"   {{( request()->row == $index) ? "Selected" :""}}>{{$item}}</option>
-                                @endforeach
+                                
+                               
+                              
                             </select>
                         </div>
                     </div>
@@ -287,47 +320,6 @@
                         </div>
                     </div> --}}
 
-                    {{-- @if (!!empty($jobs)) --}}
-                    @forelse($jobs as $job)
-                    {{-- @foreach ($companies as $item) --}}
-                        <div class="col-12 ">
-                            <a href="{{ route('jobs.jobDetail', [$job->slug]) }}">
-                            <div class="job-block" data-shuffle="list" data-groups="{{ $job->location->location.','.$job->category->name }}">
-                                <div class="inner-box" >
-                                    
-                                    <div class="content">
-                                        {{-- <span class="company-logo"><img src="{{ ucwords($item->logo) }}" alt=""></span> --}}
-                                        <span class="company-logo"><img src="{{ asset("user-uploads/company-logo/".$job->company->logo) }}" alt=""></span>
-                                        <h4>{{ ucwords($job->title) }}</h4>
-                                        <ul class="job-info">
-                                            <li><span class="icon flaticon-briefcase"></span>{{ ucwords($job->category->name) }}</li>
-                                            <li><span class="icon flaticon-map-locator"></span>{{ ucwords($job->location->location)}}</li>
-                                            <li><span class="icon flaticon-worldwide"></span>{{ ucwords($job->location->country->country_name)}}</li>
-                                        </ul>
-                                        {{-- <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button> --}}
-                                    </div>
-                                </div>
-                                    
-                                </div> 
-                            </a>                                           
-                        
-                        </div>
-                            @empty
-                            <h5>No Data Result</h5>
-                    {{-- @endforeach --}}
-                    @endforelse
-                    {{ $jobs->appends(request()->all())->links('vendor.pagination.custom') }}
-                    {{-- {{ $jobs->links() }}--}}
-                    
-                    {{-- @else
-                        
-                    
-                    @endif --}}
-                    
-
-
-                    
-                        
                     <!-- Pagination -->
                     {{-- <nav class="ls-pagination">
                         <ul>

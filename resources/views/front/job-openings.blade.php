@@ -1,3 +1,4 @@
+
 @extends('layouts.front')
 
 <style>
@@ -15,7 +16,7 @@
     <div class="" data-wow-delay="1000ms">
        
         <form action="{{url("/search")}}" method="GET">
-            <div class="job-search-form wow fadeInUp " style="border-radius: 10px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: 69px; width: 834px;;">
+            <div class="job-search-form wow fadeInUp " stPle="border-radius: 10px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: 69px; width: 834px;;">
                 <div class="row">
                 
                 <div class="form-group col-lg-3 col-md-12 col-sm-12">
