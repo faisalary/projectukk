@@ -22,6 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 // Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -50,6 +51,12 @@ Auth::routes();
         Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
         Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
         Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
+        
+    });
+    
+    
+Route::get('/pengaturan', function () {
+        return view('pengaturan_akun.pengaturan_akun');
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
