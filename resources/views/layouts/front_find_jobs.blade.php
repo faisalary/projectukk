@@ -80,8 +80,55 @@
         </div>
     </div>
 <div class="row">
+   
     <div class="dropdown-find">
-        <button class="btn dropdown-toggle-find" type="button" data-toggle="dropdown">
+        <button class="btn dropdown-toggle dropdown-toggle-find" type="button" data-toggle="dropdown">
+        Tanggal Unggah
+        </button>
+        <ul class="dropdown-menu" style="height: 120px;" >
+                <li><a class="dropdown-item" href="#">7 Hari Lalu</a></li>
+                <li><a class="dropdown-item" href="#">30 Hari Lalu</a></li>
+                <li><a class="dropdown-item" href="#">365 Hari Lalu</a></li>
+        </ul>
+    </div>
+    <div class="dropdown-find">
+        <button class="btn dropdown-toggle dropdown-toggle-find" type="button" data-toggle="dropdown">
+        Perusahaan
+        </button>
+        <ul class="dropdown-menu"style="height: 180px ;">
+                <div class="dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="input" type="text" value="" id="flexCheckDefault" placeholder="Input Perusahan" autocomplete="off">
+                    <!-- <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations"> -->
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    PT ABC
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        PT DEF
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    PT GHI
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        PT JKL
+                    </label>
+                </div>  
+               
+        </ul>
+    </div>
+    <div class="dropdown-find">
+        <button class="btn dropdown-toggle dropdown-toggle-find" type="button" data-toggle="dropdown">
         Gaji
         </button>
         <ul class="dropdown-menu">
@@ -104,237 +151,157 @@
             </div>   
         </ul>
     </div>
+    <div class="dropdown-find">
+        <button class="btn dropdown-toggle dropdown-toggle-find" type="button" data-toggle="dropdown">
+        Tingkat Pengalaman
+        </button>
+        <ul class="dropdown-menu"style="height: 160px ;">
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Beginner
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Intermediate
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Advanced
+                    </label>
+                </div>               
+        </ul>
+    </div>
+    <div class="dropdown-find">
+        <button class="btn dropdown-toggle dropdown-toggle-find" type="button" data-toggle="dropdown">
+        Tipe Pekerjaan
+        </button>
+        <ul class="dropdown-menu"style="height: 180px ;">
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Magang
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Penuh Waktu
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Paruh Waktu
+                    </label>
+                </div>
+                <div class="form-check dropdown-item" style="width: 95%; border-radius: 6px 6px 6px 6px;border: 1px solid var(--primary-500-base, #4EA971);background: var(--light-solid-color-extra-card-background, #FFF); margin: 5px">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Kontrak
+                    </label>
+                </div>  
+               
+        </ul>
+    </div>
     
 </div>
 </section>
-<!--End Page Title-->
 
-<!-- Listing Section -->
 <section class="ls-section">
     <div class="auto-container">
-        <div class="filters-backdrop"></div>
-        
-        <div class="row">
-
-            <!-- Filters Column -->
-            {{-- <div class="filters-column col-lg-4 col-md-12 col-sm-12">
-                <div class="inner-column">
-                    <div class="filters-outer">
-                        <button type="button" class="theme-btn close-filters">X</button>
+        <div class="showing-result">
+            <div class="text">300+ <strong></strong> Lowongan <strong></strong> Terserdia</div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                        <h4>Uniqlo Co., Ltd</h4>
                         
-                        <!-- Switchbox Outer -->
-                        <div class="switchbox-outer">
-                            <h4>Job type</h4>
-                            <ul class="switchbox">
-                                <li>
-                                    <label class="switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider round"></span>
-                                        <span class="title">Freelance</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                        <span class="title">Full Time</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                        <span class="title">Internship</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                        <span class="title">Part Time</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                        <span class="title">Temporary</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Checkboxes Ouer -->
-                        <div class="checkbox-outer">
-                            <h4>Date Posted</h4>
-                            <ul class="checkboxes">
-                                <li>
-                                    <input id="check-f" type="checkbox" name="check">
-                                    <label for="check-f">All</label>                              
-                                </li>
-                                <li>
-                                    <input id="check-a" type="checkbox" name="check">
-                                    <label for="check-a">Last Hour</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-b" type="checkbox" name="check">
-                                    <label for="check-b">Last 24 Hours</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-c" type="checkbox" name="check">
-                                    <label for="check-c">Last 7 Days</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-d" type="checkbox" name="check">
-                                    <label for="check-d">Last 14 Days</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-e" type="checkbox" name="check">
-                                    <label for="check-e">Last 30 Days</label>                                
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Checkboxes Ouer -->
-                        <div class="checkbox-outer">
-                            <h4>Experience Level</h4>
-                            <ul class="checkboxes square">
-                                <li>
-                                    <input id="check-ba" type="checkbox" name="check">
-                                    <label for="check-ba">All</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-bb" type="checkbox" name="check">
-                                    <label for="check-bb">Internship</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-bc" type="checkbox" name="check">
-                                    <label for="check-bc">Entry level</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-bd" type="checkbox" name="check">
-                                    <label for="check-bd">Associate</label>                                
-                                </li>
-                                <li>
-                                    <input id="check-be" type="checkbox" name="check">
-                                    <label for="check-be">Mid-Senior level4</label>                                
-                                </li>
-                                <li>
-                                    <button class="view-more"><span class="icon flaticon-plus"></span> View More</button>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Filter Block -->
-                        <div class="filter-block">
-                            <h4>Salary</h4>
-
-                            <div class="range-slider-one salary-range">
-                                <div class="salary-range-slider"></div>
-                                <div class="input-outer">
-                                    <div class="amount-outer">
-                                        <span class="amount salary-amount">
-                                            $<span class="min">0</span>
-                                            $<span class="max">0</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Filter Block -->
-                        <div class="filter-block">
-                            <h4>Tags</h4>
-                            <ul class="tags-style-one">
-                                <li><a href="#">app</a></li>
-                                <li><a href="#">administrative</a></li>
-                                <li><a href="#">android</a></li>
-                                <li><a href="#">wordpress</a></li>
-                                <li><a href="#">design</a></li>
-                                <li><a href="#">react</a></li>
-                            </ul>
+                        <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                        <div class="button-container" >
+                        <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
                         </div>
                     </div>
-
-                    <!-- Call To Action -->
-                    <div class="call-to-action-four">
-                        <h5>Recruiting?</h5>
-                        <p>Advertise your jobs to millions of monthly users and search 15.8 million CVs in our database.</p>
-                        <a href="#" class="theme-btn btn-style-one bg-blue"><span class="btn-title">Start Recruiting Now</span></a>
-                        <div class="image" style="background-image: url(images/resource/ads-bg-4.png);"></div>
-                    </div>
-                    <!-- End Call To Action -->
                 </div>
-            </div> --}}
-            
-            <!-- Content Column -->
-            <div class="content-column col-lg-12 col-md-12 col-sm-12">
-                <div class="ls-outer">
-                    <button type="button" class="theme-btn btn-style-two toggle-filters">Show Filters</button>
-
-                    <!-- ls Switcher -->
-                    <div class="ls-switcher">
-                        <div class="showing-result">
-                          
-                            <div class="text">Showing <strong></strong> of <strong></strong> jobs</div>
-                        </div>
-                        <div class="sort-by">
-                            {{-- <select class="chosen-select">
-                                
-                                <option>New Jobs</option>
-                                <option>Freelance</option>
-                                <option>Full Time</option>
-                                <option>Internship</option>
-                                <option>Part Time</option>
-                                <option>Temporary</option>
-                            </select> --}}
-
-                            <select class="chosen-select" id="select_row" >
-                                
-                               
-                              
-                            </select>
+            </div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                        <h4>Uniqlo Co., Ltd</h4>
+                        
+                        <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                        <div class="button-container" >
+                        <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
                         </div>
                     </div>
-
-
-                    <!-- Job Block -->
-                    {{-- <div class="job-block">
-                        <div class="inner-box">
-                            <div class="content">
-                                <span class="company-logo"><img src="images/resource/company-logo/1-1.png" alt=""></span>
-                                <h4><a href="#">Software Engineer (Android), Libraries</a></h4>
-                                <ul class="job-info">
-                                    <li><span class="icon flaticon-briefcase"></span> Segment</li>
-                                    <li><span class="icon flaticon-map-locator"></span> London, UK</li>
-                                    <li><span class="icon flaticon-clock-3"></span> 11 hours ago</li>
-                                    <li><span class="icon flaticon-money"></span> $35k - $45k</li>
-                                </ul>
-                                <ul class="job-other-info">
-                                    <li class="time">Full Time</li>
-                                    <li class="privacy">Private</li>
-                                    <li class="required">Urgent</li>
-                                </ul>
-                                <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>
-                            </div>
+                </div>
+            </div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 10px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                        <h4>Uniqlo Co., Ltd</h4>
+                        
+                        <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                        <div class="button-container" >
+                        <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
                         </div>
-                    </div> --}}
-
-                    <!-- Pagination -->
-                    {{-- <nav class="ls-pagination">
-                        <ul>
-                            <li class="prev"><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                            <li><a href="#" class="current-page">1</a></li>
-                            <li><a href="#" >2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="next"><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-                        </ul>
-                    </nav> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="company-block" >
+                <div class="inner-box" style="text-align: left; border-radius: 4px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div>
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="" alt="admin.upload"></figure>
+                        <h4>Uniqlo Co., Ltd</h4>
+                        
+                        <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
+                        <div class="button-container" >
+                        <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- Listing Section -->
+<!-- <section class="ls-section">
+    <div class="auto-container">
+        <div class="filters-backdrop"></div>
+        
+        <div class="row">   
+            
+            <div class="content-column col-lg-12 col-md-12 col-sm-12">
+                
+                <div class="ls-switcher">
+                    <div class="showing-result">
+                        <div class="text">300+ <strong></strong> Lowongan <strong></strong> Terserdia</div>
+                    </div>
+                <div class="sort-by">
+                    <select class="chosen-select">
+                                    
+                        <option>New Jobs</option>
+                        <option>Freelance</option>
+                        <option>Full Time</option>
+                        <option>Internship</option>
+                        <option>Part Time</option>
+                        <option>Temporary</option>
+                    </select>
+                    <select class="chosen-select" id="select_row" >
+                    </select>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section> -->
 <!--End Listing Page Section -->
 
 <input type="hidden" id="request_url" value="{{json_encode(request()->all())}}">

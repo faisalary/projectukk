@@ -139,7 +139,7 @@
                                 IND    
                             </button>  
                    
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" style="height: 120px; width: 200px;">
                                 <li><a class="dropdown-item" href="#">Indonesia</a></li>
                                 <li><a class="dropdown-item" href="#">Inggris</a></li>        
                                 <li><a class="dropdown-item" href="#">Sunda</a></li>   

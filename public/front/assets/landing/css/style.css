@@ -18976,17 +18976,25 @@ Chat Widget
   }
   
   .dropdown-toggle-find{
-    width: 300px;
+    width: 230px;
     text-align: left;
   }
   
   .dropdown-menu{
-  
     left: 0;
     right: auto;
-    width: auto;
-    height: auto;
+    width: 300px;
+    height: 300px;
+    max-height: 250px;
     max-width: 100%;
+  }
+
+  .dropdown-menu-uplaod{
+    left: 0;
+    right: auto;
+    max-height: 100px;
+    max-width: 100%;
+    overflow-y: auto; 
   }
   
   .form-range-find{
@@ -19031,4 +19039,16 @@ Chat Widget
     align-items: flex-start;
     position: absolute;
     left: 20px;
+}
+
+.check-box-bg{
+    display: flex;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 6px 0px 0px 6px;
+    border: 1px solid var(--primary-500-base, #4EA971);
+    background: var(--light-solid-color-extra-card-background, #FFF);
 }
