@@ -19052,3 +19052,29 @@ Chat Widget
     border: 1px solid var(--primary-500-base, #4EA971);
     background: var(--light-solid-color-extra-card-background, #FFF);
 }
+.image-vacancies-not-found{
+    width: auto;
+    height: auto;
+}
+.image-vacancies{
+    width: 104px;
+    height: 62px;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.descrip-job{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.center-text-icon {
+    display: flex;
+    align-items: center; /* Mengatur vertikal ke tengah */
+}
+.custom-line {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: var(--typography-color-placeholder-text, #D3D6DB);
+}
