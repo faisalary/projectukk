@@ -25,6 +25,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::group(['middleware' => 'auth'], function () {
+    // Rute untuk AdminController di dalam namespace Auth
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+        Route::post('/update-profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    });
+});
+
+
+
     //profile user
     Route::group(['middleware' => isApplicant::class], function () {
         Route::get('/profile/setup', 'ProfileUserController@index')->name('profile.setup');

@@ -155,7 +155,7 @@
                         <a  href="{{ route('register')}}">
                             <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
                         </a>
-                        <a class="m-2" href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
+                        <a class="m-2" href="{{ route('login')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
                     
                 </div>
             </div>

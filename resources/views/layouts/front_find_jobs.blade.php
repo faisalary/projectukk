@@ -7,77 +7,35 @@
 <!--Page Title-->
 <section class="page-title style-three" style="background-image: url({{asset('assets/images/background/bgEllipse.png')}});">
     <div class="auto-container">
-      
-        <div class="" >
-            {{-- <form method="post" action="{{url('/search')}}">
-                
-                <div class="row">
-                    <!-- Form Group -->
-                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
-                        <span class="icon flaticon-search-1"></span>
-                        <input type="text" name="field_name" placeholder="Job title, keywords, or company">
-                    </div>
-                    
-                    <!-- Form Group -->
-                    <div class="form-group col-lg-3 col-md-12 col-sm-12 location">
-                        <span class="icon flaticon-map-locator"></span>
-                        <input type="text" name="field_name" placeholder="City or postcode">
-                    </div>
-
-                    <!-- Form Group -->
-                    <div class="form-group col-lg-3 col-md-12 col-sm-12 location">
-                        <span class="icon flaticon-briefcase"></span>
-                        <select class="chosen-select">
-                            <option value="">All Categories</option>
-                            <option value="44">Accounting / Finance</option>
-                            <option value="106">Automotive Jobs</option>
-                            <option value="46">Customer</option>
-                            <option value="48">Design</option>
-                            <option value="47">Development</option>
-                            <option value="45">Health and Care</option>
-                            <option value="105">Marketing</option>
-                            <option value="107">Project Management</option>
-                        </select>
-                    </div>
-
-                    <!-- Form Group -->
-                    <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right">
-                        <button type="submit" class="theme-btn btn-style-one">Find Jobs</button>
-                    </div>
-                </div>
-            </form> --}}
-            <form>
-                
-                <div class="row">
-                    <!-- Form Group -->
-                    <div class="form m-3">
-                        <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
-                            <div class="form-group col-md-12 col-sm-12">
-                                <span class="icon flaticon-search-1"></span>
-                                <input type="text" class="form-control autocomplete" name="job" autocomplete="off" placeholder="Search jobs" data-url="{{url('/fetch-jobs')}}"  value="{{request()->job}}">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Form Group -->
-                    <div class="form m-3">
-                        <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
-                            <div class="form-group col-md-12 col-sm-12 location">
-                                <span class="icon flaticon-map-locator"></span>
-                                <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}"  value="{{request()->loc}}">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Form Group -->
-                    <div class="form m-3">
-                        <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right m-1">
-                            <button  class="btn-success btn-style-two">Find Jobs</button>
+        <form>
+            <div class="row">
+                <!-- Form Group -->
+                <div class="form m-3">
+                    <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <span class="icon flaticon-search-1"></span>
+                            <input type="text" class="form-control autocomplete" name="job" autocomplete="off" placeholder="Search jobs" data-url="{{url('/fetch-jobs')}}"  value="{{request()->job}}">
                         </div>
                     </div>
                 </div>
                 
-            </form>
-        </div>
+                <!-- Form Group -->
+                <div class="form m-3">
+                    <div class="job-search-form" data-wow-delay="1000ms" style="border-radius: 10px; border: 2px solid #D3D6DB; background: var(--neutral-color-white-color, #FFF); height: auto; width: 480px;">
+                        <div class="form-group col-md-12 col-sm-12 location">
+                            <span class="icon flaticon-map-locator"></span>
+                            <input type="text" class="form-control autocomplete" name="loc" autocomplete="off" placeholder="Search locations" data-url="{{url('/fetch-locations')}}"  value="{{request()->loc}}">
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Group -->
+                <div class="form m-3">
+                    <div class="form-group col-lg-2 col-md-12 col-sm-12 text-right m-1">
+                        <button  class="btn-success btn-style-two">Find Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 <div class="row">
    

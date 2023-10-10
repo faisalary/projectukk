@@ -450,9 +450,10 @@
                             <h4>Uniqlo Co., Ltd</h4>
                             
                             <div class="location">PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                            <div class="button-container" >
+                            <div class="button-container">
                             <a class="btn btn-outline-success ">Lihat Perusahaan</a>           
                             </div>
+                            
                         </div>
                 </div>
             </div>
