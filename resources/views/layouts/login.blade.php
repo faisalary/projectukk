@@ -39,6 +39,7 @@
                     <div>
                     <a href="{{ url('/login') }}"></a>
                     </div>
+                    <div class="logo mr-3"><a href="{{ url('/') }}"><img src={{asset('assets/images/app-logo.png') }} alt="icon" style="margin-bottom: 10px;" title="" width="154px" height="50px"></a></div>
                     <div class="mb-4">
                         <h4 class="text-muted"  style="font-weight: 600; font-size: 28px; margin-bottom: 0!important;">
                             @lang('auth.page.welcome')
