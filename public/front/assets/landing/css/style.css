@@ -4291,6 +4291,7 @@ Page Title
 
 .page-title .job-search-form{
     margin-bottom: 0;
+ 
 }
 
 /* Style Tgree */
@@ -4503,17 +4504,6 @@ Banner Section
 .banner-section .popular-searches a{
     color: inherit;
     font-size: 14px;
-}
-
-.job-search-form {
-    position: relative;
-    background: #FFFFFF;
-    border: 1px solid #ECEDF2;
-    -webkit-box-shadow: 0px 7px 18px rgba(64, 79, 104, 0.05);
-    box-shadow: 0px 7px 18px rgba(64, 79, 104, 0.05);
-    border-radius: 10px;
-    min-width: 740px;
-    margin-bottom: 22px;
 }
 
 .job-search-form form {
@@ -5246,10 +5236,10 @@ Banner Section Four
     position: relative;
     display: block;
     background-repeat: no-repeat;
-    background-position: center bottom;
+    background-position: top center;
     background-size: cover;
     height: 100vh;
-    min-height: 700px;
+    min-height: 1200px;
     text-align: center;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -5265,6 +5255,7 @@ Banner Section Four
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 120px 0;
+    
 }
 
 .banner-section-four .title-box{
@@ -11960,6 +11951,7 @@ Top Companies
 .top-companies{
     position: relative;
     padding: 60px 0;
+    
 }
 
 .top-companies .carousel-outer{
@@ -11976,6 +11968,7 @@ Top Companies
     position: relative;
     padding: 0 15px;
     margin-bottom: 30px;
+
 }
 
 .company-block .inner-box{
@@ -11990,6 +11983,9 @@ Top Companies
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
     text-align: center;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-100, #D3D6DB);
+
 }
 
 .company-block .inner-box.bg-clr-1{background: #FCF9F4;}
@@ -18972,4 +18968,113 @@ Chat Widget
     margin-right: 10px;
     min-width: auto;
     color: rgba(25, 103, 210, 1);
+}
+.dropdown-find {
+    display: inline-block;
+    margin-right: 10px; 
+    position: relative;
+  }
+  
+  .dropdown-toggle-find{
+    width: 230px;
+    text-align: left;
+  }
+  
+  .dropdown-menu{
+    left: 0;
+    right: auto;
+    width: 300px;
+    height: 300px;
+    max-height: 250px;
+    max-width: 100%;
+  }
+
+  .dropdown-menu-uplaod{
+    left: 0;
+    right: auto;
+    max-height: 100px;
+    max-width: 100%;
+    overflow-y: auto; 
+  }
+  
+  .form-range-find{
+    width: 80%; 
+    margin: 20px;
+    
+  }
+ 
+  .dropdown-item-find {
+    max-width: 100%;
+    margin : 10px;
+    text-align: center;
+  }
+  .dropdown-item .title {
+    max-width: 100%;
+    padding: 5px; 
+  }
+  .text-center-find{
+    text-align: center;
+}
+  .btn-dropdown-gaji{
+    display: flex;
+    padding: auto;
+    align-items: flex-start;
+    position: absolute;
+    left: 20px;
+ 
+    border-radius: 4px;
+    background: var(--light-opacity-color-gray-gray-16, rgba(75, 70, 92, 0.16));    
+}
+.btn-right-dropdown-gaji {
+    float: right;
+    left: 20px;  
+    border-radius: 4px;
+    margin-right: 20px;
+    background: var(--light-opacity-color-gray-gray-16, rgba(75, 70, 92, 0.16));   
+}
+
+.btn-outline-warning{
+    display: flex;
+    padding: auto;
+    align-items: flex-start;
+    position: absolute;
+    left: 20px;
+}
+
+.check-box-bg{
+    display: flex;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 6px 0px 0px 6px;
+    border: 1px solid var(--primary-500-base, #4EA971);
+    background: var(--light-solid-color-extra-card-background, #FFF);
+}
+.image-vacancies-not-found{
+    width: auto;
+    height: auto;
+}
+.image-vacancies{
+    width: 104px;
+    height: 62px;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.descrip-job{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.center-text-icon {
+    display: flex;
+    align-items: center; /* Mengatur vertikal ke tengah */
+}
+.custom-line {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: var(--typography-color-placeholder-text, #D3D6DB);
 }

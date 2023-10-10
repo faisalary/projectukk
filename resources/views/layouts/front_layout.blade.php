@@ -23,6 +23,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <style>
+
+
+  
     .box-icon {
         display: flex;
         align-items: center;
@@ -66,6 +69,7 @@
             background: linear-gradient(180deg, rgba(254, 254, 254, 0.70) 0%, rgba(254, 254, 254, 0.10) 100%);
             box-shadow: 0px 0px 6.257999897003174px 0px #E8E8E8 inset, 0px 0px 14px 0px #E8E8E8 inset, 0px 0px 9px 0px #4EA971 inset;
             backdrop-filter: blur(1px);
+            
         }
         #kemudahan {
             display: flex;
@@ -122,6 +126,9 @@
             height: 201px;
         }
 </style>
+
+@yield('page_style')
+
 </head>
 
 <body data-anm=".anm">
@@ -142,6 +149,7 @@
     @include('layouts.front_footer')
     <!-- End Main Footer -->
   
+   
     
 
 </div><!-- End Page Wrapper -->
@@ -165,7 +173,9 @@
 <script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
 <!--Google Map APi Key-->
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
+
 @stack('footer-script')
+@yield('page_script')
 
 </body>
 </html>

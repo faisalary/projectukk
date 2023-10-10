@@ -94,7 +94,7 @@
         <div class="main-box mx-4">
             <!--Nav Outer -->
             <div class="logo-box mr-3">
-                <div class="logo mr-3"><a href="{{ url('/') }}"><img src={{asset('assets/images/app-logo.png') }} alt="icon" title="" width="154px" height="50px"></a></div>
+                <div class="logo mr-3"> <img src="{{ asset('front/assets/img/logo.svg') }}" class="img-fluid" alt="" ><a href="{{ url('/') }}"></a></div>
             
             
                 <div id="navbarNavAltMarkup">
@@ -109,9 +109,19 @@
                 </div>
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav" >
-                    <a id="Perusahaan" class="nav-link" href="#">Tentang Kami</a>
+                    <a id="TentangKami" class="nav-link" href="#">Tentang Kami</a>
                     </div>
                 </div>
+                <!-- <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="LamaranSaya" class="nav-link" href="#">Lamaran Saya</a>
+                    </div>
+                </div>
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="PekerjaanTersimpan" class="nav-link" href="#">Pekerjaan Tersimpan</a>
+                    </div>
+                </div> -->
             </div>
           
     
@@ -124,36 +134,38 @@
            
             <div class="outer-box">
                 <!--Dropdown Bahasa-->
-                <div class="btn-box">
-                    <form class="btn-group">
+                <div class="btn-group">
+                    <form class="btn-box">
                         <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
                             <ellipse cx="12" cy="13" rx="9" ry="9.73346" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            IND    
-                        </button>  
+                                IND    
+                            </button>  
                    
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Indonesia</a></li>
-                            <li><a class="dropdown-item" href="#">Inggris</a></li>        
-                            <li><a class="dropdown-item" href="#">Sunda</a></li>   
-                        </ul>
+                            <ul class="dropdown-menu" style="height: 120px; width: 200px;">
+                                <li><a class="dropdown-item" href="#">Indonesia</a></li>
+                                <li><a class="dropdown-item" href="#">Inggris</a></li>        
+                                <li><a class="dropdown-item" href="#">Sunda</a></li>   
+                            </ul>
+                        </div> 
                     </form>
                    
                     <!-- Login/Register -->
-                    <a href="{{ route('login')}}">
-                        <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>
-                                    
-                        
-                    </a>
-                    <a href="{{ route('register')}}">
-                        <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
-                    </a>
+                    
+                        <a  href="{{ route('login')}}">
+                            <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>             
+                        </a>
+                        <a  href="{{ route('register')}}">
+                            <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
+                        </a>
+                        <a class="m-2" href="{{ route('login')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
+                    
                 </div>
             </div>
             @else
@@ -196,26 +208,27 @@
                                 </div>
                             </a>
                             <ul>
-                                @if($user && $user->roles && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name == 'applicant')
+                             
+                            @if(isset($user) && isset($user->roles) && count($user->roles) > 0 && $user->roles[0]->name == 'applicant')
                                 @if($user->profile)
-                                <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
-                                <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My Applications</a></li>
+                                    <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
+                                    <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My Applications</a></li>
                                 @else
-                                <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a></li>
+                                    <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a></li>
                                 @endif
-                                @else
+                            @else
+                            
+                                <li><a href="">Dashboard</a></li>
                                 
-                                {{-- di komen dulu ya --}}
-                                {{-- <li><a href="{{route('admin.dashboard')}}">Dashboard</a></li> --}}
-                                @endif
-                                @if($user->profile)
+                            @endif
+                            @if($user->profile)
                                 <hr class="my-2">
                                 @if(request()->url() != url('search'))
-                                <li><a href="{{ url('search') }}">Search Jobs</a></li>
+                                    <li><a href="{{ url('search') }}">Search Jobs</a></li>
                                 @else
-                                <li><a href="{{ url('/') }}">Front Page</a></li>
+                                    <li><a href="{{ url('/') }}">Front Page</a></li>
                                 @endif
-                                @endif
+                            @endif
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout
@@ -223,6 +236,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </a>
+                                  
                                 </li>
                             </ul>
                         </li>
