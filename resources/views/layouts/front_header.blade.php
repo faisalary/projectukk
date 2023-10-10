@@ -111,11 +111,6 @@
                         <a id="Perusahaan" class="nav-link" href="#">Perusahaan</a>
                     </div>
                 </div>
-                <div id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a id="Perusahaan" class="nav-link" href="#">Lamaran Saya</a>
-                    </div>
-                </div>
                 <x-nav-link id="Perusahaan" :href="route('pekerjaanTersimpan')">
                     {{ __('Pekerjaan Tersimpan') }}
                 </x-nav-link>
