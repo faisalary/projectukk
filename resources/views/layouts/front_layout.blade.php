@@ -132,6 +132,7 @@
             height: 201px;
         }
     </style>
+    @yield('page_style')
 </head>
 
 <body data-anm=".anm">
@@ -146,6 +147,16 @@
         <!--End Main Header -->
 
         @yield('content-main')
+
+
+        <!-- Main Footer -->
+        @include('layouts.front_footer')
+        <!-- End Main Footer -->
+
+
+
+
+    </div><!-- End Page Wrapper -->
 
 
     <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
@@ -167,6 +178,7 @@
     <!--Google Map APi Key-->
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
     @stack('footer-script')
+    @yield('page_script')
 
 </body>
 
