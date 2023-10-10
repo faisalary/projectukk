@@ -25,17 +25,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-    //profile user
-    Route::group(['middleware' => isApplicant::class], function () {
-        Route::get('/profile/setup', 'ProfileUserController@index')->name('profile.setup');
-        Route::get('/profile', 'ProfileUserController@edit')->name('profile.index');
-        Route::get('/profile/information', 'ProfileUserController@edit')->name('profile.information');
-        Route::get('/profile/educations', 'ProfileUserController@edit')->name('profile.educations');
-        Route::get('/profile/skills', 'ProfileUserController@edit')->name('profile.skills');
-        Route::get('/profile/languages', 'ProfileUserController@edit')->name('profile.languages');
-        Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
-    });
+//profile user
+Route::group(['middleware' => isApplicant::class], function () {
+    Route::get('/profile/setup', 'ProfileUserController@index')->name('profile.setup');
+    Route::get('/profile', 'ProfileUserController@edit')->name('profile.index');
+    Route::get('/profile/information', 'ProfileUserController@edit')->name('profile.information');
+    Route::get('/profile/educations', 'ProfileUserController@edit')->name('profile.educations');
+    Route::get('/profile/skills', 'ProfileUserController@edit')->name('profile.skills');
+    Route::get('/profile/languages', 'ProfileUserController@edit')->name('profile.languages');
+    Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
+});
 
-require __DIR__.'/auth.php';
+Route::get('/pekerjaanTersimpan', [App\Http\Controllers\PekerjaanTersimpanController::class, 'index'])->name('pekerjaanTersimpan');
+
+require __DIR__ . '/auth.php';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
