@@ -131,7 +131,10 @@
             max-width: 15rem;
             height: 201px;
         }
-    </style>
+</style>
+
+@yield('page_style')
+
 </head>
 
 <body data-anm=".anm">
@@ -148,35 +151,27 @@
         @yield('content-main')
 
 
-        <!-- Main Footer -->
-        @include('layouts.front_footer')
-        <!-- End Main Footer -->
+<script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script> 
+<script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/jquery.fancybox.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/jquery.modal.min.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/mmenu.polyfills.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/mmenu.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/appear.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/anm.min.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/owl.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/wow.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/script.js') }}"></script>
+<script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
+<script src="{{ asset('froiden-helper/helper.js') }}"></script>
+<script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
+<!--Google Map APi Key-->
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
 
-
-
-
-    </div><!-- End Page Wrapper -->
-
-
-    <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/jquery.fancybox.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/jquery.modal.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/mmenu.polyfills.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/mmenu.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/appear.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/anm.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/owl.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/wow.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/script.js') }}"></script>
-    <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-    <script src="{{ asset('froiden-helper/helper.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
-    <!--Google Map APi Key-->
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
-    @stack('footer-script')
+@stack('footer-script')
+@yield('page_script')
 
 </body>
 
