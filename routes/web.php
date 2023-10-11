@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isApplicant;
 
@@ -25,6 +26,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+
+// Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
+
+Route::group(['middleware' => 'auth'], function () {
+    // Rute untuk AdminController di dalam namespace Auth
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+        Route::post('/update-profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    });
+});
+
+
 //profile user
 Route::group(['middleware' => isApplicant::class], function () {
     Route::get('/profile/setup', 'ProfileUserController@index')->name('profile.setup');
@@ -36,8 +50,9 @@ Route::group(['middleware' => isApplicant::class], function () {
     Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
 });
 
-Route::get('/pekerjaanTersimpan', [App\Http\Controllers\PekerjaanTersimpanController::class, 'index'])->name('pekerjaanTersimpan');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
+
+Route::get('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
