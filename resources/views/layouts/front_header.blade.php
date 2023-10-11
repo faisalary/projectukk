@@ -109,7 +109,7 @@
                 </div>
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav" >
-                    <a id="TentangKami" class="nav-link" href="#">Tentang Kami</a>
+                    <a id="Tentang" class="nav-link" href="#">Tentang Kami</a>
                     </div>
                 </div>
                 <!-- <div id="navbarNavAltMarkup">
