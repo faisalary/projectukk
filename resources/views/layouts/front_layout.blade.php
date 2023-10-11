@@ -125,6 +125,7 @@
             height: 201px;
         }
 </style>
+
 </head>
 
 <body data-anm=".anm">
@@ -141,6 +142,7 @@
         @yield('content-main')
 
 
+
         <!-- Main Footer -->
         @include('layouts.front_footer')
         <!-- End Main Footer -->
@@ -151,6 +153,8 @@
     </div><!-- End Page Wrapper -->
 
 
+=======
+>>>>>>> resources/views/layouts/front_layout.blade.php
 <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script> 
 <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
 <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
@@ -170,6 +174,7 @@
 <!--Google Map APi Key-->
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
 @stack('footer-script')
+
 
 </body>
 

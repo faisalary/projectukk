@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+
 // Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -36,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/update-profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
     });
 });
-
 
 
 //profile user
@@ -50,7 +50,9 @@ Route::group(['middleware' => isApplicant::class], function () {
     Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
 });
 
+
 require __DIR__.'/auth.php';
+
 
 Route::get('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
