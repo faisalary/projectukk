@@ -1,0 +1,239 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> 
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <title>Navigation Right Alignment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<style>
+    .image-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .image-container .image {
+        display: inline-block;
+        position: relative;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .image-container .image img {
+        width: auto;
+        height: 100%;
+    }
+
+    #top-notification-dropdown>a {
+        position: relative;
+    }
+
+    #top-notification-dropdown>a span {
+        position: absolute;
+        right: 10%;
+        top: 10%;
+    }
+
+    #top-notification-dropdown>a span.badge {
+        padding: 2px 5px;
+    }
+
+    .scrollable {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+
+    .active {
+        color: #1967D2 !important;
+    }
+    
+    #lowongan {
+            color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
+            font-feature-settings: 'clig' off, 'liga' off;
+            /* Basic Typography/Paragraph/Paragraph 1 - Medium */ 
+            margin-left: 62px;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 22px; /* 146.667% */
+        }
+        #Perusahaan {
+            color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
+            font-feature-settings: 'clig' off, 'liga' off;
+            /* Basic Typography/Paragraph/Paragraph 1 - Medium */
+
+            margin-left:20px;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 22px; /* 146.667% */
+        }
+        #Tentang {
+            color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
+            font-feature-settings: 'clig' off, 'liga' off;
+            /* Basic Typography/Paragraph/Paragraph 1 - Medium */
+            
+            margin-left:20px;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 22px; /* 146.667% */
+        }
+
+</style>
+
+<header class="main-header">
+    <div class="container-fluid" style="padding: 0!important;">
+        <!-- Main box -->
+        <div class="main-box mx-4">
+            <!--Nav Outer -->
+            <div class="logo-box mr-3">
+                <div class="logo mr-3"> <img src="{{ asset('front/assets/img/logo.svg') }}" class="img-fluid" alt="" ><a href="{{ url('/') }}"></a></div>
+            
+            
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                        <a id="lowongan" class="nav-link" href="#">Lowongan Pekerjaan</a>
+                    </div>
+                </div>
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="Perusahaan" class="nav-link" href="#">Perusahaan</a>
+                    </div>
+                </div>
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="Tentang" class="nav-link" href="#">Tentang Kami</a>
+                    </div>
+                </div>
+                <!-- <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="LamaranSaya" class="nav-link" href="#">Lamaran Saya</a>
+                    </div>
+                </div>
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="PekerjaanTersimpan" class="nav-link" href="#">Pekerjaan Tersimpan</a>
+                    </div>
+                </div> -->
+            </div>
+          
+    
+            @php
+                $user = Auth::user();
+            @endphp
+            @if(!$user)
+
+         
+           
+            <div class="outer-box">
+                <!--Dropdown Bahasa-->
+                <div class="btn-box">
+                    <form class="btn-group">
+                        <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
+                            <ellipse cx="12" cy="13" rx="9" ry="9.73346" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            IND    
+                        </button>  
+                   
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Indonesia</a></li>
+                            <li><a class="dropdown-item" href="#">Inggris</a></li>        
+                            <li><a class="dropdown-item" href="#">Sunda</a></li>   
+                        </ul>
+                    </form>
+                   
+                    <!-- Login/Register -->
+                    <a href="{{ route('login')}}">
+                        <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>             
+                    </a>
+                    <a href="{{ route('register')}}">
+                        <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
+                    </a>
+                    <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
+                </div>
+            </div>
+            @else
+            <div class="outer-box">
+                <!-- Notifications Dropdown Menu -->
+                @if($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant' || $user->profile)
+                <li class="nav-item dropdown" id="top-notification-dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell-o" style="color:black;"></i>
+                        @if(count($user->unreadNotifications) > 0)
+                            <span class="badge badge-warning navbar-badge">{{ count($user->unreadNotifications) }}</span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="scrollable">
+                            @foreach ($user->unreadNotifications as $notification)
+                                @include('notifications.'.snake_case(class_basename($notification->type)))
+                            @endforeach
+                        </div>
+                        @if(count($user->unreadNotifications) > 0)
+                            <a id="mark-notification-read" href="javascript:void(0);" class="dropdown-item dropdown-footer">@lang('app.markNotificationRead') <i class="fa fa-check"></i></a>
+                        @else
+                            <a  href="javascript:void(0);" class="dropdown-item dropdown-footer">@lang('messages.notificationNotFound') </a>
+                        @endif
+                    </div>
+                </li>
+                @endif
+                <nav class="nav main-menu" style="min-width: 160px;">
+                    <ul class="navigation p-0 m-0" id="navbar">
+                        <li class="current dropdown p-0 m-0">
+                            <a class="image-container nav-link waves-effect waves-light" style="display: flex; align-items: center; justify-content: center; text-align: left;">
+                                <div class="image">
+                                    <img src="{{ $user->profile_image_url  }}" style="vertical-align:unset;" alt="User Image">
+                                </div>
+                                <div style="line-height: normal;">
+                                    <span style="color:black;">{{ ucwords($user->name) }}<br></span>
+                                    @if($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant')
+                                    <span class="text-muted" style="font-size: 12px;">{{ $user->roles[0]->name }}</span>
+                                    @endif
+                                </div>
+                            </a>
+                            <ul>
+                             
+                                <li>
+                                    <a>Profile Saya</a>
+                                </a>
+                                <li>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </a>
+                                  
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>     
+                </nav>
+            </div>
+            @endif
+        </div>
+    </div>
+
+    <!-- Mobile Header -->
+    </header>
+
+<script>
+    function saveUrl(){
+        <?php 
+            Illuminate\Support\Facades\Session::put('previousUrl', url()->current());
+        ?>
+    }
+</script>
