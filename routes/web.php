@@ -52,4 +52,5 @@ Route::group(['middleware' => isApplicant::class], function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
