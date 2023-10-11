@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Dashboard - Analytics | Vuexy - Bootstrap Admin Template</title>
+    <title>Talentern</title>
 
     <meta name="description" content="" />
 
@@ -49,17 +49,27 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../app-assets/js/config.js"></script>
 
+    <style>
+        .bg-menu-theme.menu-vertical .menu-item.active>.menu-link:not(.menu-toggle) {
+            background: #4EA971 !important;
+            box-shadow: none !important;
+            color: #fff !important;
+        }
+
+        .page-item.active .page-link {
+            border-color: #4EA971 !important;
+            background-color: #4EA971 !important;
+            color: #fff;
+        }
+
+        html:not([dir=rtl]) .app-brand-text {
+            margin-left: -2.5rem !important;
+            background-color: white !important;
+        }
+    </style>
+
     @yield('page_style')
 
-@section('page_style')
-<style>
-  .bg-menu-theme.menu-vertical .menu-item.active > .menu-link:not(.menu-toggle) { 
-        background: #33365B !important; 
-        box-shadow: none !important; 
-        color: #fff !important;         
-      }
-</style>
-@endsection
 </head>
 
 <body>
@@ -79,7 +89,9 @@
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" />
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">Vuexy</span>
+                        <span class="app-brand-text demo menu-text fw-bold">
+                            <img src="{{ url('/app-assets/img/Talentern.svg')}}">
+                        </span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -171,7 +183,7 @@
                             </li> -->
                         </ul>
                     </li>
- 
+
                     <!-- Apps & Pages -->
                     <!-- <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Apps &amp; Pages</span>
