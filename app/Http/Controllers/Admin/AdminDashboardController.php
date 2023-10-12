@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\EmailSetting;
-use App\InterviewSchedule;
-use App\Job;
-use App\JobApplication;
+use App\Models\EmailSetting;
+use App\Models\InterviewSchedule;
+use App\Models\Job;
+use App\Models\JobApplication;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Company;
-use App\SmsSetting;
+use App\Models\Company;
+use App\Models\SmsSetting;
 
 class AdminDashboardController extends AdminBaseController
 {
