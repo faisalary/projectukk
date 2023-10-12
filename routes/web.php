@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Front\JobController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isApplicant;
+use App\Http\Controllers\Auth\AuthAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,23 +20,22 @@ Route::get('/', function () {
     return view('layouts.front');
 });
 
-
+// login users
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-// Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
+// untuk admin
 
-Route::group(['middleware' => 'auth'], function () {
-    // Rute untuk AdminController di dalam namespace Auth
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
-        Route::post('/update-profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
-    });
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AdminRegisterController::class, 'register']);
+    Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthAdminController::class, 'login']);
+    Route::get('/dashboard', [AuthAdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/logout', [AuthAdminController::class, 'logout'])->name('logout');
 });
-
 
 
 //profile user
@@ -49,8 +48,10 @@ Route::group(['middleware' => isApplicant::class], function () {
     Route::get('/profile/languages', 'ProfileUserController@edit')->name('profile.languages');
     Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
 });
-
 require __DIR__.'/auth.php';
 
+
+//untuk tampilan home
 Route::get('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
+Route::post('/search', [App\Http\Controllers\Front\FrontSearchController::class, 'searchOpenings'])->name('searchOpenings');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

@@ -23,27 +23,27 @@
 @endpush
 
 @section('content')
-    @if($global->system_update == 1 && Auth::user()->hasRole('admin'))
+    {{-- @if($global->system_update == 1 && Auth::user()->hasRole('admin'))
         @php($updateVersionInfo = \Froiden\Envato\Functions\EnvatoUpdate::updateVersionInfo())
-        @if(isset($updateVersionInfo['lastVersion']))
+        @if(isset($updateVersionInfo['lastVersion'])) --}}
             <div class="row alert alert-info">
                 <div class="col-sm-10">
                     <div style="display: table-cell; vertical-align: middle;">
                         <i class="ti-gift"></i> 
                         <label class="mx-1">@lang('modules.update.newUpdate')</label>
-                        <label class="label label-success">{{ $updateVersionInfo['lastVersion'] }}</label>
+                        {{-- <label class="label label-success">{{ $updateVersionInfo['lastVersion'] }}</label> --}}
                     </div>
                 </div>
                 <div class="col-sm-2" style="display: flex; align-items: center; justify-content: right;">
-                    <a style="text-decoration: none" href="{{route('admin.update-application.index')}}"
-                       class="btn btn-success btn-sm">Update Now
+                    {{-- <a style="text-decoration: none" href="{{route('admin.update-application.index')}}" --}}
+                       {{-- class="btn btn-success btn-sm">Update Now --}}
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
-        @endif
+        {{-- @endif
     @endif
-    @if (!$user->mobile_verified && $smsSettings->nexmo_status == 'active')
+    @if (!$user->mobile_verified && $smsSettings->nexmo_status == 'active') --}}
         <div id="verify-mobile-info" class="col-md-12">
             <div class="alert alert-info col-md-12" role="alert">
                 <div class="row">
@@ -52,21 +52,21 @@
                         @lang('messages.info.verifyAlert')
                     </div>
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
-                        <a href="{{ route('admin.profile.index') }}" class="btn btn-warning">
-                            @lang('menu.profile')
+                        {{-- <a href="{{ route('admin.profile.index') }}" class="btn btn-warning"> --}}
+                            {{-- @lang('menu.profile') --}}
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    @endif
+    {{-- @endif
     @if(!$progress['progress_completed'] && Auth::user()->hasRole('admin'))
         @include('admin.dashboard.get_started')
-    @endif
+    @endif --}}
     <div class="row ">
-        @include('admin.interview-schedule.index')
+        {{-- @include('admin.interview-schedule.index')
         <div class="mt-4">
-        @include('admin.dashboard.statistics')
+        @include('admin.dashboard.statistics') --}}
         </div>
         {{--
         @if ($user->roles->count() > 0)
@@ -100,15 +100,15 @@
                         <hr>
 
                         <p class="text-center">
-                            <a href="{{\Froiden\Envato\Functions\EnvatoUpdate::reviewUrl()}}"> <img src="{{asset('assets/images/recruit-review.png')}}" alt=""></a>
+                            {{-- <a href="{{\Froiden\Envato\Functions\EnvatoUpdate::reviewUrl()}}"> <img src="{{asset('assets/images/recruit-review.png')}}" alt=""></a>
                             <button type="button" class="btn btn-link" data-dismiss="modal" onclick="hideReviewModal('closed_permanently_button_pressed')">Hide Pop up permanently</button>
-                            <button type="button" class="btn btn-link" data-dismiss="modal" onclick="hideReviewModal('already_reviewed_button_pressed')">Already Reviewed</button>
+                            <button type="button" class="btn btn-link" data-dismiss="modal" onclick="hideReviewModal('already_reviewed_button_pressed')">Already Reviewed</button> --}}
                         </p>
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{\Froiden\Envato\Functions\EnvatoUpdate::reviewUrl()}}" target="_blank" type="button" class="btn btn-success">Give Review</a>
+                    {{-- <a href="{{\Froiden\Envato\Functions\EnvatoUpdate::reviewUrl()}}" target="_blank" type="button" class="btn btn-success">Give Review</a> --}}
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
 @push('footer-script')
     <script src="{{ asset('assets/plugins/jQueryUI/jquery-ui.min.js') }}"></script>
 
-    <script>
+    {{-- <script>
         var updated = true;
 
         function showNewTodoForm() {
@@ -335,4 +335,4 @@
         }
         @endif
     </script>
-@endpush
+@endpush --}}
