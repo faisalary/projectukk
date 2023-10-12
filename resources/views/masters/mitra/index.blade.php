@@ -62,6 +62,32 @@
                 <h5 class="modal-title" id="modalTambahMitra">Tambah Mitra</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="mitra" class="form-label">Nama Mitra</label>
+                        <input type="text" id="mitra" class="form-control" placeholder="Nama Mitra" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="telp" class="form-label">No Telepon</label>
+                        <input type="text" id="telp" class="form-control" placeholder="No Telepon" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                    <label for="alamat" class="form-label">Alamat</label>
+                    <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="kmitra" class="form-label">Kategori Mitra</label>
+                        <input type="text" id="kategori" class="form-control" placeholder="Kategori Mitra" />
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                     Close
@@ -72,13 +98,38 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalEditTahunAkademik" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
                 <h5 class="modal-title" id="modalEditMitra">Edit Mitra</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="mitra" class="form-label">Nama Mitra</label>
+                        <input type="text" id="mitra" class="form-control" placeholder="Nama Mitra" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="telp" class="form-label">No Telepon</label>
+                        <input type="text" id="telp" class="form-control" placeholder="No Telepon" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                    <label for="alamat" class="form-label">Alamat</label>
+                    <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <label for="kmitra" class="form-label">Kategori Mitra</label>
+                        <input type="text" id="kategori" class="form-control" placeholder="Kategori Mitra" />
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
@@ -89,8 +140,6 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @section('page_script')
