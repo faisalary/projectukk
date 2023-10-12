@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Mahasiswa extends Model
+class MhsMagang extends Model
 {
-
     use HasUuids;
 
-    protected $table = 'mahasiswa';
-    protected $fillable = ['namamhs', 'emailmhs', 'nohpmhs', 'alamatmhs', 'kelas'];
+    protected $table = 'mhs_magang';
+    protected $fillable = ['nim', 'nip', 'nilai_akhir_magang', 'indeks_nilai_akhir_magang'];
+    protected $primaryKey = 'id_mhsmagang';
     protected $keyType = 'string';
 }

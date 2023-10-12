@@ -2,23 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class JenisMagang extends Model
 {
-    use HasFactory;
+    use HasUuids;
 
-    protected $fillable = ['namajenis', 'durasimagang'];
-    protected $primaryKey = 'kdjenismagang';
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
-    }
+    protected $table = 'jenis_magang';
+    protected $fillable = ['namajenis', 'durasimagang', 'is_review_process', 'is_document_upload', 'type'];
+    protected $primaryKey = 'id_jenismagang';
+    protected $keyType = 'string';
 }

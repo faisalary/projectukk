@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fakultas', function (Blueprint $table) {
-            $table->uuid('id_fakultas')->primary();
-            $table->string('namafakultas', 255);
+        Schema::create('tahun_akademik', function (Blueprint $table) {
+            $table->uuid('id_year_akademik')->primary();
+            $table->string('semester', 255);
+            $table->integer('tahun');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fakultas');
+        Schema::dropIfExists('tahun_akademik');
     }
 };

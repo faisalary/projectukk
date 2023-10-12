@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fakultas', function (Blueprint $table) {
-            $table->uuid('id_fakultas')->primary();
-            $table->string('namafakultas', 255);
+        Schema::create('selection_schedule_student', function (Blueprint $table) {
+            $table->uuid('id_schedule_student')->primary();
+            $table->uuid('id_schedule');
+            $table->integer('nim');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fakultas');
+        Schema::dropIfExists('selection_schedule_student');
     }
 };
