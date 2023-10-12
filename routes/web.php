@@ -40,6 +40,22 @@ Route::group(['middleware' => isApplicant::class], function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/apply_alert', function () {
+    return view('apply.apply_alert');
+});
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/master_universitas', function () {
+    return view('masters.universitas.index', ['active_menu' => 'master_universitas']);
+});
+Route::get('/master_fakultas', function () {
+    return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
+});
+Route::get('/master_prodi', function () {
+    return view('masters.prodi.index', ['active_menu' => 'master_prodi']);
+});
+Route::get('/master_tahun_akademik', function () {
+    return view('masters.tahun_akademik.index', ['active_menu' => 'master_tahun_akademik']);
+});
 Route::get('/pekerjaanTersimpan', [App\Http\Controllers\PekerjaanTersimpanController::class, 'index'])->name('pekerjaanTersimpan');

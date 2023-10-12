@@ -23,14 +23,8 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-    <style>
-        #title {
-            letter-spacing: 2px;
-            color: blue;
-            font-size: 24px;
-            font-weight: bold;
-        }
 
+    <style>
         .box-icon {
             display: flex;
             align-items: center;
@@ -149,6 +143,7 @@
         @yield('content-main')
 
 
+
         <!-- Main Footer -->
         @include('layouts.front_footer')
         <!-- End Main Footer -->
@@ -159,6 +154,8 @@
     </div><!-- End Page Wrapper -->
 
 
+    =======
+    >>>>>>> resources/views/layouts/front_layout.blade.php
     <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
