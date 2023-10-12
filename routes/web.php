@@ -77,3 +77,9 @@ Route::get('/master_prodi', function () {
 Route::get('/master_tahun_akademik', function () {
     return view('masters.tahun_akademik.index', ['active_menu' => 'master_tahun_akademik']);
 });
+Route::get('/master_mitra', function () {
+    return view('masters.mitra.index', ['active_menu' => 'master_mitra']);
+});
+Route::get('/master_dosen', function () {
+    return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
+});
