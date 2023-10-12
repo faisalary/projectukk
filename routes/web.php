@@ -36,8 +36,10 @@ Route::group(['middleware' => isApplicant::class], function () {
     Route::get('/profile/portfolio', 'ProfileUserController@edit')->name('profile.portfolio');
 });
 
-Route::get('/pekerjaanTersimpan', [App\Http\Controllers\PekerjaanTersimpanController::class, 'index'])->name('pekerjaanTersimpan');
+
 
 require __DIR__ . '/auth.php';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::get('/pekerjaanTersimpan', [App\Http\Controllers\PekerjaanTersimpanController::class, 'index'])->name('pekerjaanTersimpan');
