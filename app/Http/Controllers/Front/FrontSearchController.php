@@ -18,7 +18,7 @@ use App\Notifications\NewJobApplication;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\LinkedInSetting;
-use Carbon\Models\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -34,46 +34,44 @@ class FrontSearchController extends FrontBaseController
     
     public function searchOpenings(Request $request)
     {
-        $this->locations = JobLocation::where('location', 'like', '%' . $request->loc . '%')->orderBy('location')->get();
-        $this->companies = Company::where('company_name', 'like', '%' . $request->company . '%')->orderBy('company_name')->get();
+        // $this->locations = JobLocation::where('location', 'like', '%' . $request->loc . '%')->orderBy('location')->get();
+        // $this->companies = Company::where('company_name', 'like', '%' . $request->company . '%')->orderBy('company_name')->get();
        
-        $jobs = Job::with('company')->where('status', 'active')
-            ->where('start_date', '<=', Carbon::now()->format('Y-m-d'))
-            ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
-            ->where(function ($query) use ($request) {
-                $query->where('title', 'like', '%' . $request->job . '%')
-                      ->orWhere('job_description', 'like', '%' . $request->job . '%')
-                      ->orWhere('job_requirement', 'like', '%' . $request->job . '%');
-            })
-            ->orderBy('title');
+        // $jobs = Job::with('company')->where('status', 'active')
+        //     ->where('start_date', '<=', Carbon::now()->format('Y-m-d'))
+        //     ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
+        //     ->where(function ($query) use ($request) {
+        //         $query->where('title', 'like', '%' . $request->job . '%')
+        //               ->orWhere('job_description', 'like', '%' . $request->job . '%')
+        //               ->orWhere('job_requirement', 'like', '%' . $request->job . '%');
+        //     })
+        //     ->orderBy('title');
             
-        if ($request->loc != '') {
-            $res = array();
-            foreach ($this->locations as $d) {
-                $res[] = $d->id;
-            }
-            $jobs = $jobs->whereIn('location_id', $res);
-        }
+        // if ($request->loc != '') {
+        //     $res = array();
+        //     foreach ($this->locations as $d) {
+        //         $res[] = $d->id;
+        //     }
+        //     $jobs = $jobs->whereIn('location_id', $res);
+        // }
 
-        if ($request->company != '') {
-            $res = array();
-            foreach ($this->companies as $d) {
-                $res[] = $d->id;
-            }
-            $jobs = $jobs->whereIn('company_id', $res);
-        }
+        // if ($request->company != '') {
+        //     $res = array();
+        //     foreach ($this->companies as $d) {
+        //         $res[] = $d->id;
+        //     }
+        //     $jobs = $jobs->whereIn('company_id', $res);
+        // }
 
-        $row = ($request->row != '') ? $request->row : 3;
+        // $row = ($request->row != '') ? $request->row : 3;
         
-        // return $jobs->paginate(1);
-        $this->jobs = $jobs->paginate($row);
+        // // return $jobs->paginate(1);
+        // $this->jobs = $jobs->paginate($row);
 
         $this->rows_sort = array(3=>"show 3", 5=>"show 5");
 
             return view('layouts.front_find_jobs' , $this->data);
-        
-        
-        
+
     }
 }
 

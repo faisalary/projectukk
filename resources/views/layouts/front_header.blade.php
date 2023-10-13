@@ -126,15 +126,13 @@
                     <a id="PekerjaanTersimpan" class="nav-link" href="#">Pekerjaan Tersimpan</a>
                     </div>
                 </div> -->
-                <div id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <x-nav-link id="Perusahaan" :href="route('pekerjaanTersimpan')">
-                            {{ __('Pekerjaan Tersimpan') }}
-                        </x-nav-link>
-                    </div>
-                </div>
-
             </div>
+
+
+
+
+
+
 
 
             @php
@@ -146,8 +144,8 @@
 
             <div class=" outer-box">
                 <!--Dropdown Bahasa-->
-                <div class="btn-box">
-                    <form class="btn-group">
+                <div class="btn-group">
+                    <form class="btn-box">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">

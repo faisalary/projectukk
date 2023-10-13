@@ -15,9 +15,11 @@
 
 @section('content-main')
 <section>
-  <div style="margin-top: 100px; margin-bottom: 25px; margin-left: 50px;">
+<div class="container" style="max-width: 1600px;">
+  <div style="margin-top: 100px; margin-bottom: 25px;">
     <h1>Pengaturan Akun</h1>
   </div>
+</div>
 
   <div class="container" style="max-width: 1600px;">
     <div class="card col-12 mb-5" style="height:250px;">
