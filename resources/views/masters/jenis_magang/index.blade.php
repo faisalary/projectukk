@@ -27,24 +27,25 @@
 @section('main')
 <div class="row">
     <div class="col-md-6 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Universitas</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Jenis Magang</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahUniversitas">Tambah Universitas</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJenisMagang">Tambah Jenis Magang</button>
     </div>
 </div>
+
 <div class="row mt-2">
     <div class="col-12">
         <div class="card">
             <div class="card-datatable table-responsive">
-                <table class="table" id="table-master-univ">
+                <table class="table" id="table-master-jenis_magang">
                     <thead>
                         <tr>
                             <th>NOMOR</th>
-                            <th>NAMA</th>
-                            <th>JALAN</th>
-                            <th>KOTA</th>
-                            <th>TELP</th>
+                            <th>JENIS MAGANG</th>
+                            <th>DURASI MAGANG</th>
+                            <th>DOKUMEN UPLOAD</th>
+                            <th>SELEKSI</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -56,36 +57,36 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahUniversitas" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalTambahJenisMagang" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahUniversitas">Tambah Universitas</h5>
+                <h5 class="modal-title" id="modalTambahJenisMagang">Tambah Jenis Magang</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="universitas" class="form-label">Nama Universitas</label>
-                        <input type="text" id="universitas" class="form-control" placeholder="Nama Universitas" />
+                        <label for="jenis" class="form-label">Jenis Magang</label>
+                        <input type="text" id="jenis" class="form-control" placeholder="Jenis Magang" />
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col mb-2">
+                    <label for="durasi" class="form-label">Durasi Magang</label>
+                    <input type="text" id="durasi" class="form-control" placeholder="Durasi Magang" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                    <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="kota" placeholder="Jalan"></textarea>
+                        <label for="dokumen" class="form-label">Dokumen Upload</label>
+                        <input type="text" id="dokumen" class="form-control" placeholder="Dokumen Upload" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="kota" class="form-label">Kota</label>
-                        <input type="text" id="kota" class="form-control" placeholder="Kota" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">Telp</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Name" />
+                        <label for="seleksi" class="form-label">Seleksi</label>
+                        <input type="text" id="seleksi" class="form-control" placeholder="Seleksi" />
                     </div>
                 </div>
             </div>
@@ -99,36 +100,36 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalEditUniversitas" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalEditJenisMagang" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditUniversitas">Edit Universitas</h5>
+                <h5 class="modal-title" id="modalEditJenisMagang">Edit Jenis Magang</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="universitas" class="form-label">Nama Universitas</label>
-                        <input type="text" id="universitas" class="form-control" placeholder="Nama Universitas" />
+                        <label for="jenis" class="form-label">Jenis Magang</label>
+                        <input type="text" id="jenis" class="form-control" placeholder="Jenis Magang" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                    <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
+                    <label for="durasi" class="form-label">Durasi Magang</label>
+                    <input type="text" id="durasi" class="form-control" placeholder="Durasi Magang" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="kota" class="form-label">Kota</label>
-                        <input type="text" id="kota" class="form-control" placeholder="Kota" />
+                        <label for="dokumen" class="form-label">Dokumen Upload</label>
+                        <input type="text" id="dokumen" class="form-control" placeholder="Dokumen Upload" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="telp" class="form-label">Telp</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Seleksi" />
+                        <label for="seleksi" class="form-label">Seleksi</label>
+                        <input type="text" id="seleksi" class="form-control" placeholder="Seleksi" />
                     </div>
                 </div>
             </div>
@@ -147,50 +148,50 @@
 <script>
     var jsonData = [{
             "nomor": "1",
-            "nama": "Univestitas Telkom",
-            "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "kota": "Bandung",
-            "telp": "(022) 7686599",
+            "jenis": "Magang Fakultas",
+            "durasi": "2 Semester",
+            "dokumen": "Ya",
+            "seleksi": "Ya",
             "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
-           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
-            "nama": "Univestitas Telkom",
-            "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "kota": "Bandung",
-            "telp": " (022) 7686599",
+            "jenis": "Magang Mandiri",
+            "durasi": "1 Semester",
+            "dokumen": "Tidak",
+            "seleksi": "Tidak",
             "status":"<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
         },
         {
             "nomor": "3",
-            "nama": "Univestitas Telkom",
-            "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "kota": "Bandung",
-            "telp": " (022) 7686599",
+            "jenis": "Magang Startup",
+            "durasi": "1 Semester",
+            "dokumen": "Ya",
+            "seleksi": "Tidak",
             "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
 
-    var table = $('#table-master-univ').DataTable({
+    var table = $('#table-master-jenis_magang').DataTable({
         "data": jsonData,
         columns: [{
                 data: "nomor"
             },
 
             {
-                data: "nama"
+                data: "jenis"
             },
             {
-                data: "jalan"
+                data: "durasi"
             },
             {
-                data: "kota"
+                data: "dokumen"
             },
             {
-                data: "telp"
+                data: "seleksi"
             },
             {
                 data: "status"

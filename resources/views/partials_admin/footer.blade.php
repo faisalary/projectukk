@@ -1,6 +1,6 @@
 <!-- Footer -->
 <footer class="content-footer footer bg-footer-theme">
-  <div class="container-xxl">
+  <div class="container-xxl px-0">
     <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
       <div>
         ©
@@ -56,6 +56,9 @@
 <script src="../../app-assets/vendor/libs/apex-charts/apexcharts.js"></script>
 <script src="../../app-assets/vendor/libs/swiper/swiper.js"></script>
 <script src="../../app-assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="../../app-assets/vendor/libs/select2/select2.js"></script>
+<script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="../../app-assets/js/forms-selects.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
