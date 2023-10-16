@@ -112,8 +112,8 @@
                     </div>
                 </div>
                 <div id="navbarNavAltMarkup">
-                    <div class="navbar-nav" >
-                    <a id="Tentang" class="nav-link" href="#">Tentang Kami</a>
+                    <div class="navbar-nav">
+                        <a id="Tentang" class="nav-link" href="#">Tentang Kami</a>
                     </div>
                 </div>
                 <!-- <div id="navbarNavAltMarkup">
@@ -127,9 +127,12 @@
                     </div>
                 </div> -->
             </div>
-          
-    
-                
+
+
+
+
+
+
 
 
             @php
@@ -144,27 +147,27 @@
                 <div class="btn-group">
                     <form class="btn-box">
                         <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
-                            <ellipse cx="12" cy="13" rx="9" ry="9.73346" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            IND    
-                        </button>  
-                   
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Indonesia</a></li>
-                            <li><a class="dropdown-item" href="#">Inggris</a></li>        
-                            <li><a class="dropdown-item" href="#">Sunda</a></li>   
-                        </ul>
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
+                                    <ellipse cx="12" cy="13" rx="9" ry="9.73346" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                IND
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Indonesia</a></li>
+                                <li><a class="dropdown-item" href="#">Inggris</a></li>
+                                <li><a class="dropdown-item" href="#">Sunda</a></li>
+                            </ul>
                     </form>
 
                     <!-- Login/Register -->
                     <a href="{{ route('login')}}">
-                        <button  class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>             
+                        <button class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>
                     </a>
                     <a href="{{ route('register')}}">
                         <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>

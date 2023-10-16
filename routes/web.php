@@ -31,37 +31,36 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Auth::routes();
-    //profile user
-    Route::group(['middleware' => isApplicant::class], function () {
-        Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
-        Route::get('/profile', 'ProfileController@edit')->name('profile.index');
-        Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
-        Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
-        Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
-        Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
-        Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
-        Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
-        Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
-        Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
-        Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
-        Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
-        Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
-        Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
-        Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
-        
-    });
-    
-    
+//profile user
+Route::group(['middleware' => isApplicant::class], function () {
+    Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
+    Route::get('/profile', 'ProfileController@edit')->name('profile.index');
+    Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
+    Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
+    Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
+    Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
+    Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
+    Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
+    Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
+    Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
+    Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
+    Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
+    Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
+    Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
+    Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
+});
+
+
 Route::get('/pengaturan', function () {
-        return view('pengaturan_akun.pengaturan_akun');
-    });
+    return view('pengaturan_akun.pengaturan_akun');
+});
 
 Route::get('/apply_alert', function () {
-        return view('apply.apply_alert');
-    });
+    return view('apply.apply_alert');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
