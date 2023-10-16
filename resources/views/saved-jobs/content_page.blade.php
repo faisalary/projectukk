@@ -19,14 +19,14 @@
 {{--<span class="header-span"></span>--}}
 
 <section class="ls-section">
-    <div class="auto-container" style="background-color: rgba(0, 0, 0, 0.04);">
+    <div class="medium-container" style="background-color: rgba(0, 0, 0, 0.04);">
         <div class="showing-result container">
-            <div class="text">300+ <strong></strong> Lowongan <strong></strong> Terserdia</div>
+            <div class="text"><strong>Lowongan Pekerjaan yang Tersimpan: </strong> 10 Lowongan Pekerjaan Tersimpan</div>
         </div>
         <div class="row">
             <div class="job-view">
                 <div class="company-block">
-                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left;  margin-top: 10px; width: 561px; height: 299px; flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>

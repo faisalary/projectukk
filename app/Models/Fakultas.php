@@ -2,23 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Fakultas extends Model
 {
-    use HasFactory;
+    use HasUuids;
 
+    protected $table = 'fakultas';
     protected $fillable = ['namafakultas'];
-    protected $primaryKey = 'kdfakultas';
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
-    }
+    protected $primaryKey = 'id_fakultas';
+    protected $keyType = 'string';
 }

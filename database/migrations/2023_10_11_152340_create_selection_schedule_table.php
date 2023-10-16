@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matkul_nilai', function (Blueprint $table) {
-            $table->uuid('kdmatnilai')->primary();
-            $table->uuid('kdmatakuliah');
-            $table->decimal('nilai', 4, 2);
-            $table->uuid('nim');
-            $table->foreign('nim')->references('nim')->on('mahasiswa');
+        Schema::create('selection_schedule', function (Blueprint $table) {
+            $table->uuid('id_schedule')->primary();
+            $table->uuid('id_lowongan');
+            $table->date('schedule_date');
+            $table->string('status', 255);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matkul_nilai');
+        Schema::dropIfExists('selection_schedule');
     }
 };
