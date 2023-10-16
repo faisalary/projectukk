@@ -33,6 +33,13 @@
     <div class="col-md-6 col-12 text-end">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahProdi">Tambah Prodi</button>
     </div>
+    <div class="col-md-3 col-12 mb-2">
+        <select class="select2 form-select" data-placeholder="Pilih Universitas">
+            <option value="1">Universitas Telkom</option>
+            <option value="2">Universitas Telkom</option>
+            <option value="3">Universitas Telkom</option>
+        </select>
+    </div>
 </div>
 <div class="row mt-2">
     <div class="col-12">
@@ -42,6 +49,7 @@
                     <thead>
                         <tr>
                             <th>NOMOR</th>
+                            <th>UNIVERSITAS</th>
                             <th>NAMA FAKULTAS</th>
                             <th>NAMA PRODI</th>
                             <th>AKSI</th>
@@ -62,11 +70,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <div class="row">
+                    <div class="mb-2">
+                        <label for="univ" class="form-label">Universitas</label>
+                        <select class="form-select select2" data-placeholder="Pilih Universitas">
+                            <option value="1">Universitas Telkom</option>
+                            <option value="2">Universitas Telkom</option>
+                            <option value="3">Universitas Telkom</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="mb-2">
                         <label for="fakultas" class="form-label">Nama Fakultas</label>
-                        <select id="fakultas" class="form-select">
-                            <option>Nama Fakultas</option>
+                        <select class="form-select select2" data-placeholder="PilihFakultas">
                             <option value="1">Fakultas Ilmu Terapan</option>
                             <option value="2">Fakultas Industri Kreatif</option>
                             <option value="3">Fakultas Teknik Elektro</option>
@@ -126,10 +143,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <div class="row">
+                    <div class="mb-2">
+                        <label for="univ" class="form-label">Universitas</label>
+                        <select class="form-select select2" data-placeholder="Pilih Universitas">
+                            <option value="1">Universitas Telkom</option>
+                            <option value="2">Universitas Telkom</option>
+                            <option value="3">Universitas Telkom</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="mb-2">
                         <label for="fakultas" class="form-label">Nama Fakultas</label>
-                        <select id="fakultas" class="form-select">
+                        <select class="form-select select2" data-placeholder="Pilih Fakultas">
                             <option>Nama Fakultas</option>
                             <option value="1">Fakultas Ilmu Terapan</option>
                             <option value="2">Fakultas Industri Kreatif</option>
@@ -189,18 +216,21 @@
 <script>
     var jsonData = [{
             "nomor": "1",
+            "univ":"Universitas Telkom",
             "fakultas": "Fakultas Ilmu Terpan",
             "prodi": "D3 Sistem Informasi",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
             "nomor": "2",
+            "univ":"Universitas Telkom",
             "fakultas": "Fakultas Ilmu Terpan",
             "prodi": "D3 Sistem Informasi",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
             "nomor": "3",
+            "univ":"Universitas Telkom",
             "fakultas": "Fakultas Ilmu Terpan",
             "prodi": "D3 Sistem Informasi",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
@@ -212,7 +242,9 @@
         columns: [{
                 data: "nomor"
             },
-
+            {
+                data: "univ"
+            },
             {
                 data: "fakultas"
             },
