@@ -86,3 +86,6 @@ Route::get('/master_dosen', function () {
 Route::get('/master_mahasiswa', function () {
     return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
 });
+Route::get('/master_pegawai_industri', function () {
+    return view('masters.pegawai_industri.index', ['active_menu' => 'master_pegawai_industri']);
+});
