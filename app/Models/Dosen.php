@@ -2,23 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    use HasFactory;
+    use HasUuids;
 
-    protected $fillable = ['namadosen', 'nohpdosen', 'emaildosen', 'alamatdosen', 'pembimbingakademik'];
-    protected $primaryKey = 'kddosen';
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
-    }
+    protected $table = 'dosen';
+    protected $fillable = ['namadosen', 'nohpdosen', 'emaildosen', 'statusdosen'];
+    protected $primaryKey = 'id_dosen';
+    protected $keyType = 'string';
 }

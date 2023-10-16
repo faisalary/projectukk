@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokumen', function (Blueprint $table) {
-            $table->uuid('iddokumen')->primary();
-            $table->string('namadokumen', 50);
-            $table->string('status', 10);
+        Schema::create('tahun_akademik', function (Blueprint $table) {
+            $table->uuid('id_year_akademik')->primary();
+            $table->string('semester', 255);
+            $table->integer('tahun');
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokumen');
+        Schema::dropIfExists('tahun_akademik');
     }
 };

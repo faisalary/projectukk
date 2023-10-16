@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skill_dibutuhkan', function (Blueprint $table) {
-            $table->uuid('id_skill_dibutuhkan')->primary();
-            $table->string('nama_skill_dibutuhkan', 50);
-            $table->uuid('kdmatakuliah');
+        Schema::create('document_syarat', function (Blueprint $table) {
+            $table->uuid('id_document')->primary();
+            $table->uuid('id_jenismagang');
+            $table->string('namadocument', 255);
+            $table->string('status', 255);
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skill_dibutuhkan');
+        Schema::dropIfExists('document_syarat');
     }
 };
