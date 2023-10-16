@@ -157,8 +157,8 @@
             "nama": "PT Mencari Cinta Sejati",
             "no telepon": "(022)",
             "alamat": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "status":"<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon'><span class='badge bg-label-danger'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+            "status":"<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon'><span class='badge bg-label-danger'>Non-aktif</span></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "3",
@@ -195,24 +195,45 @@
     });
 
     function deactive(e) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menonaktifkan data?',
-            text: ' Data yang dipilih akan non-aktif!',
-            iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yakin",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-                iconHtml: 'no-border'
-            },
-            buttonsStyling: false
-        });
-    }
+    Swal.fire({
+        title: 'Apakah anda yakin ingin menonaktifkan data?',
+        text: ' Data yang dipilih akan dihapus!',
+        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yakin",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false,
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger',
+            iconHtml: 'no-border'
+        },
+        buttonsStyling: false
+    });
+}
+
+function active(e) {
+    Swal.fire({
+        title: 'Apakah anda yakin ingin mengaktifkan data?',
+        text: ' Data yang dipilih akan diaktifkan!',
+        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yakin",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false,
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger',
+            iconHtml: 'no-border'
+        },
+        buttonsStyling: false
+    });
+}
+
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
