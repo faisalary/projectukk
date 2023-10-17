@@ -28,17 +28,16 @@ Route::get('/dashboard', function () {
 
 
 
-// Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
+// untuk admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AdminRegisterController::class, 'adminregister']);
+    Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthAdminController::class, 'adminlogin']);
+    Route::get('/dashboard', [AuthAdminController::class, 'dashboard'])->name('dashboard')->middleware(['auth:admin', 'admin.auth']); 
+    Route::post('/logout', [AuthAdminController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => 'auth'], function () {
-    // Rute untuk AdminController di dalam namespace Auth
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
-        Route::post('/update-profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
-    });
 });
-
 
 
 //profile user
@@ -53,7 +52,6 @@ Route::group(['middleware' => isApplicant::class], function () {
 });
 
 require __DIR__.'/auth.php';
-
 
 
 //untuk tampilan home
