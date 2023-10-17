@@ -27,11 +27,8 @@
 
 @section('main')
 <div class="row">
-    <div class="col-md-6 col-12">
+    <div class="col-md-12 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Prodi</h4>
-    </div>
-    <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahProdi">Tambah Prodi</button>
     </div>
     <div class="col-md-3 col-12 mb-2">
         <select class="select2 form-select" data-placeholder="Pilih Universitas">
@@ -39,6 +36,9 @@
             <option value="2">Universitas Telkom</option>
             <option value="3">Universitas Telkom</option>
         </select>
+    </div>
+    <div class="col-md-9 col-12 text-end">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahProdi">Tambah Prodi</button>
     </div>
 </div>
 <div class="row mt-2">
@@ -100,7 +100,7 @@
                         <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
                     </div>
                 </div>
-                <form class="form-repeater">
+                <!-- <form class="form-repeater">
                     <div data-repeater-list="group-a">
                         <div data-repeater-item>
                             <div class="row">
@@ -123,7 +123,7 @@
                             <span class="align-middle">Add</span>
                         </button>
                     </div>
-                </form>
+                </form> -->
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
@@ -174,7 +174,7 @@
                         <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
                     </div>
                 </div>
-                <form class="form-repeater">
+                <!-- <form class="form-repeater">
                     <div data-repeater-list="group-a">
                         <div data-repeater-item>
                             <div class="row">
@@ -197,7 +197,7 @@
                             <span class="align-middle">Add</span>
                         </button>
                     </div>
-                </form>
+                </form> -->
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
