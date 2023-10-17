@@ -272,7 +272,7 @@
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
+                            <li class="menu-item" >
                                 <a href="javascript:void(0);" class="menu-link">
                                     <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
                                 </a>
@@ -282,18 +282,23 @@
                                     <div data-i18n="Master Industri">Master Industri</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mitra' ? 'active' : '' }} @endif>
+                                <a href="/master_mitra" class="menu-link">
+                                    <div data-i18n="Master Mitra">Master Mitra</div>
+                                </a>
+                            </li>
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>
+                                <a href="/master_dosen" class="menu-link">
                                     <div data-i18n="Master Dosen">Master Dosen</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mahasiswa' ? 'active' : '' }} @endif>
+                                <a href="/master_mahasiswa" class="menu-link">
                                     <div data-i18n="Master Mahasiswa">Master Mahasiswa</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_pegawai_industri' ? 'active' : '' }} @endif>
+                                <a href="/master_pegawai_industri" class="menu-link">
                                     <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
                                 </a>
                             </li>
