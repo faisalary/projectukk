@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isApplicant;
 use App\Http\Controllers\Auth\AuthAdminController;
+use App\Http\Controllers\Auth\AdminRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +28,12 @@ Route::get('/dashboard', function () {
 
 
 // untuk admin
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [AdminRegisterController::class, 'register']);
+    Route::post('/register', [AdminRegisterController::class, 'adminregister']);
     Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthAdminController::class, 'login']);
-    Route::get('/dashboard', [AuthAdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/login', [AuthAdminController::class, 'adminlogin']);
+    Route::get('/dashboard', [AuthAdminController::class, 'dashboard'])->name('dashboard')->middleware(['auth:admin', 'admin.auth']); 
     Route::post('/logout', [AuthAdminController::class, 'logout'])->name('logout');
 });
 

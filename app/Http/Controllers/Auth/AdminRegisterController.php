@@ -26,7 +26,7 @@ class AdminRegisterController extends Controller
     {
          // Validasi data input
     $this->validate($request, [
-        // 'name' => 'required|string|max:255',
+        'name' => 'required|string|max:255',
         'email' => 'required|email|unique:admins',
         'password' => 'required|string|min:8|confirmed',
     ]);

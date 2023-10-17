@@ -1,4 +1,4 @@
-@extends('layouts.app')
+
 
 @push('head-script')
     <link rel="stylesheet" href="{{ asset('assets/plugins/jQueryUI/jquery-ui.min.css') }}">
@@ -336,3 +336,4 @@
         @endif
     </script>
 @endpush --}}
+<h1>ini dashboard admin</h1>

@@ -17,13 +17,16 @@ class AdminAuthMiddleware
      public function handle($request, Closure $next)
      {
          if (!Auth::check()) {
-             return redirect('/');
+             return redirect('admin.login');
          }
  
          if (Auth::guard('admin')->check()) {
              return $next($request);
          }
+         
  
          return redirect()->route('admin.login'); // Ganti dengan rute login admin Anda
      }
+
+     
 }

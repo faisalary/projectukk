@@ -5,33 +5,39 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin; 
 
 class AuthAdminController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.login'); // Menampilkan halaman login admin
+        return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function adminlogin(Request $request)
     {
-        // Logika validasi dan otentikasi admin
-        $credentials = $request->only('name', 'email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('admin.dashboard.index'); // Redirect jika berhasil login
-        } else{
-            return back()->withInput()->withErrors(['email' => 'Email atau password salah']); // Redirect dengan pesan kesalahan jika login gagal
-        }
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Otentikasi admin
+        // if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+        //     return redirect()->route('admin.dashboard.index');
+        // }
+
+        return back()->withInput()->withErrors(['email' => 'Email atau password salah']);
     }
+    
 
     public function dashboard()
     {
-        return view('admin.dashboard.index'); // Menampilkan halaman dashboard admin
+        return view('admin.dashboard.index');
     }
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('admin.login'); // Redirect ke halaman login setelah logout
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
     }
 }
