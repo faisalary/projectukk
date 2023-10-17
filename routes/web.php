@@ -89,3 +89,6 @@ Route::get('/master_mahasiswa', function () {
 Route::get('/master_pegawai_industri', function () {
     return view('masters.pegawai_industri.index', ['active_menu' => 'master_pegawai_industri']);
 });
+Route::get('/master_dokumen_persyaratan', function () {
+    return view('masters.dokumen_persyaratan.index', ['active_menu' => 'master_dokumen_persyaratan']);
+});
