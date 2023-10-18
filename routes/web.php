@@ -92,3 +92,6 @@ Route::get('/master_pegawai_industri', function () {
 Route::get('/master_dokumen_persyaratan', function () {
     return view('masters.dokumen_persyaratan.index', ['active_menu' => 'master_dokumen_persyaratan']);
 });
+Route::get('/master_komponen_penilaian', function () {
+    return view('masters.komponen_penilaian.index', ['active_menu' => 'master_komponen_penilaian']);
+});
