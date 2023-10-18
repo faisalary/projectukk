@@ -2,12 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\ApplicationSetting;
 use App\Helper\Files;
 use App\Helper\Reply;
@@ -32,64 +26,16 @@ use App\Models\ProfileUserPortfolio;
 use App\Models\ProfileUserSkill;
 use App\Models\Skill;
 use App\Models\User;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
-
-class ProfileController extends Controller
+class ProfileUserController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
-
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
-
     public function __construct()
     {
         parent::__construct();
@@ -123,12 +69,12 @@ class ProfileController extends Controller
         return view('profile-user.setup', $this->data , compact('preferred_cities'));
     }
 
-    // public function edit()
-    // {
-    //     $preferred_cities = json_decode($this->user->profile->information->preferred_city ?? '[]');
+    public function edit()
+    {
+        $preferred_cities = json_decode($this->user->profile->information->preferred_city ?? '[]');
 
-    //     return view('profile-user.index', $this->data, compact('preferred_cities'));
-    // }
+        return view('profile-user.index', $this->data, compact('preferred_cities'));
+    }
 
     public function store(StoreApplicantProfile $request)
     {
@@ -813,4 +759,3 @@ class ProfileController extends Controller
         return response()->json($res);
     }
 }
-
