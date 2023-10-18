@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\isApplicant;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +17,6 @@ use App\Http\Middleware\isApplicant;
 Route::get('/', function () {
     return view('layouts.front');
 });
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,8 +60,8 @@ Route::get('/pengaturan', function () {
     });
 
 Route::get('/apply_alert', function () {
-        return view('apply.apply_alert');
-    });
+    return view('apply.apply_alert');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

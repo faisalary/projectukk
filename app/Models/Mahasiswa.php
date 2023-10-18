@@ -2,23 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends Model
 {
-    use HasFactory;
 
+    use HasUuids;
+
+    protected $table = 'mahasiswa';
     protected $fillable = ['namamhs', 'emailmhs', 'nohpmhs', 'alamatmhs', 'kelas'];
-    protected $primaryKey = 'nim';
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
-    }
+    protected $keyType = 'string';
 }

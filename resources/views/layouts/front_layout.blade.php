@@ -21,16 +21,11 @@
     <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
 
     <style>
-        #title {
-            letter-spacing: 2px;
-            color: blue;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
         .box-icon {
             display: flex;
             align-items: center;
@@ -131,9 +126,7 @@
             max-width: 15rem;
             height: 201px;
         }
-</style>
-
-@yield('page_style')
+    </style>
 
 </head>
 
@@ -151,27 +144,39 @@
         @yield('content-main')
 
 
-<script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script> 
-<script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/jquery.fancybox.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/mmenu.polyfills.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/mmenu.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/appear.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/anm.min.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/owl.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/wow.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/script.js') }}"></script>
-<script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-<script src="{{ asset('froiden-helper/helper.js') }}"></script>
-<script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
-<!--Google Map APi Key-->
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
 
-@stack('footer-script')
-@yield('page_script')
+        <!-- Main Footer -->
+        @include('layouts.front_footer')
+        <!-- End Main Footer -->
+
+
+
+
+    </div><!-- End Page Wrapper -->
+
+
+    =======
+    >>>>>>> resources/views/layouts/front_layout.blade.php
+    <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/jquery.modal.min.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/mmenu.polyfills.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/mmenu.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/appear.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/anm.min.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/owl.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/wow.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/script.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
+    <script src="{{ asset('froiden-helper/helper.js') }}"></script>
+    <script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
+    <!--Google Map APi Key-->
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
+    @stack('footer-script')
+
 
 </body>
 

@@ -33,7 +33,7 @@ class FrontBaseController extends Controller
      */
     public function __get($name)
     {
-        return $this->data[$name];
+        // return $this->data[$name];
     }
 
     /**
@@ -51,27 +51,27 @@ class FrontBaseController extends Controller
     public function __construct()
     {
         // Inject currently logged in user object into every view of user dashboard
-        parent::__construct();
-        $this->global = CompanySetting::first();
+        // parent::__construct();
+        // $this->global = CompanySetting::first();
 //        $this->emailSetting = EmailNotificationSetting::all();
-        $this->companyName = $this->global->company_name;
+        // $this->companyName = $this->global->company_name;
 
-        $this->frontTheme = ThemeSetting::first();
-        $this->customPages = FooterSetting::where('status', 'active')->get();
-        $this->languageSettings = LanguageSetting::where('status', 'enabled')->get();
+        // $this->frontTheme = ThemeSetting::first();
+        // $this->customPages = FooterSetting::where('status', 'active')->get();
+        // $this->languageSettings = LanguageSetting::where('status', 'enabled')->get();
 
-        App::setLocale($this->global->locale);
-        Carbon::setLocale($this->global->locale);
-        setlocale(LC_TIME,$this->global->locale.'_'.strtoupper($this->global->locale));
+        // App::setLocale($this->global->locale);
+        // Carbon::setLocale($this->global->locale);
+        // setlocale(LC_TIME,$this->global->locale.'_'.strtoupper($this->global->locale));
 
-        $this->middleware(function ($request, $next) {
-            $this->user = auth()->user();
+        // $this->middleware(function ($request, $next) {
+        //     $this->user = auth()->user();
 
-            view()->share('languages', $this->languageSettings);
-            view()->share('global', $this->global);
+        //     view()->share('languages', $this->languageSettings);
+        //     view()->share('global', $this->global);
 
-            return $next($request);
-        });
+        //     return $next($request);
+        // });
 
     }
 }
