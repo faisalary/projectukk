@@ -26,10 +26,17 @@
 
 @section('main')
 <div class="row">
-    <div class="col-md-6 col-12">
+    <div class="col-md-12 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Tahun Akademik</h4>
     </div>
-    <div class="col-md-6 col-12 text-end">
+    <div class="col-md-3 col-12 mb-2">
+        <select class="select2 form-select" data-placeholder="Pilih Universitas">
+            <option value="1">Universitas Telkom</option>
+            <option value="2">Universitas Telkom</option>
+            <option value="3">Universitas Telkom</option>
+        </select>
+    </div>
+    <div class="col-md-9 col-12 text-end">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahTahunAkademik">Tambah Tahun Akademik</button>
     </div>
 </div>
@@ -41,6 +48,7 @@
                     <thead>
                         <tr>
                             <th>NOMOR</th>
+                            <th>UNIVERSITAS</th>
                             <th>TAHUN AJARAN</th>
                             <th>SEMESTER</th>
                             <th>AKSI</th>
@@ -61,6 +69,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <div class="row">
+                    <div class="mb-2">
+                        <label for="univ" class="form-label">Universitas</label>
+                        <select class="form-select select2" data-placeholder="Pilih Fakultas">
+                            <option value="1">Universitas Telkom</option>
+                            <option value="2">Universitas Telkom</option>
+                            <option value="3">Universitas Telkom</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col mb-2">
                         <label for="tahun" class="form-label">Tahun Ajaran</label>
@@ -69,8 +87,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="semester" class="form-label">Pilih Semester</label>
-                    <select id="semester" class="form-select">
-                        <option>Pilih Semester</option>
+                    <select class="form-select select2" data-placeholder="Pilih Semester">
                         <option value="1">Ganjil</option>
                         <option value="2">Genap</option>
                     </select>
@@ -95,6 +112,16 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                <div class="row">
+                    <div class="mb-2">
+                        <label for="univ" class="form-label">Universitas</label>
+                        <select class="form-select select2" data-placeholder="Pilih Universitas">
+                            <option value="1">Universitas Telkom</option>
+                            <option value="2">Universitas Telkom</option>
+                            <option value="3">Universitas Telkom</option>
+                        </select>
+                    </div>
+                </div>
                     <div class="col mb-2">
                         <label for="tahun" class="form-label">Tahun Ajaran</label>
                         <input type="text" id="tahun" class="form-control" placeholder="Masukkan Tahun Ajaran">
@@ -102,8 +129,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="semester" class="form-label">Pilih Semester</label>
-                    <select id="semester" class="form-select">
-                        <option>Pilih Semester</option>
+                    <select class="form-select select2" data-placeholder="Pilih Semester">
                         <option value="1">Ganjil</option>
                         <option value="2">Genap</option>
                     </select>
@@ -126,18 +152,21 @@
 <script>
     var jsonData = [{
         "nomor": "1",
+            "univ":"Universitas Telkom",
             "tahun": "2020/2021",
             "semester": "Genap",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditTahunAkademik' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
             "nomor": "2",
+            "univ":"Universitas Telkom",
             "tahun": "2020/2021",
             "semester": "Genap",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditTahunAkademik' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
             "nomor": "3",
+            "univ":"Universitas Telkom",
             "tahun": "2020/2021",
             "semester": "Ganjil",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditTahunAkademik' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
@@ -149,7 +178,9 @@
         columns: [{
                 data: "nomor"
             },
-
+            {
+                data: "univ"
+            },
             {
                 data: "tahun"
             },

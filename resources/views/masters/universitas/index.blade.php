@@ -45,6 +45,7 @@
                             <th>JALAN</th>
                             <th>KOTA</th>
                             <th>TELP</th>
+                            <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -115,7 +116,7 @@
                 <div class="row">
                     <div class="col mb-2">
                     <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="kota" placeholder="Jalan"></textarea>
+                    <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -127,7 +128,7 @@
                 <div class="row">
                     <div class="col mb-2">
                         <label for="telp" class="form-label">Telp</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Name" />
+                        <input type="text" id="telp" class="form-control" placeholder="Seleksi" />
                     </div>
                 </div>
             </div>
@@ -149,24 +150,27 @@
             "nama": "Univestitas Telkom",
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
-            "telp": "(022)",
-           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "telp": "(022) 7686599",
+            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
+           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
             "nama": "Univestitas Telkom",
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
-            "telp": "(022)",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "telp": " (022) 7686599",
+            "status":"<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
         },
         {
             "nomor": "3",
             "nama": "Univestitas Telkom",
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
-            "telp": "(022)",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "telp": " (022) 7686599",
+            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
 
@@ -189,6 +193,9 @@
                 data: "telp"
             },
             {
+                data: "status"
+            },
+            {
                 data: "aksi"
             }
         ]
@@ -196,12 +203,31 @@
 
     function deactive(e) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data?',
-            text: ' Data yang dipilih akan dihapus!',
+            title: 'Apakah anda yakin ingin menonaktifkan data?',
+            text: ' Data yang dipilih akan Non-Aktif!',
             iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Hapus",
+            confirmButtonText: "Yakin",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false,
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger',
+                iconHtml: 'no-border'
+            },
+            buttonsStyling: false
+        });
+    }
+    function active(e) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin mengaktifkan data?',
+            text: ' Data yang dipilih akan Aktif!',
+            iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yakin",
             cancelButtonText: "Batal",
             closeOnConfirm: false,
             closeOnCancel: false,

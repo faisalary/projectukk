@@ -83,3 +83,10 @@ Route::get('/master_mitra', function () {
 Route::get('/master_dosen', function () {
     return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
 });
+
+Route::get('/master_nilai_mutu', function () {
+    return view('masters.nilai_mutu.index', ['active_menu' => 'master_nilai_mutu']);
+});
+Route::get('/master_jenis_magang', function () {
+    return view('masters.jenis_magang.index', ['active_menu' => 'master_jenis_magang']);
+});
