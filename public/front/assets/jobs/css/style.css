@@ -172,7 +172,13 @@ Global Settings
 
 .row {
     display: flex;
+    max-width: 120rem;
+    width: 100%;
     justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .card {
@@ -12148,17 +12154,18 @@ Top Companies
 }
 
 .company-block .inner-box {
+    text-align: left;
     position: relative;
     padding: 30px 30px;
     background: #ffffff;
     border: 1px solid #ecedf2;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    box-sizing: content-box;
+    height: max-content;
     border-radius: 8px;
     -webkit-transition: all 300ms ease;
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
-    text-align: center;
     border-radius: 10px;
     border: 2px solid var(--secondary-100, #d3d6db);
 }
@@ -19288,4 +19295,6 @@ Chat Widget
     margin-top: 10px;
     margin-bottom: 10px;
     background: var(--typography-color-placeholder-text, #d3d6db);
+    display: flex;
+    align-items: left;
 }
