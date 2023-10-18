@@ -207,7 +207,7 @@
                 "bobot": "20%",
                 "total bobot": "",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
             },
             {
                 "nomor": "",
@@ -217,7 +217,7 @@
                 "bobot": "20%",
                 "total bobot": "",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
             },
             {
                 "nomor": "",
@@ -227,7 +227,7 @@
                 "bobot": "20%",
                 "total bobot": "100%",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
             },
             {
                 "nomor": "",
@@ -237,7 +237,7 @@
                 "bobot": "20%",
                 "total bobot": "",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
             },
             {
                 "nomor": "",
@@ -247,7 +247,7 @@
                 "bobot": "20%",
                 "total bobot": "",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
             },
         ];
 
