@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('jalan', 255);
             $table->string('kota', 255);
             $table->string('telp', 15);
+            $table->boolean('status');
         });
     }
 

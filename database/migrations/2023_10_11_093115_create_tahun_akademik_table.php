@@ -15,6 +15,8 @@ return new class extends Migration
             $table->uuid('id_year_akademik')->primary();
             $table->string('semester', 255);
             $table->integer('tahun');
+            $table->uuid('id_univ');
+            $table->foreign('id_univ')->references('id_univ')->on('universitas');
         });
     }
 

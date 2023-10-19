@@ -56,48 +56,55 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahUniversitas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahUniversitas">Tambah Universitas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="universitas" class="form-label">Nama Universitas</label>
-                        <input type="text" id="universitas" class="form-control" placeholder="Nama Universitas" />
+<form class="default-form" method="POST" action="{{ route('universitas.store') }}">
+    @csrf
+    <div class="modal fade" id="modalTambahUniversitas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block">
+                    <h5 class="modal-title" id="modalTambahUniversitas">Tambah Universitas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="universitas" class="form-label">Nama Universitas</label>
+                            <input type="text" id="universitas" name="namauniv" class="form-control" placeholder="Nama Universitas" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="jalan" class="form-label">Jalan</label>
+                            <textarea class="form-control" id="kota" name="jalan" placeholder="Jalan"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="kota" class="form-label">Kota</label>
+                            <input type="text" id="kota" name="kota" class="form-control" placeholder="Kota" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="telp" class="form-label">Telp</label>
+                            <input type="text" id="telp" name="telp" class="form-control" placeholder="telp" />
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                    <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="kota" placeholder="Jalan"></textarea>
-                    </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button> -->
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="kota" class="form-label">Kota</label>
-                        <input type="text" id="kota" class="form-control" placeholder="Kota" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">Telp</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Name" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 <div class="modal fade" id="modalEditUniversitas" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,8 +122,8 @@
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                    <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
+                        <label for="jalan" class="form-label">Jalan</label>
+                        <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -151,8 +158,8 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": "(022) 7686599",
-            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
-           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
@@ -160,7 +167,7 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": " (022) 7686599",
-            "status":"<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
+            "status": "<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
         },
         {
@@ -169,34 +176,45 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": " (022) 7686599",
-            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
+            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
 
     var table = $('#table-master-univ').DataTable({
-        "data": jsonData,
+        ajax: '{{ route("universitas.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
         columns: [{
-                data: "nomor"
+                data: 'DT_RowIndex'
             },
 
             {
-                data: "nama"
+                data: 'namauniv',
+                name: 'namauniv'
             },
             {
-                data: "jalan"
+                data: 'jalan',
+                name: 'jalan'
             },
             {
-                data: "kota"
+                data: 'kota',
+                name: 'kota'
             },
             {
-                data: "telp"
+                data: 'telp',
+                name: 'telp'
             },
             {
-                data: "status"
+                data: 'status',
+                name: 'status'
             },
             {
-                data: "aksi"
+                data: 'action',
+                name: 'action'
             }
         ]
     });
@@ -210,7 +228,7 @@
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Yakin",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
+            closeOnConfirm: true,
             closeOnCancel: false,
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -220,6 +238,7 @@
             buttonsStyling: false
         });
     }
+
     function active(e) {
         Swal.fire({
             title: 'Apakah anda yakin ingin mengaktifkan data?',

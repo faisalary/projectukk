@@ -13,4 +13,5 @@ class Universitas extends Model
     protected $fillable = ['namauniv', 'jalan', 'kota', 'telp'];
     protected $primaryKey = 'id_univ';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

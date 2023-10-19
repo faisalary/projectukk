@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Universitas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class UniversitasController extends Controller
 {
@@ -11,7 +14,8 @@ class UniversitasController extends Controller
      */
     public function index()
     {
-        //
+        $universities = Universitas::all();
+        return view('masters.universitas.index', compact('universities'));
     }
 
     /**
@@ -27,15 +31,63 @@ class UniversitasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'namauniv' => ['required', 'string', 'max:255', 'unique:universitas'],
+                'jalan' => ['required', 'string', 'max:255'],
+                'kota' => ['required', 'string', 'max:255'],
+                'telp' => ['required', 'string', 'max:15'],
+            ],
+            [
+                'namauniv.unique' => 'A University with the name already exist'
+            ]
+        );
+
+        $univ = Universitas::create([
+            'namauniv' => $request->namauniv,
+            'jalan' => $request->jalan,
+            'kota' => $request->kota,
+            'telp' => $request->telp,
+        ]);
+
+        return response()->json([
+            'error' => false,
+            'massage' => 'University Created!',
+            'modal' => '#modalTambahUniversitas',
+            'table' => '#table-master-univ'
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $univ = DB::table('universitas')->select(
+            'id_univ as id_univ',
+            'namauniv as namauniv',
+            'jalan as jalan',
+            'kota as kota',
+            'telp as telp',
+        )
+            ->orderBy('namauniv', 'asc')
+            ->get();
+
+        return DataTables::of($univ)
+            ->addIndexColumn()
+            ->addColumn('action', function ($univ) {
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+
+                return $btn;
+            })
+            ->addColumn('action', function ($univ) {
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+
+                return $btn;
+            })
+            ->make(true);
     }
 
     /**
