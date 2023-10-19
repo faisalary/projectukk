@@ -74,10 +74,27 @@
             color: #fff;
         }
 
+        .select2-results__option[role=option][aria-selected=true] {
+            background-color: #4ea971 !important;
+            color: #fff;
+        }
+
+
         .form-check-input:checked,
         .form-check-input[type=checkbox]:indeterminate {
             background-color: #4EA971;
             border-color: #4EA971;
+        }
+
+        .form-check-input:checked,
+        .form-check-input[type=checkbox]:indeterminate {
+            background-color: #4ea971;
+            border-color: #4ea971;
+        }
+
+        .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+            background-color: rgba(115, 103, 240, 0.08) !important;
+            color: #4EA971 !important;
         }
     </style>
 

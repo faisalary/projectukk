@@ -37,6 +37,7 @@ class UniversitasController extends Controller
                 'jalan' => ['required', 'string', 'max:255'],
                 'kota' => ['required', 'string', 'max:255'],
                 'telp' => ['required', 'string', 'max:15'],
+                'status' => ['required', 'boolean', 'default:true'],
             ],
             [
                 'namauniv.unique' => 'A University with the name already exist'
@@ -48,6 +49,7 @@ class UniversitasController extends Controller
             'jalan' => $request->jalan,
             'kota' => $request->kota,
             'telp' => $request->telp,
+            'status' => $request->status,
         ]);
 
         return response()->json([
@@ -69,6 +71,7 @@ class UniversitasController extends Controller
             'jalan as jalan',
             'kota as kota',
             'telp as telp',
+            'status as status',
         )
             ->orderBy('namauniv', 'asc')
             ->get();

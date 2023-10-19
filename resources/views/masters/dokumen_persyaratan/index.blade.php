@@ -65,8 +65,7 @@
                 <div class="row">
                     <div class="col mb-2">
                         <label for="jenis" class="form-label">Jenis Magang</label>
-                        <select id="jenis" class="form-select">
-                            <option>Jenis Magang</option>
+                        <select class="form-select select2" data-placeholder="Jenis Magang">
                             <option value="1">Magang Fakultas</option>
                             <option value="2">Magang Mandiri</option>
                             <option value="2">Magang Startup</option>
@@ -100,7 +99,7 @@
                 <div class="row">
                     <div class="col mb-2">
                         <label for="jenis" class="form-label">Jenis Magang</label>
-                        <select id="jenis" class="form-select">
+                        <select class="form-select select2" data-placeholder="Jenis Magang">
                             <option>Jenis Magang</option>
                             <option value="1">Magang Fakultas</option>
                             <option value="2">Magang Mandiri</option>
@@ -132,42 +131,42 @@
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "Transkrip Nilai",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "Sertifikasi",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "3",
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "Eprt",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "4",
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "TAK",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-danger'>Non-aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
         },
         {
             "nomor": "5",
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "CV",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "6",
             "jenis magang": "Magang Fakultas",
             "nama dokumen": "Portofolio",
             "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDokumen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
 
