@@ -78,8 +78,7 @@
                                 <div class="row">
                                     <div class="col mb-2">
                                         <label for="jenis" class="form-label">Jenis Magang</label>
-                                        <select id="jenis" class="form-select">
-                                            <option>Jenis Magang</option>
+                                        <select class="form-select select2" data-placeholder="Jenis Magang">
                                             <option value="1">Magang Fakultas</option>
                                             <option value="2">Magang Mandiri</option>
                                             <option value="2">Magang Startup</option>
@@ -142,8 +141,7 @@
                                 <div class="row">
                                     <div class="col mb-2">
                                         <label for="jenis" class="form-label">Jenis Magang</label>
-                                        <select id="jenis" class="form-select">
-                                            <option>Jenis Magang</option>
+                                        <select class="form-select select2" data-placeholder="Jenis Magang">
                                             <option value="1">Magang Fakultas</option>
                                             <option value="2">Magang Mandiri</option>
                                             <option value="2">Magang Startup</option>

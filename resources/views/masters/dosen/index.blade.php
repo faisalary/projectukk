@@ -33,8 +33,8 @@
     <div class="row">
         <div class="col-md-2 col-12 text-start">
             <div class="col mb-2">
-                <select id="universitas" class="form-select">
-                    <option>Pilih Universitas</option>
+                <label for="universitas" class="form-label">Pilih Universitas</label>
+                <select class="form-select select2" data-placeholder="Pilih Universitas">
                     <option value="1">Telkom</option>
                     <option value="2">Telyu</option>
                 </select>
@@ -80,9 +80,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-2">
-                            <label for="universitas" class="form-label">Universitas</label>
-                            <select id="universitas" class="form-select">
-                                <option>Pilih Universitas</option>
+                            <label for="universitas" class="form-label">Pilih Universitas</label>
+                            <select class="form-select select2" data-placeholder="Pilih Universitas">
                                 <option value="1">Telkom</option>
                                 <option value="2">Telyu</option>
                             </select>
@@ -142,9 +141,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-2">
-                            <label for="universitas" class="form-label">Universitas</label>
-                            <select id="universitas" class="form-select">
-                                <option>Pilih Universitas</option>
+                            <label for="universitas" class="form-label">Pilih Universitas</label>
+                            <select class="form-select select2" data-placeholder="Pilih Universitas">
                                 <option value="1">Telkom</option>
                                 <option value="2">Telyu</option>
                             </select>

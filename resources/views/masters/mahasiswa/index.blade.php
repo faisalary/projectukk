@@ -21,6 +21,7 @@
         .swal2-html-container {
             font-size: 16px !important;
         }
+
     </style>
 @endsection
 
@@ -32,7 +33,7 @@
         <div class="row">
             <div class="col-md-2 col-12 text-start">
                 <div class="col mb-2">
-                    <select id="universitas" class="form-select">
+                    <select id="universitas" class="select2 form-select">
                         <option>Pilih Universitas</option>
                         <option value="1">Telkom</option>
                         <option value="2">Telyu</option>
@@ -86,7 +87,7 @@
                         <div class="row">
                             <div class="col mb-2">
                                 <label for="universitas" class="form-label">Universitas</label>
-                                <select id="universitas" class="form-select">
+                                <select class="form-select select2" data-placeholder="Pilih Universitas">
                                     <option>Pilih Universitas</option>
                                     <option value="1">Telkom</option>
                                     <option value="2">Telyu</option>
@@ -95,8 +96,8 @@
                         </div>
                         <div class="row">
                             <div class="col mb-2">
-                                <label for="Fakultas" class="form-label">Fakultas</label>
-                                <select id="Fakultas" class="form-select">
+                                 <label for="fakultas" class="form-label">Fakultas</label>
+                                 <select class="form-select select2" data-placeholder="Pilih Fakultas">
                                     <option>Pilih Fakultas</option>
                                     <option value="1">FIT</option>
                                     <option value="2">FEB</option>
@@ -107,7 +108,7 @@
                         <div class="row">
                             <div class="col mb-2">
                                 <label for="prodi" class="form-label">Prodi</label>
-                                <select id="prodi" class="form-select">
+                                 <select class="form-select select2" data-placeholder="Pilih Prodi">
                                     <option>Pilih Prodi</option>
                                     <option value="1">D3 Sistem Informasi</option>
                                     <option value="2">S1 Design Interior</option>
@@ -170,7 +171,7 @@
                         <div class="row">
                             <div class="col mb-2">
                                 <label for="universitas" class="form-label">Universitas</label>
-                                <select id="universitas" class="form-select">
+                                <select class="form-select select2" data-placeholder="Pilih Universitas">
                                     <option>Pilih Universitas</option>
                                     <option value="1">Telkom</option>
                                     <option value="2">Telyu</option>
@@ -179,8 +180,8 @@
                         </div>
                         <div class="row">
                             <div class="col mb-2">
-                                <label for="Fakultas" class="form-label">Fakultas</label>
-                                <select id="Fakultas" class="form-select">
+                                <label for="fakultas" class="form-label">Fakultas</label>
+                                <select class="form-select select2" data-placeholder="Pilih Fakultas">
                                     <option>Pilih Fakultas</option>
                                     <option value="1">FIT</option>
                                     <option value="2">FEB</option>
@@ -191,7 +192,7 @@
                         <div class="row">
                             <div class="col mb-2">
                                 <label for="prodi" class="form-label">Prodi</label>
-                                <select id="prodi" class="form-select">
+                                <select class="form-select select2" data-placeholder="Pilih Prodi">
                                     <option>Pilih Prodi</option>
                                     <option value="1">D3 Sistem Informasi</option>
                                     <option value="2">S1 Design Interior</option>
