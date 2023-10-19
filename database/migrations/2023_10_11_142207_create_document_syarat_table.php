@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id_document')->primary();
             $table->uuid('id_jenismagang');
             $table->string('namadocument', 255);
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->foreign('id_jenismagang')->references('id_jenismagang')->on('jenis_magang');
         });
     }

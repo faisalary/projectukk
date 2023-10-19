@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tipe', 255);
             $table->integer('bobot');
             $table->string('scoredby', 255);
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->integer('total_bobot');
             $table->foreign('id_jenismagang')->references('id_jenismagang')->on('jenis_magang');
         });

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('is_document_upload');
             $table->string('type', 255);
             $table->boolean('seleksi');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
         });
     }
 
