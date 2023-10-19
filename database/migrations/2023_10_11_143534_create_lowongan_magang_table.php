@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id_lowongan')->primary();
             $table->uuid('id_industri');
             $table->uuid('id_year_akademik');
-            $table->integer('created_by');
+            $table->string('created_by');
             $table->uuid('id_jenismagang');
             $table->timestamp('created_at');
             $table->string('intern_position', 255);
@@ -30,6 +30,10 @@ return new class extends Migration
             $table->date('enddate');
             $table->string('tahapan_seleksi', 255);
             $table->date('date_confirm_closing');
+            $table->boolean('pelaksanaan');
+            $table->foreign('id_jenismagang')->references('id_jenismagang')->on('jenis_magang');
+            $table->foreign('id_year_akademik')->references('id_year_akademik')->on('tahun_akademik');
+            $table->foreign('id_industri')->references('id_industri')->on('industri');
         });
     }
 

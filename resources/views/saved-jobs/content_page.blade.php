@@ -26,7 +26,7 @@
         <div class="row">
             <div class="job-view">
                 <div class="company-block">
-                    <div class="inner-box" style="text-align: left;  margin-top: 10px; width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left;  margin-top: 10px; width: 561px;  flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
@@ -72,7 +72,7 @@
 
                         </div>
                     </div>
-                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px;  flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
@@ -118,7 +118,7 @@
 
                         </div>
                     </div>
-                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px;  flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
@@ -164,7 +164,7 @@
 
                         </div>
                     </div>
-                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px;  flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
@@ -210,7 +210,7 @@
 
                         </div>
                     </div>
-                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px; height: 299px; flex-shrink: 0;">
+                    <div class="inner-box" style="text-align: left; border-radius: 4px; margin-top: 10px;  width: 561px;  flex-shrink: 0;">
                         <div class="row">
                             <div class="center-text-icon">
                                 <figure class="image-vacancies"><img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
@@ -261,7 +261,7 @@
             <div class="company-block">
                 <div class="inner-box" style="text-align: center; margin-top: 10px;  border-radius: 4px; width: 561px; height: 600px; flex-shrink: 0;">
                     <div>
-                        <figure class="image-vacancies-not-found" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_tidak_ditemukan.png')}}" alt="admin.upload"></figure>
+                        <figure class="image-vacancies-not-found" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/jobs/img/empty.png')}}" alt="admin.upload"></figure>
                         <h4>Belum Ada Lowongan terpilih</h4>
 
                         <div class="text">Silahkan pilih lowongan yang tersedia untuk mendapatkan detail informasi</div>

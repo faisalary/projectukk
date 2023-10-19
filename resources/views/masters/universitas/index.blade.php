@@ -1,27 +1,27 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <style>
-        .swal2-icon {
-            border-color: transparent !important;
-        }
+<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<style>
+    .swal2-icon {
+        border-color: transparent !important;
+    }
 
-        .swal2-title {
-            font-size: 20px !important;
-            text-align: center !important;
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-        }
+    .swal2-title {
+        font-size: 20px !important;
+        text-align: center !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
 
-        .swal2-modal.swal2-popup .swal2-title {
-            max-width: 100% !important;
-        }
+    .swal2-modal.swal2-popup .swal2-title {
+        max-width: 100% !important;
+    }
 
-        .swal2-html-container {
-            font-size: 16px !important;
-        }
-    </style>
+    .swal2-html-container {
+        font-size: 16px !important;
+    }
+</style>
 @endsection
 
 @section('main')
@@ -55,7 +55,9 @@
     </div>
 </div>
 
-    <!-- Modal -->
+<!-- Modal -->
+<form class="default-form" method="POST" action="{{ route('universitas.store') }}">
+    @csrf
     <div class="modal fade" id="modalTambahUniversitas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -65,27 +67,31 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="universitas" class="form-label">Nama Universitas</label>
-                            <input type="text" id="universitas" class="form-control" placeholder="Nama Universitas" />
+                            <input type="text" id="universitas" name="namauniv" class="form-control" placeholder="Nama Universitas" />
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="jalan" class="form-label">Jalan</label>
-                            <textarea class="form-control" id="kota" placeholder="Jalan"></textarea>
+                            <textarea class="form-control" id="kota" name="jalan" placeholder="Jalan"></textarea>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="kota" class="form-label">Kota</label>
-                            <input type="text" id="kota" class="form-control" placeholder="Kota" />
+                            <input type="text" id="kota" name="kota" class="form-control" placeholder="Kota" />
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="telp" class="form-label">Telp</label>
-                            <input type="text" id="telp" class="form-control" placeholder="Name" />
+                            <input type="text" id="telp" name="telp" class="form-control" placeholder="telp" />
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -93,11 +99,12 @@
                     <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button> -->
-                    <button type="button" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
+</form>
 
 <div class="modal fade" id="modalEditUniversitas" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,8 +122,8 @@
                 </div>
                 <div class="row">
                     <div class="col mb-2">
-                    <label for="jalan" class="form-label">Jalan</label>
-                    <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
+                        <label for="jalan" class="form-label">Jalan</label>
+                        <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -151,8 +158,8 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": "(022) 7686599",
-            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
-           "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
+            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
@@ -160,7 +167,7 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": " (022) 7686599",
-            "status":"<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
+            "status": "<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
         },
         {
@@ -169,34 +176,45 @@
             "jalan": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
             "kota": "Bandung",
             "telp": " (022) 7686599",
-            "status":"<span class='badge bg-label-success me-1'>Aktif</span>",
+            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
 
-        var table = $('#table-master-univ').DataTable({
-            "data": jsonData,
-            columns: [{
-                    data: "nomor"
-                },
+    var table = $('#table-master-univ').DataTable({
+        ajax: '{{ route("universitas.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
+        columns: [{
+                data: 'DT_RowIndex'
+            },
 
             {
-                data: "nama"
+                data: 'namauniv',
+                name: 'namauniv'
             },
             {
-                data: "jalan"
+                data: 'jalan',
+                name: 'jalan'
             },
             {
-                data: "kota"
+                data: 'kota',
+                name: 'kota'
             },
             {
-                data: "telp"
+                data: 'telp',
+                name: 'telp'
             },
             {
-                data: "status"
+                data: 'status',
+                name: 'status'
             },
             {
-                data: "aksi"
+                data: 'action',
+                name: 'action'
             }
         ]
     });
@@ -210,7 +228,7 @@
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Yakin",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
+            closeOnConfirm: true,
             closeOnCancel: false,
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -220,6 +238,7 @@
             buttonsStyling: false
         });
     }
+
     function active(e) {
         Swal.fire({
             title: 'Apakah anda yakin ingin mengaktifkan data?',
@@ -241,6 +260,6 @@
     }
 </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection
