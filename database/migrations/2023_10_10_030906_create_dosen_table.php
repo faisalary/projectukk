@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dosen', function (Blueprint $table) {
-            $table->integer('nip');
-            $table->uuid('id_dosen')->primary();
+            $table->integer('nip')->primary();
+            $table->uuid('id_dosen');
             $table->uuid('id_prodi');
+            $table->uuid('id_univ');
             $table->string('namadosen', 255);
             $table->string('nohpdosen', 15);
             $table->string('emaildosen', 255);
             $table->string('statusdosen', 255);
             $table->foreign('id_prodi')->references('id_prodi')->on('program_studi');
+            $table->foreign('id_univ')->references('id_univ')->on('universitas');
         });
     }
 

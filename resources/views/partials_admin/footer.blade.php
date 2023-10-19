@@ -63,6 +63,9 @@
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
 
+
+<script src="{{url('js/content.js')}}"></script>
+
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 
