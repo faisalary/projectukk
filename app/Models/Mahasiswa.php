@@ -10,8 +10,9 @@ class Mahasiswa extends Model
 {
 
     use HasUuids;
-
     protected $table = 'mahasiswa';
-    protected $fillable = ['namamhs', 'emailmhs', 'nohpmhs', 'alamatmhs', 'kelas'];
+    protected $fillable = ['namamhs','id_univ','id_prodi','id_fakultas', 'emailmhs', 'nohpmhs', 'alamatmhs', 'angkatan'];
     protected $keyType = 'string';
+    protected $primaryKey = 'nim';
+    public $timestamps = false;
 }

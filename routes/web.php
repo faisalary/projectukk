@@ -92,7 +92,9 @@ Route::get('/master_pegawai_industri', function () {
 Route::get('/master_jenis_magang', function () {
     return view('masters.jenis_magang.index', ['active_menu' => 'master_jenis_magang']);
 });
-
+Route::get('/master_komponen_penilaian', function () {
+    return view('masters.komponen_penilaian.index', ['active_menu' => 'master_komponen_penilaian']);
+});
 Route::prefix('master_universitas')->group(function () {
     Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
     Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
@@ -100,4 +102,13 @@ Route::prefix('master_universitas')->group(function () {
     Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
     Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
     Route::delete('/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
+});
+
+Route::prefix('master_mahasiswa')->group(function () {
+    Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
+    Route::get('/show', [App\Http\Controllers\MahasiswaController::class, 'show'])->name('mahasiswa.show');
+    Route::get('/create', [App\Http\Controllers\MahasiswaController::class, 'create'])->name('mahasiswa.create');
+    Route::post('/', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa.store');
+    Route::put('/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa.update');
+    Route::delete('/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 });
