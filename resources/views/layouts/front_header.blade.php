@@ -169,9 +169,9 @@
 
 
             @php
-            $user = Auth::user();
+                $user = Auth::user();
             @endphp
-            @if(!$user)
+            @if (!$user)
 
 
 
@@ -265,29 +265,31 @@
 
                                 <li><a href="">Dashboard</a></li>
 
-                                @endif
-                                @if($user->profile)
-                                <hr class="my-2">
-                                @if(request()->url() != url('search'))
-                                <li><a href="{{ url('search') }}">Search Jobs</a></li>
-                                @else
-                                <li><a href="{{ url('/') }}">Front Page</a></li>
-                                @endif
-                                @endif
-                                <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </a>
+                                    @endif
+                                    @if ($user->profile)
+                                        <hr class="my-2">
+                                        @if (request()->url() != url('search'))
+                                            <li><a href="{{ url('search') }}">Search Jobs</a></li>
+                                        @else
+                                            <li><a href="{{ url('/') }}">Front Page</a></li>
+                                        @endif
+                                    @endif
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </a>
 
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             @endif
         </div>
     </div>

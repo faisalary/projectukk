@@ -11,7 +11,7 @@ class KomponenNilai extends Model
     use HasUuids;
 
     protected $table = 'komponen_nilai';
-    protected $fillable = ['namakomponen', 'tipe', 'bobot', 'scoredby', 'status'];
+    protected $fillable = ['namakomponen', 'tipe', 'bobot', 'scoredby', 'status', 'total_bobot'];
     protected $primaryKey = 'id_kompnilai';
     protected $keyType = 'string';
 }

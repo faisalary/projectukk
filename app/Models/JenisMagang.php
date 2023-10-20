@@ -11,7 +11,7 @@ class JenisMagang extends Model
     use HasUuids;
 
     protected $table = 'jenis_magang';
-    protected $fillable = ['namajenis', 'durasimagang', 'is_review_process', 'is_document_upload', 'type'];
+    protected $fillable = ['namajenis', 'durasimagang', 'is_review_process', 'is_document_upload', 'type', 'status'];
     protected $primaryKey = 'id_jenismagang';
     protected $keyType = 'string';
 }

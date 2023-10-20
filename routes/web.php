@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -64,9 +65,9 @@ Route::get('/apply_alert', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/master_universitas', function () {
-    return view('masters.universitas.index', ['active_menu' => 'master_universitas']);
-});
+// Route::get('/master_universitas', function () {
+//     return view('masters.universitas.index', ['active_menu' => 'master_universitas']);
+// });
 Route::get('/master_fakultas', function () {
     return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
 });
@@ -82,10 +83,21 @@ Route::get('/master_mitra', function () {
 Route::get('/master_dosen', function () {
     return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
 });
-
-Route::get('/master_nilai_mutu', function () {
-    return view('masters.nilai_mutu.index', ['active_menu' => 'master_nilai_mutu']);
+Route::get('/master_mahasiswa', function () {
+    return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
+});
+Route::get('/master_pegawai_industri', function () {
+    return view('masters.pegawai_industri.index', ['active_menu' => 'master_pegawai_industri']);
 });
 Route::get('/master_jenis_magang', function () {
     return view('masters.jenis_magang.index', ['active_menu' => 'master_jenis_magang']);
+});
+
+Route::prefix('master_universitas')->group(function () {
+    Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
+    Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
+    Route::get('/create', [App\Http\Controllers\UniversitasController::class, 'create'])->name('universitas.create');
+    Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
+    Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
+    Route::delete('/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
 });
