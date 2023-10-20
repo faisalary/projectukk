@@ -83,6 +83,10 @@
     background-color: #4EA971;
     border-color: #4EA971;
 }
+.select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+    background-color: rgba(115, 103, 240, 0.08) !important;
+    color: #4EA971 !important;
+}
     </style>
 
     @yield('page_style')
@@ -280,7 +284,7 @@
                                     <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
                                 </a>
                             </li>
-                            <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
+                            <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
                                 <a href="/master_nilai_mutu" class="menu-link">
                                     <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
                                 </a>
