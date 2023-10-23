@@ -135,10 +135,7 @@
                         <a id="program" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Program Magang</a>
                         <div class="dropdown-menu" style="height:180px; width:200px;">
                             <a class="dropdown-item" href="#">Magang Fakultas </a>
-                            <a class="dropdown-item" href="#">Magang MBKM</a>
-                            <a class="dropdown-item" href="#">Magang Mandiri</a>
-                            <a class="dropdown-item" href="#">Magang Kerja</a>
-                            <a class="dropdown-item" href="#">Magang StartUp</a>
+                            <a class="dropdown-item" href="#">Informasi Magang</a>
                         </div>
                     </div>
                 </div>

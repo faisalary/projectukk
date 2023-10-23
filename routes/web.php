@@ -95,6 +95,9 @@ Route::get('/master_pegawai_industri', function () {
 Route::get('/master_jenis_magang', function () {
     return view('masters.jenis_magang.index', ['active_menu' => 'master_jenis_magang']);
 });
+Route::get('/kelola_mitra', function () {
+    return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola_mitra']);
+});
 
 Route::prefix('master_universitas')->group(function () {
     Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
