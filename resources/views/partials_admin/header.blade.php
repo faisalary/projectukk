@@ -82,6 +82,13 @@
     background-color: rgba(115, 103, 240, 0.08) !important;
     color: #4EA971 !important;
 }
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+    background-color:#4EA971;
+    color: #fff;
+}
+.nav-pills .nav-link:not(.active):hover, .nav-pills .nav-link:not(.active):focus {
+    color: #4EA971;
+}
     </style>
 
     @yield('page_style')
@@ -140,8 +147,8 @@
                                     <div data-i18n="Informasi Mitra">Informasi Mitra</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="avascript:void(0);" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola_mitra' ? 'active' : '' }} @endif">
+                                <a href="/kelola_mitra" class="menu-link">
                                     <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                                 </a>
                             </li>
