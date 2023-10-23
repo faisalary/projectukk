@@ -154,7 +154,6 @@
 
     </div><!-- End Page Wrapper -->
 
-
     <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
