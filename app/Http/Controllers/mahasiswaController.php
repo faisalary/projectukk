@@ -6,7 +6,9 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-
+use App\Models\Fakultas;
+use App\Models\ProgramStudi;
+use App\Models\Universitas;
 class MahasiswaController extends Controller
 {
     /**
@@ -15,7 +17,10 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswa = Mahasiswa::all();
-        return view('masters.mahasiswa.index', compact('mahasiswa'));
+        $fakultas = Fakultas::all();
+        $prodi = ProgramStudi::all();
+        $universitas = Universitas::all();
+        return view('masters.mahasiswa.index', compact('mahasiswa','fakultas','prodi','universitas'));
     }
 
     /**
@@ -31,30 +36,29 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'nim' => ['required', 'integer','unique:nim'],
-        //         'angkatan' => ['required', 'integer'],
-        //         'id_prodi' => ['required', 'uuid'],
-        //         'id_univ' => ['required', 'uuid'],
-        //         'id_fakultas' => ['required', 'uuid'],
-        //         'namamhs' => ['required', 'string', 'max:255'],
-        //         'alamatmhs' => ['required', 'string', 'max:255'],
-        //         'emailmhs' => ['required', 'string', 'max:255'],
-        //         'nohpmhs' => ['required', 'string', 'max:15'],
-        //         'kelas' => ['required', 'string', 'max:255'],
-        //     ],
-        //     [
-        //         'nim.unique' => 'The NIM already exist'
-        //     ]
-        // );
+        $request->validate(
+            [
+                'nim' => ['required', 'max:11','unique:mahasiswa'],
+                'angkatan' => ['required', 'integer'],
+                'id_prodi' => ['required'],
+                'id_univ' => ['required'],
+                'id_fakultas' => ['required'],
+                'namamhs' => ['required', 'string', 'max:255'],
+                'alamatmhs' => ['required', 'string', 'max:255'],
+                'emailmhs' => ['required', 'string', 'max:255'],
+                'nohpmhs' => ['required', 'string', 'max:15'],
+            ],
+            [
+                'nim.unique' => 'The NIM already exist'
+            ]
+        );
 
         $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
             'angkatan' => $request->angkatan,
-            'id_prodi' => $request->prodi,
-            'id_univ' => $request->univ,
-            'id_fakultas' => $request->fakultas,
+            'id_prodi' => $request->id_prodi,
+            'id_univ' => $request->id_univ,
+            'id_fakultas' => $request->id_fakultas,
             'namamhs' => $request->namamhs,
             'alamatmhs' => $request->alamatmhs,
             'emailmhs' => $request->emailmhs,
@@ -69,22 +73,15 @@ class MahasiswaController extends Controller
         ]);
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show()
     {
-        $mahasiswa = DB::table('mahasiswa')->select(
-            'nim as nim',
-            'angkatan as angkatan',
-            'id_prodi as prodi',
-            'id_univ as univ',
-            'id_fakultas as fakultas',
-            'namamhs as namamhs',
-            'alamatmhs as alamatmhs',
-            'emailmhs as emailmhs',
-            'nohpmhs as nohpmhs', 
-        )
+        $mahasiswa = Mahasiswa::join('fakultas','fakultas.id_fakultas', 'mahasiswa.id_fakultas')
+        ->join ('program_studi','program_studi.id_prodi', 'mahasiswa.id_prodi')
+        ->join ('universitas','universitas.id_univ', 'mahasiswa.id_univ')
             ->orderBy('nim', 'asc')
             ->get();
 

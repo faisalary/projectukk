@@ -85,10 +85,11 @@
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="univ" class="form-label">Universitas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Universitas">
+                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ">
                                         <option>Pilih Universitas</option>
-                                        <option value="1">Telkom</option>
-                                        <option value="2">Telyu</option>
+                                        @foreach($universitas as $u)
+                                            <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -96,10 +97,10 @@
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="fakultas" class="form-label">Fakultas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Fakultas">
-                                        <option value="1">FIT</option>
-                                        <option value="2">FEB</option>
-                                        <option value="2">FIK</option>
+                                    <select class="form-select select2" data-placeholder="Pilih Fakultas" name="id_fakultas">
+                                        @foreach($fakultas as $f)
+                                            <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -107,9 +108,10 @@
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="prodi" class="form-label">Prodi</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Prodi">
-                                        <option value="1">D3 Sistem Informasi</option>
-                                        <option value="2">S1 Design Interior</option>
+                                    <select class="form-select select2" data-placeholder="Pilih Prodi" name="id_prodi">
+                                        @foreach($prodi as $p)
+                                            <option value="{{ $p->id_prodi}}">{{ $p->namaprodi }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -310,16 +312,16 @@
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "univ",
-                        name: "univ"
+                        data: "namauniv",
+                        name: "namauniv"
                     },
                     {
-                        data: "fakultas",
-                        name: "fakultas"
+                        data: "namafakultas",
+                        name: "namafakultas"
                     },
                     {
-                        data: "prodi",
-                        name: "prodi"
+                        data: "namaprodi",
+                        name: "namaprodi"
                     },
                     {
                         data: "nim",

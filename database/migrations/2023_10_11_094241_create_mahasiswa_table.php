@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->integer('nim')->primary();
             $table->integer('angkatan');
-            $table->uuid('id_prodi');
-            $table->uuid('id_univ');
-            $table->uuid('id_fakultas');
+            $table->uuid('id_prodi')->nullable();
+            $table->uuid('id_univ')->nullable();
+            $table->uuid('id_fakultas')->nullable();
             $table->string('namamhs', 255);
             $table->string('alamatmhs', 255);
             $table->string('emailmhs', 255);
