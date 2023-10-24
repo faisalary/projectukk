@@ -19,6 +19,9 @@ return new class extends Migration
             $table->uuid('id_pemblap');
             $table->integer('nilai_akhir_magang');
             $table->string('indeks_nilai_akhir_magang', 255);
+            $table->foreign('id_pendaftaran')->references('id_pendaftaran')->on('pendaftaran_magang');
+            $table->foreign('nim')->references('nim')->on('mahasiswa');
+            $table->foreign('nip')->references('nip')->on('dosen');
         });
     }
 

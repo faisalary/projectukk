@@ -172,7 +172,13 @@ Global Settings
 
 .row {
     display: flex;
+    max-width: 120rem;
+    width: 100%;
     justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .card {
@@ -427,7 +433,7 @@ li {
     top: 50%;
     margin-top: -10px;
     line-height: 20px;
-    right: 20px;
+    right: 0px;
     color: #2f2d51;
     content: "\f17c";
     font-family: "Flaticon";
@@ -4491,7 +4497,7 @@ Section Title
 .sec-title h2 {
     position: relative;
     display: block;
-    font-size: 30px;
+    font-size: 40px;
     line-height: 1.2em;
     color: #202124;
     font-weight: 500;
@@ -4500,6 +4506,7 @@ Section Title
 .sec-title .text {
     position: relative;
     margin-top: 15px;
+    margin-bottom: 15px;
     font-size: 15px;
     line-height: 26px;
 }
@@ -5367,7 +5374,7 @@ Banner Section Four
     background-position: top center;
     background-size: cover;
     height: 100vh;
-    min-height: 1200px;
+    min-height: 1000px;
     text-align: center;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -12128,7 +12135,7 @@ Top Companies
 
 .top-companies {
     position: relative;
-    padding: 60px 0;
+    padding: 10px 0;
 }
 
 .top-companies .carousel-outer {
@@ -12148,17 +12155,18 @@ Top Companies
 }
 
 .company-block .inner-box {
+    text-align: left;
     position: relative;
     padding: 30px 30px;
     background: #ffffff;
     border: 1px solid #ecedf2;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    box-sizing: content-box;
+    height: max-content;
     border-radius: 8px;
     -webkit-transition: all 300ms ease;
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
-    text-align: center;
     border-radius: 10px;
     border: 2px solid var(--secondary-100, #d3d6db);
 }
@@ -12188,7 +12196,6 @@ Top Companies
 .company-block .image {
     position: relative;
     width: 90px;
-    height: 90px;
     overflow: hidden;
     border-radius: 50%;
     margin: 0 auto 14px;
@@ -12220,13 +12227,13 @@ Top Companies
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    /* display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
+    justify-content: center; */
     font-size: 14px;
     color: #696969;
     margin-bottom: 25px;
@@ -19288,4 +19295,6 @@ Chat Widget
     margin-top: 10px;
     margin-bottom: 10px;
     background: var(--typography-color-placeholder-text, #d3d6db);
+    display: flex;
+    align-items: left;
 }

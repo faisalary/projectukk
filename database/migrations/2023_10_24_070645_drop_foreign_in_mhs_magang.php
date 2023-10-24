@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fakultas', function (Blueprint $table) {
-            $table->uuid('id_fakultas')->primary();
-            $table->string('namafakultas', 255);
+        Schema::table('mhs_magang', function (Blueprint $table) {
+            $table->dropForeign('mhs_magang_nim_foreign');
+
         });
     }
 
@@ -22,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fakultas');
+        Schema::table('mhs_magang', function (Blueprint $table) {
+            //
+
+        });
     }
 };

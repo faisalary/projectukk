@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document_syarat', function (Blueprint $table) {
-            $table->uuid('id_document')->primary();
-            $table->uuid('id_jenismagang');
-            $table->string('namadocument', 255);
+        Schema::create('universitas', function (Blueprint $table) {
+            $table->uuid('id_univ')->primary();
+            $table->string('namauniv', 255);
+            $table->string('jalan', 255);
+            $table->string('kota', 255);
+            $table->string('telp', 15);
             $table->boolean('status')->default(true);
-            $table->foreign('id_jenismagang')->references('id_jenismagang')->on('jenis_magang');
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document_syarat');
+        Schema::dropIfExists('universitas');
     }
 };
