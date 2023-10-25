@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Universitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +15,8 @@ class UniversitasController extends Controller
      */
     public function index()
     {
-        $universities = Universitas::all();
-        return view('masters.universitas.index', compact('universities'));
+        $univ = Universitas::all();
+        return view('masters.universitas.index', compact('univ'));
     }
 
     /**
@@ -37,7 +38,7 @@ class UniversitasController extends Controller
                 'jalan' => ['required', 'string', 'max:255'],
                 'kota' => ['required', 'string', 'max:255'],
                 'telp' => ['required', 'string', 'max:15'],
-                'status' => ['required', 'boolean', 'default:true'],
+
             ],
             [
                 'namauniv.unique' => 'A University with the name already exist'
@@ -49,12 +50,12 @@ class UniversitasController extends Controller
             'jalan' => $request->jalan,
             'kota' => $request->kota,
             'telp' => $request->telp,
-            'status' => $request->status,
+
         ]);
 
         return response()->json([
             'error' => false,
-            'massage' => 'University Created!',
+            'message' => 'University Created!',
             'modal' => '#modalTambahUniversitas',
             'table' => '#table-master-univ'
         ]);
@@ -65,33 +66,37 @@ class UniversitasController extends Controller
      */
     public function show()
     {
-        $univ = DB::table('universitas')->select(
-            'id_univ as id_univ',
-            'namauniv as namauniv',
-            'jalan as jalan',
-            'kota as kota',
-            'telp as telp',
-            'status as status',
-        )
-            ->orderBy('namauniv', 'asc')
-            ->get();
+
+        $univ = Universitas::orderBy('namauniv', 'asc')->get();
 
         return DataTables::of($univ)
             ->addIndexColumn()
-            ->addColumn('action', function ($univ) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+            ->editColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                }
+            })
+            ->addColumn('action', function ($row) {
+                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->status) ? "danger" : "success";
+
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas-{$row->id_univ}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick = status($(this)) data-status='{$row->status}' data-id='{$row->id_univ}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
-            ->addColumn('action', function ($univ) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditUniversitas' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
-
-                return $btn;
-            })
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
+
+    // public function updateStatus(Request $request, $id)
+    // {
+    //     Universitas::find($id)->update(['status' => $request->status]);
+
+    //     return response()->json('Status updated');
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -104,16 +109,59 @@ class UniversitasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $univ = Universitas::findOrFail($id);
+
+        $request->validate(
+            [
+                'namauniv' => ['required', 'string', 'max:255', 'unique:universitas'],
+                'jalan' => ['required', 'string', 'max:255'],
+                'kota' => ['required', 'string', 'max:255'],
+                'telp' => ['required', 'string', 'max:15'],
+
+            ],
+            [
+                'namauniv.required' => 'University name must be filled',
+                'namauniv.unique' => 'The name of the University has been used',
+                'jalan.required' => 'The address must be filled',
+                'kota.required' => 'The name of City must be filled',
+                'telp.required' => 'The phone number must be filled'
+            ]
+        );
+
+        $univ->update([
+            'namauniv' => $request->namauniv,
+            'jalan' => $request->jalan,
+            'kota' => $request->kota,
+            'telp' => $request->telp,
+        ]);
+
+
+        return redirect()->route('universitas.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function status(string $id)
     {
-        //
+        try {
+            $univ = Universitas::where('id_univ', $id)->first();
+            $univ->status = ($univ->status) ? false : true;
+            $univ->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Universitas successfully Deactived!',
+                'modal' => '#modal-universitas',
+                'table' => '#table-master-univ'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }

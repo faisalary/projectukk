@@ -98,6 +98,6 @@ Route::prefix('master_universitas')->group(function () {
     Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
     Route::get('/create', [App\Http\Controllers\UniversitasController::class, 'create'])->name('universitas.create');
     Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
+    Route::post('update_status/{id}', [App\Http\Controllers\UniversitasController::class, 'status'])->name('universitas.upStatus');
     Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
-    Route::delete('/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
 });

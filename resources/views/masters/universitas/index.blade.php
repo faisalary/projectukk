@@ -105,49 +105,58 @@
         </div>
     </div>
 </form>
-
-<div class="modal fade" id="modalEditUniversitas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditUniversitas">Edit Universitas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="universitas" class="form-label">Nama Universitas</label>
-                        <input type="text" id="universitas" class="form-control" placeholder="Nama Universitas" />
+@foreach($univ as $data)
+<form class="default-form" method="POST" action="{{ route('universitas.update', $data->id_univ) }}">
+    @csrf
+    {{ method_field('put') }}
+    <div class="modal fade" id="modalEditUniversitas-{{ $data->id_univ }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block">
+                    <h5 class="modal-title" id="modalEditUniversitas">Edit Universitas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="universitas" class="form-label">Nama Universitas</label>
+                            <input type="text" id="universitas" name="namauniv" class="form-control" placeholder="Nama Universitas" value="{{ $data->namauniv }}" autofocus />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="jalan" class="form-label">Jalan</label>
+                            <textarea class="form-control" id="jalan" name="jalan" placeholder="Jalan">{{ $data->jalan }}</textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="kota" class="form-label">Kota</label>
+                            <input type="text" id="kota" class="form-control" name="kota" placeholder="Kota" value="{{ $data->kota }}" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="telp" class="form-label">Telp</label>
+                            <input type="text" id="telp" class="form-control" name="telp" placeholder="Telp" value="{{ $data->telp }}" />
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="jalan" class="form-label">Jalan</label>
-                        <textarea class="form-control" id="jalan" placeholder="Jalan"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="kota" class="form-label">Kota</label>
-                        <input type="text" id="kota" class="form-control" placeholder="Kota" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">Telp</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Seleksi" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                     Close
                 </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+@endforeach
 @endsection
 
 @section('page_script')
@@ -219,43 +228,67 @@
         ]
     });
 
-    function deactive(e) {
+    function status(e) {
+        var status = e.attr('data-status');
+        var text = "";
+        if (status == 0) {
+            text = "Active";
+        } else {
+            text = "Inactive";
+        }
         Swal.fire({
-            title: 'Apakah anda yakin ingin menonaktifkan data?',
-            text: ' Data yang dipilih akan Non-Aktif!',
-            iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yakin",
-            cancelButtonText: "Batal",
-            closeOnConfirm: true,
-            closeOnCancel: false,
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-                iconHtml: 'no-border'
-            },
-            buttonsStyling: false
-        });
-    }
 
-    function active(e) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin mengaktifkan data?',
-            text: ' Data yang dipilih akan Aktif!',
-            iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yakin",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-                iconHtml: 'no-border'
-            },
-            buttonsStyling: false
+            title: 'Are you sure?',
+            text: "The selected data will be " + text,
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, ' + text + '!',
+            showConfirmButton: true
+        }).then(function(result) {
+
+            if (result.value) {
+                var id = e.attr('data-id');
+                let data = {
+                    'id': id,
+                    '_token': `{{csrf_token()}}`
+                }
+                jQuery.ajax({
+                    method: "POST",
+                    data: data,
+                    url: `{{url("master_universitas/update_status")}}/${id}`,
+                    success: function(data) {
+
+                        if (data.error) {
+
+                            Swal.fire({
+                                type: "error",
+                                title: 'Oops...',
+                                text: data.message,
+                                confirmButtonClass: 'btn btn-success',
+                            })
+
+                        } else {
+
+                            setTimeout(function() {
+                                $('#table-master-univ').DataTable().ajax
+                                    .reload();
+
+                            }, 1000);
+
+                            Swal.fire({
+                                icon: "success",
+                                title: 'Succeed!',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            })
+
+                        }
+                    }
+                });
+
+            }
         });
     }
 </script>
