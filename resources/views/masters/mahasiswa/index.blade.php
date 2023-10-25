@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="col-md-10 col-12 text-end">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-mahasiswa">Tambah
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMahasiswa">Tambah
                     Mahasiswa</button>
             </div>
         </div>
@@ -75,7 +75,7 @@
 
         <!-- Modal -->
 
-        <div class="modal fade" id="modal-mahasiswa" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
 
                 <div class="modal-content">
@@ -83,7 +83,7 @@
                         <h5 class="modal-title">Tambah Mahasiswa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form class="default-form" id="" method="POST" action="{{ route('mahasiswa.store') }}">
+                    <form class="default-form" id="modalTambahMahasiswa" method="POST" action="{{ route('mahasiswa.store') }}">
                         @csrf
                         <div class="modal-body">
 
@@ -178,9 +178,119 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header text-center d-block">
+                        <h5 class="modal-title">Edit Mahasiswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    @foreach ($mahasiswa as $data)
+                        <form class="default-form" id="modalEditMahasiswa" method="POST"
+                            action="{{ route('mahasiswa.update', $data->nim) }}">
+                            @csrf
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="univ" class="form-label" >Universitas</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Universitas" 
+                                            name="id_univ" id="id_univ">
+                                            <option>Pilih Universitas</option>
+                                            @foreach ($universitas as $u)
+                                                <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="fakultas" class="form-label">Fakultas</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Fakultas"
+                                            name="id_fakultas" id="id_fakultas">
+                                            @foreach ($fakultas as $f)
+                                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="prodi" class="form-label">Prodi</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Prodi"
+                                            name="id_prodi" id="id_prodi">
+                                            @foreach ($prodi as $p)
+                                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="nim" class="form-label">NIM</label>
+                                        <input type="text" name="nim" id="nim" class="form-control" placeholder="NIM" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="angkatan" class="form-label">Angkatan</label>
+                                        <input type="text" name="angkatan" id="angkatan"class="form-control"
+                                            placeholder="Angkatan" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="namamhs" class="form-label">Nama Mahasiswa</label>
+                                        <input type="text" name="namamhs" id="namamhs" class="form-control"
+                                            placeholder="Nama Mahasiswa" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="nohpmhs" class="form-label">Nomor Telepon</label>
+                                            <input type="text" name="nohpmhs" id="nohpmhs" class="form-control"
+                                                placeholder="Nomor Telepon" />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="emailmhs" class ="form-label">Email</label>
+                                            <input type="text" name="emailmhs" id="emailmhs" class="form-control"
+                                                placeholder="Email" />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="alamatmhs" class="form-label">Alamat</label>
+                                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat" ></textarea>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     @endsection
 
-    @section('page_script')    
+    @section('page_script')
         <script>
             var table = $('#table-master-mahasiswa').DataTable({
                 ajax: '{{ route('mahasiswa.show') }}',
@@ -236,17 +346,17 @@
             });
 
             function status(e) {
-            var status = e.attr('data-status');
-            var text = "";
-            Swal.fire({
+                var status = e.attr('data-status');
+                var text = "";
+                Swal.fire({
 
-                title: 'Are you sure?',
-                text: "The selected data will be " + text,
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, ' + text + '!',
-                showConfirmButton: true
+                    title: 'Are you sure?',
+                    text: "The selected data will be " + text,
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, ' + text + '!',
+                    showConfirmButton: true
                 }).then(function(result) {
 
                     if (result.value) {
@@ -294,47 +404,103 @@
                         });
 
                     }
+                });
+            }
+
+            function edit(e) {
+                let id = e.attr('data-id');
+
+                let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
+                var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function(response) {
+                        $("#modal-title").html("Edit Mahasiswa");
+                        $("#modal-button").html("Update Data")
+                        $('#modal-mahasiswa form').attr('action', action);
+                        $('#nim').val(response.nim);
+                        $('#angkatan').val(response.angkatan);
+                        $('#id_prodi').val(response.id_prodi).change();
+                        $('#id_univ').val(response.id_univ).change();
+                        $('#id_fakultas').val(response.id_fakultas).change();
+                        $('#namamhs').val(response.namamhs);
+                        $('#alamatmhs').val(response.alamatmhs);
+                        $('#emailmhs').val(response.emailmhs);
+                        $('#nohpmhs').val(response.nohpmhs);
+
+                        $('#modalEditMahasiswa').modal('show');
+                    }
+                });
+            }
+
+            $("#modal-mahasiswa").on("hide.bs.modal", function() {
+
+                $("#modal-title").html("Edit Mahasiswa");
+                $("#modal-button").html("Save Data")
+                $('#modal-mahasiswa form')[0].reset();
+                $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
+                $('.invalid-feedback').removeClass('d-block');
+                $('.form-control').removeClass('is-invalid');
             });
-        }
 
-        function edit(e) {
-            let id = e.attr('data-id');
+            function delete_data(content, args) {
 
-            let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
-            var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $("#modal-title").html("Edit Mahasiswa");
-                    $("#modal-button").html("Update Data")
-                    $('#modal-mahasiswa form').attr('action', action);
-                    $('#nim').val(response.nim);
-                    $('#angkatan').val(response.angkatan);
-                    $('#id_prodi').val(response.id_prodi);
-                    $('#id_univ').val(response.id_univ);
-                    $('#id_fakultas').val(response.id_fakultas);
-                    $('#namamhs').val(response.namamhs);
-                    $('#alamatmhs').val(response.alamatmhs);
-                    $('#emailmhs').val(response.emailmhs);
-                    $('#nohpmhs').val(response.nohpmhs);
+                var id = content.attr('data-id');
+                var url = `{{ url('master/mahasiswa/destroy/') }}/${id}`;
+                const context = $(content).attr("context");
 
-                    $('#modal-mahasiswa').modal('show');
-                }
-            });
-        }
+                console.log(url);
+                console.log(id);
 
-        $("#modal-mahasiswa").on("hide.bs.modal", function() {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                    "content"
+                                ),
+                            },
+                            url: url,
+                            success: function(response) {
+                                if (response.error) {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: response.message,
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        response.table ? "Deleted!" : "Info",
+                                        response.message,
+                                        "success"
+                                    ).then(() => {
+                                        if (response.table) {
+                                            setTimeout(function() {
+                                                $(response.table)
+                                                    .DataTable()
+                                                    .ajax.reload();
+                                            }, 1000);
+                                        }
+                                        if (typeof matrix === "function") matrix();
+                                    });
+                                }
+                            },
+                        });
+                    }
+                });
+            }
+        </script>
 
-            $("#modal-title").html("Add Mahasiswa");
-            $("#modal-button").html("Save Data")
-            $('#modal-mahasiswa form')[0].reset();
-            $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
-        });
-    </script>
-
-    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-@endsection
+        <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+    @endsection

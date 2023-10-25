@@ -98,7 +98,7 @@ Route::prefix('master')->group(function () {
         Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
         Route::get('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
         Route::post('/store', [App\Http\Controllers\mahasiswaController::class, 'store'])->name('mahasiswa.store');
-        Route::post('/status/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+        Route::post('/destroy/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 
         Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
         Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');

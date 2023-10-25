@@ -10,6 +10,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
+use Illuminate\Routing\Route;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -69,7 +71,7 @@ class MahasiswaController extends Controller
         return response()->json([
             'error' => false,
             'massage' => 'Data Created!',
-            'modal' => '#modal-mahasiswa',
+            'modal' => '#modalTambahMahasiswa',
             'table' => '#table-master-mahasiswa'
         ]);
     }
@@ -88,15 +90,15 @@ class MahasiswaController extends Controller
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = action($(this)) data-action='{$row->action}' data-id='{$row->nim}'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
+            ->addColumn('action', function ($mahasiswa) {
+                $btn = "<a data-bs-toggle='modal' data-id='{$mahasiswa->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick =delete_data($(this))  data-id='{$mahasiswa->nim}'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
 
                 return $btn;
             })
             ->rawColumns(['action'])
 
-            ->make(true);
+                ->make(true);
     }
 
     /**
@@ -130,7 +132,7 @@ class MahasiswaController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Mahasiswa successfully Updated!',
-                'modal' => '#modal-mahasiswa',
+                'modal' => '#modalEditMahasiswa',
                 'table' => '#table-master-mahasiswa'
             ]);
         } catch (Exception $e) {
@@ -140,28 +142,16 @@ class MahasiswaController extends Controller
             ]);
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-        try {
-            $mahasiswa = Mahasiswa::where('nim', $id)->first();
-            $mahasiswa->action = ($mahasiswa->action) ? false : true;
-            $mahasiswa->save();
+    {                                                          
+        Mahasiswa::destroy($id);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Mahasiswa successfully Deactived!',
-                'modal' => '#modal-mahasiswa',
-                'table' => '#table-master-mahasiswa'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
+        return redirect()->route('mahasiswa.index');
+    
+    } 
 }
