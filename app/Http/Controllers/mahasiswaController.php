@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,7 @@ class MahasiswaController extends Controller
         return response()->json([
             'error' => false,
             'massage' => 'Data Created!',
-            'modal' => '#modalTambahMahasiswa',
+            'modal' => '#modal-mahasiswa',
             'table' => '#table-master-mahasiswa'
         ]);
     }
@@ -87,42 +88,80 @@ class MahasiswaController extends Controller
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
-            ->addColumn('action', function ($mahasiswa) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+            ->addColumn('action', function ($row) {
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick = action($(this)) data-action='{$row->action}' data-id='{$row->nim}'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
 
                 return $btn;
             })
-            ->addColumn('action', function ($mahasiswa) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+            ->rawColumns(['action'])
 
-                return $btn;
-            })
-            ->toJson();
+            ->make(true);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        return $mahasiswa;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $mahasiswa = Mahasiswa::where('nim', $id)->first();
+
+            $mahasiswa->nim = $request->nim;
+            $mahasiswa->angkatan = $request->angkatan;
+            $mahasiswa->id_prodi = $request->id_prodi;
+            $mahasiswa->id_univ = $request->id_univ;
+            $mahasiswa->id_fakultas = $request->id_fakultas;
+            $mahasiswa->namamhs = $request->namamhs;
+            $mahasiswa->alamatmhs = $request->alamatmhs;
+            $mahasiswa->emailmhs = $request->emailmhs;
+            $mahasiswa->nohpmhs = $request->nohpmhs;
+            $mahasiswa->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mahasiswa successfully Updated!',
+                'modal' => '#modal-mahasiswa',
+                'table' => '#table-master-mahasiswa'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $mahasiswa = Mahasiswa::where('nim', $id)->first();
+            $mahasiswa->action = ($mahasiswa->action) ? false : true;
+            $mahasiswa->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mahasiswa successfully Deactived!',
+                'modal' => '#modal-mahasiswa',
+                'table' => '#table-master-mahasiswa'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }
