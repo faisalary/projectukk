@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use App\Models\Universitas;
 use Exception;
 use Illuminate\Http\Request;
@@ -78,6 +77,7 @@ class UniversitasController extends Controller
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
+            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";

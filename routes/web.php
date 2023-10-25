@@ -85,14 +85,13 @@ Route::prefix('master')->group(function () {
     Route::get('/kelola_mitra', function () {
         return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola_mitra']);
     });
-    Route::prefix('universitas')->group(function () {
+    Route::prefix('master_universitas')->group(function () {
         Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
         Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
-        Route::post('/store', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
-        Route::post('/status/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
-
-        Route::post('/update/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
-        Route::get('/edit/{id}', [App\Http\Controllers\UniversitasController::class, 'edit'])->name('universitas.edit');
+        Route::get('/create', [App\Http\Controllers\UniversitasController::class, 'create'])->name('universitas.create');
+        Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
+        Route::post('update_status/{id}', [App\Http\Controllers\UniversitasController::class, 'status'])->name('universitas.upStatus');
+        Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
     });
 });
 
@@ -136,15 +135,6 @@ Route::get('/master_jenis_magang', function () {
 Route::get('/master_komponen_penilaian', function () {
     return view('masters.komponen_penilaian.index', ['active_menu' => 'master_komponen_penilaian']);
 });
-Route::prefix('master_universitas')->group(function () {
-    Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
-    Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
-    Route::get('/create', [App\Http\Controllers\UniversitasController::class, 'create'])->name('universitas.create');
-    Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
-    Route::post('update_status/{id}', [App\Http\Controllers\UniversitasController::class, 'status'])->name('universitas.upStatus');
-    Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
-});
-
 Route::prefix('master_mahasiswa')->group(function () {
     Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
     Route::get('/show', [App\Http\Controllers\MahasiswaController::class, 'show'])->name('mahasiswa.show');
