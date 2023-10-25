@@ -83,7 +83,8 @@
                         <h5 class="modal-title">Tambah Mahasiswa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form class="default-form" id="modalTambahMahasiswa" method="POST" action="{{ route('mahasiswa.store') }}">
+                    <form class="default-form" id="modalTambahMahasiswa" method="POST"
+                        action="{{ route('mahasiswa.store') }}">
                         @csrf
                         <div class="modal-body">
 
@@ -179,24 +180,24 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header text-center d-block">
-                        <h5 class="modal-title">Edit Mahasiswa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    @foreach ($mahasiswa as $data)
+        @foreach ($mahasiswa as $data)
+            <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center d-block">
+                            <h5 class="modal-title">Edit Mahasiswa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
                         <form class="default-form" id="modalEditMahasiswa" method="POST"
                             action="{{ route('mahasiswa.update', $data->nim) }}">
                             @csrf
+                            {{ method_field('put') }}
                             <div class="modal-body">
-
                                 <div class="row">
                                     <div class="col mb-2 form-input">
-                                        <label for="univ" class="form-label" >Universitas</label>
-                                        <select class="form-select select2" data-placeholder="Pilih Universitas" 
+                                        <label for="univ" class="form-label">Universitas</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Universitas"
                                             name="id_univ" id="id_univ">
                                             <option>Pilih Universitas</option>
                                             @foreach ($universitas as $u)
@@ -233,7 +234,8 @@
                                 <div class="row">
                                     <div class="col mb-2 form-input">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" name="nim" id="nim" class="form-control" placeholder="NIM" />
+                                        <input type="text" name="nim" id="nim" class="form-control"
+                                            placeholder="NIM" />
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -271,7 +273,7 @@
                                     <div class="row">
                                         <div class="col mb-2 form-input">
                                             <label for="alamatmhs" class="form-label">Alamat</label>
-                                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat" ></textarea>
+                                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat"></textarea>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
@@ -284,10 +286,10 @@
                                 </div>
                             </div>
                         </form>
-                    @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     @endsection
 
     @section('page_script')
@@ -344,68 +346,6 @@
                     },
                 ]
             });
-
-            function status(e) {
-                var status = e.attr('data-status');
-                var text = "";
-                Swal.fire({
-
-                    title: 'Are you sure?',
-                    text: "The selected data will be " + text,
-                    icon: 'warning',
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, ' + text + '!',
-                    showConfirmButton: true
-                }).then(function(result) {
-
-                    if (result.value) {
-                        var id = e.attr('data-id');
-                        let data = {
-                            'id': id,
-                        }
-                        jQuery.ajax({
-                            method: "POST",
-                            data: data,
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content')
-                            },
-                            url: `{{ url('master/mahasiswa/status') }}/${id}`,
-                            success: function(data) {
-
-                                if (data.error) {
-
-                                    Swal.fire({
-                                        type: "error",
-                                        title: 'Oops...',
-                                        text: data.message,
-                                        confirmButtonClass: 'btn btn-success',
-                                    })
-
-                                } else {
-
-                                    setTimeout(function() {
-                                        $('#table-master-mahasiswa').DataTable().ajax
-                                            .reload();
-
-                                    }, 1000);
-
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: 'Succeed!',
-                                        text: data.message,
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                    })
-
-                                }
-                            }
-                        });
-
-                    }
-                });
-            }
 
             function edit(e) {
                 let id = e.attr('data-id');
