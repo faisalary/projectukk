@@ -12,14 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
-            $table->integer('nim');
+            $table->integer('nim')->primary();
             $table->integer('angkatan');
-            $table->uuid('id_prodi');
+            $table->uuid('id_prodi')->nullable();
+            $table->uuid('id_univ')->nullable();
+            $table->uuid('id_fakultas')->nullable();
             $table->string('namamhs', 255);
             $table->string('alamatmhs', 255);
             $table->string('emailmhs', 255);
             $table->string('nohpmhs', 15);
-            $table->string('kelas', 255);
+            $table->string('kelas', 255)->nullable();
+            $table->foreign('id_prodi')->references('id_prodi')->on('program_studi');
+            $table->foreign('id_univ')->references('id_univ')->on('universitas');
+            $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas');
         });
     }
 

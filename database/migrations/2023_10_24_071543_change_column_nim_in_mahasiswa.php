@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('universitas', function (Blueprint $table) {
-            $table->uuid('id_univ')->primary();
-            $table->string('namauniv', 255);
-            $table->string('jalan', 255);
-            $table->string('kota', 255);
-            $table->string('telp', 15);
+        Schema::table('mahasiswa', function (Blueprint $table) {
+            //
+            Schema::table('mahasiswa', function (Blueprint $table) {
+                $table->char('nim')->change();
+            });
         });
     }
 
@@ -25,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('universitas');
+        Schema::table('mahasiswa', function (Blueprint $table) {
+            //
+        });
     }
 };
