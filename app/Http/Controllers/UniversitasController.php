@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Universitas;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -77,6 +78,12 @@ class UniversitasController extends Controller
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
+            ->editColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
@@ -103,7 +110,8 @@ class UniversitasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $univ = Universitas::where('id_univ', $id)->first();
+        return $univ;
     }
 
     /**

@@ -53,43 +53,64 @@
         color: #1967D2 !important;
     }
 
-    #lowongan {
-        color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
-        font-feature-settings: 'clig' off, 'liga' off;
-        /* Basic Typography/Paragraph/Paragraph 1 - Medium */
-        margin-left: 62px;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 22px;
-        /* 146.667% */
-    }
 
     #Perusahaan {
         color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
         font-feature-settings: 'clig' off, 'liga' off;
         /* Basic Typography/Paragraph/Paragraph 1 - Medium */
 
-        margin-left: 20px;
-        font-size: 15px;
+        margin-left: 50px;
+        font-size: 18px;
         font-style: normal;
         font-weight: 500;
         line-height: 22px;
+
         /* 146.667% */
     }
 
-    #Tentang {
+    #program {
         color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
         font-feature-settings: 'clig' off, 'liga' off;
         /* Basic Typography/Paragraph/Paragraph 1 - Medium */
 
-        margin-left: 20px;
-        font-size: 15px;
+        margin-left: 30px;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px;
+
+        /* 146.667% */
+    }
+
+    #lamaransaya {
+        color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
+        font-feature-settings: 'clig' off, 'liga' off;
+        /* Basic Typography/Paragraph/Paragraph 1 - Medium */
+
+        margin-left: 30px;
+        font-size: 18px;
         font-style: normal;
         font-weight: 500;
         line-height: 22px;
         /* 146.667% */
     }
+
+    #layanan {
+        color: var(--typography-color-heading-text, var(--typography-color-heading-text, #23314B));
+        font-feature-settings: 'clig' off, 'liga' off;
+        /* Basic Typography/Paragraph/Paragraph 1 - Medium */
+
+        margin-left: 30px;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px;
+        /* 146.667% */
+    }
+    a.btn.btn-outline-success:hover {
+    background-color: white !important;
+}
+
 </style>
 
 <header class="main-header">
@@ -98,35 +119,43 @@
         <div class="main-box mx-4">
             <!--Nav Outer -->
             <div class="logo-box mr-3">
-                <div class="logo mr-3"> <img src="{{ asset('front/assets/img/logo.svg') }}" class="img-fluid"
-                        alt=""><a href="{{ url('/') }}"></a></div>
-
+                <div class="logo mr-3" style="margin-left: 30px;"> <img src="{{ asset('front/assets/img/logo.svg') }}" class="img-fluid" alt=""><a href="{{ url('/') }}"></a></div>
 
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a id="lowongan" class="nav-link" href="#">Lowongan Pekerjaan</a>
+                        <a id="Perusahaan" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Perusahaan</a>
+                        <div class="dropdown-menu" style="height:90px; width:180px;">
+                            <a class="dropdown-item" href="#">Daftar Mitra </a>
+                            <a class="dropdown-item" href="#">Lowongan Magang</a>
+                        </div>
                     </div>
                 </div>
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a id="Perusahaan" class="nav-link" href="#">Perusahaan</a>
+                        <a id="program" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Program Magang</a>
+                        <div class="dropdown-menu" style="height:180px; width:200px;">
+                            <a class="dropdown-item" href="#">Magang Fakultas </a>
+                            <a class="dropdown-item" href="#">Informasi Magang</a>
+                        </div>
                     </div>
                 </div>
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a id="Tentang" class="nav-link" href="#">Tentang Kami</a>
-                    </div>
-                </div>
-                <!-- <div id="navbarNavAltMarkup">
-                    <div class="navbar-nav" >
-                    <a id="LamaranSaya" class="nav-link" href="#">Lamaran Saya</a>
+                        <a id="lamaransaya" class="nav-link" href="#">Lamaran Saya</a>
                     </div>
                 </div>
                 <div id="navbarNavAltMarkup">
-                    <div class="navbar-nav" >
-                    <a id="PekerjaanTersimpan" class="nav-link" href="#">Pekerjaan Tersimpan</a>
+                    <div class="navbar-nav">
+                        <a id="layanan" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Layanan LKM</a>
+                        <div class="dropdown-menu" style="height:190px; width:270px;">
+                            <a class="dropdown-item" href="#">Logbook</a>
+                            <a class="dropdown-item" href="#">Persetujuan Dosen Wali</a>
+                            <a class="dropdown-item" href="#">Konfirmasi Magang</a>
+                            <a class="dropdown-item" href="#">Input Dokumen Magang Mandiri</a>
+                            <a class="dropdown-item" href="#">Input Dokumen Magang Kerja</a>
+                        </div>
                     </div>
-                </div> -->
+                </div>
             </div>
 
 
@@ -143,115 +172,95 @@
 
 
 
-                <div class=" outer-box">
-                    <!--Dropdown Bahasa-->
-                    <div class="btn-group">
-                        <form class="btn-box">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26"
-                                        viewBox="0 0 24 26" fill="none">
-                                        <ellipse cx="12" cy="13" rx="9" ry="9.73346"
-                                            stroke="#23314B" stroke-width="1.28571" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335"
-                                            stroke="#23314B" stroke-width="1.28571" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335"
-                                            stroke="#23314B" stroke-width="1.28571" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    IND
-                                </button>
+            <div class=" outer-box">
+                <!--Dropdown Bahasa-->
+                <div class="btn-group">
+                    <!-- <form class="btn-box">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
+                                    <ellipse cx="12" cy="13" rx="9" ry="9.73346" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3.60059 9.75552H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3.60059 16.2445H20.4006" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M11.4997 3.26655C8.06261 9.22318 8.06261 16.7768 11.4997 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.5 3.26655C15.9371 9.22318 15.9371 16.7768 12.5 22.7335" stroke="#23314B" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                IND
+                            </button>
 
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Indonesia</a></li>
-                                    <li><a class="dropdown-item" href="#">Inggris</a></li>
-                                    <li><a class="dropdown-item" href="#">Sunda</a></li>
-                                </ul>
-                        </form>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Indonesia</a></li>
+                                <li><a class="dropdown-item" href="#">Inggris</a></li>
+                                <li><a class="dropdown-item" href="#">Sunda</a></li>
+                            </ul>
+                    </form> -->
 
-                        <!-- Login/Register -->
-                        <a href="{{ route('login') }}">
-                            <button class="btn btn-outline-dark me-2 ml-2" type="button">Masuk</button>
-                        </a>
-                        <a href="{{ route('register') }}">
-                            <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
-                        </a>
-                        <a href="{{ route('register') }}"
-                            style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk
-                            Perusahaan</a>
-                    </div>
+                    <!-- Login/Register -->
+                    <a href="{{ route('login')}}">
+                        <button class="btn btn-outline-success me-2 ml-2" type="button">Masuk</button>
+                    </a>
+                    <a href="{{ route('register')}}">
+                        <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px;" type="button">Daftar</button>
+                    </a>
+                    <!-- <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a> -->
                 </div>
+            </div>
             @else
-                <div class="outer-box">
-                    <!-- Notifications Dropdown Menu -->
-                    @if (
-                        ($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant') ||
-                            $user->profile)
-                        <li class="nav-item dropdown" id="top-notification-dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell-o" style="color:black;"></i>
-                                @if (count($user->unreadNotifications) > 0)
-                                    <span
-                                        class="badge badge-warning navbar-badge">{{ count($user->unreadNotifications) }}</span>
-                                @endif
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <div class="scrollable">
-                                    @foreach ($user->unreadNotifications as $notification)
-                                        @include('notifications.' . snake_case(class_basename($notification->type)))
-                                    @endforeach
+            <div class="outer-box">
+                <!-- Notifications Dropdown Menu -->
+                @if($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant'
+                || $user->profile)
+                <li class="nav-item dropdown" id="top-notification-dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell-o" style="color:black;"></i>
+                        @if(count($user->unreadNotifications) > 0)
+                        <span class="badge badge-warning navbar-badge">{{ count($user->unreadNotifications) }}</span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="scrollable">
+                            @foreach ($user->unreadNotifications as $notification)
+                            @include('notifications.'.snake_case(class_basename($notification->type)))
+                            @endforeach
+                        </div>
+                        @if(count($user->unreadNotifications) > 0)
+                        <a id="mark-notification-read" href="javascript:void(0);" class="dropdown-item dropdown-footer">@lang('app.markNotificationRead') <i class="fa fa-check"></i></a>
+                        @else
+                        <a href="javascript:void(0);" class="dropdown-item dropdown-footer">@lang('messages.notificationNotFound') </a>
+                        @endif
+                    </div>
+                </li>
+                @endif
+                <nav class="nav main-menu" style="min-width: 160px;">
+                    <ul class="navigation p-0 m-0" id="navbar">
+                        <li class="current dropdown p-0 m-0">
+                            <a class="image-container nav-link waves-effect waves-light" style="display: flex; align-items: center; justify-content: center; text-align: left;">
+                                <div class="image">
+                                    <img src="{{ $user->profile_image_url  }}" style="vertical-align:unset;" alt="User Image">
                                 </div>
-                                @if (count($user->unreadNotifications) > 0)
-                                    <a id="mark-notification-read" href="javascript:void(0);"
-                                        class="dropdown-item dropdown-footer">@lang('app.markNotificationRead') <i
-                                            class="fa fa-check"></i></a>
-                                @else
-                                    <a href="javascript:void(0);"
-                                        class="dropdown-item dropdown-footer">@lang('messages.notificationNotFound') </a>
-                                @endif
-                            </div>
-                        </li>
-                    @endif
-                    <nav class="nav main-menu" style="min-width: 160px;">
-                        <ul class="navigation p-0 m-0" id="navbar">
-                            <li class="current dropdown p-0 m-0">
-                                <a class="image-container nav-link waves-effect waves-light"
-                                    style="display: flex; align-items: center; justify-content: center; text-align: left;">
-                                    <div class="image">
-                                        <img src="{{ $user->profile_image_url }}" style="vertical-align:unset;"
-                                            alt="User Image">
-                                    </div>
-                                    <div style="line-height: normal;">
-                                        <span style="color:black;">{{ ucwords($user->name) }}<br></span>
-                                        @if ($user && is_array($user->roles) && count($user->roles) > 0 && $user->roles[0]->name != 'applicant')
-                                            <span class="text-muted"
-                                                style="font-size: 12px;">{{ $user->roles[0]->name }}</span>
-                                        @endif
-                                    </div>
-                                </a>
-                                <ul>
+                                <div style="line-height: normal;">
+                                    <span style="color:black;">{{ ucwords($user->name) }}<br></span>
+                                    @if($user && is_array($user->roles) && count($user->roles) > 0 &&
+                                    $user->roles[0]->name != 'applicant')
+                                    <span class="text-muted" style="font-size: 12px;">{{ $user->roles[0]->name }}</span>
+                                    @endif
+                                </div>
+                            </a>
+                            <ul>
 
-                                    @if (isset($user) && isset($user->roles) && count($user->roles) > 0 && $user->roles[0]->name == 'applicant')
-                                        @if ($user->profile)
-                                            <li><a href="{{ route('profile.index') }}"
-                                                    class="{{ request()->is('profile') ? 'active' : '' }}">My
-                                                    Profile</a></li>
-                                            <li><a href="{{ route('application.index') }}"
-                                                    class="{{ request()->is('profile/applications') ? 'active' : '' }}">My
-                                                    Applications</a></li>
-                                        @else
-                                            <li><a href="{{ route('profile.setup') }}"
-                                                    class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup
-                                                    Profile</a></li>
-                                        @endif
-                                    @else
-                                        <li><a href="">Dashboard</a></li>
+                                @if(isset($user) && isset($user->roles) && count($user->roles) > 0 &&
+                                $user->roles[0]->name == 'applicant')
+                                @if($user->profile)
+                                <li><a href="{{ route('profile.index') }}" class="{{ request()->is('profile') ? 'active' : '' }}">My Profile</a></li>
+                                <li><a href="{{ route('application.index') }}" class="{{ request()->is('profile/applications') ? 'active' : '' }}">My
+                                        Applications</a></li>
+                                @else
+                                <li><a href="{{ route('profile.setup') }}" class="{{ request()->is('profile/setup') ? 'active' : '' }}">Setup Profile</a>
+                                </li>
+                                @endif
+                                @else
+
+                                <li><a href="">Dashboard</a></li>
 
                                     @endif
                                     @if ($user->profile)

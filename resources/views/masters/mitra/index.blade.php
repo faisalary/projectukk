@@ -81,12 +81,6 @@
                     <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="kmitra" class="form-label">Kategori Mitra</label>
-                        <input type="text" id="kategori" class="form-control" placeholder="Kategori Mitra" />
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
@@ -122,12 +116,6 @@
                     <div class="col mb-2">
                     <label for="alamat" class="form-label">Alamat</label>
                     <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="kmitra" class="form-label">Kategori Mitra</label>
-                        <input type="text" id="kategori" class="form-control" placeholder="Kategori Mitra" />
                     </div>
                 </div>
             </div>
