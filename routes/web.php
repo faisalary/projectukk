@@ -161,4 +161,5 @@ Route::prefix('master_mahasiswa')->group(function () {
     Route::post('/', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::put('/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+    Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\MahasiswaController::class, 'list_fakultas'])->name('mahasiswa.list_fakultas');
 });
