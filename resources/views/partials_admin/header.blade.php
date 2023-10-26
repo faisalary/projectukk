@@ -89,6 +89,10 @@
 .nav-pills .nav-link:not(.active):hover, .nav-pills .nav-link:not(.active):focus {
     color: #4EA971;
 }
+ .btn-success {
+    background-color: #4EA971;
+    border-color: #4EA971;
+}
     </style>
 
     @yield('page_style')

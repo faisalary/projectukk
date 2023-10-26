@@ -63,6 +63,10 @@ Route::get('/apply_alert', function () {
     return view('apply.apply_alert');
 });
 
+Route::get('/magang_fakultas', function () {
+    return view('layouts.program_magang.magang_fakultas');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('/master_universitas', function () {

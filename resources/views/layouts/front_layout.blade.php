@@ -13,6 +13,10 @@
     <link rel="icon" href="{{ asset('front/assets/landing/images/favicon.png')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2-bootstrap4.min.css" rel="stylesheet">
+
 
 
     <!-- Responsive -->
@@ -20,9 +24,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-
 
 
     <style>
@@ -45,6 +46,29 @@
 
         .bg-primary {
             color: #fff !important;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #4EA971 !important;
+            border-color: #4EA971 !important;
+        }
+
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #4EA971 !important;
+            border-color: #4EA971 !important;
+        }
+
+        .page-item .page-link {
+            color: grey;
+        }
+
+        .dropdown-item.active,
+        .dropdown-item:active {
+            color: #fff;
+            background-color: #4EA971 !important;
         }
 
         .bg-primary,
@@ -126,6 +150,78 @@
             max-width: 15rem;
             height: 201px;
         }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: #3e8e41;
+        }
+
+        #myInput {
+            box-sizing: border-box;
+            background-image: url('searchicon.png');
+            background-position: 14px 12px;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            padding: 14px 20px 12px 45px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #myInput:focus {
+            outline: 3px solid #ddd;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f6f6f6;
+            min-width: 230px;
+            overflow: auto;
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+        .select2-container--default .select2-selection--single {
+            width: 500px;
+    height: 50px;
+    border-left: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+}
+
+.select2-container {
+    width: 418px !important;
+}
     </style>
 
 </head>
@@ -172,8 +268,69 @@
     <script src="{{ asset('front/assets/landing/js/map-script.js') }}"></script>
     <!--Google Map APi Key-->
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     @stack('footer-script')
 
+    <script>
+        function imagefun() {
+            var Image_Id = document.getElementById('getImage');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        function imagefun1() {
+            var Image_Id = document.getElementById('getImage1');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        function imagefun2() {
+            var Image_Id = document.getElementById('getImage2');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        function imagefun3() {
+            var Image_Id = document.getElementById('getImage3');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        function imagefun4() {
+            var Image_Id = document.getElementById('getImage4');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        function imagefun5() {
+            var Image_Id = document.getElementById('getImage5');
+            if (Image_Id.src.match("{{ asset('front/assets/img/bookmark-outline.svg')}}")) {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark.svg')}}";
+            } else {
+                Image_Id.src = "{{ asset('front/assets/img/bookmark-outline.svg')}}";
+            }
+        }
+
+        $("#single").select2({
+          placeholder: "Lowongan Magang",
+          allowClear: true
+      });
+    </script>
 
 </body>
 
