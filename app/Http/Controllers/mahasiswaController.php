@@ -151,7 +151,11 @@ class MahasiswaController extends Controller
     {                                                          
         Mahasiswa::destroy($id);
 
-        return redirect()->route('mahasiswa.index');
-    
+        return response()->json([
+            'error' => false,
+            'message' => 'mahasiswa successfully Deleted!',
+            'modal' => '#modal-mahasiswa',
+            'table' => '#table-master-mahasiswa'
+        ]);
     } 
 }
