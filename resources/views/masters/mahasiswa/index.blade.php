@@ -305,15 +305,15 @@
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "namauniv",
+                        data: "univ.namauniv",
                         name: "namauniv"
                     },
                     {
-                        data: "namafakultas",
+                        data: "fakultas.namafakultas",
                         name: "namafakultas"
                     },
                     {
-                        data: "namaprodi",
+                        data: "prodi.namaprodi",
                         name: "namaprodi"
                     },
                     {
