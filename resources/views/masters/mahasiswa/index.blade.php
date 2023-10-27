@@ -91,7 +91,7 @@
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="univ" class="form-label">Universitas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ">
+                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ" id="id_univ_add">
                                         <option>Pilih Universitas</option>
                                         @foreach ($universitas as $u)
                                             <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -104,10 +104,8 @@
                                 <div class="col mb-2 form-input">
                                     <label for="fakultas" class="form-label">Fakultas</label>
                                     <select class="form-select select2" data-placeholder="Pilih Fakultas"
-                                        name="id_fakultas">
-                                        @foreach ($fakultas as $f)
-                                            <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                        @endforeach
+                                        name="id_fakultas" id="id_fakultas_add">
+                                      
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -305,15 +303,15 @@
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "namauniv",
+                        data: "univ.namauniv",
                         name: "namauniv"
                     },
                     {
-                        data: "namafakultas",
+                        data: "fakultas.namafakultas",
                         name: "namafakultas"
                     },
                     {
-                        data: "namaprodi",
+                        data: "prodi.namaprodi",
                         name: "namaprodi"
                     },
                     {
@@ -382,6 +380,28 @@
                 $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
                 $('.invalid-feedback').removeClass('d-block');
                 $('.form-control').removeClass('is-invalid');
+            });
+
+            $('#id_univ_add').on('change', function() {
+                id_univx = $("#id_univ_add option:selected").val();
+
+                $.ajax({
+                    url: "{{ url('/master_mahasiswa/list-fakultas') }}" + '/' + id_univx,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        
+                        if ($('#id_fakultas_add').data('select2')) {
+                            $("#id_fakultas_add").val("");
+                            $("#id_fakultas_add").trigger("change");
+                            $('#id_fakultas_add').empty().trigger("change");
+                        }
+                        $("#id_fakultas_add").select2({
+                            data: response.data,
+                            dropdownParent: $('#modalTambahMahasiswa'),
+                        });
+                    }
+                })
             });
 
             function delete_data(content, args) {

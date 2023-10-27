@@ -12,6 +12,8 @@ use App\Models\ProgramStudi;
 use App\Models\Universitas;
 use Illuminate\Routing\Route;
 
+use function Laravel\Prompts\select;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -82,11 +84,8 @@ class MahasiswaController extends Controller
      */
     public function show()
     {
-        $mahasiswa = Mahasiswa::join('fakultas','fakultas.id_fakultas', 'mahasiswa.id_fakultas')
-        ->join ('program_studi','program_studi.id_prodi', 'mahasiswa.id_prodi')
-        ->join ('universitas','universitas.id_univ', 'mahasiswa.id_univ')
-            ->orderBy('nim', 'asc')
-            ->get();
+       
+        $mahasiswa = Mahasiswa::with("prodi","univ","fakultas")->orderBy('nim',"asc")->get();
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
@@ -158,4 +157,20 @@ class MahasiswaController extends Controller
             'table' => '#table-master-mahasiswa'
         ]);
     } 
+
+    public function list_fakultas($id_univ){
+        $fakultas = Fakultas::where("id_univ",$id_univ)->get();
+        $select=array(
+            0=>["id" => '', "text" => 'pilih dong']
+        );
+
+        foreach ($fakultas as $item) {
+            $select[] = ["id" => $item->id_fakultas, "text" => $item->namafakultas];
+        }
+        return response()->json([
+            'error' => false,
+            'data'=> $select
+        ]);
+
+    }
 }
