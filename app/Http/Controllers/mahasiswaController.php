@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,10 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
+use Illuminate\Routing\Route;
+
+use function Laravel\Prompts\select;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -79,50 +84,93 @@ class MahasiswaController extends Controller
      */
     public function show()
     {
-        $mahasiswa = Mahasiswa::join('fakultas','fakultas.id_fakultas', 'mahasiswa.id_fakultas')
-        ->join ('program_studi','program_studi.id_prodi', 'mahasiswa.id_prodi')
-        ->join ('universitas','universitas.id_univ', 'mahasiswa.id_univ')
-            ->orderBy('nim', 'asc')
-            ->get();
+       
+        $mahasiswa = Mahasiswa::with("prodi","univ","fakultas")->orderBy('nim',"asc")->get();
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
             ->addColumn('action', function ($mahasiswa) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$mahasiswa->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a onclick =delete_data($(this))  data-id='{$mahasiswa->nim}'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
 
                 return $btn;
             })
-            ->addColumn('action', function ($mahasiswa) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>";
+            ->rawColumns(['action'])
 
-                return $btn;
-            })
-            ->toJson();
+                ->make(true);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        return $mahasiswa;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $mahasiswa = Mahasiswa::where('nim', $id)->first();
+
+            $mahasiswa->nim = $request->nim;
+            $mahasiswa->angkatan = $request->angkatan;
+            $mahasiswa->id_prodi = $request->id_prodi;
+            $mahasiswa->id_univ = $request->id_univ;
+            $mahasiswa->id_fakultas = $request->id_fakultas;
+            $mahasiswa->namamhs = $request->namamhs;
+            $mahasiswa->alamatmhs = $request->alamatmhs;
+            $mahasiswa->emailmhs = $request->emailmhs;
+            $mahasiswa->nohpmhs = $request->nohpmhs;
+            $mahasiswa->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mahasiswa successfully Updated!',
+                'modal' => '#modalEditMahasiswa',
+                'table' => '#table-master-mahasiswa'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id)
+    {                                                          
+        Mahasiswa::destroy($id);
+
+        return response()->json([
+            'error' => false,
+            'message' => 'mahasiswa successfully Deleted!',
+            'modal' => '#modal-mahasiswa',
+            'table' => '#table-master-mahasiswa'
+        ]);
+    } 
+
+    public function list_fakultas($id_univ){
+        $fakultas = Fakultas::where("id_univ",$id_univ)->get();
+        $select=array(
+            0=>["id" => '', "text" => 'pilih dong']
+        );
+
+        foreach ($fakultas as $item) {
+            $select[] = ["id" => $item->id_fakultas, "text" => $item->namafakultas];
+        }
+        return response()->json([
+            'error' => false,
+            'data'=> $select
+        ]);
+
     }
 }

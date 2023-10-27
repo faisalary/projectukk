@@ -94,6 +94,15 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
         Route::get('/edit/{id}', [App\Http\Controllers\UniversitasController::class, 'edit'])->name('universitas.edit');
     });
+    Route::prefix('mahasiswa')->group(function () {
+        Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
+        Route::get('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
+        Route::post('/store', [App\Http\Controllers\mahasiswaController::class, 'store'])->name('mahasiswa.store');
+        Route::post('/destroy/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+
+        Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -141,8 +150,8 @@ Route::prefix('master_universitas')->group(function () {
     Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
     Route::get('/create', [App\Http\Controllers\UniversitasController::class, 'create'])->name('universitas.create');
     Route::post('/', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
+    Route::post('update_status/{id}', [App\Http\Controllers\UniversitasController::class, 'status'])->name('universitas.upStatus');
     Route::put('/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
-    Route::delete('/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
 });
 
 Route::prefix('master_mahasiswa')->group(function () {
@@ -152,4 +161,5 @@ Route::prefix('master_mahasiswa')->group(function () {
     Route::post('/', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::put('/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+    Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\MahasiswaController::class, 'list_fakultas'])->name('mahasiswa.list_fakultas');
 });
