@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <style>
@@ -69,25 +73,27 @@
             </div>
         </div>
 
-
-
         <!-- Modal -->
-        <form class="default-form" method="POST" action="{{ route('mahasiswa.store') }}">
-            @csrf
-            <div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-center d-block">
-                            <h5 class="modal-title">Tambah Mahasiswa</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+
+        <div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header text-center d-block">
+                        <h5 class="modal-title">Tambah Mahasiswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form class="default-form" id="modalTambahMahasiswa" method="POST"
+                        action="{{ route('mahasiswa.store') }}">
+                        @csrf
                         <div class="modal-body">
+
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="univ" class="form-label">Universitas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ">
+                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ" id="id_univ_add">
                                         <option>Pilih Universitas</option>
-                                        @foreach($universitas as $u)
+                                        @foreach ($universitas as $u)
                                             <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
                                         @endforeach
                                     </select>
@@ -97,10 +103,9 @@
                             <div class="row">
                                 <div class="col mb-2 form-input">
                                     <label for="fakultas" class="form-label">Fakultas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Fakultas" name="id_fakultas">
-                                        @foreach($fakultas as $f)
-                                            <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                        @endforeach
+                                    <select class="form-select select2" data-placeholder="Pilih Fakultas"
+                                        name="id_fakultas" id="id_fakultas_add">
+                                      
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -109,8 +114,8 @@
                                 <div class="col mb-2 form-input">
                                     <label for="prodi" class="form-label">Prodi</label>
                                     <select class="form-select select2" data-placeholder="Pilih Prodi" name="id_prodi">
-                                        @foreach($prodi as $p)
-                                            <option value="{{ $p->id_prodi}}">{{ $p->namaprodi }}</option>
+                                        @foreach ($prodi as $p)
+                                            <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
                                         @endforeach
                                     </select>
                                     <div class="invalid-feedback"></div>
@@ -148,7 +153,8 @@
                                 <div class="row">
                                     <div class="col mb-2 form-input">
                                         <label for="emailmhs" class ="form-label">Email</label>
-                                        <input type="text" name="emailmhs" class="form-control" placeholder="Email" />
+                                        <input type="text" name="emailmhs" class="form-control"
+                                            placeholder="Email" />
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -161,166 +167,151 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header text-center d-block">
-                        <h5 class="modal-title">Edit Mahasiswa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="universitas" class="form-label">Universitas</label>
-                                <select class="form-select select2" data-placeholder="Pilih Universitas">
-                                    <option>Pilih Universitas</option>
-                                    <option value="1">Telkom</option>
-                                    <option value="2">Telyu</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="fakultas" class="form-label">Fakultas</label>
-                                <select class="form-select select2" data-placeholder="Pilih Fakultas">
-                                    <option>Pilih Fakultas</option>
-                                    <option value="1">FIT</option>
-                                    <option value="2">FEB</option>
-                                    <option value="2">FIK</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="prodi" class="form-label">Prodi</label>
-                                <select class="form-select select2" data-placeholder="Pilih Prodi">
-                                    <option>Pilih Prodi</option>
-                                    <option value="1">D3 Sistem Informasi</option>
-                                    <option value="2">S1 Design Interior</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="nim" class="form-label">NIM</label>
-                                <input type="text" id="nip" class="form-control" placeholder="NIM" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="angkatan" class="form-label">Angkatan</label>
-                                <input type="text" id="angkatan" class="form-control" placeholder="Angkatan" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="namaMahasiswa" class="form-label">Nama Mahasiswa</label>
-                                <input type="text" id="NamaMahasiswa" class="form-control"
-                                    placeholder="Nama Mahasiswa" />
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2">
-                                    <label for="telp" class="form-label">Nomor Telepon</label>
-                                    <input type="text" id="telp" class="form-control"
-                                        placeholder="Nomor Telepon" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2">
-                                    <label for="email" class ="form-label">Email</label>
-                                    <input type="text" id="email" class="form-control" placeholder="Email" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success">Simpan</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+        @foreach ($mahasiswa as $data)
+            <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center d-block">
+                            <h5 class="modal-title">Edit Mahasiswa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form class="default-form" id="modalEditMahasiswa" method="POST"
+                            action="{{ route('mahasiswa.update', $data->nim) }}">
+                            @csrf
+                            {{ method_field('put') }}
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="univ" class="form-label">Universitas</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Universitas"
+                                            name="id_univ" id="id_univ">
+                                            <option>Pilih Universitas</option>
+                                            @foreach ($universitas as $u)
+                                                <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="fakultas" class="form-label">Fakultas</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Fakultas"
+                                            name="id_fakultas" id="id_fakultas">
+                                            @foreach ($fakultas as $f)
+                                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="prodi" class="form-label">Prodi</label>
+                                        <select class="form-select select2" data-placeholder="Pilih Prodi"
+                                            name="id_prodi" id="id_prodi">
+                                            @foreach ($prodi as $p)
+                                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="nim" class="form-label">NIM</label>
+                                        <input type="text" name="nim" id="nim" class="form-control"
+                                            placeholder="NIM" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="angkatan" class="form-label">Angkatan</label>
+                                        <input type="text" name="angkatan" id="angkatan"class="form-control"
+                                            placeholder="Angkatan" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-2 form-input">
+                                        <label for="namamhs" class="form-label">Nama Mahasiswa</label>
+                                        <input type="text" name="namamhs" id="namamhs" class="form-control"
+                                            placeholder="Nama Mahasiswa" />
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="nohpmhs" class="form-label">Nomor Telepon</label>
+                                            <input type="text" name="nohpmhs" id="nohpmhs" class="form-control"
+                                                placeholder="Nomor Telepon" />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="emailmhs" class ="form-label">Email</label>
+                                            <input type="text" name="emailmhs" id="emailmhs" class="form-control"
+                                                placeholder="Email" />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-2 form-input">
+                                            <label for="alamatmhs" class="form-label">Alamat</label>
+                                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat"></textarea>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     @endsection
 
     @section('page_script')
-        <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-        <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-
         <script>
-            var jsonData = [{
-                    "nomor": "1",
-                    "univ": "Univestitas Telkom",
-                    "fakultas": "Fakultas Ilmu Terapan",
-                    "prodi": "D3 Sistem informasi",
-                    "nim": "6701215679",
-                    "angkatan": "46",
-                    "namamhs": "Roseanne Park",
-                    "nohpmhs": "081222376426",
-                    "emailmhs": "rosepark@gmail.com",
-                    "alamatmhs": "jln. rancabolang no.123",
-                    "action": "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-                },
-                {
-                    "nomor": "2",
-                    "univ": "Univestitas Telkom",
-                    "fakultas": "Fakultas Ilmu Terapan",
-                    "prodi": "D3 Sistem informasi",
-                    "nim": "6701215679",
-                    "angkatan": "46",
-                    "namamhs": "Roseanne Park",
-                    "nohpmhs": "081222376426",
-                    "emailmhs": "rosepark@gmail.com",
-                    "alamatmhs": "jln. rancabolang no.123",
-                    "action": "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-                },
-                {
-                    "nomor": "3",
-                    "univ": "Univestitas Telkom",
-                    "fakultas": "Fakultas Ilmu Terapan",
-                    "prodi": "D3 Sistem informasi",
-                    "nim": "6701215679",
-                    "angkatan": "46",
-                    "namamhs": "Roseanne Park",
-                    "nohpmhs": "081222376426",
-                    "emailmhs": "rosepark@gmail.com",
-                    "alamatmhs": "jln. rancabolang no.123",
-                    "action": "<a data-bs-toggle='modal' data-bs-target='#modalEditMahasiswa' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-                }
-
-            ];
-
             var table = $('#table-master-mahasiswa').DataTable({
                 ajax: '{{ route('mahasiswa.show') }}',
-                 serverSide: false,
-                 processing: true,
-                 deferRender: true,
+                serverSide: false,
+                processing: true,
+                deferRender: true,
                 type: 'GET',
-                 destroy: true,
+                destroy: true,
                 columns: [{
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "namauniv",
+                        data: "univ.namauniv",
                         name: "namauniv"
                     },
                     {
-                        data: "namafakultas",
+                        data: "fakultas.namafakultas",
                         name: "namafakultas"
                     },
                     {
-                        data: "namaprodi",
+                        data: "prodi.namaprodi",
                         name: "namaprodi"
                     },
                     {
@@ -354,24 +345,122 @@
                 ]
             });
 
-            function deactive(e) {
+            function edit(e) {
+                let id = e.attr('data-id');
+
+                let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
+                var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function(response) {
+                        $("#modal-title").html("Edit Mahasiswa");
+                        $("#modal-button").html("Update Data")
+                        $('#modal-mahasiswa form').attr('action', action);
+                        $('#nim').val(response.nim);
+                        $('#angkatan').val(response.angkatan);
+                        $('#id_prodi').val(response.id_prodi).change();
+                        $('#id_univ').val(response.id_univ).change();
+                        $('#id_fakultas').val(response.id_fakultas).change();
+                        $('#namamhs').val(response.namamhs);
+                        $('#alamatmhs').val(response.alamatmhs);
+                        $('#emailmhs').val(response.emailmhs);
+                        $('#nohpmhs').val(response.nohpmhs);
+
+                        $('#modalEditMahasiswa').modal('show');
+                    }
+                });
+            }
+
+            $("#modal-mahasiswa").on("hide.bs.modal", function() {
+
+                $("#modal-title").html("Edit Mahasiswa");
+                $("#modal-button").html("Save Data")
+                $('#modal-mahasiswa form')[0].reset();
+                $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
+                $('.invalid-feedback').removeClass('d-block');
+                $('.form-control').removeClass('is-invalid');
+            });
+
+            $('#id_univ_add').on('change', function() {
+                id_univx = $("#id_univ_add option:selected").val();
+
+                $.ajax({
+                    url: "{{ url('/master_mahasiswa/list-fakultas') }}" + '/' + id_univx,
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        
+                        if ($('#id_fakultas_add').data('select2')) {
+                            $("#id_fakultas_add").val("");
+                            $("#id_fakultas_add").trigger("change");
+                            $('#id_fakultas_add').empty().trigger("change");
+                        }
+                        $("#id_fakultas_add").select2({
+                            data: response.data,
+                            dropdownParent: $('#modalTambahMahasiswa'),
+                        });
+                    }
+                })
+            });
+
+            function delete_data(content, args) {
+
+                var id = content.attr('data-id');
+                var url = `{{ url('master/mahasiswa/destroy/') }}/${id}`;
+                const context = $(content).attr("context");
+
+                console.log(url);
+                console.log(id);
+
                 Swal.fire({
-                    title: 'Apakah anda yakin ingin menghapus data?',
-                    text: ' Data yang dipilih akan dihapus!',
-                    iconHtml: '<img src="{{ url('/app-assets/img/alert.png') }}">',
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Hapus",
-                    cancelButtonText: "Batal",
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger',
-                        iconHtml: 'no-border'
-                    },
-                    buttonsStyling: false
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                    "content"
+                                ),
+                            },
+                            url: url,
+                            success: function(response) {
+                                if (response.error) {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: response.message,
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        response.table ? "Deleted!" : "Info",
+                                        response.message,
+                                        "success"
+                                    ).then(() => {
+                                        if (response.table) {
+                                            setTimeout(function() {
+                                                $(response.table)
+                                                    .DataTable()
+                                                    .ajax.reload();
+                                            }, 1000);
+                                        }
+                                        if (typeof matrix === "function") matrix();
+                                    });
+                                }
+                            },
+                        });
+                    }
                 });
             }
         </script>
+
+        <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
     @endsection
