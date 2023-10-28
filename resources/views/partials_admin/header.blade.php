@@ -75,21 +75,28 @@
             color: #fff;
         }
 
-    .form-check-input:checked, .form-check-input[type=checkbox]:indeterminate {
-    background-color: #4EA971;
-    border-color: #4EA971;
-}
-.select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
-    background-color: rgba(115, 103, 240, 0.08) !important;
-    color: #4EA971 !important;
-}
-.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
-    background-color:#4EA971;
-    color: #fff;
-}
-.nav-pills .nav-link:not(.active):hover, .nav-pills .nav-link:not(.active):focus {
-    color: #4EA971;
-}
+        .form-check-input:checked,
+        .form-check-input[type=checkbox]:indeterminate {
+            background-color: #4EA971;
+            border-color: #4EA971;
+        }
+
+        .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+            background-color: rgba(115, 103, 240, 0.08) !important;
+            color: #4EA971 !important;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .nav-link.active:hover,
+        .nav-pills .nav-link.active:focus {
+            background-color: #4EA971;
+            color: #fff;
+        }
+
+        .nav-pills .nav-link:not(.active):hover,
+        .nav-pills .nav-link:not(.active):focus {
+            color: #4EA971;
+        }
     </style>
 
     @yield('page_style')
@@ -245,7 +252,7 @@
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
-                                <a href="/master_tahun_akademik" class="menu-link">
+                                <a href="/master/tahun-akademik" class="menu-link">
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
