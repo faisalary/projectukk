@@ -103,6 +103,15 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
         Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');
     });
+    Route::prefix('dosen')->group(function () {
+        Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
+        Route::get('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
+        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'destroy'])->name('dosen.destroy');
+
+        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+    });
 });
 
 Route::get('/pengaturan', function () {

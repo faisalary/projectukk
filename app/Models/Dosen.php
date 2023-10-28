@@ -11,7 +11,18 @@ class Dosen extends Model
     use HasUuids;
 
     protected $table = 'dosen';
-    protected $fillable = ['namadosen', 'nohpdosen', 'emaildosen', 'statusdosen'];
-    protected $primaryKey = 'id_dosen';
+    protected $fillable = ['namadosen', 'nohpdosen', 'emaildosen', 'statusdosen','namaprodi','kodedosen'];
+    protected $primaryKey = 'nip';
     protected $keyType = 'string';
+    public $timestamps = false;
+
+    public function univ(){
+        return $this->belongsTo(Universitas::class,'id_univ');
+    }
+    public function prodi(){
+        return $this->belongsTo(ProgramStudi::class,'id_prodi');
+    }
+    public function fakultas(){
+        return $this->belongsTo(Fakultas::class,'id_fakultas');
+    }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nohpdosen', 15);
             $table->string('emaildosen', 255);
             $table->string('statusdosen', 255);
+            $table->string('kodedosen', 15);
             $table->foreign('id_prodi')->references('id_prodi')->on('program_studi');
             $table->foreign('id_univ')->references('id_univ')->on('universitas');
         });

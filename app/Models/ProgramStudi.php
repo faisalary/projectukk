@@ -13,5 +13,6 @@ class ProgramStudi extends Model
     protected $table = 'program_studi';
     protected $fillable = ['namaprodi'];
     protected $primaryKey = 'id_prodi';
+    public $timestamps=false;
     protected $keyType = 'string';
 }
