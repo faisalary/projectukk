@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('notelpon', 15);
             $table->string('alamatindustri', 255);
             $table->boolean('kategori_industri');
-            $table->boolean('statuskerjasama');
+            $table->boolean('statuskerjasama')->default(true);
         });
     }
 

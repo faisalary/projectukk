@@ -14,4 +14,5 @@ class TahunAkademik extends Model
     protected $fillable = ['semester', 'tahun'];
     protected $primaryKey = 'id_year_akademik';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

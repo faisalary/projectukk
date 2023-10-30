@@ -16,6 +16,11 @@
                         icon: "error",
                         title: "Oops...",
                         text: "Something went wrong!",
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger",
+                        },
+                        buttonsStyling: false,
                     });
                 } else {
                     Swal.fire({
@@ -85,6 +90,11 @@
                         text: response.message,
                         icon: "error",
                         heightAuto: false,
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger",
+                        },
+                        buttonsStyling: false,
                     });
                 }
             },
@@ -103,10 +113,14 @@
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!",
+            showCancelButton: true,
+            showConfirmButton: true,
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -123,13 +137,20 @@
                                 icon: "error",
                                 title: "Oops...",
                                 text: response.message,
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                    cancelButton: "btn btn-danger",
+                                },
+                                buttonsStyling: false,
                             });
                         } else {
-                            Swal.fire(
-                                response.table ? "Deleted!" : "Info",
-                                response.message,
-                                "success"
-                            ).then(() => {
+                            Swal.fire({
+                                title: response.table ? "Deleted!" : "Info",
+                                text: response.message,
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(() => {
                                 if (response.table) {
                                     setTimeout(function () {
                                         $(response.table)
@@ -146,7 +167,7 @@
         });
     }
 
-   function status(e, args) {
+    function status(e, args) {
         const { url, id } = args;
         let action = url + "/" + id;
         var status = $(e).attr("data-status");
