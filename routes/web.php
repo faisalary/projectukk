@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndustriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,9 +130,6 @@ Route::get('/master_fakultas', function () {
 Route::get('/master_tahun_akademik', function () {
     return view('masters.tahun_akademik.index', ['active_menu' => 'master_tahun_akademik']);
 });
-Route::get('/master_mitra', function () {
-    return view('masters.mitra.index', ['active_menu' => 'master_mitra']);
-});
 Route::get('/master_dosen', function () {
     return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
 });
@@ -163,6 +161,16 @@ Route::prefix('master_mahasiswa')->group(function () {
     Route::post('/', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::put('/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+});
+
+Route::prefix('master-mitra')->group(function () {
+    Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
+    Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
+    Route::get('/create', [App\Http\Controllers\IndustriController::class, 'create'])->name('mitra.create');
+    Route::post('/store', [App\Http\Controllers\IndustriController::class, 'store'])->name('mitra.store');
+    Route::put('/update/{id}', [App\Http\Controllers\IndustriController::class, 'update'])->name('mitra.update');
+    Route::delete('/destory/{id}', [App\Http\Controllers\IndustriController::class, 'destory'])->name('mitra.destory');
+    Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\MahasiswaController::class, 'list_fakultas'])->name('mahasiswa.list_fakultas');
 });
 
