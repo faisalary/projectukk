@@ -214,9 +214,7 @@
                             });
                         } else {
                             setTimeout(function () {
-                                $("#table-master-univ")
-                                    .DataTable()
-                                    .ajax.reload();
+                                $(data.table).DataTable().ajax.reload();
                             }, 1000);
 
                             Swal.fire({
