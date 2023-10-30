@@ -62,8 +62,13 @@ Route::prefix('master')->group(function () {
     Route::get('/master-prodi', function () {
         return view('masters.prodi.index', ['active_menu' => 'master-prodi']);
     });
-    Route::get('/master_tahun_akademik', function () {
-        return view('masters.tahun_akademik.index', ['active_menu' => 'master_tahun_akademik']);
+    Route::prefix('tahun-akademik')->group(function () {
+        Route::get('/', [App\Http\Controllers\TahunAkademikController::class, 'index'])->name('thn-akademik.index');
+        Route::get('/show', [App\Http\Controllers\TahunAkademikController::class, 'show'])->name('thn-akademik.show');
+        Route::post('/store', [App\Http\Controllers\TahunAkademikController::class, 'store'])->name('thn-akademik.store');
+        Route::post('status/{id}', [App\Http\Controllers\TahunAkademikController::class, 'status'])->name('thn-akademik.status');
+        Route::post('/update/{id}', [App\Http\Controllers\TahunAkademikController::class, 'update'])->name('thn-akademik.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\TahunAkademikController::class, 'edit'])->name('thn-akademik.edit');
     });
     Route::get('/master_nilai_mutu', function () {
         return view('masters.nilai_mutu.index', ['active_menu' => 'master_nilai_mutu']);
@@ -90,8 +95,7 @@ Route::prefix('master')->group(function () {
         Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');
         Route::get('/show', [App\Http\Controllers\UniversitasController::class, 'show'])->name('universitas.show');
         Route::post('/store', [App\Http\Controllers\UniversitasController::class, 'store'])->name('universitas.store');
-        Route::post('/status/{id}', [App\Http\Controllers\UniversitasController::class, 'destroy'])->name('universitas.destroy');
-
+        Route::post('/status/{id}', [App\Http\Controllers\UniversitasController::class, 'status'])->name('universitas.status');
         Route::post('/update/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
         Route::get('/edit/{id}', [App\Http\Controllers\UniversitasController::class, 'edit'])->name('universitas.edit');
     });

@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UniversitasRequest;
-use App\Models\Universitas;
 use Exception;
+use App\Models\Universitas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\TahunAkademik;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\TahunAkademikRequest;
 
-class UniversitasController extends Controller
+class TahunAkademikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $universities = Universitas::all();
-        return view('masters.universitas.index', compact('universities'));
+        $tahun = TahunAkademik::all();
+        $univ = Universitas::pluck('namauniv');
+
+        return view('masters.tahun_akademik.index', compact('tahun', 'univ'));
     }
 
     /**
@@ -31,23 +33,22 @@ class UniversitasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UniversitasRequest $request)
+    public function store(TahunAkademikRequest $request)
     {
+
         try {
 
-            $univ = Universitas::create([
-                'namauniv' => $request->namauniv,
-                'jalan' => $request->jalan,
-                'kota' => $request->kota,
-                'telp' => $request->telp,
+            $tahun = TahunAkademik::create([
+                'tahun' => $request->tahun,
+                'semester' => $request->semester,
                 'status' => true,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Universitas successfully Created!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Tahun Akademik successfully Created!',
+                'modal' => '#modal-thn-akademik',
+                'table' => '#table-master-tahun-akademik'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -62,9 +63,9 @@ class UniversitasController extends Controller
      */
     public function show()
     {
-        $univ = Universitas::orderBy('namauniv', 'asc')->get();
+        $tahun = TahunAkademik::orderBy('tahun', 'asc')->get();
 
-        return DataTables::of($univ)
+        return DataTables::of($tahun)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -77,8 +78,8 @@ class UniversitasController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_univ}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_univ}' data-url='universitas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_year_akademik}' data-url='tahun-akademik/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -92,34 +93,34 @@ class UniversitasController extends Controller
      */
     public function edit(string $id)
     {
-        $univ = Universitas::where('id_univ', $id)->first();
-        return $univ;
+        $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
+        return $tahun;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TahunAkademikRequest $request, string $id)
     {
         try {
-            $univ = Universitas::where('id_univ', $id)->first();
+            // $validated = $request->validated();
 
-            $univ->namauniv = $request->namauniv;
-            $univ->jalan = $request->jalan;
-            $univ->kota = $request->kota;
-            $univ->telp = $request->telp;
-            $univ->save();
+            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
+
+            $tahun->tahun = $request->tahun;
+            $tahun->semester = $request->semester;
+            $tahun->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Tahun Akademik successfully Updated!',
+                'modal' => '#modal-thn-akademik',
+                'table' => '#table-master-tahun-akademik'
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
-               'message' => $e->getMessage(),
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -130,15 +131,15 @@ class UniversitasController extends Controller
     public function status(string $id)
     {
         try {
-            $univ = Universitas::where('id_univ', $id)->first();
-            $univ->status = ($univ->status) ? false : true;
-            $univ->save();
+            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
+            $tahun->status = ($tahun->status) ? false : true;
+            $tahun->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Status Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Status Tahun Akademik successfully Updated!',
+                'modal' => '#modal-thn-akademik',
+                'table' => '#table-master-tahun-akademik'
             ]);
         } catch (Exception $e) {
             return response()->json([
