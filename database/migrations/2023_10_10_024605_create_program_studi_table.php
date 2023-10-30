@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas');
         });
     }
+    
 
     /**
      * Reverse the migrations.

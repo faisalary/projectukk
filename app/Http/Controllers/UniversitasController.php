@@ -117,36 +117,29 @@ class UniversitasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        $univ = Universitas::findOrFail($id);
+        try {
+            $univ = Universitas::where('id_univ', $id)->first();
 
-        $request->validate(
-            [
-                'namauniv' => ['required', 'string', 'max:255', 'unique:universitas'],
-                'jalan' => ['required', 'string', 'max:255'],
-                'kota' => ['required', 'string', 'max:255'],
-                'telp' => ['required', 'string', 'max:15'],
+            $univ->namauniv = $request->namauniv;
+            $univ->jalan = $request->jalan;
+            $univ->kota = $request->kota;
+            $univ->telp = $request->telp;
+            $univ->save();
 
-            ],
-            [
-                'namauniv.required' => 'University name must be filled',
-                'namauniv.unique' => 'The name of the University has been used',
-                'jalan.required' => 'The address must be filled',
-                'kota.required' => 'The name of City must be filled',
-                'telp.required' => 'The phone number must be filled'
-            ]
-        );
-
-        $univ->update([
-            'namauniv' => $request->namauniv,
-            'jalan' => $request->jalan,
-            'kota' => $request->kota,
-            'telp' => $request->telp,
-        ]);
-
-
-        return redirect()->route('universitas.index');
+            return response()->json([
+                'error' => false,
+                'message' => 'Universitas successfully Updated!',
+                'modal' => '#modal-universitas',
+                'table' => '#table-master-univ'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+               'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
