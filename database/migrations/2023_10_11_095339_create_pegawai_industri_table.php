@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('emailpeg', 255);
             $table->string('jabatan', 255);
             $table->string('unit', 255);
-            $table->string('statuspeg', 255);
+            $table->boolean('statuspeg')->default(true);
             $table->foreign('id_industri')->references('id_industri')->on('industri');
         });
     }
