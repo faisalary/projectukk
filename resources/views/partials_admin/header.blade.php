@@ -259,8 +259,8 @@
                                     <div data-i18n="Master Industri">Master Industri</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mitra' ? 'active' : '' }} @endif>
-                                <a href="/master_mitra" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
+                                <a href="/master-mitra" class="menu-link">
                                     <div data-i18n="Master Mitra">Master Mitra</div>
                                 </a>
                             </li>
