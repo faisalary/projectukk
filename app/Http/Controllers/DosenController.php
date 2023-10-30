@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DosenRequest;
 use App\Models\Dosen;
 use App\Models\Universitas;
 use Exception;
@@ -32,24 +33,10 @@ class DosenController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DosenRequest $request)
     {
         try {
-            $request->validate(
-                [
-                    'nip' => ['required', 'integer', 'unique:dosen'],
-                    'namauniv' => ['required', 'string', 'max:255'],
-                    'kodedosen' => ['required', 'string', 'max:255'],
-                    'namaprodi' => ['required', 'string', 'max:15'],
-                    'namadosen' => ['required', 'string', 'max:15'],
-                    'nohpdosen' => ['required', 'string', 'max:15'],
-                    'emaildosen' => ['required', 'string', 'max:255'],
-                    // 'status' => ['required', 'boolean', 'default:true'],
-                ],
-                [
-                    'nip.unique' => 'NIP sudah ada'
-                ]
-            );
+            
 
             $dosen = Dosen::create([
                 'nip' => $request->nip,
@@ -93,11 +80,11 @@ class DosenController extends Controller
                 }
             })
             ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+                $icon = ($row->statusdosen) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->statusdosen) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$row->nip}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$row->status}' data-id='{$row->nip}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->statusdosen}' data-id='{$row->nip}' data-url='dosen/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -118,7 +105,7 @@ class DosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(DosenRequest $request, string $id)
     {
         try {
             $dosen = Dosen::where('nip', $id)->first();
@@ -149,16 +136,16 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function status($id)
     {
         try {
             $dosen = Dosen::where('nip', $id)->first();
-            $dosen->status = ($dosen->status) ? false : true;
+            $dosen->statusdosen = ($dosen->statusdosen) ? false : true;
             $dosen->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Dosen sudah di-nonaktifkan!',
+                'message' => 'Status Dosen successfully Updated!',
                 'modal' => '#modal-dosen',
                 'table' => '#table-master-dosen'
             ]);

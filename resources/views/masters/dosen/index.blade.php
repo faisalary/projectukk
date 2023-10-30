@@ -26,7 +26,7 @@
             font-size: 16px !important;
         }
     </style>
-@endsection
+
 
 @section('main')
     <div class="row">
@@ -62,96 +62,11 @@
             </div>
         </div>
     </div>
-
+@endsection
     <!-- Modal -->
 
-    <div class="modal fade" id="modal-dosen" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+@include('masters.dosen.modal')
 
-            <div class="modal-content">
-                <div class="modal-header text-center d-block">
-                    <h5 class="modal-title" id="modal-title">Tambah Dosen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="default-form" id="" method="POST" action="{{ route('dosen.store') }}">
-                    @csrf
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="univ" class="form-label">Universitas</label>
-                                <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ"
-                                    id="id_univ_add">
-                                    <option>Pilih Universitas</option>
-                                    @foreach ($dosen as $u)
-                                        <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="nip" class="form-label">NIP</label>
-                                <input class="form-control" id="nip" name="nip" placeholder="NIP" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="kodedosen" class="form-label">Kode Dosen</label>
-                                <input type="text" id="kodedosen" name="kodedosen" class="form-control"
-                                    placeholder="Kode Dosen" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="namadosen" class="form-label">Nama Dosen</label>
-                                <input type="text" id="namadosen" name="namadosen" class="form-control"
-                                    placeholder="Nama Dosen" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="prodi" class="form-label">Prodi</label>
-                                <select class="form-select select2" data-placeholder="Nama Prodi" name="id_prodi"
-                                    id="id_prodi">
-                                    <option>Pilih prodi</option>
-                                    @foreach ($dosen as $p)
-                                        <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="nohpdosen" class="form-label">No Telepon</label>
-                                <input type="text" id="nohpdosen" name="nohpdosen" class="form-control"
-                                    placeholder="No Telepon" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="emaildosen" class="form-label">Email</label>
-                                <input type="text" id="emaildosen" name="emaildosen" class="form-control"
-                                    placeholder="Email" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('page_script')
@@ -196,8 +111,8 @@
                     name: 'emaildosen'
                 },
                 {
-                    data: 'statusdosen',
-                    name: 'statusdosen'
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'action',
@@ -206,72 +121,72 @@
             ]
         });
 
-        function status(e) {
-            var status = e.attr('data-status');
-            var text = "";
-            if (status == 0) {
-                text = "Active";
-            } else {
-                text = "Inactive";
-            }
-            Swal.fire({
+        // function status(e) {
+        //     var status = e.attr('data-status');
+        //     var text = "";
+        //     if (status == 0) {
+        //         text = "Active";
+        //     } else {
+        //         text = "Inactive";
+        //     }
+        //     Swal.fire({
 
-                title: 'Are you sure?',
-                text: "The selected data will be " + text,
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, ' + text + '!',
-                showConfirmButton: true
-            }).then(function(result) {
+        //         title: 'Are you sure?',
+        //         text: "The selected data will be " + text,
+        //         icon: 'warning',
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes, ' + text + '!',
+        //         showConfirmButton: true
+        //     }).then(function(result) {
 
-                if (result.value) {
-                    var id = e.attr('data-id');
-                    let data = {
-                        'id': id,
-                    }
-                    jQuery.ajax({
-                        method: "POST",
-                        data: data,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content')
-                        },
-                        url: `{{ url('master/dosen/status') }}/${id}`,
-                        success: function(data) {
+        //         if (result.value) {
+        //             var id = e.attr('data-id');
+        //             let data = {
+        //                 'id': id,
+        //             }
+        //             jQuery.ajax({
+        //                 method: "POST",
+        //                 data: data,
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                         'content')
+        //                 },
+        //                 url: `{{ url('master/dosen/status') }}/${id}`,
+        //                 success: function(data) {
 
-                            if (data.error) {
+        //                     if (data.error) {
 
-                                Swal.fire({
-                                    type: "error",
-                                    title: 'Oops...',
-                                    text: data.message,
-                                    confirmButtonClass: 'btn btn-success',
-                                })
+        //                         Swal.fire({
+        //                             type: "error",
+        //                             title: 'Oops...',
+        //                             text: data.message,
+        //                             confirmButtonClass: 'btn btn-success',
+        //                         })
 
-                            } else {
+        //                     } else {
 
-                                setTimeout(function() {
-                                    $('#table-master-dosen').DataTable().ajax
-                                        .reload();
+        //                         setTimeout(function() {
+        //                             $('#table-master-dosen').DataTable().ajax
+        //                                 .reload();
 
-                                }, 1000);
+        //                         }, 1000);
 
-                                Swal.fire({
-                                    icon: "success",
-                                    title: 'Succeed!',
-                                    text: data.message,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                })
+        //                         Swal.fire({
+        //                             icon: "success",
+        //                             title: 'Succeed!',
+        //                             text: data.message,
+        //                             showConfirmButton: false,
+        //                             timer: 2000,
+        //                         })
 
-                            }
-                        }
-                    });
+        //                     }
+        //                 }
+        //             });
 
-                }
-            });
-        }
+        //         }
+        //     });
+        // }
 
         function edit(e) {
             let id = e.attr('data-id');
@@ -311,7 +226,7 @@
                 id_univx = $("#id_univ_add option:selected").val();
 
                 $.ajax({
-                    url: "{{ url('/master_mahasiswa/list-fakultas') }}" + '/' + id_univx,
+                    url: "{{ url('/master/mahasiswa/list-fakultas') }}" + '/' + id_univx,
                     method: "GET",
                     dataType: "json",
                     success: function(response) {
@@ -323,7 +238,7 @@
                         }
                         $("#id_fakultas_add").select2({
                             data: response.data,
-                            dropdownParent: $('#modalTambahMahasiswa'),
+                            dropdownParent: $('#modal-dosen'),
                         });
                     }
                 })

@@ -75,9 +75,6 @@ Route::prefix('master')->group(function () {
     Route::get('/master_mitra', function () {
         return view('masters.mitra.index', ['active_menu' => 'master_mitra']);
     });
-    Route::get('/master_dosen', function () {
-        return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
-    });
     Route::get('/master_mahasiswa', function () {
         return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
     });
@@ -98,24 +95,23 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\UniversitasController::class, 'update'])->name('universitas.update');
         Route::get('/edit/{id}', [App\Http\Controllers\UniversitasController::class, 'edit'])->name('universitas.edit');
     });
+    Route::prefix('dosen')->group(function () {
+        Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
+        Route::get('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
+        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
+        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+    });
     Route::prefix('mahasiswa')->group(function () {
         Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
         Route::get('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
         Route::post('/store', [App\Http\Controllers\mahasiswaController::class, 'store'])->name('mahasiswa.store');
         Route::post('/destroy/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
-
         Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
         Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');
     });
-    Route::prefix('dosen')->group(function () {
-        Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
-        Route::get('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
-        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
-        Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'destroy'])->name('dosen.destroy');
-
-        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
-        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
-    });
+    
 });
 
 Route::get('/pengaturan', function () {
