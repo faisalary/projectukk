@@ -64,10 +64,10 @@ Route::prefix('master')->group(function () {
     Route::prefix('tahun-akademik')->group(function () {
         Route::get('/', [App\Http\Controllers\TahunAkademikController::class, 'index'])->name('thn-akademik.index');
         Route::get('/show', [App\Http\Controllers\TahunAkademikController::class, 'show'])->name('thn-akademik.show');
-        Route::get('/create', [App\Http\Controllers\TahunAkademikController::class, 'create'])->name('thn-akademik.create');
-        Route::post('/', [App\Http\Controllers\TahunAkademikController::class, 'store'])->name('thn-akademik.store');
-        Route::post('update_status/{id}', [App\Http\Controllers\TahunAkademikController::class, 'status'])->name('thn-akademik.upStatus');
-        Route::put('/{id}', [App\Http\Controllers\TahunAkademikController::class, 'update'])->name('thn-akademik.update');
+        Route::post('/store', [App\Http\Controllers\TahunAkademikController::class, 'store'])->name('thn-akademik.store');
+        Route::post('status/{id}', [App\Http\Controllers\TahunAkademikController::class, 'status'])->name('thn-akademik.status');
+        Route::post('/update/{id}', [App\Http\Controllers\TahunAkademikController::class, 'update'])->name('thn-akademik.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\TahunAkademikController::class, 'edit'])->name('thn-akademik.edit');
     });
     Route::get('/master_nilai_mutu', function () {
         return view('masters.nilai_mutu.index', ['active_menu' => 'master_nilai_mutu']);
