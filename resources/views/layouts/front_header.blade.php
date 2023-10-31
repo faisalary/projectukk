@@ -156,13 +156,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
-
-
-
+                
 
 
             @php
@@ -202,7 +196,7 @@
                     <a href="{{ route('register')}}">
                         <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px;" type="button">Daftar</button>
                     </a>
-                    <!-- <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a> -->
+                    <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a>
                 </div>
             </div>
             @else
