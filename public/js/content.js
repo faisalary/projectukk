@@ -16,6 +16,11 @@
                         icon: "error",
                         title: "Oops...",
                         text: "Something went wrong!",
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger",
+                        },
+                        buttonsStyling: false,
                     });
                 } else {
                     Swal.fire({
@@ -85,6 +90,11 @@
                         text: response.message,
                         icon: "error",
                         heightAuto: false,
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger",
+                        },
+                        buttonsStyling: false,
                     });
                 }
             },
@@ -103,10 +113,14 @@
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!",
+            showCancelButton: true,
+            showConfirmButton: true,
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -123,13 +137,20 @@
                                 icon: "error",
                                 title: "Oops...",
                                 text: response.message,
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                    cancelButton: "btn btn-danger",
+                                },
+                                buttonsStyling: false,
                             });
                         } else {
-                            Swal.fire(
-                                response.table ? "Deleted!" : "Info",
-                                response.message,
-                                "success"
-                            ).then(() => {
+                            Swal.fire({
+                                title: response.table ? "Deleted!" : "Info",
+                                text: response.message,
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(() => {
                                 if (response.table) {
                                     setTimeout(function () {
                                         $(response.table)
@@ -138,6 +159,70 @@
                                     }, 1000);
                                 }
                                 if (typeof matrix === "function") matrix();
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    }
+
+    function status(e, args) {
+        const { url, id } = args;
+        let action = url + "/" + id;
+        var status = $(e).attr("data-status");
+        var text = "";
+        if (status == 0) {
+            text = "Active";
+        } else {
+            text = "Inactive";
+        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "The selected data will be " + text,
+            icon: "warning",
+            confirmButtonText: "Yes, " + text + "!",
+            showConfirmButton: true,
+            showCancelButton: true,
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false,
+        }).then(function (result) {
+            if (result.value) {
+                var id = $(e).attr("data-id");
+                let data = {
+                    id: id,
+                };
+                jQuery.ajax({
+                    method: "POST",
+                    data: data,
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    url: action,
+                    success: function (data) {
+                        if (data.error) {
+                            Swal.fire({
+                                type: "error",
+                                title: "Oops...",
+                                text: data.message,
+                                confirmButtonClass: "btn btn-success",
+                            });
+                        } else {
+                            setTimeout(function () {
+                                $(data.table).DataTable().ajax.reload();
+                            }, 1000);
+
+                            Swal.fire({
+                                icon: "success",
+                                title: "Succeed!",
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000,
                             });
                         }
                     },
@@ -156,6 +241,13 @@
 
     $(document).on("click", ".delete-data", function () {
         delete_data(this, {
+            url: $(this).attr("data-url"),
+            id: $(this).attr("data-id"),
+        });
+    });
+
+    $(document).on("click", ".update-status", function () {
+        status(this, {
             url: $(this).attr("data-url"),
             id: $(this).attr("data-id"),
         });

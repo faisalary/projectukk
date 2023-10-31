@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProgramStudi extends Model
 {
-    use HasUuids;
-
+    use HasFactory, HasUuids;
+    public $timestamps = false;
     protected $table = 'program_studi';
-    protected $fillable = ['namaprodi'];
     protected $primaryKey = 'id_prodi';
-    protected $keyType = 'string';
+    protected $fillable = [ 'id_fakultas', 'id_univ','namaprodi'];
+    public $keyType = 'string';
+
+    public function univ(){
+        return $this->belongsTo(Universitas::class,'id_univ');
+    }
+    public function fakultas(){
+       return $this->belongsTo(Fakultas::class,"id_fakultas");
+    }
+
 }

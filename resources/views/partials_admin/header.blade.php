@@ -4,6 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
+    @yield("meta_header")
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Talentern</title>
@@ -242,13 +243,13 @@
                                     <div data-i18n="Master Fakultas">Master Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_prodi' ? 'active' : '' }} @endif">
-                                <a href="/master_prodi" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-prodi' ? 'active' : '' }} @endif">
+                                <a href="/master-prodi" class="menu-link">
                                     <div data-i18n="Master Prodi">Master Prodi</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
-                                <a href="/master_tahun_akademik" class="menu-link">
+                                <a href="/master/tahun-akademik" class="menu-link">
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
@@ -262,8 +263,8 @@
                                     <div data-i18n="Master Industri">Master Industri</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mitra' ? 'active' : '' }} @endif>
-                                <a href="/master_mitra" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
+                                <a href="/master-mitra" class="menu-link">
                                     <div data-i18n="Master Mitra">Master Mitra</div>
                                 </a>
                             </li>

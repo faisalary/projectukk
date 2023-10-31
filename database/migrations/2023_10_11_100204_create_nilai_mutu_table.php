@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('nilaistart');
             $table->integer('nilaiend');
             $table->integer('nilaimutu');
+            $table->boolean('status')->default(true);
         });
     }
 

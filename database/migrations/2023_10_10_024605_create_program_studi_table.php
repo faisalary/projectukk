@@ -15,11 +15,13 @@ return new class extends Migration
             $table->uuid('id_prodi')->primary();
             $table->uuid('id_fakultas');
             $table->string('namaprodi', 255);
+            $table->boolean('status')->default(true);
             $table->uuid('id_univ');
             $table->foreign('id_univ')->references('id_univ')->on('universitas');
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas');
         });
     }
+    
 
     /**
      * Reverse the migrations.
