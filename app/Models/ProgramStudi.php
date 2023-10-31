@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramStudi extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
+    public $timestamps = false;
+    protected $table = 'program_studi';
+    protected $primaryKey = 'id_prodi';
+    protected $fillable = [ 'id_fakultas', 'id_univ','namaprodi'];
+    public $keyType = 'string';
 
-    protected $fillable = ['namaprodi', 'emailkaprodi', 'nohpkaprodi', 'kompetensiprodi'];
-    protected $primaryKey = 'kdprodi';
-
-    public function getIncrementing()
-    {
-        return false;
+    public function univ(){
+        return $this->belongsTo(Universitas::class,'id_univ');
+    }
+    public function fakultas(){
+       return $this->belongsTo(Fakultas::class,"id_fakultas");
     }
 
-    public function getKeyType()
-    {
-        return 'string';
-    }
 }
