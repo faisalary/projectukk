@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\DosenRequest;
 use App\Models\Dosen;
 use App\Models\Universitas;
+use App\Models\ProgramStudi;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+
 
 class DosenController extends Controller
 {
@@ -17,9 +19,10 @@ class DosenController extends Controller
      */
     public function index()
     {
-    
-        $dosen = Dosen::with('prodi','univ')->get();
-        return view('masters.dosen.index', compact('dosen'));
+        $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
+        $prodi = ProgramStudi::all();
+        $dosen = Dosen::all();
+        return view('masters.dosen.index', compact('dosen','prodi','universitas'));
     }
 
     /**
@@ -37,14 +40,13 @@ class DosenController extends Controller
     {
         try {
             
-
             $dosen = Dosen::create([
                 'nip' => $request->nip,
-                'namauniv' => $request->namauniv,
-                'kodedosen' => $request->kodedosen,
-                'namaprodi' => $request->namaprodi,
+                'id_univ' => $request->namauniv,
+                'id_prodi' => $request->namaprodi,
+                'kode_dosen' => $request->kode_dosen,
                 'namadosen' => $request->namadosen,
-                'nohpdosen' => $request->nohp,
+                'nohpdosen' => $request->nohpdosen,
                 'emaildosen' => $request->emaildosen,
                 'status' => true,
             ]);
@@ -80,11 +82,11 @@ class DosenController extends Controller
                 }
             })
             ->addColumn('action', function ($row) {
-                $icon = ($row->statusdosen) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->statusdosen) ? "danger" : "success";
+                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$row->nip}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->statusdosen}' data-id='{$row->nip}' data-url='dosen/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->status}' data-id='{$row->nip}' data-url='dosen/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -105,15 +107,15 @@ class DosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(DosenRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
             $dosen = Dosen::where('nip', $id)->first();
 
             $dosen->nip = $request->nip;
-            $dosen->namauniv = $request->namauniv;
-            $dosen->kodedosen = $request->kodedosen;
-            $dosen->namaprodi = $request->namaprodi;
+            $dosen->id_univ = $request->namauniv;
+            $dosen->kode_dosen = $request->kode_dosen;
+            $dosen->id_prodi = $request->namaprodi;
             $dosen->namadosen = $request->namadosen;
             $dosen->nohpdosen = $request->nohpdosen;
             $dosen->emaildosen = $request->emaildosen;
@@ -140,7 +142,7 @@ class DosenController extends Controller
     {
         try {
             $dosen = Dosen::where('nip', $id)->first();
-            $dosen->statusdosen = ($dosen->statusdosen) ? false : true;
+            $dosen->status = ($dosen->status) ? false : true;
             $dosen->save();
 
             return response()->json([
@@ -156,4 +158,5 @@ class DosenController extends Controller
             ]);
         }
     }
+
 }

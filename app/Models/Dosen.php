@@ -11,7 +11,7 @@ class Dosen extends Model
     use HasUuids;
 
     protected $table = 'dosen';
-    protected $fillable = ['namadosen', 'nohpdosen', 'emaildosen', 'statusdosen','namaprodi','kodedosen'];
+    protected $fillable = ['nip','namadosen', 'nohpdosen', 'emaildosen', 'status','id_prodi','kode_dosen','id_univ'];
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
     public $timestamps = false;

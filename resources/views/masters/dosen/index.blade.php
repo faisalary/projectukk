@@ -84,15 +84,15 @@
 
                 {
                     data: 'univ.namauniv',
-                    name: 'namauniv'
+                    name: 'namauniv'    
                 },
                 {
                     data: 'nip',
                     name: 'nip'
                 },
                 {
-                    data: 'id_dosen',
-                    name: 'id_dosen'
+                    data: 'kode_dosen',
+                    name: 'kode_dosen'
                 },
                 {
                     data: 'prodi.namaprodi',
@@ -121,73 +121,7 @@
             ]
         });
 
-        // function status(e) {
-        //     var status = e.attr('data-status');
-        //     var text = "";
-        //     if (status == 0) {
-        //         text = "Active";
-        //     } else {
-        //         text = "Inactive";
-        //     }
-        //     Swal.fire({
-
-        //         title: 'Are you sure?',
-        //         text: "The selected data will be " + text,
-        //         icon: 'warning',
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes, ' + text + '!',
-        //         showConfirmButton: true
-        //     }).then(function(result) {
-
-        //         if (result.value) {
-        //             var id = e.attr('data-id');
-        //             let data = {
-        //                 'id': id,
-        //             }
-        //             jQuery.ajax({
-        //                 method: "POST",
-        //                 data: data,
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-        //                         'content')
-        //                 },
-        //                 url: `{{ url('master/dosen/status') }}/${id}`,
-        //                 success: function(data) {
-
-        //                     if (data.error) {
-
-        //                         Swal.fire({
-        //                             type: "error",
-        //                             title: 'Oops...',
-        //                             text: data.message,
-        //                             confirmButtonClass: 'btn btn-success',
-        //                         })
-
-        //                     } else {
-
-        //                         setTimeout(function() {
-        //                             $('#table-master-dosen').DataTable().ajax
-        //                                 .reload();
-
-        //                         }, 1000);
-
-        //                         Swal.fire({
-        //                             icon: "success",
-        //                             title: 'Succeed!',
-        //                             text: data.message,
-        //                             showConfirmButton: false,
-        //                             timer: 2000,
-        //                         })
-
-        //                     }
-        //                 }
-        //             });
-
-        //         }
-        //     });
-        // }
-
+        
         function edit(e) {
             let id = e.attr('data-id');
 
@@ -201,9 +135,9 @@
                     $("#modal-button").html("Update Data")
                     $('#modal-dosen form').attr('action', action);
                     $('#nip').val(response.nip);
-                    $('#namauniv').val(response.namauniv);
-                    $('#kodedosen').val(response.kodedosen);
-                    $('#namaprodi').val(response.namaprodi);
+                    $('#namauniv').val(response.namauniv).change();
+                    $('#kode_dosen').val(response.kodedosen);
+                    $('#namaprodi').val(response.namaprodi).change();
                     $('#namadosen').val(response.namadosen);
                     $('#nohpdosen').val(response.nohpdosen);
                     $('#emaildosen').val(response.emaildosen);
@@ -222,29 +156,10 @@
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
         });
-        $('#id_univ_add').on('change', function() {
-                id_univx = $("#id_univ_add option:selected").val();
 
-                $.ajax({
-                    url: "{{ url('/master/mahasiswa/list-fakultas') }}" + '/' + id_univx,
-                    method: "GET",
-                    dataType: "json",
-                    success: function(response) {
-                        
-                        if ($('#id_fakultas_add').data('select2')) {
-                            $("#id_fakultas_add").val("");
-                            $("#id_fakultas_add").trigger("change");
-                            $('#id_fakultas_add').empty().trigger("change");
-                        }
-                        $("#id_fakultas_add").select2({
-                            data: response.data,
-                            dropdownParent: $('#modal-dosen'),
-                        });
-                    }
-                })
-            });
     </script>
 
     <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+
 @endsection

@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Dosen;
+use App\Models\Universitas;
+use App\Models\ProgramStudi;
 
 class DosenRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class DosenRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,21 +28,21 @@ class DosenRequest extends FormRequest
             return [
                 'nip' => ['required', 'integer', 'unique:dosen', Rule::unique('dosen')->ignore($this->id, 'nip')],
                 'namauniv' => ['required', 'string', 'max:255'],
-                'kodedosen' => ['required', 'string', 'max:255'],
-                'namaprodi' => ['required', 'string', 'max:15'],
+                'kode_dosen' => ['required', 'string', 'max:5'],
+                'namaprodi' => ['required', 'string','max:255'],
                 'namadosen' => ['required', 'string', 'max:15'],
-                'nohpdosen' => ['required', 'numeric', 'digits:12'],
+                'nohpdosen' => ['required', 'string', ],
                 'emaildosen' => ['required', 'string', 'max:255'],
                 // 'status' => ['required', 'boolean', 'default:true'],
             ];    
         }  
         return [
-            'nip' => ['required', 'integer', 'unique:dosen', 'unique:dosen'],
+            'nip' => ['required', 'integer', 'unique:dosen'],
             'namauniv' => ['required', 'string', 'max:255'],
-            'kodedosen' => ['required', 'string', 'max:255'],
-            'namaprodi' => ['required', 'string', 'max:15'],
+            'kode_dosen' => ['required', 'string', 'max:5'],
+            'namaprodi' => ['required', 'string','max:255'],
             'namadosen' => ['required', 'string', 'max:15'],
-            'nohpdosen' => ['required', 'numeric', 'digits:12'],
+            'nohpdosen' => ['required', 'numeric', ],
             'emaildosen' => ['required', 'string', 'max:255'],
             // 'status' => ['required', 'boolean', 'default:true'],
         ];
@@ -47,9 +50,10 @@ class DosenRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nip.unique' => 'NIP already exist',
+            'nip.required' => 'NIP already exist',
             'namauniv.required' => 'University name must be filled',
-            'kodedosen.required' => 'Kode Dosen must be filled',
+            'kode_dosen.required' => 'Kode Dosen must be filled',
+            'kode_dosen.max' => 'Ga boleh lebih dari 5',
             'namaprodi.required' => 'The name of Prodi must be filled',
             'namadosen.required' => 'The name of Dosen must be filled',
             'nohpdosen.required' => 'The phone number must be filled',

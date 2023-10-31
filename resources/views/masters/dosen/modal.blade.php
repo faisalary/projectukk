@@ -13,11 +13,21 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="univ" class="form-label">Universitas</label>
-                            <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ"
-                                id="id_univ_add">
-                                <option>Pilih Universitas</option>
-                                @foreach ($dosen as $u)
+                            <select class="form-select select2" id="namauniv" name="namauniv" data-placeholder="Pilih Universitas">
+                                <option disabled selected>Pilih Universitas</option>
+                                @foreach($universitas as $u)
                                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="prodi" class="form-label">Prodi</label>
+                            <select class="form-select select2" id="namaprodi" name="namaprodi" data-placeholder="Pilih Prodi">
+                                <option disabled selected>Pilih Prodi</option>
+                                @foreach($prodi as $p)
+                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -31,8 +41,8 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="kodedosen" class="form-label">Kode Dosen</label>
-                            <input type="text" id="kodedosen" name="kodedosen" class="form-control"
+                            <label for="kode_dosen" class="form-label">Kode Dosen</label>
+                            <input type="text" id="kode_dosen" name="kode_dosen" class="form-control"
                                 placeholder="Kode Dosen" />
                             <div class="invalid-feedback"></div>
                         </div>
@@ -43,18 +53,6 @@
                             <input type="text" id="namadosen" name="namadosen" class="form-control"
                                 placeholder="Nama Dosen" />
                             <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="prodi" class="form-label">Prodi</label>
-                            <select class="form-select select2" data-placeholder="Nama Prodi" name="id_prodi"
-                                id="id_prodi_add">
-                                <option>Pilih prodi</option>
-                                @foreach ($dosen as $p)
-                                    <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                     <div class="row">
