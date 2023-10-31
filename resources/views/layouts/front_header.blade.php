@@ -138,7 +138,7 @@ button.btn.btn-outline-success.dropdown-toggle{
                         <a id="program" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Program Magang</a>
                         <div class="dropdown-menu" style="height:80px; width:180px;">
                             <a class="dropdown-item" href="/magang_fakultas">Magang Fakultas </a>
-                            <a class="dropdown-item" href="#">Informasi Magang</a>
+                            <a class="dropdown-item" href="/informasi/magang">Informasi Magang</a>
                         </div>
                     </div>
                 </div>
@@ -199,13 +199,12 @@ button.btn.btn-outline-success.dropdown-toggle{
                     </form> -->
 
                     <!-- Login/Register -->
-                <div class="mr-5">
-                        <button class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" style="border-radius: 8px; width:120px;">Masuk</button>
-                        <div class="dropdown-menu" style="height:110px; width:270px;">
-                            <a class="dropdown-item" href="{{ route('login')}}">Mahasiswa</a>
-                            <a class="dropdown-item" href="#">Mitra</a>
-                            <a class="dropdown-item" href="#">LKM</a>
-                        </div>
+                    <a href="{{ route('login')}}">
+                        <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Masuk</button>
+                    </a>
+                    <a href="{{ route('register')}}">
+                        <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px; border-radius: 8px;" type="button">Daftar</button>
+                    </a>
 
                     
                     <!-- <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a> -->

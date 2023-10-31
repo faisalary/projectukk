@@ -17,6 +17,11 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2-bootstrap4.min.css" rel="stylesheet">
 
+    <!-- Bootstrap CDN - CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 
     <!-- Responsive -->
@@ -209,19 +214,43 @@
         .show {
             display: block;
         }
+
         .select2-container--default .select2-selection--single {
             width: 500px;
-    height: 50px;
-    border-left: 0px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 0px;
-}
+            height: 50px;
+            border-left: 0px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 0px;
+        }
 
-.select2-container {
-    width: 418px !important;
-}
+        .select2-container {
+            width: 418px !important;
+        }
+
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+
+        .accordion-head i {
+            font-size: 25px;
+            float: right;
+        }
+
+        .accordion-head>.collapsed>i:before {
+            content: "\f105";
+        }
+
     </style>
 
 </head>
@@ -253,7 +282,7 @@
     <script src="{{ asset('front/assets/landing/js/jquery.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/popper.min.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/chosen.min.js') }}"></script>
-    <script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script>
+    <!-- <script src="{{ asset('front/assets/landing/js/bootstrap.min.js') }}"></script> -->
     <script src="{{ asset('front/assets/landing/js/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/jquery.modal.min.js') }}"></script>
     <script src="{{ asset('front/assets/landing/js/mmenu.polyfills.js') }}"></script>
@@ -269,6 +298,10 @@
     <!--Google Map APi Key-->
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     @stack('footer-script')
 
     <script>
@@ -327,9 +360,9 @@
         }
 
         $("#single").select2({
-          placeholder: "Lowongan Magang",
-          allowClear: true
-      });
+            placeholder: "Lowongan Magang",
+            allowClear: true
+        });
     </script>
 
 </body>

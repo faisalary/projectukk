@@ -67,6 +67,10 @@ Route::get('/magang_fakultas', function () {
     return view('layouts.program_magang.magang_fakultas');
 });
 
+Route::get('/informasi/magang', function () {
+    return view('layouts.program_magang.informasi_magang');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('/master_universitas', function () {
