@@ -111,7 +111,13 @@
                         <a id="Perusahaan" class="nav-link" href="#">Perusahaan</a>
                     </div>
                 </div>
+                <div id="navbarNavAltMarkup">
+                    <div class="navbar-nav" >
+                    <a id="Perusahaan" class="nav-link" href="#">Tentang Kami</a>
+                    </div>
+                </div>
                 
+            </div>
 
 
             @php
@@ -151,7 +157,7 @@
                     <a href="{{ route('register')}}">
                         <button class="btn btn-outline-dark me-2 ml-2" type="button">Daftar</button>
                     </a>
-                    <a href="{{ route('admin.login') }}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Login Admin</a>
+                    <a href="{{ route('login') }}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Login Admin</a>
                 </div>
             </div>
             @else
