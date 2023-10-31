@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -20,6 +24,10 @@
 
     .swal2-html-container {
         font-size: 16px !important;
+    }
+
+    .swal2-deny {
+        display: none !important;
     }
 </style>
 @endsection
@@ -44,6 +52,7 @@
                             <th>NAMA</th>
                             <th>NO TELEPON</th>
                             <th>ALAMAT</th>
+                            <th>KATEGORI STATUS</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -55,175 +64,208 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahMitra">Tambah Mitra</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="mitra" class="form-label">Nama Mitra</label>
-                        <input type="text" id="mitra" class="form-control" placeholder="Nama Mitra" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">No Telepon</label>
-                        <input type="text" id="telp" class="form-control" placeholder="No Telepon" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+    <div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
 
-<div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
             <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditMitra">Edit Mitra</h5>
+                <h5 class="modal-title" id="modal-title">Tambah Mitra</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form class="default-form" method="POST" action="{{ route('mitra.store') }}">
+                @csrf
+               
             <div class="modal-body">
+
                 <div class="row">
-                    <div class="col mb-2">
+                    <div class="col mb-2 form-input">
                         <label for="mitra" class="form-label">Nama Mitra</label>
-                        <input type="text" id="mitra" class="form-control" placeholder="Nama Mitra" />
+                        <input type="text" id="mitra" name="namaindustri" class="form-control"
+                            placeholder="Nama Mitra" />
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mb-2">
+                    <div class="col mb-2 form-input">
                         <label for="telp" class="form-label">No Telepon</label>
-                        <input type="text" id="telp" class="form-control" placeholder="No Telepon" />
+                        <input type="text" id="telp" name="notelepon" class="form-control"
+                            placeholder="No Telepon" />
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mb-2">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <textarea class="form-control" id="alamat" placeholder="Alamat"></textarea>
+                    <div class="col mb-2 form-input">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamatindustri"
+                        placeholder="Alamat"></textarea>
+                    <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="kmitra" class="form-label">Kategori Mitra</label>
+                        <input type="text" id="kategori" name="kategorimitra" class="form-control"
+                            placeholder="Kategori Mitra" />
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                {{-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                     Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
+                </button> --}}
+                <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
             </div>
+        </form>
+
         </div>
     </div>
 </div>
 @endsection
 
 @section('page_script')
-<script>
-    var jsonData = [{
-            "nomor": "1",
-            "nama": "PT Mencari Cinta Sejati",
-            "no telepon": "(022)",
-            "alamat": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-        },
-        {
-            "nomor": "2",
-            "nama": "PT Mencari Cinta Sejati",
-            "no telepon": "(022)",
-            "alamat": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "status":"<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon'><span class='badge bg-label-danger'>Non-aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-        },
-        {
-            "nomor": "3",
-            "nama": "PT Mencari Cinta Sejati",
-            "no telepon": "(022)",
-            "alamat": "Jl. Telekomunikasi Terusan Buah Batu Bandung",
-            "status":"<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditMitra' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-        }
-    ];
+    <script>
+        var table = $('#table-master-mitra').DataTable({
+            ajax: "{{ url('master-mitra/show') }}",
+            // "{{ url('master-mitra/show') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
+            columns: [{
+                    data: 'DT_RowIndex'
+                },
 
-    var table = $('#table-master-mitra').DataTable({
-        "data": jsonData,
-        columns: [{
-                data: "nomor"
-            },
+                {
+                    data: 'namaindustri',
+                    name: 'namaindustri'
+                },
+                {
+                    data: 'notelpon',
+                    name: 'notelpon'
+                },
+                {
+                    data: 'alamatindustri',
+                    name: 'alamatindustri'
+                },
+                {
+                    data: 'kategori_industri',
+                    name: 'kategori_industri'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                }
+            ]
+        });
 
-            {
-                data: "nama"
-            },
-            {
-                data: "no telepon"
-            },
-            {
-                data: "alamat"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
+        function status(e) {
+            var status = e.attr('data-status');
+            var text = "";
+            if (status == 0) {
+                text = "Active";
+            } else {
+                text = "Inactive";
             }
-        ]
-    });
+            Swal.fire({
 
-    function deactive(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin menonaktifkan data?',
-        text: ' Data yang dipilih akan dihapus!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
-    });
-}
+                title: 'Are you sure?',
+                text: "The selected data will be " + text,
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, ' + text + '!',
+                showConfirmButton: true
+                }).then(function(result) {
 
-function active(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin mengaktifkan data?',
-        text: ' Data yang dipilih akan diaktifkan!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
-    });
-}
+                    if (result.value) {
+                        var id = e.attr('data-id');
+                        let data = {
+                            'id': id,
 
-</script>
+                        }
+                        jQuery.ajax({
+                            method: "DELETE",
+                            data: data,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            },
+                            url: `{{ url('master-mitra/destory') }}/${id}`,
+                            success: function(data) {
 
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+                                if (data.error) {
+
+                                    Swal.fire({
+                                        type: "error",
+                                        title: 'Oops...',
+                                        text: data.message,
+                                        confirmButtonClass: 'btn btn-success',
+                                    })
+
+                                } else {
+
+                                    setTimeout(function() {
+                                        $('#table-master-mitra').DataTable().ajax
+                                            .reload();
+
+                                    }, 1000);
+
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: 'Succeed!',
+                                        text: data.message,
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                    })
+                                }
+                            }
+                        });
+                    }
+            });
+        }
+
+        function edit(e) {
+            let id = e.attr('data-id');
+            console.log(id);
+            let action = `{{ url('master-mitra/update/') }}/${id}`;
+            var url = `{{ url('master-mitra/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    $("#modal-title").html("Edit Mitra");
+                    $("#modal-button").html("Update Data")
+                    $('#modalTambahMitra form').attr('action', action);
+                    $('#mitra').val(response.namaindustri);
+                    $('#telp').val(response.notelpon);
+                    $('#alamat').val(response.alamatindustri);
+                    $('#kategori').val(response.kategori_industri);
+
+                    $('#modalTambahMitra').modal('show');
+                }
+            });
+        }
+
+        $("#modalTambahMitra").on("hide.bs.modal", function() {
+
+            $("#modal-title").html("Tambah Mitra");
+            $("#modal-button").html("Save Data")
+            $('#modalTambahMita form').trigger('reset');
+            $('#modalTambahMitra form').attr('action', "{{ url('master-mitra/store') }}");
+            $('.invalid-feedback').removeClass('d-block');
+            $('.form-control').removeClass('is-invalid');
+            });
+
+        </script>
+
+    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection
+
