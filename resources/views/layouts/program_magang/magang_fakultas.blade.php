@@ -17,7 +17,7 @@
             <div class="col-5">
                 <div class="input-group input-group-sm mb-3" style="width: 450px; margin-left: 19px;">
                     <div class="input-group-prepend">    
-                    <span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #FFFFFF; border-top-left-radius: 8px; border-bottom-left-radius: 8px;"><i class="flaticon-map-locator"></i></span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #FFFFFF; border-top-left-radius: 8px; border-bottom-left-radius: 8px; "><i class="flaticon-map-locator"></i></span>
                     </div>
                     <select id="single" class="js-states form-control">
                         <option selected disabled>Lowongan Magang</option>

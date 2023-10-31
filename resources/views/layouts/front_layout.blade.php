@@ -15,14 +15,14 @@
     <link rel="stylesheet" href="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
 
     <!-- Bootstrap CDN - CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
     <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 
     <!-- Responsive -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -215,15 +215,6 @@
             display: block;
         }
 
-        .select2-container--default .select2-selection--single {
-            width: 500px;
-            height: 50px;
-            border-left: 0px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 0px;
-        }
 
         .select2-container {
             width: 418px !important;
@@ -251,7 +242,43 @@
             content: "\f105";
         }
 
+        .select2-container--default .select2-selection--single .select2-selection__arrow b:before {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            margin-top: -10px;
+            content: "\f107";
+            opacity: 0.25;
+            font-family: "Font Awesome 5 Free";
+            line-height: 20px;
+            font-size: 17px;
+            color: inherit;
+            font-weight: 900;
+        }
+
+        .select2-container--open .select2-dropdown--below {
+            width: 500px !important;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #4EA971;
+            color: white;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaaaaaa1;
+            border-radius: 4px;
+            width: 500px;
+            height: 50px;
+            border-left: 0px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 0px;
+        }
     </style>
+     @yield('page_style')
 
 </head>
 
@@ -299,7 +326,7 @@
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDaaCBm4FEmgKs5cfVrh3JYue3Chj1kJMw&#038;ver=5.2.4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.1/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     @stack('footer-script')
@@ -363,6 +390,53 @@
             placeholder: "Lowongan Magang",
             allowClear: true
         });
+
+        $(document).ready(function() {
+            $("#show_hide_password span").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $("#show_hide_password_baru span").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_baru input').attr("type") == "text") {
+                    $('#show_hide_password_baru input').attr('type', 'password');
+                    $('#show_hide_password_baru i').addClass("fa-eye-slash");
+                    $('#show_hide_password_baru i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_baru input').attr("type") == "password") {
+                    $('#show_hide_password_baru input').attr('type', 'text');
+                    $('#show_hide_password_baru i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_baru i').addClass("fa-eye");
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $("#show_hide_password_konfirmasi span").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_konfirmasi input').attr("type") == "text") {
+                    $('#show_hide_password_konfirmasi input').attr('type', 'password');
+                    $('#show_hide_password_konfirmasi i').addClass("fa-eye-slash");
+                    $('#show_hide_password_konfirmasi i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_konfirmasi input').attr("type") == "password") {
+                    $('#show_hide_password_konfirmasi input').attr('type', 'text');
+                    $('#show_hide_password_konfirmasi i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_konfirmasi i').addClass("fa-eye");
+                }
+            });
+        });
+
+
     </script>
 
 </body>
