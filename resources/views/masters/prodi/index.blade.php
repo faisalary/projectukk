@@ -1,5 +1,10 @@
 @extends('partials_admin.template')
 
+
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -21,6 +26,10 @@
     .swal2-html-container {
         font-size: 16px !important;
     }
+
+    .swal2-deny {
+        display: none !important;
+    }
 </style>
 
 @endsection
@@ -32,9 +41,7 @@
     </div>
     <div class="col-md-3 col-12 mb-2">
         <select class="select2 form-select" data-placeholder="Pilih Universitas">
-            <option value="1">Universitas Telkom</option>
-            <option value="2">Universitas Telkom</option>
-            <option value="3">Universitas Telkom</option>
+                <option>Universitas Telkom</option>
         </select>
     </div>
     <div class="col-md-9 col-12 text-end">
@@ -52,7 +59,8 @@
                             <th>UNIVERSITAS</th>
                             <th>NAMA FAKULTAS</th>
                             <th>NAMA PRODI</th>
-                            <th>AKSI</th>
+                            <th>STATUS</th>
+                            <th style="min-width:100px;">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -62,222 +70,266 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahProdi" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahProdi">Tambah Prodi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="row">
-                    <div class="mb-2">
-                        <label for="univ" class="form-label">Universitas</label>
-                        <select class="form-select select2" data-placeholder="Pilih Universitas">
-                            <option value="1">Universitas Telkom</option>
-                            <option value="2">Universitas Telkom</option>
-                            <option value="3">Universitas Telkom</option>
-                        </select>
-                    </div>
+    <div class="modal fade" id="modalTambahProdi" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block">
+                    <h5 class="modal-title" id="modal-title">Tambah Prodi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="row">
-                    <div class="mb-2">
-                        <label for="fakultas" class="form-label">Nama Fakultas</label>
-                        <select class="form-select select2" data-placeholder="PilihFakultas">
-                            <option value="1">Fakultas Ilmu Terapan</option>
-                            <option value="2">Fakultas Industri Kreatif</option>
-                            <option value="3">Fakultas Teknik Elektro</option>
-                            <option value="4">Fakultas Komunikasi dan Bisnis</option>
-                            <option value="5">Fakultas Ekonomi dan Bisnis</option>
-                            <option value="6">Fakultas Informatika</option>
-                            <option value="7">Fakultas Rekayasa Industri</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="prodi" class="form-label">Nama Prodi</label>
-                        <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
-                    </div>
-                </div>
-                <!-- <form class="form-repeater">
-                    <div data-repeater-list="group-a">
-                        <div data-repeater-item>
-                            <div class="row">
-                                <div class="mb-2 col-lg-6 col-xl-10 mb-0">
-                                    <label class="form-label" for="form-repeater-1-1">Nama Prodi</label>
-                                    <input type="text" id="form-repeater-1-1" class="form-control" placeholder="Nama Prodi" />
-                                </div>                                
-                                <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                    <button class="btn btn-outline-danger waves-effect mt-4" data-repeater-delete>
-                                    <i class='tf-icons ti ti-trash'></i>
-                                    </button>
-                                </div>
+                <form class="default-form" method="POST" action="{{ route('prodi.store') }}">
+                    @csrf
+                    
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-2 form-input" >
+                                <label for="univ" class="form-label">Universitas</label>
+                                <select class="form-select select2" id="pilihuniversitas_add" name="pilihuniversitas" data-placeholder="Pilih Universitas">
+                                    <option disabled selected>Pilih Universitas</option>
+                                    @foreach($universitas as $u)
+                                        <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <hr />
                         </div>
+                        <div class="row">
+                            <div class="mb-2">
+                                <label for="fakultas" class="form-label">Nama Fakultas</label>
+                                <select class="form-select select2" id="pilihfakultas_add" name="pilihfakultas" data-placeholder="PilihFakultas">
+                                    <option disabled selected>Pilih Fakultas</option>
+                                    @foreach($fakultas as $f)
+                                    <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-2">
+                                <label for="prodi" class="form-label">Nama Prodi</label>
+                                <input type="text" name="namaprodi" id="namaprodi" class="form-control" placeholder="Nama Prodi" />
+                            </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
                     </div>
-                    <div class="mb-0">
-                        <button class="btn btn-outline-success waves-effect" data-repeater-create>
-                            <i class="ti ti-plus me-1"></i>
-                            <span class="align-middle">Add</span>
-                        </button>
-                    </div>
-                </form> -->
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
+                </form>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modalEditProdi" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditProdi">Edit Prodi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="row">
-                    <div class="mb-2">
-                        <label for="univ" class="form-label">Universitas</label>
-                        <select class="form-select select2" data-placeholder="Pilih Universitas">
-                            <option value="1">Universitas Telkom</option>
-                            <option value="2">Universitas Telkom</option>
-                            <option value="3">Universitas Telkom</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-2">
-                        <label for="fakultas" class="form-label">Nama Fakultas</label>
-                        <select class="form-select select2" data-placeholder="Pilih Fakultas">
-                            <option>Nama Fakultas</option>
-                            <option value="1">Fakultas Ilmu Terapan</option>
-                            <option value="2">Fakultas Industri Kreatif</option>
-                            <option value="3">Fakultas Teknik Elektro</option>
-                            <option value="4">Fakultas Komunikasi dan Bisnis</option>
-                            <option value="5">Fakultas Ekonomi dan Bisnis</option>
-                            <option value="6">Fakultas Informatika</option>
-                            <option value="7">Fakultas Rekayasa Industri</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="prodi" class="form-label">Nama Prodi</label>
-                        <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
-                    </div>
-                </div>
-                <!-- <form class="form-repeater">
-                    <div data-repeater-list="group-a">
-                        <div data-repeater-item>
-                            <div class="row">
-                                <div class="mb-2 col-lg-6 col-xl-10 mb-0">
-                                    <label class="form-label" for="form-repeater-1-1">Nama Prodi</label>
-                                    <input type="text" id="form-repeater-1-1" class="form-control" placeholder="Nama Prodi" />
-                                </div>                                
-                                <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                    <button class="btn btn-outline-danger waves-effect mt-4" data-repeater-delete>
-                                    <i class='tf-icons ti ti-trash'></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <hr />
-                        </div>
-                    </div>
-                    <div class="mb-0">
-                        <button class="btn btn-outline-success waves-effect" data-repeater-create>
-                            <i class="ti ti-plus me-1"></i>
-                            <span class="align-middle">Add</span>
-                        </button>
-                    </div>
-                </form> -->
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+   
 @endsection
 
 @section('page_script')
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "univ":"Universitas Telkom",
-            "fakultas": "Fakultas Ilmu Terpan",
-            "prodi": "D3 Sistem Informasi",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        },
-        {
-            "nomor": "2",
-            "univ":"Universitas Telkom",
-            "fakultas": "Fakultas Ilmu Terpan",
-            "prodi": "D3 Sistem Informasi",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        },
-        {
-            "nomor": "3",
-            "univ":"Universitas Telkom",
-            "fakultas": "Fakultas Ilmu Terpan",
-            "prodi": "D3 Sistem Informasi",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditProdi' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        }
-    ];
 
     var table = $('#table-master-prodi').DataTable({
-        "data": jsonData,
+        ajax:'{{ route('prodi.show') }}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destory: true,
         columns: [{
-                data: "nomor"
+                data: "DT_RowIndex"
             },
             {
-                data: "univ"
+                data: "univ.namauniv"
             },
             {
-                data: "fakultas"
+                data: "fakultas.namafakultas"
             },
-
             {
-                data: "prodi"
+                data: "namaprodi"
             },
-
             {
-                data: "aksi"
+                data: "status"
+            },
+            {
+                data: "action"
             }
         ]
     });
 
-    function deactive(e) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data?',
-            text: ' Data yang dipilih akan dihapus!',
-            iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Hapus",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-                iconHtml: 'no-border'
-            },
-            buttonsStyling: false
+    $("#modalTambahProdi").on("hide.bs.modal", function() {
+
+        $("#modal-title").html("Tambah Prodi");
+        // $("#modal-button").html("Save Data")
+        // $('#modal-mahasiswa form')[0].reset();
+        // $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
+        // $('.invalid-feedback').removeClass('d-block');
+        // $('.form-control').removeClass('is-invalid');
+    });
+
+    function edit(e){
+            let id = e.attr('data-id');
+
+            let action = `{{ url('master-prodi/update/') }}/${id}`;
+            var url = `{{ url('master-prodi/edit/') }}/${id}`;
+            $.ajax({
+                 type: 'GET',
+                 url: url,
+                 success: function (response) {
+                    $("#modal-title").html("Edit Prodi");
+                    $("#modal-button").html("Update Data");
+                    $('#modalTambahProdi form').attr('action',action);
+                    $('#pilihuniversitas_add').val(response.id_univ).trigger("change");
+                    $('#pilihfakultas_add').val(response.id_fakultas).trigger("change");;
+                    $('#namaprodi').val(response.namaprodi);
+
+                    $('#modalTambahProdi').modal('show');
+
+                }
+            });
+        }
+
+        $("#modal-prodi").on("hide.bs.modal",function() {
+           $("#modal-title").html("Edit Prodi");
+           $("#modal-button") .html("Save Data");
+           $('#modalTambahProdi form')[0].reset();
+           $('#modalTambahProdi form').attr('action',"{{ url('master/prodi/store') }}");
+           $('.invalid-feedback').removeCLass('d-block');
+           $('.form-control').removeClass('is-invalid');
         });
+
+        $('#pilihuniversitas_add').on('change',function(){
+            id_univ = $("#pilihuniversitas_add option:selected").val();
+            
+            $.ajax({
+                url: "{{ url('/master-prodi/list-fakultas') }}"+'/'+id_univ,
+                method: "GET",
+                dataType: "json",
+                success: function(response){
+                    if ($('#pilihfakultas_add').data('select2')) {
+                        $("#pilihfakultas_add").val("");
+                        $("#pilihfakultas_add").trigger("change");
+                        $('#pilihfakultas_add').empty().trigger("change");
+                    }
+                    $("#pilihfakultas_add").select2({
+                        data: response.data,
+                        dropdownParent: $('#modalTambahProdi'),
+                    });
+                }
+
+            })
+        });
+
+        // function delete_data(content, args) {
+            
+        //     var id = content.attr('data-id');
+        //     var ulr = `{{ url('master/prodi/destory/') }}/${id}`;
+        //     const context = $(content).attr("context");
+
+        //     console.log(url);
+        //     console.log(id);
+        // }
+
+function status(e) {
+    var status = e.attr('data-status');
+    var text = "";
+    if (status == 0) {
+        text = "Active";
+    } else {
+        text = "Inactive";
     }
+    Swal.fire({
+
+        title: 'Are you sure?',
+        text: "The selected data will be " + text,
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, ' + text + '!',
+        showConfirmButton: true
+    }).then(function(result) {
+
+        if (result.value) {
+            var id = e.attr('data-id');
+            let data = {
+                'id': id,
+                '_token': `{{csrf_token()}}`
+            }
+            jQuery.ajax({
+                method: "POST",
+                data: data,
+                url: `{{url("master-prodi/status")}}/${id}`,
+                success: function(data) {
+
+                    if (data.error) {
+
+                        Swal.fire({
+                            type: "error",
+                            title: 'Oops...',
+                            text: data.message,
+                            confirmButtonClass: 'btn btn-success',
+                        })
+
+                    } else {
+
+                        setTimeout(function() {
+                            $('#table-master-prodi').DataTable().ajax
+                                .reload();
+
+                        }, 1000);
+
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Succeed!',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        })
+
+                    }
+                }
+            });
+
+        }
+    });
+}
+
+    // function deactive(e) {
+    //     Swal.fire({
+    //         title: 'Apakah anda yakin ingin menghapus data?',
+    //         text: ' Data yang dipilih akan dihapus!',
+    //         iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#DD6B55",
+    //         confirmButtonText: "Hapus",
+    //         cancelButtonText: "Batal",
+    //         closeOnConfirm: false,
+    //         closeOnCancel: false,
+    //         customClass: {
+    //             confirmButton: 'btn btn-success',
+    //             cancelButton: 'btn btn-danger',
+    //             iconHtml: 'no-border'
+    //         },
+            // buttonsStyling: false
+
+
+        // }).then(function(result){
+        //     if(result.value){
+        //         var id = e.attr('data-id');
+                
+        //         let data ={
+        //             'id':id,
+        //         }
+
+        //         jQuery.ajax({
+        //             method:"GET",
+        //             data:data,
+        //             url:`{{ url('/master-prodi/${id}/delete') }}`,
+        //         });
+
+        //         window.location.reload(true);
+        //     }
+    //      });
+    // }
+
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

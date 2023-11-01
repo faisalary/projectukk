@@ -11,7 +11,8 @@ class NilaiMutu extends Model
     use HasUuids;
 
     protected $table = 'nilai_mutu';
-    protected $fillable = ['nilaistart', 'nilaiend', 'nilaimutu'];
+    protected $fillable = ['nilaimin', 'nilaimax', 'nilaimutu'];
     protected $primaryKey = 'id_nilai';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

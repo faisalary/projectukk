@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UniversitasRequest;
 use App\Models\Universitas;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,21 +31,9 @@ class UniversitasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UniversitasRequest $request)
     {
         try {
-            $request->validate(
-                [
-                    'namauniv' => ['required', 'string', 'max:255', 'unique:universitas'],
-                    'jalan' => ['required', 'string', 'max:255'],
-                    'kota' => ['required', 'string', 'max:255'],
-                    'telp' => ['required', 'string', 'max:15'],
-                    // 'status' => ['required', 'boolean', 'default:true'],
-                ],
-                [
-                    'namauniv.unique' => 'A University with the name already exist'
-                ]
-            );
 
             $univ = Universitas::create([
                 'namauniv' => $request->namauniv,
@@ -89,7 +78,7 @@ class UniversitasController extends Controller
                 $color = ($row->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$row->id_univ}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$row->status}' data-id='{$row->id_univ}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->status}' data-id='{$row->id_univ}' data-url='universitas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -130,7 +119,7 @@ class UniversitasController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
-                'message' => $e->getMessage(),
+               'message' => $e->getMessage(),
             ]);
         }
     }
@@ -138,7 +127,7 @@ class UniversitasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function status(string $id)
     {
         try {
             $univ = Universitas::where('id_univ', $id)->first();
@@ -147,7 +136,7 @@ class UniversitasController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Universitas successfully Deactived!',
+                'message' => 'Status Universitas successfully Updated!',
                 'modal' => '#modal-universitas',
                 'table' => '#table-master-univ'
             ]);

@@ -90,6 +90,10 @@
 .nav-pills .nav-link:not(.active):hover, .nav-pills .nav-link:not(.active):focus {
     color: #4EA971;
 }
+ .btn-success {
+    background-color: #4EA971;
+    border-color: #4EA971;
+}
     </style>
 
     @yield('page_style')
@@ -239,13 +243,13 @@
                                     <div data-i18n="Master Fakultas">Master Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_prodi' ? 'active' : '' }} @endif">
-                                <a href="/master_prodi" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-prodi' ? 'active' : '' }} @endif">
+                                <a href="/master-prodi" class="menu-link">
                                     <div data-i18n="Master Prodi">Master Prodi</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
-                                <a href="/master_tahun_akademik" class="menu-link">
+                                <a href="{{ route('thn-akademik.index') }}" class="menu-link">
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
@@ -280,7 +284,7 @@
                                 </a>
                             </li>
                             <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
-                                <a href="/master_nilai_mutu" class="menu-link">
+                                <a href="{{ route('nilai-mutu.index') }}" class="menu-link">
                                     <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
                                 </a>
                             </li>

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('nilai_mutu', function (Blueprint $table) {
             $table->uuid('id_nilai')->primary();
-            $table->integer('nilaistart');
-            $table->integer('nilaiend');
-            $table->integer('nilaimutu');
+            $table->string('nilaimin', 5);
+            $table->string('nilaimax', 5);
+            $table->string('nilaimutu', 5);
+            $table->boolean('status')->default(true);
         });
     }
 
