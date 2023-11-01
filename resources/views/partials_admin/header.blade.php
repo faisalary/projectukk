@@ -252,7 +252,7 @@
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
-                                <a href="/master/tahun-akademik" class="menu-link">
+                                <a href="{{ route('thn-akademik.index') }}" class="menu-link">
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
@@ -287,7 +287,7 @@
                                 </a>
                             </li>
                             <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
-                                <a href="/master_nilai_mutu" class="menu-link">
+                                <a href="{{ route('nilai-mutu.index') }}" class="menu-link">
                                     <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
                                 </a>
                             </li>
