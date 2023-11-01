@@ -11,7 +11,7 @@ class DocumentSyarat extends Model
     use HasUuids;
 
     protected $table = 'document_syarat';
-    protected $fillable = ['namadocument', 'status'];
+    protected $fillable = ['namadocument', 'jenismagang'];
     protected $primaryKey = 'id_document';
     protected $keyType = 'string';
 }
