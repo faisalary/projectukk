@@ -23,6 +23,17 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
+                            <label for="fakultas" class="form-label">Fakultas</label>
+                            <select class="form-select select2" id="namafakultas" name="namafakultas" data-placeholder="Pilih Fakultas">
+                                <option disabled selected>Pilih Fakultas</option>
+                                @foreach($fakultas as $f)
+                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
                             <label for="prodi" class="form-label">Prodi</label>
                             <select class="form-select select2" id="namaprodi" name="namaprodi" data-placeholder="Pilih Prodi">
                                 <option disabled selected>Pilih Prodi</option>
