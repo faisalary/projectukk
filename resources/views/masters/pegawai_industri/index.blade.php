@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -21,6 +25,10 @@
     .swal2-html-container {
         font-size: 16px !important;
     }
+
+    .swal2-deny {
+        display: none !important;
+    }
 </style>
 @endsection
 
@@ -41,10 +49,8 @@
                     <thead>
                         <tr>
                             <th>NOMOR</th>
-                            <th>NAMA PERUSAHAAN</th>
                             <th>NAMA PEGAWAI</th>
                             <th>NOMOR TELEPON</th>
-                            <th>EMAIL</th>
                             <th>JABATAN</th>
                             <th>UNIT</th>
                             <th>STATUS</th>
@@ -58,234 +64,151 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahPegawai" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahPegawai">Tambah Pegawai Industri</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-                        <input type="text" id="namaperusahaan" class="form-control" placeholder="Nama Perusahaan" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="namapegawai" class="form-label">Nama Pegawai</label>
-                        <input type="text" id="namapegawai" class="form-control" placeholder="Nama Pegawai" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">No Telepon</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Nomor Telepon" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="email" class ="form-label">Email</label>
-                        <input type="text" id="email" class="form-control" placeholder="Email" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="jabatan" class="form-label">Jabatan</label>
-                        <input type="text" id="jabatan" class="form-control" placeholder="Jabatan" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="unit" class="form-label">Unit</label>
-                        <input type="text" id="unit" class="form-control" placeholder="Unit" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="status" class="form-label">Status</label>
-                        <input type="text" id="status" class="form-control" placeholder="Status" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalEditPegawai" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditPegawai">Edit Pegawai Industri</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-                        <input type="text" id="namaperusahaan" class="form-control" placeholder="Nama Perusahaan" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="namapegawai" class="form-label">Nama Pegawai</label>
-                        <input type="text" id="namapegawai" class="form-control" placeholder="Nama Pegawai" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="telp" class="form-label">No Telepon</label>
-                        <input type="text" id="telp" class="form-control" placeholder="Nomor Telepon" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="email" class ="form-label">Email</label>
-                        <input type="text" id="email" class="form-control" placeholder="Email" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="jabatan" class="form-label">Jabatan</label>
-                        <input type="text" id="jabatan" class="form-control" placeholder="Jabatan" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="unit" class="form-label">Unit</label>
-                        <input type="text" id="unit" class="form-control" placeholder="Unit" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="status" class="form-label">Status</label>
-                        <input type="text" id="status" class="form-control" placeholder="Status" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('masters.pegawai_industri.modal')
 @endsection
 
 @section('page_script')
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "nama perusahaan": "Univestitas Techno Infinity",
-            "nama pegawai": "John doe",
-            "nomor telepon": "0898765432",
-            "email": "johndoe@gmail.com",
-            "jabatan": "Direktur Utama",
-            "unit": "direktur",
-            "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditPegawai' class='btn-icon'><span class='badge bg-label-danger'>Non-aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditPegawai' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-        },
-        {
-            "nomor": "2",
-            "nama perusahaan": "Univestitas Techno Infinity",
-            "nama pegawai": "John doe",
-            "nomor telepon": "0898765432",
-            "email": "johndoe@gmail.com",
-            "jabatan": "Direktur Utama",
-            "unit": "direktur",
-            "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditPegawai' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditPegawai' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-        },
-        {
-            "nomor": "3",
-            "nama perusahaan": "Univestitas Techno Infinity",
-            "nama pegawai": "John doe",
-            "nomor telepon": "0898765432",
-            "email": "johndoe@gmail.com",
-            "jabatan": "Direktur Utama",
-            "unit": "direktur",
-            "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-        }
-    ];
-
     var table = $('#table-master-pegawai').DataTable({
-        "data": jsonData,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "nama perusahaan"
-            },
-            {
-                data: "nama pegawai"
-            },
-            {
-                data: "nomor telepon"
-            },
-            {
-                data: "email"
-            },
-            {
-                data: "jabatan"
-            },
-            {
-                data: "unit"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
+            ajax: "{{ route('pegawaiindustri.show') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
+            columns: [{
+                    data: 'DT_RowIndex'
+                },
+                {
+                    data: 'namapeg',
+                    name: 'namapeg'
+                },
+                {
+                    data: 'nohppeg',
+                    name: 'nohppeg'
+                },
+                {
+                    data: 'jabatan',
+                    name: 'jabatan'
+                },
+                {
+                    data: 'unit',
+                    name: 'unit'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                }
+            ]
+        });
+
+    function status(e) {
+            var status = e.attr('data-status');
+            var text = "";
+            if (status == 0) {
+                text = "Active";
+            } else {
+                text = "Inactive";
             }
-        ]
-    });
+            Swal.fire({
 
-    function deactive(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin menonaktifkan data?',
-        text: ' Data yang dipilih akan dihapus!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
-    });
-}
+                title: 'Are you sure?',
+                text: "The selected data will be " + text,
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, ' + text + '!',
+                showConfirmButton: true
+                }).then(function(result) {
 
-function active(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin mengaktifkan data?',
-        text: ' Data yang dipilih akan diaktifkan!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
-    });
-}
+                    if (result.value) {
+                        var id = e.attr('data-id');
+                        let data = {
+                            'id': id,
 
-</script>
+                        }
+                        jQuery.ajax({
+                            method: "DELETE",
+                            data: data,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            },
+                            url: `{{ url('master/master-pegawai-industri/destory') }}/${id}`,
+                            success: function(data) {
 
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+                                if (data.error) {
+
+                                    Swal.fire({
+                                        type: "error",
+                                        title: 'Oops...',
+                                        text: data.message,
+                                        confirmButtonClass: 'btn btn-success',
+                                    })
+
+                                } else {
+
+                                    setTimeout(function() {
+                                        $('#table-master-pegawai').DataTable().ajax
+                                            .reload();
+
+                                    }, 1000);
+
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: 'Succeed!',
+                                        text: data.message,
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                    })
+                                }
+                            }
+                        });
+                    }
+            });
+        }
+
+        function edit(e) {
+            let id = e.attr('data-id');
+            console.log(id);
+            let action = `{{ url('master/master-pegawai-industri/update/') }}/${id}`;
+            var url = `{{ url('master/master-pegawai-industri/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    $(".modal-title").html("Edit Pegawai");
+                    $("#modal-button").html("Update Data")
+                    $('#modalTambahPegawai form').attr('action', action);
+                    $('#namapegawai').val(response.namapeg);
+                    $('#telp').val(response.nohppeg);
+                    $('#email').val(response.emailpeg);
+                    $('#jabatan').val(response.jabatan);
+                    $('#unit').val(response.unit);
+
+
+                    $('#modalTambahPegawai').modal('show');
+                }
+            });
+        }
+
+        $("#modalTambahPegawai").on("hide.bs.modal", function() {
+
+            $(".modal-title").html("Tambah Pegawai");
+            $("#modal-button").html("Save Data")
+            $('#modalTambahPegawai form').trigger('reset');
+            $('#modalTambahPegawai form').attr('action', "{{ url('master/master-pegawai-industri/store') }}");
+            $('.invalid-feedback').removeClass('d-block');
+            $('.form-control').removeClass('is-invalid');
+            });
+        </script>
+
+    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection
+

@@ -74,7 +74,7 @@
             </div>
             <form class="default-form" method="POST" action="{{ route('mitra.store') }}">
                 @csrf
-               
+
             <div class="modal-body">
 
                 <div class="row">

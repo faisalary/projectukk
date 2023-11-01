@@ -261,7 +261,7 @@
                             </li>
                             <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
                                 <a href="/master-mitra" class="menu-link">
-                                    <div data-i18n="Master Mitra">Master Mitra</div>
+                                    <div data-i18n="Master-Mitra">Master Mitra</div>
                                 </a>
                             </li>
                             <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>
@@ -274,8 +274,8 @@
                                     <div data-i18n="Master Mahasiswa">Master Mahasiswa</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_pegawai_industri' ? 'active' : '' }} @endif>
-                                <a href="/master_pegawai_industri" class="menu-link">
+                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-pegawai-industri' ? 'active' : '' }} @endif>
+                                <a href="{{ route('pegawaiindustri.index') }}" class="menu-link">
                                     <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
                                 </a>
                             </li>
