@@ -84,12 +84,12 @@ class IndustriController extends Controller
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
             })
-            ->addColumn('action', function ($industri) {
-                $icon = ($industri->statuskerjasama) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($industri->statuskerjasama) ? "danger" : "success";
+            ->addColumn('action', function ($row) {
+                $icon = ($row->statuskerjasama) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->statuskerjasama) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$industri->id_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$industri->status}' data-id='{$industri->id_industri}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->statuskerjasama}' data-id='{$row->id_industri}' data-url='mitra/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -139,7 +139,7 @@ class IndustriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destory(string $id)
+    public function status(string $id)
     {
         try{
             $industri = Industri::where('id_industri', $id)->first();

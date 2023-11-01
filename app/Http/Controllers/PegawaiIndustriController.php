@@ -53,7 +53,7 @@ class PegawaiIndustriController extends Controller
 
         $pegawai_industri = PegawaiIndustri::create([
             'id_industri' => $request->namaperusahaan,
-            'namapeg' => $request->namapeg,
+            'namapeg'=> $request->namapeg,
             'nohppeg' => $request->nohppeg,
             'emailpeg' => $request->emailpeg,
             'jabatan' => $request->jabatan,
@@ -95,12 +95,18 @@ class PegawaiIndustriController extends Controller
                 $color = ($row->statuspeg) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$row->id_peg_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$row->statuspeg}' data-id='{$row->id_peg_industri}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->statuspeg}' data-id='{$row->id_peg_industri}'  data-url='pegawai-industri/status' class=' update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
+            ->addColumn('pegawai_industri', function ($row) {
+                return $row->namapeg.'<br>'.$row->industri->namaindustri;
+            })
+            ->addColumn('kontak', function ($row) {
+                return $row->nohppeg.'<br>'.$row->emailpeg;
+            })
 
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status','pegawai_industri','kontak'])
 
             ->make(true);
      }
@@ -147,7 +153,7 @@ class PegawaiIndustriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destory(string $id)
+    public function status(string $id)
     {
         try{
             $pegawai_industri = PegawaiIndustri::where('id_peg_industri', $id)->first();

@@ -50,7 +50,7 @@
                         <tr>
                             <th>NOMOR</th>
                             <th>NAMA PEGAWAI</th>
-                            <th>NOMOR TELEPON</th>
+                            <th>kONTAK</th>
                             <th>JABATAN</th>
                             <th>UNIT</th>
                             <th>STATUS</th>
@@ -80,12 +80,12 @@
                     data: 'DT_RowIndex'
                 },
                 {
-                    data: 'namapeg',
-                    name: 'namapeg'
+                    data: 'pegawai_industri',
+                    name: 'pegawai_industri'
                 },
                 {
-                    data: 'nohppeg',
-                    name: 'nohppeg'
+                    data: 'kontak',
+                    name: 'kontak'
                 },
                 {
                     data: 'jabatan',
@@ -138,7 +138,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                     'content')
                             },
-                            url: `{{ url('master/master-pegawai-industri/destory') }}/${id}`,
+                            url: `{{ url('master/pegawai-industri/status') }}/${id}`,
                             success: function(data) {
 
                                 if (data.error) {
@@ -175,8 +175,8 @@
         function edit(e) {
             let id = e.attr('data-id');
             console.log(id);
-            let action = `{{ url('master/master-pegawai-industri/update/') }}/${id}`;
-            var url = `{{ url('master/master-pegawai-industri/edit/') }}/${id}`;
+            let action = `{{ url('master/pegawai-industri/update/') }}/${id}`;
+            var url = `{{ url('master/pegawai-industri/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -185,6 +185,7 @@
                     $(".modal-title").html("Edit Pegawai");
                     $("#modal-button").html("Update Data")
                     $('#modalTambahPegawai form').attr('action', action);
+                    $('#namaperusahaan').val(response.id_industri).trigger('change');
                     $('#namapegawai').val(response.namapeg);
                     $('#telp').val(response.nohppeg);
                     $('#email').val(response.emailpeg);
@@ -199,10 +200,10 @@
 
         $("#modalTambahPegawai").on("hide.bs.modal", function() {
 
-            $(".modal-title").html("Tambah Pegawai");
+            $(".modal-title").html("Add Pegawai");
             $("#modal-button").html("Save Data")
             $('#modalTambahPegawai form').trigger('reset');
-            $('#modalTambahPegawai form').attr('action', "{{ url('master/master-pegawai-industri/store') }}");
+            $('#modalTambahPegawai form').attr('action', "{{ url('master/pegawai-industri/store') }}");
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
             });

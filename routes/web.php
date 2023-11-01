@@ -79,25 +79,25 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\NilaiMutuController::class, 'update'])->name('nilai-mutu.update');
         Route::get('/edit/{id}', [App\Http\Controllers\NilaiMutuController::class, 'edit'])->name('nilai-mutu.edit');
     });
-    Route::prefix('master-mitra')->group(function () {
+    Route::prefix('mitra')->group(function () {
         Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
         Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
         Route::get('/create', [App\Http\Controllers\IndustriController::class, 'create'])->name('mitra.create');
         Route::post('/store', [App\Http\Controllers\IndustriController::class, 'store'])->name('mitra.store');
         Route::post('/update/{id}', [App\Http\Controllers\IndustriController::class, 'update'])->name('mitra.update');
-        Route::delete('/destory/{id}', [App\Http\Controllers\IndustriController::class, 'destory'])->name('mitra.destory');
+        Route::post('/status/{id}', [App\Http\Controllers\IndustriController::class, 'status'])->name('mitra.status');
         Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     });
     Route::get('/master_mahasiswa', function () {
         return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
     });
-    Route::prefix('master-pegawai-industri')->group(function () {
+    Route::prefix('pegawai-industri')->group(function () {
         Route::get('/', [App\Http\Controllers\PegawaiIndustriController::class, 'index'])->name('pegawaiindustri.index');
         Route::get('/show', [App\Http\Controllers\PegawaiIndustriController::class, 'show'])->name('pegawaiindustri.show');
         Route::get('/create', [App\Http\Controllers\PegawaiIndustriController::class, 'create'])->name('pegawaiindustri.create');
         Route::post('/store', [App\Http\Controllers\PegawaiIndustriController::class, 'store'])->name('pegawaiindustri.store');
-        Route::put('/update/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'update'])->name('pegawaiindustri.update');
-        Route::delete('/destory/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'destory'])->name('pegawaiindustri.destory');
+        Route::post('/update/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'update'])->name('pegawaiindustri.update');
+        Route::post('/status/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'status'])->name('pegawaiindustri.status');
         Route::get('/edit/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'edit'])->name('pegawaiindustri.edit');
     });
     Route::get('/master_jenis_magang', function () {

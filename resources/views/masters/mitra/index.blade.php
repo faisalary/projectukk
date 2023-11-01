@@ -111,9 +111,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                {{-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> --}}
                 <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
             </div>
         </form>
@@ -126,8 +123,7 @@
 @section('page_script')
     <script>
         var table = $('#table-master-mitra').DataTable({
-            ajax: "{{ url('master-mitra/show') }}",
-            // "{{ url('master-mitra/show') }}",
+            ajax: "{{ route('mitra.show') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -196,7 +192,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                     'content')
                             },
-                            url: `{{ url('master-mitra/destory') }}/${id}`,
+                            url: `{{ url('master/mitra/destory') }}/${id}`,
                             success: function(data) {
 
                                 if (data.error) {
@@ -233,8 +229,8 @@
         function edit(e) {
             let id = e.attr('data-id');
             console.log(id);
-            let action = `{{ url('master-mitra/update/') }}/${id}`;
-            var url = `{{ url('master-mitra/edit/') }}/${id}`;
+            let action = `{{ url('master/mitra/update/') }}/${id}`;
+            var url = `{{ url('master/mitra/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -256,14 +252,13 @@
         $("#modalTambahMitra").on("hide.bs.modal", function() {
 
             $("#modal-title").html("Tambah Mitra");
-            $("#modal-button").html("Save Data")
-            $('#modalTambahMita form').trigger('reset');
-            $('#modalTambahMitra form').attr('action', "{{ url('master-mitra/store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
-            });
-
-        </script>
+            $("#modal-button").html("Save Data");
+            $('#modalTambahMitra form #mitra').val('').trigger('change');
+            $('#modalTambahMitra form #telp').val('').trigger('change');
+            $('#modalTambahMitra form #alamat').val('').trigger('change');
+            $('#modalTambahMitra form #kategori').val('').trigger('change');
+        });
+     </script>
 
     <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
