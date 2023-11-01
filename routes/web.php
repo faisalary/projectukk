@@ -57,8 +57,13 @@ Route::group(['middleware' => isApplicant::class], function () {
 });
 
 Route::prefix('master')->group(function () {
-    Route::get('/master_fakultas', function () {
-        return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
+    Route::prefix('fakultas')->group(function () {
+        Route::get('/', [App\Http\Controllers\FakultasController::class, 'index'])->name('fakultas.index');
+        Route::get('/show/{id_univ}', [App\Http\Controllers\FakultasController::class, 'show'])->name('fakultas.show');
+        Route::post('/store', [App\Http\Controllers\FakultasController::class, 'store'])->name('fakultas.store');
+        Route::post('/update/{id}', [App\Http\Controllers\FakultasController::class, 'update'])->name('fakultas.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\FakultasController::class, 'edit'])->name('fakultas.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\FakultasController::class, 'status'])->name('fakultas.status');
     });
     Route::get('/master-prodi', function () {
         return view('masters.prodi.index', ['active_menu' => 'master-prodi']);
