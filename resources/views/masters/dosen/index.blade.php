@@ -46,10 +46,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Universitas</th>
+                                <th style="min-width:150px;">Universitas</th>
+                                {{-- <th>NAMA FAKULTAS</th>
+                                <th>NAMA PRODI</th> --}}
                                 <th>NIP</th>
-                                <th>KODE DOSEN</th>
-                                <th>NAMA PRODI</th>
+                                <th style="min-width:25px;">KODE DOSEN</th>
                                 <th>NAMA DOSEN</th>
                                 <th>NOMOR TELEPON</th>
                                 <th>EMAIL</th>
@@ -82,9 +83,26 @@
                     data: 'DT_RowIndex'
                 },
 
+                // {
+                //     data: 'univ.namauniv',
+                //     name: 'namauniv'    
+                // },
+                // {
+                //     data: function(data) {
+                //         return (data.prodi.fakultas != null) ? data.prodi.fakultas.namafakultas : '-';
+                //     },
+                //     name: 'namafakultas'
+                // },
+                // {
+                //     data: 'prodi.namaprodi',
+                //     name: 'namaprodi'
+                // },
                 {
-                    data: 'univ.namauniv',
-                    name: 'namauniv'    
+                    data: null,
+                    name: 'combined_column',
+                    render: function(data, type, row) {
+                        return data.univ.namauniv + '<br>' + (data.prodi.fakultas ? data.prodi.fakultas.namafakultas + '<br>' : '') + data.prodi.namaprodi;
+                    }
                 },
                 {
                     data: 'nip',
@@ -93,10 +111,6 @@
                 {
                     data: 'kode_dosen',
                     name: 'kode_dosen'
-                },
-                {
-                    data: 'prodi.namaprodi',
-                    name: 'namaprodi'
                 },
                 {
                     data: 'namadosen',
@@ -135,9 +149,10 @@
                     $("#modal-button").html("Update Data")
                     $('#modal-dosen form').attr('action', action);
                     $('#nip').val(response.nip);
-                    $('#namauniv').val(response.namauniv).change();
-                    $('#kode_dosen').val(response.kodedosen);
-                    $('#namaprodi').val(response.namaprodi).change();
+                    $('#id_univ').val(response.id_univ).change();
+                    $('#namafakultas').val(response.id_fakultas).change();
+                    $('#kode_dosen').val(response.kode_dosen);
+                    $('#namaprodi').val(response.id_prodi).change();
                     $('#namadosen').val(response.namadosen);
                     $('#nohpdosen').val(response.nohpdosen);
                     $('#emaildosen').val(response.emaildosen);
