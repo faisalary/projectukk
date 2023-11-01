@@ -13,4 +13,5 @@ class Industri extends Model
     protected $fillable = ['namaindustri', 'notelpon', 'alamatindustri', 'kategori_industri', 'statuskerjasama'];
     protected $primaryKey = 'id_industri';
     protected $keyType = 'string';
+    public $timestamps = false;
 }

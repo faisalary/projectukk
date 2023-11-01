@@ -99,11 +99,9 @@ class UniversitasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UniversitasRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
-            // $validated = $request->validated();
-
             $univ = Universitas::where('id_univ', $id)->first();
 
             $univ->namauniv = $request->namauniv;
@@ -121,7 +119,7 @@ class UniversitasController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
-                'message' => $e->getMessage(),
+               'message' => $e->getMessage(),
             ]);
         }
     }

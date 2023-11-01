@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <style>
@@ -22,26 +26,16 @@
             font-size: 16px !important;
         }
     </style>
-@endsection
+
 
 @section('main')
     <div class="row">
         <div class="col-md-6 col-12">
             <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Dosen</h4>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 col-12 text-start">
-            <div class="col mb-2">
-                <label for="universitas" class="form-label">Pilih Universitas</label>
-                <select class="form-select select2" data-placeholder="Pilih Universitas">
-                    <option value="1">Telkom</option>
-                    <option value="2">Telyu</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-10 col-12 text-end">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDosen">Tambah Dosen</button>
+        <div class="col-md-6 col-12 text-end">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-dosen">Tambah
+                Dosen</button>
         </div>
     </div>
     <div class="row mt-2">
@@ -51,8 +45,8 @@
                     <table class="table" id="table-master-dosen">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
-                                <th>UNIVERSITAS</th>
+                                <th>No</th>
+                                <th>Universitas</th>
                                 <th>NIP</th>
                                 <th>KODE DOSEN</th>
                                 <th>NAMA PRODI</th>
@@ -68,247 +62,104 @@
             </div>
         </div>
     </div>
-
+@endsection
     <!-- Modal -->
-    <div class="modal fade" id="modalTambahDosen" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center d-block">
-                    <h5 class="modal-title" id="modalTambahDosen">Tambah Dosen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="universitas" class="form-label">Pilih Universitas</label>
-                            <select class="form-select select2" data-placeholder="Pilih Universitas">
-                                <option value="1">Telkom</option>
-                                <option value="2">Telyu</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="nip" class="form-label">NIP</label>
-                            <input type="text" id="nip" class="form-control" placeholder="NIP" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="kode" class="form-label">Kode Dosen</label>
-                            <input type="text" id="kode" class="form-control" placeholder="Kode Dosen" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="namaDosen" class="form-label">Nama Dosen</label>
-                            <input type="text" id="namaDosen" class="form-control" placeholder="Nama Dosen" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="prodi" class="form-label">Nama Prodi</label>
-                            <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="telp" class="form-label">No Telepon</label>
-                            <input type="text" id="telp" class="form-control" placeholder="Nomor Telepon" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="email" class ="form-label">Email</label>
-                            <input type="text" id="email" class="form-control" placeholder="Email" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modalEditDosen" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center d-block">
-                    <h5 class="modal-title" id="modalEditDosen">Edit Dosen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="universitas" class="form-label">Pilih Universitas</label>
-                            <select class="form-select select2" data-placeholder="Pilih Universitas">
-                                <option value="1">Telkom</option>
-                                <option value="2">Telyu</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="nip" class="form-label">NIP</label>
-                            <input type="text" id="nip" class="form-control" placeholder="NIP" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="kode" class="form-label">Kode Dosen</label>
-                            <input type="text" id="kode" class="form-control" placeholder="Kode Dosen" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="namaDosen" class="form-label">Nama Dosen</label>
-                            <input type="text" id="namaDosen" class="form-control" placeholder="Nama Dosen" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="prodi" class="form-label">Nama Prodi</label>
-                            <input type="text" id="prodi" class="form-control" placeholder="Nama Prodi" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="telp" class="form-label">No Telepon</label>
-                            <input type="text" id="telp" class="form-control" placeholder="Nomor Telepon" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="email" class ="form-label">Email</label>
-                            <input type="text" id="email" class="form-control" placeholder="Email" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
+@include('masters.dosen.modal')
+
 @endsection
 
 @section('page_script')
     <script>
-        var jsonData = [{
-                "nomor": "1",
-                "universitas": "Univestitas Telkom",
-                "nip": "009876772467",
-                "kode dosen": "MSH",
-                "nama prodi": "D3 Sistem Informasi",
-                "nama dosen": "John Doe",
-                "nomor telepon": "0898765432",
-                "email": "johndoe@gmail.com",
-                "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-            },
-            {
-                "nomor": "2",
-                "universitas": "Univestitas Telkom",
-                "nip": "009876772467",
-                "kode dosen": "MSH",
-                "nama prodi": "D3 Sistem Informasi",
-                "nama dosen": "John Doe",
-                "nomor telepon": "0898765432",
-                "email": "johndoe@gmail.com",
-                "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon'><span class='badge bg-label-danger'>Non-aktif</span></a>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "3",
-                "universitas": "Univestitas Telkom",
-                "nip": "009876772467",
-                "kode dosen": "MSH",
-                "nama prodi": "D3 Sistem Informasi",
-                "nama dosen": "John Doe",
-                "nomor telepon": "0898765432",
-                "email": "johndoe@gmail.com",
-                "status": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon'><span class='badge bg-label-success'>Aktif</span></a>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditDosen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i></a>"
-            }
-        ];
-
         var table = $('#table-master-dosen').DataTable({
-            "data": jsonData,
+            ajax: '{{ route('dosen.show') }}',
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
+                    data: 'DT_RowIndex'
+                },
+
+                {
+                    data: 'univ.namauniv',
+                    name: 'namauniv'    
                 },
                 {
-                    data: "universitas"
+                    data: 'nip',
+                    name: 'nip'
                 },
                 {
-                    data: "nip"
+                    data: 'kode_dosen',
+                    name: 'kode_dosen'
                 },
                 {
-                    data: "kode dosen"
+                    data: 'prodi.namaprodi',
+                    name: 'namaprodi'
                 },
                 {
-                    data: "nama prodi"
+                    data: 'namadosen',
+                    name: 'namadosen'
                 },
                 {
-                    data: "nama dosen"
+                    data: 'nohpdosen',
+                    name: 'nohpdosen'
                 },
                 {
-                    data: "nomor telepon"
+                    data: 'emaildosen',
+                    name: 'emaildosen'
                 },
                 {
-                    data: "email"
+                    data: 'status',
+                    name: 'status'
                 },
                 {
-                    data: "status"
-                },
-                {
-                    data: "aksi"
+                    data: 'action',
+                    name: 'action'
                 }
             ]
         });
 
-        function deactive(e) {
-            Swal.fire({
-                title: 'Apakah anda yakin ingin menonaktifkan data?',
-                text: ' Data yang dipilih akan dihapus!',
-                iconHtml: '<img src="{{ url('/app-assets/img/alert.png') }}">',
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yakin",
-                cancelButtonText: "Batal",
-                closeOnConfirm: false,
-                closeOnCancel: false,
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger',
-                    iconHtml: 'no-border'
-                },
-                buttonsStyling: false
+        
+        function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('master/dosen/update/') }}/${id}`;
+            var url = `{{ url('master/dosen/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit Dosen");
+                    $("#modal-button").html("Update Data")
+                    $('#modal-dosen form').attr('action', action);
+                    $('#nip').val(response.nip);
+                    $('#namauniv').val(response.namauniv).change();
+                    $('#kode_dosen').val(response.kodedosen);
+                    $('#namaprodi').val(response.namaprodi).change();
+                    $('#namadosen').val(response.namadosen);
+                    $('#nohpdosen').val(response.nohpdosen);
+                    $('#emaildosen').val(response.emaildosen);
+
+                    $('#modal-dosen').modal('show');
+                }
             });
         }
 
-        function active(e) {
-            Swal.fire({
-                title: 'Apakah anda yakin ingin mengaktifkan data?',
-                text: ' Data yang dipilih akan diaktifkan!',
-                iconHtml: '<img src="{{ url('/app-assets/img/alert.png') }}">',
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yakin",
-                cancelButtonText: "Batal",
-                closeOnConfirm: false,
-                closeOnCancel: false,
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger',
-                    iconHtml: 'no-border'
-                },
-                buttonsStyling: false
-            });
-        }
+        $("#modal-dosen").on("hide.bs.modal", function() {
+
+            $("#modal-title").html("Add Dosen");
+            $("#modal-button").html("Save Data")
+            $('#modal-dosen form')[0].reset();
+            $('#modal-dosen form').attr('action', "{{ url('master/dosen/store') }}");
+            $('.invalid-feedback').removeClass('d-block');
+            $('.form-control').removeClass('is-invalid');
+        });
+
     </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+
 @endsection

@@ -22,7 +22,7 @@
             <!-- Job Search Form -->
             <div class="row">
                 <div class="job-search-form mr-0" data-wow-delay="1000ms"
-                    style="border-radius: 5px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: 65px; width: 880px; margin-left:50px">
+                    style="border-radius: 8px; border: 2px solid var(--primary-500-base, #4EA971); background: #FFF; height: 65px; width: 880px; margin-left:50px">
                     <form method="post" action="{{url('/search')}}" class="p-0">
                         @csrf
                         <div class="row" style="margin-left: -65px; margin-right: -70px">
@@ -57,7 +57,7 @@
                     </form>
                 </div>
                 <div class="form-group col-lg-2 col-md-12 col-sm-12 text-left">
-                    <button type="submit" class="btn-success btn-style-two" style="height:63px;">Cari Magang</button>
+                    <button type="submit" class="btn-success btn-style-two" style="height:63px; border-radius:8px;">Cari Magang</button>
                 </div>
             </div>
 

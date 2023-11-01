@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndustriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +60,8 @@ Route::prefix('master')->group(function () {
     Route::get('/master_fakultas', function () {
         return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
     });
-    Route::get('/master_prodi', function () {
-        return view('masters.prodi.index', ['active_menu' => 'master_prodi']);
+    Route::get('/master-prodi', function () {
+        return view('masters.prodi.index', ['active_menu' => 'master-prodi']);
     });
     Route::prefix('tahun-akademik')->group(function () {
         Route::get('/', [App\Http\Controllers\TahunAkademikController::class, 'index'])->name('thn-akademik.index');
@@ -79,9 +81,6 @@ Route::prefix('master')->group(function () {
     });
     Route::get('/master_mitra', function () {
         return view('masters.mitra.index', ['active_menu' => 'master_mitra']);
-    });
-    Route::get('/master_dosen', function () {
-        return view('masters.dosen.index', ['active_menu' => 'master_dosen']);
     });
     Route::get('/master_mahasiswa', function () {
         return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
@@ -108,9 +107,16 @@ Route::prefix('master')->group(function () {
         Route::get('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
         Route::post('/store', [App\Http\Controllers\mahasiswaController::class, 'store'])->name('mahasiswa.store');
         Route::post('/destroy/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
-
         Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
         Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+    });
+    Route::prefix('dosen')->group(function () {
+        Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
+        Route::get('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
+        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
     });
 });
 
@@ -120,6 +126,14 @@ Route::get('/pengaturan', function () {
 
 Route::get('/apply_alert', function () {
     return view('apply.apply_alert');
+});
+
+Route::get('/magang_fakultas', function () {
+    return view('layouts.program_magang.magang_fakultas');
+});
+
+Route::get('/informasi/magang', function () {
+    return view('layouts.program_magang.informasi_magang');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

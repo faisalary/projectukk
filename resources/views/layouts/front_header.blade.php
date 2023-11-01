@@ -6,7 +6,6 @@
 <link rel="stylesheet" type="text/css" href="/css/app.css">
 <!-- <title>Navigation Right Alignment</title> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <style>
@@ -110,6 +109,10 @@
     a.btn.btn-outline-success:hover {
     background-color: white !important;
 }
+button.btn.btn-outline-success.dropdown-toggle{
+    background-color: white !important;
+    color: #4EA971 !important;
+}
 
 </style>
 
@@ -124,7 +127,7 @@
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a id="Perusahaan" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Perusahaan</a>
-                        <div class="dropdown-menu" style="height:90px; width:180px;">
+                        <div class="dropdown-menu" style="height:80px; width:180px;">
                             <a class="dropdown-item" href="#">Daftar Mitra </a>
                             <a class="dropdown-item" href="#">Lowongan Magang</a>
                         </div>
@@ -133,9 +136,9 @@
                 <div id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a id="program" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Program Magang</a>
-                        <div class="dropdown-menu" style="height:180px; width:200px;">
-                            <a class="dropdown-item" href="#">Magang Fakultas </a>
-                            <a class="dropdown-item" href="#">Informasi Magang</a>
+                        <div class="dropdown-menu" style="height:80px; width:180px;">
+                            <a class="dropdown-item" href="/magang_fakultas">Magang Fakultas </a>
+                            <a class="dropdown-item" href="/informasi/magang">Informasi Magang</a>
                         </div>
                     </div>
                 </div>
@@ -156,13 +159,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
-
-
-
+                
 
 
             @php
@@ -197,11 +194,13 @@
 
                     <!-- Login/Register -->
                     <a href="{{ route('login')}}">
-                        <button class="btn btn-outline-success me-2 ml-2" type="button">Masuk</button>
+                        <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Masuk</button>
                     </a>
                     <a href="{{ route('register')}}">
-                        <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px;" type="button">Daftar</button>
+                        <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px; border-radius: 8px;" type="button">Daftar</button>
                     </a>
+
+                    
                     <!-- <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a> -->
                 </div>
             </div>
