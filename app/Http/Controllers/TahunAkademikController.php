@@ -17,9 +17,8 @@ class TahunAkademikController extends Controller
     public function index()
     {
         $tahun = TahunAkademik::all();
-        $univ = Universitas::pluck('namauniv');
 
-        return view('masters.tahun_akademik.index', compact('tahun', 'univ'));
+        return view('masters.tahun_akademik.index', compact('tahun'));
     }
 
     /**

@@ -13,5 +13,7 @@ class Fakultas extends Model
     protected $table = 'fakultas';
     protected $fillable = ['namafakultas'];
     protected $primaryKey = 'id_fakultas';
+    public $timestamps=false;
+    
     protected $keyType = 'string';
 }

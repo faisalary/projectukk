@@ -25,16 +25,16 @@ class UniversitasRequest extends FormRequest
         if (isset($this->id)) {
 
             return [
-                'namauniv' => ['required', 'alpha', 'max:255', Rule::unique('universitas')->ignore($this->id, 'id_univ')],
+                'namauniv' => ['required', 'string', 'max:255', Rule::unique('universitas')->ignore($this->id, 'id_univ')],
                 'jalan' => ['required', 'string', 'max:255'],
-                'kota' => ['required', 'alpha', 'max:255'],
+                'kota' => ['required', 'string', 'max:255'],
                 'telp' => ['required', 'numeric', 'digits:12'],
             ];
         }
         return [
-            'namauniv' => ['required', 'alpha', 'max:255', 'unique:universitas'],
+            'namauniv' => ['required', 'string', 'max:255', 'unique:universitas'],
             'jalan' => ['required', 'string', 'max:255'],
-            'kota' => ['required', 'alpha', 'max:255'],
+            'kota' => ['required', 'string', 'max:255'],
             'telp' => ['required', 'numeric', 'digits:12'],
         ];
     }
@@ -44,10 +44,8 @@ class UniversitasRequest extends FormRequest
         return [
             'namauniv.unique' => 'A University with the name already exist',
             'namauniv.required' => 'University name must be filled',
-            'namauniv.alpha' => 'University name must be letter',
             'jalan.required' => 'The address must be filled',
             'kota.required' => 'The name of City must be filled',
-            'kota.alpha' => 'The name of City must be letter',
             'telp.required' => 'The phone number must be filled',
             'telp.numeric' => 'The phone number must be number',
             'telp.digits' => 'The phone number must be 12 digits'

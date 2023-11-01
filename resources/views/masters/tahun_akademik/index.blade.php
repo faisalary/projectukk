@@ -116,8 +116,8 @@
 
     $("#modal-thn-akademik").on("hide.bs.modal", function() {
 
-        $("#modal-title").html("Add Universitas");
-        $("#modal-button").html("Save Data")
+        $("#modal-title").html("Tambah Tahun Akademik");
+        $("#modal-button").html("Simpan")
         $('#modal-thn-akademik form')[0].reset();
         $('#modal-thn-akademik form').attr('action', "{{ url('master/tahun-akademik/store') }}");
         $('.invalid-feedback').removeClass('d-block');
