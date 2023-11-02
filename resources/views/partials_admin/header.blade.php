@@ -237,7 +237,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
-                                <a href="{{ route('universitas.index') }}" class="menu-link">
+                                {{-- <a href="{{ route('universitas.index') }}" class="menu-link"> --}}
                                     <div data-i18n="Master Universitas">Master Universitas</div>
                                 </a>
                             </li>

@@ -25,10 +25,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'isAdmin','verified'])->name('dashboard');
 
-
-
-// Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
-
 Route::group(['middleware' => 'auth'], function () {
     // Rute untuk AdminController di dalam namespace Auth
     Route::prefix('admin')->group(function () {
