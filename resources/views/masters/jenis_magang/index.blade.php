@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -21,6 +25,10 @@
 .swal2-html-container {
     font-size: 16px !important;
 }
+
+.swal2-deny {
+        display: none !important;
+    }
 </style>
 @endsection
 
@@ -30,7 +38,7 @@
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Jenis Magang</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJenisMagang">Tambah Jenis
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-jenismagang">Tambah Jenis
             Magang</button>
     </div>
 </div>
@@ -47,6 +55,7 @@
                             <th>DURASI MAGANG</th>
                             <th>DOKUMEN UPLOAD</th>
                             <th>SELEKSI</th>
+                            <th>TIPE</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -58,226 +67,84 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTambahJenisMagang" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTambahJenisMagang">Tambah Jenis Magang</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="jenis" class="form-label">Jenis Magang</label>
-                        <input type="text" id="jenis" class="form-control" placeholder="Jenis Magang" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="durasi" class="form-label">Durasi Magang</label>
-                        <input type="text" id="durasi" class="form-control" placeholder="Durasi Magang" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="dokumen" class="form-label d-block">Dokumen Upload</label>
-                        <div class="form-check form-check-inline ">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Ya</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Tidak</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="seleksi" class="form-label d-block">Seleksi</label>
-                        <div class="form-check form-check-inline ">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio1"
-                                value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Ya</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio2"
-                                value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Tidak</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="modalEditJenisMagang" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalEditJenisMagang">Edit Jenis Magang</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="jenis" class="form-label">Jenis Magang</label>
-                        <input type="text" id="jenis" class="form-control" placeholder="Jenis Magang" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="dokumen" class="form-label">Durasi Magang</label>
-                        <input type="text" id="durasi" class="form-control" placeholder="Durasi Magang" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="dokumen" class="form-label d-block">Dokumen Upload</label>
-                        <div class="form-check form-check-inline ">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Ya</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Tidak</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="seleksi" class="form-label d-block">Seleksi</label>
-                        <div class="form-check form-check-inline ">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio1"
-                                value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Ya</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio2"
-                                value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Tidak</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> -->
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('masters.jenis_magang.modal')
 @endsection
 
 @section('page_script')
 <script>
-var jsonData = [{
-        "nomor": "1",
-        "jenis": "Magang Fakultas",
-        "durasi": "2 Semester",
-        "dokumen": "Ya",
-        "seleksi": "Ya",
-        "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
-        "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-    },
-    {
-        "nomor": "2",
-        "jenis": "Magang Mandiri",
-        "durasi": "1 Semester",
-        "dokumen": "Tidak",
-        "seleksi": "Tidak",
-        "status": "<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
-        "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
-    },
-    {
-        "nomor": "3",
-        "jenis": "Magang Startup",
-        "durasi": "1 Semester",
-        "dokumen": "Ya",
-        "seleksi": "Tidak",
-        "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
-        "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-    }
-];
+
 
 var table = $('#table-master-jenis_magang').DataTable({
-    "data": jsonData,
+    ajax: '{{ route('jenismagang.show') }}',
+    serverSide: false,
+    processing: true,
+    deferRender: true,
+    type: 'GET',
+    destroy: true,
     columns: [{
-            data: "nomor"
+            data: "DT_RowIndex"
         },
 
         {
-            data: "jenis"
+            data: "namajenis"
         },
         {
-            data: "durasi"
+            data: "durasimagang"
         },
         {
-            data: "dokumen"
+            data: "is_document_upload"
         },
         {
-            data: "seleksi"
+            data: "is_review_process"
+        },
+        {
+            data: "type"
         },
         {
             data: "status"
         },
         {
-            data: "aksi"
+            data: "action"
         }
     ]
 });
 
-function deactive(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin menonaktifkan data?',
-        text: ' Data yang dipilih akan Non-Aktif!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
+function edit(e){
+    let id = e.attr('data-id');
+
+    let action = `{{ url('master/master-jenis-magang/update/') }}/${id}`;
+    var url = `{{ url('master/master-jenis-magang/edit/') }}/${id}`;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response){
+            $(".modal-title").html("Edit Jenis Magang");
+            $("#modal-button").html("Update Data");
+            $('#modal-jenismagang form').attr('action',action);
+            $('#jenis').val(response.namajenis);
+            $('#durasi').val(response.durasimagang).trigger('change');
+            $('#dokumen').val(response.is_document_upload);
+            $('#review').val(response.is_review_process);
+            $('#type').val(response.type);
+
+            $('#modal-jenismagang').modal('show');
+        }
     });
 }
 
-function active(e) {
-    Swal.fire({
-        title: 'Apakah anda yakin ingin mengaktifkan data?',
-        text: ' Data yang dipilih akan Aktif!',
-        iconHtml: '<img src="{{ url("/app-assets/img/alert.png")}}">',
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yakin",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false,
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-            iconHtml: 'no-border'
-        },
-        buttonsStyling: false
-    });
-}
+$("#modal-jenismagang").on("hide.bs.modal",function() {
+    $(".modal-title").html("Tambah Jenis Magang");
+    $("#modal-button") .html("Save Data");
+    $('#modal-jenismagang form')[0].reset();
+    $('#modal-jenismagang form #durasi').val('').trigger('change');
+    $('#modal-jenismagang form').attr('action',"{{ url('master/master-jenis-magang/store') }}");
+    $('.invalid-feedback').removeClass('d-block');
+    $('.form-control').removeClass('is-invalid');
+});
+
+
+
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

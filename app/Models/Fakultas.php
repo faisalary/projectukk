@@ -11,7 +11,13 @@ class Fakultas extends Model
     use HasUuids;
 
     protected $table = 'fakultas';
-    protected $fillable = ['namafakultas'];
+    protected $fillable = ['namafakultas','id_univ','status'];
     protected $primaryKey = 'id_fakultas';
+    public $timestamps=false;
+    
     protected $keyType = 'string';
+    
+    public function univ(){
+        return $this->belongsTo(Universitas::class,'id_univ');
+    }
 }

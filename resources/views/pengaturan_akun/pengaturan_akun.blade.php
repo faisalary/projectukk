@@ -1,104 +1,78 @@
 @extends('layouts.front_layout')
 
 @section('page_style')
-<style>
-  .field-icon {
-    float: right;
-    margin-left: -30px;
-    margin-right: 10px;
-    margin-top: 11px;
-    position: relative;
-    z-index: 2;
-  }
-</style>
+
+<link id="bootstrap-css" href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 @endsection
 
 @section('content-main')
-<section>
-<div class="container" style="max-width: 1600px;">
-  <div style="margin-top: 100px; margin-bottom: 25px;">
-    <h1>Pengaturan Akun</h1>
-  </div>
-</div>
-
-  <div class="container" style="max-width: 1600px;">
-    <div class="card col-12 mb-5" style="height:250px;">
+<section class="top-companies" style="background: #E5E5E5; margin-top: 80px;">
+  <div class="auto-container">
+    <div class="sec-title mt-4 mb-4">
+      <h4 style="color:#4B465C;">Pengaturan Akun</h4>
+    </div>
+    <div class="card col-12 mb-3" style="height: auto;">
       <div style="margin-top: 15px; margin-left: 20px; ">
-        <h4>Ubah Kata sandi</h4>
+        <h5 style="color:#4B465C;">Ubah Kata sandi</h5>
       </div>
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="inputpassword">Kata sandi Saat ini </label>
-            <div class="input-group form-password-toggle">
-              <input id="password-field" type="password" class="form-control" name="password" placeholder="Kata sandi Saat ini" value="">
-              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password">
-              </span>
+            <label style="color:#4B465C;">Kata sandi Saat Ini</label>
+            <div class="input-group" id="show_hide_password">
+              <input type="password" class="form-control" placeholder="Kata sandi Saat Ini" style="border-right: 0px;">
+              <div class="input-group-append">
+                <span class="input-group-text" style="background-color: #ffffffff; border-left: 0px;"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label style="color:#4B465C;">Kata sandi Baru</label>
+            <div class="input-group" id="show_hide_password_baru">
+              <input type="password" class="form-control" placeholder="Kata sandi Baru" style="border-right: 0px;">
+              <div class="input-group-append">
+                <span class="input-group-text" style="background-color: #ffffffff; border-left: 0px;"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+              </div>
             </div>
           </div>
           <div class="form-group col-md-4">
-            <label for="inputpassword">Kata sandi Baru </label>
-            <div class="input-group form-password-toggle">
-              <input id="passwordbaru-field" type="password" class="form-control" name="password" placeholder="Kata sandi Baru" value="">
-              <span toggle="#passwordbaru-field" class="fa fa-fw fa-eye field-icon toggle-password">
-              </span>
+            <label style="color:#4B465C;">Konfirmasi Kata sandi Baru</label>
+            <div class="input-group" id="show_hide_password_konfirmasi">
+              <input type="password" class="form-control" placeholder="Konfirmasi Kata sandi Baru" style="border-right: 0px;">
+              <div class="input-group-append">
+                <span class="input-group-text" style="background-color: #ffffffff; border-left: 0px;"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+              </div>
             </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputpassword">Konfirmasi Kata sandi Baru </label>
-            <div class="input-group form-password-toggle">
-              <input id="konfirmasipassword-field" type="password" class="form-control" name="password" placeholder="Konfirmasi Kata sandi Baru" value="">
-              <span toggle="#konfirmasipassword-field" class="fa fa-fw fa-eye field-icon toggle-password">
-              </span>
             </div>
           </div>
           <div class="col-12 text-right pr-0 mt-2 mb-2">
-            <button type="button" id="btn_edit_password" class="btn btn-primary waves-effect waves-float waves-light" style="background-color: #4EA971;"> Simpan</button>
+            <button type="button" id="btn_edit_password" class="btn btn-success waves-effect waves-float waves-light" style="background-color: #4EA971;"> Simpan</button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container" style="max-width: 1600px;">
-    <div class="card col-12 mb-5" style="height:250px;">
+    <div class="card col-12 mb-5" style="height: auto;">
       <div style="margin-top: 15px; margin-left: 20px; ">
-        <h4>Ubah Email</h4>
+        <h5 style="color:#4B465C;">Ubah Email</h5>
       </div>
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Email Saat ini</label>
-            <input type="email" placeholder="Email Saat ini" class="form-control" id="inputEmail4">
+            <label for="inputEmail" style="color:#4B465C;">Email Saat ini</label>
+            <input type="email" placeholder="Email Saat ini" class="form-control" id="inputEmail">
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">Email Baru</label>
-            <input type="password" placeholder="Email Baru" class="form-control" id="inputPassword4">
+            <label for="inputEmailBaru" style="color:#4B465C;">Email Baru</label>
+            <input type="email" placeholder="Email Baru" class="form-control" id="inputEmailBaru">
           </div>
         </div>
         <div class="col-12 text-right pr-0 mt-2 mb-2">
-          <button type="button" id="btn_edit_password" class="btn btn-primary waves-effect waves-float waves-light" style="background-color: #4EA971;">
+          <button type="button" id="btn_edit_password" class="btn btn-success waves-effect waves-float waves-light" style="background-color: #4EA971;">
             Simpan</button>
         </div>
       </div>
     </div>
   </div>
 </section>
-@endsection
-
-@section('page_script')
-<script>
-  $(".toggle-password").click(function() {
-
-    $(this).toggleClass("fa-eye fa-eye-slash");
-    var input = $($(this).attr("toggle"));
-    if (input.attr("type") == "password") {
-      input.attr("type", "text");
-    } else {
-      input.attr("type", "password");
-    }
-  });
-</script>
 @endsection

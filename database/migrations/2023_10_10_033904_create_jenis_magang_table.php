@@ -18,7 +18,6 @@ return new class extends Migration
             $table->boolean('is_review_process')->default(false);
             $table->boolean('is_document_upload')->default(false);
             $table->string('type', 255);
-            $table->boolean('seleksi');
             $table->boolean('status')->default(true);
         });
     }
