@@ -54,7 +54,7 @@
                             <th>JENIS MAGANG</th>
                             <th>DURASI MAGANG</th>
                             <th>DOKUMEN UPLOAD</th>
-                            <th>SELEKSI</th>
+                            <th>REVIEW</th>
                             <th>TIPE</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
@@ -113,8 +113,8 @@ var table = $('#table-master-jenis_magang').DataTable({
 function edit(e){
     let id = e.attr('data-id');
 
-    let action = `{{ url('master/master-jenis-magang/update/') }}/${id}`;
-    var url = `{{ url('master/master-jenis-magang/edit/') }}/${id}`;
+    let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
+    var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
     $.ajax({
         type: 'GET',
         url: url,
@@ -138,7 +138,7 @@ $("#modal-jenismagang").on("hide.bs.modal",function() {
     $("#modal-button") .html("Save Data");
     $('#modal-jenismagang form')[0].reset();
     $('#modal-jenismagang form #durasi').val('').trigger('change');
-    $('#modal-jenismagang form').attr('action',"{{ url('master/master-jenis-magang/store') }}");
+    $('#modal-jenismagang form').attr('action',"{{ url('master/jenis-magang/store') }}");
     $('.invalid-feedback').removeClass('d-block');
     $('.form-control').removeClass('is-invalid');
 });

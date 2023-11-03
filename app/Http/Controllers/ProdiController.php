@@ -66,10 +66,16 @@ class ProdiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
 
-        $prodi = ProgramStudi::with("univ", "fakultas")->orderBy('id_prodi', "asc")->get();
+        $prodi = ProgramStudi::query();
+        if ($request->fakultas != null) {
+            $prodi->where("id_fakultas", $request->fakultas);
+        } else if ($request->univ !=null) {
+            $prodi->where("id_univ", $request->univ);
+        }
+        $prodi = $prodi->with("univ", "fakultas")->orderBy('id_prodi', "asc")->get();
 
         return DataTables::of($prodi)
             ->addIndexColumn()
@@ -85,12 +91,13 @@ class ProdiController extends Controller
                 $color = ($prodi->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$prodi->id_prodi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$prodi->status}' data-id='{$prodi->id_prodi}' data-url='master-prodi/status' class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$prodi->status}' data-id='{$prodi->id_prodi}' data-url='prodi/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
             ->rawColumns(['status', 'action'])
 
+            // ->json();
             ->make(true);
     }
 
@@ -167,6 +174,22 @@ class ProdiController extends Controller
         return response()->json([
             'error' => false,
             'data' => $select
+        ]);
+    }
+
+    public function list_prodi($id_fakultas)
+    {
+        $prodi = ProgramStudi::where("id_fakultas", $id_fakultas)->get();
+        $select = array(
+            0 => ["id" => '', 'text' => 'pilih']
+        );
+
+        foreach ($prodi as $item) {
+            $select[] = ["id" => $item->id_prodi, "text" => $item->namaprodi];
+        }
+        return response()->json([
+            'error' => false,
+            'data' => $select,
         ]);
     }
 }
