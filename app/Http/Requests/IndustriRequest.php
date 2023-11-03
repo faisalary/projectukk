@@ -11,7 +11,7 @@ class IndustriRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,14 +26,16 @@ class IndustriRequest extends FormRequest
                 'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
                 'notelepon' => ['required', 'numeric', 'digits:12'],
                 'alamatindustri' => ['required', 'string', 'max:255'],
-                'kategorimitra' => ['required', 'string', 'max:15'],
+                'kategorimitra' => ['required'],
+                'statuskerjasama' => ['required'],
             ];
         }
         return [
                 'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
                 'notelepon' => ['required', 'numeric', 'digits:12'],
                 'alamatindustri' => ['required', 'string', 'max:255'],
-                'kategorimitra' => ['required', 'string', 'max:15'],
+                'kategorimitra' => ['required'],
+                'statuskerjasama' => ['required'],
         ];
     }
 
@@ -46,6 +48,7 @@ class IndustriRequest extends FormRequest
             'notelepon.digits' => 'The phone number must be 12 digits',
             'alamatindustri.required' => 'The industrial address must be filled',
             'kategorimitra.required' => 'The partner category must be filled',
+            'statuskerjasama' => 'The cooperation status must be filled',
         ];
     }
 }

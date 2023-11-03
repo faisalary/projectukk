@@ -258,14 +258,9 @@
                                     <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
-                                    <div data-i18n="Master Industri">Master Industri</div>
-                                </a>
-                            </li>
                             <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Master-Mitra">Master Mitra</div>
+                                    <div data-i18n="Master Industri">Master Industri</div>
                                 </a>
                             </li>
                             <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>

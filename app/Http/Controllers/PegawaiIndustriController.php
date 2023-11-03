@@ -36,22 +36,7 @@ class PegawaiIndustriController extends Controller
     public function store(PegawaiIndustriRequest $request)
     {
         try{
-            $request->validate(
-            [
-                'namaperusahaan' => ['required'],
-                'namapeg' => ['required', 'string', 'max:255', 'unique:pegawai_industri'],
-                'nohppeg' => ['required', 'string', 'max:255'],
-                'emailpeg' => ['required', 'string', 'max:255'],
-                'jabatan' => ['required', 'string', 'max:255'],
-                'unit' => ['required', 'string', 'max:255'],
-                // 'status' => ['required', 'boolean', 'default:true'],
-            ],
-            [
-                'namapeg.unique' => 'A Pegawai Industri with the name already exist'
-            ]
-        );
-
-        $pegawai_industri = PegawaiIndustri::create([
+            $pegawai_industri = PegawaiIndustri::create([
             'id_industri' => $request->namaperusahaan,
             'namapeg'=> $request->namapeg,
             'nohppeg' => $request->nohppeg,
