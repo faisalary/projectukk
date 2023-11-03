@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProdiRequest;
 use Exception;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class ProdiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProdiRequest $request)
     {
         $request->validate(
             [
@@ -84,7 +85,7 @@ class ProdiController extends Controller
                 $color = ($prodi->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$prodi->id_prodi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$prodi->status}' data-id='{$prodi->id_prodi}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$prodi->status}' data-id='{$prodi->id_prodi}' data-url='master-prodi/status' class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -105,7 +106,7 @@ class ProdiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(ProdiRequest $request, $id)
     {
         try {
             $prodi = ProgramStudi::where('id_prodi', $id)->first();

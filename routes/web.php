@@ -57,11 +57,30 @@ Route::group(['middleware' => isApplicant::class], function () {
 });
 
 Route::prefix('master')->group(function () {
-    Route::get('/master_fakultas', function () {
-        return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
+    Route::prefix('fakultas')->group(function () {
+        Route::get('/', [App\Http\Controllers\FakultasController::class, 'index'])->name('fakultas.index');
+        Route::get('/show/{id_univ}', [App\Http\Controllers\FakultasController::class, 'show'])->name('fakultas.show');
+        Route::post('/store', [App\Http\Controllers\FakultasController::class, 'store'])->name('fakultas.store');
+        Route::post('/update/{id}', [App\Http\Controllers\FakultasController::class, 'update'])->name('fakultas.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\FakultasController::class, 'edit'])->name('fakultas.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\FakultasController::class, 'status'])->name('fakultas.status');
     });
-    Route::get('/master-prodi', function () {
-        return view('masters.prodi.index', ['active_menu' => 'master-prodi']);
+    Route::prefix('master-prodi')->group(function () {
+        Route::get('/', [App\Http\Controllers\ProdiController::class, 'index'])->name('prodi.index');
+        Route::get('/show', [App\Http\Controllers\ProdiController::class, 'show'])->name('prodi.show');
+        Route::post('/store', [App\Http\Controllers\ProdiController::class, 'store'])->name('prodi.store');
+        Route::post('/update/{id}', [App\Http\Controllers\ProdiController::class, 'update'])->name('prodi.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\ProdiController::class, 'edit'])->name('prodi.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
+        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
+    });
+    Route::prefix('dokumen-persyarat')->group(function () {
+        Route::get('/', [App\Http\Controllers\DokumenSyaratController::class, 'index'])->name('doc-syarat.index');
+        Route::get('/show', [App\Http\Controllers\DokumenSyaratController::class, 'show'])->name('doc-syarat.show');
+        Route::post('/store', [App\Http\Controllers\DokumenSyaratController::class, 'store'])->name('doc-syarat.store');
+        Route::post('status/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'status'])->name('doc-syarat.status');
+        Route::post('/update/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'update'])->name('doc-syarat.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'edit'])->name('doc-syarat.edit');
     });
     Route::prefix('tahun-akademik')->group(function () {
         Route::get('/', [App\Http\Controllers\TahunAkademikController::class, 'index'])->name('thn-akademik.index');
@@ -100,11 +119,13 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'status'])->name('pegawaiindustri.status');
         Route::get('/edit/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'edit'])->name('pegawaiindustri.edit');
     });
-    Route::get('/master_jenis_magang', function () {
-        return view('masters.jenis_magang.index', ['active_menu' => 'master_jenis_magang']);
-    });
-    Route::get('/kelola_mitra', function () {
-        return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola_mitra']);
+    Route::prefix('master-jenis-magang')->group(function () {
+        Route::get('/', [App\Http\Controllers\JenisMagangController::class, 'index'])->name('jenismagang.index');
+        Route::get('/show', [App\Http\Controllers\JenisMagangController::class, 'show'])->name('jenismagang.show');
+        Route::post('/store', [App\Http\Controllers\JenisMagangController::class, 'store'])->name('jenismagang.store');
+        Route::post('/update/{id}', [App\Http\Controllers\JenisMagangController::class, 'update'])->name('jenismagang.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\JenisMagangController::class, 'edit'])->name('jenismagang.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\JenisMagangController::class, 'status'])->name('jenismagang.status');
     });
     Route::prefix('universitas')->group(function () {
         Route::get('/', [App\Http\Controllers\UniversitasController::class, 'index'])->name('universitas.index');

@@ -13,8 +13,9 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="universitas" class="form-label">Nama Universitas</label>
-                            <input type="text" id="namauniv" onkeyup="this.value.replace(/^[\pL\s\-]+$/u, '').toLowerCase();" name="namauniv" class="form-control" placeholder="Nama Universitas" />
+                            <input type="text" id="namauniv" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" name="namauniv" class="form-control" placeholder="Nama Universitas" />
                             <div class="invalid-feedback"></div>
+
                         </div>
                     </div>
                     <div class="row">
