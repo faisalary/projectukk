@@ -57,8 +57,13 @@ Route::group(['middleware' => isApplicant::class], function () {
 });
 
 Route::prefix('master')->group(function () {
-    Route::get('/master_fakultas', function () {
-        return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
+    Route::prefix('fakultas')->group(function () {
+        Route::get('/', [App\Http\Controllers\FakultasController::class, 'index'])->name('fakultas.index');
+        Route::get('/show/{id_univ}', [App\Http\Controllers\FakultasController::class, 'show'])->name('fakultas.show');
+        Route::post('/store', [App\Http\Controllers\FakultasController::class, 'store'])->name('fakultas.store');
+        Route::post('/update/{id}', [App\Http\Controllers\FakultasController::class, 'update'])->name('fakultas.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\FakultasController::class, 'edit'])->name('fakultas.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\FakultasController::class, 'status'])->name('fakultas.status');
     });
     Route::prefix('prodi')->group(function () {
         Route::get('/', [App\Http\Controllers\ProdiController::class, 'index'])->name('prodi.index');
@@ -69,6 +74,14 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
         Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
         Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\ProdiController::class, 'list_prodi'])->name('prodi.list_prodi');
+    });
+    Route::prefix('dokumen-persyarat')->group(function () {
+        Route::get('/', [App\Http\Controllers\DokumenSyaratController::class, 'index'])->name('doc-syarat.index');
+        Route::get('/show', [App\Http\Controllers\DokumenSyaratController::class, 'show'])->name('doc-syarat.show');
+        Route::post('/store', [App\Http\Controllers\DokumenSyaratController::class, 'store'])->name('doc-syarat.store');
+        Route::post('status/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'status'])->name('doc-syarat.status');
+        Route::post('/update/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'update'])->name('doc-syarat.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DokumenSyaratController::class, 'edit'])->name('doc-syarat.edit');
     });
     Route::prefix('tahun-akademik')->group(function () {
         Route::get('/', [App\Http\Controllers\TahunAkademikController::class, 'index'])->name('thn-akademik.index');

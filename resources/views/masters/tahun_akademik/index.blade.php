@@ -107,7 +107,7 @@
                 $("#modal-button").html("Update Data")
                 $('#modal-thn-akademik form').attr('action', action);
                 $('#tahun').val(response.tahun);
-                $('#semester').val(response.semester);
+                $('#semester').val(response.semester).trigger('change');
 
                 $('#modal-thn-akademik').modal('show');
             }
@@ -119,6 +119,7 @@
         $("#modal-title").html("Tambah Tahun Akademik");
         $("#modal-button").html("Simpan")
         $('#modal-thn-akademik form')[0].reset();
+        $('#modal-thn-akademik form #semester').val('').trigger('change');
         $('#modal-thn-akademik form').attr('action', "{{ url('master/tahun-akademik/store') }}");
         $('.invalid-feedback').removeClass('d-block');
         $('.form-control').removeClass('is-invalid');
