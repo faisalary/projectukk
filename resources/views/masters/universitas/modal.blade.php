@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="kota" class="form-label">Kota</label>
-                            <input type="text" id="kota" name="kota" class="form-control" placeholder="Kota" />
+                            <input type="text" id="kota" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" name="kota" class="form-control" placeholder="Kota" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

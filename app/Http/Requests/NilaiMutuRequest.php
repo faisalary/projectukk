@@ -24,7 +24,7 @@ class NilaiMutuRequest extends FormRequest
         return [
             'nilaimin' => ['required', 'numeric', 'between:0,90'],
             'nilaimax' => ['required', 'numeric', 'between:0,100'],
-            'nilaimutu' => ['required', 'alpha', 'max:5']
+            'nilaimutu' => ['required', 'alpha', 'max:2']
         ];
     }
 
