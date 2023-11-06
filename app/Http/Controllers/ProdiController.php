@@ -72,9 +72,12 @@ class ProdiController extends Controller
         $prodi = ProgramStudi::query();
         if ($request->fakultas != null) {
             $prodi->where("id_fakultas", $request->fakultas);
-        } else if ($request->univ !=null) {
+        } else if ($request->univ != null) {
             $prodi->where("id_univ", $request->univ);
+        } else if ($request->prodi != null) {
+            $prodi->where("id_prodi", $request->prodi);
         }
+
         $prodi = $prodi->with("univ", "fakultas")->orderBy('id_prodi', "asc")->get();
 
         return DataTables::of($prodi)
