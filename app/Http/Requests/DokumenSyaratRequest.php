@@ -22,7 +22,16 @@ class DokumenSyaratRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'namajenis' => ['required'],
+            'namadoc' => ['required', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'namajenis.required' => 'Type of internship must be filled',
+            'namadoc.required' => 'Document name must be filled'
         ];
     }
 }
