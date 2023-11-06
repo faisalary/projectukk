@@ -12,9 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('jenis_magang', function (Blueprint $table) {
-        //     $table->enum('durasimagang', array('1 Semester','2 Semester'))->change();
-        // });
+        Schema::table('jenis_magang', function (Blueprint $table) {
+            $table->enum('durasimagang', array('1 Semester', '2 Semester'))->change();
+        });
     }
 
     /**
