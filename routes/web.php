@@ -63,7 +63,7 @@ Route::prefix('master')->group(function () {
     Route::get('/master-prodi', function () {
         return view('masters.prodi.index', ['active_menu' => 'master-prodi']);
     });
-    Route::prefix('dokumen-persyarat')->group(function () {
+    Route::prefix('dokumen-persyaratan')->group(function () {
         Route::get('/', [App\Http\Controllers\DokumenSyaratController::class, 'index'])->name('doc-syarat.index');
         Route::get('/show', [App\Http\Controllers\DokumenSyaratController::class, 'show'])->name('doc-syarat.show');
         Route::post('/store', [App\Http\Controllers\DokumenSyaratController::class, 'store'])->name('doc-syarat.store');
