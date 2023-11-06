@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\DosenRequest;
+use App\Http\Requests\FakultasRequest;
 use App\Models\Dosen;
 use App\Models\Universitas;
-use App\Models\ProgramStudi;
 use App\Models\Fakultas;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class DosenController extends Controller
+class FakultasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +20,8 @@ class DosenController extends Controller
     public function index()
     {
         $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
-        $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        $dosen = Dosen::all();
-        return view('masters.dosen.index', compact('dosen','prodi','universitas','fakultas'));
+        return view('masters.fakultas.index', compact('fakultas','universitas'));
     }
 
     /**
@@ -38,27 +35,22 @@ class DosenController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DosenRequest $request)
+    public function store(FakultasRequest $request)
     {
         try {
             
-            $dosen = Dosen::create([
-                'nip' => $request->nip,
+            $fakultas = Fakultas::create([
+
                 'id_univ' => $request->namauniv,
-                'prodi.fakultas.id_fakultas'=> $request->namafakultas,
-                'id_prodi' => $request->namaprodi,
-                'kode_dosen' => $request->kode_dosen,
-                'namadosen' => $request->namadosen,
-                'nohpdosen' => $request->nohpdosen,
-                'emaildosen' => $request->emaildosen,
+                'namafakultas' => $request->namafakultas,
                 'status' => true,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Dosen successfully Created!',
-                'modal' => '#modal-dosen',
-                'table' => '#table-master-dosen'
+                'message' => 'Fakultas successfully Created!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -71,11 +63,15 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id_univ)
     {
-        $dosen = Dosen::with('univ','prodi.fakultas')->orderBy('nip', 'asc')->get();
+        $fakultas = Fakultas::query();
+        if ($id_univ !== 'all'){
+            $fakultas = $fakultas->where('id_univ',$id_univ);
+        }
+        $fakultas->with('univ')->orderBy('id_fakultas', 'asc')->get();
 
-        return DataTables::of($dosen)
+        return DataTables::of($fakultas)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -88,8 +84,8 @@ class DosenController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->nip}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->nip}' data-url='dosen/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_fakultas}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_fakultas}' data-url='fakultas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -103,8 +99,8 @@ class DosenController extends Controller
      */
     public function edit(string $id)
     {
-        $dosen = Dosen::where('nip', $id)->first();
-        return $dosen;
+        $fakultas = Fakultas::where('id_fakultas', $id)->first();
+        return $fakultas;
     }
 
     /**
@@ -113,23 +109,17 @@ class DosenController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $dosen = Dosen::where('nip', $id)->first();
+            $fakultas = Fakultas::where('id_fakultas', $id)->first();
 
-            $dosen->nip = $request->nip;
-            $dosen->id_univ = $request->namauniv;
-            $dosen->id_prodi = $request->namafakultas;
-            $dosen->id_prodi = $request->namaprodi;
-            $dosen->kode_dosen = $request->kode_dosen;
-            $dosen->namadosen = $request->namadosen;
-            $dosen->nohpdosen = $request->nohpdosen;
-            $dosen->emaildosen = $request->emaildosen;
-            $dosen->save();
+            $fakultas->id_univ = $request->namauniv;
+            $fakultas->namafakultas = $request->namafakultas;
+            $fakultas->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Dosen sudah diupdate!',
-                'modal' => '#modal-dosen',
-                'table' => '#table-master-dosen'
+                'message' => 'Fakultas sudah diupdate!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -145,15 +135,15 @@ class DosenController extends Controller
     public function status($id)
     {
         try {
-            $dosen = Dosen::where('nip', $id)->first();
-            $dosen->status = ($dosen->status) ? false : true;
-            $dosen->save();
+            $fakultas = Fakultas::where('id_fakultas', $id)->first();
+            $fakultas->status = ($fakultas->status) ? false : true;
+            $fakultas->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Status Dosen successfully Updated!',
-                'modal' => '#modal-dosen',
-                'table' => '#table-master-dosen'
+                'message' => 'Status Fakultas successfully Updated!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([

@@ -35,10 +35,10 @@
 @section('main')
 <div class="row">
     <div class="col-md-6 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Mitra</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Industri</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">Tambah Mitra</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">Tambah Industri</button>
     </div>
 </div>
 <div class="row mt-2">
@@ -52,7 +52,8 @@
                             <th>NAMA</th>
                             <th>NO TELEPON</th>
                             <th>ALAMAT</th>
-                            <th>KATEGORI STATUS</th>
+                            <th>KATEGORI INDUSTRI</th>
+                            <th>STATUS KERJASAMA</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -63,71 +64,13 @@
     </div>
 </div>
 
-<!-- Modal -->
-    <div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-
-            <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Mitra</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form class="default-form" method="POST" action="{{ route('mitra.store') }}">
-                @csrf
-               
-            <div class="modal-body">
-
-                <div class="row">
-                    <div class="col mb-2 form-input">
-                        <label for="mitra" class="form-label">Nama Mitra</label>
-                        <input type="text" id="mitra" name="namaindustri" class="form-control"
-                            placeholder="Nama Mitra" />
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2 form-input">
-                        <label for="telp" class="form-label">No Telepon</label>
-                        <input type="text" id="telp" name="notelepon" class="form-control"
-                            placeholder="No Telepon" />
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2 form-input">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="alamat" name="alamatindustri"
-                        placeholder="Alamat"></textarea>
-                    <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2 form-input">
-                        <label for="kmitra" class="form-label">Kategori Mitra</label>
-                        <input type="text" id="kategori" name="kategorimitra" class="form-control"
-                            placeholder="Kategori Mitra" />
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                {{-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                    Close
-                </button> --}}
-                <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
-            </div>
-        </form>
-
-        </div>
-    </div>
-</div>
+@include('masters.mitra.modal')
 @endsection
 
 @section('page_script')
     <script>
         var table = $('#table-master-mitra').DataTable({
-            ajax: "{{ url('master-mitra/show') }}",
-            // "{{ url('master-mitra/show') }}",
+            ajax: "{{ route('mitra.show') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -152,6 +95,10 @@
                 {
                     data: 'kategori_industri',
                     name: 'kategori_industri'
+                },
+                {
+                    data: 'statuskerjasama',
+                    name: 'statuskerjasama'
                 },
                 {
                     data: 'status',
@@ -196,7 +143,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                     'content')
                             },
-                            url: `{{ url('master-mitra/destory') }}/${id}`,
+                            url: `{{ url('master/mitra/status') }}/${id}`,
                             success: function(data) {
 
                                 if (data.error) {
@@ -233,20 +180,21 @@
         function edit(e) {
             let id = e.attr('data-id');
             console.log(id);
-            let action = `{{ url('master-mitra/update/') }}/${id}`;
-            var url = `{{ url('master-mitra/edit/') }}/${id}`;
+            let action = `{{ url('master/mitra/update/') }}/${id}`;
+            var url = `{{ url('master/mitra/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
                     console.log(response);
-                    $("#modal-title").html("Edit Mitra");
+                    $("#modal-title").html("Edit Industri");
                     $("#modal-button").html("Update Data")
                     $('#modalTambahMitra form').attr('action', action);
                     $('#mitra').val(response.namaindustri);
                     $('#telp').val(response.notelpon);
                     $('#alamat').val(response.alamatindustri);
-                    $('#kategori').val(response.kategori_industri);
+                    $('#kategori').val(response.kategori_industri).trigger('change');;
+                    $('#status').val(response.statuskerjasama).trigger('change');;
 
                     $('#modalTambahMitra').modal('show');
                 }
@@ -255,15 +203,21 @@
 
         $("#modalTambahMitra").on("hide.bs.modal", function() {
 
-            $("#modal-title").html("Tambah Mitra");
-            $("#modal-button").html("Save Data")
-            $('#modalTambahMita form').trigger('reset');
-            $('#modalTambahMitra form').attr('action', "{{ url('master-mitra/store') }}");
+            $("#modal-title").html("Tambah Industri");
+            $("#modal-button").html("Save Data");
+            $('#modalTambahMitra form')[0].reset();
+            $('#modalTambahMitra form #kategori').val('').trigger('change');
+            $('#modalTambahMitra form #status').val('').trigger('change');
+            $('#modalTambahMitra form').attr('action',"{{ url('master/mitra/store') }}");
             $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
-            });
-
-        </script>
+            // $('.form-control').removeClass('is-invalid');
+            // $('#modalTambahMitra form #mitra').val('').trigger('change');
+            // $('#modalTambahMitra form #telp').val('').trigger('change');
+            // $('#modalTambahMitra form #alamat').val('').trigger('change');
+            // $('#modalTambahMitra form #kategori').val('').trigger('change');
+            // $('#modalTambahMitra form #statuskerjasama').val('').trigger('change');
+        });
+     </script>
 
     <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>

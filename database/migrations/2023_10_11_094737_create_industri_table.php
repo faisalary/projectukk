@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('industri', function (Blueprint $table) {
-            $table->uuid('id_industri')->primary();
+            $table->Uuid('id_industri')->primary();
             $table->string('namaindustri', 255);
             $table->string('notelpon', 15);
             $table->string('alamatindustri', 255);
@@ -29,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('industri');
     }
 };
+
