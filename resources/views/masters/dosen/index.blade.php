@@ -90,54 +90,6 @@
             $('#modal-dosen form #pilihprodi_add').val('').trigger('change');
         });
 
-        // var table = $('#table-master-dosen').DataTable({
-        //     ajax: '{{ route('dosen.show') }}',
-        //     serverSide: false,
-        //     processing: true,
-        //     deferRender: true,
-        //     type: 'GET',
-        //     destroy: true,
-        //     columns: [{
-        //             data: 'DT_RowIndex'
-        //         },
-        //         {
-        //             data: null,
-        //             name: 'combined_column',
-        //             render: function(data, type, row) {
-        //                 return data.univ.namauniv + '<br>' + (data.prodi.fakultas ? data.prodi.fakultas.namafakultas + '<br>' : '') + data.prodi.namaprodi;
-        //             }
-        //         },
-        //         {
-        //             data: 'nip',
-        //             name: 'nip'
-        //         },
-        //         {
-        //             data: 'kode_dosen',
-        //             name: 'kode_dosen'
-        //         },
-        //         {
-        //             data: 'namadosen',
-        //             name: 'namadosen'
-        //         },
-        //         {
-        //             data: 'nohpdosen',
-        //             name: 'nohpdosen'
-        //         },
-        //         {
-        //             data: 'emaildosen',
-        //             name: 'emaildosen'
-        //         },
-        //         {
-        //             data: 'status',
-        //             name: 'status'
-        //         },
-        //         {
-        //             data: 'action',
-        //             name: 'action'
-        //         }
-        //     ]
-        // });
-
         
         function edit(e) {
             let id = e.attr('data-id');

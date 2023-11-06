@@ -25,26 +25,23 @@
         .swal2-html-container {
             font-size: 16px !important;
         }
+        .swal2-deny {
+        display: none !important;
+        }
     </style>
-@endsection
 
-@section('main')
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Mahasiswa</h4>
-        </div>
+
+    @section('main')
         <div class="row">
-            <div class="col-md-2 col-12 text-start">
-                <div class="col mb-2">
-                    <select id="univ" class="select2 form-select">
-                        <option value="1">Telkom</option>
-                        <option value="2">Telyu</option>
-                    </select>
-                </div>
+            <div class="col-md-10 col-12">
+                <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Mahasiswa</h4>
             </div>
-            <div class="col-md-10 col-12 text-end">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMahasiswa">Tambah
-                    Mahasiswa</button>
+            <div class="col-md-2 col-12 text-end">
+                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"> <i class="tf-icons ti ti-filter"></i></button>
+            </div>
+            <div class="col-md-12 d-flex justify-content-between mt-2">
+                <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-mahasiswa">Tambah Mahasiswa</button>
             </div>
         </div>
         <div class="row mt-2">
@@ -73,233 +70,180 @@
             </div>
         </div>
 
+    @endsection
         <!-- Modal -->
-
-        <div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header text-center d-block">
-                        <h5 class="modal-title">Tambah Mahasiswa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form class="default-form" id="modalTambahMahasiswa" method="POST"
-                        action="{{ route('mahasiswa.store') }}">
-                        @csrf
-                        <div class="modal-body">
-
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="univ" class="form-label">Universitas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Universitas" name="id_univ" id="id_univ_add">
-                                        <option>Pilih Universitas</option>
-                                        @foreach ($universitas as $u)
-                                            <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="fakultas" class="form-label">Fakultas</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Fakultas"
-                                        name="id_fakultas" id="id_fakultas_add">
-                                      
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="prodi" class="form-label">Prodi</label>
-                                    <select class="form-select select2" data-placeholder="Pilih Prodi" name="id_prodi">
-                                        @foreach ($prodi as $p)
-                                            <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="nim" class="form-label">NIM</label>
-                                    <input type="text" name="nim" class="form-control" placeholder="NIM" />
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="angkatan" class="form-label">Angkatan</label>
-                                    <input type="text" name="angkatan" class="form-control" placeholder="Angkatan" />
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-2 form-input">
-                                    <label for="namamhs" class="form-label">Nama Mahasiswa</label>
-                                    <input type="text" name="namamhs" class="form-control"
-                                        placeholder="Nama Mahasiswa" />
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="nohpmhs" class="form-label">Nomor Telepon</label>
-                                        <input type="text" name="nohpmhs" class="form-control"
-                                            placeholder="Nomor Telepon" />
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="emailmhs" class ="form-label">Email</label>
-                                        <input type="text" name="emailmhs" class="form-control"
-                                            placeholder="Email" />
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="alamatmhs" class="form-label">Alamat</label>
-                                        <textarea class="form-control" name="alamatmhs" placeholder="Alamat"></textarea>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        @foreach ($mahasiswa as $data)
-            <div class="modal fade" id="modalEditMahasiswa" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-center d-block">
-                            <h5 class="modal-title">Edit Mahasiswa</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <form class="default-form" id="modalEditMahasiswa" method="POST"
-                            action="{{ route('mahasiswa.update', $data->nim) }}">
-                            @csrf
-                            {{ method_field('put') }}
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="univ" class="form-label">Universitas</label>
-                                        <select class="form-select select2" data-placeholder="Pilih Universitas"
-                                            name="id_univ" id="id_univ">
-                                            <option>Pilih Universitas</option>
-                                            @foreach ($universitas as $u)
-                                                <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="fakultas" class="form-label">Fakultas</label>
-                                        <select class="form-select select2" data-placeholder="Pilih Fakultas"
-                                            name="id_fakultas" id="id_fakultas">
-                                            @foreach ($fakultas as $f)
-                                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="prodi" class="form-label">Prodi</label>
-                                        <select class="form-select select2" data-placeholder="Pilih Prodi"
-                                            name="id_prodi" id="id_prodi">
-                                            @foreach ($prodi as $p)
-                                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" name="nim" id="nim" class="form-control"
-                                            placeholder="NIM" />
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="angkatan" class="form-label">Angkatan</label>
-                                        <input type="text" name="angkatan" id="angkatan"class="form-control"
-                                            placeholder="Angkatan" />
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-2 form-input">
-                                        <label for="namamhs" class="form-label">Nama Mahasiswa</label>
-                                        <input type="text" name="namamhs" id="namamhs" class="form-control"
-                                            placeholder="Nama Mahasiswa" />
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col mb-2 form-input">
-                                            <label for="nohpmhs" class="form-label">Nomor Telepon</label>
-                                            <input type="text" name="nohpmhs" id="nohpmhs" class="form-control"
-                                                placeholder="Nomor Telepon" />
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col mb-2 form-input">
-                                            <label for="emailmhs" class ="form-label">Email</label>
-                                            <input type="text" name="emailmhs" id="emailmhs" class="form-control"
-                                                placeholder="Email" />
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col mb-2 form-input">
-                                            <label for="alamatmhs" class="form-label">Alamat</label>
-                                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat"></textarea>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+    
+    @include('masters.mahasiswa.modal')
+    
     @endsection
 
     @section('page_script')
         <script>
+            $("#modal-mahasiswa").on("hide.bs.modal", function() {
+
+            $("#modal-title").html("Tambah Prodi");
+            $("#modal-button").html("Save Data");
+            $('#modal-mahasiswa form #pilihuniversitas_add').val('').trigger('change');
+            $('#modal-mahasiswa form #pilihfakultas_add').val('').trigger('change');
+            $('#modal-mahasiswa form #pilihprodi_add').val('').trigger('change');
+            });
+
+
+            function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
+            var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit Mahasiswa");
+                    $("#modal-button").html("Update Data")
+                    $('#modal-mahasiswa form').attr('action', action);
+                    $('#nim').val(response.nim);
+                    $('#id_univ').val(response.id_univ).change();
+                    $('#namafakultas').val(response.id_fakultas).change();
+                    $('#angkatan').val(response.angkatan);
+                    $('#namaprodi').val(response.id_prodi).change();
+                    $('#namamhs').val(response.namamhs);
+                    $('#nohpmhs').val(response.nohpmhs);
+                    $('#emailmhs').val(response.emailmhs);
+
+                    $('#modal-mahasiswa').modal('show');
+                }
+            });
+            }
+
+            $('#pilihuniversitas_add').on('change',function(){
+            id_univ = $("#pilihuniversitas_add option:selected").val();
+
+            $.ajax({
+                url: "{{ url('/master/mahasiswa/list-fakultas') }}"+'/'+id_univ,
+                method: "GET",
+                dataType: "json",
+                success: function(response){
+                    if ($('#pilihfakultas_add').data('select2')) {
+                        $("#pilihfakultas_add form").val(""); 
+                        $("#pilihfakultas_add").trigger("change");
+                        $('#pilihfakultas_add').empty().trigger("change");
+                    }
+                    $("#pilihfakultas_add").select2({
+                        data: response.data,
+                        dropdownParent: $('#modal-mahasiswa'),
+                    });
+                }
+
+            })
+            });
+            $('#pilihfakultas_add').on('change',function(){
+            id_univ = $("#pilihfakultas_add option:selected").val();
+
+            $.ajax({
+                url: "{{ url('/master/mahasiswa/list-prodi') }}"+'/'+id_univ,
+                method: "GET",
+                dataType: "json",
+                success: function(response){
+                    if ($('#pilihprodi_add').data('select2')) {
+                        $("#pilihprodi_add form").val(""); 
+                        $("#pilihprodi_add").trigger("change");
+                        $('#pilihprodi_add').empty().trigger("change");
+                    }
+                    $("#pilihprodi_add").select2({
+                        data: response.data,
+                        dropdownParent: $('#modal-mahasiswa'),
+                    });
+                }
+
+            })
+            });
+
+
+            $('#univ').on('change',function(){
+            id_univ = $("#univ option:selected").val();
+
+            $.ajax({
+                url: "{{ url('/master/mahasiswa/list-fakultas') }}"+'/'+id_univ,
+                method: "GET",
+                dataType: "json",
+                success: function(response){
+                    if ($('#fakultas').data('select2')) {
+                        $("#fakultas form").val(""); 
+                        $("#fakultas").trigger("change");
+                        $('#fakultas').empty().trigger("change");
+                    }
+                    $("#fakultas").select2({
+                        data: response.data,
+                        dropdownParent: $('#modalSlide'),
+                    });
+                }
+
+            })
+            });
+
+            $('#fakultas').on('change',function(){
+            id_fakultas = $("#fakultas option:selected").val();
+
+            $.ajax({
+                url: "{{ url('/master/mahasiswa/list-prodi') }}"+'/'+id_fakultas,
+                method: "GET",
+                dataType: "json",
+                success: function(response){
+                    if ($('#prodi').data('select2')) {
+                        $("#prodi form").val(""); 
+                        $("#prodi").trigger("change");
+                        $('#prodi').empty().trigger("change");
+                    }
+                    $("#prodi").select2({
+                        data: response.data,
+                        dropdownParent: $('#modalSlide'),
+                    });
+                }
+
+            })
+            });
+
+            $( document ).ready(function() {
+            table_master_mahasiswa();
+            });
+
+            $(document).on('submit','#filter',function(e){
+            const offcanvasFilter = $('#modalSlide');
+            e.preventDefault();
+            table_master_mahasiswa();
+            $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() + ', Fakultas: ' + $('#fakultas :selected').text() + ', Prodi: ' + $('#prodi :selected').text());
+            offcanvasFilter.offcanvas('hide');
+            });
+
+            $('.data-reset').on('click',function () {
+            $('#univ').val(null).trigger('change');
+            $('#fakultas').val(null).trigger('change');
+            $('#prodi').val(null).trigger('change');
+            });
+
+            function table_master_mahasiswa() {
             var table = $('#table-master-mahasiswa').DataTable({
-                ajax: '{{ route('mahasiswa.show') }}',
+                ajax: {
+                    url:"{{ url('master/mahasiswa/show') }}",
+                    type: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    data: function(d) {
+                        var frm_data = $('#filter').serializeArray();
+                        $.each(frm_data, function(key, val) {
+                            d[val.name] = val.value;
+                        });
+                    }
+                },
                 serverSide: false,
                 processing: true,
-                deferRender: true,
-                type: 'GET',
+                // deferRender: true,
                 destroy: true,
-                columns: [{
+                columns: [
+                    {
                         data: "DT_RowIndex"
                     },
                     {
@@ -341,122 +285,8 @@
                     {
                         data: "action",
                         name: "action"
-                    },
-                ]
-            });
-
-            function edit(e) {
-                let id = e.attr('data-id');
-
-                let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
-                var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    success: function(response) {
-                        $("#modal-title").html("Edit Mahasiswa");
-                        $("#modal-button").html("Update Data")
-                        $('#modal-mahasiswa form').attr('action', action);
-                        $('#nim').val(response.nim);
-                        $('#angkatan').val(response.angkatan);
-                        $('#id_prodi').val(response.id_prodi).change();
-                        $('#id_univ').val(response.id_univ).change();
-                        $('#id_fakultas').val(response.id_fakultas).change();
-                        $('#namamhs').val(response.namamhs);
-                        $('#alamatmhs').val(response.alamatmhs);
-                        $('#emailmhs').val(response.emailmhs);
-                        $('#nohpmhs').val(response.nohpmhs);
-
-                        $('#modalEditMahasiswa').modal('show');
                     }
-                });
-            }
-
-            $("#modal-mahasiswa").on("hide.bs.modal", function() {
-
-                $("#modal-title").html("Edit Mahasiswa");
-                $("#modal-button").html("Save Data")
-                $('#modal-mahasiswa form')[0].reset();
-                $('#modal-mahasiswa form').attr('action', "{{ url('master/mahasiswa/store') }}");
-                $('.invalid-feedback').removeClass('d-block');
-                $('.form-control').removeClass('is-invalid');
-            });
-
-            $('#id_univ_add').on('change', function() {
-                id_univx = $("#id_univ_add option:selected").val();
-
-                $.ajax({
-                    url: "{{ url('/master_mahasiswa/list-fakultas') }}" + '/' + id_univx,
-                    method: "GET",
-                    dataType: "json",
-                    success: function(response) {
-                        
-                        if ($('#id_fakultas_add').data('select2')) {
-                            $("#id_fakultas_add").val("");
-                            $("#id_fakultas_add").trigger("change");
-                            $('#id_fakultas_add').empty().trigger("change");
-                        }
-                        $("#id_fakultas_add").select2({
-                            data: response.data,
-                            dropdownParent: $('#modalTambahMahasiswa'),
-                        });
-                    }
-                })
-            });
-
-            function delete_data(content, args) {
-
-                var id = content.attr('data-id');
-                var url = `{{ url('master/mahasiswa/destroy/') }}/${id}`;
-                const context = $(content).attr("context");
-
-                console.log(url);
-                console.log(id);
-
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            headers: {
-                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                    "content"
-                                ),
-                            },
-                            url: url,
-                            success: function(response) {
-                                if (response.error) {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: response.message,
-                                    });
-                                } else {
-                                    Swal.fire(
-                                        response.table ? "Deleted!" : "Info",
-                                        response.message,
-                                        "success"
-                                    ).then(() => {
-                                        if (response.table) {
-                                            setTimeout(function() {
-                                                $(response.table)
-                                                    .DataTable()
-                                                    .ajax.reload();
-                                            }, 1000);
-                                        }
-                                        if (typeof matrix === "function") matrix();
-                                    });
-                                }
-                            },
-                        });
-                    }
+                    ]
                 });
             }
         </script>
