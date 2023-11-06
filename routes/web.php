@@ -146,11 +146,13 @@ Route::prefix('master')->group(function () {
     });
     Route::prefix('dosen')->group(function () {
         Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
-        Route::get('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
+        Route::post('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
         Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
         Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
         Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
+        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\DosenController::class, 'list_fakultas'])->name('dosen.list_fakultas');
+        Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\DosenController::class, 'list_prodi'])->name('dosen.list_prodi');
     });
 });
 
