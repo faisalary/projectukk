@@ -5,6 +5,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndustriController;
+use App\Http\Controllers\Auth\LoginAdminController;
+use App\Http\Controllers\Auth\RegisterAdminController;
+use App\Http\Controllers\Auth\SetPasswordController;
+use App\Http\Middleware\IsAdmin;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +31,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'isAdmin','verified'])->name('dashboard');
 
 
-
-// Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/register', [RegisterAdminController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterAdminController::class, 'adminregister']);
+    Route::get('/set-password/{token}', [SetPasswordController::class, 'showResetForm'])->name('set.password');
+    Route::post('/set-password', [SetPasswordController::class, 'reset'])->name('update.password');
+    Route::get('/dashboard', [LoginAdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/logout', [LoginAdminController::class, 'logout'])->name('logout');
 });
 
 require __DIR__ . '/auth.php';
@@ -108,6 +113,15 @@ Route::prefix('master')->group(function () {
     Route::get('/master_pegawai_industri', function () {
         return view('masters.pegawai_industri.index', ['active_menu' => 'master_pegawai_industri']);
     });
+    Route::prefix('komponen-penilaian')->group(function () {
+        Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen_penilaian.index');
+        Route::get('/show', [App\Http\Controllers\KomponenPenilaianController::class, 'show'])->name('komponen_penilaian.show');
+        Route::post('/store', [App\Http\Controllers\KomponenPenilaianController::class, 'store'])->name('komponen_penilaian.store');
+        Route::post('/update/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'update'])->name('komponen_penilaian.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'edit'])->name('komponen_penilaian.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen_penilaian.status');
+        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen_penilaian.list_fakultas');
+    });
     Route::prefix('master-jenis-magang')->group(function () {
         Route::get('/', [App\Http\Controllers\JenisMagangController::class, 'index'])->name('jenismagang.index');
         Route::get('/show', [App\Http\Controllers\JenisMagangController::class, 'show'])->name('jenismagang.show');
@@ -140,6 +154,7 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
     });
+
 });
 
 Route::get('/pengaturan', function () {
@@ -189,3 +204,5 @@ Route::prefix('master-prodi')->group(function () {
     Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
     Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
 });
+
+

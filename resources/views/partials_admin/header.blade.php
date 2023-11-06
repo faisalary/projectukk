@@ -297,7 +297,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                                <a href="{{route('komponen_penilaian.index')}}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
