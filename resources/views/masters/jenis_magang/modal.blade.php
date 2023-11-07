@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col mb-2">
                             <label for="jenis" class="form-label">Jenis Magang</label>
-                            <input type="text" id="jenis" name="jenis" class="form-control" placeholder="Jenis Magang" />
+                            <input type="text" id="jenis" name="jenis" class="form-control" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" placeholder="Jenis Magang" />
                         </div>
                     </div>
                     <div class="row">
