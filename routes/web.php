@@ -71,14 +71,15 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\FakultasController::class, 'edit'])->name('fakultas.edit');
         Route::post('/status/{id}', [App\Http\Controllers\FakultasController::class, 'status'])->name('fakultas.status');
     });
-    Route::prefix('master-prodi')->group(function () {
+    Route::prefix('prodi')->group(function () {
         Route::get('/', [App\Http\Controllers\ProdiController::class, 'index'])->name('prodi.index');
-        Route::get('/show', [App\Http\Controllers\ProdiController::class, 'show'])->name('prodi.show');
+        Route::post('/show', [App\Http\Controllers\ProdiController::class, 'show'])->name('prodi.show');
         Route::post('/store', [App\Http\Controllers\ProdiController::class, 'store'])->name('prodi.store');
         Route::post('/update/{id}', [App\Http\Controllers\ProdiController::class, 'update'])->name('prodi.update');
         Route::get('/edit/{id}', [App\Http\Controllers\ProdiController::class, 'edit'])->name('prodi.edit');
         Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
         Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
+        Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\ProdiController::class, 'list_prodi'])->name('prodi.list_prodi');
     });
     Route::prefix('dokumen-persyarat')->group(function () {
         Route::get('/', [App\Http\Controllers\DokumenSyaratController::class, 'index'])->name('doc-syarat.index');
@@ -104,23 +105,26 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\NilaiMutuController::class, 'update'])->name('nilai-mutu.update');
         Route::get('/edit/{id}', [App\Http\Controllers\NilaiMutuController::class, 'edit'])->name('nilai-mutu.edit');
     });
-    Route::get('/master_mitra', function () {
-        return view('masters.mitra.index', ['active_menu' => 'master_mitra']);
+    Route::prefix('mitra')->group(function () {
+        Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
+        Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
+        Route::get('/create', [App\Http\Controllers\IndustriController::class, 'create'])->name('mitra.create');
+        Route::post('/store', [App\Http\Controllers\IndustriController::class, 'store'])->name('mitra.store');
+        Route::post('/update/{id}', [App\Http\Controllers\IndustriController::class, 'update'])->name('mitra.update');
+        Route::post('/status/{id}', [App\Http\Controllers\IndustriController::class, 'status'])->name('mitra.status');
+        Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     });
     Route::get('/master_mahasiswa', function () {
         return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
     });
-    Route::get('/master_pegawai_industri', function () {
-        return view('masters.pegawai_industri.index', ['active_menu' => 'master_pegawai_industri']);
-    });
-    Route::prefix('komponen-penilaian')->group(function () {
-        Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen_penilaian.index');
-        Route::get('/show', [App\Http\Controllers\KomponenPenilaianController::class, 'show'])->name('komponen_penilaian.show');
-        Route::post('/store', [App\Http\Controllers\KomponenPenilaianController::class, 'store'])->name('komponen_penilaian.store');
-        Route::post('/update/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'update'])->name('komponen_penilaian.update');
-        Route::get('/edit/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'edit'])->name('komponen_penilaian.edit');
-        Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen_penilaian.status');
-        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen_penilaian.list_fakultas');
+    Route::prefix('pegawai-industri')->group(function () {
+        Route::get('/', [App\Http\Controllers\PegawaiIndustriController::class, 'index'])->name('pegawaiindustri.index');
+        Route::get('/show', [App\Http\Controllers\PegawaiIndustriController::class, 'show'])->name('pegawaiindustri.show');
+        Route::get('/create', [App\Http\Controllers\PegawaiIndustriController::class, 'create'])->name('pegawaiindustri.create');
+        Route::post('/store', [App\Http\Controllers\PegawaiIndustriController::class, 'store'])->name('pegawaiindustri.store');
+        Route::post('/update/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'update'])->name('pegawaiindustri.update');
+        Route::post('/status/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'status'])->name('pegawaiindustri.status');
+        Route::get('/edit/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'edit'])->name('pegawaiindustri.edit');
     });
     Route::prefix('master-jenis-magang')->group(function () {
         Route::get('/', [App\Http\Controllers\JenisMagangController::class, 'index'])->name('jenismagang.index');
@@ -204,5 +208,3 @@ Route::prefix('master-prodi')->group(function () {
     Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
     Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
 });
-
-
