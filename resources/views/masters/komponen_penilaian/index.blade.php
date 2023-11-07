@@ -74,86 +74,38 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script>
-        var jsonData = [{
-                "nomor": "1",
-                "jenis magang": "Magang Fakultas",
-                "nama komponen": "Sikap",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Kehadiran",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Performa",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "100%",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Laporan Akhir",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Presentasi",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-        ];
-
+    <script>         
         var table = $('#table-master-komponen').DataTable({
-            "data": jsonData,
+            ajax: '{{ route('komponen_penilaian.show') }}',
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
+                    data: "DT_RowIndex"
                 },
                 {
-                    data: "jenis magang"
+                    data: "jenismagang.namajenis"
                 },
                 {
-                    data: "nama komponen"
+                    data: "namakomponen"
                 },
+               
                 {
-                    data: "dinilai oleh"
+                    data: "scoredby"
                 },
                 {
                     data: "bobot"
                 },
                 {
-                    data: "total bobot"
+                    data: "total_bobot"
                 },
                 {
                     data: "status"
                 },
                 {
-                    data: "aksi"
+                    data: "action"
                 }
             ]
         });
@@ -229,5 +181,63 @@
                 buttonsStyling: false
             });
         }
+        function edit(e) {
+            let id = e.attr('data-id');
+            let action = `{{ url('master/komponen-penilaian/update/') }}/${id}`;
+            var url = `{{ url('master/komponen-penilaian/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit Komponen Nilai");
+                    $("#modal-button").html("Update Data")
+                    $('#modal-komponen-nilai form').attr('action', action);
+                    $('#jenismagang').val(response.id_jenismagang);
+                    $('#namakomponen').val(response.namakomponen);
+                    $('#bobot').val(response.bobot);
+                    $('#scoredby').val(response.scoredby);
+                    $('#modal-komponen-nilai').modal('show');
+                }
+            });
+        }
+        var i = 0;
+        $('#add').click(function(){
+            if (i < 5) {
+                ++i;
+                $('#komponen-input-nilai').append(
+                `<div class="row">
+                    <div class="col-md-4 col-12">
+                        <label class="form-label" for="form-repeater-1-1">Nama Komponen</label>
+                        <input name="namakomponen" type="text" id="namakomponen" class="form-control"
+                            placeholder="Nama Komponen">
+                    </div>
+                    <div class="col-md-4 col-15" style="margin-right: -1rem; margin-left: -1rem;">
+                        <label class="form-label" for="form-repeater-1-2">Bobot Penilaian</label>
+                        <input name="bobot" type="text" id="bobot" class="form-control"
+                            placeholder="Bobot Penilaian">
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <label class="form-label" for="form-repeater-1-2">Dinilai Oleh</label>
+                        <input name="scoredby" type="text" id="scoredby" class="form-control"
+                            placeholder="Dinilai Oleh">
+                    </div>
+                    <div class="col-md-1 col-12 d-flex align-items-center mb-3" id="remove-row"
+                        style="margin-right: -1rem; margin-left: -1rem; margin-top: 1.3rem;">
+                        <button class="btn waves-effect remove-table-row" >
+                            <i class="tf-icons ti ti-trash text-danger trash-icon"></i>
+                        </button>
+                    </div>
+                    </div>`
+                );
+            }
+        });
+        $(document).on('click', '.remove-table-row', function(){
+            $(this).closest('.row').remove();
+        } );
+        
     </script>
+    
+    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+
 @endsection

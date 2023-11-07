@@ -6,7 +6,8 @@ use App\Models\KomponenNilai;
 use App\Http\Requests\KomponenNilaiRequest;
 use App\Models\JenisMagang;
 use Exception;
-use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
+use Yajra\DataTables\DataTables;
 
 class KomponenPenilaianController extends Controller
 {
@@ -32,17 +33,72 @@ class KomponenPenilaianController extends Controller
                 'id_kompnilai' => $request->kompnilai,
                 'id_jenismagang' => $request->jenismagang,
                 'namakomponen' => $request->namakomponen,
-                'tipe'=>$request->tipe,
-                'bobot'=>$request->bobot,
+                'tipe'=>'1',
+                'bobot'=>str_replace('%', '', $request->bobot),
                 'scoredby'=>$request->scoredby,
                 'status'=> true,
-                'total_bobot'=>$request->total_bobot,
-
+              
             ]); 
 
             return response()->json([
                 'error' => false,
-                'message' => 'bagus',
+                'message' => 'Data komponen berhasil di simpan',
+                'modal' => '#modal-komponen-nilai',
+                'table' => '#table-master-komponen'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' =>'Gagal menambahkan komponen penilaian', $e->getMessage(),
+            ]);
+        }
+        
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    
+    public function show()
+    {
+        $penilaian = KomponenNilai::with("jenismagang")->orderby('id_jenismagang', 'asc')->get();
+       
+        return DataTables::of($penilaian)
+        ->addIndexColumn()
+        ->editColumn('status', function ($row){
+            if ($row->status == 1) {
+                return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+            } else {
+                return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+            }
+        })
+        ->addColumn('action', function ($row){
+            $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+            $color = ($row->status) ? "danger" : "success";
+            
+            $btn = "<a data-bs-toggle='modal' data-id='{$row->id_jenismagang}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+            <a data-status='{$row->status}' data-url='komponen-penilaian/status' data-id='{$row->id_kompnilai}'  class='btn-icon update-status text-danger waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
+
+            return $btn;
+        })
+        ->rawColumns(['action','status'])
+
+        ->make(true);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function status(string $id)
+    {
+        try {
+            $nilai = KomponenNilai::where('id_kompnilai', $id)->first();
+            $nilai->status = ($nilai->status) ? false : true;
+            $nilai->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Status berhasil di ubah',
                 'modal' => '#modal-komponen-nilai',
                 'table' => '#table-master-komponen'
             ]);
@@ -52,23 +108,50 @@ class KomponenPenilaianController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-        
+    }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
+        return $penilaian;
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      */
-    public function show($id_jenismagang)
+    public function update(KomponenNilai $request, string $id)
     {
-        $penilaian = KomponenNilai::query();
-        if($id_jenismagang !== 'all'){
-            $penilaian = $penilaian->where('id_jenismagang',$id_jenismagang );
+        try {
+            // $validated = $request->validated();
 
+            $penilaian = KomponenNilai::where('id_jenismagang', $id)->first();
+           
+            $penilaian->id_kompnilai = $request->kompnilai;
+            $penilaian->id_jenismagang = $request->jenismagang;
+            $penilaian->namakomponen = $request->namakomponen;
+            $penilaian->tipe = 1;
+            $penilaian->bobot = str_replace('%', '', $request->bobot);
+            $penilaian->scoredby = $request->scoredby;
+            $penilaian->save();
+          
+            return response()->json([
+                'error' => false,
+                'message' => 'Komponen Nilai successfully Updated!',
+                'modal' => '#modal-komponen-nilai',
+                'table' => '#table-master-komponen'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
         }
-        $penilaian->with('id');
     }
-    
+
 
 }
+
 
 
