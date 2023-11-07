@@ -108,9 +108,6 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\IndustriController::class, 'status'])->name('mitra.status');
         Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     });
-    Route::get('/master_mahasiswa', function () {
-        return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
-    });
     Route::prefix('pegawai-industri')->group(function () {
         Route::get('/', [App\Http\Controllers\PegawaiIndustriController::class, 'index'])->name('pegawaiindustri.index');
         Route::get('/show', [App\Http\Controllers\PegawaiIndustriController::class, 'show'])->name('pegawaiindustri.show');
@@ -138,11 +135,13 @@ Route::prefix('master')->group(function () {
     });
     Route::prefix('mahasiswa')->group(function () {
         Route::get('/', [App\Http\Controllers\mahasiswaController::class, 'index'])->name('mahasiswa.index');
-        Route::get('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
+        Route::post('/show', [App\Http\Controllers\mahasiswaController::class, 'show'])->name('mahasiswa.show');
         Route::post('/store', [App\Http\Controllers\mahasiswaController::class, 'store'])->name('mahasiswa.store');
-        Route::post('/destroy/{id}', [App\Http\Controllers\mahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
         Route::post('/update/{id}', [App\Http\Controllers\mahasiswaController::class, 'update'])->name('mahasiswa.update');
         Route::get('/edit/{id}', [App\Http\Controllers\mahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\mahasiswaController::class, 'status'])->name('mahasiswa.status');
+        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\mahasiswaController::class, 'list_fakultas'])->name('mahasiswa.list_fakultas');
+        Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\mahasiswaController::class, 'list_prodi'])->name('mahasiswa.list_prodi');
     });
     Route::prefix('dosen')->group(function () {
         Route::get('/', [App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
