@@ -108,9 +108,6 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\IndustriController::class, 'status'])->name('mitra.status');
         Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     });
-    Route::get('/master_mahasiswa', function () {
-        return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
-    });
     Route::prefix('pegawai-industri')->group(function () {
         Route::get('/', [App\Http\Controllers\PegawaiIndustriController::class, 'index'])->name('pegawaiindustri.index');
         Route::get('/show', [App\Http\Controllers\PegawaiIndustriController::class, 'show'])->name('pegawaiindustri.show');
