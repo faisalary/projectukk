@@ -104,10 +104,10 @@
                     $("#modal-button").html("Update Data")
                     $('#modal-dosen form').attr('action', action);
                     $('#nip').val(response.nip);
-                    $('#id_univ').val(response.id_univ).change();
-                    $('#namafakultas').val(response.id_fakultas).change();
+                    $('#pilihuniversitas_add').val(response.id_univ).change();
+                    $('#pilihfakultas_add').val(response.id_fakultas).change();
                     $('#kode_dosen').val(response.kode_dosen);
-                    $('#namaprodi').val(response.id_prodi).change();
+                    $('#pilihprodi_add').val(response.id_prodi).change();
                     $('#namadosen').val(response.namadosen);
                     $('#nohpdosen').val(response.nohpdosen);
                     $('#emaildosen').val(response.emaildosen);

@@ -53,8 +53,8 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="angkatan" class="form-label">Angkatan</label>
-                            <input type="text" id="angkatan" name="angkatan" class="form-control"
-                                placeholder="Kode Dosen" />
+                            <input type="text" id="angkatan" name="angkatan" class="form-select yearpicker" 
+                                placeholder="Angkatan" readonly/>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

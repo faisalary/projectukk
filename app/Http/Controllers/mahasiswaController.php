@@ -127,9 +127,9 @@ class mahasiswaController extends Controller
 
             $mahasiswa->nim = $request->nim;
             $mahasiswa->angkatan = $request->angkatan;
-            $mahasiswa->id_prodi = $request->id_prodi;
-            $mahasiswa->id_univ = $request->id_univ;
-            $mahasiswa->id_fakultas = $request->id_fakultas;
+            $mahasiswa->id_prodi = $request->namaprodi;
+            $mahasiswa->id_univ = $request->namauniv;
+            $mahasiswa->id_fakultas = $request->namafakultas;
             $mahasiswa->namamhs = $request->namamhs;
             $mahasiswa->alamatmhs = $request->alamatmhs;
             $mahasiswa->emailmhs = $request->emailmhs;

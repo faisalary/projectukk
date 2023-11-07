@@ -6,6 +6,7 @@
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" /> 
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -60,6 +61,7 @@
                                     <th>NAMA MAHASISWA</th>
                                     <th>NOMOR TELEPON</th>
                                     <th>EMAIL</th>
+                                    <th>STATUS</th>
                                     <th>ALAMAT</th>
                                     <th style="min-width:100px;">AKSI</th>
                                 </tr>
@@ -102,13 +104,14 @@
                     $("#modal-button").html("Update Data")
                     $('#modal-mahasiswa form').attr('action', action);
                     $('#nim').val(response.nim);
-                    $('#id_univ').val(response.id_univ).change();
-                    $('#namafakultas').val(response.id_fakultas).change();
+                    $('#pilihuniversitas_add').val(response.id_univ).change();
+                    $('#pilihfakultas_add').val(response.id_fakultas).change();
                     $('#angkatan').val(response.angkatan);
-                    $('#namaprodi').val(response.id_prodi).change();
+                    $('#pilihprodi_add').val(response.id_prodi).change();
                     $('#namamhs').val(response.namamhs);
                     $('#nohpmhs').val(response.nohpmhs);
                     $('#emailmhs').val(response.emailmhs);
+                    $('#alamatmhs').val(response.alamatmhs);
 
                     $('#modal-mahasiswa').modal('show');
                 }
@@ -283,14 +286,23 @@
                         name: "alamatmhs"
                     },
                     {
+                        data: "status",
+                        name: "status"
+                    },
+                    {
                         data: "action",
                         name: "action"
                     }
                     ]
                 });
             }
+
+        $(document).ready(function() {    $(".yearpicker").yearpicker({
+            startYear: new Date().getFullYear() - 10,      endYear: new Date().getFullYear() + 10,
+        });  });
         </script>
 
         <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
         <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+        <script src="{{ url('app-assets/js/yearpicker.js') }}"></script>
     @endsection
