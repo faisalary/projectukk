@@ -255,3 +255,11 @@ Route::get('/detail-informasi-pengalaman', function() {
 Route::get('/detail-informasi-dokumen', function() {
     return view('profile.dokumen');
 });
+
+Route::get('/profile-company', function() {
+    return view('company.profile_company');
+});
+
+Route::get('/summary-profile', function() {
+    return view('company.summary_profile');
+});
