@@ -21,8 +21,23 @@ class KomponenNilaiRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (isset($this->id)){
+            return [
+                'jenismagang' => ['required',''],
+                'halo1.*.namakomponen' => ['required'],
+                // 'halo1.*. tipe' => 1,
+                'halo1.*.bobot'=>['required'],
+                'halo1.*.scoredby'=>['required'],
+               
+            ];
+        }
         return [
-            //
-        ];
+          
+            'jenismagang' => ['required',''],
+            'halo1.*.namakomponen' => ['required'],
+            // 'halo1.*. tipe' => 1,
+            'halo1.*.bobot'=>['required'],
+            'halo1.*.scoredby'=>['required'],
+    ];
     }
 }

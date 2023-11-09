@@ -28,17 +28,30 @@ class KomponenPenilaianController extends Controller
 
     public function store(KomponenNilaiRequest $request)
     {
+        // dd($request);
         try{
-            KomponenNilai::create([
-                'id_kompnilai' => $request->kompnilai,
-                'id_jenismagang' => $request->jenismagang,
-                'namakomponen' => $request->namakomponen,
-                'tipe'=>'1',
-                'bobot'=>str_replace('%', '', $request->bobot),
-                'scoredby'=>$request->scoredby,
-                'status'=> true,
+            foreach($request->halo1 as $d){
+                KomponenNilai::create([
+                    'id_kompnilai' => $request->kompnilai,
+                    'id_jenismagang' => $request->jenismagang,
+                    'namakomponen' => $d['namakomponen'],
+                    'tipe'=>'1',
+                    'bobot' => str_replace('%', '', $d['bobot']),
+                    'scoredby' => $d['scoredby'],
+                    'status'=> true,
+                  
+                ]); 
+            }
+            // KomponenNilai::create([
+            //     'id_kompnilai' => $request->kompnilai,
+            //     'id_jenismagang' => $request->jenismagang,
+            //     'namakomponen' => $request->namakomponen,
+            //     'tipe'=>'1',
+            //     'bobot'=>str_replace('%', '', $request->bobot),
+            //     'scoredby'=>$request->scoredby,
+            //     'status'=> true,
               
-            ]); 
+            // ]); 
 
             return response()->json([
                 'error' => false,
@@ -114,7 +127,7 @@ class KomponenPenilaianController extends Controller
      */
     public function edit(string $id)
     {
-        $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
+        $penilaian = KomponenNilai::where('id_jenismagang', $id)->first();
         return $penilaian;
     }
 
@@ -126,14 +139,11 @@ class KomponenPenilaianController extends Controller
         try {
             // $validated = $request->validated();
 
-            $penilaian = KomponenNilai::where('id_jenismagang', $id)->first();
-           
-            $penilaian->id_kompnilai = $request->kompnilai;
-            $penilaian->id_jenismagang = $request->jenismagang;
-            $penilaian->namakomponen = $request->namakomponen;
-            $penilaian->tipe = 1;
-            $penilaian->bobot = str_replace('%', '', $request->bobot);
-            $penilaian->scoredby = $request->scoredby;
+            $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
+            
+            $penilaian->namakomponen = $request->halo1[0]->namakomponen;
+            $penilaian->bobot = str_replace('%', '', $request->halo1[0]->bobot);
+            $penilaian->scoredby = $request->halo1[0]->scoredby;
             $penilaian->save();
           
             return response()->json([

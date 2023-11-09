@@ -74,6 +74,7 @@
 @endsection
 
 @section('page_script')
+<script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
     <script>         
         var table = $('#table-master-komponen').DataTable({
             ajax: '{{ route('komponen_penilaian.show') }}',
@@ -200,41 +201,8 @@
                 }
             });
         }
-        var i = 0;
-        $('#add').click(function(){
-            if (i < 5) {
-                ++i;
-                $('#komponen-input-nilai').append(
-                `<div class="row">
-                    <div class="col-md-4 col-12">
-                        <label class="form-label" for="form-repeater-1-1">Nama Komponen</label>
-                        <input name="namakomponen" type="text" id="namakomponen" class="form-control"
-                            placeholder="Nama Komponen">
-                    </div>
-                    <div class="col-md-4 col-15" style="margin-right: -1rem; margin-left: -1rem;">
-                        <label class="form-label" for="form-repeater-1-2">Bobot Penilaian</label>
-                        <input name="bobot" type="text" id="bobot" class="form-control"
-                            placeholder="Bobot Penilaian">
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <label class="form-label" for="form-repeater-1-2">Dinilai Oleh</label>
-                        <input name="scoredby" type="text" id="scoredby" class="form-control"
-                            placeholder="Dinilai Oleh">
-                    </div>
-                    <div class="col-md-1 col-12 d-flex align-items-center mb-3" id="remove-row"
-                        style="margin-right: -1rem; margin-left: -1rem; margin-top: 1.3rem;">
-                        <button class="btn waves-effect remove-table-row" >
-                            <i class="tf-icons ti ti-trash text-danger trash-icon"></i>
-                        </button>
-                    </div>
-                    </div>`
-                );
-            }
-        });
-        $(document).on('click', '.remove-table-row', function(){
-            $(this).closest('.row').remove();
-        } );
-        
+        $('.repeater').repeater();
+
     </script>
     
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
