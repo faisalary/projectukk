@@ -131,6 +131,13 @@ Route::get('/informasi/magang', function () {
     return view('layouts.program_magang.informasi_magang');
 });
 
+Route::get('/informasi/lowongan', function () {
+    return view('company.lowongan_magang.informasi_lowongan');
+});
+Route::get('/detail/kandidat', function () {
+    return view('company.lowongan_magang.detail_kandidat');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('/master_universitas', function () {
