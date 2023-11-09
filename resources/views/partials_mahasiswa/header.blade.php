@@ -467,7 +467,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="/lowongan-magang-tersimpan">
                         <i class="ti ti-briefcase me-2 ti-sm"></i>
                         <span class="align-middle">Lowongan Tersimpan</span>
                       </a>
