@@ -263,8 +263,7 @@
                             <div data-i18n="Master Data">Master Data</div>
                         </a>
                         <ul class="menu-sub">
-                            <li
-                                class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
                                 <a href="{{ route('universitas.index') }}" class="menu-link">
                                     <div data-i18n="Master Universitas">Master Universitas</div>
                                 </a>
@@ -324,7 +323,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                                <a href="{{route('komponen_penilaian.index')}}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>

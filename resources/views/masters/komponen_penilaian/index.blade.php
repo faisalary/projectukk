@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <style>
@@ -36,7 +40,7 @@
             <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Komponen Penilaian</h4>
         </div>
         <div class="col-md-6 col-12 text-end">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahKomponen">Tambah Komponen
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai">Tambah Komponen
                 Penilaian</button>
         </div>
     </div>
@@ -64,216 +68,45 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalTambahKomponen" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center d-block">
-                    <h5 class="modal-title">Tambah Komponen Penilaian</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-repeater">
-                        <div data-repeater-list="group-a">
-                            <div data-repeater-item="">
-                                <div class="row">
-                                    <div class="col mb-2">
-                                        <label for="jenis" class="form-label">Jenis Magang</label>
-                                        <select class="form-select select2" data-placeholder="Jenis Magang">
-                                            <option value="1">Magang Fakultas</option>
-                                            <option value="2">Magang Mandiri</option>
-                                            <option value="2">Magang Startup</option>
-                                            <option value="2">Magang Kerja</option>
-                                            <option value="2">Magang MBKM-Kampus Merdeka</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-12">
-                                        <label class="form-label" for="form-repeater-1-1">Nama Komponen</label>
-                                        <input type="text" id="form-repeater-1-1" class="form-control"
-                                            placeholder="Nama Komponen">
-                                    </div>
-                                    <div class="col-md-4 col-15" style="margin-right: -1rem; margin-left: -1rem;">
-                                        <label class="form-label" for="form-repeater-1-2">Bobot Penilaian</label>
-                                        <input type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Bobot Penilaian">
-                                    </div>
-                                    <div class="col-md-3 col-12">
-                                        <label class="form-label" for="form-repeater-1-2">Dinilai Oleh</label>
-                                        <input type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Dinilai Oleh">
-                                    </div>
-                                    <div class="col-md-1 col-12 d-flex align-items-center mb-3"
-                                        style="margin-right: -1rem; margin-left: -1rem; margin-top: 1.3rem;">
-                                        <button class="btn waves-effect" data-repeater-delete="">
-                                            <i class="tf-icons ti ti-trash text-danger trash-icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <button class="btn waves-effect bg-label-success" data-repeater-create="">
-                        <i class="ti ti-plus me-1"></i>
-                        <span class="align-middle">Data</span>
-                    </button>
-                    <div class="row">
-                        <div class="col-md-12 col-12 text-end">
-                            <button class="btn btn-success" onclick = alertt($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i>Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalEditKomponen" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center d-block">
-                    <h5 class="modal-title">Edit Komponen Penilaian</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-repeater">
-                        <div data-repeater-list="group-a">
-                            <div data-repeater-item="">
-                                <div class="row">
-                                    <div class="col mb-2">
-                                        <label for="jenis" class="form-label">Jenis Magang</label>
-                                        <select class="form-select select2" data-placeholder="Jenis Magang">
-                                            <option value="1">Magang Fakultas</option>
-                                            <option value="2">Magang Mandiri</option>
-                                            <option value="2">Magang Startup</option>
-                                            <option value="2">Magang Kerja</option>
-                                            <option value="2">Magang MBKM-Kampus Merdeka</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 col-12">
-                                        <label class="form-label" for="form-repeater-1-1">Nama Komponen</label>
-                                        <input type="text" id="form-repeater-1-1" class="form-control"
-                                            placeholder="Nama Komponen">
-                                    </div>
-                                    <div class="col-md-4 col-15" style="margin-right: -1rem; margin-left: -1rem;">
-                                        <label class="form-label" for="form-repeater-1-2">Bobot Penilaian</label>
-                                        <input type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Bobot Penilaian">
-                                    </div>
-                                    <div class="col-md-3 col-12">
-                                        <label class="form-label" for="form-repeater-1-2">Dinilai Oleh</label>
-                                        <input type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Dinilai Oleh">
-                                    </div>
-                                    <div class="col-md-1 col-12 d-flex align-items-center mb-3"
-                                        style="margin-right: -1rem; margin-left: -1rem; margin-top: 1.3rem;">
-                                        <button class="btn waves-effect" data-repeater-delete="">
-                                            <i class="tf-icons ti ti-trash text-danger trash-icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <button class="btn waves-effect bg-label-success" data-repeater-create="">
-                        <i class="ti ti-plus me-1"></i>
-                        <span class="align-middle">Data</span>
-                    </button>
-                    <div class="row">
-                        <div class="col-md-12 col-12 text-end">
-                            <button class="btn btn-success" onclick = alert($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='far fa-check-circle text-success'></i>Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('masters.komponen_penilaian.modal')
 
 
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script>
-        var jsonData = [{
-                "nomor": "1",
-                "jenis magang": "Magang Fakultas",
-                "nama komponen": "Sikap",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Kehadiran",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Performa",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "100%",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Laporan Akhir",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-            {
-                "nomor": "",
-                "jenis magang": "",
-                "nama komponen": "Presentasi",
-                "dinilai oleh": "Pembimbing Lapangan",
-                "bobot": "20%",
-                "total bobot": "",
-                "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditKomponen' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a> <a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-            },
-        ];
-
+<script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+    <script>         
         var table = $('#table-master-komponen').DataTable({
-            "data": jsonData,
+            ajax: '{{ route('komponen_penilaian.show') }}',
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
+                    data: "DT_RowIndex"
                 },
                 {
-                    data: "jenis magang"
+                    data: "jenismagang.namajenis"
                 },
                 {
-                    data: "nama komponen"
+                    data: "namakomponen"
                 },
+               
                 {
-                    data: "dinilai oleh"
+                    data: "scoredby"
                 },
                 {
                     data: "bobot"
                 },
                 {
-                    data: "total bobot"
+                    data: "total_bobot"
                 },
                 {
                     data: "status"
                 },
                 {
-                    data: "aksi"
+                    data: "action"
                 }
             ]
         });
@@ -349,5 +182,30 @@
                 buttonsStyling: false
             });
         }
+        function edit(e) {
+            let id = e.attr('data-id');
+            let action = `{{ url('master/komponen-penilaian/update/') }}/${id}`;
+            var url = `{{ url('master/komponen-penilaian/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit Komponen Nilai");
+                    $("#modal-button").html("Update Data")
+                    $('#modal-komponen-nilai form').attr('action', action);
+                    $('#jenismagang').val(response.id_jenismagang);
+                    $('#namakomponen').val(response.namakomponen);
+                    $('#bobot').val(response.bobot);
+                    $('#scoredby').val(response.scoredby);
+                    $('#modal-komponen-nilai').modal('show');
+                }
+            });
+        }
+        $('.repeater').repeater();
+
     </script>
+    
+    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+
 @endsection
