@@ -18,12 +18,10 @@
         font-size: 0.9375rem;
         margin-bottom: 0px;
     }
-    #more {display: none;}
 
-    .position-relative {
-    padding-right: 15px;
-    padding-left: 0px; 
-}
+    #more {
+        display: none;
+    }
 </style>
 
 @endsection
@@ -31,7 +29,20 @@
 @section('main')
 <div class="row">
     <div class="col-md-12 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4>
+        <nav aria-label="breadcrumb">
+            <h4>
+                <ol class="breadcrumb breadcrumb-style1">
+                    <li class="breadcrumb-item text-secondary">
+                        Lowongan Magang
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/informasi/lowongan" class="text-secondary">Informasi Lowongan</a>
+                    </li>
+                    <li class="breadcrumb-item active">Fullstack Developer - Tahun Ajaran 2324</li>
+                </ol>
+            </h4>
+        </nav>
+        <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
     </div>
     <div class="col-9"></div>
     <div class="col-md-3 col-12 mb-3 d-flex align-items-center justify-content-between">
@@ -116,14 +127,14 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Filter Berdasarkan</h5>
+            <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan</h5>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
             <form class="add-new-user pt-0" id="filter">
                 <div class="col-12 mb-2">
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Universitas</label>
+                            <label for="univ" class="form-label" style="padding-left: 15px;">Universitas</label>
                             <select class="form-select select2" id="univ" name="univ" data-placeholder="Pilih Universitas">
                                 <option disabled selected>Pilih Universitas</option>
                             </select>
@@ -132,7 +143,7 @@
                     </div>
                     <div class="row">
                         <div class="mb-2">
-                            <label for="fakultas" class="form-label">Fakultas</label>
+                            <label for="fakultas" class="form-label" style="padding-left: 15px;">Fakultas</label>
                             <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
                                 <option disabled selected>Pilih Fakultas</option>
                             </select>
@@ -140,7 +151,7 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Prodi</label>
+                            <label for="univ" class="form-label" style="padding-left: 15px;">Prodi</label>
                             <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
                                 <option disabled selected>Pilih Prodi</option>
                             </select>
@@ -150,7 +161,7 @@
                     <div class="row cnt">
                         <div id="div1" class="targetDiv">
                             <div class="col mb-2 form-input">
-                                <label for="univ" class="form-label">Status Kandidat</label>
+                                <label for="univ" class="form-label" style="padding-left: 15px;">Status Kandidat</label>
                                 <select class="form-select select2" id="status" name="status" data-placeholder="Status Kandidat">
                                     <option disabled selected>Pilih Status Kandidat</option>
                                 </select>
@@ -174,15 +185,15 @@
                     <table class="table tab1c" id="table-seluruh-kandidat" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
+                                <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
+                                <th style="min-width:100px;">NO TELEPON </th>
+                                <th style="min-width:150px;">EMAIL</th>
+                                <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width:150px;">UNIVERSITAS</th>
+                                <th style="min-width:100px;">STATUS</th>
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -196,15 +207,15 @@
                     <table class="table tab1c" id="table-belum-proses" style="width: 100% !important;">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
+                                <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
+                                <th style="min-width:100px;">NO TELEPON </th>
+                                <th style="min-width:150px;">EMAIL</th>
+                                <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width:150px;">UNIVERSITAS</th>
+                                <th style="min-width:100px;">STATUS</th>
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -220,15 +231,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -244,15 +255,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -268,15 +279,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -292,15 +303,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -316,15 +327,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -340,15 +351,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -368,6 +379,14 @@
                     <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="" style="min-width: 220px;"><i class="tf-icons ti ti-file-symlink"> Unduh Format CV</i>
                     </button>
                     <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                        <option disabled selected>Ubah Status Kandidat</option>
+                        <option>Belum Proses</option>
+                        <option>Screening</option>
+                        <option>Seleksi Tahap 1</option>
+                        <option>Seleksi Tahap 2</option>
+                        <option>Penawaran</option>
+                        <option>Diterima</option>
+                        <option>Ditolak</option>
                     </select>
                 </div>
             </div>
@@ -669,6 +688,16 @@
             {
                 data: "aksi"
             }
+        ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
         ]
     });
 
@@ -738,6 +767,16 @@
             {
                 data: "aksi"
             }
+        ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
         ]
     });
 
@@ -819,6 +858,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -843,7 +892,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -924,6 +973,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -948,7 +1007,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1029,6 +1088,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1053,7 +1122,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1134,6 +1203,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1158,7 +1237,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1239,6 +1318,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1263,7 +1352,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1343,6 +1432,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1367,12 +1466,10 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
-    // jQuery(document).ready(function() {
-    //     $(".targetDiv").hide();
-    // });
+   
     jQuery(function() {
         jQuery('.showSingle').click(function() {
             jQuery('.targetDiv').hide('.cnt');
@@ -1396,12 +1493,7 @@
         }
     }
 
-    // $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(event) {
-    //     var tabID = $(event.target).attr('data-bs-target');
-    //     if (tabID === '#navs-pills-justified-belum-proses') {
-    //         table.columns.adjust().responsive.recalc();
-    //     }
-    // });
+   
     $('.display').DataTable({
         responsive: true
     });

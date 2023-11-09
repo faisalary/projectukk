@@ -191,10 +191,10 @@ Route::get('/informasi/magang', function () {
 });
 
 Route::get('/informasi/lowongan', function () {
-    return view('company.lowongan_magang.informasi_lowongan');
+    return view('company.lowongan_magang.informasi_lowongan', ['active_menu' => 'informasi/lowongan']);
 });
 Route::get('/detail/kandidat', function () {
-    return view('company.lowongan_magang.detail_kandidat');
+    return view('company.lowongan_magang.detail_kandidat',['active_menu' => 'informasi/lowongan']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
