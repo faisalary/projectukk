@@ -14,4 +14,6 @@ class JenisMagang extends Model
     protected $fillable = ['namajenis', 'durasimagang', 'is_review_process', 'is_document_upload', 'type', 'status'];
     protected $primaryKey = 'id_jenismagang';
     protected $keyType = 'string';
+    public $timestamps= false;
+    
 }

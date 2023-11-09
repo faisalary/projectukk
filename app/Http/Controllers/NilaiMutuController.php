@@ -3,22 +3,20 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\Universitas;
+use App\Models\NilaiMutu;
 use Illuminate\Http\Request;
-use App\Models\TahunAkademik;
+use App\Http\Requests\NilaiMutuRequest;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\TahunAkademikRequest;
 
-class TahunAkademikController extends Controller
+class NilaiMutuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tahun = TahunAkademik::all();
-
-        return view('masters.tahun_akademik.index', compact('tahun'));
+        $nilai = NilaiMutu::all();
+        return view('masters.nilai_mutu.index', compact('nilai'));
     }
 
     /**
@@ -32,22 +30,22 @@ class TahunAkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TahunAkademikRequest $request)
+    public function store(NilaiMutuRequest $request)
     {
-
         try {
 
-            $tahun = TahunAkademik::create([
-                'tahun' => $request->tahun,
-                'semester' => $request->semester,
+            $nilai = NilaiMutu::create([
+                'nilaimin' => $request->nilaimin,
+                'nilaimax' => $request->nilaimax,
+                'nilaimutu' => $request->nilaimutu,
                 'status' => true,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Tahun Akademik successfully Created!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Nilai Mutu successfully Created!',
+                'modal' => '#modal-nilai-mutu',
+                'table' => '#table-master-nilai-mutu'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -62,9 +60,9 @@ class TahunAkademikController extends Controller
      */
     public function show()
     {
-        $tahun = TahunAkademik::orderBy('tahun', 'asc')->get();
+        $nilai = NilaiMutu::orderBy('nilaimin', 'desc')->get();
 
-        return DataTables::of($tahun)
+        return DataTables::of($nilai)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -77,8 +75,8 @@ class TahunAkademikController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_year_akademik}' data-url='tahun-akademik/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_nilai}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_nilai}' data-url='nilai-mutu/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -92,29 +90,30 @@ class TahunAkademikController extends Controller
      */
     public function edit(string $id)
     {
-        $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-        return $tahun;
+        $nilai = NilaiMutu::where('id_nilai', $id)->first();
+        return $nilai;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(TahunAkademikRequest $request, string $id)
+    public function update(NilaiMutuRequest $request, string $id)
     {
         try {
             // $validated = $request->validated();
 
-            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
+            $nilai = NilaiMutu::where('id_nilai', $id)->first();
 
-            $tahun->tahun = $request->tahun;
-            $tahun->semester = $request->semester;
-            $tahun->save();
+            $nilai->nilaimin = $request->nilaimin;
+            $nilai->nilaimax = $request->nilaimax;
+            $nilai->nilaimutu = $request->nilaimutu;
+            $nilai->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Nilai Mutu successfully Updated!',
+                'modal' => '#modal-nilai-mutu',
+                'table' => '#table-master-nilai-mutu'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -130,15 +129,15 @@ class TahunAkademikController extends Controller
     public function status(string $id)
     {
         try {
-            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-            $tahun->status = ($tahun->status) ? false : true;
-            $tahun->save();
+            $nilai = NilaiMutu::where('id_nilai', $id)->first();
+            $nilai->status = ($nilai->status) ? false : true;
+            $nilai->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Status Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Status Nilai Mutu successfully Updated!',
+                'modal' => '#modal-nilai-mutu',
+                'table' => '#table-master-nilai-mutu'
             ]);
         } catch (Exception $e) {
             return response()->json([

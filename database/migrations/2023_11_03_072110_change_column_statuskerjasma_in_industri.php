@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilai_mutu', function (Blueprint $table) {
-            $table->uuid('id_nilai')->primary();
-            $table->string('nilaimin', 5);
-            $table->string('nilaimax', 5);
-            $table->string('nilaimutu', 5);
-            $table->boolean('status')->default(true);
+        Schema::table('industri', function (Blueprint $table) {
+            $table->string('statuskerjasama', 255)->change();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilai_mutu');
+        Schema::table('industri', function (Blueprint $table) {
+            //
+        });
     }
 };

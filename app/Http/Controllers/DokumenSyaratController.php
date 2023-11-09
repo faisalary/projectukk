@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DokumenSyaratRequest;
 use Exception;
-use App\Models\Universitas;
+use App\Models\JenisMagang;
 use Illuminate\Http\Request;
-use App\Models\TahunAkademik;
+use App\Models\DocumentSyarat;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\TahunAkademikRequest;
 
-class TahunAkademikController extends Controller
+class DokumenSyaratController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tahun = TahunAkademik::all();
-
-        return view('masters.tahun_akademik.index', compact('tahun'));
+        $doc = DocumentSyarat::all();
+        $jenis = JenisMagang::all();
+        return view('masters.dokumen_persyaratan.index', compact('doc', 'jenis'));
     }
 
     /**
@@ -32,22 +32,21 @@ class TahunAkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TahunAkademikRequest $request)
+    public function store(DokumenSyaratRequest $request)
     {
-
         try {
 
-            $tahun = TahunAkademik::create([
-                'tahun' => $request->tahun,
-                'semester' => $request->semester,
+            DocumentSyarat::create([
+                'namadocument' => $request->namadoc,
+                'id_jenismagang' => $request->namajenis,
                 'status' => true,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Tahun Akademik successfully Created!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Document successfully Add!',
+                'modal' => '#modal-dokumen',
+                'table' => '#table-master-dokumen'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -62,9 +61,9 @@ class TahunAkademikController extends Controller
      */
     public function show()
     {
-        $tahun = TahunAkademik::orderBy('tahun', 'asc')->get();
+        $doc = DocumentSyarat::with('jenis')->orderBy('id_jenismagang', 'asc')->get();
 
-        return DataTables::of($tahun)
+        return DataTables::of($doc)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -77,8 +76,8 @@ class TahunAkademikController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_year_akademik}' data-url='tahun-akademik/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_document}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_document}' data-url='dokumen-persyaratan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -92,29 +91,27 @@ class TahunAkademikController extends Controller
      */
     public function edit(string $id)
     {
-        $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-        return $tahun;
+        $doc = DocumentSyarat::where('id_document', $id)->first();
+        return $doc;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(TahunAkademikRequest $request, string $id)
+    public function update(DokumenSyaratRequest $request, string $id)
     {
         try {
-            // $validated = $request->validated();
+            $doc = DocumentSyarat::where('id_document', $id)->first();
 
-            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-
-            $tahun->tahun = $request->tahun;
-            $tahun->semester = $request->semester;
-            $tahun->save();
+            $doc->id_jenismagang = $request->namajenis;
+            $doc->namadocument = $request->namadoc;
+            $doc->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Document successfully Updated!',
+                'modal' => '#modal-dokumen',
+                'table' => '#table-master-dokumen'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -130,15 +127,15 @@ class TahunAkademikController extends Controller
     public function status(string $id)
     {
         try {
-            $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-            $tahun->status = ($tahun->status) ? false : true;
-            $tahun->save();
+            $doc = DocumentSyarat::where('id_document', $id)->first();
+            $doc->status = ($doc->status) ? false : true;
+            $doc->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Status Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
+                'message' => 'Status Document successfully Updated!',
+                'modal' => '#modal-dokumen',
+                'table' => '#table-master-dokumen'
             ]);
         } catch (Exception $e) {
             return response()->json([

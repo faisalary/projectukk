@@ -11,7 +11,7 @@ class Dosen extends Model
     use HasUuids;
 
     protected $table = 'dosen';
-    protected $fillable = ['nip','namadosen', 'nohpdosen', 'emaildosen', 'status','id_prodi','kode_dosen','id_univ'];
+    protected $fillable = ['nip','namadosen', 'nohpdosen', 'emaildosen', 'status','id_prodi','kode_dosen','id_univ','id_fakultas'];
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
     public $timestamps = false;
@@ -23,6 +23,6 @@ class Dosen extends Model
         return $this->belongsTo(ProgramStudi::class,'id_prodi');
     }
     public function fakultas(){
-        return $this->belongsTo(Fakultas::class,'id_fakultas');
+        return $this->belongsTo(Fakultas::class,'id_prodi');
     }
 }

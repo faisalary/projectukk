@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndustriRequest;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Models\Industri;
@@ -15,8 +16,8 @@ class IndustriController extends Controller
      */
     public function index()
     {
-    $industri = Industri::all();
-    return view('masters.mitra.index', compact('industri'));
+        $industri = Industri::all();
+        return view('masters.mitra.index', compact('industri'));
     }
 
     /**
@@ -30,44 +31,32 @@ class IndustriController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(IndustriRequest $request)
     {
-        try{
-            $request->validate(
-            [
-                'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
-                'notelepon' => ['required', 'string', 'max:15'],
-                'alamatindustri' => ['required', 'string', 'max:255'],
-                'kategorimitra' => ['required', 'string', 'max:15'],
-                // 'status' => ['required', 'boolean', 'default:true'],
-            ],
-            [
-                'namaindustri.unique' => 'A Industri with the name already exist'
-            ]
-        );
+        try {
+            Industri::create([
+                'namaindustri' => $request->namaindustri,
+                'notelpon' => $request->notelepon,
+                'email' => $request->email,
+                'alamatindustri' => $request->alamatindustri,
+                'kategori_industri' => $request->kategorimitra,
+                'statuskerjasama' => $request->statuskerjasama,
+                'status' => true,
+            ]);
 
-        $industri = Industri::create([
-            'namaindustri' => $request->namaindustri,
-            'notelpon' => $request->notelepon,
-            'alamatindustri' => $request->alamatindustri,
-            'kategori_industri' => $request->kategorimitra,
-            'statuskerjasama' => true,
-        ]);
-
-        return response()->json([
-            'error' => false,
-            'message' => 'Mitra successfully Created!',
-            'modal' => '#modalTambahMitra',
-            'table' => '#table-master-mitra'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'error' => true,
-            'message' => $e->getMessage(),
-        ]);
+            return response()->json([
+                'error' => false,
+                'message' => 'Industri successfully Created!',
+                'modal' => '#modalTambahMitra',
+                'table' => '#table-master-mitra'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
-}
-
     /**
      * Display the spesified resource.
      */
@@ -78,18 +67,18 @@ class IndustriController extends Controller
         return DataTables::of($industri)
             ->addIndexColumn()
             ->editColumn('status', function ($industri) {
-                if ($industri->statuskerjasama == 1) {
+                if ($industri->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
             })
-            ->addColumn('action', function ($industri) {
-                $icon = ($industri->statuskerjasama) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($industri->statuskerjasama) ? "danger" : "success";
+            ->addColumn('action', function ($row) {
+                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$industri->id_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick = status($(this)) data-status='{$industri->status}' data-id='{$industri->id_industri}'  class='btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='mitra/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -97,9 +86,9 @@ class IndustriController extends Controller
             ->rawColumns(['action', 'status'])
 
             ->make(true);
-     }
+    }
 
-     /**
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -111,20 +100,22 @@ class IndustriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(IndustriRequest $request, string $id)
     {
-        try{
+        try {
             $industri = Industri::where('id_industri', $id)->first();
 
             $industri->namaindustri = $request->namaindustri;
             $industri->notelpon = $request->notelepon;
+            $industri->email = $request->email;
             $industri->alamatindustri = $request->alamatindustri;
             $industri->kategori_industri = $request->kategorimitra;
+            $industri->statuskerjasama = $request->statuskerjasama;
             $industri->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Mitra successfully Updated!',
+                'message' => 'Industri successfully Updated!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-master-mitra'
             ]);
@@ -139,16 +130,16 @@ class IndustriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destory(string $id)
+    public function status(string $id)
     {
-        try{
+        try {
             $industri = Industri::where('id_industri', $id)->first();
-            $industri->statuskerjasama = ($industri->statuskerjasama) ? false : true;
+            $industri->status = ($industri->status) ? false : true;
             $industri->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Mitra successfully Deactived!',
+                'message' => 'Status Industri successfully Updated!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-master-mitra'
             ]);
@@ -160,6 +151,3 @@ class IndustriController extends Controller
         }
     }
 }
-
-
-

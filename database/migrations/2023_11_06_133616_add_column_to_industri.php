@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('program_studi', function (Blueprint $table) {
-            $table->boolean('status')->default(true);
+        Schema::table('industri', function (Blueprint $table) {
+            $table->string('email');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('program_studi', function (Blueprint $table) {
-            //
+        Schema::table('industri', function (Blueprint $table) {
+            $table->dropColumn('email');
         });
     }
 };

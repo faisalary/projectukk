@@ -1,12 +1,12 @@
-<div class="modal fade" id="modal-dosen" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal-mahasiswa" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
 
         <div class="modal-content">
             <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Dosen</h5>
+                <h5 class="modal-title" id="modal-title">Tambah Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" id="" method="POST" action="{{ route('dosen.store') }}">
+            <form class="default-form" id="" method="POST" action="{{ route('mahasiswa.store') }}">
                 @csrf
                 <div class="modal-body">
 
@@ -45,40 +45,47 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="nip" class="form-label">NIP</label>
-                            <input class="form-control" id="nip" name="nip" placeholder="NIP" />
+                            <label for="nim" class="form-label">NIM</label>
+                            <input class="form-control" id="nim" name="nim" placeholder="NIP" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="kode_dosen" class="form-label">Kode Dosen</label>
-                            <input type="text" id="kode_dosen" name="kode_dosen" class="form-control"
-                                placeholder="Kode Dosen" />
+                            <label for="angkatan" class="form-label">Angkatan</label>
+                            <input type="text" id="angkatan" name="angkatan" class="form-select yearpicker" 
+                                placeholder="Angkatan" readonly/>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="namadosen" class="form-label">Nama Dosen</label>
-                            <input type="text" id="namadosen" name="namadosen" class="form-control"
-                                placeholder="Nama Dosen" />
+                            <label for="namamhs" class="form-label">Nama Mahasiswa</label>
+                            <input type="text" id="namamhs" name="namamhs" class="form-control"
+                                placeholder="Nama Mahasiswa" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="nohpdosen" class="form-label">No Telepon</label>
-                            <input type="text" id="nohpdosen" name="nohpdosen" class="form-control"
+                            <label for="nohpmhs" class="form-label">No Telepon</label>
+                            <input type="text" id="nohpmhs" name="nohpmhs" class="form-control"
                                 placeholder="No Telepon" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="emaildosen" class="form-label">Email</label>
-                            <input type="text" id="emaildosen" name="emaildosen" class="form-control"
+                            <label for="emailmhs" class="form-label">Email</label>
+                            <input type="text" id="emailmhs" name="emailmhs" class="form-control"
                                 placeholder="Email" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="alamatmhs" class="form-label">Alamat</label>
+                            <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat"></textarea>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

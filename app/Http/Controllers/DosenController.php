@@ -7,6 +7,7 @@ use App\Http\Requests\DosenRequest;
 use App\Models\Dosen;
 use App\Models\Universitas;
 use App\Models\ProgramStudi;
+use App\Models\Fakultas;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,8 +22,9 @@ class DosenController extends Controller
     {
         $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
         $prodi = ProgramStudi::all();
+        $fakultas = Fakultas::all();
         $dosen = Dosen::all();
-        return view('masters.dosen.index', compact('dosen','prodi','universitas'));
+        return view('masters.dosen.index', compact('dosen','prodi','universitas','fakultas'));
     }
 
     /**
@@ -39,10 +41,20 @@ class DosenController extends Controller
     public function store(DosenRequest $request)
     {
         try {
-            
+            $request->validate(
+                [
+                    'namafakultas' => ['required'],
+                    'namauniv' => ['required'],
+                    'namaprodi' => ['required'],
+                ],
+                [
+                    'namafakultas.required' => 'The Fakultas is required!'
+                ]
+            );
             $dosen = Dosen::create([
                 'nip' => $request->nip,
                 'id_univ' => $request->namauniv,
+                'prodi.fakultas.id_fakultas'=> $request->namafakultas,
                 'id_prodi' => $request->namaprodi,
                 'kode_dosen' => $request->kode_dosen,
                 'namadosen' => $request->namadosen,
@@ -68,9 +80,16 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        $dosen = Dosen::with('univ','fakultas','prodi')->orderBy('nip', 'asc')->get();
+        // $dosen = Dosen::with('univ','prodi.fakultas')->orderBy('nip', 'asc')->get();
+        $dosen = Dosen::query();
+        if ($request->fakultas != null) {
+            $dosen->where("id_fakultas", $request->fakultas);
+        } else if ($request->univ !=null) {
+            $dosen->where("id_univ", $request->univ);
+        }
+        $dosen = $dosen->with("univ", "prodi.fakultas")->orderBy('nip', "asc")->get();
 
         return DataTables::of($dosen)
             ->addIndexColumn()
@@ -114,8 +133,9 @@ class DosenController extends Controller
 
             $dosen->nip = $request->nip;
             $dosen->id_univ = $request->namauniv;
-            $dosen->kode_dosen = $request->kode_dosen;
+            $dosen->id_prodi = $request->namafakultas;
             $dosen->id_prodi = $request->namaprodi;
+            $dosen->kode_dosen = $request->kode_dosen;
             $dosen->namadosen = $request->namadosen;
             $dosen->nohpdosen = $request->nohpdosen;
             $dosen->emaildosen = $request->emaildosen;
@@ -157,6 +177,37 @@ class DosenController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+    public function list_fakultas($id_univ)
+    {
+        $fakultas = Fakultas::where("id_univ", $id_univ)->get();
+        $select = array(
+            0 => ["id" => '', 'text' => 'pilih']
+        );
+
+        foreach ($fakultas as $item) {
+            $select[] = ["id" => $item->id_fakultas, "text" => $item->namafakultas];
+        }
+        return response()->json([
+            'error' => false,
+            'data' => $select
+        ]);
+    }
+
+    public function list_prodi($id_fakultas)
+    {
+        $prodi = ProgramStudi::where("id_fakultas", $id_fakultas)->get();
+        $select = array(
+            0 => ["id" => '', 'text' => 'pilih']
+        );
+
+        foreach ($prodi as $item) {
+            $select[] = ["id" => $item->id_prodi, "text" => $item->namaprodi];
+        }
+        return response()->json([
+            'error' => false,
+            'data' => $select,
+        ]);
     }
 
 }

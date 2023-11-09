@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,12 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilai_mutu', function (Blueprint $table) {
-            $table->uuid('id_nilai')->primary();
-            $table->string('nilaimin', 5);
-            $table->string('nilaimax', 5);
-            $table->string('nilaimutu', 5);
-            $table->boolean('status')->default(true);
+        Schema::table('jenis_magang', function (Blueprint $table) {
+            $table->enum('durasimagang', array('1 Semester', '2 Semester'))->change();
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilai_mutu');
+        Schema::table('jenis_magang', function (Blueprint $table) {
+            //
+        });
     }
 };

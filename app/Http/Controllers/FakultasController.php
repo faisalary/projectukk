@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UniversitasRequest;
-use App\Models\Universitas;
-use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\FakultasRequest;
+use App\Models\Dosen;
+use App\Models\Universitas;
+use App\Models\Fakultas;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-class UniversitasController extends Controller
+
+class FakultasController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $universities = Universitas::all();
-        return view('masters.universitas.index', compact('universities'));
+        $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
+        $fakultas = Fakultas::all();
+        return view('masters.fakultas.index', compact('fakultas','universitas'));
     }
 
     /**
@@ -31,23 +35,22 @@ class UniversitasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UniversitasRequest $request)
+    public function store(FakultasRequest $request)
     {
         try {
+            
+            $fakultas = Fakultas::create([
 
-            $univ = Universitas::create([
-                'namauniv' => $request->namauniv,
-                'jalan' => $request->jalan,
-                'kota' => $request->kota,
-                'telp' => $request->telp,
+                'id_univ' => $request->namauniv,
+                'namafakultas' => $request->namafakultas,
                 'status' => true,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Universitas successfully Created!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Fakultas successfully Created!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -60,11 +63,15 @@ class UniversitasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id_univ)
     {
-        $univ = Universitas::orderBy('namauniv', 'asc')->get();
+        $fakultas = Fakultas::query();
+        if ($id_univ !== 'all'){
+            $fakultas = $fakultas->where('id_univ',$id_univ);
+        }
+        $fakultas->with('univ')->orderBy('id_fakultas', 'asc')->get();
 
-        return DataTables::of($univ)
+        return DataTables::of($fakultas)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -77,8 +84,8 @@ class UniversitasController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_univ}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_univ}' data-url='universitas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_fakultas}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_fakultas}' data-url='fakultas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -92,29 +99,27 @@ class UniversitasController extends Controller
      */
     public function edit(string $id)
     {
-        $univ = Universitas::where('id_univ', $id)->first();
-        return $univ;
+        $fakultas = Fakultas::where('id_fakultas', $id)->first();
+        return $fakultas;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UniversitasRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
-            $univ = Universitas::where('id_univ', $id)->first();
+            $fakultas = Fakultas::where('id_fakultas', $id)->first();
 
-            $univ->namauniv = $request->namauniv;
-            $univ->jalan = $request->jalan;
-            $univ->kota = $request->kota;
-            $univ->telp = $request->telp;
-            $univ->save();
+            $fakultas->id_univ = $request->namauniv;
+            $fakultas->namafakultas = $request->namafakultas;
+            $fakultas->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Fakultas sudah diupdate!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -127,18 +132,18 @@ class UniversitasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function status(string $id)
+    public function status($id)
     {
         try {
-            $univ = Universitas::where('id_univ', $id)->first();
-            $univ->status = ($univ->status) ? false : true;
-            $univ->save();
+            $fakultas = Fakultas::where('id_fakultas', $id)->first();
+            $fakultas->status = ($fakultas->status) ? false : true;
+            $fakultas->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Status Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
+                'message' => 'Status Fakultas successfully Updated!',
+                'modal' => '#modal-fakultas',
+                'table' => '#table-master-fakultas'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -147,4 +152,5 @@ class UniversitasController extends Controller
             ]);
         }
     }
+
 }
