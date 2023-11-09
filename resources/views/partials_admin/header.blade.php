@@ -389,8 +389,8 @@
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
+                                <a href="/informasi/lowongan" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>

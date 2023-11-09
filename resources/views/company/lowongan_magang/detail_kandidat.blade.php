@@ -27,7 +27,18 @@
 @section('main')
 <div class="row">
     <div class="col-md-12 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4>
+    <nav aria-label="breadcrumb">
+                   <h4> <ol class="breadcrumb breadcrumb-style1">
+                      <li class="breadcrumb-item text-secondary">
+                      Lowongan Magang
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="/informasi/lowongan" class="text-secondary">Informasi Lowongan</a>
+                      </li>
+                      <li class="breadcrumb-item active">Fullstack Developer - Tahun Ajaran 2324</li>
+                    </ol></h4>
+                  </nav>
+        <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
     </div>
     <div class="col-9"></div>
     <div class="col-md-3 col-12 mb-3 d-flex align-items-center justify-content-between">
@@ -364,6 +375,14 @@
                     <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="" style="min-width: 220px;"><i class="tf-icons ti ti-file-symlink"> Unduh Format CV</i>
                     </button>
                     <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                    <option disabled selected>Ubah Status Kandidat</option>
+                        <option>Belum Proses</option>
+                        <option>Screening</option>
+                        <option>Seleksi Tahap 1</option>
+                        <option>Seleksi Tahap 2</option>
+                        <option>Penawaran</option>
+                        <option>Diterima</option>
+                        <option>Ditolak</option>
                     </select>
                 </div>
             </div>
