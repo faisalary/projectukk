@@ -194,10 +194,10 @@ button.btn.btn-outline-success.dropdown-toggle{
 
                     <!-- Login/Register -->
                     <a href="{{ route('login')}}">
-                        <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Masuk</button>
+                        <button class="btn btn-outline-success me-2" style="margin-left:450px; border-radius: 8px;" type="button">Masuk</button>
                     </a>
                     <a href="{{ route('register')}}">
-                        <button class="btn btn-outline-success me-2 ml-2" style="margin-right:30px; border-radius: 8px;" type="button">Daftar</button>
+                        <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
                     </a>
 
                     

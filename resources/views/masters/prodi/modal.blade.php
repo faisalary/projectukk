@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col mb-2">
                             <label for="prodi" class="form-label">Nama Prodi</label>
-                            <input type="text" name="namaprodi" id="namaprodi" class="form-control" placeholder="Nama Prodi" />
+                            <input type="text" name="namaprodi" id="namaprodi" class="form-control" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" placeholder="Nama Prodi" />
                         </div>
                     </div>
                     </div>

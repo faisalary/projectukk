@@ -16,8 +16,8 @@ class IndustriController extends Controller
      */
     public function index()
     {
-    $industri = Industri::all();
-    return view('masters.mitra.index', compact('industri'));
+        $industri = Industri::all();
+        return view('masters.mitra.index', compact('industri'));
     }
 
     /**
@@ -33,29 +33,30 @@ class IndustriController extends Controller
      */
     public function store(IndustriRequest $request)
     {
-        try{
-            $industri = Industri::create([
-            'namaindustri' => $request->namaindustri,
-            'notelpon'=> $request->notelepon,
-            'alamatindustri' => $request->alamatindustri,
-            'kategori_industri' => $request->kategorimitra,
-            'statuskerjasama' => $request->statuskerjasama,
-            'status' => true,
-        ]);
+        try {
+            Industri::create([
+                'namaindustri' => $request->namaindustri,
+                'notelpon' => $request->notelepon,
+                'email' => $request->email,
+                'alamatindustri' => $request->alamatindustri,
+                'kategori_industri' => $request->kategorimitra,
+                'statuskerjasama' => $request->statuskerjasama,
+                'status' => true,
+            ]);
 
-        return response()->json([
-            'error' => false,
-            'message' => 'Industri successfully Created!',
-            'modal' => '#modalTambahMitra',
-            'table' => '#table-master-mitra'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'error' => true,
-            'message' => $e->getMessage(),
-        ]);
+            return response()->json([
+                'error' => false,
+                'message' => 'Industri successfully Created!',
+                'modal' => '#modalTambahMitra',
+                'table' => '#table-master-mitra'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
-}
     /**
      * Display the spesified resource.
      */
@@ -85,9 +86,9 @@ class IndustriController extends Controller
             ->rawColumns(['action', 'status'])
 
             ->make(true);
-     }
+    }
 
-     /**
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -99,13 +100,14 @@ class IndustriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(IndustriRequest $request, string $id)
     {
-        try{
+        try {
             $industri = Industri::where('id_industri', $id)->first();
 
             $industri->namaindustri = $request->namaindustri;
             $industri->notelpon = $request->notelepon;
+            $industri->email = $request->email;
             $industri->alamatindustri = $request->alamatindustri;
             $industri->kategori_industri = $request->kategorimitra;
             $industri->statuskerjasama = $request->statuskerjasama;
@@ -130,14 +132,14 @@ class IndustriController extends Controller
      */
     public function status(string $id)
     {
-        try{
+        try {
             $industri = Industri::where('id_industri', $id)->first();
             $industri->status = ($industri->status) ? false : true;
             $industri->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Industri successfully Deactived!',
+                'message' => 'Status Industri successfully Updated!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-master-mitra'
             ]);
@@ -149,6 +151,3 @@ class IndustriController extends Controller
         }
     }
 }
-
-
-

@@ -107,6 +107,33 @@
             background-color: #4EA971;
             border-color: #4EA971;
         }
+        .form-check-input:checked,
+        .form-check-input[type=checkbox]:indeterminate {
+            background-color: #4EA971;
+            border-color: #4EA971;
+        }
+
+        .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+            background-color: rgba(115, 103, 240, 0.08) !important;
+            color: #4EA971 !important;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .nav-link.active:hover,
+        .nav-pills .nav-link.active:focus {
+            background-color: #4EA971;
+            color: #fff;
+        }
+
+        .nav-pills .nav-link:not(.active):hover,
+        .nav-pills .nav-link:not(.active):focus {
+            color: #4EA971;
+        }
+
+        .btn-success {
+            background-color: #4EA971;
+            border-color: #4EA971;
+        }
     </style>
 
     @yield('page_style')
@@ -152,13 +179,16 @@
 
                 <div class="menu-inner-shadow"></div>
 
+                <!-- Admin -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Admin</span>
+                </li>
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
                             <div data-i18n="Dashboards">Dashboards</div>
-                            <!-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> -->
                         </a>
                     </li>
 
@@ -174,47 +204,11 @@
                                     <div data-i18n="Informasi Mitra">Informasi Mitra</div>
                                 </a>
                             </li>
-                            <li
-                                class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola_mitra' ? 'active' : '' }} @endif">
-                                <a href="/kelola_mitra" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola_mitra' ? 'active' : '' }} @endif">
+                                <a href="/master/kelola_mitra" class="menu-link">
                                     <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                                 </a>
                             </li>
-                            <!-- <li class="menu-item">
-                                <a href="layouts-content-navbar-with-sidebar.html" class="menu-link">
-                                    <div data-i18n="Content nav + Sidebar">Content nav + Sidebar</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="../horizontal-menu-template" class="menu-link" target="_blank">
-                                    <div data-i18n="Horizontal">Horizontal</div>
-                                </a>
-                            </li> -->
-                            <!-- <li class="menu-item">
-                                <a href="layouts-without-menu.html" class="menu-link">
-                                    <div data-i18n="Without menu">Without menu</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-without-navbar.html" class="menu-link">
-                                    <div data-i18n="Without navbar">Without navbar</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-fluid.html" class="menu-link">
-                                    <div data-i18n="Fluid">Fluid</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-container.html" class="menu-link">
-                                    <div data-i18n="Container">Container</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-blank.html" class="menu-link">
-                                    <div data-i18n="Blank">Blank</div>
-                                </a>
-                            </li> -->
                         </ul>
                     </li>
 
@@ -226,34 +220,47 @@
                         </a>
                     </li>
 
-                    <!-- Jadwal Interview -->
+                    <!-- Jadwal Seleksi -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Interview">Jadwal Interview</div>
+                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
                     </li>
 
-                    <!-- Anggota Tim -->
+                    <!-- Kelola Pengguna -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Anggota Tim">Anggota Tim</div>
+                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
                         </a>
                     </li>
 
+                    <!-- Lowongan Magang -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link ">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link">
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link">
+                                    <div data-i18n="Pertanyaan Magang">Pertanyaan Magang</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
+                    <!-- Master Data -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data">Master Data</div>
-                            <!-- <div class="badge bg-label-danger rounded-pill ms-auto">4</div> -->
                         </a>
                         <ul class="menu-sub">
                             <li
@@ -329,6 +336,7 @@
                         </ul>
                     </li>
 
+                    <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-settings"></i>
@@ -345,23 +353,88 @@
                                     <div data-i18n="Pengaturan Bahasa">Pengaturan Bahasa</div>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link ">
+                                    <i class="menu-icon tf-icons ti ti-file"></i>
+                                    <div data-i18n="Pengaturan Tema">Pengaturan Tema</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link ">
+                                    <i class="menu-icon tf-icons ti ti-lock"></i>
+                                    <div data-i18n="Pengaturan Email">Pengaturan Email</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+                </ul>
 
+                <!-- Mitra -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Mitra</span>
+                </li>
+                <ul class="menu-inner py-2">
+                    <!-- Dashboards -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link ">
-                            <i class="menu-icon tf-icons ti ti-file"></i>
-                            <div data-i18n="Pengaturan Tema">Pengaturan Tema</div>
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                            <div data-i18n="Dashboards">Dashboards</div>
                         </a>
                     </li>
 
+                    <!-- Lowongan Magang -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link ">
-                            <i class="menu-icon tf-icons ti ti-lock"></i>
-                            <div data-i18n="Pengaturan Email">Pengaturan Email</div>
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-briefcase"></i>
+                            <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link">
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link">
+                                    <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Anggota Tim -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Anggota Tim">Anggota Tim</div>
+                        </a>
+                    </li>
+
+                    <!-- Jadwal Seleksi -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-clock"></i>
+                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
+                        </a>
+                    </li>
+
+                    <!-- Profile Perusahaan -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-building"></i>
+                            <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
+                        </a>
+                    </li>
+
+                    <!-- Logbook Mahasiswa -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
                     </li>
                 </ul>
-                </ul>
+
             </aside>
             <!-- / Menu -->
 
