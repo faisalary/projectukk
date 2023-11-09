@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use App\Http\Requests\MahasiswaRequest;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Fakultas;
@@ -14,7 +15,7 @@ use Illuminate\Routing\Route;
 
 use function Laravel\Prompts\select;
 
-class MahasiswaController extends Controller
+class mahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,31 +40,16 @@ class MahasiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MahasiswaRequest $request)
     {
-        $request->validate(
-            [
-                'nim' => ['required', 'max:11','unique:mahasiswa'],
-                'angkatan' => ['required', 'integer'],
-                'id_prodi' => ['required'],
-                'id_univ' => ['required'],
-                'id_fakultas' => ['required'],
-                'namamhs' => ['required', 'string', 'max:255'],
-                'alamatmhs' => ['required', 'string', 'max:255'],
-                'emailmhs' => ['required', 'string', 'max:255'],
-                'nohpmhs' => ['required', 'string', 'max:15'],
-            ],
-            [
-                'nim.unique' => 'The NIM already exist'
-            ]
-        );
+        try {
 
         $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
             'angkatan' => $request->angkatan,
-            'id_prodi' => $request->id_prodi,
-            'id_univ' => $request->id_univ,
-            'id_fakultas' => $request->id_fakultas,
+            'id_prodi' => $request->namaprodi,
+            'id_univ' => $request->namauniv,
+            'id_fakultas' => $request->namafakultas,
             'namamhs' => $request->namamhs,
             'alamatmhs' => $request->alamatmhs,
             'emailmhs' => $request->emailmhs,
@@ -73,32 +59,54 @@ class MahasiswaController extends Controller
         return response()->json([
             'error' => false,
             'massage' => 'Data Created!',
-            'modal' => '#modalTambahMahasiswa',
+            'modal' => '#modal-mahasiswa',
             'table' => '#table-master-mahasiswa'
         ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-       
-        $mahasiswa = Mahasiswa::with("prodi","univ","fakultas")->orderBy('nim',"asc")->get();
+        $mahasiswa = Mahasiswa::query();
+        if ($request->fakultas != null) {
+            $mahasiswa->where("id_fakultas", $request->fakultas);
+        } else if ($request->univ !=null) {
+            $mahasiswa->where("id_univ", $request->univ);
+        }
+        $mahasiswa = $mahasiswa->with("univ", "prodi","fakultas")->orderBy('nim', "asc")->get();
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
-            ->addColumn('action', function ($mahasiswa) {
-                $btn = "<a data-bs-toggle='modal' data-id='{$mahasiswa->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a onclick =delete_data($(this))  data-id='{$mahasiswa->nim}'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
+            ->editColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                }
+            })
+            ->addColumn('action', function ($row) {
+                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->status) ? "danger" : "success";
+
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->nim}' data-url='mahasiswa/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
 
-                ->make(true);
+            ->make(true);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -119,9 +127,9 @@ class MahasiswaController extends Controller
 
             $mahasiswa->nim = $request->nim;
             $mahasiswa->angkatan = $request->angkatan;
-            $mahasiswa->id_prodi = $request->id_prodi;
-            $mahasiswa->id_univ = $request->id_univ;
-            $mahasiswa->id_fakultas = $request->id_fakultas;
+            $mahasiswa->id_prodi = $request->namaprodi;
+            $mahasiswa->id_univ = $request->namauniv;
+            $mahasiswa->id_fakultas = $request->namafakultas;
             $mahasiswa->namamhs = $request->namamhs;
             $mahasiswa->alamatmhs = $request->alamatmhs;
             $mahasiswa->emailmhs = $request->emailmhs;
@@ -131,7 +139,7 @@ class MahasiswaController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Mahasiswa successfully Updated!',
-                'modal' => '#modalEditMahasiswa',
+                'modal' => '#modal-mahasiswa',
                 'table' => '#table-master-mahasiswa'
             ]);
         } catch (Exception $e) {
@@ -146,22 +154,31 @@ class MahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {                                                          
-        Mahasiswa::destroy($id);
+    public function status($id)
+    {
+        try {
+            $mahasiswa = Mahasiswa::where('nim', $id)->first();
+            $mahasiswa->status = ($mahasiswa->status) ? false : true;
+            $mahasiswa->save();
 
-        return response()->json([
-            'error' => false,
-            'message' => 'mahasiswa successfully Deleted!',
-            'modal' => '#modal-mahasiswa',
-            'table' => '#table-master-mahasiswa'
-        ]);
-    } 
-
-    public function list_fakultas($id_univ){
-        $fakultas = Fakultas::where("id_univ",$id_univ)->get();
-        $select=array(
-            0=>["id" => '', "text" => 'pilih dong']
+            return response()->json([
+                'error' => false,
+                'message' => 'Status Mahasiswa successfully Updated!',
+                'modal' => '#modal-mahasiswa',
+                'table' => '#table-master-mahasiswa'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function list_fakultas($id_univ)
+    {
+        $fakultas = Fakultas::where("id_univ", $id_univ)->get();
+        $select = array(
+            0 => ["id" => '', 'text' => 'pilih']
         );
 
         foreach ($fakultas as $item) {
@@ -169,8 +186,24 @@ class MahasiswaController extends Controller
         }
         return response()->json([
             'error' => false,
-            'data'=> $select
+            'data' => $select
         ]);
-
     }
+
+    public function list_prodi($id_fakultas)
+    {
+        $prodi = ProgramStudi::where("id_fakultas", $id_fakultas)->get();
+        $select = array(
+            0 => ["id" => '', 'text' => 'pilih']
+        );
+
+        foreach ($prodi as $item) {
+            $select[] = ["id" => $item->id_prodi, "text" => $item->namaprodi];
+        }
+        return response()->json([
+            'error' => false,
+            'data' => $select,
+        ]);
+    }
+
 }

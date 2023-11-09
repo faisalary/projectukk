@@ -22,7 +22,7 @@ class Dosen extends Model
     public function prodi(){
         return $this->belongsTo(ProgramStudi::class,'id_prodi');
     }
-    // public function fakultas(){
-    //     return $this->belongsTo(Fakultas::class,'id_prodi');
-    // }
+    public function fakultas(){
+        return $this->belongsTo(Fakultas::class,'id_prodi');
+    }
 }
