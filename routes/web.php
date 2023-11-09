@@ -155,6 +155,22 @@ Route::prefix('master')->group(function () {
     });
 });
 
+Route::prefix('mitra')->group(function (){
+    Route::prefix('kelola-mitra')->group(function () {
+        Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
+        Route::post('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');
+        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
+    });
+    Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');         
+});
+
+
+
+
+
 Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan_akun');
 });
