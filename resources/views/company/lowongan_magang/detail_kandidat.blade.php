@@ -18,8 +18,10 @@
         font-size: 0.9375rem;
         margin-bottom: 0px;
     }
-    #more {display: none;}
 
+    #more {
+        display: none;
+    }
 </style>
 
 @endsection
@@ -27,17 +29,19 @@
 @section('main')
 <div class="row">
     <div class="col-md-12 col-12">
-    <nav aria-label="breadcrumb">
-                   <h4> <ol class="breadcrumb breadcrumb-style1">
-                      <li class="breadcrumb-item text-secondary">
-                      Lowongan Magang
-                      </li>
-                      <li class="breadcrumb-item">
+        <nav aria-label="breadcrumb">
+            <h4>
+                <ol class="breadcrumb breadcrumb-style1">
+                    <li class="breadcrumb-item text-secondary">
+                        Lowongan Magang
+                    </li>
+                    <li class="breadcrumb-item">
                         <a href="/informasi/lowongan" class="text-secondary">Informasi Lowongan</a>
-                      </li>
-                      <li class="breadcrumb-item active">Fullstack Developer - Tahun Ajaran 2324</li>
-                    </ol></h4>
-                  </nav>
+                    </li>
+                    <li class="breadcrumb-item active">Fullstack Developer - Tahun Ajaran 2324</li>
+                </ol>
+            </h4>
+        </nav>
         <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
     </div>
     <div class="col-9"></div>
@@ -181,15 +185,15 @@
                     <table class="table tab1c" id="table-seluruh-kandidat" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
+                                <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
+                                <th style="min-width:100px;">NO TELEPON </th>
+                                <th style="min-width:150px;">EMAIL</th>
+                                <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width:150px;">UNIVERSITAS</th>
+                                <th style="min-width:100px;">STATUS</th>
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -203,15 +207,15 @@
                     <table class="table tab1c" id="table-belum-proses" style="width: 100% !important;">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
+                                <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
+                                <th style="min-width:100px;">NO TELEPON </th>
+                                <th style="min-width:150px;">EMAIL</th>
+                                <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width:150px;">UNIVERSITAS</th>
+                                <th style="min-width:100px;">STATUS</th>
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -227,15 +231,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -251,15 +255,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -275,15 +279,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -299,15 +303,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -323,15 +327,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -347,15 +351,15 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th style="min-width:140px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:120px;">UNIVERSITAS</th>
-                                <th>STATUS</th>
-                                <th style="min-width:90px;">AKSI</th>
+                                <th style="min-width: auto;">NOMOR</th> 
+                                <th style="min-width:100px;">NAMA</th> 
+                                <th style="min-width:100px;">NO TELEPON </th> 
+                                <th style="min-width:150px;">EMAIL</th> 
+                                <th style="min-width:150px;">PROGRAM STUDI</th> 
+                                <th style="min-width:100px;">FAKULTAS</th> 
+                                <th style="min-width:150px;">UNIVERSITAS</th> 
+                                <th style="min-width:100px;">STATUS</th> 
+                                <th style="min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -375,7 +379,7 @@
                     <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="" style="min-width: 220px;"><i class="tf-icons ti ti-file-symlink"> Unduh Format CV</i>
                     </button>
                     <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
-                    <option disabled selected>Ubah Status Kandidat</option>
+                        <option disabled selected>Ubah Status Kandidat</option>
                         <option>Belum Proses</option>
                         <option>Screening</option>
                         <option>Seleksi Tahap 1</option>
@@ -684,6 +688,16 @@
             {
                 data: "aksi"
             }
+        ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
         ]
     });
 
@@ -753,6 +767,16 @@
             {
                 data: "aksi"
             }
+        ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
         ]
     });
 
@@ -834,6 +858,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -858,7 +892,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -939,6 +973,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -963,7 +1007,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1044,6 +1088,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1068,7 +1122,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1149,6 +1203,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1173,7 +1237,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1254,6 +1318,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1278,7 +1352,7 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
     var jsonData = [{
@@ -1358,6 +1432,16 @@
                 data: "aksi"
             }
         ],
+        "columnDefs": [ 
+            { "width": "100px", "targets": 0 }, 
+            { "width": "100px", "targets": 1 }, 
+            { "width": "150px", "targets": 2 }, 
+            { "width": "150px", "targets": 3 }, 
+            { "width": "100px", "targets": 4 }, 
+            { "width": "150px", "targets": 5 }, 
+            { "width": "100px", "targets": 6 }, 
+            { "width": "100px", "targets": 7 } 
+        ],
         columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -1382,12 +1466,10 @@
                     selectAllRender: '<input type="checkbox" class="form-check-input">'
                 }
             },
-        ],
+        ]
     });
 
-    // jQuery(document).ready(function() {
-    //     $(".targetDiv").hide();
-    // });
+   
     jQuery(function() {
         jQuery('.showSingle').click(function() {
             jQuery('.targetDiv').hide('.cnt');
@@ -1411,12 +1493,7 @@
         }
     }
 
-    // $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(event) {
-    //     var tabID = $(event.target).attr('data-bs-target');
-    //     if (tabID === '#navs-pills-justified-belum-proses') {
-    //         table.columns.adjust().responsive.recalc();
-    //     }
-    // });
+   
     $('.display').DataTable({
         responsive: true
     });
