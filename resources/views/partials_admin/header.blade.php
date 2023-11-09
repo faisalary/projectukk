@@ -419,7 +419,7 @@
 
                     <!-- Profile Perusahaan -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                        <a href="/profile-company" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
                         </a>
