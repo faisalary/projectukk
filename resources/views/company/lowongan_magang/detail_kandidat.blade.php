@@ -20,10 +20,6 @@
     }
     #more {display: none;}
 
-    .position-relative {
-    padding-right: 15px;
-    padding-left: 0px; 
-}
 </style>
 
 @endsection
@@ -116,14 +112,14 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Filter Berdasarkan</h5>
+            <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan</h5>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
             <form class="add-new-user pt-0" id="filter">
                 <div class="col-12 mb-2">
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Universitas</label>
+                            <label for="univ" class="form-label" style="padding-left: 15px;">Universitas</label>
                             <select class="form-select select2" id="univ" name="univ" data-placeholder="Pilih Universitas">
                                 <option disabled selected>Pilih Universitas</option>
                             </select>
@@ -132,7 +128,7 @@
                     </div>
                     <div class="row">
                         <div class="mb-2">
-                            <label for="fakultas" class="form-label">Fakultas</label>
+                            <label for="fakultas" class="form-label" style="padding-left: 15px;">Fakultas</label>
                             <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
                                 <option disabled selected>Pilih Fakultas</option>
                             </select>
@@ -140,7 +136,7 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Prodi</label>
+                            <label for="univ" class="form-label" style="padding-left: 15px;">Prodi</label>
                             <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
                                 <option disabled selected>Pilih Prodi</option>
                             </select>
@@ -150,7 +146,7 @@
                     <div class="row cnt">
                         <div id="div1" class="targetDiv">
                             <div class="col mb-2 form-input">
-                                <label for="univ" class="form-label">Status Kandidat</label>
+                                <label for="univ" class="form-label" style="padding-left: 15px;">Status Kandidat</label>
                                 <select class="form-select select2" id="status" name="status" data-placeholder="Status Kandidat">
                                     <option disabled selected>Pilih Status Kandidat</option>
                                 </select>
