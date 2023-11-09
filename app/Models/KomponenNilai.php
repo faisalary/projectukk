@@ -19,8 +19,10 @@ class KomponenNilai extends Model
     public function jenismagang(){
         return $this->belongsTo(JenisMagang::class,'id_jenismagang');
     }
-    // public function getTotalBobotAttribute(){
-    //     return $this->where('id_jenismagang', $this->id_jenismagang)
-    //                 ->sum('bobot');
-    // }
+    public function getTotalBobotAttribute()
+    {
+        return $this->where('id_jenismagang', $this->id_jenismagang)
+                    ->distinct()
+                    ->sum('bobot');
+    }
 }
