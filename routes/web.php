@@ -171,3 +171,15 @@ Route::get('/informasi/magang', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/informasi/pribadi', function () {
+    return view('profile.informasi_pribadi');
+});
+
+Route::get('/detail-informasi-pengalaman', function() {
+    return view('profile.pengalaman');
+});
+
+Route::get('/detail-informasi-dokumen', function() {
+    return view('profile.dokumen');
+});
