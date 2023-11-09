@@ -473,7 +473,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="/pengaturan">
                         <i class="ti ti-settings me-2 ti-sm"></i>
                         <span class="align-middle">Pengaturan Akun</span>
                       </a>
