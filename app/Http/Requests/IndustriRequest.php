@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndustriRequest extends FormRequest
@@ -21,35 +22,37 @@ class IndustriRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)){
+        if (isset($this->id)) {
             return [
-                'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
+                'namaindustri' => ['required', 'string', 'max:255', Rule::unique('industri')->ignore($this->id, 'id_industri')],
                 'notelepon' => ['required', 'numeric', 'digits:12'],
+                'email' => ['required', 'string', 'max:255'],
                 'alamatindustri' => ['required', 'string', 'max:255'],
                 'kategorimitra' => ['required'],
                 'statuskerjasama' => ['required'],
             ];
         }
         return [
-                'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
-                'notelepon' => ['required', 'numeric', 'digits:12'],
-                'alamatindustri' => ['required', 'string', 'max:255'],
-                'kategorimitra' => ['required'],
-                'statuskerjasama' => ['required'],
+            'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
+            'notelepon' => ['required', 'numeric', 'digits:12'],
+            'email' => ['required', 'string', 'max:255'],
+            'alamatindustri' => ['required', 'string', 'max:255'],
+            'kategorimitra' => ['required'],
+            'statuskerjasama' => ['required'],
         ];
     }
 
     public function messages()
     {
-        return[
+        return [
             'namaindustri.required' => 'Industri name must be filled',
             'notelepon.required' => 'The phone number must be filled',
             'notelepon.numeric' => 'The phone number must be number',
             'notelepon.digits' => 'The phone number must be 12 digits',
             'alamatindustri.required' => 'The industrial address must be filled',
             'kategorimitra.required' => 'The partner category must be filled',
-            'statuskerjasama' => 'The cooperation status must be filled',
+            'statuskerjasama.required' => 'The cooperation status must be filled',
+            'email.required' => 'Email must be filled'
         ];
     }
 }
-

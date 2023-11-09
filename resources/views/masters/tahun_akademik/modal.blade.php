@@ -18,9 +18,9 @@
                         </div>
                     </div>
                     <div class="mb-2 form-input">
-                        <label for="semester" class="form-label">Pilih Semester</label>
+                        <label for="semester" class="form-label">Semester</label>
                         <select class="form-select select2" id="semester" name="semester" data-placeholder="Pilih Semester">
-                            <option value="" disabled selected></option>
+                            <option value="" disabled selected>Pilih Semester</option>
                             <option value="Ganjil">Ganjil</option>
                             <option value="Genap">Genap</option>
                         </select>
