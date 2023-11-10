@@ -196,6 +196,19 @@ Route::get('/informasi/lowongan', function () {
 Route::get('/detail/kandidat', function () {
     return view('company.lowongan_magang.detail_kandidat',['active_menu' => 'informasi/lowongan']);
 });
+Route::get('/kelola/mitra', function () {
+    return view('mitra.kelola_mitra.index',['active_menu' => 'kelola/mitra']);
+});
+Route::get('/informasi/mitra/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_mitra',['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('/informasi/lowongan/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_lowongan',['active_menu' => 'informasi/mitra/admin']);
+});
+
+Route::get('/detail/kandidat/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.detail',['active_menu' => 'informasi/mitra/admin']);
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
