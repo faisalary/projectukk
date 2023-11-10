@@ -410,15 +410,15 @@
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi' ? 'active' : '' }} @endif">
+                        <a href="/jadwal-seleksi" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
                     </li>
 
                     <!-- Profile Perusahaan -->
-                    <li class="menu-item">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
                         <a href="/profile-company" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
