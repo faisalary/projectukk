@@ -79,12 +79,12 @@
             </div>
           </div>
       </div>
-      
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success me-2">Simpan Data</button>
+      </div>
+      <input type="hidden">
+    </form>
   </div>
-          <div class="mt-2 text-end">
-            <button type="submit" class="btn btn-success me-2 waves-effect waves-light">Simpan Data</button>
-          </div>
-        <input type="hidden"></form>
       </div>
       <!-- /Account -->
     </div>
