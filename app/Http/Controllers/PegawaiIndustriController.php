@@ -80,7 +80,7 @@ class PegawaiIndustriController extends Controller
                 $color = ($row->statuspeg) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$row->id_peg_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->statuspeg}' data-id='{$row->id_peg_industri}'  data-url='pegawai-industri/status' class=' update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->statuspeg}' data-id='{$row->id_peg_industri}'  data-url='pegawai-industri/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -159,7 +159,3 @@ class PegawaiIndustriController extends Controller
         }
     }
 }
-
-
-
-

@@ -33,16 +33,15 @@ class IndustriController extends Controller
      */
     public function store(IndustriRequest $request)
     {
-        try {
-            Industri::create([
-                'namaindustri' => $request->namaindustri,
-                'notelpon' => $request->notelepon,
-                'email' => $request->email,
-                'alamatindustri' => $request->alamatindustri,
-                'kategori_industri' => $request->kategorimitra,
-                'statuskerjasama' => $request->statuskerjasama,
-                'status' => true,
-            ]);
+        try{
+            $industri = Industri::create([
+            'namaindustri' => $request->namaindustri,
+            'notelpon'=> $request->notelepon,
+            'alamatindustri' => $request->alamatindustri,
+            'kategori_industri' => $request->kategorimitra,
+            'statuskerjasama' => $request->statuskerjasama,
+            'status' => true,
+        ]);
 
             return response()->json([
                 'error' => false,
