@@ -25,6 +25,7 @@ class IndustriRequest extends FormRequest
             return [
                 'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
                 'notelepon' => ['required', 'numeric', 'digits:12'],
+                'email' => ['required', 'string', 'max:255'],
                 'alamatindustri' => ['required', 'string', 'max:255'],
                 'kategorimitra' => ['required'],
                 'statuskerjasama' => ['required'],
@@ -33,6 +34,7 @@ class IndustriRequest extends FormRequest
         return [
                 'namaindustri' => ['required', 'string', 'max:255', 'unique:industri'],
                 'notelepon' => ['required', 'numeric', 'digits:12'],
+                'email' => ['required', 'string', 'max:255'],
                 'alamatindustri' => ['required', 'string', 'max:255'],
                 'kategorimitra' => ['required'],
                 'statuskerjasama' => ['required'],
@@ -46,7 +48,8 @@ class IndustriRequest extends FormRequest
             'notelepon.required' => 'The phone number must be filled',
             'notelepon.numeric' => 'The phone number must be number',
             'notelepon.digits' => 'The phone number must be 12 digits',
-            'alamatindustri.required' => 'The industrial address must be filled',
+            'email.required' => 'The industrial address must be filled',
+            'alamatindustri.required' => 'The e-mail address must be filled',
             'kategorimitra.required' => 'The partner category must be filled',
             'statuskerjasama' => 'The cooperation status must be filled',
         ];

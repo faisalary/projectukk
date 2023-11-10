@@ -51,6 +51,7 @@
                             <th>NOMOR</th>
                             <th>NAMA</th>
                             <th>NO TELEPON</th>
+                            <th>EMAIL</th>
                             <th>ALAMAT</th>
                             <th>KATEGORI INDUSTRI</th>
                             <th>STATUS KERJASAMA</th>
@@ -87,6 +88,10 @@
                 {
                     data: 'notelpon',
                     name: 'notelpon'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
                 },
                 {
                     data: 'alamatindustri',
@@ -192,6 +197,7 @@
                     $('#modalTambahMitra form').attr('action', action);
                     $('#mitra').val(response.namaindustri);
                     $('#telp').val(response.notelpon);
+                    $('#email').val(response.email);
                     $('#alamat').val(response.alamatindustri);
                     $('#kategori').val(response.kategori_industri).trigger('change');;
                     $('#status').val(response.statuskerjasama).trigger('change');;

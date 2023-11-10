@@ -30,6 +30,14 @@
             </div>
             <div class="row">
                 <div class="col mb-2 form-input">
+                    <label for="emai" class="form-label">Email</label>
+                    <input type="text" id="email" name="email" class="form-control"
+                        placeholder="Email" />
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-2 form-input">
                     <label for="alamat" class="form-label">Alamat</label>
                     <textarea class="form-control" id="alamat" name="alamatindustri"
                     placeholder="Alamat"></textarea>

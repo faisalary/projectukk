@@ -37,6 +37,7 @@ class IndustriController extends Controller
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'notelpon'=> $request->notelepon,
+            'email'=> $request->email,
             'alamatindustri' => $request->alamatindustri,
             'kategori_industri' => $request->kategorimitra,
             'statuskerjasama' => $request->statuskerjasama,
@@ -106,6 +107,7 @@ class IndustriController extends Controller
 
             $industri->namaindustri = $request->namaindustri;
             $industri->notelpon = $request->notelepon;
+            $industri->email = $request->email;
             $industri->alamatindustri = $request->alamatindustri;
             $industri->kategori_industri = $request->kategorimitra;
             $industri->statuskerjasama = $request->statuskerjasama;
