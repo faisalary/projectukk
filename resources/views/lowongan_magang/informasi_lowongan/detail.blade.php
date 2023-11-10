@@ -33,12 +33,12 @@
             <h4>
                 <ol class="breadcrumb breadcrumb-style1">
                     <li class="breadcrumb-item text-secondary">
-                        Lowongan Magang
+                        Mitra
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/informasi/lowongan" class="text-secondary">Informasi Lowongan</a>
+                        <a href="/informasi/lowongan/admin" class="text-secondary">Informasi Mitra</a>
                     </li>
-                    <li class="breadcrumb-item active">Fullstack Developer - Tahun Ajaran 2324</li>
+                    <li class="breadcrumb-item active">Total Kandidat Content Creator  PT  Teknologi Nirmala Olah Daya Informasi</li>
                 </ol>
             </h4>
         </nav>
@@ -64,48 +64,48 @@
         <ul class="nav nav-pills mb-3 " role="tablist">
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-users ti-xs me-1"></i> Seluruh Kandidat
+                    <i class="tf-icons ti ti-users ti-xs me-1"></i> Total Kandidat
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">3</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-belum-proses" aria-controls="navs-pills-justified-belum-proses" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-belum-proses" aria-controls="navs-pills-justified-belum-proses" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-clock ti-xs me-1"></i> Belum Proses
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class=" nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
@@ -114,7 +114,7 @@
     </div>
 
     <div class="row cnt">
-        <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta, Status :  Diterima" id="tooltip-filter"></i></div>
+        <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta" id="tooltip-filter"></i></div>
         <div id="div2" class="col-1 targetDiv" style="display: none;">
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
                 <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
@@ -182,10 +182,10 @@
         <div class="tab-pane fade show active" id="navs-pills-justified-kandidat" role="tabpanel">
             <div class="card">
                 <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer :</span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                    <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -212,10 +212,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-belum-proses" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -223,6 +223,8 @@
                     <table class="table tab1c" id="table-belum-proses" style="width: 100% !important;">
                         <thead>
                             <tr>
+                                <th></th>
+                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -242,10 +244,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-screening" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -253,8 +255,6 @@
                     <table class="table tab2c" id="table-screening">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -274,10 +274,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-tahap1" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span>&nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -285,8 +285,6 @@
                     <table class="table" id="table-tahap1">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -306,10 +304,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-tahap2" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span>&nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -317,8 +315,6 @@
                     <table class="table" id="table-tahap2">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -338,19 +334,17 @@
         <div class="tab-pane fade" id="navs-pills-justified-penawaran" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
-                    <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
+                    <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span> &nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
                 <div class="card-datatable table-responsive">
                     <table class="table" id="table-penawaran">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -370,10 +364,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-diterima" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -381,8 +375,6 @@
                     <table class="table" id="table-diterima">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -402,10 +394,10 @@
         <div class="tab-pane fade" id="navs-pills-justified-ditolak" role="tabpanel">
             <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:550px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;">Total Kandidat Belum Proses Fullstack Developer : </span> &nbsp;<span style="color:#7367F0;">350</span> &nbsp;<span style="color:#4EA971;">Kandidat Melamar</span>
+                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:400px; height:40px;border-radius:8px;">
+                <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                 </div>
-                <div class="col-6 d-flex align-items-center justify-content-end ms-4">
+                <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
                     <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
                 </div>
                 </div>
@@ -413,8 +405,6 @@
                     <table class="table" id="table-ditolak">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
@@ -789,6 +779,8 @@
     });
 
     var jsonData = [{
+            "id": "",
+            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -800,6 +792,8 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
+            "id": "",
+            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -811,6 +805,8 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
+            "id": "",
+            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -827,6 +823,12 @@
         scrollX: true,
         responsive: true,
         columns: [{
+                data: "id"
+            },
+            {
+                data: "id"
+            },
+            {
                 data: "nomor"
             },
             {
@@ -887,12 +889,35 @@
                 "width": "100px",
                 "targets": 7
             }
+        ],
+        columnDefs: [{
+                // For Responsive
+                className: 'control',
+                orderable: false,
+                searchable: false,
+                responsivePriority: 2,
+                targets: 0,
+                render: function(data, type, full, meta) {
+                    return '';
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: false,
+                responsivePriority: 3,
+                checkboxes: true,
+                render: function() {
+                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+                },
+                checkboxes: {
+                    selectAllRender: '<input type="checkbox" class="form-check-input">'
+                }
+            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -904,8 +929,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -917,8 +940,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -933,12 +954,7 @@
     var table = $('#table-screening').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
+        columns: [
             {
                 data: "nomor"
             },
@@ -1000,37 +1016,10 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1042,8 +1031,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1055,8 +1042,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1071,12 +1056,7 @@
     var table = $('#table-tahap1').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
+        columns: [
             {
                 data: "nomor"
             },
@@ -1138,37 +1118,10 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1180,8 +1133,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1193,8 +1144,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1209,12 +1158,7 @@
     var table = $('#table-tahap2').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
+        columns: [
             {
                 data: "nomor"
             },
@@ -1276,37 +1220,10 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076189",
@@ -1318,8 +1235,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1331,8 +1246,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1347,12 +1260,7 @@
     var table = $('#table-penawaran').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
+        columns: [
             {
                 data: "nomor"
             },
@@ -1414,37 +1322,10 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1456,8 +1337,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1469,8 +1348,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1485,12 +1362,7 @@
     var table = $('#table-diterima').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
+        columns: [
             {
                 data: "nomor"
             },
@@ -1552,37 +1424,10 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
     var jsonData = [{
-            "id": "",
-            "id": "",
             "nomor": "1",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1594,8 +1439,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "2",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1607,8 +1450,6 @@
             "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
         },
         {
-            "id": "",
-            "id": "",
             "nomor": "3",
             "nama": "Andika Alatas 6701228083",
             "no": "+6281298076589",
@@ -1623,12 +1464,7 @@
     var table = $('#table-ditolak').DataTable({
         "data": jsonData,
         scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            }, {
+        columns: [ {
                 data: "nomor"
             },
             {
@@ -1689,31 +1525,6 @@
                 "width": "100px",
                 "targets": 7
             }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
         ]
     });
 
