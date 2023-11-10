@@ -169,7 +169,7 @@
                                 <div class="col-6 text-end">
                                     <button type="button" class="btn btn-outline-success waves-effect"><a href="#" class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</a>
                                     </button>
-                                    <button type="button" class="btn btn-outline-dark waves-effect"><a href="#" class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Statistik Kandidat</a>
+                                    <button type="button" class="btn btn-outline-dark waves-effect"><a href="/detail/kandidat" class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Statistik Kandidat</a>
                                     </button>
                                 </div>
                             </div>
