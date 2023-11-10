@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('jenis_magang', function (Blueprint $table) {
-            $table->enum('durasimagang', array('1 Semester', '2 Semester'))->change();
+        Schema::table('industri', function (Blueprint $table) {
+            //
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('jenis_magang', function (Blueprint $table) {
-            //
+        Schema::table('industri', function (Blueprint $table) {
+            $table->text('description')->nullable();
         });
     }
 };

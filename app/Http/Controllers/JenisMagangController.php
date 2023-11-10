@@ -101,7 +101,7 @@ class JenisMagangController extends Controller
                 $color = ($jenismagang->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$jenismagang->id_jenismagang}'onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$jenismagang->status}' data-id='{$jenismagang->id_jenismagang}' data-url='master-jenis-magang/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$jenismagang->status}' data-id='{$jenismagang->id_jenismagang}' data-url='jenis-magang/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })

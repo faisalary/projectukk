@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="mutu" class="form-label">Nilai Mutu</label>
-                            <input type="text" id="mutu" class="form-control" name="nilaimutu" placeholder="Nilai Mutu" />
+                            <input type="text" id="mutu" class="form-control" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '').toUpperCase();" name="nilaimutu" placeholder="Nilai Mutu" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
