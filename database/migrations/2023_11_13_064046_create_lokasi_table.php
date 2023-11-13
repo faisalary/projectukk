@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->text('description')->nullable();
-            
+        Schema::create('lokasi', function (Blueprint $table) {
+            $table->uuid('id_lokasi')->primary();
+            $table->string('kota', 255);
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            
-        });
+        Schema::dropIfExists('lokasi');
     }
 };
