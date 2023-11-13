@@ -2,7 +2,10 @@
 
 @section('page_style')
 <style>
-    
+    .page-item.active .page-link, .pagination li.active > a:not(.page-link) {
+                border-color: #FFFFFF !important;
+                background-color: #4EA971 !important;
+                }
 
 </style>
 @endsection
@@ -12,13 +15,13 @@
 {{-- <div class="col-3 text-left">
     <img class="image" style="border-radius: 0%; margin-left: 400px; justify-content-center" src="{{ asset('front/assets/img/belum_ada_lowongan.png')}}" alt="admin.upload">
 </div>
-<div class="sec-title mt-5 mb-4" style="text-align:center"> 
+<div class="sec-title mt-5 mb-4" style="text-align:center">
     <p style="text-align: center"><h4><b> Belum Ada Lowongan Tersimpan </b></h4></p>
     <div class="mt-4">
     <a href="javascript:void(0)" class="btn btn-success" type="submit">Cari Lowongan</a>
     </div>
   </div> --}}
-      
+
     <div class="auto-container">
       <div class="sec-title mt-5 mb-4">
         <h4><b>Lowongan Tersimpan</b></h4>
@@ -45,7 +48,7 @@
                     </div>
                     <div class="col-2">
                         <!-- <img src="{{ asset('front/assets/img/bookmark.svg')}}" onclick="changeImage(this)" /> -->
-                    
+
                         <img src="{{ asset('front/assets/img/bookmark.svg')}}" class="getImage" onclick="imagefun()">
                     </div>
                 </div>
