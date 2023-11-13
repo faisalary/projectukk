@@ -57,12 +57,12 @@
 
     @yield('page_style')
     <style>
-        .dropdown-item:focus,.dropdown-item:hover { 
+        .dropdown-item:focus,.dropdown-item:hover {
             color: #4EA971 !important
-        } 
-             
-        .dropdown-item.active,.dropdown-item:active { 
-            color:#FFF; 
+        }
+
+        .dropdown-item.active,.dropdown-item:active {
+            color:#FFF;
             background-color:#4EA971  !important
         }
       </style>
@@ -96,12 +96,12 @@
                 <i class="ti ti-menu-2 ti-sm"></i>
               </a>
             </div>
-            
+
             <!-- Menu -->
             <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
               <div class="container-xxl d-flex h-100" style="width: 50rem;">
                 <ul class="menu-inner">
-                  
+
                   <!-- Perusahaan -->
                   <li class="menu-item">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
@@ -467,13 +467,13 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="/lowongan-magang-tersimpan">
                         <i class="ti ti-briefcase me-2 ti-sm"></i>
                         <span class="align-middle">Lowongan Tersimpan</span>
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="/pengaturan">
                         <i class="ti ti-settings me-2 ti-sm"></i>
                         <span class="align-middle">Pengaturan Akun</span>
                       </a>
@@ -512,7 +512,7 @@
         <div class="layout-page">
           <!-- Content wrapper -->
           <div class="content-wrapper">
-            
+
 
             <!-- Content -->
 
@@ -524,7 +524,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            
+
             </button>
           </div>
           <div class="modal-body text-center" style="display:block;">
