@@ -57,10 +57,11 @@
                                 <th>NOMOR</th>
                                 <th style="min-width: 100px;">NAMA</th>
                                 <th>EMAIL</th>
+                                <th>NOMOR TELEPON</th>
                                 <th>ALAMAT</th>
                                 <th>DESKRIPSI PERUSAHAAN</th>
-                                <th>NPWP PERUSAHAAN</th>
-                                <th>SOSIAL MEDIA</th>
+                                <th>KATEGORI MITRA</th>
+                                <th>STATUS KERJASAMA</th>
                             </tr>
                         </thead>
                     </table>
@@ -73,13 +74,14 @@
                             <thead>
                                 <tr>
                                     <th>NOMOR</th>
-                                    <th style="min-width:100px;">NAMA</th>
+                                    <th style="min-width: 100px;">NAMA</th>
                                     <th>EMAIL</th>
+                                    <th>NOMOR TELEPON</th>
                                     <th>ALAMAT</th>
                                     <th>DESKRIPSI PERUSAHAAN</th>
-                                    <th>NPWP PERUSAHAAN</th>
-                                    <th style="min-width:100px;">NOMOR TELEPON</th>
-                                    <th style="min-width:100px;">AKSI</th>
+                                    <th>KATEGORI MITRA</th>
+                                    <th>STATUS KERJASAMA</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -114,13 +116,13 @@
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
+                                <th style="min-width: 100px;">NAMA</th>
                                 <th>EMAIL</th>
+                                <th>NOMOR TELEPON</th>
                                 <th>ALAMAT</th>
                                 <th>DESKRIPSI PERUSAHAAN</th>
-                                <th style="min-width:100px;">NPWP PERUSAHAAN</th>
-                                <th style="min-width:100px;">SOSIAL MEDIA</th>
-                                <th>AKSI</th>
+                                <th>KATEGORI MITRA</th>
+                                <th>STATUS KERJASAMA</th>
                             </tr>
                         </thead>
                     </table>
@@ -217,10 +219,11 @@
                                 <th>NOMOR</th>
                                 <th style="min-width: 100px;">NAMA</th>
                                 <th>EMAIL</th>
-                                <th style="min-width: 120px;">ALAMAT</th>
-                                <th style="min-width: 140px;">DESKRIPSI PERUSAHAAN</th>
-                                <th>NPWP PERUSAHAAN</th>
-                                <th style="min-width: 100px;">SOSIAL MEDIA</th>
+                                <th>NOMOR TELEPON</th>
+                                <th>ALAMAT</th>
+                                <th>DESKRIPSI PERUSAHAAN</th>
+                                <th>KATEGORI MITRA</th>
+                                <th>STATUS KERJASAMA</th>
                             </tr>
                         </thead>
                     </table>

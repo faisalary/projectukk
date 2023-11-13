@@ -155,7 +155,7 @@ Route::prefix('master')->group(function () {
     });
 });
 
-Route::prefix('mitra')->group(function (){
+Route::prefix('company')->group(function (){
     Route::prefix('kelola-mitra')->group(function () {
         Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
         Route::post('/show', [App\Http\Controllers\DosenController::class, 'show'])->name('dosen.show');

@@ -12,7 +12,7 @@ class KelolaMitraController extends Controller
      */
     public function index()
     {
-        return view('mitra.kelola_mitra.index');
+        return view('company.kelola_mitra.index');
     }
 
     /**
