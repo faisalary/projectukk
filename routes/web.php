@@ -183,7 +183,13 @@ Route::prefix('company')->group(function (){
         Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
     });
-    Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');         
+    Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index'); 
+    
+    Route::prefix('profile-company')->group( function() {
+        Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
+        Route::post('/show', [App\Http\Controllers\ProfileCompanyController::class, 'show'])->name('profile_company.show');
+        Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
+    });
 });
 
 
@@ -341,9 +347,6 @@ Route::get('/detail-informasi-dokumen', function() {
     return view('profile.dokumen');
 });
 
-Route::get('/profile-company', function() {
-    return view('company.profile_company',['active_menu' => 'profile-company']);
-});
 
 Route::get('/summary-profile', function() {
     return view('company.summary_profile');

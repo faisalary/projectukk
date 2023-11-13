@@ -219,10 +219,10 @@
                                 <th>NOMOR</th>
                                 <th style="min-width: 100px;">NAMA</th>
                                 <th>EMAIL</th>
-                                <th>NOMOR TELEPON</th>
-                                <th>ALAMAT</th>
+                                <th style="min-width: 120px;">NOMOR TELEPON<</th>
+                                <th style="min-width: 140px;">ALAMAT</th>
                                 <th>DESKRIPSI PERUSAHAAN</th>
-                                <th>KATEGORI MITRA</th>
+                                <th style="min-width: 100px;">KATEGORI MITRA</th>
                                 <th>STATUS KERJASAMA</th>
                             </tr>
                         </thead>
