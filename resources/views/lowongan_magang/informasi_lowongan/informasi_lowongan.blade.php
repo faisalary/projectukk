@@ -46,11 +46,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-4" style="border: 2px solid #D3D6DB; width:370px; height:35px; margin:0 13px; border-radius:8px;">
-                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#7367F0;">350</span> <span style="color:#4EA971;">Kandidat Melamar</span></div>
+                    <div class="col-4" style="border: 2px solid #D3D6DB; width:300px; height:35px; margin:0 13px; border-radius:8px;">
+                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#4EA971;">350</span> <span style="color:#7367F0;">Kandidat</span></div>
                     </div>
                     <div class="col-3" style="border: 2px solid #D3D6DB; width:310px; height:35px; border-radius:8px;">
-                        <div class="ti ti-briefcase text-success" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan :</span> <span style="color:#7367F0;">50</span> <span style="color:#4EA971;">Lowongan</span></div>
+                        <div class="ti ti-briefcase text-success" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan :</span> <span style="color:#4EA971;">50</span> <span style="color:#7367F0;">Lowongan</span></div>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -78,7 +78,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2">
-                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/techno.png')}}" alt="admin.upload">
                                 </figure>
                             </div>
                             <div class="col-10 d-flex justify-content-between">
@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="card-info">
                                         <small>Total Pelamar</small>
-                                        <h5 class="mb-0">0</h5>
+                                        <h5 class="mb-0">20</h5>
                                     </div>
                                 </div>
                             </div>
@@ -167,9 +167,7 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
-                                    </button></a>
-                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                     </button></a>
                                 </div>
                             </div>
@@ -180,7 +178,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2">
-                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/techno.png')}}" alt="admin.upload">
                                 </figure>
                             </div>
                             <div class="col-10 d-flex justify-content-between">
@@ -189,7 +187,7 @@
                                     <p>IT-Computer - Software</p>
                                 </div>
                                 <div>
-                                    <span class="badge bg-label-success me-1 text-end">Aktif</span>
+                                    <span class="badge bg-label-danger me-1 text-end">Non-Aktif</span>
                                 </div>
                             </div>
                         </div>
@@ -269,9 +267,7 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
-                                    </button></a>
-                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                     </button></a>
                                 </div>
                             </div>
@@ -282,12 +278,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2">
-                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/techno.png')}}" alt="admin.upload">
                                 </figure>
                             </div>
                             <div class="col-10 d-flex justify-content-between">
                                 <div>
-                                    <h5>Fullstack Developer</h5>
+                                    <h5>UI UX Designer</h5>
                                     <p>IT-Computer - Software</p>
                                 </div>
                                 <div>
@@ -303,7 +299,7 @@
                                     </div>
                                     <div class="card-info">
                                         <small>Total Pelamar</small>
-                                        <h5 class="mb-0">0</h5>
+                                        <h5 class="mb-0">40</h5>
                                     </div>
                                 </div>
                             </div>
@@ -371,9 +367,7 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
-                                    </button></a>
-                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                     </button></a>
                                 </div>
                             </div>

@@ -105,7 +105,7 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\NilaiMutuController::class, 'update'])->name('nilai-mutu.update');
         Route::get('/edit/{id}', [App\Http\Controllers\NilaiMutuController::class, 'edit'])->name('nilai-mutu.edit');
     });
-    Route::prefix('mitra')->group(function () {
+    Route::prefix('industri')->group(function () {
         Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
         Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
         Route::get('/create', [App\Http\Controllers\IndustriController::class, 'create'])->name('mitra.create');
@@ -195,6 +195,19 @@ Route::get('/informasi/lowongan', function () {
 });
 Route::get('/detail/kandidat', function () {
     return view('company.lowongan_magang.detail_kandidat',['active_menu' => 'informasi/lowongan']);
+});
+Route::get('/kelola/mitra', function () {
+    return view('mitra.kelola_mitra.index',['active_menu' => 'kelola/mitra']);
+});
+Route::get('/informasi/mitra/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_mitra',['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('/informasi/lowongan/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_lowongan',['active_menu' => 'informasi/mitra/admin']);
+});
+
+Route::get('/detail/kandidat/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.detail',['active_menu' => 'informasi/mitra/admin']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -291,6 +304,13 @@ Route::prefix('master-prodi')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\ProdiController::class, 'edit'])->name('prodi.edit');
     Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
     Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
+});
+
+Route::get('/lowongan-magang-tersimpan', function () {
+    return view('layouts.program_magang.lowongan_magang_tersimpan');
+});
+Route::get('/lowongan-pekerjaan-tersimpan', function () {
+    return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
 });
 
 Route::get('/informasi/pribadi', function () {
