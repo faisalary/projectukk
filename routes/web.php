@@ -154,6 +154,15 @@ Route::prefix('master')->group(function () {
         Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\DosenController::class, 'list_fakultas'])->name('dosen.list_fakultas');
         Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\DosenController::class, 'list_prodi'])->name('dosen.list_prodi');
     });
+    Route::prefix('komponen-penilaian')->group(function () {
+        Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen_penilaian.index');
+        Route::get('/show', [App\Http\Controllers\KomponenPenilaianController::class, 'show'])->name('komponen_penilaian.show');
+        Route::post('/store', [App\Http\Controllers\KomponenPenilaianController::class, 'store'])->name('komponen_penilaian.store');
+        Route::post('/update/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'update'])->name('komponen_penilaian.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'edit'])->name('komponen_penilaian.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen_penilaian.status');
+        Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen_penilaian.list_fakultas');
+    });
 });
 
 Route::get('/pengaturan', function () {
