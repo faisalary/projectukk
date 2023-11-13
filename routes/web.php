@@ -326,9 +326,13 @@ Route::get('/detail-informasi-dokumen', function() {
 });
 
 Route::get('/profile-company', function() {
-    return view('company.profile_company');
+    return view('company.profile_company',['active_menu' => 'profile-company']);
 });
 
 Route::get('/summary-profile', function() {
     return view('company.summary_profile');
+});
+
+Route::get('/jadwal-seleksi', function() {
+    return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
