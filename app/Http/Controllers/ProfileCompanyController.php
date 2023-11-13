@@ -31,27 +31,22 @@ class ProfileCompanyController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            
-            $industri = Industri::create([
+        
 
-                'id_univ' => $request->namauniv,
-                'namafakultas' => $request->namafakultas,
-                'status' => true,
+            $industri = Industri::create([
+                'namaindustri' => $request->namaindustri,
+                'notelpon' => $request->notelpon,
+                'alamatindustri' => $request->alamatindustri,
+                'description' => $request->description,
+                'email' => $request->email,
             ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Fakultas successfully Created!',
-                'modal' => '#modal-fakultas',
-                'table' => '#table-master-fakultas'
+                'message' => 'Mitra Data successfully Created!',
+                'url' => url('company/profile-company')
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
+        
     }
 
     /**

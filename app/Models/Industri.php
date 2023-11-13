@@ -10,7 +10,7 @@ class Industri extends Model
     use HasUuids;
 
     protected $table = 'industri';
-    protected $fillable = ['namaindustri', 'notelpon', 'email', 'alamatindustri', 'kategori_industri', 'statuskerjasama', 'des'];
+    protected $fillable = ['namaindustri', 'notelpon', 'email', 'alamatindustri', 'kategori_industri', 'statuskerjasama', 'description'];
     protected $primaryKey = 'id_industri';
     protected $keyType = 'string';
     public $timestamps = false;

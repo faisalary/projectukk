@@ -165,6 +165,23 @@ Route::prefix('master')->group(function () {
     });
 });
 
+Route::prefix('company')->group(function (){
+    Route::prefix('kelola-mitra')->group(function () {
+        Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
+        Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
+        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
+    });
+    Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index'); 
+    
+    Route::prefix('profile-company')->group( function() {
+        Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
+        Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
+    });
+});
+
 Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan_akun');
 });
