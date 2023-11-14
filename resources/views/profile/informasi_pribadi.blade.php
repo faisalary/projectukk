@@ -78,7 +78,7 @@
    </div>
 </div>
 
-<!-- Pengalaman dan Keahlian -->
+<!-- Dokumen Pendukung -->
 
 <div class="row mt-4">
     <div class="col-12">
@@ -218,7 +218,7 @@
                                 <h6 class="mb-0">Desain UI/UX Website</h6> 
                                 <div>
                                 <i class="menu-icon tf-icons ti ti-edit text-success" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
-                                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"></i>
+                                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                             </div>
                                 </div>
                                 <p class="mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique eros eget mauris blandit, vel gravida turpis molestie.</p>
@@ -607,23 +607,41 @@
 </div>
 
 
-<!-- Modal Delete-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        
-        </button>
+<!-- Modal Delete Pengalaman dan Keahlian-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pengalaman dan Keahlian Ini?</h5>
+          </div>
+              <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
+                  <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
+              </div>
+          
       </div>
-      <div class="modal-body text-center" style="display:block;">
-        Apakah Anda ingin menghapus Pengalaman dan Keahlian ini?
+  </div>
+</div>
+
+<!-- Modal Delete Dokumen Pendukung-->
+<div class="modal fade" id="ModalDelete" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Dokumen Pendukung Ini?</h5>
+          </div>
+              <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
+                  <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
+              </div>
+          
       </div>
-      <div class="modal-footer" style="display: flex; justify-content:center;">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-        <button type="button" class="btn btn-danger">Tidak</button>
-      </div>
-    </div>
   </div>
 </div>
 
