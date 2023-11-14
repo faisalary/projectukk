@@ -437,8 +437,16 @@
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                    <div class="d-flex justify-content-center"> 
+                      <div class="flex-shrink-0 me-3"> 
+                          <div class="avatar avatar-online"> 
+                              <img src="../../app-assets/img/avatars/1.png" alt class="h-auto round rounded-circle" /> 
+                          </div> 
+                      </div> 
+                      <div class="flex-grow-1"> 
+                          <span class="fw-semibold d-block user-name">Jhon Doe</span> 
+                          <small class="text-muted user-status"> Mahasiswa</small> 
+                      </div> 
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -482,7 +490,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modaldelete" target="_blank">
                         <i class="ti ti-logout me-2 ti-sm"></i>
                         <span class="align-middle">Keluar</span>
                       </a>
@@ -519,21 +527,20 @@
             <div class="container-xxl flex-grow-1 container-p-y">
 
     <!-- Modal Delete-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-            </button>
+    <div class="modal fade" id="modaldelete" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center">
+                <h5 class="modal-title" id="modal-title">Apakah Anda Ingin Keluar <br> Dari Akun Ini?</h5>
+              </div>
+                  <div class="modal-footer" style="display: flex; justify-content:center;">
+                      <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
+                      <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
+                  </div>
+              
           </div>
-          <div class="modal-body text-center" style="display:block;">
-            Apakah Anda Ingin Keluar Dari Akun Ini?
-          </div>
-          <div class="modal-footer" style="display: flex; justify-content:center;">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-            <button type="button" class="btn btn-danger">Tidak</button>
-          </div>
-        </div>
       </div>
-    </div>
+  </div>
