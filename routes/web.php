@@ -230,3 +230,15 @@ Route::get('informasi/lowongan/admin', function () {
 Route::get('/detail/kandidat/admin', function () {
     return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
 });
+
+Route::get('/company', function () {
+    return view('company.lowongan.index', ['active_menu' => 'company']);
+});
+
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
+});
