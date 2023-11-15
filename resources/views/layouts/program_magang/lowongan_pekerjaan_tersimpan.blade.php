@@ -14,6 +14,7 @@
 @endsection
 
 @section('main')
+<div class="container-xxl flex-grow-1 container-p-y">
     <div class="auto-container">
         <div class="sec-title mt-4 mb-4">
             <h4>Lowongan Pekerjaan yang tersimpan : <span class="ms-5">10 Lowongan Pekerjaan Tersimpan </span></h4>
@@ -81,7 +82,7 @@
                                         <li class="list-inline-item mt-3 mb-3"><i class="ti ti-briefcase"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 5px;"></i> Full
                                             time </li>
-                                        <li class="list-inline-item mt-3 mb-3"><i class="fas fa-user-friends"
+                                        <li class="list-inline-item mt-3 mb-3"><i class="ti ti-users"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 6px;"></i>
                                             Advanced </li>
                                     </ul>
@@ -150,7 +151,7 @@
                                         <li class="list-inline-item mt-3 mb-3"><i class="ti ti-briefcase"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 5px;"></i> Full
                                             time </li>
-                                        <li class="list-inline-item mt-3 mb-3"><i class="fas fa-user-friends"
+                                        <li class="list-inline-item mt-3 mb-3"><i class="ti ti-users"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 6px;"></i>
                                             Advanced </li>
                                     </ul>
@@ -219,7 +220,7 @@
                                         <li class="list-inline-item mt-3 mb-3"><i class="ti ti-briefcase"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 5px;"></i> Full
                                             time </li>
-                                        <li class="list-inline-item mt-3 mb-3"><i class="fas fa-user-friends"
+                                        <li class="list-inline-item mt-3 mb-3"><i class="ti ti-users"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 6px;"></i>
                                             Advanced </li>
                                     </ul>
@@ -289,7 +290,7 @@
                                         <li class="list-inline-item mt-3 mb-3"><i class="ti ti-briefcase"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 5px;"></i> Full
                                             time </li>
-                                        <li class="list-inline-item mt-3 mb-3"><i class="fas fa-user-friends"
+                                        <li class="list-inline-item mt-3 mb-3"><i class="ti ti-users"
                                                 style="margin-right: 10px;margin-left: 10px;margin-bottom: 6px;"></i>
                                             Advanced </li>
                                     </ul>
@@ -544,6 +545,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('page_script')
