@@ -235,3 +235,15 @@ Route::get('/kelola/mitra', function () {
     return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola/mitra']);
 });
 
+
+Route::get('/company', function () {
+    return view('company.lowongan.index', ['active_menu' => 'company']);
+});
+
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
+});
