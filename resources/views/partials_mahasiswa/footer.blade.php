@@ -60,7 +60,7 @@
 <div class="content-backdrop fade"></div>
 </div>
 <!--/ Content wrapper -->
-</div>
+<!-- </div> -->
 
 <!--/ Layout container -->
 </div>
@@ -93,12 +93,17 @@
 <script src="../../app-assets/vendor/libs/apex-charts/apexcharts.js"></script>
 <script src="../../app-assets/vendor/libs/swiper/swiper.js"></script>
 <script src="../../app-assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<script src="../../app-assets/vendor/libs/select2/select2.js"></script>
+<script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
 
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
+<script src="../../app-assets/js/forms-selects.js"></script>
 
 @yield('page_script')
 </body>

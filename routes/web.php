@@ -166,7 +166,7 @@ Route::prefix('master')->group(function () {
 });
 
 Route::get('/pengaturan', function () {
-    return view('pengaturan_akun.pengaturan_akun');
+    return view('pengaturan_akun.pengaturan');
 });
 
 Route::get('/apply_alert', function () {
@@ -174,7 +174,7 @@ Route::get('/apply_alert', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang_fakultas');
+    return view('layouts.program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
@@ -219,4 +219,14 @@ Route::get('/summary-profile', function () {
 
 Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+});
+
+Route::get('informasi/mitra/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_mitra', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('informasi/lowongan/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_lowongan', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('/detail/kandidat/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
 });
