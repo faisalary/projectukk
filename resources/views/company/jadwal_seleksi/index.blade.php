@@ -154,7 +154,7 @@
                     <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="default-form" method="POST">
+                <form class="default-form">
                     @csrf
 
                     <div class="modal-body">
@@ -244,7 +244,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -259,100 +259,97 @@
                     <h5 class="modal-title" id="modal-title">Edit Jadwal Seleksi Lanjutan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="default-form" method="POST">
-                    @csrf
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="nama" class="form-label">Nama Kandidat</label>
-                                <select class="form-select select2" id="nama" name="nama"
-                                    data-placeholder="Pilih Nama Kandidat">
-                                    <option>Andika Alatas-UI/UX Designer</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="nama" class="form-label">Nama Kandidat</label>
+                            <select class="form-select select2" id="nama" name="nama"
+                                data-placeholder="Pilih Nama Kandidat">
+                                <option>Andika Alatas-UI/UX Designer</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class="row">
-                            <div class="mb-2">
-                                <label for="jenis" class="form-label">Jenis Seleksi</label>
-                                <select class="form-select select2" id="jenis" name="jenisseleksi"
-                                    data-placeholder="Pilih Jenis Seleksi">
-                                    <option value="Seleksi Tahap 1">Seleksi Tahap 1</option>
-                                    <option value="Seleksi Tahap 2">Seleksi Tahap 2</option>
-                                    <option value="Seleksi Tahap 3">Seleksi Tahap 3</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-2">
+                            <label for="jenis" class="form-label">Jenis Seleksi</label>
+                            <select class="form-select select2" id="jenis" name="jenisseleksi"
+                                data-placeholder="Pilih Jenis Seleksi">
+                                <option value="Seleksi Tahap 1">Seleksi Tahap 1</option>
+                                <option value="Seleksi Tahap 2">Seleksi Tahap 2</option>
+                                <option value="Seleksi Tahap 3">Seleksi Tahap 3</option>
+                            </select>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <label class="form-label">Penanggung Jawab Seleksi</label>
-                                <div class="position-relative"><select
-                                        class="select2 form-select select2-hidden-accessible" multiple=""
-                                        data-select2-id="editJadwalSeleksi" tabindex="-1" aria-hidden="true">
-                                        <optgroup label="Pilih Penanggung Jawab">
-                                            <option value="AK">Alaska</option>
-                                            <option value="HI">Hawaii</option>
-                                        </optgroup>
-                                    </select></div>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <label class="form-label">Penanggung Jawab Seleksi</label>
+                            <div class="position-relative"><select class="select2 form-select select2-hidden-accessible"
+                                    multiple="" data-select2-id="editJadwalSeleksi" tabindex="-1"
+                                    aria-hidden="true">
+                                    <optgroup label="Pilih Penanggung Jawab">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                    </optgroup>
+                                </select></div>
                         </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan</label>
-                                <div class="form-check form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio1"
-                                        value="1">
-                                    <label class="form-check-label" for="1">Onsite</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio2"
-                                        value="2">
-                                    <label class="form-check-label" for="2">Online</label>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan</label>
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio1"
+                                    value="1">
+                                <label class="form-check-label" for="1">Onsite</label>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan</label>
-                                <input class="form-control" type="date" value="2023-09-09" id="mulai">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label for="waktu1" class="form-label">Waktu Mulai Pelaksanaan</label>
-                                <input class="form-control" type="time" value="12:30:00" id="waktu1">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan</label>
-                                <input class="form-control" type="date" value="2023-09-09" id="mulai">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label for="waktu2" class="form-label">Waktu Akhir Pelaksanaan</label>
-                                <input class="form-control" type="time" value="12:30:00" id="waktu2">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="tempat" class="form-label">Tempat Pelaksanaan</label>
-                                <input type="text" class="form-control" id="tempat"
-                                    placeholder="Masukan Alamat/Link Pelaksanaan"
-                                    value="Gedung Merah Putih Interview Room Lt. 15"
-                                    aria-describedby="defaultFormControlHelp">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="catatan" class="form-label">Catatan</label>
-                                <input type="text" class="form-control" id="catatan" placeholder="Ketik Disini"
-                                    aria-describedby="defaultFormControlHelp">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio2"
+                                    value="2">
+                                <label class="form-check-label" for="2">Online</label>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan</label>
+                            <input class="form-control" type="date" value="2023-09-09" id="mulai">
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label for="waktu1" class="form-label">Waktu Mulai Pelaksanaan</label>
+                            <input class="form-control" type="time" value="12:30:00" id="waktu1">
+                        </div>
                     </div>
-                </form>
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan</label>
+                            <input class="form-control" type="date" value="2023-09-09" id="mulai">
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label for="waktu2" class="form-label">Waktu Akhir Pelaksanaan</label>
+                            <input class="form-control" type="time" value="12:30:00" id="waktu2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="tempat" class="form-label">Tempat Pelaksanaan</label>
+                            <input type="text" class="form-control" id="tempat"
+                                placeholder="Masukan Alamat/Link Pelaksanaan"
+                                value="Gedung Merah Putih Interview Room Lt. 15"
+                                aria-describedby="defaultFormControlHelp">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="catatan" class="form-label">Catatan</label>
+                            <input type="text" class="form-control" id="catatan" placeholder="Ketik Disini"
+                                aria-describedby="defaultFormControlHelp">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalalert"
+                        data-dismiss="modal">Simpan</button>
+                </div>
             </div>
         </div>
     </div>
@@ -374,7 +371,7 @@
                         </button>
                     </div>
                 </div>
-                <form class="default-form" method="POST">
+                <form class="default-form">
                     @csrf
 
                     <div class="modal-body">
@@ -503,7 +500,7 @@
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="default-form" method="POST">
+                <form class="default-form">
                     @csrf
 
                     <div class="modal-body">
@@ -609,6 +606,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Alert-->
+    <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="../../app-assets/img/alert.png" alt="">
+                  <h5 class="modal-title" id="modal-title">Apakah Data Jadwal Seleksi lanjutan anda sudah benar?</h5>
+                  <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Jadwal seleksi lanjutan akan otomatis terkirim melalui email aktif kandidat!</div>
+                </div>
+                    <div class="modal-footer" style="display: flex; justify-content:center;">
+                        <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
+                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
+                    </div>
+                
+            </div>
+        </div>
+      </div>
 @endsection
 
 @section('page_script')

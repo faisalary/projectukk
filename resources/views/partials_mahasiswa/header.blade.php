@@ -370,64 +370,64 @@
               </li>
               <!--/ Notification -->
 
-              <!-- User -->
-              <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                  <div class="avatar avatar-online">
-                    <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
-                  </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <a class="dropdown-item" href="pages-account-settings-account.html">
-                      <div class="d-flex">
-                        <div class="flex-shrink-0 me-3">
-                          <div class="avatar avatar-online">
-                            <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="pages-account-settings-account.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block">John Doe</span>
+                            <small class="text-muted">Mahasiswa</small>
                           </div>
                         </div>
-                        <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
-                          <small class="text-muted">Mahasiswa</small>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <div class="dropdown-divider"></div>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
-                      <i class="ti ti-user-circle me-2 ti-sm"></i>
-                      <span class="align-middle">Profil Saya</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/lowongan-magang-tersimpan">
-                      <i class="ti ti-briefcase me-2 ti-sm"></i>
-                      <span class="align-middle">Lowongan Tersimpan</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/pengaturan">
-                      <i class="ti ti-settings me-2 ti-sm"></i>
-                      <span class="align-middle">Pengaturan Akun</span>
-                    </a>
-                  </li>
-                  <li>
-                    <div class="dropdown-divider"></div>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
-                      <i class="ti ti-logout me-2 ti-sm"></i>
-                      <span class="align-middle">Keluar</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <!--/ User -->
-            </ul>
-          </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/informasi/pribadi">
+                        <i class="ti ti-user-circle me-2 ti-sm"></i>
+                        <span class="align-middle">Profil Saya</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/lowongan-magang-tersimpan">
+                        <i class="ti ti-briefcase me-2 ti-sm"></i>
+                        <span class="align-middle">Lowongan Tersimpan</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/pengaturan">
+                        <i class="ti ti-settings me-2 ti-sm"></i>
+                        <span class="align-middle">Pengaturan Akun</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                        <i class="ti ti-logout me-2 ti-sm"></i>
+                        <span class="align-middle">Keluar</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
 
           <!-- Search Small Screens -->
           <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
@@ -447,24 +447,24 @@
 
           <!-- Content -->
 
-          <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+            <div class="container-xxl flex-grow-1 container-p-y">
 
-            <!-- Modal Delete-->
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal Delete-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                    </button>
-                  </div>
-                  <div class="modal-body text-center" style="display:block;">
-                    Apakah Anda Ingin Keluar Dari Akun Ini?
-                  </div>
-                  <div class="modal-footer" style="display: flex; justify-content:center;">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-                    <button type="button" class="btn btn-danger">Tidak</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </button>
+          </div>
+          <div class="modal-body text-center" style="display:block;">
+            Apakah Anda Ingin Keluar Dari Akun Ini?
+          </div>
+          <div class="modal-footer" style="display: flex; justify-content:center;">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
+            <button type="button" class="btn btn-danger">Tidak</button>
+          </div>
+        </div>
+      </div>
+    </div>
