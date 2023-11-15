@@ -65,7 +65,7 @@
 @endsection
 
 @section('main')
-<div class="row" style=" min-height:150px; background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
+<div class="row" style=" min-height:10px; background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
   <div class="col-2 ms-5"></div>
   <div class="col-3 mt-5">
     <div class="input-group input-group-merge">
@@ -91,18 +91,10 @@
   </div>
   <div class="col-2"></div>
 
-  <div class="row mt-4">
+  <div class="row mt-4 mb-4">
     <div class="col-1 ms-5"></div>
     <div class="col-2">
-      <div class="dropdown cursor-pointer">
-        <a class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Tanggal Posting
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-
-          <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" readonly="readonly">
-        </div>
-      </div>
+    <p class="flatpickr-input" id="flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">

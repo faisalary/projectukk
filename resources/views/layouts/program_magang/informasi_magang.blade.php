@@ -16,8 +16,8 @@
 @endsection
 
 @section('main')
-<div class="container-xxl flex-grow-1 container">
-<div class="sec-title mt-4 mb-4" style="margin-left:50px;">
+<div class="container-xxl flex-grow-1 container-p-y">
+<div class="sec-title mt-2 mb-4" style="margin-left:50px;">
   <h4>Informasi Magang</h4>
 </div>
 

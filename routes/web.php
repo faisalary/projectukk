@@ -230,3 +230,8 @@ Route::get('informasi/lowongan/admin', function () {
 Route::get('/detail/kandidat/admin', function () {
     return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
 });
+
+Route::get('/kelola/mitra', function () {
+    return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola/mitra']);
+});
+
