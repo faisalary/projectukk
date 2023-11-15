@@ -19,7 +19,7 @@
     line-height: 2.25rem;
     color: #6f6b7d;
     padding-left: 0.875rem;
-    width: 310px;
+    width: 284px;
   }
 
   .content-wrapper {
@@ -110,15 +110,15 @@
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
 
-          <li class="ps-2 pe-5">
+          <li class="ps-2 pe-3">
             <input type="checkbox"> PT Techno Infinity
           </li>
 
-          <li class="ps-2 pe-5">
+          <li class="ps-2 pe-3">
             <input type="checkbox"> Direktorat PUTI Tel-U
           </li>
 
-          <li class="ps-2 pe-5">
+          <li class="ps-2 pe-3">
             <input type="checkbox"> PT Telkom Indonesia
           </li>
 
@@ -179,7 +179,7 @@
 
 
 
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container">
   <div class="sec-title text-start mb-5 mt-4">
     <h4 class="">Magang Fakultas (1 & 2 Semester)</h4>
   </div>
@@ -372,24 +372,24 @@
     </div>
   </div>
   <nav aria-label="Page navigation">
-    <ul class="pagination d-flex justify-content-end">
-      <li class="page-item prev">
-        <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
-      </li>
-      <li class="page-item active">
-        <a class="page-link waves-effect" href="javascript:void(0);">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link waves-effect" href="javascript:void(0);">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link waves-effect" href="javascript:void(0);">3</a>
-      </li>
-      <li class="page-item next">
-        <a class="page-link waves-effect" href="javascript:void(0);">Next</a>
-      </li>
-    </ul>
-  </nav>
+        <ul class="pagination justify-content-end">
+            <li class="page-item prev">
+                <a class="page-link" href="javascript:void(0);" style="height: 36px;">Previous</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="javascript:void(0);">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0);">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 @endsection
