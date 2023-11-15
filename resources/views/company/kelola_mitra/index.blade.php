@@ -104,11 +104,13 @@
                                     <th>NOMOR</th>
                                     <th style="min-width: 100px;">NAMA</th>
                                     <th>EMAIL</th>
-                                    <th>NOMOR TELEPON</th>
+                                    <th style="min-width: 120px;">NOMOR TELEPON</th>
                                     <th>ALAMAT</th>
-                                    <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th style="min-width: 100px;">DESKRIPSI PERUSAHAAN</th>
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
+                                    <th>STATUS</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -144,34 +146,49 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
         var table = $('#table-kelola-mitra1').DataTable({
-            "data": jsonData,
+            ajax: "{{ route('kelola_mitra.show') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
-                },
-                {
-                    data: "nama"
-                },
-                {
-                    data: "email"
+                    data: 'DT_RowIndex'
                 },
 
                 {
-                    data: "alamat"
+                    data: 'namaindustri',
+                    name: 'namaindustri'
                 },
                 {
-                    data: "deskripsi"
+                    data: 'email',
+                    name: 'email'
                 },
                 {
-                    data: "npwp"
+                    data: 'notelepon',
+                    name: 'notelepon'
                 },
                 {
-                    data: "sosial"
+                    data: 'alamatindustri',
+                    name: 'alamatindustri'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'kategori_industri',
+                    name: 'kategori_industri'
+                },
+                {
+                    data: 'statuskerjasama',
+                    name: 'statuskerjasama'
                 }
             ]
         });
     </script>
 
-    <script>
+    {{-- <script>
         var table = $('#table-kelola-mitra2').DataTable({
             ajax: "{{ route('kelola_mitra.show') }}",
             serverSide: false,
@@ -222,31 +239,51 @@
 
     <script>
         var table = $('#table-kelola-mitra3').DataTable({
-            "data": jsonData,
+            ajax: "{{ route('kelola_mitra.show') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
-                },
-                {
-                    data: "nama"
-                },
-                {
-                    data: "email"
+                    data: 'DT_RowIndex'
                 },
 
                 {
-                    data: "alamat"
+                    data: 'namaindustri',
+                    name: 'namaindustri'
                 },
                 {
-                    data: "deskripsi"
+                    data: 'email',
+                    name: 'email'
                 },
                 {
-                    data: "npwp"
+                    data: 'notelepon',
+                    name: 'notelepon'
                 },
                 {
-                    data: "sosial"
+                    data: 'alamatindustri',
+                    name: 'alamatindustri'
                 },
                 {
-                    data: "aksi"
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'kategori_industri',
+                    name: 'kategori_industri'
+                },
+                {
+                    data: 'statuskerjasama',
+                    name: 'statuskerjasama'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
                 }
             ]
         });
@@ -254,32 +291,47 @@
 
     <script>
         var table = $('#table-kelola-mitra4').DataTable({
-            "data": jsonData,
+            ajax: "{{ route('kelola_mitra.show') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
             columns: [{
-                    data: "nomor"
-                },
-                {
-                    data: "nama"
-                },
-                {
-                    data: "email"
+                    data: 'DT_RowIndex'
                 },
 
                 {
-                    data: "alamat"
+                    data: 'namaindustri',
+                    name: 'namaindustri'
                 },
                 {
-                    data: "deskripsi"
+                    data: 'email',
+                    name: 'email'
                 },
                 {
-                    data: "npwp"
+                    data: 'notelepon',
+                    name: 'notelepon'
                 },
                 {
-                    data: "sosial"
+                    data: 'alamatindustri',
+                    name: 'alamatindustri'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'kategori_industri',
+                    name: 'kategori_industri'
+                },
+                {
+                    data: 'statuskerjasama',
+                    name: 'statuskerjasama'
                 }
             ]
-        });
-    </script>
+        }); --}}
+    {{-- </script> --}}
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>

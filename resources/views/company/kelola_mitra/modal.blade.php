@@ -19,6 +19,27 @@
                         <input type="text" id="email" class="form-control" placeholder="Email" />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <select class="form-select select2" id="kategori" name="kategorimitra" data-placeholder="Kategori Mitra">
+                            <option disabled selected>Pilih Kategori Mitra</option>
+                            <option value="Internal">Internal</option>
+                            <option value="Eksternal">Eksternal</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-2">
+                        <select class="form-select select2" id="status" name="statuskerjasama" data-placeholder="Status Kerjasama">
+                            <option disabled selected>Pilih Status Kerjasama</option>
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+                            <option value="Internal Telyu">Internal Tel-u</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="simpanButton">Simpan</button>

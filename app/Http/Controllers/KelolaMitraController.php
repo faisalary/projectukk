@@ -32,30 +32,42 @@ class KelolaMitraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $industri = Industri::create([
+            'namaindustri' => $request->namaindustri,
+            'email' => $request->email,
+            'kategori_industri' => $request->kategorimitra,
+            'statuskerjasama' => $request->statuskerjasama,
+            'status' => true,
+        ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Industri successfully Created!',
+                'modal' => '#modalTambahMitra',
+                'table' => '#table-kelola-mitra1'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        $industri = Industri::orderBy('id_industri', 'asc')->get();
+        $industri = Industri::orderBy('namaindustri', 'asc')->get();
+
+        
 
         return DataTables::of($industri)
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
-
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola_mitra/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-
-                return $btn;
-            })
             ->make(true);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
