@@ -524,7 +524,7 @@
 
             <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
+            {{-- <div class="container-xxl flex-grow-1 container-p-y"> --}}
 
     <!-- Modal Delete-->
     <div class="modal fade" id="modaldelete" tabindex="-1" aria-hidden="true">
