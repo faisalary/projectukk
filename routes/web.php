@@ -173,3 +173,15 @@ Route::get('/informasi/magang', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/company', function () {
+    return view('company.lowongan.index', ['active_menu' => 'company']);
+});
+
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
+});
