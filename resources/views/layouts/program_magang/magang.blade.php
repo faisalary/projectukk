@@ -19,7 +19,7 @@
     line-height: 2.25rem;
     color: #6f6b7d;
     padding-left: 0.875rem;
-    width: 284px;
+    width: 310px;
   }
 
   .content-wrapper {
@@ -179,7 +179,7 @@
 
 
 
-<div class="container-xxl flex-grow-1 container">
+<div class="container-xxl flex-grow-1 container-p-y">
   <div class="sec-title text-start mb-5 mt-4">
     <h4 class="">Magang Fakultas (1 & 2 Semester)</h4>
   </div>
