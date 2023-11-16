@@ -232,17 +232,13 @@ Route::get('/detail/kandidat/admin', function () {
 });
 
 Route::get('/company', function () {
-    return view('company.lowongan.index');
+    return view('company.lowongan.index', ['active_menu' => 'company']);
 });
 
-Route::get('/detail-lowongan', function () {
-    return view('company.lowongan.detail');
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
 });
 
-Route::get('/add', function () {
-    return view('company.lowongan.add');
-});
-
-Route::get('/edit', function () {
-    return view('company.lowongan.edit');
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
 });
