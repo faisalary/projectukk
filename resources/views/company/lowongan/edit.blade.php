@@ -9,12 +9,12 @@
 
 @section('main')
     <div class="row ">
-            <div class="">
-                <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
-                    Tambah Lowongan Magang
-                </h4>
-            </div>
-        </div>
+    <div class="">
+        <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
+            Edit Lowongan Magang
+        </h4>
+    </div>
+    </div>
 
     <div class="row">
         <div class="col-xl">
@@ -251,7 +251,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",

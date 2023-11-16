@@ -8,30 +8,30 @@
 @endsection
 
 @section('main')
+<div class="row">
+    <div class="col-md-9 col-12"><nav aria-label="breadcrumb">
     <div class="row ">
-        <div class="col-7">
-            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang /</span> Kelola
-                Lowongan-Tahun
-                Ajaran 2024
-            </h4>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-2 text-end">
-            <select id="selectpickerBasic" class="selectpicker w-100" data-style="btn-default">
-                <option data-style="btn-success">2023/2024 - Ganjil</option>
-                <option>2023/2024 - Genap</option>
-                <option>2023/2024 - Ganjil</option>
-                <option>2023/2024 - Genap</option>
-                <option>2023/2024 - Ganjil</option>
-                <option>2023/2024 - Genap</option>
+    <div class="">
+        <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
+            Lowongan Magang-Tahun Ajaran 2324
+        </h4>
+    </div>
+    </div>
+</div>
+    <div class="col-md-3 col-12">
+        <div class="input-group">
+            <select class="form-select" id="inputGroupSelect04" data-placeholder="Pilih Tahun Ajaran"
+                aria-label="Example select with button addon">
+                <option value="1">2023/2024 Genap</option>
+                <option value="2">2023/2024 Ganjil</option>
+                <option value="3">2022/2023 Genap</option>
+                <option value="4">2022/2023 Ganjil</option>
+                <option value="5">2021/2022 Genap</option>
+                <option value="6">2021/2022 Ganjil</option>
             </select>
-
-
+            <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
         </div>
-        <div class="col-1"> <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas"
-                data-bs-target="#modalSlide">
-                <i class="tf-icons ti ti-filter"></i>
-            </button></div>
     </div>
     <div class="col-xl-12">
         <div class="nav-align-top">
@@ -45,7 +45,7 @@
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending"
                         aria-selected="false">
                         <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
@@ -69,10 +69,19 @@
                     </button>
                 </li>
             </ul>
-            <div class="col-md-15 col-12 text-end">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">+ Tambah Lowongan
-                    Magang</button>
-            </div>
+            <div class="row mb-4">
+                <div class="col-md-8 col-12 ">
+                <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
+                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></div>
+                </div>
+                {{-- <div class="col-1"></div> --}}
+                    <div class="col-md-4 d-flex justify-content-end align-items-center">
+                        <a href='/tambah-lowongan-magang'>
+                            <button class="btn btn-success" type="button">+ Tambah Lowongan
+                                Magang</button>
+                            </a>
+                        </div>
+               </div>
             <div class="tab-content mt-4">
                 <div class="tab-pane fade show active" id="navs-pills-justified-users" role="tabpanel">
                     <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10  col-3">
@@ -180,44 +189,46 @@
                     <div class="row">
                         <div class="mb-2">
                             <label for="fakultas" class="form-label">Program Studi</label>
-                            <select class="form-select select2" id="fakultas" name="fakultas"
-                                data-placeholder="Pilih Fakultas">
-                                <option disabled selected>Fakultas</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Durasi Magang</label>
                             <select class="form-select select2" id="prodi" name="prodi"
+                                data-placeholder="Pilih Fakultas">
+                                <option value="">Fakultas</option>
+
+                            </select>
+                        </div>
+                        <div class="col-12 mb-2 form-input">
+                            <label for="univ" class="form-label">Durasi Magang</label>
+                            <select class="form-select select2" id="durasi" name="durasi"
                                 data-placeholder="Pilih Prodi">
-                                <option disabled selected>Prodi</option>
-
+                                <option value="1 Semester">1 Semester</option>
+                                <option value="2 Semester">2 Semester</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col-12 mb-2 form-input">
                             <label for="univ" class="form-label">Posisi Lowongan Magang</label>
-                            <select class="form-select select2" id="univ" name="univ"
+                            <select class="form-select select2" id="posisi" name="posisi"
                                 data-placeholder="Pilih Universitas">
-                                <option disabled selected>Prodi</option>
-
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                                <option value="Fullstack Developer">Fullstack Developer</option>
+                                <option value="Quality Assurance">Quality Assurance</option>
+                                <option value="Technical Writter">Technical Writter</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="row cnt">
+                            <div id="div1" class="targetDiv">
+                        <div class="col-12 mb-2 form-input">
                             <label for="univ" class="form-label">Status Lowongan Magang</label>
                             <select class="form-select select2" id="univ" name="univ"
                                 data-placeholder="Pilih Universitas">
-                                <option disabled selected>Pilih Status Lowongan Magang</option>
-
+                                <option value="Diterima">Diterima</option>
+                                <option value="Ditolak">Ditolak</option>
+                                <option value="Kadaluarsa">Kadaluarsa</option>
+                                <option value="Menunggu Persetujuan">Menunggu Persetujuan</option>
                             </select>
                             <div class="invalid-feedback"></div>
+                        </div>
+                            </div>
                         </div>
                     </div>
 
@@ -230,7 +241,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center d-block">
@@ -256,7 +267,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('page_script')
@@ -270,7 +281,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",
@@ -279,7 +290,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer   ",
@@ -288,7 +299,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             }
         ];
 
@@ -328,7 +339,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<div class='d-flex'><a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",
@@ -337,7 +348,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer   ",
@@ -346,7 +357,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             }
         ];
 
@@ -386,7 +397,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<div class='d-flex'><a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",
@@ -395,7 +406,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer   ",
@@ -404,7 +415,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             }
         ];
 
@@ -443,7 +454,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<div class='d-flex'><a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",
@@ -452,7 +463,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer   ",
@@ -461,7 +472,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             }
         ];
 
@@ -491,6 +502,13 @@
                 }
             ]
         });
+
+        jQuery(function() {
+        jQuery('.showSingle').click(function() {
+            jQuery('.targetDiv').hide('.cnt');
+            jQuery('#div' + $(this).attr('target')).slideToggle();
+        });
+    });
     </script>
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
