@@ -231,14 +231,14 @@ Route::get('/detail/kandidat/admin', function () {
     return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
 });
 
-Route::get('/company', function () {
-    return view('company.lowongan.index', ['active_menu' => 'company']);
+Route::get('/kelola/lowongan', function () {
+    return view('company.lowongan.kelola_lowongan', ['active_menu' => 'kelola/lowongan']);
 });
 
-Route::get('/company/detail-lowongan', function () {
-    return view('company.lowongan.detail', ['active_menu' => 'company']);
+Route::get('/detail/informasi', function () {
+    return view('company.lowongan.detail_informasi', ['active_menu' => 'kelola/lowongan']);
 });
 
-Route::get('/company/add', function () {
-    return view('company.lowongan.add', ['active_menu' => 'company']);
+Route::get('/kelola/lowongan/tambah-lowongan', function () {
+    return view('company.lowongan.tambah_lowongan', ['active_menu' => 'kelola/lowongan']);
 });
