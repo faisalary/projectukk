@@ -3,7 +3,11 @@
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <style>
-
+    .tooltip-inner {
+        max-width: 900px;
+        /* If max-width does not work, try using width instead */
+        width: 900px; 
+    }
     </style>
 @endsection
 
@@ -18,20 +22,17 @@
     </div>
     </div>
 </div>
-    <div class="col-md-3 col-12">
-        <div class="input-group">
-            <select class="form-select" id="inputGroupSelect04" data-placeholder="Pilih Tahun Ajaran"
-                aria-label="Example select with button addon">
-                <option value="1">2023/2024 Genap</option>
-                <option value="2">2023/2024 Ganjil</option>
-                <option value="3">2022/2023 Genap</option>
-                <option value="4">2022/2023 Ganjil</option>
-                <option value="5">2021/2022 Genap</option>
-                <option value="6">2021/2022 Ganjil</option>
-            </select>
-            <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
-        </div>
+<div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
+    <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
+        <option value="1">2023/2024 Genap</option>
+        <option value="2">2023/2024 Ganjil</option>
+        <option value="3">2022/2023 Genap</option>
+        <option value="4">2022/2023 Ganjil</option>
+        <option value="5">2021/2022 Genap</option>
+        <option value="6">2021/2022 Ganjil</option>
+    </select>
+    <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i>
+    </button>
     </div>
     <div class="col-xl-12">
         <div class="nav-align-top">
@@ -72,7 +73,7 @@
             <div class="row mb-4">
                 <div class="col-md-8 col-12 ">
                 <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
-                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></div>
+                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Durasi Magang : 2 Semester, Posisi Lowongan : UI/UX Designer" id="tooltip-filter"></i></div>
                 </div>
                 {{-- <div class="col-1"></div> --}}
                     <div class="col-md-4 d-flex justify-content-end align-items-center">
