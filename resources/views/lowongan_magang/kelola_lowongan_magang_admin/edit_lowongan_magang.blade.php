@@ -9,7 +9,7 @@
 
 @section('main')
     <div class="row ">
-        <div class="col-md-12 col-12">
+        <div class="col-md-12 col-12"> 
             <nav aria-label="breadcrumb">
                 <h4>
                     <ol class="breadcrumb breadcrumb-style1">
