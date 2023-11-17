@@ -10,7 +10,7 @@
 @section('main')
     <div class="row ">
         <div class="">
-            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang</span>
+            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang / </span>
                 Detail Lowongan UI/UX Designer
             </h4>
         </div>
@@ -233,7 +233,7 @@
             </div>
             <button type="button" class="btn btn-label-warning w-100 mt-3"
                 style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                <i class="ti ti-edit ti-sm" style="margin-right: 15px"></i>
+                <i class="ti ti-edit ti-sm" style="margin-right: 15px"></i><a href="/edit">
                 Ajukan perbaikan
             </button>
 
@@ -254,7 +254,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer",
@@ -263,7 +263,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-success'>Aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             },
             {
                 "posisi": "UI/UX Designer   ",
@@ -272,7 +272,7 @@
                 "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 september 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 Desember 2024</h6></div>",
                 "durasi_magang": "2 Semester",
                 "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-                "aksi": "<a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+                "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
             }
         ];
 
