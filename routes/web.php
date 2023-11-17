@@ -166,7 +166,7 @@ Route::prefix('master')->group(function () {
 });
 
 Route::get('/pengaturan', function () {
-    return view('pengaturan_akun.pengaturan_akun');
+    return view('pengaturan_akun.pengaturan');
 });
 
 Route::get('/apply_alert', function () {
@@ -174,7 +174,7 @@ Route::get('/apply_alert', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang_fakultas');
+    return view('layouts.program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
@@ -235,4 +235,30 @@ Route::get('/edit-lowongan-magang', function() {
 
 Route::get('/detail-lowongan-magang', function() {
     return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});
+Route::get('informasi/mitra/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_mitra', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('informasi/lowongan/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_lowongan', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('/detail/kandidat/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
+});
+
+Route::get('/kelola/mitra', function () {
+    return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola/mitra']);
+});
+
+
+Route::get('/company', function () {
+    return view('company.lowongan.index', ['active_menu' => 'company']);
+});
+
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
 });
