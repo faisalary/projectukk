@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mahasiswa', function (Blueprint $table) {
-            $table->string('nim', 255)->change();
+        Schema::create('lokasi', function (Blueprint $table) {
+            $table->uuid('id_lokasi')->primary();
+            $table->string('kota', 255);
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mahasiswa', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('lokasi');
     }
 };

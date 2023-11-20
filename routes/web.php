@@ -5,11 +5,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndustriController;
-use App\Http\Controllers\Auth\LoginAdminController;
-use App\Http\Controllers\Auth\RegisterAdminController;
-use App\Http\Controllers\Auth\SetPasswordController;
-use App\Http\Middleware\IsAdmin;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +23,11 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+
 })->middleware(['auth',])->name('dashboard');
+
+})->middleware(['auth', 'isAdmin', 'verified'])->name('dashboard');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard'); 
 //admin
@@ -120,9 +119,6 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\IndustriController::class, 'status'])->name('mitra.status');
         Route::get('/edit/{id}', [App\Http\Controllers\IndustriController::class, 'edit'])->name('mitra.edit');
     });
-    Route::get('/master_mahasiswa', function () {
-        return view('masters.mahasiswa.index', ['active_menu' => 'master_mahasiswa']);
-    });
     Route::prefix('pegawai-industri')->group(function () {
         Route::get('/', [App\Http\Controllers\PegawaiIndustriController::class, 'index'])->name('pegawaiindustri.index');
         Route::get('/show', [App\Http\Controllers\PegawaiIndustriController::class, 'show'])->name('pegawaiindustri.show');
@@ -132,7 +128,7 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'status'])->name('pegawaiindustri.status');
         Route::get('/edit/{id}', [App\Http\Controllers\PegawaiIndustriController::class, 'edit'])->name('pegawaiindustri.edit');
     });
-    Route::prefix('master-jenis-magang')->group(function () {
+    Route::prefix('jenis-magang')->group(function () {
         Route::get('/', [App\Http\Controllers\JenisMagangController::class, 'index'])->name('jenismagang.index');
         Route::get('/show', [App\Http\Controllers\JenisMagangController::class, 'show'])->name('jenismagang.show');
         Route::post('/store', [App\Http\Controllers\JenisMagangController::class, 'store'])->name('jenismagang.store');
@@ -177,11 +173,10 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen_penilaian.status');
         Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen_penilaian.list_fakultas');
     });
-
 });
 
 Route::get('/pengaturan', function () {
-    return view('pengaturan_akun.pengaturan_akun');
+    return view('pengaturan_akun.pengaturan');
 });
 
 Route::get('/apply_alert', function () {
@@ -189,7 +184,7 @@ Route::get('/apply_alert', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang_fakultas');
+    return view('layouts.program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
@@ -205,12 +200,10 @@ Route::get('/detail/kandidat', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/master_universitas', function () {
-//     return view('masters.universitas.index', ['active_menu' => 'master_universitas']);
-// });
-Route::get('/master_fakultas', function () {
-    return view('masters.fakultas.index', ['active_menu' => 'master_fakultas']);
+Route::get('/lowongan-magang-tersimpan', function () {
+    return view('layouts.program_magang.lowongan_magang_tersimpan');
 });
+
 Route::get('/master_tahun_akademik', function () {
     return view('masters.tahun_akademik.index', ['active_menu' => 'master_tahun_akademik']);
 });
@@ -297,16 +290,74 @@ Route::prefix('master-prodi')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\ProdiController::class, 'edit'])->name('prodi.edit');
     Route::post('/status/{id}', [App\Http\Controllers\ProdiController::class, 'status'])->name('prodi.status');
     Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\ProdiController::class, 'list_fakultas'])->name('prodi.list_fakultas');
+
+Route::get('/lowongan-pekerjaan-tersimpan', function () {
+    return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
+
 });
 
 Route::get('/informasi/pribadi', function () {
     return view('profile.informasi_pribadi');
 });
 
-Route::get('/detail-informasi-pengalaman', function() {
+Route::get('/detail-informasi-pengalaman', function () {
     return view('profile.pengalaman');
 });
 
-Route::get('/detail-informasi-dokumen', function() {
+Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
+});
+
+Route::get('/profile-company', function () {
+    return view('company.profile_company', ['active_menu' => 'profile-company']);
+});
+
+Route::get('/summary-profile', function () {
+    return view('company.summary_profile');
+});
+
+Route::get('/jadwal-seleksi', function () {
+    return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+});
+
+Route::get('/halaman-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang');
+});
+
+Route::get('/tambah-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
+});
+
+Route::get('/edit-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang');
+});
+
+Route::get('/detail-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});
+Route::get('informasi/mitra/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_mitra', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('informasi/lowongan/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.informasi_lowongan', ['active_menu' => 'informasi/mitra/admin']);
+});
+Route::get('/detail/kandidat/admin', function () {
+    return view('lowongan_magang.informasi_lowongan.detail', ['active_menu' => 'informasi/mitra/admin']);
+});
+
+Route::get('/kelola/mitra', function () {
+    return view('mitra.kelola_mitra.index', ['active_menu' => 'kelola/mitra']);
+});
+
+
+Route::get('/company', function () {
+    return view('company.lowongan.index', ['active_menu' => 'company']);
+});
+
+Route::get('/company/detail-lowongan', function () {
+    return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
 });
