@@ -166,7 +166,7 @@ Route::prefix('master')->group(function () {
 });
 
 Route::get('/pengaturan', function () {
-    return view('pengaturan_akun.pengaturan_akun');
+    return view('pengaturan_akun.pengaturan');
 });
 
 Route::get('/apply_alert', function () {
@@ -174,7 +174,7 @@ Route::get('/apply_alert', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang_fakultas');
+    return view('layouts.program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
