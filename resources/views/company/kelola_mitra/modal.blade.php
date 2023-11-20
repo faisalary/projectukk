@@ -6,44 +6,51 @@
                 <h5 class="modal-title" id="modalTambahMitra">Tambah Mitra</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="nama" class="form-label">Nama Perusahaan</label>
-                        <input type="text" id="nama" class="form-control" placeholder="Nama Perusahaan" />
+            <form class="default-form" method="POST" action="{{ route('kelola_mitra.store') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="nama" class="form-label">Nama Perusahaan</label>
+                            <input type="text" id="nama" name="namaindustri"class="form-control" placeholder="Nama Perusahaan" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="kategori" class="form-label">Pilih Kategori Mitra</label>
+                            <select class="form-select select2" id="kategori" name="kategori_industri"
+                                data-placeholder="Kategori Mitra">
+                                <option disabled selected>Pilih Kategori Mitra</option>
+                                <option value="Internal">Internal</option>
+                                <option value="Eksternal">Eksternal</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="statuskerjasama" class="form-label">Pilih Status Kerjasama</label>
+                            <select class="form-select select2" id="status" name="statuskerjasama"
+                                data-placeholder="Status Kerjasama">
+                                <option disabled selected>Pilih Status Kerjasama</option>
+                                <option value="Ya">Ya</option>
+                                <option value="Tidak">Tidak</option>
+                                <option value="Internal Telyu">Internal Tel-u</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" id="email" class="form-control" placeholder="Email" />
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="simpanButton">Simpan</button>
                 </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <select class="form-select select2" id="kategori" name="kategorimitra" data-placeholder="Kategori Mitra">
-                            <option disabled selected>Pilih Kategori Mitra</option>
-                            <option value="Internal">Internal</option>
-                            <option value="Eksternal">Eksternal</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-2">
-                        <select class="form-select select2" id="status" name="statuskerjasama" data-placeholder="Status Kerjasama">
-                            <option disabled selected>Pilih Status Kerjasama</option>
-                            <option value="Ya">Ya</option>
-                            <option value="Tidak">Tidak</option>
-                            <option value="Internal Telyu">Internal Tel-u</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="simpanButton">Simpan</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -54,22 +61,19 @@
         <div class="modal-content">
             <div class="modal-header text-center d-block">
                 <h5 class="modal-title" id="modalEditMitra">Edit Mitra</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-2">
                         <label for="nama" class="form-label">Nama Mitra</label>
-                        <input type="text" id="nama" class="form-control"
-                            placeholder="Nama Mitra" />
+                        <input type="text" id="nama" class="form-control" placeholder="Nama Mitra" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" id="email" class="form-control"
-                            placeholder="Email" />
+                        <input type="text" id="email" class="form-control" placeholder="Email" />
                     </div>
                 </div>
                 <div class="row">
@@ -111,13 +115,12 @@
                                     </div>
                                     <div class="col-7" style="margin-top:3px;">
                                         <label class="form-label" for="form-repeater-1-1"></label>
-                                        <input type="text" id="form-repeater-1-1"
-                                            class="form-control" placeholder="Usename" />
+                                        <input type="text" id="form-repeater-1-1" class="form-control"
+                                            placeholder="Usename" />
                                     </div>
                                     <div class="col-1" style="padding-left:0px;">
                                         <button class="btn btn-outline-danger waves-effect"
-                                            style="width: 10px;     margin-top: 25px;"
-                                            data-repeater-delete>
+                                            style="width: 10px;     margin-top: 25px;" data-repeater-delete>
                                             <i class="tf-icons ti ti-trash"></i>
                                         </button>
                                     </div>
@@ -145,8 +148,7 @@
         <div class="modal-content">
             <div class="modal-header text-center d-block">
                 <h5 class="modal-title" id="modalreject">Alasan Penolakan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">

@@ -169,7 +169,7 @@ Route::prefix('company')->group(function (){
     Route::prefix('kelola-mitra')->group(function () {
         Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
         Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
-        Route::post('/store', [App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+        Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
         Route::post('/update/{id}', [App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
         Route::get('/edit/{id}', [App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');

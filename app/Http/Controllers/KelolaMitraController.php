@@ -36,7 +36,7 @@ class KelolaMitraController extends Controller
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
-            'kategori_industri' => $request->kategorimitra,
+            'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
             'status' => true,
         ]);
@@ -62,10 +62,16 @@ class KelolaMitraController extends Controller
     {
         $industri = Industri::orderBy('namaindustri', 'asc')->get();
 
-        
-
         return DataTables::of($industri)
             ->addIndexColumn()
+            ->editColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                }
+            })
+            ->rawColumns(['status'])
             ->make(true);
     }
     /**
@@ -84,11 +90,23 @@ class KelolaMitraController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function status($id)
     {
-        //
+        try {
+            $industri = Industri::where('namaindustri', $id)->first();
+            $industri->status = ($industri->status) ? false : true;
+            $industri->save();
+
+            return response()->json([
+                'error' => false,
+                'table' => '#table-kelola-mitra3'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
+
 }
