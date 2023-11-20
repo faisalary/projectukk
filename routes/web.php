@@ -221,6 +221,26 @@ Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
 
+Route::get('/halaman-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang');
+});
+
+Route::get('/tambah-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
+});
+
+Route::get('/edit-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang');
+});
+
+Route::get('/detail-lowongan-magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});
+
 Route::get('/seleksi-lanjutan', function () {
     return view('admin.jadwal-seleksi.index', ['active_menu' => 'seleksi-lanjutan']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
 });
