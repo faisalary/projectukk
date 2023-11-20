@@ -220,3 +220,7 @@ Route::get('/summary-profile', function () {
 Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
+
+Route::get('/seleksi-lanjutan', function () {
+    return view('admin.jadwal-seleksi.index', ['active_menu' => 'seleksi-lanjutan']);
+});

@@ -216,8 +216,8 @@
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'seleksi-lanjutan' ? 'active' : '' }} @endif">
+                        <a href="/seleksi-lanjutan" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
