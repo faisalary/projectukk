@@ -28,15 +28,21 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'isAdmin','verified'])->name('dashboard');
+})->middleware(['auth',])->name('dashboard');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard'); 
+//admin
+Route::get('/dashboard-admin', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth' ])->name('dashboard.admin'); 
+//super admin
+Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/register', [RegisterAdminController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterAdminController::class, 'adminregister']);
     Route::get('/set-password/{token}', [SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [SetPasswordController::class, 'reset'])->name('update.password');
-    Route::get('/dashboard', [LoginAdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+    // Route::get('/dashboard', [LoginAdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/logout', [LoginAdminController::class, 'logout'])->name('logout');
 });
 
@@ -240,7 +246,7 @@ Route::prefix('master_mahasiswa')->group(function () {
     Route::put('/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 });
-
+  
 Route::prefix('master-mitra')->group(function () {
     Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
     Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
