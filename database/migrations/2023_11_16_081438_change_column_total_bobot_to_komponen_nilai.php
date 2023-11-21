@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('komponen_nilai', function (Blueprint $table) {
             $table->integer('total_bobot')->default(0)->change();
+            $table->string('tipe', 255)->nullable()->change();
         });
     }
 
