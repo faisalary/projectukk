@@ -6,7 +6,6 @@ use App\Models\KomponenNilai;
 use App\Http\Requests\KomponenNilaiRequest;
 use App\Models\JenisMagang;
 use Exception;
-use PhpParser\Node\Expr\FuncCall;
 use Yajra\DataTables\DataTables;
 
 class KomponenPenilaianController extends Controller
