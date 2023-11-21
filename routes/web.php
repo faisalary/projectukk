@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
 
 })->middleware(['auth',])->name('dashboard');
 
-})->middleware(['auth', 'isAdmin', 'verified'])->name('dashboard');
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard'); 
@@ -359,4 +359,6 @@ Route::get('/seleksi-lanjutan', function () {
 
 Route::get('/company/add', function () {
     return view('company.lowongan.add', ['active_menu' => 'company']);
+});
+
 });
