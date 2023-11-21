@@ -182,11 +182,11 @@
                     <!-- Kelola Mitra -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/mitra' ? 'active' : '' }} @endif">
                         <a href="/kelola/mitra" class="menu-link">
-                        <i class="menu-icon tf-icons ti ti-building"></i>
+                            <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                         </a>
                     </li>
-                    
+
                     <!-- Lowongan Magang -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -290,7 +290,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('komponen_penilaian.index')}}" class="menu-link">
+                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
@@ -356,7 +356,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
-                                <a href="/informasi/lowongan" class="menu-link">
+                                <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
