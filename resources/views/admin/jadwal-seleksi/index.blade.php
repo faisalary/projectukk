@@ -33,31 +33,17 @@
         <div class="col-md-9 col-12">
             <h4 class="fw-bold">Jadwal Seleksi</h4>
         </div>
-        <div class="col-md-3 col-12">
-            <div class="input-group">
-                <select class="form-select" id="inputGroupSelect04" data-placeholder="Pilih Tahun Ajaran"
-                    aria-label="Example select with button addon">
-                    <option value="1">2023/2024 Genap</option>
-                    <option value="2">2023/2024 Ganjil</option>
-                    <option value="3">2022/2023 Genap</option>
-                    <option value="4">2022/2023 Ganjil</option>
-                    <option value="5">2021/2022 Genap</option>
-                    <option value="6">2021/2022 Ganjil</option>
-                </select>
-                <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
-            </div>
-        </div>
-
-        <div class="col-md-1 col-12 text-end" style="width:50px;">
-        </div>
-        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
-                <div class="d-flex align-items-center">
-                    <i class="tf-icons ti ti-plus me-2"></i>
-                    <span class="mt-1">Jadwal Seleksi Lanjutan</span>
-                </div>
-            </button>
+        <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
+            <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
+                <option value="1">2023/2024 Genap</option>
+                <option value="2">2023/2024 Ganjil</option>
+                <option value="3">2022/2023 Genap</option>
+                <option value="4">2022/2023 Ganjil</option>
+                <option value="5">2021/2022 Genap</option>
+                <option value="6">2021/2022 Ganjil</option>
+            </select>
+            <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
         </div>
     </div>
     <div class="row mt-2">
@@ -67,8 +53,6 @@
                     <table class="table" id="table-jadwal-seleksi">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
                                 <th>NOMOR</th>
                                 <th>NAMA</th>
                                 <th>TANGGAL SELEKSI</th>
@@ -85,8 +69,8 @@
         </div>
     </div>
 
-    {{-- Modal Slide --}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
+      {{-- Modal Slide --}}
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Filter Berdasarkan</h5>
         </div>
@@ -145,215 +129,7 @@
             </form>
         </div>
     </div>
-
-    {{-- Modal Tambah --}}
-    <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-block border-bottom">
-                    <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="default-form">
-                    @csrf
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="nama" class="form-label">Nama Kandidat</label>
-                                <select class="form-select select2" id="nama" name="nama"
-                                    data-placeholder="Pilih Nama Kandidat">
-                                    <option></option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-2">
-                                <label for="jenis" class="form-label">Jenis Seleksi</label>
-                                <select class="form-select select2" id="jenis" name="jenis_seleksi"
-                                    data-placeholder="Pilih Jenis Seleksi">
-                                    <option value="Seleksi Tahap 1">Seleksi Tahap 1</option>
-                                    <option value="Seleksi Tahap 2">Seleksi Tahap 2</option>
-                                    <option value="Seleksi Tahap 3">Seleksi Tahap 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <label class="form-label">Penanggung Jawab Seleksi</label>
-                                <div class="position-relative"><select
-                                        class="select2 form-select select2-hidden-accessible" multiple=""
-                                        data-select2-id="selectJadwalLanjutan" tabindex="-1" aria-hidden="true">
-                                        <optgroup label="Pilih Penanggung Jawab">
-                                            <option value="AK">Alaska</option>
-                                            <option value="HI">Hawaii</option>
-                                        </optgroup>
-                                    </select></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan</label>
-                                <div class="form-check form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio1"
-                                        value="1">
-                                    <label class="form-check-label" for="1">Onsite</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio2"
-                                        value="2">
-                                    <label class="form-check-label" for="2">Online</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan</label>
-                                <input class="form-control" type="date" value="0000-00-00" id="mulai">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label for="waktu1" class="form-label">Waktu Mulai Pelaksanaan</label>
-                                <input class="form-control" type="time" value="12:30:00" id="waktu1">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan</label>
-                                <input class="form-control" type="date" value="0000-00-00" id="mulai">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label for="waktu2" class="form-label">Waktu Akhir Pelaksanaan</label>
-                                <input class="form-control" type="time" value="12:30:00" id="waktu2">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="tempat" class="form-label">Tempat Pelaksanaan</label>
-                                <input type="text" class="form-control" id="tempat"
-                                    placeholder="Masukan Alamat/Link Pelaksanaan"
-                                    aria-describedby="defaultFormControlHelp">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label for="catatan" class="form-label">Catatan</label>
-                                <input type="text" class="form-control" id="catatan" placeholder="Ketik Disini"
-                                    aria-describedby="defaultFormControlHelp">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal Edit --}}
-    <div class="modal fade" id="modalEditJadwal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-block border-bottom">
-                    <h5 class="modal-title" id="modal-title">Edit Jadwal Seleksi Lanjutan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="nama" class="form-label">Nama Kandidat</label>
-                            <select class="form-select select2" id="nama" name="nama"
-                                data-placeholder="Pilih Nama Kandidat">
-                                <option>Andika Alatas-UI/UX Designer</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-2">
-                            <label for="jenis" class="form-label">Jenis Seleksi</label>
-                            <select class="form-select select2" id="jenis" name="jenisseleksi"
-                                data-placeholder="Pilih Jenis Seleksi">
-                                <option value="Seleksi Tahap 1">Seleksi Tahap 1</option>
-                                <option value="Seleksi Tahap 2">Seleksi Tahap 2</option>
-                                <option value="Seleksi Tahap 3">Seleksi Tahap 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mb-2">
-                            <label class="form-label">Penanggung Jawab Seleksi</label>
-                            <div class="position-relative"><select class="select2 form-select select2-hidden-accessible"
-                                    multiple="" data-select2-id="editJadwalSeleksi" tabindex="-1"
-                                    aria-hidden="true">
-                                    <optgroup label="Pilih Penanggung Jawab">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
-                                    </optgroup>
-                                </select></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan</label>
-                            <div class="form-check form-check-inline ">
-                                <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio1"
-                                    value="1">
-                                <label class="form-check-label" for="1">Onsite</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="pelaksanaan" id="inlineRadio2"
-                                    value="2">
-                                <label class="form-check-label" for="2">Online</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 mb-2">
-                            <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan</label>
-                            <input class="form-control" type="date" value="2023-09-09" id="mulai">
-                        </div>
-                        <div class="col-6 mb-2">
-                            <label for="waktu1" class="form-label">Waktu Mulai Pelaksanaan</label>
-                            <input class="form-control" type="time" value="12:30:00" id="waktu1">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 mb-2">
-                            <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan</label>
-                            <input class="form-control" type="date" value="2023-09-09" id="mulai">
-                        </div>
-                        <div class="col-6 mb-2">
-                            <label for="waktu2" class="form-label">Waktu Akhir Pelaksanaan</label>
-                            <input class="form-control" type="time" value="12:30:00" id="waktu2">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="tempat" class="form-label">Tempat Pelaksanaan</label>
-                            <input type="text" class="form-control" id="tempat"
-                                placeholder="Masukan Alamat/Link Pelaksanaan"
-                                value="Gedung Merah Putih Interview Room Lt. 15"
-                                aria-describedby="defaultFormControlHelp">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="catatan" class="form-label">Catatan</label>
-                            <input type="text" class="form-control" id="catatan" placeholder="Ketik Disini"
-                                aria-describedby="defaultFormControlHelp">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit"class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalalert"
-                        data-dismiss="modal">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     {{-- Modal CV Onsite --}}
     <div class="modal fade" id="modalCV" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -362,8 +138,7 @@
                     <div class="d-flex justify-content-between">
                         <h5 class="modal-title" id="modal-title">Jadwal Seleksi Tahap 1</h5>
                         <button for="upload"
-                            class="btn btn-outline-success waves-effect me-2 mb-3 waves-effect waves-light"
-                            tabindex="0">
+                            class="btn btn-outline-success waves-effect me-2 mb-3 waves-effect waves-light" tabindex="0">
                             <i class="ti ti-download d-block pe-2"></i>
                             <span class="d-none d-sm-block">Unduh CV</span>
                             <input type="file" id="upload" class="account-file-input" hidden=""
@@ -470,7 +245,7 @@
                                     <span class="text-secondary">Status Seleksi</span>
                                     <div class="mt-2">
                                         <input class="form-check-input" type="checkbox" value=""
-                                            id="customCheckTemp4">
+                                            id="customCheckTemp4" disabled>
                                         <span class="custom-option-headear">Sudah Seleksi Tahap 1</span>
                                     </div>
                                 </div>
@@ -596,7 +371,7 @@
                                     <p class="fw-bold mt-1">Kadavi Bagaskara</p>
                                 </div>
                                 <div class="col-6">
-                                    <span class="text-secondary">Respon Kandidat</span>
+                                    <span class="text-secondary">Status Seleksi</span>
                                     <span class="badge bg-label-info mt-1">Sudah Interview</span>
                                 </div>
                             </div>
@@ -606,27 +381,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Alert-->
-    <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="../../app-assets/img/alert.png" alt="">
-                  <h5 class="modal-title" id="modal-title">Apakah Data Jadwal Seleksi lanjutan anda sudah benar?</h5>
-                  <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Jadwal seleksi lanjutan akan otomatis terkirim melalui email aktif kandidat!</div>
-                </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                
-            </div>
-        </div>
-      </div>
 @endsection
 
 @section('page_script')
@@ -635,20 +389,16 @@
 
     <script>
         var jsonData = [{
-                "id": "",
-                "id": "",
                 "nomor": "1",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
                 "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
                 "waktu": "<span class='text-secondary'>Jam Dimulai</span><br>08.00<br><span class='text-secondary'>Jam Berakhir</span><br>23.59",
                 "jenis": "Seleksi Tahap 1",
-                "pelaksanaan": "Onsite",
+                "pelaksanaan": "Online",
                 "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
-                "aksi": "<div class='d-flex'><a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a></div>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalCVOnline' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
             },
             {
-                "id": "",
-                "id": "",
                 "nomor": "2",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
                 "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
@@ -656,11 +406,9 @@
                 "jenis": "Seleksi Tahap 1",
                 "pelaksanaan": "Onsite",
                 "status": "<span class='badge bg-label-secondary me-1'>Belum Seleksi</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCVOnline' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
             },
             {
-                "id": "",
-                "id": "",
                 "nomor": "3",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
                 "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
@@ -668,19 +416,13 @@
                 "jenis": "Seleksi Tahap 1",
                 "pelaksanaan": "Onsite",
                 "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
-                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+                "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalCVOnline' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
 
             }
         ];
         var table = $('#table-jadwal-seleksi').DataTable({
             "data": jsonData,
             columns: [{
-                    data: "id"
-                },
-                {
-                    data: "id"
-                },
-                {
                     data: "nomor"
                 },
                 {
@@ -705,31 +447,24 @@
                     data: "aksi"
                 }
             ],
-            columnDefs: [{
-                    // For Responsive
-                    className: 'control',
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 2,
-                    targets: 0,
-                    render: function(data, type, full, meta) {
-                        return '';
-                    }
-                },
-                {
-                    targets: 1,
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 3,
-                    checkboxes: true,
-                    render: function() {
-                        return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                    },
-                    checkboxes: {
-                        selectAllRender: '<input type="checkbox" class="form-check-input">'
-                    }
-                },
-            ]
+            // columnDefs: [{
+            //         // For Responsive
+            //         className: 'control',
+            //         orderable: false,
+            //         searchable: false,
+            //         responsivePriority: 2,
+            //         targets: 0,
+            //         render: function(data, type, full, meta) {
+            //             return '';
+            //         }
+            //     },
+            //     {
+            //         targets: 1,
+            //         orderable: false,
+            //         searchable: false,
+            //         responsivePriority: 3,
+            //     },
+            // ]
         });
     </script>
 
