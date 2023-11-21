@@ -89,7 +89,7 @@
                                     <th>DESKRIPSI PERUSAHAAN</th>
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
-                                    <th>AKSI</th>
+                                    <th style="min-width: 100px;">AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -110,7 +110,7 @@
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>STATUS</th>
-                                    <th>AKSI</th>
+                                    <th style="min-width: 100px;">AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -126,10 +126,12 @@
                                     <th style="min-width: 100px;">NAMA</th>
                                     <th>EMAIL</th>
                                     <th style="min-width: 120px;">NOMOR TELEPON</th>
-                                    <th style="min-width: 140px;">ALAMAT</th>
+                                    <th>ALAMAT</th>
                                     <th>DESKRIPSI PERUSAHAAN</th>
                                     <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
+                                    <th>STATUS</th>
+                                    <th style="min-width: 100px;">AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -171,15 +173,39 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon'
+                    name: 'notelepon',
+                    render: function(data, type, row, meta) {
+                        // Check if the data is null or undefined
+                        if (data === null || data === undefined) {
+                            return "-"; // You can change this to any default value
+                        } else {
+                            return data;
+                        }
+                    }
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri'
+                    name: 'alamatindustri',
+                    render: function(data, type, row, meta) {
+                        // Check if the data is null or undefined
+                        if (data === null || data === undefined) {
+                            return "-"; // You can change this to any default value
+                        } else {
+                            return data;
+                        }
+                    }
                 },
                 {
                     data: 'description',
-                    name: 'description'
+                    name: 'description',
+                    render: function(data, type, row, meta) {
+                        // Check if the data is null or undefined
+                        if (data === null || data === undefined) {
+                            return "-"; // You can change this to any default value
+                        } else {
+                            return data;
+                        }
+                    }
                 },
                 {
                     data: 'kategori_industri',
@@ -234,8 +260,8 @@
                     name: 'statuskerjasama'
                 },
                 {
-                    data: 'action',
-                    name: 'action'
+                    data: 'aksi',
+                    name: 'aksi'
                 }
 
             ]
@@ -333,6 +359,14 @@
                 {
                     data: 'statuskerjasama',
                     name: 'statuskerjasama'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
                 }
             ]
         });

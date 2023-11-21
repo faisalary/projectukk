@@ -71,7 +71,24 @@ class KelolaMitraController extends Controller
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
             })
-            ->rawColumns(['status'])
+            ->addColumn('action', function ($row) {
+                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($row->status) ? "danger" : "success";
+
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->namaindustri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->namaindustri}' data-url='kelola_mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+
+                return $btn;
+            })
+            ->addColumn('aksi', function ($row) {
+                $btn = "<a data-bs-toggle='modal' class='btn-icon'>
+                <i class='btn-icon ti ti-file-check text-success'></i>
+                <i class='btn-icon ti ti-file-x text-danger'></i></a>";
+        
+                return $btn;
+            })
+            
+            ->rawColumns(['status','action','aksi'])
             ->make(true);
     }
     /**
@@ -79,9 +96,9 @@ class KelolaMitraController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $industri = Industri::where('id_industri', $id)->first();
+        return $industri;
     }
-
     /**
      * Update the specified resource in storage.
      */
