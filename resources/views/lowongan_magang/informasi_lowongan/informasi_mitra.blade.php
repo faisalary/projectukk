@@ -81,9 +81,9 @@
 
 <div class="col-md-3 col-12 mb-3">
     <select class="select2 form-select" data-placeholder="Pilih status Merekrut">
-    <option disabled selected>Pilih status Merekrut</option>
-        </select>
-    </div>
+        <option disabled selected>Pilih status Merekrut</option>
+    </select>
+</div>
 
 <div class="row mt-2">
     <div class="col-12">
