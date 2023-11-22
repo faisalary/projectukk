@@ -192,7 +192,6 @@
                     $('#jabatan').val(response.jabatan);
                     $('#unit').val(response.unit);
 
-
                     $('#modalTambahPegawai').modal('show');
                 }
             });
@@ -200,7 +199,7 @@
 
         $("#modalTambahPegawai").on("hide.bs.modal", function() {
 
-            $(".modal-title").html("Add Pegawai");
+            $(".modal-title").html("Tambah Pegawai");
             $("#modal-button").html("Save Data")
             $('#modalTambahPegawai form').trigger('reset');
             $('#modalTambahPegawai form').attr('action', "{{ url('master/pegawai-industri/store') }}");

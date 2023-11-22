@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('komponen_nilai', function (Blueprint $table) {
-            $table->integer('total_bobot')->default(0)->change();
+        Schema::table('industri', function (Blueprint $table) {
+            $table->string('email', 255);
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('komponen_nilai', function (Blueprint $table) {
-            $table->dropColumn('total_bobot');
+        Schema::table('industri', function (Blueprint $table) {
+            //
         });
     }
 };

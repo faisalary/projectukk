@@ -167,10 +167,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <button type="button" class="btn btn-outline-success waves-effect"><a href="#" class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</a>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-dark waves-effect"><a href="#" class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Statistik Kandidat</a>
-                                    </button>
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                    </button></a>
                                 </div>
                             </div>
                         </div>
@@ -269,10 +269,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <button type="button" class="btn btn-outline-success waves-effect"><a href="#" class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</a>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-dark waves-effect"><a href="#" class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Statistik Kandidat</a>
-                                    </button>
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                    </button></a>
                                 </div>
                             </div>
                         </div>
@@ -371,10 +371,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <button type="button" class="btn btn-outline-success waves-effect"><a href="#" class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</a>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-dark waves-effect"><a href="#" class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Statistik Kandidat</a>
-                                    </button>
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                    </button></a>
                                 </div>
                             </div>
                         </div>
@@ -406,45 +406,6 @@
 @endsection
 
 @section('page_script')
-<script>
-    // var jsonData = [{
-    //         "nomor": "1",
-    //         "jenis": "Magang Fakultas",
-    //         "durasi": "2 Semester",
-    //         "dokumen": "Ya",
-    //         "seleksi": "Ya",
-    //         "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
-    //         "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJenisMagang' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = deactive($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-    //     }
-    // ];
-
-    // var table = $('#table-master-jenis_magang').DataTable({
-    //     "data": jsonData,
-    //     columns: [{
-    //             data: "nomor"
-    //         },
-
-    //         {
-    //             data: "jenis"
-    //         },
-    //         {
-    //             data: "durasi"
-    //         },
-    //         {
-    //             data: "dokumen"
-    //         },
-    //         {
-    //             data: "seleksi"
-    //         },
-    //         {
-    //             data: "status"
-    //         },
-    //         {
-    //             data: "aksi"
-    //         }
-    //     ]
-    // });
-</script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>

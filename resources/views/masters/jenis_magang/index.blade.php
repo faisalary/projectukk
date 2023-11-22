@@ -1,32 +1,32 @@
 @extends('partials_admin.template')
 
 @section('meta_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
-.swal2-icon {
-    border-color: transparent !important;
-}
+    .swal2-icon {
+        border-color: transparent !important;
+    }
 
-.swal2-title {
-    font-size: 20px !important;
-    text-align: center !important;
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-}
+    .swal2-title {
+        font-size: 20px !important;
+        text-align: center !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
 
-.swal2-modal.swal2-popup .swal2-title {
-    max-width: 100% !important;
-}
+    .swal2-modal.swal2-popup .swal2-title {
+        max-width: 100% !important;
+    }
 
-.swal2-html-container {
-    font-size: 16px !important;
-}
+    .swal2-html-container {
+        font-size: 16px !important;
+    }
 
-.swal2-deny {
+    .swal2-deny {
         display: none !important;
     }
 </style>
@@ -73,78 +73,73 @@
 
 @section('page_script')
 <script>
-
-
-var table = $('#table-master-jenis_magang').DataTable({
-    ajax: '{{ route('jenismagang.show') }}',
-    serverSide: false,
-    processing: true,
-    deferRender: true,
-    type: 'GET',
-    destroy: true,
-    columns: [{
-            data: "DT_RowIndex"
-        },
-
-        {
-            data: "namajenis"
-        },
-        {
-            data: "durasimagang"
-        },
-        {
-            data: "is_document_upload"
-        },
-        {
-            data: "is_review_process"
-        },
-        {
-            data: "type"
-        },
-        {
-            data: "status"
-        },
-        {
-            data: "action"
-        }
-    ]
-});
-
-function edit(e){
-    let id = e.attr('data-id');
-
-    let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
-    var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
-    $.ajax({
+    var table = $('#table-master-jenis_magang').DataTable({
+        ajax: '{{ route("jenismagang.show") }}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
         type: 'GET',
-        url: url,
-        success: function (response){
-            $(".modal-title").html("Edit Jenis Magang");
-            $("#modal-button").html("Update Data");
-            $('#modal-jenismagang form').attr('action',action);
-            $('#jenis').val(response.namajenis);
-            $('#durasi').val(response.durasimagang).trigger('change');
-            $('#dokumen').val(response.is_document_upload);
-            $('#review').val(response.is_review_process);
-            $('#type').val(response.type);
+        destroy: true,
+        columns: [{
+                data: "DT_RowIndex"
+            },
 
-            $('#modal-jenismagang').modal('show');
-        }
+            {
+                data: "namajenis"
+            },
+            {
+                data: "durasimagang"
+            },
+            {
+                data: "is_document_upload"
+            },
+            {
+                data: "is_review_process"
+            },
+            {
+                data: "type"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "action"
+            }
+        ]
     });
-}
 
-$("#modal-jenismagang").on("hide.bs.modal",function() {
-    $(".modal-title").html("Tambah Jenis Magang");
-    $("#modal-button") .html("Save Data");
-    $('#modal-jenismagang form')[0].reset();
-    $('#modal-jenismagang form #durasi').val('').trigger('change');
-    $('#modal-jenismagang form').attr('action',"{{ url('master/jenis-magang/store') }}");
-    $('.invalid-feedback').removeClass('d-block');
-    $('.form-control').removeClass('is-invalid');
-});
+    function edit(e) {
+        let id = e.attr('data-id');
 
+        let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
+        var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+                $(".modal-title").html("Edit Jenis Magang");
+                $("#modal-button").html("Update Data");
+                $('#modal-jenismagang form').attr('action', action);
+                $('#jenis').val(response.namajenis);
+                $('#durasi').val(response.durasimagang).trigger('change');
+                $('#dokumen').val(response.is_document_upload);
+                $('#review').val(response.is_review_process);
+                $('#type').val(response.type);
 
+                $('#modal-jenismagang').modal('show');
+            }
+        });
+    }
 
+    $("#modal-jenismagang").on("hide.bs.modal", function() {
+        $(".modal-title").html("Tambah Jenis Magang");
+        $("#modal-button").html("Save Data");
+        $('#modal-jenismagang form')[0].reset();
+        $('#modal-jenismagang form #durasi').val('').trigger('change');
+        $('#modal-jenismagang form').attr('action', "{{ url('master/jenis-magang/store') }}");
+        $('.invalid-feedback').removeClass('d-block');
+        $('.form-control').removeClass('is-invalid');
+    });
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
