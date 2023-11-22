@@ -75,8 +75,8 @@ class KelolaMitraController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->namaindustri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->namaindustri}' data-url='kelola_mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola_mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -104,7 +104,27 @@ class KelolaMitraController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $industri = Industri::where('id_industri', $id)->first();
+
+            $industri->namaindustri = $request->namaindustri;
+            $industri->email = $request->email;
+            $industri->kategori_industri = $request->kategori_industri;
+            $industri->statuskerjasama = $request->statuskerjasama;
+            $industri->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mitra successfully Updated!',
+                'modal' => '#modalEditMitra',
+                'table' => '#table-kelola-mitra3'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function status($id)
