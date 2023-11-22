@@ -23,9 +23,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-
-})->middleware(['auth',])->name('dashboard');
-
 })->middleware(['auth', 'isAdmin', 'verified'])->name('dashboard');
 
 
@@ -342,4 +339,6 @@ Route::get('/seleksi-lanjutan', function () {
 
 Route::get('/company/add', function () {
     return view('company.lowongan.add', ['active_menu' => 'company']);
+});
+
 });
