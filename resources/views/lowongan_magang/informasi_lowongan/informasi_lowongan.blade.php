@@ -167,8 +167,8 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    <a href="/informasi/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>
@@ -267,8 +267,8 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>
@@ -367,8 +367,8 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>
