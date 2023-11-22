@@ -6,7 +6,7 @@ use App\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PemissionSeeder extends Seeder
+class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class PemissionSeeder extends Seeder
 
         // Insert permissions into the database
         foreach ($permissions as $permission) {
-            Permission::create($permission);
+            // Permission::create($permission);
         }
     }
 }
