@@ -167,6 +167,8 @@
                 <div class="menu-inner-shadow"></div>
 
                 <!-- Admin -->
+               
+                @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin</span>
                 </li>
@@ -334,8 +336,11 @@
                         </ul>
                     </li>
                 </ul>
+                @endcan
 
+                
                 <!-- Mitra -->
+                @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Mitra</span>
                 </li>
@@ -400,8 +405,9 @@
                         </a>
                     </li>
                 </ul>
-
+                @endcan
             </aside>
+            
             <!-- / Menu -->
 
             <!-- Layout container -->
