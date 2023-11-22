@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -50,20 +54,21 @@
       </div>
       <hr class="my-0">
       <div class="card-body">
-        <form id="formAccountSettings" method="POST" onsubmit="return false" class="fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+        <form action="{{ url('company/profile-company/store') }}" method="POST" class="default-form">
+          @csrf
           <div class="row">
             <div class="mb-3 col-md-12 fv-plugins-icon-container">
               <label for="namaperusahaan" class="form-label">Nama Perusahaan <span class="text-danger">*</span></label>
-              <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Nama Perusahaan" autofocus="">
+              <input class="form-control" type="text" id="namaindustri" name="namaindustri" placeholder="Nama Perusahaan" autofocus="">
             <div class="fv-plugins-message-container invalid-feedback"></div></div>
             <div class="mb-3 col-md-12 fv-plugins-icon-container">
               <label for="alamat" class="form-label">Alamat Perusahaan <span class="text-danger">*</span></label>
-              <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamat"></textarea>
+              <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamatindustri" name="alamatindustri"></textarea>
             <div class="fv-plugins-message-container invalid-feedback"></div>
             </div>
             <div class="mb-3 col-md-12 fv-plugins-icon-container">
                 <label for="deskripsi" class="form-label">Deskripsi Perusahaan <span class="text-danger">*</span></label>
-                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="deskripsi"></textarea>
+                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description" name="description"></textarea>
               <div class="fv-plugins-message-container invalid-feedback"></div>
               </div>
           </div>
@@ -71,11 +76,11 @@
             <label class="form-label">Kontak Perusahaan</label>
             <div class="mb-3 col-md-12 fv-plugins-icon-container">
                 <label for="notelp" class="form-label">No. Telepon Perusahaan <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="notelp" placeholder="Masukan Nomor Telepon" aria-describedby="floatingInputHelp">
-            <div class="fv-plugins-message-container invalid-feedback">
+                <input type="text" class="form-control" id="notelpon" name="notelpon"placeholder="Masukan Nomor Telepon" aria-describedby="floatingInputHelp">
+                <div class="fv-plugins-message-container invalid-feedback"></div>
                 <label for="lastName" class="form-label">E-mail Perusahaan <span class="text-danger">*</span></label>
-                <input type="text" id="email" class="form-control" placeholder="Masukan E-mail Perusahaan" aria-label="john.doe" aria-describedby="basic-default-email2">
-            </div>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Masukan E-mail Perusahaan" aria-label="john.doe" aria-describedby="basic-default-email2">
+                <div class="fv-plugins-message-container invalid-feedback"></div>
             </div>
           </div>
       </div>
@@ -92,5 +97,6 @@
 @endsection
 
 @section('page_script')
-
+<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection
