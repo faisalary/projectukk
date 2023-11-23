@@ -26,6 +26,7 @@
 
 @section('main')
 <div class="row">
+   
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - Tahun Ajaran 2324</h4>
     </div>

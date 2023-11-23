@@ -14,6 +14,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class FakultasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:only.lkm', ['only' => ['index']]);
+        $this->middleware('permission:create.fakultas', ['only' => ['store']]);
+        $this->middleware('permission:edit.fakultas', ['only' => ['edit']]);
+        $this->middleware('permission:update.fakultas', ['only' => ['update']]);
+        $this->middleware('permission:status.fakultas', ['only' => ['status']]);
+    }
     /**
      * Display a listing of the resource.
      */
