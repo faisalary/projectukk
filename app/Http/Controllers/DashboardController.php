@@ -23,7 +23,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return redirect()->route('fakultas.index');
+        return redirect()->route('lowongan.index');
     }
     
 }

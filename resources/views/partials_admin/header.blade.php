@@ -359,9 +359,10 @@
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
+                        
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('mitra.index') }}" class="menu-link">
+                                <a href="{{ route('lowongan.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
