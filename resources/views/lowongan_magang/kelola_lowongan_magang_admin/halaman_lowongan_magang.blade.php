@@ -74,6 +74,7 @@
             </li>
         </ul>
     </div>
+</div>
 
    <div class="row mb-4">
     <div class="col-md-8 col-12 ">
@@ -99,7 +100,6 @@
                         <div class="col mb-2 form-input">
                             <label for="univ" class="form-label" style="padding-left: 15px;">Posisi Pekerjaan</label>
                             <select class="form-select select2" id="posisipekerjaan" name="posisi pekerjaan" data-placeholder="Pilih posisi pekerjaan">
-                                <option disabled selected>Pilih Posisi Pekerjaan</option>
                                 <option disabled selected>Pilih Posisi Pekerjaan</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -157,10 +157,11 @@
         <div class="tab-pane fade show active" id="navs-pills-justified-dibuat" role="tabpanel">
             <div class="card">
                 <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:280px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;"><i class="tf-icons ti ti-briefcase ti-xs me-1" style="color:#4EA971;"></i>Total Lowongan :</span> &nbsp;<span style="color:#7367F0;">50</span> &nbsp;<span style="color:#4EA971;">Lowongan</span>
-                </div>
-
+                    <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
+                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
+                        Total lowongan : <span class="text-primary">50</span> <span
+                            class="text-success">Lowongan</span>
+                    </div>
                 </div>
                 <div class="card-datatable table-responsive">
                     <table class="table tab1c" id="table-dibuat" style="width: 100%;">
@@ -183,11 +184,12 @@
 
         <div class="tab-pane fade" id="navs-pills-justified-tertunda" role="tabpanel">
             <div class="card">
-            <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:280px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;"><i class="tf-icons ti ti-briefcase ti-xs me-1" style="color:#4EA971;"></i>Total Lowongan : </span> &nbsp;<span style="color:#7367F0;">50</span> &nbsp;<span style="color:#4EA971;">Lowongan</span>
-                </div>
-
+                <div class="row mt-3 ms-2">
+                    <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
+                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
+                        Total lowongan : <span class="text-primary">50</span> <span
+                            class="text-success">Lowongan</span>
+                    </div>
                 </div>
                 <div class="card-datatable table-responsive">
                     <table class="table tab1c" id="table-tertunda" style="width: 100% !important;">
@@ -210,11 +212,12 @@
 
         <div class="tab-pane fade" id="navs-pills-justified-disetujui" role="tabpanel">
             <div class="card">
-            <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:280px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;"><i class="tf-icons ti ti-briefcase ti-xs me-1" style="color:#4EA971;"></i>Total Lowongan : </span> &nbsp;<span style="color:#7367F0;">50</span> &nbsp;<span style="color:#4EA971;">Lowongan</span>
-                </div>
-
+                <div class="row mt-3 ms-2">
+                 <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
+                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
+                        Total lowongan : <span class="text-primary">50</span> <span
+                            class="text-success">Lowongan</span>
+                    </div>
                 </div>
                 <div class="card-datatable table-responsive">
                     <table class="table" id="table-disetujui">
@@ -239,11 +242,12 @@
 
         <div class="tab-pane fade" id="navs-pills-justified-ditolak" role="tabpanel">
             <div class="card">
-            <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; width:280px; height:40px;border-radius:8px;">
-                    <span style="color:#4B465C;"><i class="tf-icons ti ti-briefcase ti-xs me-1" style="color:#4EA971;"></i>Total Lowongan : </span> &nbsp;<span style="color:#7367F0;">50</span> &nbsp;<span style="color:#4EA971;">Lowongan</span>
-                </div>
-
+                <div class="row mt-3 ms-2">
+                 <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
+                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
+                        Total lowongan : <span class="text-primary">50</span> <span
+                            class="text-success">Lowongan</span>
+                    </div>
                 </div>
                 <div class="card-datatable table-responsive">
                     <table class="table" id="table-ditolak">
@@ -379,7 +383,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         },
         {
             "nomor": "2",
@@ -389,7 +393,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         }
     ];
 
@@ -459,7 +463,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         },
         {
             "id": "",
@@ -471,7 +475,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         }
     ];
 
@@ -573,7 +577,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         },
         {
             "id": "",
@@ -585,7 +589,7 @@
             "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
             "durasi magang": "2 semester",
             "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
         }
     ];
 

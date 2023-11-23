@@ -8,13 +8,24 @@
 @endsection
 
 @section('main')
-    <div class="row ">
-        <div class="">
-            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang / </span>
-                Detail Lowongan UI/UX Designer
+<div class="row ">
+    <div class="col-md-12 col-12">
+        <nav aria-label="breadcrumb">
+            <h4>
+                <ol class="breadcrumb breadcrumb-style1">
+                    <li class="breadcrumb-item text-secondary">
+                        Lowongan Magang
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/halaman-lowongan-magang" class="text-secondary">Kelola Magang</a>
+                    </li>
+                    <li class="breadcrumb-item active">Detail Lowongan UI/UX Designer</li>
+                </ol>
             </h4>
-        </div>
+        </nav>
+        <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
     </div>
+
     <div class="d-flex">
         <div class="card" style="padding: 50px 30px; width: 100%; margin-right: 20px; !important">
             <div class="card-body d-flex flex-row justify-content-between"
@@ -74,8 +85,9 @@
                     </div>
                 </div>
                 <div class="w-auto">
-                    <p class="mt-2" style="font-size: 22px; color: #4B465C !important">Detail pengajuan</p>
-                    <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
+                    <button type="button" class="btn btn-label-warning waves-effect">Menunggu Persetujuan</button>
+                    <p class="mt-2" style="font-size: 23px; color: #4B465C !important">Detail pengajuan</p>
+                    <p class="fw-normal" style="font-size: 14px; margin-top: -8px; !important">
                         Pengajuan : <span class="fw-semibold">25/08/2020</span>
                     </p>
                 </div>
@@ -257,8 +269,7 @@
                         <textarea class="form-control" data-bs-toggle="autosize" placeholder="Masukkan alasan penolakan"></textarea>
                     </div>
                     <div class="mt-4 text-end">
-
-                        <button type="button" class="btn btn-success">Ya, Yakin</button>
+                        <button type="button" class="btn btn-success">Ya, Yakin</a></button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                     </div>
                 </div>
