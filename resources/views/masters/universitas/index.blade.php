@@ -35,10 +35,10 @@
         </div>
         <div class="col-md-6 col-12 text-end">
             
-            @can("create.mahasiswa")
+      
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-universitas">Tambah
                 Universitas</button>
-            @endcan
+           
             
         </div>
     </div>

@@ -20,11 +20,20 @@ class PermissionSeeder extends Seeder
        
         $role = [
             [
+                //lkm
                 'name' => 'superadmin',
                 'guard_name'=> 'web',
                 'permissions' => [
+                    'only.lkm',
                     'slidebar.lkm',
                     'create.mahasiswa',
+                    'create.industri',
+                    'view.industri',
+                    'edit.industri',
+                    'status.industri',
+                    'view.fakultas',
+                    'edit.fakultas',
+                    'status.fakultas',
                     'create.fakultas',
                     'table.informasi.admin',
                     'edit.status.candidate',
@@ -37,6 +46,7 @@ class PermissionSeeder extends Seeder
                 ]
             ],
             [
+                //mitra
                 'name' => 'admin',
                 'guard_name'=> 'web',
                 'permissions' => [
@@ -56,6 +66,7 @@ class PermissionSeeder extends Seeder
                 ]
             ],
             [
+                //mahasiswa
                 'name' => 'user',
                 'guard_name'=> 'web'
             ],
