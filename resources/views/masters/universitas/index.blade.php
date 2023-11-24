@@ -29,15 +29,19 @@
 @endsection
 
 @section('main')
-<div class="row">
-    <div class="col-md-6 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Universitas</h4>
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Universitas</h4>
+        </div>
+        <div class="col-md-6 col-12 text-end">
+            
+            @can("create.mahasiswa")
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-universitas">Tambah
+                Universitas</button>
+            @endcan
+            
+        </div>
     </div>
-    <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-universitas">Tambah
-            Universitas</button>
-    </div>
-</div>
 <div class="row mt-2">
     <div class="col-12">
         <div class="card">

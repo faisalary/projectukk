@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role as SpatieRole;
 
-class Role extends Model
+
+class Role extends SpatieRole
 {
-    public function permissions(){
-        return $this->hasMany(PermissionRole::class, 'role_id');
-    }
-
-    public function roleuser(){
-        return $this->hasMany(RoleUser::class, 'role_id');
-    }
+    use HasFactory;
+    use HasUuids;
+    protected $primaryKey = 'uuid';
+    
 }
