@@ -108,6 +108,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/update/{id}', [App\Http\Controllers\NilaiMutuController::class, 'update'])->name('nilai-mutu.update');
                 Route::get('/edit/{id}', [App\Http\Controllers\NilaiMutuController::class, 'edit'])->name('nilai-mutu.edit');
             });
+            //kelola-mitra
             Route::prefix('mitra')->group(function () {
                 Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
                 Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
@@ -174,7 +175,7 @@ Route::middleware('auth')->group(function () {
         });
     
 
-    Route::prefix('informasi')->group(function () {
+    Route::prefix('informasi')->middleware('permission:only.lkm.mitra')->group(function () {
         Route::prefix('lowongan/admin')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiLowonganController::class, 'index'])->name('lowongan.index');
             Route::get('/show', [App\Http\Controllers\InformasiLowonganController::class, 'show'])->name('lowongan.show');

@@ -168,6 +168,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
+                                    @can('confirmation.limit')
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    @endcan
                                     <a href="/informasi/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                         </button></a>
                                 </div>
@@ -268,6 +272,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
+                                    @can('confirmation.limit')
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    @endcan
                                     <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                         </button></a>
                                 </div>
@@ -368,6 +376,10 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
+                                    @can('confirmation.limit')
+                                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                    </button></a>
+                                    @endcan
                                     <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                                         </button></a>
                                 </div>
