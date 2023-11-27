@@ -25,6 +25,32 @@
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             color: #4EA971;
         }
+
+        .bootstrap-select .dropdown-menu.inner a[aria-selected=true] {
+            background: #4EA971 !important;
+        }
+
+        .dropdown-toggle:after {
+            display: none;
+        }
+
+        .dropdown-toggle::before {
+            display: inline-block !important;
+            margin-right: 0.5em !important;
+            vertical-align: middle !important;
+            content: "" !important;
+            margin-top: -0.28em !important;
+            width: 0.42em !important;
+            height: 0.42em !important;
+            border: 1px solid !important; 
+            border-top: 0 !important;
+            border-left: 0 !important;
+            transform: rotate(45deg) !important;
+        }
+
+        .bootstrap-select .dropdown-menu a:not([href]):not(.active):not(:active):not(.selected):hover {
+            color: #4EA971 !important;
+        }
     </style>
 @endsection
 
@@ -33,7 +59,7 @@
         <div class="col-md-9 col-12">
             <h4 class="fw-bold">Jadwal Seleksi</h4>
         </div>
-        <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
+        <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
             <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
                 <option value="1">2023/2024 Genap</option>
                 <option value="2">2023/2024 Ganjil</option>
@@ -42,19 +68,36 @@
                 <option value="5">2021/2022 Genap</option>
                 <option value="6">2021/2022 Ganjil</option>
             </select>
-            <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
+            <div class="ps-3">
+                <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
+            </div>
         </div>
 
-        <div class="col-md-1 col-12 text-end" style="width:50px;">
-        </div>
-        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
+        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-3">
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
                 <div class="d-flex align-items-center">
                     <i class="tf-icons ti ti-plus me-2"></i>
-                    <span class="mt-1">Jadwal Seleksi Lanjutan</span>
+                    <span class="mt-1">Buat Jadwal Seleksi Lanjutan</span>
                 </div>
             </button>
+        </div>
+        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
+            <div class="dropdown bootstrap-select">
+                <select id="selectpickerBasic" class="selectpicker " data-style="btn-default">
+                    <option disabled selected>Ubah Status Kandidat</option>
+                    <option value="Sudah Seleksi Tahap 1">Sudah Seleksi Tahap 1</option>
+                    <option value="Belum Seleksi Tahap 1">Belum Seleksi Tahap 1</option>
+                    <option value="Sudah Seleksi Tahap 2">Sudah Seleksi Tahap 2</option>
+                    <option value="Belum Seleksi Tahap 2">Belum Seleksi Tahap 2</option>
+                    <option value="Sudah Seleksi Tahap 3">Sudah Seleksi Tahap 3</option>
+                    <option value="Belum Seleksi Tahap 3">Belum Seleksi Tahap 3</option>
+                </select>
+            </div>
+            <div class="ps-3">
+                <button class="btn btn-success waves-effect" type="button"><i
+                        class="tf-icons ti ti-checks me-2"></i>Terapkan</button>
+            </div>
         </div>
     </div>
     <div class="row mt-2">
@@ -69,7 +112,7 @@
                                 <th>NOMOR</th>
                                 <th>NAMA</th>
                                 <th>TANGGAL SELEKSI</th>
-                                <th>WAKTU SELESAI</th>
+                                <th>WAKTU SELEKSI</th>
                                 <th>JENIS SELEKSI</th>
                                 <th>PELAKSANAAN</th>
                                 <th>STATUS</th>
@@ -83,7 +126,6 @@
     </div>
 
     @include('company.jadwal_seleksi.modal')
-    
 @endsection
 
 @section('page_script')
@@ -96,11 +138,11 @@
                 "id": "",
                 "nomor": "1",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-                "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
-                "waktu": "<span class='text-secondary'>Jam Dimulai</span><br>08.00<br><span class='text-secondary'>Jam Berakhir</span><br>23.59",
+                "tanggal": "20 Juli 2023",
+                "waktu": "08.00",
                 "jenis": "Seleksi Tahap 1",
                 "pelaksanaan": "Online",
-                "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
+                "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi Tahap 1</span>",
                 "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCVOnline' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
             },
             {
@@ -108,11 +150,11 @@
                 "id": "",
                 "nomor": "2",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-                "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
-                "waktu": "<span class='text-secondary'>Jam Dimulai</span><br>08.00<br><span class='text-secondary'>Jam Berakhir</span><br>23.59",
+                "tanggal": "20 Juli 2023",
+                "waktu": "08.00",
                 "jenis": "Seleksi Tahap 1",
                 "pelaksanaan": "Onsite",
-                "status": "<span class='badge bg-label-secondary me-1'>Belum Seleksi</span>",
+                "status": "<span class='badge bg-label-secondary me-1'>Belum Seleksi Tahap 2</span>",
                 "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
             },
             {
@@ -120,11 +162,11 @@
                 "id": "",
                 "nomor": "3",
                 "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-                "tanggal": "<span class='text-secondary'>Mulai</span><br>20 Juli 2023<br><span class='text-secondary'>Berakhir</span><br>22 Juli 2023",
-                "waktu": "<span class='text-secondary'>Jam Dimulai</span><br>08.00<br><span class='text-secondary'>Jam Berakhir</span><br>23.59",
+                "tanggal": "20 Juli 2023",
+                "waktu": "08.00",
                 "jenis": "Seleksi Tahap 1",
                 "pelaksanaan": "Onsite",
-                "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
+                "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi Tahap 3</span>",
                 "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
 
             }

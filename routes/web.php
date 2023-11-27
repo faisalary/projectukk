@@ -233,6 +233,10 @@ Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
 
+Route::get('/seleksi-lanjutan', function () {
+    return view('admin.jadwal-seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+});
+
 Route::prefix('informasi')->group(function () {
     Route::prefix('lowongan/admin')->group(function () {
         Route::get('/', [App\Http\Controllers\InformasiLowonganController::class, 'index'])->name('lowongan.index');
