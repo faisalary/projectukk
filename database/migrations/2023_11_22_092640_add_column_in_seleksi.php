@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->text('description')->nullable();
-            $table->string('image', 255)->nullable();
+        Schema::table('seleksi', function (Blueprint $table) {
+            $table->boolean('pelaksanaan')->default(true);
+            $table->text('detail')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
+        Schema::table('seleksi', function (Blueprint $table) {
             //
         });
     }

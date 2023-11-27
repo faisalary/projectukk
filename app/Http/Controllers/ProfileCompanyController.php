@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
-use App\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Http\Hash;
-use Illuminate\Support\Http\Storage;
-use Illuminate\Support\Http\Validator;
-use App\Models\User;
+use App\Models\Industri;
+use Exception;
 
-class InformasiMitraController extends Controller
+class ProfileCompanyController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('permission:only.lkm', ['only' => ['index']]);
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra');
+        $industri = Industri::all();
+        return view('company.profile_company');
     }
 
     /**
@@ -38,7 +31,22 @@ class InformasiMitraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+
+            $industri = Industri::create([
+                'namaindustri' => $request->namaindustri,
+                'notelpon' => $request->notelpon,
+                'alamatindustri' => $request->alamatindustri,
+                'description' => $request->description,
+                'email' => $request->email,
+            ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mitra Data successfully Created!',
+                'url' => url('company/profile-company')
+            ]);
+        
     }
 
     /**

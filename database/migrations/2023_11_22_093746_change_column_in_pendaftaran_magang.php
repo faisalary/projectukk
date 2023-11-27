@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->text('description')->nullable();
-            $table->string('image', 255)->nullable();
+        Schema::table('pendaftaran_magang', function (Blueprint $table) {
+            $table->string('applicant_status', 255)->default('blm')->change();
+            $table->boolean('status')->default(true)->change();
+            // $table->boolean('approval')->nullable()->default(true)->change();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
+        Schema::table('pendaftaran_magang', function (Blueprint $table) {
             //
         });
     }

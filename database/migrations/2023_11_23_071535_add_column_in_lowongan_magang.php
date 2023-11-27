@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->text('description')->nullable();
-            $table->string('image', 255)->nullable();
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            $table->string('applicant_status', 255)->nullable()->default('tertunda');
+            $table->boolean('paid')->nullable()->default(false);
+            $table->tinyInteger('pelaksanaan')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
+        Schema::table('lowongan_magang', function (Blueprint $table) {
             //
         });
     }
