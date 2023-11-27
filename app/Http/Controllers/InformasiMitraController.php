@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Http\Hash;
+use Illuminate\Support\Http\Storage;
+use Illuminate\Support\Http\Validator;
+use App\Models\User;
 
 class InformasiMitraController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:only.lkm', ['only' => ['index']]);
+    }
     /**
      * Display a listing of the resource.
      */
