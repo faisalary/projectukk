@@ -456,7 +456,6 @@
         </div>
 
     </div>
-
     @endsection
 
     @section('page_script')
