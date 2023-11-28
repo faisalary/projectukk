@@ -22,6 +22,9 @@
     #more {
         display: none;
     }
+    span.select2-selection.select2-selection--single {
+    width: 200px;
+}
 </style>
 
 @endsection

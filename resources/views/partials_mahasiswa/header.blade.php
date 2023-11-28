@@ -59,6 +59,7 @@
       color: #FFF;
       background-color: #4EA971 !important
     }
+    
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -69,11 +70,11 @@
 
 <body>
   <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu" >
     <div class="layout-container">
       <!-- Navbar -->
 
-      <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+      <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar" style="background-color: #FFF !important;">
         <div class="container-xxl">
           <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
             <a href="index.html" class="app-brand-link gap-2">
@@ -181,6 +182,15 @@
           <!-- / Menu -->
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+           <!-- Login dan Daftar -->
+           <a href="{{ route('login')}}">
+               <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
+           </a>
+           <!-- <a href="{{ route('register')}}">
+               <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
+           </a> -->
+
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Notification -->
               <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -370,6 +380,7 @@
               </li>
               <!--/ Notification -->
 
+
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -403,7 +414,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/lowongan-magang-tersimpan">
+                      <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
                         <i class="ti ti-briefcase me-2 ti-sm"></i>
                         <span class="align-middle">Lowongan Tersimpan</span>
                       </a>
@@ -427,7 +438,7 @@
                 </li>
                 <!--/ User -->
               </ul>
-            </div>
+            <!-- </div> -->
 
           <!-- Search Small Screens -->
           <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">

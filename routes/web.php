@@ -18,7 +18,7 @@ use App\Http\Controllers\IndustriController;
 */
 
 Route::get('/', function () {
-    return view('layouts.front');
+    return view('landingpage.landingpage');
 });
 
 Route::get('/dashboard', function () {
