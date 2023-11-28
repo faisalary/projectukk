@@ -182,8 +182,8 @@
                     </li>
 
                     <!-- Kelola Mitra -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/mitra' ? 'active' : '' }} @endif">
-                        <a href="/kelola/mitra" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/master/company/kelola-mitra' ? 'active' : '' }} @endif">
+                        <a href="/master/company/kelola-mitra" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                         </a>
@@ -201,9 +201,9 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
-                                    <div data-i18n="Pertanyaan Magang">Kelola Lowongan</div>
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="/informasi/kelola/lowongan" class="menu-link">
+                                    <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
                         </ul>
@@ -366,8 +366,8 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="/informasi/kelola/lowongan" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
