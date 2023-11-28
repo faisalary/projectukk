@@ -28,7 +28,7 @@ class DosenController extends Controller
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
         $dosen = Dosen::all();
-        return view('masters.dosen.index', compact('dosen','prodi','universitas','fakultas'));
+        return view('masters.dosen.index', compact('dosen', 'prodi', 'universitas', 'fakultas'));
     }
 
     /**
@@ -58,7 +58,7 @@ class DosenController extends Controller
             $dosen = Dosen::create([
                 'nip' => $request->nip,
                 'id_univ' => $request->namauniv,
-                'prodi.fakultas.id_fakultas'=> $request->namafakultas,
+                'prodi.fakultas.id_fakultas' => $request->namafakultas,
                 'id_prodi' => $request->namaprodi,
                 'kode_dosen' => $request->kode_dosen,
                 'namadosen' => $request->namadosen,
@@ -90,7 +90,7 @@ class DosenController extends Controller
         $dosen = Dosen::query();
         if ($request->fakultas != null) {
             $dosen->where("id_fakultas", $request->fakultas);
-        } else if ($request->univ !=null) {
+        } else if ($request->univ != null) {
             $dosen->where("id_univ", $request->univ);
         }
         $dosen = $dosen->with("univ", "prodi.fakultas")->orderBy('nip', "asc")->get();
@@ -213,5 +213,4 @@ class DosenController extends Controller
             'data' => $select,
         ]);
     }
-
 }

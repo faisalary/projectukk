@@ -880,7 +880,7 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
 }
 
 .bootstrap-select .dropdown-menu.inner a[aria-selected=true] {
-  background: #7367f0 !important;
+  background: #4EA971 !important;
   color: #fff !important;
 }
 .bootstrap-select .dropdown-toggle.show {
