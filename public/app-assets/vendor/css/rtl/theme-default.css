@@ -221,6 +221,29 @@ button.list-group-item-primary.active {
   border-left-color: #7367f0;
 }
 
+.tooltip-custom .tooltip-inner, .tooltip-custom > .tooltip .tooltip-inner, .ngb-tooltip-custom + ngb-tooltip-window .tooltip-inner {
+  background: #23314B;
+  color: #fff;
+}
+.tooltip-custom.bs-tooltip-auto[data-popper-placement=top] .tooltip-arrow::before, .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=top] .tooltip-arrow::before, .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=top] .tooltip-arrow::before {
+  border-top-color: #23314B;
+}
+.tooltip-custom.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before, .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before, .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before {
+  border-left-color: #23314B;
+}
+[dir=rtl] .tooltip-custom.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before, [dir=rtl] .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before, [dir=rtl] .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=left] .tooltip-arrow::before {
+  border-right-color: #23314B;
+}
+.tooltip-custom.bs-tooltip-auto[data-popper-placement=bottom] .tooltip-arrow::before, .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=bottom] .tooltip-arrow::before, .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=bottom] .tooltip-arrow::before {
+  border-bottom-color: #23314B;
+}
+.tooltip-custom.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before, .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before, .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before {
+  border-right-color: #23314B;
+}
+[dir=rtl] .tooltip-custom.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before, [dir=rtl] .tooltip-custom > .tooltip.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before, [dir=rtl] .ngb-tooltip-custom + ngb-tooltip-window.bs-tooltip-auto[data-popper-placement=right] .tooltip-arrow::before {
+  border-left-color: #23314B;
+}
+
 .popover-primary, .popover-primary > .popover, .ngb-popover-primary + ngb-popover-window {
   border-color: transparent;
   background: #7367f0;

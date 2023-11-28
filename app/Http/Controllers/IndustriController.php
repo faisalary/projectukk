@@ -11,6 +11,15 @@ use Yajra\DataTables\Facades\DataTables;
 
 class IndustriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:only.lkm', ['only' => ['index']]);
+        $this->middleware('permission:create.industri', ['only' => ['store']]);
+        $this->middleware('permission:view.industri', ['only' => ['show']]);
+        $this->middleware('permission:edit.industri', ['only' => ['edit']]);
+        $this->middleware('permission:update.industri', ['only' => ['update']]);
+        $this->middleware('permission:status.industri', ['only' => ['status']]);
+    }
     /**
      * Display a listing of the resource.
      */
