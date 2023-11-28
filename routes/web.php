@@ -18,7 +18,7 @@ use App\Http\Controllers\IndustriController;
 */
 
 Route::get('/', function () {
-    return view('layouts.front');
+    return view('landingpage.landingpage');
 });
 
 Route::get('/dashboard', function () {
@@ -190,9 +190,9 @@ Route::get('/detail/kandidat', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/lowongan-magang-tersimpan', function () {
-    return view('layouts.program_magang.lowongan_magang_tersimpan');
-});
+// Route::get('/lowongan-magang-tersimpan', function () {
+//     return view('layouts.program_magang.lowongan_magang_tersimpan');
+// });
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
     return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
 });
@@ -242,6 +242,10 @@ Route::get('/company', function () {
 
 Route::get('/company/detail-lowongan', function () {
     return view('company.lowongan.detail', ['active_menu' => 'company']);
+});
+
+Route::get('/company/add', function () {
+    return view('company.lowongan.add', ['active_menu' => 'company']);
 });
 
 Route::get('/company/add', function () {

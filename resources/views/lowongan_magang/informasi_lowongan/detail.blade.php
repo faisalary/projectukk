@@ -22,6 +22,9 @@
     #more {
         display: none;
     }
+    span.select2-selection.select2-selection--single {
+    width: 200px;
+}
 </style>
 
 @endsection
@@ -117,9 +120,16 @@
         <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta" id="tooltip-filter"></i></div>
         <div id="div2" class="col-1 targetDiv" style="display: none;">
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" style="width:200px;">
+                <option disabled selected>Pilih Status Kandidat</option>
+                <option >Screening</option>
+                <option >Seleksi Tahap 1</option>
+                <option >Seleksi Tahap 2</option>
+                <option >Penawaran</option>
+                <option >Diterima</option>
+                <option >Ditolak</option>
                 </select>
-                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
                 </button>
             </div>
         </div>
