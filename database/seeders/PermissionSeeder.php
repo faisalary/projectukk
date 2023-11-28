@@ -17,12 +17,12 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-       
+
         $role = [
             [
                 //lkm
                 'name' => 'superadmin',
-                'guard_name'=> 'web',
+                'guard_name' => 'web',
                 'permissions' => [
                     'only.lkm',
                     'slidebar.lkm',
@@ -48,7 +48,7 @@ class PermissionSeeder extends Seeder
             [
                 //mitra
                 'name' => 'admin',
-                'guard_name'=> 'web',
+                'guard_name' => 'web',
                 'permissions' => [
                     'slidebar.mitra',
                     'information.vacancies',
@@ -62,13 +62,14 @@ class PermissionSeeder extends Seeder
                     'button.submit.improvement',
                     'create.data',
                     'edit.data.table',
-                    'delete.data.table',                    
+                    'delete.data.table',
+                    'button.tnglbts.mitra'
                 ]
             ],
             [
                 //mahasiswa
                 'name' => 'user',
-                'guard_name'=> 'web'
+                'guard_name' => 'web'
             ],
         ];
 
