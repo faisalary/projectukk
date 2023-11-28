@@ -172,34 +172,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
             });
         });
-    
 
-    Route::prefix('informasi')->group(function () {
-        Route::prefix('lowongan/admin')->group(function () {
-            Route::get('/', [App\Http\Controllers\InformasiLowonganController::class, 'index'])->name('lowongan.index');
-            Route::get('/show', [App\Http\Controllers\InformasiLowonganController::class, 'show'])->name('lowongan.show');
-            Route::post('/store', [App\Http\Controllers\InformasiLowonganController::class, 'store'])->name('lowongan.store');
-            Route::post('/status/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'status'])->name('lowongan.status');
-            Route::post('/update/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'update'])->name('lowongan.update');
-            Route::get('/edit/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'edit'])->name('lowongan.edit');
-        });
-        Route::prefix('mitra/admin')->group(function () {
-            Route::get('/', [App\Http\Controllers\InformasiMitraController::class, 'index'])->name('mitra.index');
-            Route::get('/show', [App\Http\Controllers\InformasiMitraController::class, 'show'])->name('mitra.show');
-            Route::post('/store', [App\Http\Controllers\InformasiMitraController::class, 'store'])->name('mitra.store');
-            Route::post('/status/{id}', [App\Http\Controllers\InformasiMitraController::class, 'status'])->name('mitra.status');
-            Route::post('/update/{id}', [App\Http\Controllers\InformasiMitraController::class, 'update'])->name('mitra.update');
-            Route::get('/edit/{id}', [App\Http\Controllers\InformasiMitraController::class, 'edit'])->name('mitra.edit');
-        });
-        Route::prefix('kandidat/admin')->group(function () {
-            Route::get('/', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
-            Route::get('/show', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
-            Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
-            Route::post('/status/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'status'])->name('kandidat.status');
-            Route::post('/update/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'update'])->name('kandidat.update');
-            Route::get('/edit/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'edit'])->name('kandidat.edit');
-        });
-    });
 });
 
 Route::get('/pengaturan', function () {
@@ -293,7 +266,7 @@ Route::prefix('company')->group(function (){
         Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
         Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
         Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
-        Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+        Route::post('/update/', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
         Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
     });

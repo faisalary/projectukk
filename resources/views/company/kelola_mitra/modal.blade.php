@@ -1,5 +1,5 @@
 {{-- Modal Tambah --}}
-<div class="modal fade" id="modal-mitra" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalTambahMitra" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
@@ -56,7 +56,7 @@
 </div>
 
 {{-- Modal edit --}}
-{{-- <div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
@@ -110,7 +110,7 @@
             </form>
         </div>
     </div>
-</div> --}}
+</div>
 {{-- Modal Reject --}}
 <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

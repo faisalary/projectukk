@@ -131,7 +131,7 @@
                                     <th KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>STATUS</th>
-                                    <th style="min-width: 100px;">AKSI</th>
+
                                 </tr>
                             </thead>
                         </table>
@@ -435,10 +435,6 @@
                 {
                     data: 'status',
                     name: 'status'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
                 }
             ]
         });
@@ -453,13 +449,12 @@
                 url: url,
                 success: function(response) {
                     $("#modal-title").html("Edit Mitra");
-                    $("#modal-button").html("Update Data")
+                    $("#simpanButton").html("Update Data")
                     $('#modal-mitra form').attr('action', action);
                     $('#namaindustri').val(response.namaindustri);
                     $('#email').val(response.email);
                     $('#kategori_industri').val(response.kategori_industri);
                     $('#statuskerjasama').val(response.statuskerjasama);
-
                     $('#modal-mitra').modal('show');
                 }
             });
@@ -468,7 +463,7 @@
         $("#modal-mitra").on("hide.bs.modal", function() {
 
             $("#modal-title").html("Tambah Mitra");
-            $("#modal-button").html("Save Data")
+            $("#simpanButton").html("Save Data")
             $('#modal-mitra form')[0].reset();
             $('#modal-mitra form').attr('action', "{{ url('company/kelola_mitra/store') }}");
             $('.invalid-feedback').removeClass('d-block');
