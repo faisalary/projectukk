@@ -8,17 +8,21 @@
             </div>
             <form class="default-form" method="POST" action="{{ route('kelola_mitra.store') }}">
                 @csrf
+
                 <div class="modal-body">
+
                     <div class="row">
                         <div class="col mb-2">
                             <label for="nama" class="form-label">Nama Perusahaan</label>
-                            <input type="text" id="nama" name="namaindustri"class="form-control" placeholder="Nama Perusahaan" />
+                            <input type="text" id="nama" name="namaindustri"class="form-control"
+                                placeholder="Nama Perusahaan" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Email" />
+                            <input type="text" id="email" name="email" class="form-control"
+                                placeholder="Email" />
                         </div>
                     </div>
                     <div class="row">
@@ -56,7 +60,7 @@
 </div>
 
 {{-- Modal edit --}}
-<div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade" id="modalEditMitra" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center d-block">
@@ -110,7 +114,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 {{-- Modal Reject --}}
 <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

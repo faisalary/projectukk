@@ -266,7 +266,7 @@ Route::prefix('company')->group(function (){
         Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
         Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
         Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
-        Route::post('/update/', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+        Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
         Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
     });

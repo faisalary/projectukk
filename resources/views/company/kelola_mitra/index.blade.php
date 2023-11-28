@@ -147,11 +147,11 @@
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
-        $("#modalTambahMitra").on("hide.bs.modal", function() {
+        // $("#modalTambahMitra").on("hide.bs.modal", function() {
 
 
-            $("#simpanButton").html("Save Data");
-        });
+        //     $("#simpanButton").html("Save Data");
+        // });
         var table = $('#table-kelola-mitra1').DataTable({
             ajax: "{{ route('kelola_mitra.show') }}",
             serverSide: false,
@@ -453,9 +453,11 @@
                     $('#modal-mitra form').attr('action', action);
                     $('#namaindustri').val(response.namaindustri);
                     $('#email').val(response.email);
-                    $('#kategori_industri').val(response.kategori_industri);
+                    $('#kategori_industri').val(response.kategori_industri).trigger('change');;
                     $('#statuskerjasama').val(response.statuskerjasama);
+                    $('#status').val(response.statuskerjasama).trigger('change');;
                     $('#modal-mitra').modal('show');
+
                 }
             });
         }
