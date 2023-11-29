@@ -12,24 +12,24 @@
                 <div class="modal-body">
 
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="nama" class="form-label">Nama Perusahaan</label>
                             <input type="text" id="nama" name="namaindustri"class="form-control"
                                 placeholder="Nama Perusahaan" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="email" class="form-label">Email</label>
                             <input type="text" id="email" name="email" class="form-control"
                                 placeholder="Email" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="kategori" class="form-label">Pilih Kategori Mitra</label>
                             <select class="form-select select2" id="kategori" name="kategori_industri"
-                                data-placeholder="Kategori Mitra">
+                                data-placeholder="Pilih Kategori Mitra">
                                 <option disabled selected>Pilih Kategori Mitra</option>
                                 <option value="Internal">Internal</option>
                                 <option value="Eksternal">Eksternal</option>
@@ -38,10 +38,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2">
+                        <div class="col mb-2 form-input">
                             <label for="statuskerjasama" class="form-label">Pilih Status Kerjasama</label>
-                            <select class="form-select select2" id="status" name="statuskerjasama"
-                                data-placeholder="Status Kerjasama">
+                            <select class="form-select select2" id="statuskerjasama" name="statuskerjasama"
+                                data-placeholder="Pilih Status Kerjasama">
                                 <option disabled selected>Pilih Status Kerjasama</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>

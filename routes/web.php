@@ -200,6 +200,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'edit'])->name('kandidat.edit');
         });
     });
+    
     Route::prefix('company')->group(function (){
         Route::prefix('kelola-mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');

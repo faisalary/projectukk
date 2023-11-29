@@ -76,7 +76,7 @@ class KelolaMitraController extends Controller
                 $color = ($row->status) ? "danger" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-bs-target='#modalTambahMitra' data-id='{$row->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='company/kelola_mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola-mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -141,9 +141,9 @@ class KelolaMitraController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Status successfully Updated!',
-                'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra3'
             ]);
+        
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,

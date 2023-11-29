@@ -442,32 +442,32 @@
         function edit(e) {
             let id = e.attr('data-id');
 
-            let action = `{{ url('company/kelola_mitra/update/') }}/${id}`;
-            var url = `{{ url('company/kelola_mitra/edit/') }}/${id}`;
+            let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
+            var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
                     $("#modal-title").html("Edit Mitra");
-                    $("#simpanButton").html("Update Data")
-                    $('#modal-mitra form').attr('action', action);
-                    $('#namaindustri').val(response.namaindustri);
+                    $("#simpanButton").html("Update Data");
+                    $('#modalTambahMitra form').attr('action', action);
+                    $('#nama').val(response.namaindustri);
                     $('#email').val(response.email);
-                    $('#kategori_industri').val(response.kategori_industri).trigger('change');;
-                    $('#statuskerjasama').val(response.statuskerjasama);
-                    $('#status').val(response.statuskerjasama).trigger('change');;
-                    $('#modal-mitra').modal('show');
-
+                    $('#kategori').val(response.kategori_industri).trigger('change');
+                    $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
+                    $('#modalTambahMitra').modal('show');
                 }
             });
         }
 
-        $("#modal-mitra").on("hide.bs.modal", function() {
+        $("#modalTambahMitra").on("hide.bs.modal", function() {
 
             $("#modal-title").html("Tambah Mitra");
             $("#simpanButton").html("Save Data")
-            $('#modal-mitra form')[0].reset();
-            $('#modal-mitra form').attr('action', "{{ url('company/kelola_mitra/store') }}");
+            $('#modalTambahMitra form')[0].reset();
+            $('#modalTambahMitra form #kategori').val('').trigger('change');
+            $('#modalTambahMitra form #statuskerjasama').val('').trigger('change');
+            $('#modalTambahMitra form').attr('action', "{{ route('kelola_mitra.store') }}");
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
         });
