@@ -242,3 +242,7 @@ Route::get('/company/detail-lowongan', function () {
 Route::get('/company/add', function () {
     return view('company.lowongan.add', ['active_menu' => 'company']);
 });
+
+Route::get('/konfigurasi', function () {
+    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
+});
