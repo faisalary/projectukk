@@ -2,6 +2,7 @@
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <style>
     .swal2-icon {
         border-color: transparent !important;
@@ -26,6 +27,7 @@
 
 @section('main')
 <div class="row">
+
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - Tahun Ajaran 2324</h4>
     </div>
@@ -167,8 +169,12 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    @can( "button.tnglbts.mitra" )
+                                    <a href="/informasi/kandidat/admin"><button type="button" class="btn btn-outline-success mx-3 waves-effect"><i class="ti bi-pencil-square text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
+                                        </button></a>
+                                    @endcan
+                                    <a href="/informasi/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti bi-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>
@@ -267,8 +273,8 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>
@@ -367,8 +373,8 @@
                                     <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
                                 </div>
                                 <div class="col-6 text-end">
-                                <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                                    </button></a>
+                                    <a href="/detail/kandidat/admin"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                                        </button></a>
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
 @endsection
 
 @section('main')
-<div class="sec-title mt-4 mb-4" style="margin-left:60px;">
+<div class="sec-title mt-4 mb-3" style="margin-left:60px;">
   <h4>Pengaturan Akun</h4>
 </div>
 <div class="row ms-5 me-5 mb-5">

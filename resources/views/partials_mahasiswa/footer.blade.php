@@ -105,6 +105,7 @@
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
 
+
 @yield('page_script')
 </body>
 

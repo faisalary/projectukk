@@ -167,6 +167,8 @@
                 <div class="menu-inner-shadow"></div>
 
                 <!-- Admin -->
+               
+                @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin</span>
                 </li>
@@ -182,11 +184,11 @@
                     <!-- Kelola Mitra -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/mitra' ? 'active' : '' }} @endif">
                         <a href="/kelola/mitra" class="menu-link">
-                        <i class="menu-icon tf-icons ti ti-building"></i>
+                            <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                         </a>
                     </li>
-                    
+
                     <!-- Lowongan Magang -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -216,8 +218,8 @@
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'seleksi-lanjutan' ? 'active' : '' }} @endif">
+                        <a href="/seleksi-lanjutan" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
@@ -290,7 +292,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('komponen_penilaian.index')}}" class="menu-link">
+                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
@@ -341,8 +343,11 @@
                         </ul>
                     </li>
                 </ul>
+                @endcan
 
+                
                 <!-- Mitra -->
+                @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Mitra</span>
                 </li>
@@ -361,9 +366,10 @@
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
+                        
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
-                                <a href="/informasi/lowongan" class="menu-link">
+                                <a href="{{ route('lowongan.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
@@ -407,8 +413,9 @@
                         </a>
                     </li>
                 </ul>
-
+                @endcan
             </aside>
+            
             <!-- / Menu -->
 
             <!-- Layout container -->
