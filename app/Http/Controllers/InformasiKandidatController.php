@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
 use App\Models\Mahasiswa;
+use App\Models\PendaftaranMagang;
 use App\Models\Universitas;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -16,12 +17,9 @@ class InformasiKandidatController extends Controller
      */
     public function index()
     {
-        $mahasiswa = Mahasiswa::all();
-        $fakultas = Fakultas::all();
-        $prodi = ProgramStudi::all();
-        $universitas = Universitas::all();
+        $pendaftar = PendaftaranMagang::all();
 
-        return view('lowongan_magang.informasi_lowongan.detail', compact('mahasiswa', 'fakultas', 'prodi', 'universitas'));
+        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar'));
     }
 
     /**
@@ -46,13 +44,13 @@ class InformasiKandidatController extends Controller
     public function show(Request $request)
     {
 
-        $mahasiswa = Mahasiswa::query();
+        $pendaftar = PendaftaranMagang::query();
 
         if ($request->type) {
-            $mahasiswa = $mahasiswa->where('progress', $request->type)->with("univ", "prodi", "fakultas");
+            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("univ", "prodi", "fakultas");
         }
 
-        return DataTables::of($mahasiswa->get())
+        return DataTables::of($pendaftar->get())
             ->addIndexColumn()
             ->editColumn('status', function ($industri) {
                 // if ($industri->status == 1) {
