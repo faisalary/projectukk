@@ -24,14 +24,14 @@
                     <form>
                         <div class="mb-3">
                             <label for="mitra" class="form-label">Mitra<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="mitra"
+                            <input type="text" class="form-control" id="mitra" name="mitra"
                                 placeholder="Masukan Nama Mitra" />
                         </div>
 
                         <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="tahun" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="tahunajaran" name="tahun ajaran" data-placeholder="Pilih Tahun Ajaran">
+                                <label for="tahunajaran" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="tahunajaran" name="tahunajaran" data-placeholder="Pilih Tahun Ajaran">
                                     <option disabled selected>Pilih Tahun Ajaran</option>
                                     <option value="1">2023/2024 - Ganjil</option>
                                     <option value="2">2023/2024 - Genap</option>
@@ -45,27 +45,27 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="posisi"
+                            <label for="posisipekerjaan" class="form-label">Posisi<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="posisi" name="posisipekerjaan"
                                 placeholder="Masukan Posisi Pekerjaan" />
                         </div>
                         <div class="mb-3">
-                            <label for="kuota penerimaan" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kuotapenerimaan"
+                            <label for="kuotapenerimaan" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="kuota" name="kuotapenerimaan"
                                 placeholder="Masukkan Kuota Penerimaan" />
                         </div>
                         <div class="mb-3">
-                            <label for="industri" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="industri"
+                            <label for="industripekerjaan" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="industri" name="industripekerjaan"
                                 placeholder="Masukkan Industri Pekerjaan" />
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span class="text-danger">*</span></label>
-                            <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi"></textarea>
+                            <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi" name="deskripsi"></textarea>
                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <div class="mb-3">
                             <label for="kualifikasi" class="form-label">Requirements <span class="text-danger">*</span></label>
-                            <textarea class="form-control" rows="2" placeholder="Masukan Kualifikasi Mahasiswa" id="kualifikasi"></textarea>
+                            <textarea class="form-control" rows="2" placeholder="Masukan Kualifikasi Mahasiswa" id="kualifikasi" name="kualifikasi"></textarea>
                             <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <div class="mb-3">
                             <div class="border py-2 px-3 rounded-3">
@@ -90,7 +90,7 @@
                                 <div class="row">
                                     <div class="col mb-3 form-input">
                                         <label for="programstudi" class="form-label">Program Studi<span class="text-danger">*</span></label>
-                                        <select class="form-select select2" id="program" name="program studi" data-placeholder="Pilih Program Studi">
+                                        <select class="form-select select2" id="programstudi" name="programstudi" data-placeholder="Pilih Program Studi">
                                             <option disabled selected>Pilih Program Studi</option>
                                             <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
                                             <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
@@ -137,7 +137,7 @@
                         <div class="row">
                             <div class="col mb-3 form-input">
                                 <label for="lokasi" class="form-label">Lokasi Pekerjaan<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="lokasi" name="tahun ajaran" data-placeholder="Masukan Lokasi Pekerjaan">
+                                <select class="form-select select2" id="lokasi" name="lokasipekerjaan" data-placeholder="Masukan Lokasi Pekerjaan">
                                     <option disabled selected>Masukan Lokasi Pekerjaan</option>
                                     <option value="1">Bandung</option>
                                     <option value="2">Jakarta</option>
@@ -151,16 +151,16 @@
                         <div class="mb-3">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div style="flex: 1;">
-                                    <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="date" placeholder="Masukan Tanggal Ditayangkan"
+                                    <label for="tanggalmulai" class="form-label">Tanggal Lowongan Ditayangkan <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="date" id="tanggal" name="tanggalmulai" placeholder="Masukan Tanggal Ditayangkan"
                                         id="html5-date-input" />
                                 </div>
                                 <div class = "mt-3"
                                     style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                                 </div>
                                 <div style="flex: 1;">
-                                    <label for="tanggal" class="form-label">Tanggal Lowongan Diturunkan <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="date" placeholder="Masukan Tanggal Diturunkan"
+                                    <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="date" id="tanggal" name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan"
                                         id="html5-date-input"/>
                                 </div>
                             </div>
@@ -168,8 +168,8 @@
 
                         <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="durasi" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="durasi" name="durasi magang" data-placeholder="Pilih Durasi Magang">
+                                <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="durasi" name="durasimagang" data-placeholder="Pilih Durasi Magang">
                                     <option disabled selected>Pilih Durasi Magang</option>
                                     <option value="1">1 Semester</option>
                                     <option value="2">2 Semester</option>

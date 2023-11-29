@@ -172,7 +172,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
             });
         });
-    
+
 
     Route::prefix('informasi')->group(function () {
         Route::prefix('lowongan/admin')->group(function () {
@@ -198,6 +198,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'status'])->name('kandidat.status');
             Route::post('/update/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'update'])->name('kandidat.update');
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'edit'])->name('kandidat.edit');
+        });
+    });
+
+    Route::prefix('kelola')->group(function () {
+        Route::prefix('lowongan/admin')->group(function () {
+            Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
+            Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
+            Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
+            Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+            Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
         });
     });
 });
@@ -262,4 +273,22 @@ Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
 
+Route::get('/halaman-lowongan-magang', function () {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', ['active_menu' => 'jadwal-seleksi']);
+});
 
+Route::get('/tambah-lowongan-magang', function () {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
+});
+
+Route::get('/edit-lowongan-magang', function () {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang');
+});
+
+Route::get('/detail-lowongan-magang', function () {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});
+
+Route::get('/company', function () {
+    return view('company.lowongan.index');
+});

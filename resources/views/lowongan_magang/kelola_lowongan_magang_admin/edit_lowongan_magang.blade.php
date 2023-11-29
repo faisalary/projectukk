@@ -118,8 +118,7 @@
                               id="TagifyCustomListSuggestion"
                               name="TagifyCustomListSuggestion"
                               class="form-control"
-                              placeholder="select technologies"
-                              value="PostgreSQL, Figma, PHP Native, Sketch"/>
+                              placeholder="Pilih Keterampilan"/>
                               <label for="" style="font-size: 13px">Jika keterampilan belum terdaftar silahkan ketik manual</label>
                           </div>
 

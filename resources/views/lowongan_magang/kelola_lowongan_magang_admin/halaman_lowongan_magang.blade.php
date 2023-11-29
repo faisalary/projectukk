@@ -1,5 +1,9 @@
 @extends('partials_admin.template')
 
+@section('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
@@ -79,17 +83,17 @@
    <div class="row mb-4">
     <div class="col-md-8 col-12 ">
     <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
-        data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Posisi Pekerjaan : UI/UX Designer, Durasi Magang : 2 Semester, Fakultas : Fakultas Ilmu Terapan, Universitas : Universitas Telkom" id="tooltip-filter"></i></div>
+        data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Posisi Pekerjaan : -, Durasi Magang : -, Fakultas : -, Universitas : -" id="tooltip-filter"></i></div>
     </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <a href='/tambah-lowongan-magang'>
-                <button class="btn btn-success" type="button">+ Tambah Lowongan
+                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modal-lowonganmagang">+ Tambah Lowongan
                 Magang</button>
             </a>
         </div>
    </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan</h5>
         </div>
@@ -151,7 +155,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> --}}
 
     <div class="tab-content p-0">
         <div class="tab-pane fade show active" id="navs-pills-justified-dibuat" role="tabpanel">
@@ -290,426 +294,223 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        },
-        {
-            "nomor": "2",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        }
-    ];
+    $("#modal-lowonganmagang").on("hide.bs.modal", function() {
 
-    var table = $('#table-dibuat').DataTable({
-        "data": jsonData,
-        // scrollX: true,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "posisi"
-            },
-            {
-                data: "fakultas"
-            },
-
-            {
-                data: "program studi"
-            },
-            {
-                data: "tanggal"
-            },
-            {
-                data: "durasi magang"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
-            }
-        ],
-        "columnDefs": [{
-                "width": "100px",
-                "targets": 0
-            },
-            {
-                "width": "100px",
-                "targets": 1
-            },
-            {
-                "width": "150px",
-                "targets": 2
-            },
-            {
-                "width": "150px",
-                "targets": 3
-            },
-            {
-                "width": "100px",
-                "targets": 4
-            },
-            {
-                "width": "150px",
-                "targets": 5
-            }
-        ]
+    $("#modal-title").html("Tambah Lowongan Magang");
+    $("#modal-button").html("Save Data");
+    $('#modal-lowonganmagang form #mitra_add').val('').trigger('change');
+    $('#modal-lowonganmagang form #tahunajaran_add').val('').trigger('change');
+    $('#modal-lowonganmagang form #jenismagang_add').val('').trigger('change');
+    $('#modal-lowonganmagang form #fakultas_add').val('').trigger('change');
+    $('#modal-lowonganmagang form #informasilowongan_add').val('').trigger('change');
+    $('#modal-lowonganmagang form #fakultas_add').val('').trigger('change');
     });
 
-    var jsonData = [{
-            "nomor": "1",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        },
-        {
-            "nomor": "2",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        }
-    ];
+    function edit(e) {
+    let id = e.attr('data-id');
 
-    var table = $('#table-tertunda').DataTable({
-        "data": jsonData,
-        // scrollX: true,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "posisi"
-            },
-            {
-                data: "fakultas"
-            },
+    let action = `{{ url('kelola/lowongan/admin/update/') }}/${id}`;
+    var url = `{{ url('kelola/lowongan/admin/edit/') }}/${id}`;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+                $("#modal-title").html("Edit LowonganMangang");
+                $("#modal-button").html("Update Data")
+                $('#modal-lowonganmagang form').attr('action', action);
+                $('#mitra_add').val(response.id_industis).change();
+                $('#tahunajaran_add').val(response.id_year_Akademik).change();
 
-            {
-                data: "program studi"
-            },
-            {
-                data: "tanggal"
-            },
-            {
-                data: "durasi magang"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
+                $('#jenismagang_add').val(response.id_jenismagang).change();
+
+                $('#posisi').val(response.intern_position);
+                $('#bidang').val(response.bidang);
+                $('#durasimagang').val(response.durasimagang);
+                $('#deskripsi').val(response.deskripsi);
+                $('#kualifikasi').val(response.requirements);
+
+                $('#kuotapenerimaan').val(response.kuota);
+                $('#benefit').val(response.benefitmagang);
+                $('#tanggalmulai').val(response.startdate);
+                $('#tanggalakhir').val(response.enddate);
+                $('#tahapan').val(response.tahapan_seleksi);
+                $('#informasilowongan').val(response.date_confirm_closing).change();
+                $('#programstudi').val(response.id_prodi).change();
+                $('#fakultas_add').val(response.id_fakultas).change();
+
+                $('#modal-lowonganmagang').modal('show');
             }
-        ],
-        "columnDefs": [{
-                "width": "100px",
-                "targets": 0
-            },
-            {
-                "width": "100px",
-                "targets": 1
-            },
-            {
-                "width": "150px",
-                "targets": 2
-            },
-            {
-                "width": "150px",
-                "targets": 3
-            },
-            {
-                "width": "100px",
-                "targets": 4
-            },
-            {
-                "width": "150px",
-                "targets": 5
-            }
-        ]
-    });
-
-    var jsonData = [{
-            "id": "",
-            "id": "",
-            "nomor": "1",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        },
-        {
-            "id": "",
-            "id": "",
-            "nomor": "2",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        }
-    ];
-
-    var table = $('#table-disetujui').DataTable({
-        "data": jsonData,
-        // scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
-            {
-                data: "nomor"
-            },
-            {
-                data: "posisi"
-            },
-            {
-                data: "fakultas"
-            },
-
-            {
-                data: "program studi"
-            },
-            {
-                data: "tanggal"
-            },
-            {
-                data: "durasi magang"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
-            }
-        ],
-        "columnDefs": [{
-                "width": "100px",
-                "targets": 0
-            },
-            {
-                "width": "100px",
-                "targets": 1
-            },
-            {
-                "width": "150px",
-                "targets": 2
-            },
-            {
-                "width": "150px",
-                "targets": 3
-            },
-            {
-                "width": "100px",
-                "targets": 4
-            },
-            {
-                "width": "150px",
-                "targets": 5
-            }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
-        ]
-    });
-
-
-    var jsonData = [{
-            "id": "",
-            "id": "",
-            "nomor": "1",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        },
-        {
-            "id": "",
-            "id": "",
-            "nomor": "2",
-            "posisi": "UI/UX Designer",
-            "fakultas": "fakultas ilmu terapan",
-            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            "durasi magang": "2 semester",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        }
-    ];
-
-    var table = $('#table-ditolak').DataTable({
-        "data": jsonData,
-        // scrollX: true,
-        columns: [{
-                data: 'id'
-            },
-            {
-                data: 'id'
-            },
-            {
-                data: "nomor"
-            },
-            {
-                data: "posisi"
-            },
-            {
-                data: "fakultas"
-            },
-
-            {
-                data: "program studi"
-            },
-            {
-                data: "tanggal"
-            },
-            {
-                data: "durasi magang"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
-            }
-        ],
-        "columnDefs": [{
-                "width": "100px",
-                "targets": 0
-            },
-            {
-                "width": "100px",
-                "targets": 1
-            },
-            {
-                "width": "150px",
-                "targets": 2
-            },
-            {
-                "width": "150px",
-                "targets": 3
-            },
-            {
-                "width": "100px",
-                "targets": 4
-            },
-            {
-                "width": "150px",
-                "targets": 5
-            }
-        ],
-        columnDefs: [{
-                // For Responsive
-                className: 'control',
-                orderable: false,
-                searchable: false,
-                responsivePriority: 2,
-                targets: 0,
-                render: function(data, type, full, meta) {
-                    return '';
-                }
-            },
-            {
-                targets: 1,
-                orderable: false,
-                searchable: false,
-                responsivePriority: 3,
-                checkboxes: true,
-                render: function() {
-                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                },
-                checkboxes: {
-                    selectAllRender: '<input type="checkbox" class="form-check-input">'
-                }
-            },
-        ]
-    });
-
-    jQuery(function() {
-        jQuery('.showSingle').click(function() {
-            jQuery('.targetDiv').hide('.cnt');
-            jQuery('#div' + $(this).attr('target')).slideToggle();
         });
-    });
-
-    function myFunction() {
-        var dots = document.getElementById("dots");
-        var moreText = document.getElementById("more");
-        var btnText = document.getElementById("myBtn");
-
-        if (dots.style.display === "none") {
-            dots.style.display = "inline";
-            btnText.innerHTML = "Lebih Banyak";
-            moreText.style.display = "none";
-        } else {
-            dots.style.display = "none";
-            btnText.innerHTML = "Lebih Sedikit";
-            moreText.style.display = "inline";
-        }
     }
 
 
-    $('.display').DataTable({
-        responsive: true
+    var table = $('#table-dibuat').DataTable({
+        ajax: '{{ route("lowongan-magang.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
+        columns: [{
+                data: 'DT_RowIndex'
+            },
+            {
+                data: 'posisipekerjaan',
+                name: 'posisipekerjaan'
+            },
+            {
+                data: 'fakultas',
+                name: 'fakultas'
+            },
+            {
+                data: 'programstudi',
+                name: 'programstudi'
+            },
+            {
+                data: 'tanggal',
+                name: 'tanggal'
+            },
+            {
+                data: 'durasimagang',
+                name: 'durasimagang'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ],
     });
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-        $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+    var table = $('#table-tertunda').DataTable({
+        ajax: '{{ route("lowongan-magang.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
+        columns: [{
+            data: 'DT_RowIndex'
+            },
+            {
+                data: 'posisipekerjaan',
+                name: 'posisipekerjaan'
+            },
+            {
+                data: 'fakultas',
+                name: 'fakultas'
+            },
+            {
+                data: 'programstudi',
+                name: 'programstudi'
+            },
+            {
+                data: 'tanggal',
+                name: 'tanggal'
+            },
+            {
+                data: 'durasimagang',
+                name: 'durasimagang'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ],
+    });
+
+
+    var table = $('#table-disetujui').DataTable({
+        ajax: '{{ route("lowongan-magang.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
+        columns: [{
+            data: 'DT_RowIndex'
+            },
+            {
+                data: 'posisipekerjaan',
+                name: 'posisipekerjaan'
+            },
+            {
+                data: 'fakultas',
+                name: 'fakultas'
+            },
+            {
+                data: 'programstudi',
+                name: 'programstudi'
+            },
+            {
+                data: 'tanggal',
+                name: 'tanggal'
+            },
+            {
+                data: 'durasimagang',
+                name: 'durasimagang'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ],
+    });
+
+    var table = $('#table-ditolak').DataTable({
+        ajax: '{{ route("lowongan-magang.show")}}',
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
+        destroy: true,
+        columns: [{
+            data: 'DT_RowIndex'
+            },
+            {
+                data: 'posisipekerjaan',
+                name: 'posisipekerjaan'
+            },
+            {
+                data: 'fakultas',
+                name: 'fakultas'
+            },
+            {
+                data: 'programstudi',
+                name: 'programstudi'
+            },
+            {
+                data: 'tanggal',
+                name: 'tanggal'
+            },
+            {
+                data: 'durasimagang',
+                name: 'durasimagang'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ],
     });
 </script>
 

@@ -6,7 +6,7 @@
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" /> 
+    <link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -74,9 +74,9 @@
 
     @endsection
         <!-- Modal -->
-    
+
     @include('masters.mahasiswa.modal')
-    
+
     @endsection
 
     @section('page_script')
@@ -127,7 +127,7 @@
                 dataType: "json",
                 success: function(response){
                     if ($('#pilihfakultas_add').data('select2')) {
-                        $("#pilihfakultas_add form").val(""); 
+                        $("#pilihfakultas_add form").val("");
                         $("#pilihfakultas_add").trigger("change");
                         $('#pilihfakultas_add').empty().trigger("change");
                     }
@@ -148,7 +148,7 @@
                 dataType: "json",
                 success: function(response){
                     if ($('#pilihprodi_add').data('select2')) {
-                        $("#pilihprodi_add form").val(""); 
+                        $("#pilihprodi_add form").val("");
                         $("#pilihprodi_add").trigger("change");
                         $('#pilihprodi_add').empty().trigger("change");
                     }
@@ -171,7 +171,7 @@
                 dataType: "json",
                 success: function(response){
                     if ($('#fakultas').data('select2')) {
-                        $("#fakultas form").val(""); 
+                        $("#fakultas form").val("");
                         $("#fakultas").trigger("change");
                         $('#fakultas').empty().trigger("change");
                     }
@@ -193,7 +193,7 @@
                 dataType: "json",
                 success: function(response){
                     if ($('#prodi').data('select2')) {
-                        $("#prodi form").val(""); 
+                        $("#prodi form").val("");
                         $("#prodi").trigger("change");
                         $('#prodi').empty().trigger("change");
                     }
