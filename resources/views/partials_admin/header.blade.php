@@ -182,8 +182,8 @@
                     </li>
 
                     <!-- Kelola Mitra -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/master/company/kelola-mitra' ? 'active' : '' }} @endif">
-                        <a href="/master/company/kelola-mitra" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola-mitra' ? 'active' : '' }} @endif">
+                        <a href="/company/kelola-mitra" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                         </a>
@@ -210,16 +210,16 @@
                     </li>
 
                     <!-- Data Kandidat -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/data-kandidat' ? 'active' : '' }} @endif">
+                        <a href="/data-kandidat" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Kandidat">Data Kandidat</div>
                         </a>
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'seleksi-lanjutan' ? 'active' : '' }} @endif">
-                        <a href="/seleksi-lanjutan" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                        <a href="/seleksi/lanjutan" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
@@ -304,6 +304,14 @@
                         </ul>
                     </li>
 
+                     <!-- Kelola Pengguna -->
+                     <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti -users"></i>
+                            <div data-i18n="Konfigurasi">Konfigurasi</div>
+                        </a>
+                    </li>
+
                     <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -361,8 +369,8 @@
                         </a>
                         
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan.index') }}" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/admin' ? 'active' : '' }} @endif">
+                                <a href="/informasi/lowongan/admin" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>

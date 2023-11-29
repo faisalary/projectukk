@@ -66,7 +66,8 @@ class PermissionSeeder extends Seeder
                     'create.data',
                     'edit.data.table',
                     'delete.data.table',
-                    'button.tnglbts.mitra'
+                    'button.tnglbts.mitra',
+                    'button.create.jadwal.seleksi'
                 ]
             ],
             [
