@@ -261,3 +261,7 @@ Route::get('/summary-profile', function () {
 Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
+
+Route::get('/detail/lowongan/magang', function () {
+    return view('layouts.program_magang.detail_lowongan');
+});
