@@ -44,7 +44,7 @@ class KelolaMitraController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Industri successfully Created!',
-                'modal' => '#modal-mitra',
+                'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra1'
             ]);
         } catch (Exception $e) {
@@ -60,14 +60,12 @@ class KelolaMitraController extends Controller
      */
     public function show()
     {
-        $industri = Industri::orderBy('namaindustri', 'asc')->get();
+        $industri = Industri::orderBy('namaindustri')->get();
 
         return DataTables::of($industri)
             ->addIndexColumn()
-            ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-warning'>" . "Pending" . "</div></div>";
-                } elseif ($row->status == 2) {
+            ->editColumn('status', function ($industri) {
+                if ($industri->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
@@ -77,20 +75,24 @@ class KelolaMitraController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modal-mitra' data-id='{$row->id_industri}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola_mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalTambahMitra' data-id='{$row->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola-mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
             ->addColumn('aksi', function ($row) {
-                $btn = "<a data-bs-toggle='modal' class='btn-icon' data-id='{$row->id_industri}'>
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalreject' class='btn-icon' data-id='{$row->id_industri}'>
                 <i class='btn-icon ti ti-file-check text-success'></i>
                 <i class='btn-icon ti ti-file-x text-danger'></i></a>";
+
+                // $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' class='btn-icon text-success'><i class='tf-icons ti ti-file-check'></i>
+                // <a data-id='{$row->id_industri}' data-bs-target='#modalreject' class='btn-icon text-danger'><i class='tf-icons ti ti-file-x'></i></a>";
+
         
                 return $btn;
             })
             
-            ->rawColumns(['status','action','aksi'])
+            ->rawColumns(['action','status','aksi'])
             ->make(true);
     }
     /**
@@ -118,8 +120,8 @@ class KelolaMitraController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Mitra successfully Updated!',
-                'modal' => '#modal-mitra',
-                'table' => '#table-kelola-mitra1'
+                'modal' => '#modalTambahMitra',
+                'table' => '#table-kelola-mitra3'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -129,7 +131,7 @@ class KelolaMitraController extends Controller
         }
     }
 
-    public function status($id)
+    public function status(string $id)
     {
         try {
             $industri = Industri::where('id_industri', $id)->first();
@@ -139,9 +141,9 @@ class KelolaMitraController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Status successfully Updated!',
-                'modal' => '#modal-mitra',
                 'table' => '#table-kelola-mitra3'
             ]);
+        
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
