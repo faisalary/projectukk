@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
                 'name' => 'superadmin',
                 'guard_name' => 'web',
                 'permissions' => [
+                    'only.lkm.mitra',
                     'only.lkm',
                     'slidebar.lkm',
                     'create.mahasiswa',
@@ -50,6 +51,8 @@ class PermissionSeeder extends Seeder
                 'name' => 'admin',
                 'guard_name' => 'web',
                 'permissions' => [
+                    'only.lkm.mitra',
+                    'only.mitra',
                     'slidebar.mitra',
                     'information.vacancies',
                     'confirmation.limit',
@@ -63,7 +66,8 @@ class PermissionSeeder extends Seeder
                     'create.data',
                     'edit.data.table',
                     'delete.data.table',
-                    'button.tnglbts.mitra'
+                    'button.tnglbts.mitra',
+                    'button.create.jadwal.seleksi'
                 ]
             ],
             [
