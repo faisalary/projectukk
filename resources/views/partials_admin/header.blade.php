@@ -304,10 +304,9 @@
                         </ul>
                     </li>
 
-                     <!-- Kelola Pengguna -->
-                     <li class="menu-item">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'konfigurasi' ? 'active' : '' }} @endif">
                         <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti -users"></i>
+                            <i class="ti ti-user"></i>
                             <div data-i18n="Konfigurasi">Konfigurasi</div>
                         </a>
                     </li>
