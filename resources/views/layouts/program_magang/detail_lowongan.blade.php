@@ -17,6 +17,10 @@
         background-color: #4EA971 !important;
         border-color: #4EA971 !important;
     }
+    .highlight {
+      background-color: #4EA971 !important;
+      color: white !important;
+    }
 </style>
 @endsection
 
@@ -84,21 +88,126 @@
                 <div class="w-auto">
                     <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
                     <div class="text-end mt-4">
-                    <button type="button" class="btn btn-outline-dark waves-effect me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Laporkan">
-                    <i class="ti ti-flag"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-dark waves-effect me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan">
-                      <i class="ti ti-share"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-dark waves-effect" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
-                      <i class="ti ti-heart"></i>
-                      </button>
+                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter" data-bs-original-title="Laporkan">
+                            <i class="ti ti-flag"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan">
+                            <i class="ti ti-share"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
+                            <i class="ti ti-heart"></i>
+                        </button>
                     </div>
-                      <div class="mt-4"></div>
-                      <button type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
+                    <div class="mt-4"></div>
+                    <button type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
                         Lamar Lowongan
-                      </button>
+                    </button>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <figure class="image"><img src="{{ url('/app-assets/img/Talentern.svg')}}"></figure>
+                                    <div class="text-center">
+                                        <div class=""></div>
+                                        <h4>Apakah anda akan melaporkan lowongan ini? </h4>
+                                        <p>Jika ya, silahkan plih salah satu alasan berikut dan tim Kepercayaan dan
+                                            Keamanan kami akan memeriksanya. </p>
+                                    </div>
+                                    <div class="modal-body pt-0">
+                                        <div class="text-center mt-3">
+                                            <button type="submit" class="btn btn-outline-dark waves-effect" style="width: 370px;">
+                                                Ini adalah akun palsu
+                                            </button>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <button type="submit" class="btn btn-outline-dark waves-effect" style="width: 370px;">
+                                                Mereka berpura-pura menjadi perusahaan lain
+                                            </button>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <button type="submit" class="btn btn-outline-dark waves-effect" style="width: 370px;">
+                                                Mereka mencoba berbagi informasi kontak
+                                            </button>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <button type="button" class="btn btn-outline-dark waves-effect" data-bs-toggle="modal" data-bs-target="#modalLaporan" style="width: 370px;">
+                                                Lainnya
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalLaporan" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="card">
+                                <div class="card-body text-center pb-0">
+                                    <figure class="image"><img src="{{ url('/app-assets/img/Talentern.svg')}}"></figure>
+                                    <div class="text-center">
+                                        <div class=""></div>
+                                        <h4>Apakah anda akan melaporkan lowongan ini? </h4>
+                                        <p>Jika ya, silahkan plih salah satu alasan berikut dan tim Kepercayaan dan
+                                            Keamanan kami akan memeriksanya. </p>
+                                    </div>
+                                </div>
+                                <div class="modal-body pt-0">
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="nameWithTitle" class="form-label">Nama Lowongan </label>
+                                            <input type="text" id="nameWithTitle" class="form-control" placeholder="Nama Lowongan" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col mb-0">
+                                            <label for="namaWithTitle" class="form-label">Nama Depan</label>
+                                            <input type="text" id="namaWithTitle" class="form-control" placeholder="Nama Depan">
+                                        </div>
+                                        <div class="col mb-0">
+                                            <label for="namaWithTitle" class="form-label">Nama Belakang</label>
+                                            <input type="text" id="namaWithTitle" class="form-control" placeholder="Nama Belakang">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="emailWithTitle" class="form-label">Email<span class="text-danger">*</span></label>
+                                            <input type="email" id="emailWithTitle" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="deskripsiWithTitle" class="form-label">Deskripsi <span class="text-danger">*</span></label>
+                                            <textarea id="deskripsiWithTitle" class="form-control" placeholder="Deskripsi"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" style="width: 510px;">
+                                        Kirim
+                                    </button>
+                                    </div>
+                                    <div class="mb-1"></div>
+                                    <button type="submit" class="btn btn-secondary waves-effect waves-light" style="width: 510px;">
+                                        Batal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
             </div>
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
                 <h3 style="color: #23314B; padding-left: 20px;"><b>Deskipsi pekerjaan</b></h3>
@@ -139,7 +248,7 @@
             </div>
 
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <h3 style="color: #23314B; padding-left: 20px;"><b>Requirements</b></h3>
+                <h3 style="color: #23314B; padding-left: 20px;"><b>Requirements</b></h3>
                 <ul style="list-style-type: disc; padding-left: 50px; margin-top: 5px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
                     <li>
                         At least Bachelor's degree in any field
@@ -198,7 +307,7 @@
             </div>
 
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <h3 style="color: #23314B; padding-left: 20px;"><b>Kemampuan</b></h3>
+                <h3 style="color: #23314B; padding-left: 20px;"><b>Kemampuan</b></h3>
 
                 <div class="d-flex" style="column-gap: 10px; padding-left: 20px; padding-bottom: 30px !important">
                     <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
@@ -209,7 +318,7 @@
             </div>
 
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <h3 style="color: #23314B; padding-left: 20px;"><b>Tentang Perusahaan</b></h3>
+                <h3 style="color: #23314B; padding-left: 20px;"><b>Tentang Perusahaan</b></h3>
 
                 <p style="margin-top: 5px; padding-left: 20px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
                     ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
@@ -229,5 +338,9 @@
 @endsection
 
 @section('page_script')
-
+<script>
+    function changeColor(button) {
+    button.classList.toggle('highlight');
+  }
+</script>
 @endsection
