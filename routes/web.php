@@ -322,3 +322,7 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
+
+Route::get('/anggota/tim', function () {
+    return view('company.anggota_tim.index');
+});
