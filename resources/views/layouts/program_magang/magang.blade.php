@@ -60,6 +60,26 @@
   .menu-link {
     text-decoration: none !important;
   }
+
+  .select2-results__option[role="option"][aria-selected="true"] {
+    background-color: #4EA971;
+    color: #fff;
+  }
+
+  .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+    background-color: rgba(115, 103, 240, 0.08) !important;
+    color: #4EA971 !important;
+  }
+
+  input[type="checkbox"]:focus {
+    outline: 0px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+
+  .form-check-input:checked, .form-check-input[type=checkbox]:indeterminate {
+    background-color: #4EA971 !important;
+    border-color: #4EA971 !important;
+}
 </style>
 
 @endsection
@@ -94,7 +114,7 @@
   <div class="row mt-4 mb-4">
     <div class="col-1 ms-5"></div>
     <div class="col-2">
-    <p class="flatpickr-input" id="flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
+      <p class="flatpickr-input" id="flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">
@@ -103,15 +123,31 @@
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
 
           <li class="ps-2 pe-3">
-            <input type="checkbox"> PT Techno Infinity
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px" style="margin-top: 0px; margin-right:3px"> PT Techno Infinity
           </li>
 
           <li class="ps-2 pe-3">
-            <input type="checkbox"> Direktorat PUTI Tel-U
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
           </li>
 
           <li class="ps-2 pe-3">
-            <input type="checkbox"> PT Telkom Indonesia
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Telkom Indonesia
+          </li>
+
+          <li class="ps-2 pe-3">
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Inovasi Daya Solusi
+          </li>
+
+          <li class="ps-2 pe-3">
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Indo Trans Teknologi
+          </li>
+
+          <li class="ps-2 pe-3">
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
+          </li>
+
+          <li class="ps-2 pe-3">
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Fakultas Ilmu Terapan
           </li>
 
         </ul>
@@ -123,11 +159,11 @@
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
-            <input type="checkbox"> Dibayar
+           <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Berbayar
           </li>
 
           <li class="ps-2 pe-5">
-            <input type="checkbox"> Tidak Dibayar
+           <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Tidak Berbayar
           </li>
         </ul>
       </div>
@@ -138,11 +174,11 @@
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
-            <input type="checkbox"> 1 Semester
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 1 Semester
           </li>
 
           <li class="ps-2 pe-5">
-            <input type="checkbox"> 2 Semester
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 2 Semester
           </li>
         </ul>
       </div>
@@ -153,14 +189,14 @@
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
-            <input type="checkbox"> Onsite
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Onsite
           </li>
 
           <li class="ps-2 pe-5">
-            <input type="checkbox"> Hybrid
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Hybrid
           </li>
           <li class="ps-2 pe-5">
-            <input type="checkbox"> Online
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Online
           </li>
         </ul>
       </div>
@@ -185,7 +221,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -193,15 +229,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -216,7 +252,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -224,15 +260,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -247,7 +283,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -255,15 +291,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -278,7 +314,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -286,15 +322,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -309,7 +345,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -317,15 +353,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -340,7 +376,7 @@
               </figure>
             </div>
             <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Back End Developer</h5>
+              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
               <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
             </div>
             <div class="col-2">
@@ -348,15 +384,15 @@
             </div>
           </div>
           <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px"></i>IDR 4.300.000 - 5.500.000</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-briefcase" style="margin-right: 10px"></i>2 Semester</div>
+          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
           <div class="row">
             <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px"></i>2 Semester</div>
+              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
             </div>
             <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu <i class="ti ti-clock"></i></div>
+              <div class="location"> 8 hari lalu</div>
             </div>
           </div>
         </div>
@@ -364,24 +400,24 @@
     </div>
   </div>
   <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-end">
-            <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);" style="height: 36px;">Previous</a>
-            </li>
-            <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">Next</a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="pagination justify-content-end">
+      <li class="page-item prev">
+        <a class="page-link" href="javascript:void(0);" style="height: 36px;">Previous</a>
+      </li>
+      <li class="page-item active">
+        <a class="page-link" href="javascript:void(0);">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>
 
 @endsection

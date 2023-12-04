@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-4 p-0">
                             <div class="input-group">
-                                <span class="input-group-text"><i class="ti ti-briefcase"></i></span>
+                                <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
                                 <select id="selectpickerBasic" class="selectpicker w-100" data-style="btn-default">
                                     <option value="">Jenis Magang</option>
                                     <option value="44">Accounting / Finance</option>
@@ -218,7 +218,7 @@
 
     <div class="auto-container">
         <div class="sec-title text-center">
-            <h2 style="padding-top:50px;">Lowongan Untuk Kamu</h2>
+            <h2 style="padding-top:50px;">Lowongan Magang Untuk Kamu</h2>
             <p style="font-size:20px; padding-bottom:15px;">Temukan berbagai lowongan kerja yang kamu inginkan</p>
             <div class="btn mb-3">
                 <button id="btnTerbaru" class="btn btn-success me-2 ml-2" type="button">Lowongan
@@ -238,19 +238,18 @@
                                 <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
                                 </figure>
                             </div>
-                            <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                            <div class="col-6 ps-5" style="padding-top:10px;padding-left:50px;">
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Wings Surya</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Human Resources</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -268,18 +267,17 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Uniqlo Co., Ltd</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Marketing Intern</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -297,18 +295,17 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-left:30px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Nestle SA</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Quality Assurance</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -329,18 +326,17 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Lazada Group</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Business Analyst</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -358,18 +354,17 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Bank Central Asia Tbk</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Teller</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -387,18 +382,17 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Sejahteraraya Anugerahjaya</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Resepsionis</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
                                 <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                                 <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
@@ -433,7 +427,7 @@
                                 <span class="icon ti ti-map-pin"> 24 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 70 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 70 Lowongan</span>
                             </div>
                         </div>
                     </div>
@@ -448,7 +442,7 @@
                                 <span class="icon ti ti-map-pin"> 34 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
                             </div>
                        </div>
                     </div>
@@ -463,7 +457,7 @@
                                 <span class="icon ti ti-map-pin"> 14 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 26 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 26 Lowongan</span>
                             </div>
                         </div>
                     </div>
@@ -480,7 +474,7 @@
                                 <span class="icon ti ti-map-pin"> 30 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
                             </div>
                         </div>
                     </div>
@@ -495,7 +489,7 @@
                                 <span class="icon ti ti-map-pin"> 34 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 56 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 56 Lowongan</span>
                             </div>
                         </div>
                     </div>
@@ -523,7 +517,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971; opacity:0.7!important;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -539,7 +533,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -555,7 +549,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -571,7 +565,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                      PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -587,7 +581,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -603,7 +597,7 @@
                                     <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
                                     </div>
-                                        <div class="button-container text-center">
+                                        <div class="button-container">
                                             <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
                                         </div>
                             </div>
@@ -620,7 +614,7 @@
     <div class="auto-container" style="background-image: url({{ asset('front/assets/landing/images/background/blue.png')}}); ; background-size: cover; background-repeat: no-repeat; min-width:100%;">
             <header class="section-header">
                 <div class="sec-title text-center">
-                    <h2 style="color: white; padding-top:50px;">Lowongan Terbaik di Kota Besar</h2>
+                    <h2 style="color: white; padding-top:50px;">Lowongan Magang Terbaik di Kota Besar</h2>
                         <p style="color: white; font-size:20px; padding-bottom:20px;">Temukan peluang karir anda di kota - kota besar</p>
                 </div>
             </header>

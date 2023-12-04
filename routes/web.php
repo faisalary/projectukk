@@ -235,10 +235,28 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'edit'])->name('kandidat.edit');
         });
     });
+
     Route::prefix('/seleksi/lanjutan')->group(function () {
         Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('lowongan.index');
         Route::get('show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('lowongan.show');
         Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('lowongan.store');
+    });
+
+    Route::prefix('company')->group(function (){
+        Route::prefix('kelola-mitra')->group(function () {
+            Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
+            Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
+            Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
+            Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
+            Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
+        });
+        Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index'); 
+        
+        Route::prefix('profile-company')->group( function() {
+            Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
+            Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
+        });
     });
 });
 
@@ -300,4 +318,15 @@ Route::get('/summary-profile', function () {
 
 Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+});
+
+Route::get('/detail/lowongan/magang', function () {
+    return view('layouts.program_magang.detail_lowongan');
+});
+Route::get('/konfigurasi', function () {
+    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
+});
+
+Route::get('/anggota/tim', function () {
+    return view('company.anggota_tim.index');
 });
