@@ -23,11 +23,11 @@ class LoginAdminController extends Controller
             'password' => 'required',
         ]);
         
-        // $credentials = $request->only('email', 'password');
-        // if (Auth::guard('guardName')($credentials)) {
-        //     return redirect()->intended('admin.dashboard.index')
-        //                 ->withSuccess('Signed in');
-        // }
+        $credentials = $request->only('email', 'password');
+        if (Auth::guard('guardName')($credentials)) {
+            return redirect()->intended('admin.dashboard.index')
+                        ->withSuccess('Signed in');
+        }
 
         if(Auth::guard('admin')->attempt(['email'=>$request->email, 'password'=>$request->password])){
         return redirect()->intended('admin.dashboard.index');

@@ -53,8 +53,10 @@ class RegisterAdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'remember_token' => $code,
-            'isAdmin'=>1
+            'isAdmin'=>1,
+            'id_industri'=>null
         ]);
+        $admin->guard(['web'])->givePermissionTo(['admin']);
 
         $url=url('/admin/set-password/'.$code);
 

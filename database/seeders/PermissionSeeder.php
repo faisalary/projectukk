@@ -4,11 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
-use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role as ModelsRole;
 
 class PermissionSeeder extends Seeder
 {

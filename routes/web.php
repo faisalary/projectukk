@@ -175,6 +175,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
         });
     });
+    Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function (){
+        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
+        
+    });
     //kelola-mitra
     Route::prefix('company')->middleware('can:only.lkm')->group(function (){
         Route::prefix('kelola-mitra')->group(function () {
