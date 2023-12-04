@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Mail\VerifyEmail;
-use App\Models\Role;
 use App\Models\User;
+use App\Models\Industri;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -58,14 +57,11 @@ class RegisterAdminController extends Controller
             'id_mahasiswa' => 22
 
         ]);
-        
         $admin->assignRole('admin');
 
         $url=url('/admin/set-password/'.$code);
 
         if ($admin) {
-             // Kirim email verifikasi
-            // $admin->sendEmailVerificationNotification();
         Mail::to($admin->email)->send(new VerifyEmail($url));
 
             // Admin berhasil ditambahkan
