@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Mail\VerifyEmail;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -69,6 +70,7 @@ class RegisterAdminController extends Controller
             // Gagal menambahkan admin
             session()->flash('error', 'Gagal menambahkan admin.');
         }
+        
     }
 
     return redirect()->route('admin.register'); // Redirect kembali ke halaman registrasi
