@@ -54,9 +54,12 @@ class RegisterAdminController extends Controller
             'password' => Hash::make($request->password),
             'remember_token' => $code,
             'isAdmin'=>1,
-            'id_industri'=>null
+            'id_industri'=> 21,
+            'id_mahasiswa' => 22
+
         ]);
-        $admin->guard(['web'])->givePermissionTo(['admin']);
+        
+        $admin->assignRole('admin');
 
         $url=url('/admin/set-password/'.$code);
 
