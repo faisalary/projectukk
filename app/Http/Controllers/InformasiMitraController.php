@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
 use Illuminate\Support\Http\Hash;
 use Illuminate\Support\Http\Storage;
 use Illuminate\Support\Http\Validator;
-use App\Models\User;
+use Yajra\DataTables\Facades\DataTables;
 
 class InformasiMitraController extends Controller
 {
@@ -22,7 +24,12 @@ class InformasiMitraController extends Controller
      */
     public function index()
     {
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra');
+        // return auth()->user();
+        // LowonganMagang::create([
+        //     'id_industri'=>auth()->user()->id_industri
+        // ])
+        $mitra = LowonganMagang::all();
+        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra'));
     }
 
     /**
@@ -46,7 +53,28 @@ class InformasiMitraController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $mitra = LowonganMagang::all();
+
+        return DataTables::of($mitra)
+            ->addIndexColumn()
+            ->editColumn('status', function ($mitra) {
+                if ($mitra->status == 1) {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                }
+            })
+            ->addColumn('action', function ($row) {
+
+                $btn = "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
+
+                return $btn;
+            })
+
+            ->rawColumns(['action', 'status'])
+
+            ->make(true);
     }
 
     /**

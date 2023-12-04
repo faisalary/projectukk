@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Industri;
+use App\Models\JenisMagang;
+use App\Models\Lokasi;
+use App\Models\LowonganMagang;
+use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
 
 class InformasiLowonganController extends Controller
@@ -11,7 +16,12 @@ class InformasiLowonganController extends Controller
      */
     public function index()
     {
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan');
+        $lowongan = LowonganMagang::all();
+        $industri = Industri::all();
+        $thnakademik = TahunAkademik::all();
+        $jenisMagang = JenisMagang::all();
+        $lokasi = Lokasi::all();
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('lowongan', 'industri', 'thnakademik', 'lokasi', 'jenisMagang'));
     }
 
     /**
@@ -33,9 +43,22 @@ class InformasiLowonganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $lowongan = LowonganMagang::query();
+        if ($request->industri != null) {
+            $lowongan->where("id_industri", $request->industri);
+        } else if ($request->thnakademik != null) {
+            $lowongan->where("id_year_akademik", $request->thnakademik);
+        } else if ($request->jenisMagang != null) {
+            $lowongan->where("id_jenismagang", $request->jenisMagang);
+        } else if ($request->lokasi != null) {
+            $lowongan->where("id_lokasi", $request->lokasi);
+        }
+
+        $lowongan = $lowongan->with("industri", "tahunAkademik", "jenisMagang", "lokasi");
+
+        return $lowongan;
     }
 
     /**
