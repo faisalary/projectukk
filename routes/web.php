@@ -175,7 +175,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('informasi')->group(function () {
-        Route::prefix('lowongan/admin')->group(function () {
+        Route::prefix('lowongan/')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiLowonganController::class, 'index'])->name('lowongan.index');
             Route::get('/show', [App\Http\Controllers\InformasiLowonganController::class, 'show'])->name('lowongan.show');
             Route::post('/store', [App\Http\Controllers\InformasiLowonganController::class, 'store'])->name('lowongan.store');
@@ -183,7 +183,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'update'])->name('lowongan.update');
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'edit'])->name('lowongan.edit');
         });
-        Route::prefix('mitra/admin')->group(function () {
+        Route::prefix('mitra/')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiMitraController::class, 'index'])->name('mitra.index');
             Route::get('/show', [App\Http\Controllers\InformasiMitraController::class, 'show'])->name('mitra.show');
             Route::post('/store', [App\Http\Controllers\InformasiMitraController::class, 'store'])->name('mitra.store');
@@ -191,7 +191,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\InformasiMitraController::class, 'update'])->name('mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiMitraController::class, 'edit'])->name('mitra.edit');
         });
-        Route::prefix('kandidat/admin')->group(function () {
+        Route::prefix('kandidat/')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
             Route::get('/show', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
             Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
@@ -218,12 +218,12 @@ Route::get('/informasi/magang', function () {
     return view('layouts.program_magang.informasi_magang');
 });
 
-Route::get('/informasi/lowongan', function () {
-    return view('company.lowongan_magang.informasi_lowongan');
-});
-Route::get('/detail/kandidat', function () {
-    return view('company.lowongan_magang.detail_kandidat');
-});
+// Route::get('/informasi/lowongan', function () {
+//     return view('company.lowongan_magang.informasi_lowongan');
+// });
+// Route::get('/detail/kandidat', function () {
+//     return view('company.lowongan_magang.detail_kandidat');
+// });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

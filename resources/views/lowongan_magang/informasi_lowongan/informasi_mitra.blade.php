@@ -59,8 +59,8 @@
             "totallowongan": "100",
             "lowonganbaru": "5",
             "totalpelamar": "500",
-            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
-            "aksi": "<a href='/informasi/lowongan/admin' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
+            "statuskerjasama": "<span class='badge bg-label-success me-1'>Ya</span>",
+            "aksi": "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
         },
         {
             "nomor": "2",
@@ -68,7 +68,7 @@
             "totallowongan": "100",
             "lowonganbaru": "5",
             "totalpelamar": "500",
-            "status": "<span class='badge bg-label-danger me-1'>Non-Aktif</span>",
+            "statuskerjasama": "<span class='badge bg-label-success me-1'>Ya</span>",
             "aksi": "<a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
         },
         {
@@ -77,7 +77,7 @@
             "totallowongan": "100",
             "lowonganbaru": "5",
             "totalpelamar": "500",
-            "status": "<span class='badge bg-label-success me-1'>Aktif</span>",
+            "statuskerjasama": "<span class='badge bg-label-info me-1'>Internal Tel-u</span>",
             "aksi": "<a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
         },
     ];
