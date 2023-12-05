@@ -106,14 +106,15 @@
         line-height: 22px;
         /* 146.667% */
     }
-    a.btn.btn-outline-success:hover {
-    background-color: white !important;
-}
-button.btn.btn-outline-success.dropdown-toggle{
-    background-color: white !important;
-    color: #4EA971 !important;
-}
 
+    a.btn.btn-outline-success:hover {
+        background-color: white !important;
+    }
+
+    button.btn.btn-outline-success.dropdown-toggle {
+        background-color: white !important;
+        color: #4EA971 !important;
+    }
 </style>
 
 <header class="main-header">
@@ -159,11 +160,13 @@ button.btn.btn-outline-success.dropdown-toggle{
                         </div>
                     </div>
                 </div>
-                
 
 
+
+
+            </div>
             @php
-                $user = Auth::user();
+            $user = Auth::user();
             @endphp
             @if (!$user)
 
@@ -200,7 +203,7 @@ button.btn.btn-outline-success.dropdown-toggle{
                         <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
                     </a>
 
-                    
+
                     <!-- <a href="{{ route('register')}}" style="text-decoration: none; color:#23314B; font-weight: 500; font-size: 15px;">Untuk Perusahaan</a> -->
                 </div>
             </div>
@@ -235,7 +238,7 @@ button.btn.btn-outline-success.dropdown-toggle{
                         <li class="current dropdown p-0 m-0">
                             <a class="image-container nav-link waves-effect waves-light" style="display: flex; align-items: center; justify-content: center; text-align: left;">
                                 <div class="image">
-                                    <img src="{{ $user->profile_image_url  }}" style="vertical-align:unset;" alt="User Image">
+                                    <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" style=" vertical-align:unset;" alt="User Image">
                                 </div>
                                 <div style="line-height: normal;">
                                     <span style="color:black;">{{ ucwords($user->name) }}<br></span>
@@ -261,36 +264,33 @@ button.btn.btn-outline-success.dropdown-toggle{
 
                                 <li><a href="">Dashboard</a></li>
 
-                                    @endif
-                                    @if ($user->profile)
-                                        <hr class="my-2">
-                                        @if (request()->url() != url('search'))
-                                            <li><a href="{{ url('search') }}">Search Jobs</a></li>
-                                        @else
-                                            <li><a href="{{ url('/') }}">Front Page</a></li>
-                                        @endif
-                                    @endif
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Logout
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                style="display: none;">
-                                                {{ csrf_field() }}
-                                            </form>
-                                        </a>
+                                @endif
+                                @if ($user->profile)
+                                <hr class="my-2">
+                                @if (request()->url() != url('search'))
+                                <li><a href="{{ url('search') }}">Search Jobs</a></li>
+                                @else
+                                <li><a href="{{ url('/') }}">Front Page</a></li>
+                                @endif
+                                @endif
+                                <li>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </a>
 
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             @endif
         </div>
-    </div>
 
-    <!-- Mobile Header -->
+        <!-- Mobile Header -->
 </header>
 
 <script>

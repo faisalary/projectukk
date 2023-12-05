@@ -196,12 +196,12 @@
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/admin' ? 'active' : '' }} @endif">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola/lowongan' ? 'active' : '' }} @endif">
                                 <a href="/informasi/kelola/lowongan" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
@@ -368,8 +368,8 @@
                         </a>
 
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/admin' ? 'active' : '' }} @endif">
-                                <a href="/informasi/lowongan/admin" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan.index')}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>

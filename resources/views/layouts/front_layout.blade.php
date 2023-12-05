@@ -278,7 +278,7 @@
             border-bottom-left-radius: 0px;
         }
     </style>
-     @yield('page_style')
+    @yield('page_style')
 
 </head>
 
@@ -435,8 +435,6 @@
                 }
             });
         });
-
-
     </script>
 
 </body>
