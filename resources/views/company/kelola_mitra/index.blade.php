@@ -153,7 +153,7 @@
         //     $("#simpanButton").html("Save Data");
         // });
         var table = $('#table-kelola-mitra1').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/0') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -221,7 +221,7 @@
 
     <script>
         var table = $('#table-kelola-mitra2').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/0') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -294,7 +294,7 @@
 
     <script>
         var table = $('#table-kelola-mitra3').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/1') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -370,7 +370,7 @@
 
     <script>
         var table = $('#table-kelola-mitra4').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/2') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
