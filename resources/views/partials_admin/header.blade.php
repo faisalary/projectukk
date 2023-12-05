@@ -167,7 +167,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <!-- Admin -->
-               
+
                 @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin</span>
@@ -182,8 +182,8 @@
                     </li>
 
                     <!-- Kelola Mitra -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/mitra' ? 'active' : '' }} @endif">
-                        <a href="/kelola/mitra" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola-mitra' ? 'active' : '' }} @endif">
+                        <a href="/company/kelola-mitra" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
                         </a>
@@ -196,30 +196,30 @@
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/admin' ? 'active' : '' }} @endif">
-                                <a href="/informasi/mitra/admin" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
+                                <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
-                                    <div data-i18n="Pertanyaan Magang">Kelola Lowongan</div>
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="/informasi/kelola/lowongan" class="menu-link">
+                                    <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
                     <!-- Data Kandidat -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/data-kandidat' ? 'active' : '' }} @endif">
+                        <a href="/data-kandidat" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Kandidat">Data Kandidat</div>
                         </a>
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'seleksi-lanjutan' ? 'active' : '' }} @endif">
-                        <a href="/seleksi-lanjutan" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                        <a href="/seleksi/lanjutan" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
@@ -304,6 +304,13 @@
                         </ul>
                     </li>
 
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'konfigurasi' ? 'active' : '' }} @endif">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="ti ti-user"></i>
+                            <div data-i18n="Konfigurasi">Konfigurasi</div>
+                        </a>
+                    </li>
+
                     <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -338,7 +345,7 @@
                 </ul>
                 @endcan
 
-                
+
                 <!-- Mitra -->
                 @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
@@ -359,15 +366,15 @@
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
-                        
+
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan.index') }}" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan.index')}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="/informasi/kelola/lowongan" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -408,7 +415,7 @@
                 </ul>
                 @endcan
             </aside>
-            
+
             <!-- / Menu -->
 
             <!-- Layout container -->

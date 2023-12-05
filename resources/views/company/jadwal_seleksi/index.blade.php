@@ -52,12 +52,14 @@
         <div class="col-md-1 col-12 text-end" style="width:50px;">
         </div>
         <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
+            @can('button.create.jadwal.seleksi')
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
                 <div class="d-flex align-items-center">
                     <i class="tf-icons ti ti-plus me-2"></i>
                     <span class="mt-1">Jadwal Seleksi Lanjutan</span>
                 </div>
             </button>
+            @endcan
         </div>
     </div>
     <div class="row mt-2">
