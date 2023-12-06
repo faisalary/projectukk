@@ -41,13 +41,13 @@ class KelolaMitraController extends Controller
     public function store(Request $request)
     {
         try{
-            // $this->validate($request, [
-            //     'namaindustri' => 'required|string|max:255',
-            //     'name' => 'required|string|max:255',
-            //     'email' => 'required|email|unique:users',
-            //     'kategori_industri' => 'required|string|max:255',
-            //     'statuskerjasama' => 'required|string|max:255',
-            // ]);
+            $this->validate($request, [
+                'namaindustri' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'kategori_industri' => 'required|string|max:255',
+                'statuskerjasama' => 'required|string|max:255',
+            ]);
             
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
@@ -67,7 +67,7 @@ class KelolaMitraController extends Controller
                 'password' => Hash::make($defaultPassword),
                 'remember_token' => $code,
                 'isAdmin'=>1,
-                'id_industri' => Uuid::uuid4(),
+
             ]);
             $admin->assignRole('admin');
         
