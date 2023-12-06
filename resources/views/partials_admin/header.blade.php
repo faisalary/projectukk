@@ -167,7 +167,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <!-- Admin -->
-               
+
                 @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin</span>
@@ -196,12 +196,12 @@
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/admin' ? 'active' : '' }} @endif">
-                                <a href="/informasi/mitra/admin" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
+                                <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola/lowongan' ? 'active' : '' }} @endif">
                                 <a href="/informasi/kelola/lowongan" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
@@ -345,7 +345,7 @@
                 </ul>
                 @endcan
 
-                
+
                 <!-- Mitra -->
                 @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
@@ -366,10 +366,10 @@
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
-                        
+
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/admin' ? 'active' : '' }} @endif">
-                                <a href="/informasi/lowongan/admin" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan.index')}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
@@ -415,7 +415,7 @@
                 </ul>
                 @endcan
             </aside>
-            
+
             <!-- / Menu -->
 
             <!-- Layout container -->
@@ -431,15 +431,14 @@
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- Search -->
-                        <div class="navbar-nav align-items-center">
+                        <!-- <div class="navbar-nav align-items-center">
                             <div class="nav-item navbar-search-wrapper mb-0">
-                                <!-- <a class="nav-item nav-link search-toggler d-flex align-items-center px-0"
-                                    href="javascript:void(0);">
+                                <a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);">
                                     <i class="ti ti-search ti-md me-2"></i>
                                     <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
-                                </a> -->
+                                </a>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -763,10 +762,17 @@
                             <!--/ Notification -->
 
                             <!-- User -->
+                            @php
+                            $user = Auth::user();
+                            @endphp
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                                        @if($user->roles[0]->name == 'superadmin')
+                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                        @elseif($user->roles[0]->name == 'admin')
+                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                        @endif
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -775,12 +781,16 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                                                        @if($user->roles[0]->name == 'superadmin')
+                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                                        @elseif($user->roles[0]->name == 'admin')
+                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <small class="text-muted">{{ ucwords($user->name) }}</small>
                                                 </div>
                                             </div>
                                         </a>

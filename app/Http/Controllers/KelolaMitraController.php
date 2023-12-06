@@ -90,9 +90,9 @@ class KelolaMitraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($statusapprove)
     {
-        $industri = Industri::orderBy('namaindustri')->get();
+        $industri = Industri::where('statusapprove',$statusapprove)->orderBy('namaindustri')->get();
 
         return DataTables::of($industri)
             ->addIndexColumn()
@@ -112,29 +112,42 @@ class KelolaMitraController extends Controller
 
                 return $btn;
             })
-            ->addColumn('aksi', function ($row) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalreject' class='btn-icon' data-id='{$row->id_industri}'>
-                <i class='btn-icon ti ti-file-check text-success'></i>
-                <i class='btn-icon ti ti-file-x text-danger'></i></a>";
-
-                // $btn = "<a data-bs-toggle='modal' data-id='{$row->id_industri}' class='btn-icon text-success'><i class='tf-icons ti ti-file-check'></i>
-                // <a data-id='{$row->id_industri}' data-bs-target='#modalreject' class='btn-icon text-danger'><i class='tf-icons ti ti-file-x'></i></a>";
-
-        
+            
+            ->addColumn('aksi', function ($id) {
+                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalreject' class='btn-icon' data-id='{$id->id_industri}'>
+                    <i class='btn-icon ti ti-file-check text-success' onclick='approved({$id->statusapprove})'></i>
+                    <i class='btn-icon ti ti-file-x text-danger' onclick='rejected({$id->statusapprove})'></i></a>";
+                    // data-bs-target='#modalreject'
                 return $btn;
             })
+
             
             ->rawColumns(['action','status','aksi'])
             ->make(true);
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+    public function approved($id)
+    {
+        $data=Industri::find($id);
+        $data->statusapprove='1';
+        $data->save();
+        return redirect()->back();
+    }
+    public function rejected($id)
+    {
+        $data=Industri::find($id);
+        $data->statusapprove='2';
+        $data->save();
+        return redirect()->back();
+    }
+    
+
     public function edit(string $id)
     {
         $industri = Industri::where('id_industri', $id)->first();
         return $industri;
     }
+
     /**
      * Update the specified resource in storage.
      */

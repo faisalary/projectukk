@@ -39,7 +39,9 @@ class PermissionSeeder extends Seeder
                     'edit.actions',
                     'agree.and.reject.buttons',
                     'approval.page',
-                    'can.view.data.table'
+                    'can.view.data.table',
+                    'title.info.lowongan.admin',
+                    'ubah.lowongan.admin'
                 ]
             ],
             [
@@ -63,7 +65,8 @@ class PermissionSeeder extends Seeder
                     'edit.data.table',
                     'delete.data.table',
                     'button.tnglbts.mitra',
-                    'button.create.jadwal.seleksi'
+                    'title.info.lowongan.mitra',
+                    'ubah.lowongan.mitra'
                 ]
             ],
             [

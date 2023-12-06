@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-
-            $table->uuid('id_industri');
-            $table->foreign('id_industri')->references('id_industri')->on('industri');
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            $table->date('date_confirm_closing')->nullable()->change();
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            $table->removeColumn('date_confirm_closing');
         });
     }
 };

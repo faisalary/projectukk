@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-
-            $table->uuid('id_industri');
-            $table->foreign('id_industri')->references('id_industri')->on('industri');
+        Schema::table('industri', function (Blueprint $table) {
+            $table->tinyInteger('statusapprove')->default(0)->nullable();
         });
     }
 
@@ -23,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('industri', function (Blueprint $table) {
             //
         });
     }
