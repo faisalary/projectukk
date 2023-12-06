@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 class KelolaMitraController extends Controller
 {
     public function __construct()
@@ -41,23 +41,17 @@ class KelolaMitraController extends Controller
     public function store(Request $request)
     {
         try{
-            $this->validate($request, [
-                'namaindustri' => 'required|string|max:255',
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users',
-                'kategori_industri' => 'required|string|max:255',
-                'statuskerjasama' => 'required|string|max:255',
-            ]);
-            
+            DB::beginTransaction();
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
             'status' => true,
-            ]);
+        ]);
 
-            $code = Str::random(64);
+        
+        $code = Str::random(64);
             $defaultPassword = '123445678';
 
             $admin = User::create([
@@ -67,20 +61,27 @@ class KelolaMitraController extends Controller
                 'password' => Hash::make($defaultPassword),
                 'remember_token' => $code,
                 'isAdmin'=>1,
-
+                'id_industri' => $industri->id_industri,
+                
+                
             ]);
             $admin->assignRole('admin');
-        
+            
+            DB::commit();
+            
             return response()->json([
                 'error' => false,
                 'message' => 'Industri successfully Created!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra1'
             ]);
-            } catch (Exception $e) {
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
             ]);
         }
     }
