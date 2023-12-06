@@ -68,8 +68,6 @@ class KelolaMitraController extends Controller
                 'remember_token' => $code,
                 'isAdmin'=>1,
                 'id_industri' => Uuid::uuid4(),
-                
-                
             ]);
             $admin->assignRole('admin');
         

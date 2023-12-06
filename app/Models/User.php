@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'isAdmin',
         'id_industri',
+        'id_mahasiswa',
      
     ];
 
