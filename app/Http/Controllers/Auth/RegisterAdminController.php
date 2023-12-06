@@ -11,6 +11,7 @@ use App\Models\Industri;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class RegisterAdminController extends Controller
 {
@@ -53,8 +54,6 @@ class RegisterAdminController extends Controller
             'password' => Hash::make($request->password),
             'remember_token' => $code,
             'isAdmin'=>1,
-            'id_industri'=> 21,
-            'id_mahasiswa' => 22
 
         ]);
         $admin->assignRole('admin');

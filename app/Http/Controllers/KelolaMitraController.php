@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Industri;
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class KelolaMitraController extends Controller
 {
+    public function __construct()
+    {
+       
+    }
     /**
      * Display a listing of the resource.
      */
@@ -33,24 +41,48 @@ class KelolaMitraController extends Controller
     public function store(Request $request)
     {
         try{
+            // $this->validate($request, [
+            //     'namaindustri' => 'required|string|max:255',
+            //     'name' => 'required|string|max:255',
+            //     'email' => 'required|email|unique:users',
+            //     'kategori_industri' => 'required|string|max:255',
+            //     'statuskerjasama' => 'required|string|max:255',
+            // ]);
+            
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
             'status' => true,
-        ]);
+            ]);
 
+            $code = Str::random(64);
+            $defaultPassword = '123445678';
+
+            $admin = User::create([
+                'name' => $request->namaindustri,
+                'username' => 'mitra',
+                'email' => $request->email,
+                'password' => Hash::make($defaultPassword),
+                'remember_token' => $code,
+                'isAdmin'=>1,
+                'id_industri' => Uuid::uuid4(),
+                
+                
+            ]);
+            $admin->assignRole('admin');
+        
             return response()->json([
                 'error' => false,
                 'message' => 'Industri successfully Created!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra1'
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
+            } catch (Exception $e) {
+                return response()->json([
+                    'error' => true,
+                    'message' => $e->getMessage(),
             ]);
         }
     }

@@ -21,15 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected static function boot()
-    {
-        parent::boot();
 
-        static::creating(function ($user) {
-            $user->id_industri = Uuid::uuid4(); 
-            $user->id_mahasiswa = Uuid::uuid4();
-        });
-    }
     protected $fillable = [
         'name',
         'username',
@@ -38,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'isAdmin',
         'id_industri',
-        'id_mahasiswa'
+     
     ];
 
     /**
