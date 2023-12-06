@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Industri;
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 class KelolaMitraController extends Controller
 {
     /**
@@ -33,6 +37,7 @@ class KelolaMitraController extends Controller
     public function store(Request $request)
     {
         try{
+            DB::beginTransaction();
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
@@ -41,13 +46,35 @@ class KelolaMitraController extends Controller
             'status' => true,
         ]);
 
+        
+        $code = Str::random(64);
+            $defaultPassword = '123445678';
+
+            $admin = User::create([
+                'name' => $request->namaindustri,
+                'username' => 'mitra',
+                'email' => $request->email,
+                'password' => Hash::make($defaultPassword),
+                'remember_token' => $code,
+                'isAdmin'=>1,
+                'id_industri' => $industri->id_industri,
+                
+                
+            ]);
+            $admin->assignRole('admin');
+            
+            DB::commit();
+            
             return response()->json([
                 'error' => false,
                 'message' => 'Industri successfully Created!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra1'
             ]);
+
         } catch (Exception $e) {
+            DB::rollBack();
+            
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
