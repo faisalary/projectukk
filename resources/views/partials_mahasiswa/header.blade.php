@@ -180,17 +180,20 @@
             </div>
           </aside>
           <!-- / Menu -->
-
+          
+          
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+          <!-- Login dan Daftar -->
 
-           <!-- Login dan Daftar -->
-           <a href="{{ route('login')}}">
-               <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
-           </a>
-           <!-- <a href="{{ route('register')}}">
-               <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
-           </a> -->
+            @php
+            $user = Auth::user();
+            @endphp
+            @if (!$user)
 
+            <a href="{{ route('login')}}">
+                <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
+            </a>
+            @else
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Notification -->
               <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -379,29 +382,27 @@
                 </ul>
               </li>
               <!--/ Notification -->
-
-
-                <!-- User -->
+                <!-- User -->             
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                      <img src="{{Auth::user()->profile_image_url ?? '/app-assets/img/avatars/1.png'}}" alt class="h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a class="dropdown-item">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
-                            </div>
+                      <a class="dropdown-item" href="pages-account-settings-account.html">
+                          <div class="d-flex">
+                              <div class="flex-shrink-0 me-3">
+                                  <div class="avatar avatar-online">
+                                    <img src="{{Auth::user()->profile_image_url ?? '/app-assets/img/avatars/1.png'}}" alt class="h-auto rounded-circle" />
+                                  </div>
+                              </div>
+                              <div class="flex-grow-1">
+                                  <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                                  <small class="text-muted">Mahasiswa</small>
+                              </div>
                           </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Mahasiswa</small>
-                          </div>
-                        </div>
                       </a>
                     </li>
                     <li>
@@ -429,7 +430,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
                         <i class="ti ti-logout me-2 ti-sm"></i>
                         <span class="align-middle">Keluar</span>
                       </a>
@@ -438,8 +439,8 @@
                 </li>
                 <!--/ User -->
               </ul>
-            <!-- </div> -->
-
+            </div>
+          @endif 
           <!-- Search Small Screens -->
           <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
             <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
@@ -473,8 +474,8 @@
             Apakah Anda Ingin Keluar Dari Akun Ini?
           </div>
           <div class="modal-footer" style="display: flex; justify-content:center;">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-            <button type="button" class="btn btn-danger">Tidak</button>
+            <a href="{{ route('logout') }}"<button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+            <button type="button" class="btn btn-danger" >Tidak</button>
           </div>
         </div>
       </div>
