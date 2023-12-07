@@ -51,7 +51,7 @@ class LoginController extends Controller
             // if (!$user->hasVerifiedEmail()) {
             //     return redirect()->route('verification.notice')->with('warning', 'Please verify your email first.');
             // }
-            return view('dashboard');
+            return view('landingpage.landingpage');
         }
     }
 }

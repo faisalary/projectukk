@@ -18,19 +18,12 @@ use App\Http\Middleware\RoleMiddleware;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage.landingpage');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard');
+// landingpage
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+// after-login-user
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
-Route::get('/dashboard-admin', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
+Route::get('/dashboard-admin', [App\Http\Controllers\DashboardMitraController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
 //super admin
 Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
@@ -269,14 +262,9 @@ Route::get('/informasi/magang', function () {
     return view('layouts.program_magang.informasi_magang');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('/lowongan-magang-tersimpan', function () {
     return view('layouts.program_magang.lowongan_magang_tersimpan');
 });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
     return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
