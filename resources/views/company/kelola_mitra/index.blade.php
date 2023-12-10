@@ -313,8 +313,8 @@
                     name: 'email'
                 },
                 {
-                    data: 'notelepon',
-                    name: 'notelepon',
+                    data: 'notelpon',
+                    name: 'notelpon',
                     render: function(data, type, row, meta) {
                         // Check if the data is null or undefined
                         if (data === null || data === undefined) {
