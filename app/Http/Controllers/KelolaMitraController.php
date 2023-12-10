@@ -8,12 +8,17 @@ use App\Models\Industri;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Mail;
 class KelolaMitraController extends Controller
 {
+    public function __construct()
+    {
+       
+    }
     /**
      * Display a listing of the resource.
      */
@@ -36,6 +41,10 @@ class KelolaMitraController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'namaindustri' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+        ]);
         try{
             DB::beginTransaction();
             $industri = Industri::create([
@@ -48,29 +57,39 @@ class KelolaMitraController extends Controller
 
         
         $code = Str::random(64);
-            $defaultPassword = '123445678';
+        $defaultPassword = '12345678';
+        $admin = User::create([
+            'name' => $request->namaindustri,
+            'username' => 'mitra',
+            'email' => $request->email,
+            'password' => Hash::make($defaultPassword),
+            'remember_token' => $code,
+            'isAdmin'=>1,
+            'id_industri' => $industri->id_industri,
+            'id_mahasiswa' => '1'
+        ]);
+        $admin->assignRole('admin');
+        $url=url('/admin/set-password/'.$code);
 
-            $admin = User::create([
-                'name' => $request->namaindustri,
-                'username' => 'mitra',
-                'email' => $request->email,
-                'password' => Hash::make($defaultPassword),
-                'remember_token' => $code,
-                'isAdmin'=>1,
-                'id_industri' => $industri->id_industri,
+        if ($admin) {
+        Mail::to($admin->email)->send(new VerifyEmail($url));
+
+            // Admin berhasil ditambahkan
+            session()->flash('success', 'Admin berhasil ditambahkan. silahkan Cek email anda untuk melakukan verify');
                 
-                
-            ]);
-            $admin->assignRole('admin');
-            
-            DB::commit();
-            
-            return response()->json([
-                'error' => false,
-                'message' => 'Industri successfully Created!',
-                'modal' => '#modalTambahMitra',
-                'table' => '#table-kelola-mitra1'
-            ]);
+        } else {
+            // Gagal menambahkan admin
+            session()->flash('error', 'Gagal menambahkan admin.');
+        }
+        
+        DB::commit();
+        
+        return response()->json([
+            'error' => false,
+            'message' => 'Industri successfully Created!',
+            'modal' => '#modalTambahMitra',
+            'table' => '#table-kelola-mitra1'
+        ]);
 
         } catch (Exception $e) {
             DB::rollBack();
