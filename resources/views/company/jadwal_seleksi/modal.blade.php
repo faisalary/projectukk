@@ -8,16 +8,6 @@
              <div class="col-12 mb-2">
                  <div class="row">
                      <div class="mb-2">
-                         <label for="jenis" class="form-label">Jenis Seleksi</label>
-                         <select class="form-control select2" data-placeholder="Pilih Jenis Seleksi" id="jenisseleksi">
-                             <option value="Seleksi Tahap 1">Seleksi Tahap 1</option>
-                             <option value="Seleksi Tahap 2">Seleksi Tahap 2</option>
-                             <option value="Seleksi Tahap 3">Seleksi Tahap 3</option>
-                         </select>
-                     </div>
-                 </div>
-                 <div class="row">
-                     <div class="mb-2">
                          <label for="pelaksanaan" class="form-label">Pelaksanaan Seleksi</label>
                          <select class="form-select select2" data-placeholder="Pilih Pelaksanaan Seleksi"
                              id="pelaksanaanseleksi">
@@ -124,7 +114,7 @@
      </div>
  </div>
 
- <!-- Modal CV Online-->
+ <!-- Modal Detail-->
  <div class="modal fade" id="modaldetail" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
          <div class="modal-content">
@@ -142,7 +132,7 @@
                  </div>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
-             <form class="default-form">
+             <form class="default-form" id="" method="GET" action="{{ route('seleksi.show') }}">
                  @csrf
 
                  <div class="modal-body">
@@ -213,13 +203,11 @@
                              </div>
                              <div class="col-6 ms-4">
                                  <span class="text-secondary">Tanggal Pelaksanaan</span>
-                                 <p class="fw-bold mt-1">Selasa, 30 Juli 2023, 08.00</p>
+                                 <p class="fw-bold mt-1" id="tglpelaksanaan"></p>
                              </div>
                              <div class="col-6 ms-4">
                                  <span class="text-secondary">Tempat Pelaksanaan</span>
-                                 @foreach ($seleksi as $s)
-                                     <p class="fw-bold mt-1" id="tpelaksanaan" name="tpelaksanaan" value="{{ $s->id_seleksi }}">{{ $s->detail }}</p>
-                                 @endforeach
+                                 <p class="fw-bold mt-1" id="tpelaksanaan" name="tpelaksanaan"></p>
                              </div>
                              <div class="col-6 ms-4">
                                  <span class="text-secondary">Respon Kandidat</span>
@@ -229,19 +217,15 @@
                          <div class="col-4 mt-2">
                              <div class="col-6">
                                  <span class="text-secondary">Jenis Pelaksanaan</span>
-                                 <p class="fw-bold mt-1">Onsite</p>
+                                 <p class="fw-bold mt-1" id="jpelaksanaan">Onsite</p>
                              </div>
                              <div class="col-6">
                                  <span class="text-secondary">Waktu Pelaksanaan</span>
-                                 <p class="fw-bold mt-1">10.00</p>
+                                 <p class="fw-bold mt-1" id="wpelaksanaan"></p>
                              </div>
-                             <div class="col-8">
+                             <div class="col-6">
                                  <span class="text-secondary">Status Seleksi</span>
-                                 <div class="mt-2">
-                                     <input class="form-check-input" type="checkbox" value=""
-                                         id="customCheckTemp4">
-                                     <span class="custom-option-headear">Sudah Seleksi Tahap 1</span>
-                                 </div>
+                                     <p class="fw-bold mt-1" id="seleksiteks"></p>
                              </div>
                          </div>
                      </div>

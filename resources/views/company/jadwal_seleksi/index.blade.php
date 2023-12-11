@@ -88,7 +88,7 @@
                                 aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
                                 <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
                                 <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;">1</span>
+                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
                             </button>
                         </li>
                         <li class="nav-item" style="font-size: small;">
@@ -97,17 +97,16 @@
                                 aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
                                 <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
                                 <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;">1</span>
+                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
                             </button>
                         </li>
                         <li class="nav-item" style="font-size: small;">
                             <button type="button" class="nav-link showSingle" target="2" role="tab"
                                 data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3"
-                                aria-controls="navs-pills-justified-tahap3" aria-selected="false"
-                                style="padding: 8px 9px;">
+                                aria-controls="navs-pills-justified-tahap3" aria-selected="false" style="padding: 8px 9px;">
                                 <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
                                 <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;">2</span>
+                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
                             </button>
                         </li>
                     </ul>
@@ -124,27 +123,40 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
-            <div class="dropdown bootstrap-select">
-                <select id="selectpickerBasic" class="selectpicker " data-style="btn-default">
-                    <option disabled selected>Ubah Status Kandidat</option>
-                    <option value="Sudah Seleksi Tahap 1">Sudah Seleksi</option>
-                    <option value="Belum Seleksi Tahap 1">Belum Seleksi</option>
-                </select>
+        <form class="default-form" method="POST" action="{{ url('jadwal-seleksi/store?updateMassive=true') }}">
+            @csrf
+            <input type="hidden" name="checked[]" id="checkval">
+            <button style="display: none;" type="submit" id="gotcha"></button>
+            <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
+                <div class="dropdown bootstrap-select">
+                    <select id="selectpickerBasic" class="selectpicker " data-style="btn-default" name="hayolo">
+                        <option disabled selected>Ubah Status Kandidat</option>
+                        @foreach ($seleksi as $status)
+                            @if ($status->statusseleksi == 0)
+                                <option value="1">Sudah Seleksi Tahap 1</option>
+                            @elseif($status->statusseleksi == 1)
+                            <option value="2">Belum Seleksi Tahap 2</option>
+                            @elseif($status->statusseleksi == 2)
+                            <option value="3">Sudah Seleksi Tahap 2</option>
+                            @endif
+                        @endforeach
+                        {{-- <option value="4">Belum Seleksi Tahap 3</option>
+                        <option value="5">Sudah Seleksi Tahap 3</option> --}}
+                    </select>
+                </div>
+                <div class="ps-3">
+                    <button class="btn btn-success waves-effect" type="button" onclick="terapkan()"><i
+                            class="tf-icons ti ti-checks me-2"></i>Terapkan</button>
+                </div>
             </div>
-            <div class="ps-3">
-                <button class="btn btn-success waves-effect" type="button"><i
-                        class="tf-icons ti ti-checks me-2"></i>Terapkan</button>
-            </div>
-        </div>
+        </form>
     </div>
 
     <div class="tab-content p-0">
         <div class="tab-pane fade show active" id="navs-pills-justified-tahap1" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="table-jadwal-seleksi">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
                         <thead>
                             <tr>
                                 <th></th>
@@ -167,7 +179,7 @@
         <div class="tab-pane fade show" id="navs-pills-justified-tahap2" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="table-jadwal-seleksi-tahap2">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
                         <thead>
                             <tr>
                                 <th></th>
@@ -175,7 +187,6 @@
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th>TANGGAL DAFTAR</th>
-                                <th>TAHAPAN SELEKSI</th>
                                 <th>TANGGAL SELEKSI</th>
                                 <th>WAKTU SELEKSI</th>
                                 <th style="min-width:100px;">PELAKSANAAN</th>
@@ -191,7 +202,7 @@
         <div class="tab-pane fade show" id="navs-pills-justified-tahap3" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="table-jadwal-seleksi-tahap3">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap3">
                         <thead>
                             <tr>
                                 <th></th>
@@ -199,7 +210,6 @@
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th>TANGGAL DAFTAR</th>
-                                <th>TAHAPAN SELEKSI</th>
                                 <th>TANGGAL SELEKSI</th>
                                 <th>WAKTU SELEKSI</th>
                                 <th style="min-width:100px;">PELAKSANAAN</th>
@@ -220,11 +230,18 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
 
     <script>
+        let checked = [];
+
+        function terapkan() {
+            let val = $(".checkbox1:checkbox:checked").map((_, el) => el.value).get();
+            $('#checkval').val(val);
+            $('#gotcha').click();
+        }
         $("#modalTambahJadwal").on("hide.bs.modal", function() {
             $(".modal-title").html("Tambah Jadwal Seleksi Lanjutan");
             $("#modal-button").html("Save Data");
             $('#modalTambahJadwal form')[0].reset();
-            $('#modalTambahJadwal form #pelaksanaan').val('').trigger('change');
+            $('#modalTambahJadwal form #nama').val('').trigger('change');
             $('#modalTambahJadwal form').attr('action', "{{ url('jadwal-seleksi/store') }}");
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
@@ -242,7 +259,7 @@
                     $(".modal-title").html("Edit Jadwal Seleksi Lanjutan");
                     $("#modal-button").html("Update Data");
                     $('#modalTambahJadwal form').attr('action', action);
-                    $('#nama').val(response.id_pendaftaran);
+                    $('#nama').val(response.id_pendaftaran).trigger('change');
                     $('#pelaksanaan').val(response.pelaksanaan).trigger('change');
                     $('#mulai').val(response.tglseleksi);
                     $('#waktu').val(response.jamseleksi);
@@ -253,91 +270,87 @@
             });
         }
 
-        // var jsonData = [{
-        //         "id": "",
-        //         "id": "",
-        //         "nomor": "1",
-        //         "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-        //         "tanggal_pendaftaran": "14 Juni 2023",
-        //         "tanggal": "20 Juli 2023",
-        //         "waktu": "08.00",
-        //         "pelaksanaan": "Online",
-        //         "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
-        //         "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCVOnline' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
-        //     },
-        //     {
-        //         "id": "",
-        //         "id": "",
-        //         "nomor": "2",
-        //         "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-        //         "tanggal_pendaftaran": "14 Juni 2023",
-        //         "tanggal": "20 Juli 2023",
-        //         "waktu": "08.00",
-        //         "pelaksanaan": "Onsite",
-        //         "status": "<span class='badge bg-label-secondary me-1'>Belum Seleksi</span>",
-        //         "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
-        //     },
-        //     {
-        //         "id": "",
-        //         "id": "",
-        //         "nomor": "3",
-        //         "nama": "<span class='fw-bold'>Andika Alatas</span> <br> 6701228083",
-        //         "tanggal_pendaftaran": "14 Juni 2023",
-        //         "tanggal": "20 Juli 2023",
-        //         "waktu": "08.00",
-        //         "pelaksanaan": "Onsite",
-        //         "status": "<span class='badge bg-label-success me-1'>Sudah Seleksi</span>",
-        //         "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditJadwal' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a data-bs-toggle='modal' data-bs-target='#modalCV' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>"
+        function get(e) {
+            let id = e.attr('data-id');
 
-        //     }
-        // ];
-        var table = $('#table-jadwal-seleksi').DataTable({
-            ajax: {
-                url: "{{ url('jadwal-seleksi/show') }}",
-                type: 'POST',
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        "content"
-                    ),
+            let action = `{{ url('jadwal-seleksi/update/') }}/${id}`;
+            var url = `{{ url('jadwal-seleksi/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $(".modal-title").html("Jadwal Seleksi Tahap 1");
+                    $('#jpelaksanaan').html(response.pelaksanaan);
+                    $('#tpelaksanaan').html(response.detail);
+                    $('#tglpelaksanaan').html(response.tglseleksi);
+                    $('#wpelaksanaan').html(response.jamseleksi);
+                    $('#seleksiteks').html(response.teks);
                 }
-            },
-            columns: [{
-                    data: "id_seleksi"
+            });
+        }
+
+        const tahap = [1, 2, 3];
+        tahap.forEach((no) => {
+            $('#table-jadwal-seleksi-tahap' + no).DataTable({
+                ajax: {
+                    url: "{{ url('jadwal-seleksi/show') }}?tahap=" + no,
+                    type: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    }
                 },
-                {
-                    data: "id_seleksi"
-                },
-                {
-                    data: "DT_RowIndex"
-                },
-                {
-                    data: "id_pendaftaran",
-                    name: "id_pendaftaran"
-                },
-                {
-                    data: "tanggaldaftar",
-                    name: "tanggaldaftar"
-                },
-                {
-                    data: "tglseleksi",
-                    name: "mulai"
-                },
-                {
-                    data: "jamseleksi",
-                    name: "waktu"
-                },
-                {
-                    data: "pelaksanaan",
-                    name: "pelaksanaan"
-                },
-                {
-                    data: "status"
-                },
-                {
-                    data: "action"
-                }
-            ],
-            columnDefs: [{
+                serverSide: false,
+                processing: true,
+                destroy: true,
+                columns: [{
+                        data: "id_seleksi"
+                    },
+                    {
+                        data: "checkbox",
+                        orderable: false,
+                        searchable: false,
+                        responsivePriority: 3,
+                        checkboxes: true,
+                        render: function(data) {
+                            return `<input type="checkbox" class="dt-checkboxes form-check-input checkbox1" value="${data}">`;
+                        },
+                        checkboxes: {
+                            selectAllRender: '<input type="checkbox" class="form-check-input">'
+                        }
+                    },
+                    {
+                        data: "DT_RowIndex"
+                    },
+                    {
+                        data: "id_pendaftaran",
+                        name: "id_pendaftaran"
+                    },
+                    {
+                        data: "tanggaldaftar",
+                        name: "tanggaldaftar"
+                    },
+                    {
+                        data: "tglseleksi",
+                        name: "mulai"
+                    },
+                    {
+                        data: "jamseleksi",
+                        name: "waktu"
+                    },
+                    {
+                        data: "pelaksanaan",
+                        name: "pelaksanaan"
+                    },
+                    {
+                        data: "statusseleksi"
+                    },
+                    {
+                        data: "action"
+                    }
+                ],
+                columnDefs: [{
                     // For Responsive
                     className: 'control',
                     orderable: false,
@@ -347,28 +360,9 @@
                     render: function(data, type, full, meta) {
                         return '';
                     }
-                },
-                {
-                    targets: 1,
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 3,
-                    checkboxes: true,
-                    render: function() {
-                        return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                    },
-                    checkboxes: {
-                        selectAllRender: '<input type="checkbox" class="form-check-input">'
-                    }
-                },
-            ]
-        });
-
-        var table = $('#table-jadwal-seleksi-tahap2').DataTable({
-        });
-
-        var table = $('#table-jadwal-seleksi-tahap3').DataTable({
-        });
+                }, ]
+            });
+        })
     </script>
 
 

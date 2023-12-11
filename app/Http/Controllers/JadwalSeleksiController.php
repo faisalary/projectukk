@@ -37,7 +37,28 @@ class JadwalSeleksiController extends Controller
     }
 
     public function store(Request $request)
-    {
+    { $a = [];
+        if(request()->updateMassive == true){
+            foreach(explode(',',$request->checked[0]) as $id){
+                $a = Seleksi::find($id);
+                if($a){
+                    if($request->hayolo == null){
+                        return response()->json([
+                            'error' => true,
+                            'message' => 'No Status Kandidat selected',
+                        ], 422);
+                    }
+                    $a->statusseleksi = $request->hayolo;
+                    $a->save();
+                }
+            }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Updated!',
+                'table' => '.table-jadwal-seleksi',
+                'modal' => 'none'
+            ]);
+        }
         try {
             Seleksi::create([
                 'id_pendaftaran' => $request->id_pendaftaran,
@@ -64,13 +85,26 @@ class JadwalSeleksiController extends Controller
 
     public function show()
     {
+        if(request()->tahap == '1'){
+            $statusseleksi = [0,1];
+        }elseif(request()->tahap == '2'){
+            $statusseleksi = [2,3];
+        }elseif(request()->tahap == '3'){
+            $statusseleksi = [4,5];
+        }
         $seleksi = Seleksi::select('seleksi.*', 'pendaftaran_magang.tanggaldaftar', 'mahasiswa.namamhs', 'mahasiswa.nim')->join('pendaftaran_magang', 'pendaftaran_magang.id_pendaftaran', 'seleksi.id_pendaftaran')
             ->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
             ->join('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')
+            ->where('statusseleksi', $statusseleksi[0])
+            ->orWhere('statusseleksi', $statusseleksi[1])
             ->get();
 
         return DataTables::of($seleksi)
             ->addIndexColumn()
+            ->addColumn('checkbox', function ($seleksi) {
+                // return '<input class="form-check-input checkbox1" type="checkbox" name="checkTerapkan[]" value="'.$seleksi->id_seleksi.'">';
+                return $seleksi->id_seleksi;
+            })
             ->addColumn('id_pendaftaran', function ($seleksi) {
                 $data = $seleksi->namamhs . "  " . $seleksi->nim;
                 return $data;
@@ -83,23 +117,24 @@ class JadwalSeleksiController extends Controller
                 }
                 return $seleksi->pelaksanaan;
             })
-            ->editColumn('status', function ($seleksi) {
-                if ($seleksi->status == 1) {
-                    return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 1" . "</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 1" . "</div></div>";
-                }
+            ->editColumn('statusseleksi', function ($seleksi) {
+                // if ($seleksi->statusseleksi == 0) {
+                //     return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 1" . "</div></div>";
+                // } else {
+                //     return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 1" . "</div></div>";
+                // }
+                return $seleksi->status_seleksi_text;
             })
             ->addColumn('action', function ($seleksi) {
-                $icon = ($seleksi->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($seleksi->status) ? "secondary" : "success";
+                $icon = ($seleksi->statusseleksi) ? "ti-circle-x" : "ti-circle-check";
+                $color = ($seleksi->statusseleksi) ? "secondary" : "success";
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$seleksi->id_seleksi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-bs-toggle='modal' data-id='{$seleksi->id_seleksi}' data-bs-target='#modaldetail'  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                <a data-bs-toggle='modal' data-id='{$seleksi->id_seleksi}' data-bs-target='#modaldetail' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
 
                 return $btn;
             })
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['checkbox','statusseleksi', 'action'])
 
             // ->toJson();
             ->make(true);
@@ -108,6 +143,12 @@ class JadwalSeleksiController extends Controller
     public function edit($id)
     {
         $seleksi = Seleksi::where('id_seleksi', $id)->first();
+        if ($seleksi->pelaksanaan == 0) {
+            $seleksi->pelaksanaan = "Onsite";
+        } else {
+            $seleksi->pelaksanaan = "Online";
+        }
+        $seleksi['teks'] = $seleksi->status_seleksi_text;
         return $seleksi;
     }
 
