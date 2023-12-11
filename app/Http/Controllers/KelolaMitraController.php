@@ -59,8 +59,8 @@ class KelolaMitraController extends Controller
         $code = Str::random(64);
         $defaultPassword = '12345678';
         $admin = User::create([
-            'name' => $request->namaindustri,
-            'username' => 'mitra',
+            'name' => 'mitra',
+            'username' => $request->namaindustri,
             'email' => $request->email,
             'password' => Hash::make($defaultPassword),
             'remember_token' => $code,
