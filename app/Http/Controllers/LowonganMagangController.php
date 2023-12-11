@@ -12,6 +12,7 @@ use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\TahunAkademik;
 use App\Models\JenisMagang;
+use App\Models\Industri;
 use Illuminate\Routing\Route;
 
 class LowonganMagangController extends Controller
@@ -26,7 +27,8 @@ class LowonganMagangController extends Controller
         $fakultas = Fakultas::all();
         $tahun = TahunAkademik::all();
         $jenismagang = JenisMagang::all();
-        return view('masters.lowongan-magang.index', compact('lowonganmagang','prodi','fakultas','tahun','jenismagang'));
+        $industri = Industri::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowonganmagang','prodi','fakultas','tahun','jenismagang','industri'));
     }
 
      /**
@@ -45,14 +47,14 @@ class LowonganMagangController extends Controller
         try {
 
         $lowonganmagang = LowonganMagang::create([
-            'id_industri' => $request->mitra,
-            'id_year_Akademik' => $request->tahunajaran,
+            'id_industri' => $request->namaindustri,
+            'id_year_Akademik' => $request->tahun,
             'created_by' => $request->now(),
             'id_jenismagang' => $request->jenismagang,
             'created_at' => $request->now(),
             'intern_position' => $request->posisi,
             'bidang' => $request->bidang,
-            'durasimagang' => $request->durasi,
+            'durasimagang' => $request->durasimagang,
             'deskripsi' => $request->deskripsi,
             'requirements' => $request->kualifikasi,
             'id_lokasi' => $request->lokasi,
@@ -61,17 +63,19 @@ class LowonganMagangController extends Controller
             'startdate' => $request->tanggalmulai,
             'enddate' => $request->tanggalakhir,
             'tahapan_seleksi' => $request->tahapan,
-            'date_confirm_closing' => $request->informasilowongan,
-            'id_prodi' => $request->programstudi,
-            'id_fakultas' => $request->fakultas,
+            'date_confirm_closing' => $request->namainformasilowongan,
+            'id_prodi' => $request->namaprodi,
+            'id_fakultas' => $request->namafakultas,
+            'applicant_status' => $request->tertunda,
+            'paid' => $request->gaji,
             'status' => true,
         ]);
 
         return response()->json([
             'error' => false,
             'massage' => 'Data Created!',
-            'modal' => '#modal-lowonganmagang',
-            'table' => '#table-master-mahasiswa'
+            'modal' => '#modalTambahLowongan',
+            // 'table' => '#table_kelola_lowongan'
         ]);
         } catch (Exception $e) {
             return response()->json([
@@ -87,14 +91,23 @@ class LowonganMagangController extends Controller
     public function show(Request $request)
     {
         $lowonganmagang = LowonganMagang::query();
-        if ($request->fakultas != null) {
-            $lowonganmagang->where("id_fakultas", $request->fakultas);
-        } else if ($request->univ !=null) {
-            $lowonganmagang->where("id_univ", $request->univ);
+        if($request->type){
+            if ($request->fakultas != null) {
+                $lowonganmagang->where("id_fakultas", $request->fakultas, $request->type);
+            } else if ($request->prodi !=null) {
+                $lowonganmagang->where("id_prodi", $request->prodi, $request->type);
+            } else if ($request->tahun != null) {
+                $lowonganmagang->where("id_year_Akademik", $request->tahun, $request->type);
+            } else if ($request->jenismagang != null) {
+                $lowonganmagang->where("id_jenismagang", $request->jenismagang, $request->type);
+            } else if ($request->industri != null) {
+                $lowonganmagang->where("id_industri", $request->industri, $request->type);
+            }
+            $lowonganmagang = $lowonganmagang->with("fakultas", "prodi",  "tahun", "jenismagang", "industri")->orderBy('id_fakultas', 'desc');
         }
-        $lowonganmagang = $lowonganmagang->with("univ", "prodi","fakultas")->orderBy('nim', "asc")->get();
 
-        return DataTables::of($lowonganmagang)
+
+        return DataTables::of($lowonganmagang->get())
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -134,8 +147,8 @@ class LowonganMagangController extends Controller
         try {
             $lowonganmagang = LowonganMagang::where();
 
-            $lowonganmagang->id_industri = $request->mitra;
-            $lowonganmagang->id_year_Akademik = $request->tahunajaran;
+            $lowonganmagang->id_industri = $request->namaindustri;
+            $lowonganmagang->id_year_Akademik = $request->tahun;
             $lowonganmagang->created_by = $request->now();
             $lowonganmagang->id_jenismagang = $request->jenismagang;
             $lowonganmagang->created_at = $request->now();
@@ -151,15 +164,17 @@ class LowonganMagangController extends Controller
             $lowonganmagang->enddate = $request->tanggalakhir;
             $lowonganmagang->tahapan_seleksi = $request->tahapan;
             $lowonganmagang->date_confirm_closing = $request->informasilowongan;
-            $lowonganmagang->id_prodi = $request->programstudi;
-            $lowonganmagang->id_fakultas = $request->fakultas;
+            $lowonganmagang->id_prodi = $request->namaprodi;
+            $lowonganmagang->id_fakultas = $request->namafakultas;
+            $lowonganmagang->applicant_status = $request->tertunda;
+            $lowonganmagang->paid = $request->gaji;
             $lowonganmagang->save();
 
             return response()->json([
                 'error' => false,
                 'message' => 'lowongan magang successfully Updated!',
-                'modal' => '#modal-lowonganmagang',
-                'table' => '#table-master-mahasiswa'
+                'modal' => '#modalTambahLowongan',
+                // 'table' => '#table_kelola_lowongan'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -175,7 +190,23 @@ class LowonganMagangController extends Controller
      */
     public function status($id)
     {
+        try {
+            $lowonganmagang = LowonganMagang::where($id)->first();
+            $lowonganmagang->status = ($lowonganmagang->status) ? false : true;
+            $lowonganmagang->save();
 
+            return response()->json([
+                'error' => false,
+                'message' => 'Status Lowongan Magang successfully Updated!',
+                'modal' => '#modalTambahLowongan',
+                // 'table' => '#table_kelola_lowongan'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
 }

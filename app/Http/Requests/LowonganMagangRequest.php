@@ -42,6 +42,7 @@ class LowonganMagangRequest extends FormRequest
                 'informasi_lowongan' => ['required', 'date', 'max:255'],
                 'program_studi' => ['required', 'string', 'max:255'],
                 'fakultas' => ['required', 'string', 'max:255'],
+                'paid' => ['required', 'boolean'],
             ];
         }
         return [
@@ -64,6 +65,7 @@ class LowonganMagangRequest extends FormRequest
             'informasi_lowongan' => ['required', 'date', 'max:255'],
             'program_studi' => ['required', 'string', 'max:255'],
             'fakultas' => ['required', 'string', 'max:255'],
+            'paid' => ['required', 'boolean'],
         ];
     }
     public function messages(): array
@@ -89,6 +91,7 @@ class LowonganMagangRequest extends FormRequest
             'pelaksanaan.required' => 'Implementation must be filled',
             'id_prodi.required' => 'Prodi must be filled',
             'id_fakultas.required' => 'Fakultas must be filled',
+            'paid' => 'paid must be filled',
         ];
     }
 }

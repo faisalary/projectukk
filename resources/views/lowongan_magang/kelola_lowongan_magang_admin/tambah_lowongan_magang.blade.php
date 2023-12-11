@@ -21,42 +21,45 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <div class="card-body">
-                    <form>
-                        <div class="mb-3">
+                        <div class="row">
+                            <div class="col mb-3 form-input">
                             <label for="mitra" class="form-label">Mitra<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="mitra" name="mitra"
-                                placeholder="Masukan Nama Mitra" />
+                            <select class="form-select select2" id="pilihindustri_add" name="namaindustri" data-placeholder="Pilih Mitra">
+                                <option disabled selected>Pilih Mitra</option>
+                                {{-- @foreach($industri as $i)
+                                <option value="{{ $i->id_industri }}">{{ $f->namaindustri }}</option>
+                                @endforeach --}}
+                                <div class="invalid-feedback"></div>
+                            </select>
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="tahunajaran" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="tahunajaran" name="tahunajaran" data-placeholder="Pilih Tahun Ajaran">
+                                <label for="tahun" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="pilihtahunajaran_add" name="tahun" data-placeholder="Pilih Tahun Ajaran">
                                     <option disabled selected>Pilih Tahun Ajaran</option>
-                                    <option value="1">2023/2024 - Ganjil</option>
-                                    <option value="2">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
+                                    {{-- @foreach($tahun as $t)
+                                    <option value="{{ $t->id_year_Akademik }}">{{ $f->tahun }}</option>
+                                    @endforeach --}}
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="posisipekerjaan" class="form-label">Posisi<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="posisi" name="posisipekerjaan"
+                            <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="posisi" name="posisi"
                                 placeholder="Masukan Posisi Pekerjaan" />
                         </div>
                         <div class="mb-3">
-                            <label for="kuotapenerimaan" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kuota" name="kuotapenerimaan"
+                            <label for="kuota" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="kuota" name="kuota"
                                 placeholder="Masukkan Kuota Penerimaan" />
                         </div>
                         <div class="mb-3">
-                            <label for="industripekerjaan" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="industri" name="industripekerjaan"
+                            <label for="bidang" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="bidang" name="bidang"
                                 placeholder="Masukkan Industri Pekerjaan" />
                         </div>
                         <div class="mb-3">
@@ -76,12 +79,11 @@
                                 <div class="row">
                                     <div class="col mb-3 form-input">
                                         <label for="fakultas" class="form-label">Fakultas<span class="text-danger">*</span></label>
-                                        <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
+                                        <select class="form-select select2" id="pilihfakultas_add" name="namafakultas" data-placeholder="Pilih Fakultas">
                                             <option disabled selected>Pilih Fakultas</option>
-                                            <option>Fakultas Ilmu Terapan</option>
-                                            <option>Fakultas Komunikasi Bisnis</option>
-                                            <option>Fakultas Industri Kreatif</option>
-                                            <option>Fakultas Ekonomi Bisnis</option>
+                                            @foreach($fakultas as $f)
+                                            <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                            @endforeach
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -89,8 +91,8 @@
 
                                 <div class="row">
                                     <div class="col mb-3 form-input">
-                                        <label for="programstudi" class="form-label">Program Studi<span class="text-danger">*</span></label>
-                                        <select class="form-select select2" id="programstudi" name="programstudi" data-placeholder="Pilih Program Studi">
+                                        <label for="prodi" class="form-label">Program Studi<span class="text-danger">*</span></label>
+                                        <select class="form-select select2" id="pilihprodi_add" name="namaprodi" data-placeholder="Pilih Program Studi">
                                             <option disabled selected>Pilih Program Studi</option>
                                             <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
                                             <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
@@ -111,7 +113,7 @@
                               class="form-control"
                               placeholder="Pilih Keterampilan"/>
                               <label for="" style="font-size: 13px">Jika keterampilan belum terdaftar silahkan ketik manual</label>
-                          </div>
+                        </div>
 
                         <div class="mb-3">
                             <label for="gaji" class="form-label">Gaji Ditawarkan<span class="text-danger">*</span></label>
@@ -131,7 +133,7 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-message">Benefits (Addtional)</label>
-                            <textarea id="basic-default-message" class="form-control" placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                            <textarea id="basic-default-message" class="form-control" id="benefit" name="benefit" placeholder="Masukan kualifikasi mahasiswa"></textarea>
                         </div>
 
                         <div class="row">
@@ -168,7 +170,7 @@
 
                         <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
+                                <label for="durasi" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
                                 <select class="form-select select2" id="durasi" name="durasimagang" data-placeholder="Pilih Durasi Magang">
                                     <option disabled selected>Pilih Durasi Magang</option>
                                     <option value="1">1 Semester</option>
@@ -199,14 +201,22 @@
                             </div>
                         </div>
 
-                        <div class="mb-3 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-success">Simpan</button>
+                        {{-- <div class="mb-3 d-flex justify-content-end">
+                            <a href="/kelola/lowongan/admin">
+                            <button type="submit" id='modal-button' class="btn btn-success">Simpan</button></a>
+                        </div> --}}
+                        <div class="modal-footer">
+                            <a href="/kelola/lowongan/admin">
+                            <button type="submit" id="modal-button" class="btn btn-success">Simpan</button></a>
                         </div>
                     </form>
                 </div>
+            {{-- </form> --}}
             </div>
         </div>
     </div>
+    {{-- </div>
+</div> --}}
 @endsection
 
 @section('page_script')

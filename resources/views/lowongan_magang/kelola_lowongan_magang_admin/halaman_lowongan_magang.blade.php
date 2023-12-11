@@ -49,51 +49,56 @@
         </div>
     </div>
 
-<div class="col-xl-12">
-    <div class="nav-align-top">
-        <ul class="nav nav-pills " role="tablist">
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-dibuat" aria-controls="navs-pills-justified-dibuat" aria-selected="true" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-briefcase ti-xs me-2"></i> Dibuat
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"style="background-color: #DCEEE3; color: #4EA971;">3</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clock ti-xs me-2"></i> Tertunda
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-disetujui" aria-controls="navs-pills-justified-disetujui" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clipboard-check ti-xs me-2"></i>Disetujui
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">4</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clipboard-x ti-xs me-2"></i> Ditolak
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
-                </button>
-            </li>
-        </ul>
-    </div>
-</div>
+    <div class="col-xl-12">
+        <div class="nav-align-top">
+            <ul class="nav nav-pills mb-3 " role="tablist">
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-dibuat" aria-controls="navs-pills-justified-dibuat" aria-selected="true" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Dibuat
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">3</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Tertunda
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-disetujui" aria-controls="navs-pills-justified-disetujui" aria-selected="false" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Disetujui
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Ditolak
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
 
    <div class="row mb-4">
     <div class="col-md-8 col-12 ">
-    <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
-        data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Posisi Pekerjaan : -, Durasi Magang : -, Fakultas : -, Universitas : -" id="tooltip-filter"></i></div>
+    <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Posisi Pekerjaan : -, Durasi Magang : -, Fakultas : -, Universitas : -" id="tooltip-filter"></i></div>
     </div>
+    @foreach(['2','3','4'] as $statusId)
+    @if($statusId == 2)
+    @can("can.view.data.table")
+    <div id="div{{$statusId}}" class="col-1 targetDiv" style="display: none;">
+    @endcan
+    @endif
+    @endforeach
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <a href='/tambah-lowongan-magang'>
-                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modal-lowonganmagang">+ Tambah Lowongan
-                Magang</button>
+                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
+                    Magang</button>
             </a>
         </div>
    </div>
 
-    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan</h5>
         </div>
@@ -102,8 +107,8 @@
                 <div class="col-12 mb-2">
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label" style="padding-left: 15px;">Posisi Pekerjaan</label>
-                            <select class="form-select select2" id="posisipekerjaan" name="posisi pekerjaan" data-placeholder="Pilih posisi pekerjaan">
+                            <label for="posisi" class="form-label" style="padding-left: 15px;">Posisi</label>
+                            <select class="form-select select2" id="posisi" name="posisi" data-placeholder="Pilih posisi pekerjaan">
                                 <option disabled selected>Pilih Posisi Pekerjaan</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -111,24 +116,29 @@
                     </div>
                     <div class="row">
                         <div class="mb-2">
-                            <label for="univ" class="form-label" style="padding-left: 15px;">Durasi Magang</label>
-                            <select class="form-select select2" id="durasimagang" name="durasi magang" data-placeholder="Pilih Durasi Magang">
+                            <label for="durasimagang" class="form-label" style="padding-left: 15px;">Durasi Magang</label>
+                            <select class="form-select select2" id="durasimagang" name="durasimagang" data-placeholder="Pilih Durasi Magang">
                                 <option disabled selected>Pilih Durasi Magang</option>
                                 <option value="1 Semester">1 Semester</option>
                                 <option value="2 Semester">2 Semester</option>
-
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="fakultas" class="form-label" style="padding-left: 15px;">Fakultas</label>
-                            <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Input Fakultas">
+                            {{-- <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Input Fakultas">
                                 <option disabled selected>Pilih Fakultas</option>
                                 <option value="fakultas ilmu terapan">Fakultas Ilmu Terapan</option>
                                 <option value="Fakultas Komunikasi Bisnis">Fakultas Komunikasi Bisnis</option>
                                 <option value="Fakultas Industri Kreatif">Fakultas Industri Kreatif</option>
                                 <option value="Fakultas Ekonomi Bisnis Bisnis">Fakultas Ekonomi Bisnis Bisnis</option>
+                            </select> --}}
+                             <select class="form-select select2" id="pilihfakultas_add" name="pilihfakultas" data-placeholder="Pilih Fakultas">
+                                <option disabled selected>Pilih Fakultas</option>
+                                @foreach($fakultas as $f)
+                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -136,8 +146,8 @@
                     <div class="row cnt">
                         <div id="div1" class="targetDiv">
                             <div class="col mb-2 form-input">
-                                <label for="univ" class="form-label" style="padding-left: 15px;">Program Studi</label>
-                                <select class="form-select select2" id="programstudi" name="program studi" data-placeholder="Program Studi">
+                                <label for="prodi" class="form-label" style="padding-left: 15px;">Program Studi</label>
+                                <select class="form-select select2" id="prodi" name="programstudi" data-placeholder="Pilih Program Studi">
                                     <option disabled selected>Pilih Program Studi</option>
                                     <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
                                     <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
@@ -148,27 +158,26 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mt-3 text-end">
-                    <button type="button" class="btn btn-label-danger">Reset</button>
-                    <button type="submit" class="btn btn-success">Terapkan</button>
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn btn-label-danger">Reset</button>
+                        <button type="submit" class="btn btn-success">Terapkan</button>
+                    </div>
                 </div>
             </form>
         </div>
-    </div> --}}
+    </div>
 
     <div class="tab-content p-0">
-        <div class="tab-pane fade show active" id="navs-pills-justified-dibuat" role="tabpanel">
+        @foreach(['dibuat','tertunda','disetujui','ditolak'] as $tableId)
+        <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
                 <div class="row mt-3 ms-2">
-                    <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
-                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
-                        Total lowongan : <span class="text-primary">50</span> <span
-                            class="text-success">Lowongan</span>
+                    <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
+                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>Total Lowongan:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Lowongan </span>
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="table-dibuat" style="width: 100%;">
+                    <table class="table tab1c" id="{{$tableId}}" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="min-width: auto;">NOMOR</th>
@@ -176,7 +185,7 @@
                                 <th style="min-width:100px;">FAKULTAS </th>
                                 <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:150px;">TANGGAL</th>
-                                <th style="min-width:100px;">DURASI MAGANG</th>
+                                <th style="min-width:150px;">DURASI MAGANG</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -185,95 +194,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="tab-pane fade" id="navs-pills-justified-tertunda" role="tabpanel">
-            <div class="card">
-                <div class="row mt-3 ms-2">
-                    <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
-                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
-                        Total lowongan : <span class="text-primary">50</span> <span
-                            class="text-success">Lowongan</span>
-                    </div>
-                </div>
-                <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="table-tertunda" style="width: 100% !important;">
-                        <thead>
-                            <tr>
-                                <th style="min-width: auto;">NOMOR</th>
-                                <th style="min-width:100px;">POSISI</th>
-                                <th style="min-width:100px;">FAKULTAS </th>
-                                <th style="min-width:150px;">PROGRAM STUDI</th>
-                                <th style="min-width:150px;">TANGGAL</th>
-                                <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane fade" id="navs-pills-justified-disetujui" role="tabpanel">
-            <div class="card">
-                <div class="row mt-3 ms-2">
-                 <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
-                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
-                        Total lowongan : <span class="text-primary">50</span> <span
-                            class="text-success">Lowongan</span>
-                    </div>
-                </div>
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="table-disetujui">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th style="min-width: auto;">NOMOR</th>
-                                <th style="min-width:100px;">POSISI</th>
-                                <th style="min-width:100px;">FAKULTAS </th>
-                                <th style="min-width:150px;">PROGRAM STUDI</th>
-                                <th style="min-width:150px;">TANGGAL</th>
-                                <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane fade" id="navs-pills-justified-ditolak" role="tabpanel">
-            <div class="card">
-                <div class="row mt-3 ms-2">
-                 <div class="border border-green-500 py-2 px-3 fw-semibold rounded-2 w-10 col-5" style="width: 300px;">
-                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>
-                        Total lowongan : <span class="text-primary">50</span> <span
-                            class="text-success">Lowongan</span>
-                    </div>
-                </div>
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="table-ditolak">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th style="min-width: auto;">NOMOR</th>
-                                <th style="min-width:100px;">POSISI</th>
-                                <th style="min-width:100px;">FAKULTAS </th>
-                                <th style="min-width:150px;">PROGRAM STUDI</th>
-                                <th style="min-width:150px;">TANGGAL</th>
-                                <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+        @endforeach
 
     <!-- Modal Alert-->
     <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
@@ -297,17 +218,80 @@
 @endsection
 
 @section('page_script')
+<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    $("#modal-lowonganmagang").on("hide.bs.modal", function() {
+    $('.table').each(function() {
+            let idElement = $(this).attr('id');
+            let url = "{{ url('kelola/lowongan/admin/show') }}?type=" + idElement;
+            console.log(idElement);
+            console.log(url);
+
+            $(this).DataTable({
+                ajax: url,
+                serverSide: false,
+                processing: true,
+                deferRender: true,
+                type: 'GET',
+                destroy: true,
+                columns: [{
+                        data: "DT_RowIndex"
+                    },
+                    {
+                        data: "posisi"
+                    },
+                    {
+                        data: "fakultas.namafakultas"
+                    },
+                    {
+                        data: "prodi.namaprodi"
+                    },
+                    {
+                        data: "tanggal"
+                    },
+                    {
+                        data: "durasimagang"
+                    },
+                    {
+                        data: "status"
+                    },
+                    {
+                        data: "action"
+                    }
+                ],
+            });
+
+        });
+
+        jQuery(function() {
+            jQuery('.showSingle').click(function() {
+                let idElement = $(this).attr('target');
+
+                jQuery('.targetDiv').hide('.cnt');
+                jQuery("#div" + idElement).slideToggle();
+
+                console.log(idElement);
+            });
+        });
+
+        $('.display').DataTable({
+            responsive: true
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+        });
+
+    $("#modalTambahLowongan").on("hide.bs.modal", function() {
 
     $("#modal-title").html("Tambah Lowongan Magang");
     $("#modal-button").html("Save Data");
-    $('#modal-lowonganmagang form #mitra_add').val('').trigger('change');
-    $('#modal-lowonganmagang form #tahunajaran_add').val('').trigger('change');
-    $('#modal-lowonganmagang form #jenismagang_add').val('').trigger('change');
-    $('#modal-lowonganmagang form #fakultas_add').val('').trigger('change');
-    $('#modal-lowonganmagang form #informasilowongan_add').val('').trigger('change');
-    $('#modal-lowonganmagang form #fakultas_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihindustri_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihtahunajaran_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihjenismagang_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihfakultas_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihprodi_add').val('').trigger('change');
+    $('#modalTambahLowongan form #pilihinformasilowongan_add').val('').trigger('change');
     });
 
     function edit(e) {
@@ -321,197 +305,52 @@
             success: function(response) {
                 $("#modal-title").html("Edit LowonganMangang");
                 $("#modal-button").html("Update Data")
-                $('#modal-lowonganmagang form').attr('action', action);
-                $('#mitra_add').val(response.id_industis).change();
-                $('#tahunajaran_add').val(response.id_year_Akademik).change();
-
-                $('#jenismagang_add').val(response.id_jenismagang).change();
-
+                $('#modalTambahLowongan form').attr('action', action);
+                $('#pilihindustri_add').val(response.id_industri).change();
+                $('#pilihtahunajaran_add').val(response.id_year_Akademik).change();
+                $('#created_by').val(response.now());
+                $('#pilihjenismagang_add').val(response.id_jenismagang).change();
+                $('#created_at').val(response.now());
                 $('#posisi').val(response.intern_position);
                 $('#bidang').val(response.bidang);
                 $('#durasimagang').val(response.durasimagang);
                 $('#deskripsi').val(response.deskripsi);
                 $('#kualifikasi').val(response.requirements);
-
+                $('#lokasi').val(response.id_lokasi);
                 $('#kuotapenerimaan').val(response.kuota);
-                $('#benefit').val(response.benefitmagang);
+                $('#benefits').val(response.benefitmagang);
                 $('#tanggalmulai').val(response.startdate);
                 $('#tanggalakhir').val(response.enddate);
                 $('#tahapan').val(response.tahapan_seleksi);
-                $('#informasilowongan').val(response.date_confirm_closing).change();
-                $('#programstudi').val(response.id_prodi).change();
-                $('#fakultas_add').val(response.id_fakultas).change();
+                $('#pilihinformasilowongan_add').val(response.date_confirm_closing).change();
+                $('#pilihprodi').val(response.id_prodi).change();
+                $('#pilihfakultas_add').val(response.id_fakultas).change();
+                $('#tertunda').val(response.applicant_status);
+                $('#gaji').val(response.paid);
 
-                $('#modal-lowonganmagang').modal('show');
+                $('#modalTambahLowongan').modal('show');
             }
         });
     }
 
+        $( document ).ready(function() {
+            });
 
-    var table = $('#table-dibuat').DataTable({
-        ajax: '{{ route("lowongan-magang.show")}}',
-        serverSide: false,
-        processing: true,
-        deferRender: true,
-        type: 'GET',
-        destroy: true,
-        columns: [{
-                data: 'DT_RowIndex'
-            },
-            {
-                data: 'posisipekerjaan',
-                name: 'posisipekerjaan'
-            },
-            {
-                data: 'fakultas',
-                name: 'fakultas'
-            },
-            {
-                data: 'programstudi',
-                name: 'programstudi'
-            },
-            {
-                data: 'tanggal',
-                name: 'tanggal'
-            },
-            {
-                data: 'durasimagang',
-                name: 'durasimagang'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action'
-            }
-        ],
-    });
+            $(document).on('submit','#filter',function(e){
+            const offcanvasFilter = $('#modalSlide');
+            e.preventDefault();
+            $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() + ', Fakultas: ' + $('#fakultas :selected').text() + ', durasimagang: ' + $('#durasimagang :selected').text() + ', posisipekerjaan: ' + $('#posisipekerjaan :selected').text());
+            offcanvasFilter.offcanvas('hide');
+            });
 
-    var table = $('#table-tertunda').DataTable({
-        ajax: '{{ route("lowongan-magang.show")}}',
-        serverSide: false,
-        processing: true,
-        deferRender: true,
-        type: 'GET',
-        destroy: true,
-        columns: [{
-            data: 'DT_RowIndex'
-            },
-            {
-                data: 'posisipekerjaan',
-                name: 'posisipekerjaan'
-            },
-            {
-                data: 'fakultas',
-                name: 'fakultas'
-            },
-            {
-                data: 'programstudi',
-                name: 'programstudi'
-            },
-            {
-                data: 'tanggal',
-                name: 'tanggal'
-            },
-            {
-                data: 'durasimagang',
-                name: 'durasimagang'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action'
-            }
-        ],
-    });
+            $('.data-reset').on('click',function () {
+            $('#univ').val(null).trigger('change');
+            $('#fakultas').val(null).trigger('change');
+            $('#durasimagang').val(null).trigger('change');
+            $('#posisipekerjaan').val(null).trigger('change');
+            });
 
 
-    var table = $('#table-disetujui').DataTable({
-        ajax: '{{ route("lowongan-magang.show")}}',
-        serverSide: false,
-        processing: true,
-        deferRender: true,
-        type: 'GET',
-        destroy: true,
-        columns: [{
-            data: 'DT_RowIndex'
-            },
-            {
-                data: 'posisipekerjaan',
-                name: 'posisipekerjaan'
-            },
-            {
-                data: 'fakultas',
-                name: 'fakultas'
-            },
-            {
-                data: 'programstudi',
-                name: 'programstudi'
-            },
-            {
-                data: 'tanggal',
-                name: 'tanggal'
-            },
-            {
-                data: 'durasimagang',
-                name: 'durasimagang'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action'
-            }
-        ],
-    });
-
-    var table = $('#table-ditolak').DataTable({
-        ajax: '{{ route("lowongan-magang.show")}}',
-        serverSide: false,
-        processing: true,
-        deferRender: true,
-        type: 'GET',
-        destroy: true,
-        columns: [{
-            data: 'DT_RowIndex'
-            },
-            {
-                data: 'posisipekerjaan',
-                name: 'posisipekerjaan'
-            },
-            {
-                data: 'fakultas',
-                name: 'fakultas'
-            },
-            {
-                data: 'programstudi',
-                name: 'programstudi'
-            },
-            {
-                data: 'tanggal',
-                name: 'tanggal'
-            },
-            {
-                data: 'durasimagang',
-                name: 'durasimagang'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action'
-            }
-        ],
-    });
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

@@ -167,7 +167,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <!-- Admin -->
-               
+
                 @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin</span>
@@ -338,7 +338,7 @@
                 </ul>
                 @endcan
 
-                
+
                 <!-- Mitra -->
                 @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
@@ -359,7 +359,7 @@
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
-                        
+
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/lowongan' ? 'active' : '' }} @endif">
                                 <a href="{{ route('lowongan.index') }}" class="menu-link">
@@ -367,7 +367,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link">
+                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -408,7 +408,7 @@
                 </ul>
                 @endcan
             </aside>
-            
+
             <!-- / Menu -->
 
             <!-- Layout container -->

@@ -127,8 +127,8 @@
                                     <th>EMAIL</th>
                                     <th style="min-width: 120px;">NOMOR TELEPON</th>
                                     <th>ALAMAT</th>
-                                    <th style="min-width: 100px;">>DESKRIPSI PERUSAHAAN</th>
-                                    <th KATEGORI MITRA</th>
+                                    <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>STATUS</th>
                                     <th style="min-width: 100px;">AKSI</th>
@@ -147,7 +147,7 @@
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
-        $("#modalTambahMitra").on("hide.bs.modal", function() {
+        $("#modalTambahProdi").on("hide.bs.modal", function() {
 
 
             $("#simpanButton").html("Save Data");
@@ -241,39 +241,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
@@ -314,39 +290,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
@@ -390,39 +342,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
@@ -441,38 +369,6 @@
                     name: 'action'
                 }
             ]
-        });
-
-        function edit(e) {
-            let id = e.attr('data-id');
-
-            let action = `{{ url('company/kelola_mitra/update/') }}/${id}`;
-            var url = `{{ url('company/kelola_mitra/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $("#modal-title").html("Edit Mitra");
-                    $("#modal-button").html("Update Data")
-                    $('#modal-mitra form').attr('action', action);
-                    $('#namaindustri').val(response.namaindustri);
-                    $('#email').val(response.email);
-                    $('#kategori_industri').val(response.kategori_industri);
-                    $('#statuskerjasama').val(response.statuskerjasama);
-
-                    $('#modal-mitra').modal('show');
-                }
-            });
-        }
-
-        $("#modal-mitra").on("hide.bs.modal", function() {
-
-            $("#modal-title").html("Tambah Mitra");
-            $("#modal-button").html("Save Data")
-            $('#modal-mitra form')[0].reset();
-            $('#modal-mitra form').attr('action', "{{ url('company/kelola_mitra/store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
         });
     </script>
 
