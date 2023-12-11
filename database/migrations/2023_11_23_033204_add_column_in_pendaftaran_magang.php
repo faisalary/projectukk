@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            $table->timestamp('tanggaldaftar')->nullable();
+            $table->date('tanggaldaftar')->nullable();
             $table->timestamp('approvetime')->nullable();
             $table->string('approved_by', 255)->nullable();
         });
@@ -24,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('pendaftaran_magang', 'tanggaldaftar');
+            Schema::dropIfExists('pendaftaran_magang', 'approvetime');
+            Schema::dropIfExists('pendaftaran_magang', 'approved_by');
         });
     }
 };
