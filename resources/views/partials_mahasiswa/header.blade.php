@@ -189,9 +189,11 @@
             @endphp
             @if (!$user)
 
-            <a href="{{ route('login')}}">
-              <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
-            </a>
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <a href="{{ route('login')}}">
+                <button class="btn btn-outline-success me-2" type="button">Masuk</button>
+              </a>
+            </ul>
             @else
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Notification -->
@@ -390,7 +392,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item" href="pages-account-settings-account.html">
+                    <a class="dropdown-item" href="/informasi/pribadi">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
