@@ -59,7 +59,6 @@
       color: #FFF;
       background-color: #4EA971 !important
     }
-    
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -70,7 +69,7 @@
 
 <body>
   <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu" >
+  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
     <div class="layout-container">
       <!-- Navbar -->
 
@@ -180,10 +179,10 @@
             </div>
           </aside>
           <!-- / Menu -->
-          
-          
+
+
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-          <!-- Login dan Daftar -->
+            <!-- Login dan Daftar -->
 
             @php
             $user = Auth::user();
@@ -191,7 +190,7 @@
             @if (!$user)
 
             <a href="{{ route('login')}}">
-                <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
+              <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
             </a>
             @else
             <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -382,65 +381,65 @@
                 </ul>
               </li>
               <!--/ Notification -->
-                <!-- User -->             
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="{{Auth::user()->profile_image_url ?? '/app-assets/img/avatars/1.png'}}" alt class="h-auto rounded-circle" />
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="pages-account-settings-account.html">
-                          <div class="d-flex">
-                              <div class="flex-shrink-0 me-3">
-                                  <div class="avatar avatar-online">
-                                    <img src="{{Auth::user()->profile_image_url ?? '/app-assets/img/avatars/1.png'}}" alt class="h-auto rounded-circle" />
-                                  </div>
-                              </div>
-                              <div class="flex-grow-1">
-                                  <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
-                                  <small class="text-muted">Mahasiswa</small>
-                              </div>
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online">
+                    <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="pages-account-settings-account.html">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
                           </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/informasi/pribadi">
-                        <i class="ti ti-user-circle me-2 ti-sm"></i>
-                        <span class="align-middle">Profil Saya</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
-                        <i class="ti ti-briefcase me-2 ti-sm"></i>
-                        <span class="align-middle">Lowongan Tersimpan</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/pengaturan">
-                        <i class="ti ti-settings me-2 ti-sm"></i>
-                        <span class="align-middle">Pengaturan Akun</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
-                        <i class="ti ti-logout me-2 ti-sm"></i>
-                        <span class="align-middle">Keluar</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <!--/ User -->
-              </ul>
-            </div>
-          @endif 
+                        </div>
+                        <div class="flex-grow-1">
+                          <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                          <small class="text-muted">{{ ucwords($user->name) }}</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/informasi/pribadi">
+                      <i class="ti ti-user-circle me-2 ti-sm"></i>
+                      <span class="align-middle">Profil Saya</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
+                      <i class="ti ti-briefcase me-2 ti-sm"></i>
+                      <span class="align-middle">Lowongan Tersimpan</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/pengaturan">
+                      <i class="ti ti-settings me-2 ti-sm"></i>
+                      <span class="align-middle">Pengaturan Akun</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
+                      <i class="ti ti-logout me-2 ti-sm"></i>
+                      <span class="align-middle">Keluar</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!--/ User -->
+            </ul>
+          </div>
+          @endif
           <!-- Search Small Screens -->
           <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
             <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
@@ -459,24 +458,24 @@
 
           <!-- Content -->
 
-            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+          <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
 
-    <!-- Modal Delete-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- Modal Delete-->
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-            </button>
+                  </button>
+                </div>
+                <div class="modal-body text-center" style="display:block;">
+                  Apakah Anda Ingin Keluar Dari Akun Ini?
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="modal-body text-center" style="display:block;">
-            Apakah Anda Ingin Keluar Dari Akun Ini?
-          </div>
-          <div class="modal-footer" style="display: flex; justify-content:center;">
-            <a href="{{ route('logout') }}"<button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
-            <button type="button" class="btn btn-danger" >Tidak</button>
-          </div>
-        </div>
-      </div>
-    </div>
