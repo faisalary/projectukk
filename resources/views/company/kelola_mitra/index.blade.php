@@ -131,7 +131,7 @@
                                     <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>STATUS</th>
-                                    <th style="min-width: 100px;">AKSI</th>
+
                                 </tr>
                             </thead>
                         </table>
@@ -147,13 +147,13 @@
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
-        $("#modalTambahProdi").on("hide.bs.modal", function() {
+        // $("#modalTambahMitra").on("hide.bs.modal", function() {
 
 
-            $("#simpanButton").html("Save Data");
-        });
+        //     $("#simpanButton").html("Save Data");
+        // });
         var table = $('#table-kelola-mitra1').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/0') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -221,7 +221,7 @@
 
     <script>
         var table = $('#table-kelola-mitra2').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/0') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -270,7 +270,7 @@
 
     <script>
         var table = $('#table-kelola-mitra3').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/1') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -322,7 +322,7 @@
 
     <script>
         var table = $('#table-kelola-mitra4').DataTable({
-            ajax: "{{ route('kelola_mitra.show') }}",
+            ajax: "{{ url('company/kelola-mitra/show/2') }}",
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -363,12 +363,41 @@
                 {
                     data: 'status',
                     name: 'status'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
                 }
             ]
+        });
+
+        function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
+            var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit Mitra");
+                    $("#simpanButton").html("Update Data");
+                    $('#modalTambahMitra form').attr('action', action);
+                    $('#nama').val(response.namaindustri);
+                    $('#email').val(response.email);
+                    $('#kategori').val(response.kategori_industri).trigger('change');
+                    $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
+                    $('#modalTambahMitra').modal('show');
+                }
+            });
+        }
+
+        $("#modalTambahMitra").on("hide.bs.modal", function() {
+
+            $("#modal-title").html("Tambah Mitra");
+            $("#simpanButton").html("Save Data")
+            $('#modalTambahMitra form')[0].reset();
+            $('#modalTambahMitra form #kategori').val('').trigger('change');
+            $('#modalTambahMitra form #statuskerjasama').val('').trigger('change');
+            $('#modalTambahMitra form').attr('action', "{{ route('kelola_mitra.store') }}");
+            $('.invalid-feedback').removeClass('d-block');
+            $('.form-control').removeClass('is-invalid');
         });
     </script>
 

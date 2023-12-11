@@ -28,19 +28,20 @@ class LowonganMagang extends Model
     protected $primaryKey = 'id_lowongan';
     protected $keyType = 'string';
 
-    public function industri(){
-        return $this->belongsTo(Industri::class,'id_industri');
+    public function industri()
+    {
+        return $this->belongsTo(Industri::class, 'id_industri');
     }
-    public function tahunakademik(){
-        return $this->belongsTo(TahunAkademik::class,'id_year_akademik');
+    public function tahunAkademik()
+    {
+        return $this->belongsTo(TahunAkademik::class, 'id_year_akademik');
     }
-    public function jenismagang(){
-        return $this->belongsTo(JenisMagang::class,'id_jenismagang');
+    public function jenisMagang()
+    {
+        return $this->belongsTo(JenisMagang::class, 'id_jenismagang');
     }
-    public function Prodi(){
-        return $this->belongsTo(ProgramStudi::class,'id_prodi');
-    }
-    public function fakultas(){
-        return $this->belongsTo(Fakultas::class,'id_fakultas');
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class, 'id_lokasi');
     }
 }

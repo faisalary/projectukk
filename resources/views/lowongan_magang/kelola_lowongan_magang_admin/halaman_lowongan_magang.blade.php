@@ -221,47 +221,388 @@
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    $('.table').each(function() {
-            let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/admin/show') }}?type=" + idElement;
-            console.log(idElement);
-            console.log(url);
+    var jsonData = [{
+            "nomor": "1",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        },
+        {
+            "nomor": "2",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-success'>Aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        }
+    ];
 
-            $(this).DataTable({
-                ajax: url,
-                serverSide: false,
-                processing: true,
-                deferRender: true,
-                type: 'GET',
-                destroy: true,
-                columns: [{
-                        data: "DT_RowIndex"
-                    },
-                    {
-                        data: "posisi"
-                    },
-                    {
-                        data: "fakultas.namafakultas"
-                    },
-                    {
-                        data: "prodi.namaprodi"
-                    },
-                    {
-                        data: "tanggal"
-                    },
-                    {
-                        data: "durasimagang"
-                    },
-                    {
-                        data: "status"
-                    },
-                    {
-                        data: "action"
-                    }
-                ],
-            });
+    var table = $('#table-dibuat').DataTable({
+        "data": jsonData,
+        // scrollX: true,
+        columns: [{
+                data: "nomor"
+            },
+            {
+                data: "posisi"
+            },
+            {
+                data: "fakultas"
+            },
 
-        });
+            {
+                data: "program studi"
+            },
+            {
+                data: "tanggal"
+            },
+            {
+                data: "durasi magang"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "aksi"
+            }
+        ],
+        "columnDefs": [{
+                "width": "100px",
+                "targets": 0
+            },
+            {
+                "width": "100px",
+                "targets": 1
+            },
+            {
+                "width": "150px",
+                "targets": 2
+            },
+            {
+                "width": "150px",
+                "targets": 3
+            },
+            {
+                "width": "100px",
+                "targets": 4
+            },
+            {
+                "width": "150px",
+                "targets": 5
+            }
+        ]
+    });
+
+    var jsonData = [{
+            "nomor": "1",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-success'>Aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        },
+        {
+            "nomor": "2",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        }
+    ];
+
+    var table = $('#table-tertunda').DataTable({
+        "data": jsonData,
+        // scrollX: true,
+        columns: [{
+                data: "nomor"
+            },
+            {
+                data: "posisi"
+            },
+            {
+                data: "fakultas"
+            },
+
+            {
+                data: "program studi"
+            },
+            {
+                data: "tanggal"
+            },
+            {
+                data: "durasi magang"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "aksi"
+            }
+        ],
+        "columnDefs": [{
+                "width": "100px",
+                "targets": 0
+            },
+            {
+                "width": "100px",
+                "targets": 1
+            },
+            {
+                "width": "150px",
+                "targets": 2
+            },
+            {
+                "width": "150px",
+                "targets": 3
+            },
+            {
+                "width": "100px",
+                "targets": 4
+            },
+            {
+                "width": "150px",
+                "targets": 5
+            }
+        ]
+    });
+
+    var jsonData = [{
+            "id": "",
+            "id": "",
+            "nomor": "1",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-success'>Aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        },
+        {
+            "id": "",
+            "id": "",
+            "nomor": "2",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        }
+    ];
+
+    var table = $('#table-disetujui').DataTable({
+        "data": jsonData,
+        // scrollX: true,
+        columns: [{
+                data: 'id'
+            },
+            {
+                data: 'id'
+            },
+            {
+                data: "nomor"
+            },
+            {
+                data: "posisi"
+            },
+            {
+                data: "fakultas"
+            },
+
+            {
+                data: "program studi"
+            },
+            {
+                data: "tanggal"
+            },
+            {
+                data: "durasi magang"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "aksi"
+            }
+        ],
+        "columnDefs": [{
+                "width": "100px",
+                "targets": 0
+            },
+            {
+                "width": "100px",
+                "targets": 1
+            },
+            {
+                "width": "150px",
+                "targets": 2
+            },
+            {
+                "width": "150px",
+                "targets": 3
+            },
+            {
+                "width": "100px",
+                "targets": 4
+            },
+            {
+                "width": "150px",
+                "targets": 5
+            }
+        ],
+        columnDefs: [{
+                // For Responsive
+                className: 'control',
+                orderable: false,
+                searchable: false,
+                responsivePriority: 2,
+                targets: 0,
+                render: function(data, type, full, meta) {
+                    return '';
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: false,
+                responsivePriority: 3,
+                checkboxes: true,
+                render: function() {
+                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+                },
+                checkboxes: {
+                    selectAllRender: '<input type="checkbox" class="form-check-input">'
+                }
+            },
+        ]
+    });
+
+
+    var jsonData = [{
+            "id": "",
+            "id": "",
+            "nomor": "1",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        },
+        {
+            "id": "",
+            "id": "",
+            "nomor": "2",
+            "posisi": "UI/UX Designer",
+            "fakultas": "fakultas ilmu terapan",
+            "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+            "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+            "durasi magang": "2 semester",
+            "status": "<span class='badge bg-label-success'>Aktif</span>",
+            "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        }
+    ];
+
+    var table = $('#table-ditolak').DataTable({
+        "data": jsonData,
+        // scrollX: true,
+        columns: [{
+                data: 'id'
+            },
+            {
+                data: 'id'
+            },
+            {
+                data: "nomor"
+            },
+            {
+                data: "posisi"
+            },
+            {
+                data: "fakultas"
+            },
+
+            {
+                data: "program studi"
+            },
+            {
+                data: "tanggal"
+            },
+            {
+                data: "durasi magang"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "aksi"
+            }
+        ],
+        "columnDefs": [{
+                "width": "100px",
+                "targets": 0
+            },
+            {
+                "width": "100px",
+                "targets": 1
+            },
+            {
+                "width": "150px",
+                "targets": 2
+            },
+            {
+                "width": "150px",
+                "targets": 3
+            },
+            {
+                "width": "100px",
+                "targets": 4
+            },
+            {
+                "width": "150px",
+                "targets": 5
+            }
+        ],
+        columnDefs: [{
+                // For Responsive
+                className: 'control',
+                orderable: false,
+                searchable: false,
+                responsivePriority: 2,
+                targets: 0,
+                render: function(data, type, full, meta) {
+                    return '';
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: false,
+                responsivePriority: 3,
+                checkboxes: true,
+                render: function() {
+                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+                },
+                checkboxes: {
+                    selectAllRender: '<input type="checkbox" class="form-check-input">'
+                }
+            },
+        ]
+    });
 
         jQuery(function() {
             jQuery('.showSingle').click(function() {
