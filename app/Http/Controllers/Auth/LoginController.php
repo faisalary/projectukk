@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\IsAdmin;
 use App\Providers\RouteServiceProvider;
+use Doctrine\DBAL\Driver\Middleware;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,10 @@ class LoginController extends Controller
         } elseif ($user->hasRole('admin')) {
             return redirect()->route('dashboard.admin');
         } else {
-            return view('dashboard');
+            // if (!$user->hasVerifiedEmail()) {
+            //     return redirect()->route('verification.notice')->with('warning', 'Please verify your email first.');
+            // }
+            return view('landingpage.landingpage');
         }
     }
 }
