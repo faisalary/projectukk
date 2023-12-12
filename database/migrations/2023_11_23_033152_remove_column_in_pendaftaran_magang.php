@@ -23,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            Schema::dropIfExists('pendaftaran_magang', 'approvetime');
-            Schema::dropIfExists('pendaftaran_magang', 'tanggaldaftar');
+            //    
         });
     }
 };

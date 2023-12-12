@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('seleksi', 'statusseleksi')) {
+            Schema::table('seleksi', function (Blueprint $table) {
+                $table->dropColumn('statusseleksi');
+            });
+        }
         Schema::table('seleksi', function (Blueprint $table) {
             $table->boolean('statusseleksi')->default(false)->change();
         });
@@ -21,8 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('seleksi', function (Blueprint $table) {
-            Schema::dropIfExists('seleksi', 'statusseleksi');
-        });
+        if (Schema::hasColumn('seleksi', 'statusseleksi')) {
+            Schema::table('seleksi', function (Blueprint $table) {
+                $table->dropColumn('statusseleksi');
+            });
+        }
     }
 };
