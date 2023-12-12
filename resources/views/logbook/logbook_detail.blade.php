@@ -160,7 +160,7 @@
                                     <div class="rounded-pill d-flex flex-column align-items-center justify-content-center"
                                         style="background-color: #070A0F80; width: 70px; height: 70px;">
                                         <img src="../assets/images/smile.png" alt=""
-                                            style="filter: grayscale(100%) opacity(50%);">
+                                            style="filter: grayscale(80%) opacity(50%);">
                                     </div>
                                     <div class="fw-bold d-flex flex-column justify-content-center"
                                         style="margin-left: 12px">
@@ -175,7 +175,8 @@
                             </div>
                             <div class="text-center"
                                 style="border-bottom: 1px solid #D3D6DB; border-right: 1px solid #D3D6DB; border-left: 1px solid #D3D6DB;  border-radius: 0 0 6px 6px; padding: 20px; margin-bottom: 30px; !important">
-                                <button type="button" class="btn btn-success">Buat Laporan Harian</button>
+                                <button data-bs-toggle='modal' data-bs-target='#modalEditJadwal' type="button"
+                                    class="btn btn-success">Buat Laporan Harian</button>
                             </div>
                         </div>
                         <div>
@@ -184,7 +185,7 @@
                                     <div class="rounded-pill d-flex flex-column align-items-center justify-content-center"
                                         style="background-color: #070A0F80; width: 70px; height: 70px;">
                                         <img src="../assets/images/smile.png" alt=""
-                                            style="filter: grayscale(100%) opacity(50%);">
+                                            style="filter: grayscale(80%) opacity(50%);">
                                     </div>
 
                                     <div class="fw-bold d-flex flex-column justify-content-center"
@@ -200,7 +201,9 @@
                             </div>
                             <div class="text-center"
                                 style="border-bottom: 1px solid #D3D6DB; border-right: 1px solid #D3D6DB; border-left: 1px solid #D3D6DB;  border-radius: 0 0 6px 6px; padding: 20px; margin-bottom: 30px; !important">
-                                <button type="button" class="btn btn-secondary">Buat Laporan Harian</button>
+                                <button data-bs-toggle='modal' data-bs-target='#modalEditJadwal' type="button"
+                                    class="btn btn-secondary">Buat
+                                    Laporan Harian</button>
                             </div>
                         </div>
                     </div>
@@ -210,6 +213,69 @@
     </div>
 @endsection
 <!-- Modal -->
+
+{{-- Modal Edit --}}
+<div class="modal fade" id="modalEditJadwal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block">
+                <h4 class="modal-title text-center" id="modal-title">Laporan Harian Magang </h4>
+                <h6 class="modal-title text-center" id="modal-title">Kamis, 23 Januari 2023 </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+
+                    <label for="desc" class="form-label">Kamu melakukan pekerjan apa hari ini?</label>
+                    <input type="text" class="form-control" id="desc" placeholder="Tulis Disini"
+                        aria-describedby="defaultFormControlHelp">
+                </div>
+                <div class="mt-4">
+                    <label for="mood" class="form-label">Silahkan pilih mood anda pada hari ini :</label>
+                    <div class="d-flex mt-1">
+                        <div>
+                            <img src="../assets/images/smile.png" alt=""
+                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
+                        </div>
+
+                        <div class="text-center" style="margin-left: 20px;">
+                            <img src="../assets/images/love.png" alt=""
+                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
+                        </div>
+
+                        <div class="text-center" style="margin-left: 20px;">
+                            <img src="../assets/images/sad.png" alt=""
+                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
+                        </div>
+
+                        <div class="text-center" style="margin-left: 20px;">
+                            <img src="../assets/images/kyaa.png" alt=""
+                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
+                        </div>
+
+                        <div class="text-center" style="margin-left: 20px;">
+                            <img src="../assets/images/jutek.png" alt=""
+                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p></p>
+                    <label for="mood" class="form-label" style="color: #005E9C">Tidak hadir magang dan
+                        mengerjakan pekerjaan hari ini ?</label>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit"class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalalert"
+                    data-dismiss="modal">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- MODAL --}}
 
 
 
