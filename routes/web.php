@@ -262,6 +262,16 @@ Route::get('/jadwal-seleksi', function () {
     return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
 });
 
+
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
+});
+
+
+Route::get('/logbook', function () {
+    return view('logbook.logbook', ['active_menu' => 'logbook']);
+});
+
+Route::get('/logbook-detail', function () {
+    return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
 });
