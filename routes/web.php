@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndustriController;
 use App\Http\Middleware\RoleMiddleware;
 
 /*
