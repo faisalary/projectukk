@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->uuid('id_industri');
+            $table->uuid('id_industri')->nullable();
             $table->foreign('id_industri')->references('id_industri')->on('industri');
         });
     }
