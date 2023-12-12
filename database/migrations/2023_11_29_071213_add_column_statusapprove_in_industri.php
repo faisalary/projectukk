@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('industri', 'statusapprove')) {
+            Schema::table('industri', function (Blueprint $table) {
+                $table->dropColumn('statusapprove');
+            });
+        }
         Schema::table('industri', function (Blueprint $table) {
             $table->tinyInteger('statusapprove')->default(0)->nullable();
         });
@@ -21,8 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('industri', 'statusapprove')) {
+            Schema::table('industri', function (Blueprint $table) {
+                $table->dropColumn('statusapprove');
+            });
+        }
     }
 };

@@ -11,6 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('pendaftaran_magang', 'applicant_status')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('applicant_status');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'status')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('status');
+            });
+        }
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
             $table->string('applicant_status', 255)->default('blm')->change();
             $table->boolean('status')->default(true)->change();
@@ -23,9 +32,14 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            Schema::dropIfExists('pendaftaran_magang', 'applicant_status');
-            Schema::dropIfExists('pendaftaran_magang', 'status');
-        });
+        if (Schema::hasColumn('pendaftaran_magang', 'applicant_status')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('applicant_status');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'status')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('status');
+            });
+        }
     }
 };
