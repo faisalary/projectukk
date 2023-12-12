@@ -24,14 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasColumn('pendaftaran_magang', 'applicant_status')) {
-            Schema::table('pendaftaran_magang', function (Blueprint $table) {
-                $table->dropColumn('applicant_status');
-            });
-        } else if (Schema::hasColumn('pendaftaran_magang', 'status')) {
-            Schema::table('pendaftaran_magang', function (Blueprint $table) {
-                $table->dropColumn('status');
-            });
-        }
+        Schema::table('pendaftaran_magang', function (Blueprint $table) {
+            //
+        });
     }
 };
