@@ -66,7 +66,7 @@ class KelolaMitraController extends Controller
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
-            'id_mahasiswa' => '1'
+            'id_mahasiswa' => null
         ]);
         $admin->assignRole('admin');
         $url=url('/admin/set-password/'.$code);

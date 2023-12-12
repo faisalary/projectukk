@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             'username' => 'SuperAdmin',
             'email' => 'superadmin@demo.test',
             'password' => bcrypt('12345678'),
-            'isAdmin' => 0
+            'isAdmin' => 0,
+            'id_industri' => null,
         ]);
         $superadmin->assignRole('superadmin');
         
