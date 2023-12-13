@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Mail;
+use Ramsey\Uuid\Uuid;
+
 class KelolaMitraController extends Controller
 {
     public function __construct()
@@ -66,7 +68,6 @@ class KelolaMitraController extends Controller
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
-            'id_mahasiswa' => null
         ]);
         $admin->assignRole('admin');
         $url=url('/admin/set-password/'.$code);
