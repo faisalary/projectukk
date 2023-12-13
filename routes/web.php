@@ -33,30 +33,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
-    Route::get('/logout', [App\Http\Controllers\Auth\LoginAdminController::class, 'logout'])->name('logout');
+    
 });
 
 require __DIR__ . '/auth.php';
 
 Auth::routes();
 //profile user
-Route::group(['middleware' => isApplicant::class], function () {
-    Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
-    Route::get('/profile', 'ProfileController@edit')->name('profile.index');
-    Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
-    Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
-    Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
-    Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
-    Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
-    Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
-    Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
-    Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
-    Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
-    Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
-    Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
-    Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
-    Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
-});
+// Route::group(['middleware' => isApplicant::class], function () {
+//     Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
+//     Route::get('/profile', 'ProfileController@edit')->name('profile.index');
+//     Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
+//     Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
+//     Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
+//     Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
+//     Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
+//     Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
+//     Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
+//     Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
+//     Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
+//     Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
+//     Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
+//     Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
+//     Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
+// });
 
 Route::middleware('auth')->group(function () {
 
@@ -188,12 +188,13 @@ Route::middleware('auth')->group(function () {
         Route::prefix('profile-company')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
             Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
         });
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
         Route::get('/show', [App\Http\Controllers\DatakandidatController::class, 'show'])->name('data-kandidat.show');
-        Route::post('/store', [App\Http\Controllers\DatakandidatControllerta::class, 'store'])->name('data-kandidat.store');
+        Route::post('/store', [App\Http\Controllers\DatakandidatController::class, 'store'])->name('data-kandidat.store');
         Route::post('/update/{id}', [App\Http\Controllers\DatakandidatController::class, 'update'])->name('data-kandidat.update');
         Route::get('/edit/{id}', [App\Http\Controllers\DatakandidatController::class, 'edit'])->name('data-kandidat.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DatakandidatController::class, 'status'])->name('data-kandidat.status');

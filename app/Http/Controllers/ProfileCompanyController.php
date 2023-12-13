@@ -68,10 +68,32 @@ class ProfileCompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+        public function update(Request $request, $id)
     {
-        //
+        try {
+            $industri = Industri::where('id_industri', $id)->first();
+
+            $industri->namaindustri = $request->namaindustri;
+            $industri->email = $request->email;
+            $industri->kategori_industri = $request->kategori_industri;
+            $industri->statuskerjasama = $request->statuskerjasama;
+            $industri->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Mitra successfully Updated!',
+                'modal' => '#modalTambahMitra',
+                'table' => '#table-kelola-mitra3'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.
