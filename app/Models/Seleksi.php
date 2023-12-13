@@ -27,18 +27,12 @@ class Seleksi extends Model
     public function getStatusSeleksiTextAttribute()
     {
         if ($this->statusseleksi == 0) {
-            return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 1" . "</div></div>";
+            return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di Proses" . "</div></div>";
         } else if ($this->statusseleksi == 1) {
-            return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 1" . "</div></div>";
+            return "<div class='text-center'><div class='badge bg-label-danger'>" . "Ditolak" . "</div></div>";
         } else if ($this->statusseleksi == 2) {
-            return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 2" . "</div></div>";
-        } else if ($this->statusseleksi == 3) {
-            return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 2" . "</div></div>";
-        } else if ($this->statusseleksi == 4) {
-            return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 3" . "</div></div>";
-        } else if ($this->statusseleksi == 5) {
-            return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 3" . "</div></div>";
-        }
+            return "<div class='text-center'><div class='badge bg-label-success'>" . "Diterima" . "</div></div>";
+        } 
        
     }
 }

@@ -85,18 +85,17 @@ class JadwalSeleksiController extends Controller
 
     public function show()
     {
-        if(request()->tahap == '1'){
-            $statusseleksi = [0,1];
+        if(request()->tahap == '0'){
+            $statusseleksi = 0;
+        }elseif(request()->tahap == '1'){
+            $statusseleksi = 1;
         }elseif(request()->tahap == '2'){
-            $statusseleksi = [2,3];
-        }elseif(request()->tahap == '3'){
-            $statusseleksi = [4,5];
+            $statusseleksi = 2;
         }
         $seleksi = Seleksi::select('seleksi.*', 'pendaftaran_magang.tanggaldaftar', 'mahasiswa.namamhs', 'mahasiswa.nim')->join('pendaftaran_magang', 'pendaftaran_magang.id_pendaftaran', 'seleksi.id_pendaftaran')
             ->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
             ->join('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')
-            ->where('statusseleksi', $statusseleksi[0])
-            ->orWhere('statusseleksi', $statusseleksi[1])
+            ->where('statusseleksi', $statusseleksi)
             ->get();
 
         return DataTables::of($seleksi)

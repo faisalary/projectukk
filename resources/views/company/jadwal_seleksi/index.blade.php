@@ -131,16 +131,11 @@
                 <div class="dropdown bootstrap-select">
                     <select id="selectpickerBasic" class="selectpicker " data-style="btn-default" name="hayolo">
                         <option disabled selected>Ubah Status Kandidat</option>
-                        @foreach ($seleksi as $status)
-                            @if ($status->statusseleksi == 0)
-                                <option value="1">Sudah Seleksi Tahap 1</option>
-                            @elseif($status->statusseleksi == 1)
-                            <option value="2">Belum Seleksi Tahap 2</option>
-                            @elseif($status->statusseleksi == 2)
-                            <option value="3">Sudah Seleksi Tahap 2</option>
-                            @endif
-                        @endforeach
-                        {{-- <option value="4">Belum Seleksi Tahap 3</option>
+                        <option value="0">Belum di Proses</option>
+                        <option value="1">Ditolak</option>
+                        <option value="2">Diterima</option>
+                        {{-- <option value="3">Sudah Seleksi Tahap 2</option>
+                        <option value="4">Belum Seleksi Tahap 3</option>
                         <option value="5">Sudah Seleksi Tahap 3</option> --}}
                     </select>
                 </div>
@@ -156,7 +151,7 @@
         <div class="tab-pane fade show active" id="navs-pills-justified-tahap1" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap0">
                         <thead>
                             <tr>
                                 <th></th>
@@ -179,7 +174,7 @@
         <div class="tab-pane fade show" id="navs-pills-justified-tahap2" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
                         <thead>
                             <tr>
                                 <th></th>
@@ -202,7 +197,7 @@
         <div class="tab-pane fade show" id="navs-pills-justified-tahap3" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap3">
+                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
                         <thead>
                             <tr>
                                 <th></th>
@@ -289,7 +284,7 @@
             });
         }
 
-        const tahap = [1, 2, 3];
+        const tahap = [0,1,2];
         tahap.forEach((no) => {
             $('#table-jadwal-seleksi-tahap' + no).DataTable({
                 ajax: {
