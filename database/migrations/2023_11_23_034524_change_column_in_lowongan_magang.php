@@ -11,11 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasColumn('lowongan_magang', 'benefitmagang')) {
-            Schema::table('lowongan_magang', function (Blueprint $table) {
-                $table->dropColumn('benefitmagang');
-            });
-        }
+
         Schema::table('lowongan_magang', function (Blueprint $table) {
             $table->text('benefitmagang')->nullable()->change();
         });
@@ -26,10 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasColumn('lowongan_magang', 'benefitmagang')) {
-            Schema::table('lowongan_magang', function (Blueprint $table) {
-                $table->dropColumn('benefitmagang');
-            });
-        }
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            //
+        });
     }
 };
