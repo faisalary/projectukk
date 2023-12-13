@@ -36,14 +36,10 @@
                     @lang('app.byFooter')
                     <div class="copyright-text text-left mt-2" style="color: white"><a>Crafted with PASSION by Proxsis Solusi Humaka & Techno Infinity</a>
                         <div class="social-links mt-2">
-                            <a href="#" class="ml-0"><i class="fab fa-facebook-f"
-                                    style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-instagram"
-                                    style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"
-                                    style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-twitter"
-                                    style="color: white; margin-right: 20px;"></i></a>
+                            <a href="#" class="ml-0"><i class="fab fa-facebook-f" style="color: white; margin-right: 20px;"></i></a>
+                            <a href="#"><i class="fab fa-instagram" style="color: white; margin-right: 20px;"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in" style="color: white; margin-right: 20px;"></i></a>
+                            <a href="#"><i class="fab fa-twitter" style="color: white; margin-right: 20px;"></i></a>
                         </div>
                     </div>
                 </div>
@@ -104,6 +100,7 @@
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
+
 
 @yield('page_script')
 </body>

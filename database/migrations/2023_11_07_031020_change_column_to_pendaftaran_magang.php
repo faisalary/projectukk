@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            $table->string('nim', 255);
+            $table->string('nim', 255)->change();
             $table->foreign('nim')->references('nim')->on('mahasiswa');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('pendaftaran_magang', 'nim');
         });
     }
 };

@@ -22,6 +22,9 @@
     #more {
         display: none;
     }
+    span.select2-selection.select2-selection--single {
+    width: 200px;
+}
 </style>
 
 @endsection
@@ -32,9 +35,16 @@
         <nav aria-label="breadcrumb">
             <h4>
                 <ol class="breadcrumb breadcrumb-style1">
+                    @can( "title.info.lowongan.admin")
+                    <li class="breadcrumb-item text-secondary">
+                        Admin
+                    </li>
+                    @endcan
+                    @can( "title.info.lowongan.mitra")
                     <li class="breadcrumb-item text-secondary">
                         Mitra
                     </li>
+                    @endcan
                     <li class="breadcrumb-item">
                         <a href="/informasi/lowongan/admin" class="text-secondary">Informasi Mitra</a>
                     </li>
@@ -115,14 +125,41 @@
 
     <div class="row cnt">
         <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta" id="tooltip-filter"></i></div>
-        <div id="div2" class="col-1 targetDiv" style="display: none;">
+        @foreach(['2','3','4','5'] as $statusId)
+        @if($statusId == 2)
+        @can("ubah.lowongan.admin")
+        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
+
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
                 <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                    <option disabled selected>Ubah Status Kandidat</option>
+                    <option>Screening</option>
+                    <option>Ditolak</option>
                 </select>
                 <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
                 </button>
             </div>
         </div>
+        @endcan
+        @else
+        @can("ubah.lowongan.mitra")
+        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
+
+            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
+                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                    <option disabled selected>Ubah Status Kandidat</option>
+                    <option>Seleksi Tahap 1</option>
+                    <option>Seleksi Tahap 2</option>
+                    <option>Penawaran</option>
+                </select>
+                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                </button>
+            </div>
+        </div>
+        @endcan
+        @endif
+
+        @endforeach
     </div>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
@@ -164,6 +201,12 @@
                                 <label for="univ" class="form-label" style="padding-left: 15px;">Status Kandidat</label>
                                 <select class="form-select select2" id="status" name="status" data-placeholder="Status Kandidat">
                                     <option disabled selected>Pilih Status Kandidat</option>
+                                    <option>Screening</option>
+                                    <option>Seleksi Tahap 1</option>
+                                    <option>Seleksi Tahap 2</option>
+                                    <option>Penawaran</option>
+                                    <option>Diterima</option>
+                                    <option>Ditolak</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -201,6 +244,7 @@
                                 <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
                                 <th style="min-width:150px;">UNIVERSITAS</th>
+                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -211,7 +255,7 @@
         </div>
         @endforeach
 
-
+        <!-- pop-up detail -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="modalslide" aria-labelledby="offcanvasAddUserLabel" style="width: 750px;">
             <div class="offcanvas-header">
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -415,7 +459,6 @@
         </div>
 
     </div>
-
     @endsection
 
     @section('page_script')
@@ -503,7 +546,7 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('informasi/kandidat/admin/show') }}?type=" + idElement;
+            let url = "{{ url('informasi/kandidat/show') }}?type=" + idElement;
 
 
 
@@ -537,6 +580,9 @@
                         data: "universitas"
                     },
                     {
+                        data: "tanggaldaftar"
+                    },
+                    {
                         data: "status"
                     },
                     {
@@ -549,8 +595,12 @@
 
         jQuery(function() {
             jQuery('.showSingle').click(function() {
+                let idElement = $(this).attr('target');
+
                 jQuery('.targetDiv').hide('.cnt');
-                jQuery('#div' + $(this).attr('target')).slideToggle();
+                jQuery("#div" + idElement).slideToggle();
+
+                console.log(idElement);
             });
         });
 
@@ -558,16 +608,17 @@
             var dots = document.getElementById("dots");
             var moreText = document.getElementById("more");
             var btnText = document.getElementById("myBtn");
+            https: //meet.google.com/bqa-trxd-gkg
 
-            if (dots.style.display === "none") {
-                dots.style.display = "inline";
-                btnText.innerHTML = "Lebih Banyak";
-                moreText.style.display = "none";
-            } else {
-                dots.style.display = "none";
-                btnText.innerHTML = "Lebih Sedikit";
-                moreText.style.display = "inline";
-            }
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btnText.innerHTML = "Lebih Banyak";
+                    moreText.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btnText.innerHTML = "Lebih Sedikit";
+                    moreText.style.display = "inline";
+                }
         }
 
 

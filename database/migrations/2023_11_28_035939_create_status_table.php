@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->string('email');
+        Schema::create('status', function (Blueprint $table) {
+            $table->integer('id_status')->primary();
+            $table->char('cat', 4);
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->dropColumn('email');
-        });
+        Schema::dropIfExists('status');
     }
 };

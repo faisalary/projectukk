@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
             $table->string('applicant_status', 255)->default('blm')->change();
             $table->boolean('status')->default(true)->change();

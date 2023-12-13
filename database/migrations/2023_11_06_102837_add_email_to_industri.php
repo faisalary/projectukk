@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('industri', 'email')) {
+            Schema::table('industri', function (Blueprint $table) {
+                $table->dropColumn('email');
+            });
+        }
+
         Schema::table('industri', function (Blueprint $table) {
             $table->string('email', 255);
         });
@@ -21,8 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('industri', 'email')) {
+            Schema::table('industri', function (Blueprint $table) {
+                $table->dropColumn('email');
+            });
+        }
     }
 };
