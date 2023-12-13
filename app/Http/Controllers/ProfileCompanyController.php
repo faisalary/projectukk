@@ -83,7 +83,6 @@ class ProfileCompanyController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Mitra successfully Updated!',
-                'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra3'
             ]);
         } catch (Exception $e) {
