@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndustriController;
 use App\Http\Middleware\RoleMiddleware;
 
 /*
@@ -29,8 +28,8 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
+    // Route::get('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'showRegistrationForm'])->name('register');
+    // Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
     
@@ -40,23 +39,7 @@ require __DIR__ . '/auth.php';
 
 Auth::routes();
 //profile user
-// Route::group(['middleware' => isApplicant::class], function () {
-//     Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
-//     Route::get('/profile', 'ProfileController@edit')->name('profile.index');
-//     Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
-//     Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
-//     Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
-//     Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
-//     Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
-//     Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
-//     Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
-//     Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
-//     Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
-//     Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
-//     Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
-//     Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
-//     Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
-// });
+
 
 Route::middleware('auth')->group(function () {
 
@@ -235,16 +218,16 @@ Route::middleware('auth')->group(function () {
         Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
     });
 
-    Route::prefix('kelola')->group(function () {
-        Route::prefix('lowongan/admin')->group(function () {
-            Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
-            Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
-            Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
-            Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
-            Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
-            Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
-        });
-    });
+    // Route::prefix('kelola')->group(function () {
+    //     Route::prefix('lowongan/admin')->group(function () {
+    //         Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
+    //         Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
+    //         Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
+    //         Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
+    //         Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
+    //         Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+    //     });
+    // });
 });
 
 Route::get('/pengaturan', function () {
@@ -291,8 +274,14 @@ Route::get('/summary-profile', function () {
     return view('company.summary_profile');
 });
 
-Route::get('/jadwal-seleksi', function () {
-    return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+Route::prefix('jadwal-seleksi')->group(function () {
+    Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
+    Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+    Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+    Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+    Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
 });
 
 Route::get('/detail/lowongan/magang', function () {
