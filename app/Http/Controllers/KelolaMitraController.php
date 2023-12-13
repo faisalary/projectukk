@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Mail;
+use Ramsey\Uuid\Uuid;
+
 class KelolaMitraController extends Controller
 {
     public function __construct()
@@ -59,14 +61,13 @@ class KelolaMitraController extends Controller
         $code = Str::random(64);
         $defaultPassword = '12345678';
         $admin = User::create([
-            'name' => $request->namaindustri,
-            'username' => 'mitra',
+            'name' => 'mitra',
+            'username' => $request->namaindustri,
             'email' => $request->email,
             'password' => Hash::make($defaultPassword),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
-            'id_mahasiswa' => '1'
         ]);
         $admin->assignRole('admin');
         $url=url('/admin/set-password/'.$code);
