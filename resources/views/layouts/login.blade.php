@@ -27,8 +27,6 @@
 
     <!-- Preloader -->
     <div class="preloader"></div>
-
-    
     <!-- Info Section -->
     <div class="login-section">
         <div id="imgLogin" class="image-layer" style="background-image: url({{asset('assets/images/background/auth_new.png')}}); background-size: 800px; margin-left: 20px;"></div>
@@ -63,7 +61,6 @@
                                     <a href="#" class="theme-btn social-btn-two google-btn"><i class="fab fa-google"></i> Log In via Gmail</a>
                                 </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
