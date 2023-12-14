@@ -10,24 +10,42 @@ use App\Models\User;
 
 class SetPasswordController extends Controller
 {
-    public function showResetForm($id)
-    {
+    // public function showResetForm($id)
+    // {
         
-        return view('auth.reset_password_admin', compact('id'));
+    //     return view('auth.reset_password_admin', compact('id'));
+    // }
+    // public function reset(Request $request)
+    // {
+    //         $request->validate([
+    //             'password' => 'required|string|min:8|confirmed',
+    //         ]);
+
+    //         $admin=User::where('remember_token', $request->token)->first();
+    //         $admin->password=$request->password_confirmation;
+    //         $admin->save();
+    //         return redirect('company.profile_company');
+    // }
+
+    public function showResetForm($token)
+    {
+        return view('auth.reset_password_admin', compact('token'));
     }
+
     public function reset(Request $request)
     {
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // $user = $request->user();
-        // $user->password = Hash::make($request->password);
-        // $user->save();
+        $admin = User::where('remember_token', $request->token)->first();
 
-        $admin=User::where('remember_token', $request->token)->first();
-        $admin->password=$request->password_confirmation;
+        if (!$admin) {
+            return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
+        }
+        $admin->password = bcrypt($request->password);
         $admin->save();
-        return redirect('admin.dashboard.index');
+        // $admin->
+        return redirect('/informasi/lowongan');
     }
 }
