@@ -31,14 +31,14 @@
                             {{-- <select class="form-select select2" id="mitra" name="namaindustri" data-placeholder="Pilih Mitra">
                                 <option disabled selected>Pilih Mitra</option>
                                 @foreach($industri as $i)
-                                <option value="{{ $i->id_industri }}">{{ $f->namaindustri }}</option>
+                                <option value="{{ $i->id_industri }}">{{ $i->namaindutri }}</option>
                                 @endforeach
-                                <div class="invalid-feedback"></div>
                             </select> --}}
                             <select class="form-select select2" id="mitra" name="namaindustri" data-placeholder="Pilih Mitra">
                                 <option disabled selected>Pilih Mitra</option>
-                                <option value="4">industri</option>
+                                <option value="1">industri</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
@@ -66,17 +66,17 @@
 
                         <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="jenismagang" class="form-label">Jenis Magang<span class="text-danger">*</span></label>
-                                {{-- <select class="form-select select2" id="jenis" name="jenismagang" data-placeholder="Pilih Jenis Magang">
+                                <label for="jenis" class="form-label">Jenis Magang<span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="jenis" name="jenis" data-placeholder="Pilih Jenis Magang">
                                     <option disabled selected>Pilih Jenis Magang</option>
                                     @foreach($jenismagang as $j)
                                     <option value="{{ $j->id_jenismagang }}">{{ $j->jenismagang }}</option>
                                     @endforeach
-                                </select> --}}
-                                <select class="form-select select2" id="jenismagang" name="jenismagang" data-placeholder="Pilih Jenis Magang">
-                                    <option disabled selected>Pilih Jenis Magang</option>
-                                    <option value="3">jenis magang</option>
                                 </select>
+                                {{-- <select class="form-select select2" id="jenis" name="jenis" data-placeholder="Pilih Jenis Magang">
+                                    <option disabled selected>Pilih Jenis Magang</option>
+                                    <option value="1">Jenis Magang</option>
+                                </select> --}}
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -269,25 +269,25 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col mb-3 form-input">
-                                <label for="pelaksaan" class="form-label" id="pelaksanaan" name="pelaksanaan">Berapa Banyak Tahapan Seleksi<span class="text-danger">*</span></label>
+                                <label for="Pelaksanaan" class="form-label" id="pelaksanaan" name="pelaksanaan">Pelaksanaan<span class="text-danger">*</span></label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksaan" class="form-check-input" type="radio" value="" checked />
-                                        <label class="form-check-label" for="pelaksaan">online</label>
+                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="1" checked />
+                                        <label class="form-check-label" for="Pelaksanaan">online</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksaan" class="form-check-input" type="radio" value=""/>
-                                        <label class="form-check-label" for="pelaksaan">offline</label>
+                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="2"/>
+                                        <label class="form-check-label" for="Pelaksanaan">offline</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksaan" class="form-check-input" type="radio" value=""/>
-                                        <label class="form-check-label" for="pelaksaan"></label>
+                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="3"/>
+                                        <label class="form-check-label" for="Pelaksanaan">hybrid</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="modal-footer">
                             <a href="/kelola/lowongan">
@@ -300,6 +300,7 @@
     </div>
 </form>
 @endsection
+
 
 @section('page_script')
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

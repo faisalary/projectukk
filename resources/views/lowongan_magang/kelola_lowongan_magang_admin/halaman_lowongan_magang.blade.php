@@ -148,6 +148,12 @@
                                     <option value="D3 Teknologi Komputer">D3 Teknologi Komputer</option>
                                     <option value="D3 Teknologi Rekayasa Media">D3 Teknologi Rekayasa Media</option>
                                 </select>
+                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
+                                    <option disabled selected>Pilih Program Studi</option>
+                                    @foreach($prodi as $p)
+                                    <option value="{{ $f->id_prodi }}">{{ $p->prodi }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -331,7 +337,7 @@
                 $('#modalTambahLowongan form').attr('action', action);
                 $('#mitra').val(response.id_industri).change();
                 $('#tahun').val(response.id_year_Akademik).change();
-                $('#jenismagang').val(response.id_jenismagang).change();
+                $('#jenis').val(response.id_jenismagang).change();
                 $('#posisi').val(response.intern_position);
                 $('#kuota').val(response.kuota);
                 $('#bidang').val(response.bidang);

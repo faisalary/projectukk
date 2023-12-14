@@ -59,7 +59,7 @@ class LowonganMagangController extends Controller
         $lowonganmagang = LowonganMagang::create([
             'id_industri' => $request->namaindustri,
             'id_year_Akademik' => $request->tahun,
-            'id_jenismagang' => $request->jenismagang,
+            'id_jenismagang' => $request->jenis,
             'intern_position' => $request->posisi,
             'kuota' => $request->kuota,
             'bidang' => $request->bidang,
@@ -74,9 +74,10 @@ class LowonganMagangController extends Controller
             'enddate' => $request->tanggalakhir,
             'durasimagang' => $request->durasimagang,
             'tahapan_seleksi' => $request->tahapan,
-             'created_by' => $request->created_by,
-            // 'created_at' => $request->created_at,
+            'created_by' => $request->created_by,
+            'created_at' => $request->created_at,
             'date_confirm_closing' => $request->tanggalkonfirmasi,
+            // 'pelaksaan' => $request->pelaksanaan,
             // 'applicant_status' => $request->pendaftar,
 
         ]);
@@ -160,7 +161,7 @@ class LowonganMagangController extends Controller
 
             $lowonganmagang->id_industri = $request->namaindustri;
             $lowonganmagang->id_year_Akademik = $request->tahun;
-            $lowonganmagang->id_jenismagang = $request->jenismagang;
+            $lowonganmagang->id_jenismagang = $request->jenis;
             $lowonganmagang->intern_position = $request->posisi;
             $lowonganmagang->kuota = $request->kuota;
             $lowonganmagang->bidang = $request->bidang;
@@ -176,8 +177,9 @@ class LowonganMagangController extends Controller
             $lowonganmagang->durasimagang = $request->durasimagang;
             $lowonganmagang->tahapan_seleksi = $request->tahapan;
             $lowonganmagang->created_by = $request->created_by;
-            // $lowonganmagang->created_at = $request->created_at;
+            $lowonganmagang->created_at = $request->created_at;
             $lowonganmagang->date_confirm_closing = $request->tanggalkonfirmasi;
+            // $lowonganmagang->pelaksaan = $request->pelaksanaan;
             // $lowonganmagang->applicant_status = $request->pendaftar;
             $lowonganmagang->save();
 
