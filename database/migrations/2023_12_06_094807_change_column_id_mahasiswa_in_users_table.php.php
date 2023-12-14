@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('users', 'id_mahasiswa')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropForeign('users_id_mahasiswa_foreign');
+                $table->dropColumn('id_mahasiswa');
+            });
+        }
         Schema::table('users', function (Blueprint $table) {
             $table->uuid('id_mahasiswa')->nullable()->change(null);
             $table->foreign('id_mahasiswa')->references('nim')->on('mahasiswa')->onDelete('set null');
@@ -22,8 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('users', 'id_mahasiswa')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('id_mahasiswa');
+            });
+        }
     }
 };

@@ -25,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('industri', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('industri', 'notelpon');
+            Schema::dropIfExists('industri', 'alamatindustri');
+            Schema::dropIfExists('industri', 'kategori_industri');
+            Schema::dropIfExists('industri', 'statuskerjasama');
         });
     }
 };

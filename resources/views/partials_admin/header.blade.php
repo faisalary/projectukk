@@ -789,8 +789,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">{{ ucwords($user->name) }}</small>
+                                                    <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                                                    <small class="text-muted">{{ ucwords($user->email) }}</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -844,9 +844,9 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}">
-                                            <i class="ti ti-logout me-2 ti-sm" id="logout-form" action="{{ route('logout') }}" method="POST">{{ csrf_field() }}</i>
-                                            <span class="align-middle">Log Out</span>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
+                                            <i class="ti ti-logout me-2 ti-sm"></i>
+                                            <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -867,5 +867,24 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
+                    <!-- Modal Delete-->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center" style="display:block;">
+                                    Apakah Anda Ingin Keluar Dari Akun Ini?
+                                </div>
+                                <div class="modal-footer" style="display: flex; justify-content:center;">
+                                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="container-xxl flex-grow-1 container-p-y">
