@@ -11,7 +11,9 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
+use App\Models\User;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Hash;
 
 use function Laravel\Prompts\select;
 
@@ -54,7 +56,20 @@ class mahasiswaController extends Controller
             'alamatmhs' => $request->alamatmhs,
             'emailmhs' => $request->emailmhs,
             'nohpmhs' => $request->nohpmhs, 
+            
         ]);
+       
+        $admin = User::create([
+            'name' => 'mahasiswa',
+            'username' => $request->namamhs,
+            'email' => $request->emailmhs,
+            'password' => bcrypt('12345678'),            
+            'isAdmin'=>2,
+            'nim' => $mahasiswa->nim,
+        ]);
+        $admin->assignRole('user');
+     
+
 
         return response()->json([
             'error' => false,
