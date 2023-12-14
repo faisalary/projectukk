@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('jenis_magang', function (Blueprint $table) {
-            $table->enum('durasimagang', array('1 Semester', '2 Semester'))->change();
+            $table->dropColumn('durasimagang');
+            // $table->enum('durasimagang', array('1 Semester', '2 Semester'));
+            $table->string('durasimagang')->change();
         });
     }
 
@@ -23,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('jenis_magang', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('jenis_magang', 'durasimagang');
         });
     }
 };

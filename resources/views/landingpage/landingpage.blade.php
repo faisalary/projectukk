@@ -71,7 +71,6 @@
     .layout-page {
         padding-top: 40px !important;
     }
-
 </style>
 @endsection
 
@@ -79,7 +78,7 @@
 <main class="main-content" style="background-color: #fff;">
 
     <div class="auto-container" style="background-image: url({{asset('assets/images/background/background.png')}}); background-repeat: no-repeat; background-size: cover; background-position: center bottom; padding-bottom:12rem;">
-        
+
         <div class="title-box wow animate__animated animate__fadeInUp" data-wow-delay="1000ms">
             <h1 class="mb-4 text-center" style="font-size: 50px; color:#fff; padding-top:70px">Selangkah Lebih Dekat Dengan <br>Magang Impianmu</h1>
             <p class="mb-5 text-center" style="font-size: 22px; color:#fff;">Temukan dan wujudkan semua karir impianmu hanya
@@ -108,7 +107,7 @@
                         </div>
                         <div class="col-4 p-0">
                             <div class="input-group">
-                                <span class="input-group-text"><i class="ti ti-briefcase"></i></span>
+                                <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
                                 <select id="selectpickerBasic" class="selectpicker w-100" data-style="btn-default">
                                     <option value="">Jenis Magang</option>
                                     <option value="44">Accounting / Finance</option>
@@ -218,7 +217,7 @@
 
     <div class="auto-container">
         <div class="sec-title text-center">
-            <h2 style="padding-top:50px;">Lowongan Untuk Kamu</h2>
+            <h2 style="padding-top:50px;">Lowongan Magang Untuk Kamu</h2>
             <p style="font-size:20px; padding-bottom:15px;">Temukan berbagai lowongan kerja yang kamu inginkan</p>
             <div class="btn mb-3">
                 <button id="btnTerbaru" class="btn btn-success me-2 ml-2" type="button">Lowongan
@@ -238,22 +237,21 @@
                                 <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
                                 </figure>
                             </div>
-                            <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                            <div class="col-6 ps-5" style="padding-top:10px;padding-left:50px;">
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Wings Surya</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Human Resources</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -268,21 +266,20 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Uniqlo Co., Ltd</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Marketing Intern</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -297,21 +294,20 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-left:30px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Nestle SA</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Quality Assurance</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -329,21 +325,20 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">Lazada Group</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Business Analyst</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -358,21 +353,20 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Bank Central Asia Tbk</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Teller</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -387,21 +381,20 @@
                                 </figure>
                             </div>
                             <div class="col-6" style="padding-top:10px;padding-left:50px;">
-                                <div class="clock"> 8 hari lalu <i class="ti ti-clock mb-1"></i></div>
+                                <div class="clock ps-5"> 8 hari lalu </div>
                             </div>
                             <div class="col-12">
                                 <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Sejahteraraya Anugerahjaya</p>
                             </div>
                         </div>
                         <h2 class="mb-3" style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">Resepsionis</h2>
-                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jl. Gatot Soebroto No 577,
-                            Tangerang</div>
-                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>IDR 4.300.000 - 5.500.000
+                        <div class="location mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                        <div class="location mb-3"><i class="ti ti-currency-dollar" style="padding-right :5px; padding-bottom:5px;"></i>Berbayar
                         </div>
-                        <div class="location mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""></i>Full Time</div>
+                        <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                                <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
-                                <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
+                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
                 </div>
@@ -433,69 +426,69 @@
                                 <span class="icon ti ti-map-pin"> 24 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 70 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 70 Lowongan</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class=" col-4" style="width: 28%;">
-                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
-                    <div class="text-center p-4">
-                    <h5 class="font-weight-semibold">Design & Creatives</h5>
-                        <div class="row text-center mt-3">
-                            <div class="col-6">
-                                <span class="icon ti ti-map-pin"> 34 lokasi</span>
+                                    <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                                        <div class="text-center p-4">
+                                            <h5 class="font-weight-semibold">Design & Creatives</h5>
+                                            <div class="row text-center mt-3">
+                                                <div class="col-6">
+                                                    <span class="icon ti ti-map-pin"> 34 lokasi</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
-                            <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
-                            </div>
-                       </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-4" style="width: 28%;">
-                 <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
-                    <div class="text-center p-4">
-                    <h5 class="font-weight-semibold">Finance & Accounting </h5>
-                        <div class="row text-center mt-3">
-                            <div class="col-6">
-                                <span class="icon ti ti-map-pin"> 14 lokasi</span>
-                            </div>
-                            <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 26 Lowongan</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class=" row text-center justify-content-center">
-            <div class="col-4" style="width: 28%;">
-                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
-                    <div class="text-center p-4">
-                    <h5 class="font-weight-semibold">Writing & Editor</h5>
-                        <div class="row text-center mt-3">
-                            <div class="col-6">
-                                <span class="icon ti ti-map-pin"> 30 lokasi</span>
-                            </div>
-                            <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
+                            <div class=" col-4" style="width: 28%;">
+                                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                                    <div class="text-center p-4">
+                                        <h5 class="font-weight-semibold">Finance & Accounting </h5>
+                                        <div class="row text-center mt-3">
+                                            <div class="col-6">
+                                                <span class="icon ti ti-map-pin"> 14 lokasi</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 26 Lowongan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-4" style="width: 28%;">
-                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
-                    <div class="text-center p-4">
-                    <h5 class="font-weight-semibold">Business & Sales</h5>
-                        <div class="row text-center mt-3">
-                            <div class="col-6">
-                                <span class="icon ti ti-map-pin"> 34 lokasi</span>
+                        <div class=" row text-center justify-content-center">
+                            <div class="col-4" style="width: 28%;">
+                                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                                    <div class="text-center p-4">
+                                        <h5 class="font-weight-semibold">Writing & Editor</h5>
+                                        <div class="row text-center mt-3">
+                                            <div class="col-6">
+                                                <span class="icon ti ti-map-pin"> 30 lokasi</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <span class="icon ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 56 Lowongan</span>
+                            <div class=" col-4" style="width: 28%;">
+                                <div class="bg-white" style="margin: 15px; width: 100%; border-radius: 15px; border-top: 10px solid #4EA971">
+                                    <div class="text-center p-4">
+                                        <h5 class="font-weight-semibold">Business & Sales</h5>
+                                        <div class="row text-center mt-3">
+                                            <div class="col-6">
+                                                <span class="icon ti ti-map-pin"> 34 lokasi</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 56 Lowongan</span>
                             </div>
                         </div>
                     </div>
@@ -503,187 +496,187 @@
             </div>
         </div>
         <div class=" text-center">
-            <a class="mb-5 mt-4" type="button" class="btn btn-outline-success" style="color:#ffff; font-size:20px; margin: 20px ">Lihat Kemampuan Lainnya <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
-        </div>
-    </div>
+                                                    <a class="mb-5 mt-4" type="button" class="btn btn-outline-success" style="color:#ffff; font-size:20px; margin: 20px ">Lihat Kemampuan Lainnya <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
+                                            </div>
+                                        </div>
 
-    <!-- Top Companies -->
-    <div class="auto-container">
-        <div class="sec-title text-center mt-5">
-        <h2>Mitra Perusahaan</h2>
-            <div class="text" style="font-size:20px;">Talentern menjalin kerjasama dengan 500+ perusahaan nasional dan multinasional</div>
-        </div>
-            <div class="row mx-5">
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
-                                <h4>PT Wings Surya</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971; opacity:0.7!important;">Lihat Perusahaan</a>
+                                        <!-- Top Companies -->
+                                        <div class="auto-container">
+                                            <div class="sec-title text-center mt-5">
+                                                <h2>Mitra Perusahaan</h2>
+                                                <div class="text" style="font-size:20px;">Talentern menjalin kerjasama dengan 500+ perusahaan nasional dan multinasional</div>
+                                            </div>
+                                            <div class="row mx-5">
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
+                                                                <h4>PT Wings Surya</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971; opacity:0.7!important;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lowongan_uniqlo.png')}}" alt="admin.upload"></figure>
+                                                                <h4>Uniqlo Co., Ltd</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png')}}" alt="admin.upload"></figure>
+                                                                <h4>Lazada Group</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/bca.png')}}" alt="admin.upload"></figure>
+                                                                <h4>PT Bank Central Asia Tbk</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/Nestle.png')}}" alt="admin.upload"></figure>
+                                                                <h4>Nestle SA</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-5">
+                                                    <div class="card">
+                                                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
+                                                            <div>
+                                                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/mayapada.png')}}" alt="admin.upload"></figure>
+                                                                <h4>PT Sejahteraraya Anugerahjaya</h4>
+                                                                <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
+                                                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
+                                                                </div>
+                                                                <div class="button-container">
+                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <a class="mb-5 mt-5" type="button" class="btn btn-outline-success" style="color:#4EA971;; font-size:20px; margin: 20px;">Lihat Perusahaan Lainnya <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
+                                            </div>
                                         </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lowongan_uniqlo.png')}}" alt="admin.upload"></figure>
-                                <h4>Uniqlo Co., Ltd</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png')}}" alt="admin.upload"></figure>
-                                <h4>Lazada Group</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/bca.png')}}" alt="admin.upload"></figure>
-                                <h4>PT Bank Central Asia Tbk</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                     PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/Nestle.png')}}" alt="admin.upload"></figure>
-                                <h4>Nestle SA</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/mayapada.png')}}" alt="admin.upload"></figure>
-                                <h4>PT Sejahteraraya Anugerahjaya</h4>
-                                    <div class="location" style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.
-                                    </div>
-                                        <div class="button-container text-center">
-                                            <a class="btn btn-outline-success mt-3" style="color:#4EA971;">Lihat Perusahaan</a>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center">
-                <a class="mb-5 mt-5" type="button" class="btn btn-outline-success" style="color:#4EA971;; font-size:20px; margin: 20px;">Lihat Perusahaan Lainnya <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
-            </div>
-    </div>
 
-    <!-- Lowongan Terbaik  -->
-    <div class="auto-container" style="background-image: url({{ asset('front/assets/landing/images/background/blue.png')}}); ; background-size: cover; background-repeat: no-repeat; min-width:100%;">
-            <header class="section-header">
-                <div class="sec-title text-center">
-                    <h2 style="color: white; padding-top:50px;">Lowongan Terbaik di Kota Besar</h2>
-                        <p style="color: white; font-size:20px; padding-bottom:20px;">Temukan peluang karir anda di kota - kota besar</p>
-                </div>
-            </header>
-            <div class="image" style="margin-left: 150px; margin-right: 150px;">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="{{ asset('front/assets/img/Rectangle.png') }}" class="img-fluid" alt="bandung">
-                            </div>
-                            <div class="col-12">
-                                <img src="{{ asset('front/assets/img/Jakarta.png') }}" class="img-fluid" alt="jakarta">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="{{ asset('front/assets/img/Bali.png') }}" class="img-fluid" alt="bali" style="height: 563px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="{{ asset('front/assets/img/Yogya.png') }}" class="img-fluid" alt="yogya" style="height: 282px;" width="610px">
-                            </div>
-                            <div class="col-6">
-                                <img src="{{ asset('front/assets/img/surabaya.png') }}" class="img-fluid" alt="surabaya">
-                            </div>
-                            <div class="col-6">
-                                <img src="{{ asset('front/assets/img/medan.png') }}" class="img-fluid" alt="medan">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <a class="mb-5" type="button" class="btn btn-outline-success" style="color:white; font-size:20px; margin: 20px;">Lihat Semua Wilayah <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
-                </div>
-            </div>
-    </div>
-
-    <div class="auto-container mt-5 mb-5" style="margin-left:110px;">
-        <div class="widgets-section">
-                <div class="row">
-                    <div class="col-6">
-                        <h4 style="margin-top: 100px; color: #4EA971; ">Bagaimana Cara Melamar Pekerjaan di Talentern?</h2>
-                        <h2>5 Langkah Melamar <br> Pekerjaan di Talentern<h1>
-                            <p style="font-size: 16px;">Sodales mauris quam faucibus scelerisque risus malesuada nulla. Cursus enim quis elementum feugiat ut. Phasellus a viverra facilisis eu purus. Et risus magna dis nisl nulla sed diam.</p>
-                                <button type="button" class="btn btn-success mb-5">Cari Lowongan Sekarang</button>
-                                    <div class="big-column">
-                                        <div class="footer-column about-widget">
+                                        <!-- Lowongan Terbaik  -->
+                                        <div class="auto-container" style="background-image: url({{ asset('front/assets/landing/images/background/blue.png')}}); ; background-size: cover; background-repeat: no-repeat; min-width:100%;">
+                                            <header class="section-header">
+                                                <div class="sec-title text-center">
+                                                    <h2 style="color: white; padding-top:50px;">Lowongan Magang Terbaik di Kota Besar</h2>
+                                                    <p style="color: white; font-size:20px; padding-bottom:20px;">Temukan peluang karir anda di kota - kota besar</p>
+                                                </div>
+                                            </header>
+                                            <div class="image" style="margin-left: 150px; margin-right: 150px;">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <img src="{{ asset('front/assets/img/Rectangle.png') }}" class="img-fluid" alt="bandung">
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <img src="{{ asset('front/assets/img/Jakarta.png') }}" class="img-fluid" alt="jakarta">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <img src="{{ asset('front/assets/img/Bali.png') }}" class="img-fluid" alt="bali" style="height: 563px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <img src="{{ asset('front/assets/img/Yogya.png') }}" class="img-fluid" alt="yogya" style="height: 282px;" width="610px">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <img src="{{ asset('front/assets/img/surabaya.png') }}" class="img-fluid" alt="surabaya">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <img src="{{ asset('front/assets/img/medan.png') }}" class="img-fluid" alt="medan">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <a class="mb-5" type="button" class="btn btn-outline-success" style="color:white; font-size:20px; margin: 20px;">Lihat Semua Wilayah <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                    </div>
-                    <div class="col-6">
-                        <div style="margin-top: 30px; margin-bottom: 30px;">
-                            <img src="{{ asset('front/assets/img/background_pekerjaan.svg') }}" class="img-fluid" alt="" style="height: 500px;" width="700px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
+
+                                        <div class="auto-container mt-5 mb-5" style="margin-left:110px;">
+                                            <div class="widgets-section">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4 style="margin-top: 100px; color: #4EA971; ">Bagaimana Cara Melamar Pekerjaan di Talentern?</h2>
+                                                            <h2>5 Langkah Melamar <br> Pekerjaan di Talentern<h1>
+                                                                    <p style="font-size: 16px;">Sodales mauris quam faucibus scelerisque risus malesuada nulla. Cursus enim quis elementum feugiat ut. Phasellus a viverra facilisis eu purus. Et risus magna dis nisl nulla sed diam.</p>
+                                                                    <button type="button" class="btn btn-success mb-5">Cari Lowongan Sekarang</button>
+                                                                    <div class="big-column">
+                                                                        <div class="footer-column about-widget">
+                                                                        </div>
+                                                                    </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div style="margin-top: 30px; margin-bottom: 30px;">
+                                                            <img src="{{ asset('front/assets/img/background_pekerjaan.svg') }}" class="img-fluid" alt="" style="height: 500px;" width="700px">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 </main>
 
 

@@ -12,12 +12,11 @@
                     <div class="card-header">{{ __('Set-Password Baru') }}</div>
 
                     <div class="card-body">
-                        {{-- <form method="POST" action="{{ route('update.password') }}"> --}}
-                        <form >
+                        <form method="post"  action="{{ route('admin.update.password') }}">
                             
                             @csrf
                              <!-- Password Reset Token -->
-                             <input type="hidden" name="token" value="{{$id}}">
+                             <input type="hidden" name="token" value="{{$token}}">
                             <div class="form-group m-2">
                                 <label for="password">{{ __('Password baru') }}</label>
                                 <input class="form-control" type="password" name="password" required>

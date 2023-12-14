@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->string('email');
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->uuid('id_industri')->nullable();
+            $table->foreign('id_industri')->references('id_industri')->on('industri');
         });
     }
 
@@ -21,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('industri', function (Blueprint $table) {
-            $table->dropColumn('email');
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

@@ -4,11 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
-use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role as ModelsRole;
 
 class PermissionSeeder extends Seeder
 {
@@ -24,6 +20,7 @@ class PermissionSeeder extends Seeder
                 'name' => 'superadmin',
                 'guard_name' => 'web',
                 'permissions' => [
+                    'only.lkm.mitra',
                     'only.lkm',
                     'slidebar.lkm',
                     'create.mahasiswa',
@@ -42,7 +39,9 @@ class PermissionSeeder extends Seeder
                     'edit.actions',
                     'agree.and.reject.buttons',
                     'approval.page',
-                    'can.view.data.table'
+                    'can.view.data.table',
+                    'title.info.lowongan.admin',
+                    'ubah.lowongan.admin'
                 ]
             ],
             [
@@ -50,6 +49,8 @@ class PermissionSeeder extends Seeder
                 'name' => 'admin',
                 'guard_name' => 'web',
                 'permissions' => [
+                    'only.lkm.mitra',
+                    'only.mitra',
                     'slidebar.mitra',
                     'information.vacancies',
                     'confirmation.limit',
@@ -63,7 +64,9 @@ class PermissionSeeder extends Seeder
                     'create.data',
                     'edit.data.table',
                     'delete.data.table',
-                    'button.tnglbts.mitra'
+                    'button.tnglbts.mitra',
+                    'title.info.lowongan.mitra',
+                    'ubah.lowongan.mitra'
                 ]
             ],
             [
