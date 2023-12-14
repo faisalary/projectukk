@@ -41,5 +41,13 @@ class UserSeeder extends Seeder
             'isAdmin' => 2
         ]);
         $user->assignRole('user');
+        $user = User::create([
+            'name' => 'User Role',
+            'username' => 'User',
+            'email' => 'user@role.test',
+            'password' => bcrypt('12345678'),
+            'isAdmin' => 2
+        ]);
+        $user->assignRole('user');
     }
 }
