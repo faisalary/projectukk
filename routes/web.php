@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
-    
+
 });
 
 require __DIR__ . '/auth.php';
@@ -154,7 +154,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function (){
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
-        
+
     });
     //kelola-mitra
     Route::prefix('company')->middleware('can:only.lkm')->group(function () {
@@ -218,16 +218,17 @@ Route::middleware('auth')->group(function () {
         Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
     });
 
-    // Route::prefix('kelola')->group(function () {
-    //     Route::prefix('lowongan/admin')->group(function () {
-    //         Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
-    //         Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
-    //         Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
-    //         Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
-    //         Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
-    //         Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
-    //     });
-    // });
+    Route::prefix('kelola')->group(function () {
+        Route::prefix('lowongan/')->group(function () {
+            Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
+            Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
+            Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
+            Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
+            Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
+            Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+        });
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -305,3 +306,7 @@ Route::get('/konfigurasi', function () {
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
+
+// Route::get('/tambah-lowongan-magang', function () {
+//     return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
+// });
