@@ -15,31 +15,31 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // $superadmin = User::create([
-        //     'name' => 'Super Admin Role',
-        //     'username' => 'SuperAdmin',
-        //     'email' => 'superadmin@demo.test',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 0
-        // ]);
-        // $superadmin->assignRole('superadmin');
-        
-        // $admin = User::create([
-        //     'name' => 'Admin Role',
-        //     'username' => 'Admin',
-        //     'email' => 'admin@role.test',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 1
-        // ]);
-        // $admin->assignRole('admin');
+        $superadmin = User::create([
+            'name' => 'Super Admin Role',
+            'username' => 'SuperAdmin',
+            'email' => 'superadmin@demo.test',
+            'password' => bcrypt('12345678'),
+            'isAdmin' => 0
+        ]);
+        $superadmin->assignRole('superadmin');
 
-        // $user = User::create([
-        //     'name' => 'User Role',
-        //     'username' => 'User',
-        //     'email' => 'user@role.test',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 2
-        // ]);
-        // $user->assignRole('user');
+        $admin = User::create([
+            'name' => 'Admin Role',
+            'username' => 'Admin',
+            'email' => 'admin@role.test',
+            'password' => bcrypt('12345678'),
+            'isAdmin' => 1
+        ]);
+        $admin->assignRole('admin');
+
+        $user = User::create([
+            'name' => 'User Role',
+            'username' => 'User',
+            'email' => 'user@role.test',
+            'password' => bcrypt('12345678'),
+            'isAdmin' => 2
+        ]);
+        $user->assignRole('user');
     }
 }
