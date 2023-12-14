@@ -273,8 +273,14 @@ Route::get('/summary-profile', function () {
     return view('company.summary_profile');
 });
 
-Route::get('/jadwal-seleksi', function () {
-    return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+Route::prefix('jadwal-seleksi')->group(function () {
+    Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
+    Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+    Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+    Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+    Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
 });
 
 Route::get('/detail/lowongan/magang', function () {
