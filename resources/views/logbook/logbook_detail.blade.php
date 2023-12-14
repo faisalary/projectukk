@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="user-profile-header-banner">
-                    <img src="../assets/profile-banner.png" alt="Banner image" class="rounded-top" width="100%"
+                    <img src="../assets/logbookbg.png" alt="Banner image" class="rounded-top" width="100%"
                         style="height: 129px; !important" />
                 </div>
                 <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4"
@@ -71,23 +71,23 @@
                         <div class="d-flex">
                             <div class="text-center">
                                 <p>Senin</p>
-                                <img src="../assets/images/smile.png" alt="">
+                                <img src="../assets/images/sad.png" alt="" ">
                             </div>
-                            <div class="text-center" style=" margin-left: 20px; ">
+                            <div class="text-center" style=" margin-left: 5px; ">
                                 <p>Selasa</p>
-                                <img src="../assets/images/love.png" alt="">
+                                <img src="../assets/images/jutek.png" alt="" ">
                             </div>
-                            <div class="text-center" style=" margin-left: 20px; ">
+                            <div class="text-center" style=" margin-left: 5px; ">
                                 <p>Rabu</p>
-                                <img src="../assets/images/sad.png" alt="">
+                                <img src="../assets/images/kyaa.png" alt="" ">
                             </div>
-                            <div class="text-center" style=" margin-left: 20px; ">
+                            <div class="text-center" style=" margin-left: 5px; ">
                                 <p>kamis</p>
-                                <img src="../assets/images/kyaa.png" alt="">
+                                <img src="../assets/images/love.png" alt=""">
                             </div>
-                            <div class="text-center" style=" margin-left: 20px; ">
+                            <div class="text-center" style=" margin-left: 5px; ">
                                 <p>Jumat</p>
-                                <img src="../assets/images/jutek.png" alt="">
+                                <img src="../assets/images/smile.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -235,28 +235,23 @@
                     <div class="d-flex mt-1">
                         <div>
                             <img src="../assets/images/smile.png" alt=""
-                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
-                        </div>
+>                        </div>
 
                         <div class="text-center" style="margin-left: 20px;">
                             <img src="../assets/images/love.png" alt=""
-                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
-                        </div>
+>                        </div>
 
                         <div class="text-center" style="margin-left: 20px;">
                             <img src="../assets/images/sad.png" alt=""
-                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
-                        </div>
+>                        </div>
 
                         <div class="text-center" style="margin-left: 20px;">
                             <img src="../assets/images/kyaa.png" alt=""
-                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
-                        </div>
+>                        </div>
 
                         <div class="text-center" style="margin-left: 20px;">
                             <img src="../assets/images/jutek.png" alt=""
-                                style="box-shadow: 0 4px 12px rgba(239, 131, 84, 0.5);">
-                        </div>
+>                        </div>
                     </div>
                 </div>
                 <div class="text-center mt-4">

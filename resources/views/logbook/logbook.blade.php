@@ -17,24 +17,29 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="user-profile-header-banner">
-                    <img src="../assets/profile-banner.png" alt="Banner image" class="rounded-top" width="100%" style="height: 129px; !important" />
+                    <img src="../assets/logbookbg.png" alt="Banner image" class="rounded-top" width="100%" style="height: 129px; !important" />
                 </div>
                 <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4" style="justify-content: space-between; !important">
                     <div class="flex-shrink-0 mt-n5 mx-sm-0 mx-auto ms-0 ms-sm-5">
-                        <img
-                        src="../assets/14.png"
-                        alt="user image"
-                        class="d-block h-auto rounded user-profile-img"
-                        />
-                        <div style="margin-top: 24px;">
-                            <h4>Human Resources</h4>
-                            <ul
-                            class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2"
-                            >
-                            <li class="list-inline-item">PT. Wings Surya</li>
-                            </ul>
+                        <div class="card" style="width: 12,5rem;">
+                            <div class="card-body">
+                                    <img
+                                    src="../assets/images/wings.png"
+                                    alt="user image"
+                                    class="d-block h-auto rounded user-profile-img"
+                                    />
+                             </div>
                         </div>
-                    </div>
+                                <div style="margin-top: 24px;">
+                                    <h4>Human Resources</h4>
+                                    <ul
+                                    class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2"
+                                    >
+                                    <li class="list-inline-item">PT. Wings Surya</li>
+                                    </ul>
+                                </div>
+                            </div>
+                       
      
                     <div class="mt-3 mt-sm-5">
                             <div class="card-body" style="width: 400px !important; ">
@@ -82,7 +87,42 @@
                 
                     <div style="display: flex; !important">
                         <div class="text-center" style="margin-top: 120px; margin-bottom: 30px">
-                            <a href="/detail/kandidat" class="btn btn-success active" role="button" style="margin-bottom: 14px">Lengkapi Logbook Mahasiswa</a>
+                            <a href="/logbook-detail" class="btn btn-success active" role="button" style="margin-bottom: 14px">Lengkapi Logbook Mahasiswa</a>
+                            <p>Laporan mingguan dapat terkirim ketika laporan harian sudah dilengkapi secara keseluruhan</p>
+                        </div>
+                        <div class="text-center" style=" margin-left: 20px; ">
+                            <p>Senin</p>
+                            <img src="../assets/images/smile.png" alt="">
+                        </div>
+                        <div class="text-center" style=" margin-left: 20px; ">
+                            <p>Selasa</p>
+                            <img src="../assets/images/love.png" alt="">
+                        </div>
+                        <div class="text-center" style=" margin-left: 20px; ">
+                            <p>Rabu</p>
+                            <img src="../assets/images/sad.png" alt="">
+                        </div>
+                        <div class="text-center" style=" margin-left: 20px; ">
+                            <p>kamis</p>
+                            <img src="../assets/images/kyaa.png" alt="">
+                        </div>
+                        <div class="text-center" style=" margin-left: 20px; ">
+                            <p>Jumat</p>
+                            <img src="../assets/images/jutek.png" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ms-0 ms-sm-4" style="display: flex; justify-content: space-between; border: 1px solid #D3D6DB; padding: 10px 30px; margin-bottom: 20px; border-radius: 6px; ">
+                    <div>
+                        <span class="badge bg-label-success">Disetujui</span>
+                        <h5>20 - 25 Januari 2023</h5>
+                        <p>Minggu ke - 1</p>
+                    </div>
+                
+                    <div style="display: flex; !important">
+                        <div class="text-center" style="margin-top: 120px; margin-bottom: 30px">
+                            <a href="/logbook-detail" class="btn btn-success active" role="button" style="margin-bottom: 14px">Lengkapi Logbook Mahasiswa</a>
                             <p>Laporan mingguan dapat terkirim ketika laporan harian sudah dilengkapi secara keseluruhan</p>
                         </div>
                         <div class="text-center" style=" margin-left: 20px; ">
@@ -118,7 +158,7 @@
                 
                     <div style="display: flex; !important">
                         <div class="text-center" style="margin-top: 120px; margin-bottom: 30px">
-                            <a href="/detail/kandidat" class="btn btn-outline-danger active" role="button" style="margin-bottom: 14px">Perbaiki Logbook Mahasiswa</a>
+                            <a href="/logbook-detail" class="btn btn-outline-danger active" role="button" style="margin-bottom: 14px">Perbaiki Logbook Mahasiswa</a>
                             <p>Laporan mingguan dapat terkirim ketika laporan harian sudah dilengkapi secara keseluruhan</p>
                         </div>
                         <div class="text-center" style=" margin-left: 20px; ">
