@@ -72,7 +72,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'isAdmin'=>2,
-            'id_industri' => Uuid::uuid4(),
             'id_mahasiswa' => Uuid::uuid4()
         ]);
         $user->assignRole('user');
