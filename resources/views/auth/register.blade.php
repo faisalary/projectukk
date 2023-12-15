@@ -72,10 +72,8 @@
                     @enderror
                 </div>
             </div>
-    
-
+            
             {{-- form-control --}}
-        
             <div class="col">
                 <label for="username" class="col-form-label text-md-end">{{ __('Username') }}</label>
                 <div class="md-6">
@@ -141,8 +139,7 @@
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
         <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
-        
-    </div>
+        </div>
     </div>
 </form>
 
