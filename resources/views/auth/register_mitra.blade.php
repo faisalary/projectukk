@@ -1,7 +1,7 @@
 @extends('partials_auth.register_mitra')
-
 @section('conten')
-<form method="POST" action="{{ route('register') }}">
+
+<form method="POST" action="{{ route('admin.register.store') }}">
     @csrf
     <div class="row">
         <div class="col mb-2 form-input">
@@ -33,11 +33,11 @@
     </div>
     <div class="form-group">
         <div class="col">
-            <label for="username" class="col-form-label text-md-end">{{ __('Nama Instansi/Perusahaan') }}</label>
+            <label for="namaindustri" class="col-form-label text-md-end">{{ __('Nama Instansi/Perusahaan') }}</label>
             <div class="md-6">
-                <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="Masukkan nama perusahaan/instansi" autofocus>
+                <input id="namaindustri" type="namaindustri" class="form-control @error('namaindustri') is-invalid @enderror" name="namaindustri" value="{{ old('namaindustri') }}" required autocomplete="namaindustri" placeholder="Masukkan nama perusahaan/instansi" autofocus>
 
-                @error('username')
+                @error('namaindustri')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -64,8 +64,8 @@
 
     <div class="row">
         <div class="col mb-2 form-input">
-            <label for="kategori-mitra" class="form-label">{{ __('Kategori Mitra') }}</label>
-            <select class="form-select select2" id="kategori-mitra" name="kategori-mitra"
+            <label for="kategori_industri" class="form-label">{{ __('Kategori Mitra') }}</label>
+            <select class="form-select select2" id="kategori_industri" name="kategori_industri"
                 data-placeholder="Pilih Kategori Mitra">
                 <option disabled selected>Pilih Kategori Mitra</option>
                 <option>Iya</option>
@@ -75,9 +75,9 @@
     </div>
     <div class="row">
         <div class="col mb-2 form-input">
-            <label for="status-kerja-sama" class="form-label">{{ __('Status Kerja Sama') }}</label>
-            <select class="form-select select2" id="status-kerja-sama" name="status-kerja-sama"
-                data-placeholder="status-kerja-sama">
+            <label for="statuskerjasama" class="form-label">{{ __('Status Kerja Sama') }}</label>
+            <select class="form-select select2" id="statuskerjasama" name="statuskerjasama"
+                data-placeholder="statuskerjasama">
                 <option disabled selected>Status Kerja Sama</option>
                 <option>Internal</option>
                 <option>Eksternal</option>
@@ -88,7 +88,7 @@
     {{-- form-control --}}
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
-        <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
+        <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);" name="register">Buat Akun</button>
         </div>
     </div>
 </form>

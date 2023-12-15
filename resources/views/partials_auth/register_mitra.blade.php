@@ -17,7 +17,7 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     
-      <title>Talentern</title>
+      <title>Register Mitra</title>
     
       <meta name="description" content="" />
     
@@ -138,6 +138,7 @@
            
             <!-- /Logo -->
             @yield('conten')
+            
             <p class="text-center">
               <span>Already have an account?</span>
               <a href="{{ url('/login') }}">
@@ -160,33 +161,6 @@
       </div>
     </div>
 
-    <!-- / Content -->
-
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../../assets/vendor/js/bootstrap.js"></script>
-    <script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../../assets/vendor/libs/node-waves/node-waves.js"></script>
-
-    <script src="../../assets/vendor/libs/hammer/hammer.js"></script>
-    <script src="../../assets/vendor/libs/i18n/i18n.js"></script>
-    <script src="../../assets/vendor/libs/typeahead-js/typeahead.js"></script>
-
-    <script src="../../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="../../assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
-    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
-
-    <!-- Main JS -->
-    <script src="../../assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="../../assets/js/pages-auth.js"></script>
     <script>
     function redirectToPage() {
       var selectedRole = document.getElementById("roleregister").value;
@@ -194,7 +168,7 @@
       if (selectedRole === "user") {
         window.location.href = "/register";
         } else if (selectedRole === "mitra") {
-          window.location.href = "/admin/register";
+          window.location.href = "/mitra/register";
       }
       
     }

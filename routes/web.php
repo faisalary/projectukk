@@ -27,9 +27,9 @@ Route::get('/dashboard-admin', [App\Http\Controllers\DashboardMitraController::c
 Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
+Route::group(['prefix' => 'mitra', 'as' => 'admin.'], function () {
+    Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
+    Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
     
