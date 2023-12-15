@@ -18,7 +18,7 @@ use App\Http\Controllers\IndustriController;
 */
 
 Route::get('/', function () {
-    return view('layouts.front');
+    return view('landingpage.landingpage');
 });
 
 Route::get('/dashboard', function () {
@@ -325,4 +325,12 @@ Route::get('/konfigurasi', function () {
 
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
+});
+
+Route::get('/kegiatan_saya/lamaran_saya', function () {
+    return view('kegiatan_saya.lamaran_saya.index');
+});
+
+Route::get('/kegiatan_saya/lamaran_saya/status', function () {
+    return view('kegiatan_saya.lamaran_saya.status_lamaran');
 });

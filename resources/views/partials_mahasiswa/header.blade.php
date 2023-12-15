@@ -41,9 +41,16 @@
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
+
 
   <!-- Page CSS -->
   <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/dropzone/dropzone.css" />
   <!-- Helpers -->
   <script src="../../app-assets/vendor/js/helpers.js"></script>
 
@@ -59,7 +66,10 @@
       color: #FFF;
       background-color: #4EA971 !important
     }
-    
+
+    .d-flex i:hover {
+      text-decoration: none !important;
+    }
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -70,7 +80,7 @@
 
 <body>
   <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu" >
+  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
     <div class="layout-container">
       <!-- Navbar -->
 
@@ -139,11 +149,12 @@
 
                 <!-- Lamaran Saya -->
                 <li class="menu-item">
-                  <a href="javascript:void(0)" class="menu-link">
+                  <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
                     <div data-i18n="Lamaran Saya">Lamaran Saya</div>
                   </a>
+                </li>
 
-                  <!-- Layanan LKM -->
+                <!-- Layanan LKM -->
                 <li class="menu-item">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Layanan LKM">Layanan LKM</div>
@@ -177,17 +188,24 @@
                     </li>
 
                   </ul>
+                </li>
+
+                <li class="menu-item">
+                  <a href="#footer" class="menu-link">
+                    <div data-i18n="Kontak Kami">Kontak Kami</div>
+                  </a>
+                </li>
             </div>
           </aside>
           <!-- / Menu -->
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
-           <!-- Login dan Daftar -->
-           <a href="{{ route('login')}}">
-               <button class="btn btn-outline-success me-2" style="margin-left:200px; border-radius: 8px;" type="button">Masuk</button>
-           </a>
-           <!-- <a href="{{ route('register')}}">
+            <!-- Login dan Daftar -->
+            <a href="{{ route('login')}}">
+              <button class="btn btn-outline-success me-2" style="margin-left:50px; border-radius: 8px;" type="button">Masuk</button>
+            </a>
+            <!-- <a href="{{ route('register')}}">
                <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
            </a> -->
 
@@ -381,71 +399,79 @@
               <!--/ Notification -->
 
 
-                <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-online me-2">
+                      <img src="../../app-assets/img/avatars/1.png" alt="Avatar" class="h-auto rounded-circle" />
                     </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Mahasiswa</small>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <p class="mb-0 me-2">Jhon Doe</p>
+                      <i class="ti ti-chevron-down"></i>
+                    </div>
+                  </div>
+                </a>
+
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
                           </div>
                         </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/informasi/pribadi">
-                        <i class="ti ti-user-circle me-2 ti-sm"></i>
-                        <span class="align-middle">Profil Saya</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
-                        <i class="ti ti-briefcase me-2 ti-sm"></i>
-                        <span class="align-middle">Lowongan Tersimpan</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/pengaturan">
-                        <i class="ti ti-settings me-2 ti-sm"></i>
-                        <span class="align-middle">Pengaturan Akun</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
-                        <i class="ti ti-logout me-2 ti-sm"></i>
-                        <span class="align-middle">Keluar</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <!--/ User -->
-              </ul>
+                        <div class="flex-grow-1">
+                          <span class="fw-semibold d-block">John Doe</span>
+                          <small class="text-muted">Mahasiswa</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/informasi/pribadi">
+                      <i class="ti ti-user-circle me-2 ti-sm"></i>
+                      <span class="align-middle">Profil Saya</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
+                      <i class="ti ti-briefcase me-2 ti-sm"></i>
+                      <span class="align-middle">Lowongan Tersimpan</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/pengaturan">
+                      <i class="ti ti-settings me-2 ti-sm"></i>
+                      <span class="align-middle">Pengaturan Akun</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                      <i class="ti ti-logout me-2 ti-sm"></i>
+                      <span class="align-middle">Keluar</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!--/ User -->
+            </ul>
             <!-- </div> -->
 
-          <!-- Search Small Screens -->
-          <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
-            <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
-            <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+            <!-- Search Small Screens -->
+            <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+              <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
+              <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+            </div>
           </div>
-        </div>
       </nav>
 
       <!-- / Navbar -->
@@ -458,24 +484,24 @@
 
           <!-- Content -->
 
-            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+          <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
 
-    <!-- Modal Delete-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- Modal Delete-->
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-            </button>
+                  </button>
+                </div>
+                <div class="modal-body text-center" style="display:block;">
+                  Apakah Anda Ingin Keluar Dari Akun Ini?
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
+                  <button type="button" class="btn btn-danger">Tidak</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="modal-body text-center" style="display:block;">
-            Apakah Anda Ingin Keluar Dari Akun Ini?
-          </div>
-          <div class="modal-footer" style="display: flex; justify-content:center;">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-            <button type="button" class="btn btn-danger">Tidak</button>
-          </div>
-        </div>
-      </div>
-    </div>
