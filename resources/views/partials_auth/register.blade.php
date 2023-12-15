@@ -187,5 +187,18 @@
 
     <!-- Page JS -->
     <script src="../../assets/js/pages-auth.js"></script>
+    <script>
+
+      function redirectToPage() {
+        var selectedRole = document.getElementById("roleregister").value;
+  
+        if (selectedRole === "user") {
+          window.location.href = "/register";
+        } else if (selectedRole === "mitra") {
+          window.location.href = "/admin/register";
+        }
+        
+      }
+      </script>
   </body>
 </html>
