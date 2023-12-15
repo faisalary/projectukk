@@ -11,8 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('pendaftaran_magang', 'tanggaldaftar')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('tanggaldaftar');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'approvetime')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('approvetime');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'approved_by')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('approved_by');
+            });
+        }
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            $table->timestamp('tanggaldaftar')->nullable();
+            $table->date('tanggaldaftar')->nullable();
             $table->timestamp('approvetime')->nullable();
             $table->string('approved_by', 255)->nullable();
         });
@@ -23,8 +36,18 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('pendaftaran_magang', 'tanggaldaftar')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('tanggaldaftar');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'approvetime')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('approvetime');
+            });
+        } else if (Schema::hasColumn('pendaftaran_magang', 'approved_by')) {
+            Schema::table('pendaftaran_magang', function (Blueprint $table) {
+                $table->dropColumn('approved_by');
+            });
+        }
     }
 };

@@ -23,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('komponen_nilai', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('komponen_nilai', 'total_bobot');
+            Schema::dropIfExists('komponen_nilai', 'tipe');
         });
     }
 };

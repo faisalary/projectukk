@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Ramsey\Uuid\Uuid;    
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,13 +21,16 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'username',
         'email',
         'password',
         'remember_token',
-        'isAdmin'
+        'isAdmin',
+        'id_industri',
+        'nim'
     ];
 
     /**

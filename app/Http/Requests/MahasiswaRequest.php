@@ -24,7 +24,7 @@ class MahasiswaRequest extends FormRequest
     {
         if (isset($this->id)) {
             return [
-                'nim' => ['required', 'integer','max:15', 'unique:mahasiswa', Rule::unique('mahasiswa')->ignore($this->id, 'nim')],
+                'nim' => ['required', 'string','max:15', 'unique:mahasiswa', Rule::unique('mahasiswa')->ignore($this->id, 'nim')],
                 'angkatan' => ['required', 'integer'],
                 'namaprodi' => ['required', 'string','max:255'],
                 'namauniv' => ['required', 'string', 'max:255'],
@@ -36,7 +36,7 @@ class MahasiswaRequest extends FormRequest
             ];    
         }  
         return [
-            'nim' => ['required', 'integer','max:15','unique:mahasiswa'],
+            'nim' => ['required', 'string','max:15','unique:mahasiswa'],
             'angkatan' => ['required', 'integer'],
             'namaprodi' => ['required', 'string','max:255'],
             'namauniv' => ['required', 'string', 'max:255'],

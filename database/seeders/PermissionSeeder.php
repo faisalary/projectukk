@@ -4,11 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
-use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role as ModelsRole;
 
 class PermissionSeeder extends Seeder
 {
@@ -43,7 +39,9 @@ class PermissionSeeder extends Seeder
                     'edit.actions',
                     'agree.and.reject.buttons',
                     'approval.page',
-                    'can.view.data.table'
+                    'can.view.data.table',
+                    'title.info.lowongan.admin',
+                    'ubah.lowongan.admin'
                 ]
             ],
             [
@@ -67,7 +65,8 @@ class PermissionSeeder extends Seeder
                     'edit.data.table',
                     'delete.data.table',
                     'button.tnglbts.mitra',
-                    'button.create.jadwal.seleksi'
+                    'title.info.lowongan.mitra',
+                    'ubah.lowongan.mitra'
                 ]
             ],
             [

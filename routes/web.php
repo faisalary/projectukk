@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndustriController;
+use App\Http\Middleware\RoleMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,19 +17,12 @@ use App\Http\Controllers\IndustriController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage.landingpage');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard');
+// landingpage
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+// after-login-user
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
-Route::get('/dashboard-admin', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
+Route::get('/dashboard-admin', [App\Http\Controllers\DashboardMitraController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
 //super admin
 Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
@@ -39,30 +32,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/register', [App\Http\Controllers\Auth\RegisterAdminController::class, 'adminregister']);
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
-    Route::get('/logout', [App\Http\Controllers\Auth\LoginAdminController::class, 'logout'])->name('logout');
+    
 });
 
 require __DIR__ . '/auth.php';
 
 Auth::routes();
 //profile user
-Route::group(['middleware' => isApplicant::class], function () {
-    Route::get('/profile/setup', 'ProfileController@index')->name('profile.setup');
-    Route::get('/profile', 'ProfileController@edit')->name('profile.index');
-    Route::get('/profile/information', 'ProfileController@edit')->name('profile.information');
-    Route::get('/profile/educations', 'ProfileController@edit')->name('profile.educations');
-    Route::get('/profile/skills', 'ProfileController@edit')->name('profile.skills');
-    Route::get('/profile/languages', 'ProfileController@edit')->name('profile.languages');
-    Route::get('/profile/portfolio', 'ProfileController@edit')->name('profile.portfolio');
-    Route::post('/store-profile', 'ProfileController@store')->name('store-profile');
-    Route::post('/store-personal', 'ProfileController@storePersonal')->name('store-personal');
-    Route::post('/store-information', 'ProfileController@storeInformation')->name('store-information');
-    Route::post('/store-educations', 'ProfileController@storeEducations')->name('store-educations');
-    Route::post('/store-skills', 'ProfileController@storeSkills')->name('store-skills');
-    Route::post('/store-languages', 'ProfileController@storeLanguages')->name('store-languages');
-    Route::post('/store-portfolio', 'ProfileController@storePortfolio')->name('store-portfolio');
-    Route::get('/profile/applications', 'ApplicationUserController@index')->name('application.index');
-});
+
 
 Route::middleware('auth')->group(function () {
 
@@ -110,7 +87,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\NilaiMutuController::class, 'update'])->name('nilai-mutu.update');
             Route::get('/edit/{id}', [App\Http\Controllers\NilaiMutuController::class, 'edit'])->name('nilai-mutu.edit');
         });
-        
+
         Route::prefix('mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\IndustriController::class, 'index'])->name('mitra.index');
             Route::get('/show', [App\Http\Controllers\IndustriController::class, 'show'])->name('mitra.show');
@@ -175,17 +152,23 @@ Route::middleware('auth')->group(function () {
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
         });
     });
+    Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function (){
+        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
+        
+    });
     //kelola-mitra
-    Route::prefix('company')->middleware('can:only.lkm')->group(function (){
+    Route::prefix('company')->middleware('can:only.lkm')->group(function () {
         Route::prefix('kelola-mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
-            Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
+            Route::get('/show/{statusapprove}', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
             Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
             Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
             Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
+            Route::post('/approved/{id}', [App\Http\Controllers\KelolaMitraController::class, 'approved'])->name('kelola_mitra.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\KelolaMitraController::class, 'rejected'])->name('kelola_mitra.rejected');
         });
-        Route::prefix('profile-company')->group( function() {
+        Route::prefix('profile-company')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
             Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
         });
@@ -193,7 +176,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
         Route::get('/show', [App\Http\Controllers\DatakandidatController::class, 'show'])->name('data-kandidat.show');
-        Route::post('/store', [App\Http\Controllers\DatakandidatControllerta::class, 'store'])->name('data-kandidat.store');
+        Route::post('/store', [App\Http\Controllers\DatakandidatController::class, 'store'])->name('data-kandidat.store');
         Route::post('/update/{id}', [App\Http\Controllers\DatakandidatController::class, 'update'])->name('data-kandidat.update');
         Route::get('/edit/{id}', [App\Http\Controllers\DatakandidatController::class, 'edit'])->name('data-kandidat.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DatakandidatController::class, 'status'])->name('data-kandidat.status');
@@ -201,8 +184,8 @@ Route::middleware('auth')->group(function () {
     });
 
     //route untuk LKM dan Mitra
-    Route::prefix('informasi')->middleware('permission:only.lkm.mitra')->group(function () {
-        Route::prefix('lowongan/admin')->group(function () {
+    Route::prefix('informasi')->middleware([RoleMiddleware::class])->group(function () {
+        Route::prefix('lowongan/')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiLowonganController::class, 'index'])->name('lowongan.index');
             Route::get('/show', [App\Http\Controllers\InformasiLowonganController::class, 'show'])->name('lowongan.show');
             Route::post('/store', [App\Http\Controllers\InformasiLowonganController::class, 'store'])->name('lowongan.store');
@@ -210,7 +193,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'update'])->name('lowongan.update');
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiLowonganController::class, 'edit'])->name('lowongan.edit');
         });
-        Route::prefix('mitra/admin')->group(function () {
+        Route::prefix('mitra/')->middleware('can:only.lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiMitraController::class, 'index'])->name('mitra.index');
             Route::get('/show', [App\Http\Controllers\InformasiMitraController::class, 'show'])->name('mitra.show');
             Route::post('/store', [App\Http\Controllers\InformasiMitraController::class, 'store'])->name('mitra.store');
@@ -218,11 +201,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\InformasiMitraController::class, 'update'])->name('mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\InformasiMitraController::class, 'edit'])->name('mitra.edit');
         });
-        Route::prefix('kelola/lowongan')->group(function () {
-            Route::get('/', [App\Http\Controllers\KelolaLowonganController::class, 'index'])->name('kelolalowongan.index');
-            Route::get('/detail/lowongan', [App\Http\Controllers\KelolaLowonganController::class, 'index'])->name('kelolalowongan.index');
-        });
-        Route::prefix('kandidat/admin')->middleware('can:only.lkm')->group(function () {
+        Route::prefix('kandidat/')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
             Route::get('/show', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
             Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
@@ -233,27 +212,21 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/seleksi/lanjutan')->group(function () {
-        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('lowongan.index');
-        Route::get('show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('lowongan.show');
-        Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('lowongan.store');
+        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+        Route::get('show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+        Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
     });
 
-    Route::prefix('company')->group(function (){
-        Route::prefix('kelola-mitra')->group(function () {
-            Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
-            Route::get('/show', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
-            Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
-            Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
-            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
-            Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
-        });
-        Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index'); 
-        
-        Route::prefix('profile-company')->group( function() {
-            Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
-            Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
-        });
-    });
+    // Route::prefix('kelola')->group(function () {
+    //     Route::prefix('lowongan/admin')->group(function () {
+    //         Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
+    //         Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
+    //         Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
+    //         Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
+    //         Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
+    //         Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+    //     });
+    // });
 });
 
 Route::get('/pengaturan', function () {
@@ -272,21 +245,9 @@ Route::get('/informasi/magang', function () {
     return view('layouts.program_magang.informasi_magang');
 });
 
-Route::get('/informasi/lowongan', function () {
-    return view('company.lowongan_magang.informasi_lowongan');
-});
-Route::get('/detail/kandidat', function () {
-    return view('company.lowongan_magang.detail_kandidat');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('/lowongan-magang-tersimpan', function () {
     return view('layouts.program_magang.lowongan_magang_tersimpan');
 });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
     return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
@@ -312,8 +273,14 @@ Route::get('/summary-profile', function () {
     return view('company.summary_profile');
 });
 
-Route::get('/jadwal-seleksi', function () {
-    return view('company.jadwal_seleksi.index', ['active_menu' => 'jadwal-seleksi']);
+Route::prefix('jadwal-seleksi')->group(function () {
+    Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
+    Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+    Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+    Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+    Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
 });
 
 Route::get('/detail/lowongan/magang', function () {
@@ -327,6 +294,16 @@ Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
 
+Route::get('/detail/lowongan/magang', function () {
+    return view('layouts.program_magang.detail_lowongan');
+});
+Route::get('/konfigurasi', function () {
+    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
+});
+
+Route::get('/anggota/tim', function () {
+    return view('company.anggota_tim.index');
+});
 Route::get('/kegiatan_saya/lamaran_saya', function () {
     return view('kegiatan_saya.lamaran_saya.index');
 });

@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            
-            $table->uuid('id_industri');
-            $table->foreign('id_industri')->references('id_industri')->on('industri');
 
+            $table->uuid('id_industri')->nullable();
+            $table->foreign('id_industri')->references('id_industri')->on('industri');
         });
     }
 
