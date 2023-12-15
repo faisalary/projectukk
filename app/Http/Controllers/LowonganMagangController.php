@@ -59,14 +59,14 @@ class LowonganMagangController extends Controller
         $lowonganmagang = LowonganMagang::create([
             'id_industri' => $request->namaindustri,
             'id_year_Akademik' => $request->tahun,
-            'id_jenismagang' => $request->jenis,
+            'id_jenismagang' => $request->jenismagang,
             'intern_position' => $request->posisi,
             'kuota' => $request->kuota,
-            'bidang' => $request->bidang,
             'deskripsi' => $request->deskripsi,
             'requirements' => $request->kualifikasi,
-            'id_prodi' => $request->prodi,
-            'id_fakultas' => $request->fakultas,
+            'jenjang' => $request->Jenjang,
+            'bidang' => $request->bidang,
+            'keterampilan' => $request->keterampilan,
             'paid' => $request->gaji,
             'benefitmagang' => $request->benefit,
             'id_lokasi' => $request->lokasi,
@@ -74,11 +74,13 @@ class LowonganMagangController extends Controller
             'enddate' => $request->tanggalakhir,
             'durasimagang' => $request->durasimagang,
             'tahapan_seleksi' => $request->tahapan,
-            'created_by' => $request->created_by,
-            'created_at' => $request->created_at,
-            'date_confirm_closing' => $request->tanggalkonfirmasi,
+            // 'created_by' => $request->created_by,
+            // 'created_at' => $request->created_at,
+            // 'date_confirm_closing' => $request->tanggalkonfirmasi,
             // 'pelaksaan' => $request->pelaksanaan,
             // 'applicant_status' => $request->pendaftar,
+            // 'id_prodi' => $request->prodi,
+            // 'id_fakultas' => $request->fakultas,
 
         ]);
 
@@ -161,14 +163,14 @@ class LowonganMagangController extends Controller
 
             $lowonganmagang->id_industri = $request->namaindustri;
             $lowonganmagang->id_year_Akademik = $request->tahun;
-            $lowonganmagang->id_jenismagang = $request->jenis;
+            $lowonganmagang->id_jenismagang = $request->jenismagang;
             $lowonganmagang->intern_position = $request->posisi;
             $lowonganmagang->kuota = $request->kuota;
-            $lowonganmagang->bidang = $request->bidang;
             $lowonganmagang->deskripsi = $request->deskripsi;
             $lowonganmagang->requirements = $request->kualifikasi;
-            $lowonganmagang->id_prodi = $request->prodi;
-            $lowonganmagang->id_fakultas = $request->fakultas;
+            $lowonganmagang->jenjang = $request->jenjang;
+            $lowonganmagang->bidang = $request->bidang;
+            $lowonganmagang->keterampilan = $request->keterampilan;
             $lowonganmagang->paid = $request->gaji;
             $lowonganmagang->benefitmagang = $request->benefit;
             $lowonganmagang->id_lokasi = $request->lokasi;
@@ -176,9 +178,11 @@ class LowonganMagangController extends Controller
             $lowonganmagang->enddate = $request->tanggalakhir;
             $lowonganmagang->durasimagang = $request->durasimagang;
             $lowonganmagang->tahapan_seleksi = $request->tahapan;
-            $lowonganmagang->created_by = $request->created_by;
-            $lowonganmagang->created_at = $request->created_at;
-            $lowonganmagang->date_confirm_closing = $request->tanggalkonfirmasi;
+            // $lowonganmagang->created_by = $request->created_by;
+            // $lowonganmagang->created_at = $request->created_at;
+            // $lowonganmagang->date_confirm_closing = $request->tanggalkonfirmasi;
+            // $lowonganmagang->id_prodi = $request->prodi;
+            // $lowonganmagang->id_fakultas = $request->fakultas;
             // $lowonganmagang->pelaksaan = $request->pelaksanaan;
             // $lowonganmagang->applicant_status = $request->pendaftar;
             $lowonganmagang->save();

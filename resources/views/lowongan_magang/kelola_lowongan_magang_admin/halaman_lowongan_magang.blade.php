@@ -33,7 +33,7 @@
 @section('main')
 <div class="row">
     <div class="col-md-9 col-12">
-        <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 2324</h4>
+        <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
     </div>
     <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
         <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
@@ -49,30 +49,67 @@
         </div>
     </div>
 
+    {{-- <div class="col-xl-12">
+        <div class="nav-align-top">
+            <ul class="nav nav-pills mb-3 " role="tablist">
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#navs-pills-justified-users" aria-controls="navs-pills-justified-users"
+                        aria-selected="true">
+                        <i class="ti ti-briefcase ti-sm"></i> Total Lowongan
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">2</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending"
+                        aria-selected="false">
+                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">2</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#navs-pills-justified-verified" aria-controls="navs-pills-justified-verified"
+                        aria-selected="false">
+                        <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Lowongan Disetujui
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">4</span>
+                    </button>
+                </li>
+                <li class="nav-item" style="font-size: small;">
+                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#navs-pills-justified-rejected" aria-controls="navs-pills-justified-rejected"
+                        aria-selected="false">
+                        <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Lowongan Ditolak
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">1</span>
+                    </button>
+                </li>
+            </ul> --}}
+
     <div class="col-xl-12">
         <div class="nav-align-top">
             <ul class="nav nav-pills mb-3 " role="tablist">
                 <li class="nav-item" style="font-size: small;">
-                    <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-dibuat" aria-controls="navs-pills-justified-dibuat" aria-selected="true" style="padding: 8px 9px;">
-                        <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Dibuat
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">3</span>
+                    <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-total" aria-controls="navs-pills-justified-total" aria-selected="true" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Total Lowongan
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
-                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
-                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Tertunda
+                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-menunggu" aria-controls="navs-pills-justified-menunggu" aria-selected="false" style="padding: 8px 9px;">
+                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
                         <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-disetujui" aria-controls="navs-pills-justified-disetujui" aria-selected="false" style="padding: 8px 9px;">
-                        <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Disetujui
+                        <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Lowongan Disetujui
                         <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                        <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Ditolak
+                        <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Lowongan Ditolak
                         <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                     </button>
                 </li>
@@ -83,8 +120,8 @@
         <div class="col-md-8 col-12 ">
         <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Posisi Pekerjaan : -, Durasi Magang : -, Fakultas : -, Universitas : -" id="tooltip-filter"></i></div>
         </div>
-    @foreach(['2','3','4'] as $statusId)
-    @if($statusId == 2)
+    @foreach(['3','4'] as $statusId)
+    @if($statusId == 3)
     @can("can.view.data.table")
     <div id="div{{$statusId}}" class="col-1 targetDiv" style="display: none;">
     @endcan
@@ -106,13 +143,25 @@
         <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
             <form class="add-new-user pt-0" id="filter">
                 <div class="col-12 mb-2">
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="posisi" class="form-label" style="padding-left: 15px;">Posisi</label>
-                            <select class="form-select select2" id="posisi" name="posisi" data-placeholder="Pilih posisi pekerjaan">
-                                <option disabled selected>Pilih Posisi Pekerjaan</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
+                    <div class="row cnt">
+                        <div id="div1" class="targetDiv">
+                            <div class="col mb-2 form-input">
+                                <label for="prodi" class="form-label" style="padding-left: 15px;">Program Studi</label>
+                                {{-- <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
+                                    <option disabled selected>Input Program Studi</option>
+                                    <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
+                                    <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
+                                    <option value="D3 Teknologi Komputer">D3 Teknologi Komputer</option>
+                                    <option value="D3 Teknologi Rekayasa Media">D3 Teknologi Rekayasa Media</option>
+                                </select> --}}
+                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
+                                    <option disabled selected>Pilih Program Studi</option>
+                                    @foreach($prodi as $p)
+                                    <option value="{{ $p->id_prodi }}">{{ $p->prodi }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -127,37 +176,31 @@
                     </div>
                     <div class="row">
                         <div class="col mb-2 form-input">
-                            <label for="fakultas" class="form-label" style="padding-left: 15px;">Fakultas</label>
-                             <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
-                                <option disabled selected>Pilih Fakultas</option>
-                                @foreach($fakultas as $f)
-                                <option value="{{ $f->id_fakultas }}">{{ $f->fakultas }}</option>
-                                @endforeach
+                            <label for="posisi" class="form-label" style="padding-left: 15px;">Posisi Lowongan Magang</label>
+                             <select class="form-select select2" id="posisi" name="posisi" data-placeholder="Pilih Fakultas">
+                                <option disabled selected>Pilih Posisi Lowongan Magang</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                                <option value="Fullstack Developer">Fullstack Developer</option>
+                                <option value="Quality Assurance">Quality Assurance</option>
+                                <option value="Technical Writter">Technical Writter</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <div class="row cnt">
-                        <div id="div1" class="targetDiv">
-                            <div class="col mb-2 form-input">
-                                <label for="prodi" class="form-label" style="padding-left: 15px;">Program Studi</label>
-                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                                    <option disabled selected>Pilih Program Studi</option>
-                                    <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
-                                    <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
-                                    <option value="D3 Teknologi Komputer">D3 Teknologi Komputer</option>
-                                    <option value="D3 Teknologi Rekayasa Media">D3 Teknologi Rekayasa Media</option>
-                                </select>
-                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                                    <option disabled selected>Pilih Program Studi</option>
-                                    @foreach($prodi as $p)
-                                    <option value="{{ $f->id_prodi }}">{{ $p->prodi }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                    <div class="row">
+                        <div class="col mb-2 form-input">
+                            <label for="status" class="form-label" style="padding-left: 15px;">Status Lowongan Magang</label>
+                             <select class="form-select select2" id="status" name="status" data-placeholder="Pilih Status Lowongan Magang">
+                                <option disabled selected>Pilih Status Lowongan Magang</option>
+                                <option value="Diterima">Diterima</option>
+                                <option value="Ditolak">Ditolak</option>
+                                <option value="Kadaluarsa">Kadaluarsa</option>
+                                <option value="Menunggu Persetujuan">Menunggu Persetujuan</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
+
                     <div class="mt-3 text-end">
                         <button type="button" class="btn btn-label-danger">Reset</button>
                         <button type="submit" class="btn btn-success">Terapkan</button>
@@ -168,7 +211,7 @@
     </div>
 
     <div class="tab-content p-0">
-        @foreach(['dibuat','tertunda','disetujui','ditolak'] as $tableId)
+        @foreach(['total','menunggu','disetujui','ditolak'] as $tableId)
         <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
                 <div class="row mt-3 ms-2">
@@ -182,8 +225,6 @@
                             <tr>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">POSISI</th>
-                                <th style="min-width:100px;">FAKULTAS </th>
-                                <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:150px;">TANGGAL</th>
                                 <th style="min-width:150px;">DURASI MAGANG</th>
                                 <th style="min-width:100px;">STATUS</th>
@@ -197,7 +238,7 @@
         @endforeach
 
     <!-- Modal Alert-->
-    <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -214,7 +255,7 @@
                     </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('page_script')
@@ -262,14 +303,6 @@
                     {
                         data: "posisi"
                         name: "posisi"
-                    },
-                    {
-                        data: "fakultas"
-                        name: "fakultas"
-                    },
-                    {
-                        data: "prodi"
-                        name: "prodi"
                     },
                     {
                         data: "tanggal"
@@ -337,14 +370,14 @@
                 $('#modalTambahLowongan form').attr('action', action);
                 $('#mitra').val(response.id_industri).change();
                 $('#tahun').val(response.id_year_Akademik).change();
-                $('#jenis').val(response.id_jenismagang).change();
+                $('#jenismagang').val(response.id_jenismagang).change();
                 $('#posisi').val(response.intern_position);
                 $('#kuota').val(response.kuota);
-                $('#bidang').val(response.bidang);
                 $('#deskripsi').val(response.deskripsi);
                 $('#kualifikasi').val(response.requirements);
-                $('#prodi').val(response.id_prodi).change();
-                $('#fakultas').val(response.id_fakultas).change();
+                $('#jenjang').val(response.jenjang);
+                $('#bidang').val(response.bidang);
+                $('#keterampilan').val(response.keterampilan);
                 $('#gaji').val(response.paid);
                 $('#benefit').val(response.benefitmagang);
                 $('#lokasi').val(response.id_lokasi);
@@ -352,12 +385,12 @@
                 $('#tanggalakhir').val(response.enddate);
                 $('#durasimagang').val(response.durasimagang);
                 $('#tahapan').val(response.tahapan_seleksi);
-                $('#created_by').val(response.created_by());
+                // $('#created_by').val(response.created_by());
                 // $('#created_at').val(response.created_at());
-                $('#tanggalkonfirmasi').val(response.date_confirm_closing);
+                // $('#tanggalkonfirmasi').val(response.date_confirm_closing);
+                // $('#prodi').val(response.id_prodi).change();
+                // $('#fakultas').val(response.id_fakultas).change();
                 // $('#pendaftar').val(response.applicant_status).change();
-
-
                 $('#modalTambahLowongan').modal('show');
             }
         });
@@ -369,13 +402,12 @@
             $(document).on('submit','#filter',function(e){
             const offcanvasFilter = $('#modalSlide');
             e.preventDefault();
-            $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() + ', Fakultas: ' + $('#fakultas :selected').text() + ', durasimagang: ' + $('#durasimagang :selected').text() + ', posisipekerjaan: ' + $('#posisipekerjaan :selected').text());
+            $('#tooltip-filter').attr('data-bs-original-title', 'programstudi: ' + $('#prodi :selected').text() + ', durasimagang: ' + $('#durasimagang :selected').text() + ', posisipekerjaan: ' + $('#posisipekerjaan :selected').text());
             offcanvasFilter.offcanvas('hide');
             });
 
             $('.data-reset').on('click',function () {
-            $('#univ').val(null).trigger('change');
-            $('#fakultas').val(null).trigger('change');
+            $('#prodi').val(null).trigger('change');
             $('#durasimagang').val(null).trigger('change');
             $('#posisipekerjaan').val(null).trigger('change');
             });

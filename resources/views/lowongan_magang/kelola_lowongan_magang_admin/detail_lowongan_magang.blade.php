@@ -27,12 +27,12 @@
     </div>
 
     <div class="d-flex">
-        <div class="card" style="padding: 50px 30px; width: 100%; margin-right: 20px; !important">
+        <div class="card" style="padding: 50px 30px; width: 80%; margin-right: 20px; !important">
             <div class="card-body d-flex flex-row justify-content-between"
                 style=" border-bottom: 1px solid #D3D6DB;  !important">
                 <div class="">
                     <div class="d-flex items-center justify-content-start">
-                        <img src="front/assets/img/logo_wings.png" alt="" style="width: 150px; height: 90px; !important">
+                        <img src="/assets/images/wings.png" alt="" style="width: 150px; height: 90px; !important">
                         <div class="ms-5">
                             <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">Human resources</p>
                             <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
@@ -85,11 +85,15 @@
                     </div>
                 </div>
                 <div class="w-auto">
-                    <button type="button" class="btn btn-label-warning waves-effect">Menunggu Persetujuan</button>
-                    <p class="mt-2" style="font-size: 23px; color: #4B465C !important">Detail pengajuan</p>
-                    <p class="fw-normal" style="font-size: 14px; margin-top: -8px; !important">
-                        Pengajuan : <span class="fw-semibold">25/08/2020</span>
-                    </p>
+                    <span class="badge bg-label-danger w-100">Ditolak</span>
+                    <p class="mt-2" style="font-size: 22px; color: #4B465C !important">Detail pengajuan</p>
+                    <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">Pengajuan : <span
+                            class="fw-semibold">25/08/2020</span></p>
+                    <p class="fw-normal" style="font-size: 13px; margin-top: -12px; !important">Disetujui : <span
+                            class="fw-semibold">25/08/2020</span></p>
+                    <p class="fw-normal" style="font-size: 13px; margin-top: -12px; !important">Oleh : <span
+                            class="fw-semibold">Admin
+                            1</span></p>
                 </div>
             </div>
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
@@ -219,61 +223,30 @@
                 </p>
             </div>
         </div>
-        <div style="width: 25%">
-            <div class="card" style=" height: fit-content; padding: 24px;">
-                <button type="button" data-bs-toggle='modal' data-bs-target='#acceptModal' class="btn btn-success w-100"
-                    style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                    <i class="ti ti-check ti-sm" style="margin-right: 10px"></i>
-                    Setujui
-                </button> <button type="button" data-bs-toggle='modal' data-bs-target='#rejectModal'
-                    class="btn btn-danger w-100 mt-3" style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                    <i class="ti ti-x ti-sm" style="margin-right: 10px"></i>
-                    Tolak
-                </button>
-            </div>
-        </div>
-    </div>
+        <div style="width: 20%">
+            <div class="card" style=" height: 210px;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5 class="card-title" style="font-size: 12px; color: #23314B; margin-top: 10px">Komentar</h5>
+                        <p class="card-text" style="font-size: 12px; padding-bottom: 10px">Some quick example text to build
+                            on
+                            the card title and
+                            make up the bulk of the
+                            card's content.</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p style="font-size: 12px; font-weight: 600; color: #D3D6DB; margin-top: 10px">Timestamp : 15.00 -
+                            12/09/2023 </p>
+                        <p style="font-size: 12px; font-weight: 600; color: #D3D6DB; margin-top: -10px">Oleh : Admin 3 </p>
+                    </li>
 
-    <div class="modal fade" id="acceptModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <span class="text-warning">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle"
-                            width="75" height="67" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M12 9v4" />
-                            <path
-                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" />
-                            <path d="M12 16h.01" />
-                        </svg>
-                    </span>
-                    <h4 class="mt-4">Apakah anda yakin ingin menyetujui lowongan?</h4>
-                    <p>Data terpilih akan secara otomatis berpindah ke tab disetujui!</p>
-                    <button type="button" class="btn btn-success">Ya, Yakin</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                </div>
+                </ul>
             </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="rejectModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <h4 class="mt-4">Alasan Penolakan Lowongan</h4>
-                    <div class="text-start">
-                        <label for="exampleFormControlTextarea1" class="form-label text-start">Alasan Penolakan
-                            Lowongan</label>
-                        <textarea class="form-control" data-bs-toggle="autosize" placeholder="Masukkan alasan penolakan"></textarea>
-                    </div>
-                    <div class="mt-4 text-end">
-                        <button type="button" class="btn btn-success">Ya, Yakin</a></button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                    </div>
-                </div>
-            </div>
+            <button type="button" class="btn btn-label-warning w-100 mt-3"
+                style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+                <i class="ti ti-edit ti-sm" style="margin-right: 15px"></i><a href="/edit">
+                Ajukan perbaikan
+            </button>
         </div>
     </div>
 @endsection

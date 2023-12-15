@@ -315,7 +315,7 @@ html:not([dir=rtl]) .bs-stepper .bs-stepper-header .step:last-child .step-trigge
   box-shadow: 0 0.25rem 1.125rem rgba(75, 70, 92, 0.1);
 }
 .light-style .bs-stepper .bs-stepper-header {
-  border-bottom: 1px solid #dbdade;
+  border-bottom: 0px solid #dbdade;
 }
 .light-style .bs-stepper .bs-stepper-header .line i {
   color: #a5a3ae;

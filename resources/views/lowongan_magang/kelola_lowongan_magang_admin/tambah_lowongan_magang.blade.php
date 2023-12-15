@@ -25,286 +25,279 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <div class="card-body">
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                            <label for="mitra" class="form-label">Mitra<span class="text-danger">*</span></label>
-                            {{-- <select class="form-select select2" id="mitra" name="namaindustri" data-placeholder="Pilih Mitra">
-                                <option disabled selected>Pilih Mitra</option>
-                                @foreach($industri as $i)
-                                <option value="{{ $i->id_industri }}">{{ $i->namaindutri }}</option>
-                                @endforeach
-                            </select> --}}
-                            <select class="form-select select2" id="mitra" name="namaindustri" data-placeholder="Pilih Mitra">
-                                <option disabled selected>Pilih Mitra</option>
-                                <option value="1">industri</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                            </div>
+                <div class="bs-stepper wizard-icons wizard-icons-example ms-5 me-5 mt-5">
+                    <div class="bs-stepper-header">
+                        <div class="step d-flex flex-column align-items-center">
+                            <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
+                                1
+                            </button>
+                            <p>Detail Lowongan</p>
                         </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="tahun" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
-                                {{-- <select class="form-select select2" id="tahun" name="tahun" data-placeholder="Pilih Tahun Ajaran">
-                                    <option disabled selected>Pilih Tahun Ajaran</option>
-                                    @foreach($tahun as $t)
-                                    <option value="{{ $t->id_year_Akademik }}">{{ $t->tahun }}</option>
-                                    @endforeach
-                                </select> --}}
-                                <select class="form-select select2" id="tahun" name="tahun" data-placeholder="Pilih Tahun Ajaran">
-                                    <option disabled selected>Pilih Tahun Ajaran</option>
-                                    <option value="1">2023/2024 - Ganjil</option>
-                                    <option value="2">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                        <hr style="width: 10%; height:60px; border-color: #4EA971; border-width: 3px;">
+                        <div class="step d-flex flex-column align-items-center">
+                            <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
+                                2
+                            </button>
+                            <p>Seleksi Lanjutan</p>
                         </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="jenis" class="form-label">Jenis Magang<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="jenis" name="jenis" data-placeholder="Pilih Jenis Magang">
-                                    <option disabled selected>Pilih Jenis Magang</option>
-                                    @foreach($jenismagang as $j)
-                                    <option value="{{ $j->id_jenismagang }}">{{ $j->jenismagang }}</option>
-                                    @endforeach
-                                </select>
-                                {{-- <select class="form-select select2" id="jenis" name="jenis" data-placeholder="Pilih Jenis Magang">
-                                    <option disabled selected>Pilih Jenis Magang</option>
-                                    <option value="1">Jenis Magang</option>
-                                </select> --}}
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
-                                <input type="text" id="posisi" name="posisi" class="form-control"
-                                    placeholder="Masukan Posisi Pekerjaan" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="kuota" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
-                                <input type="int" id="kuota" name="kuota" class="form-control"
-                                    placeholder="Masukkan Kuota Penerimaan" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="bidang" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
-                                <input type="text" id="bidang" name="bidang" class="form-control"
-                                    placeholder="Masukkan Industri Pekerjaan" />
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi" name="deskripsi"></textarea>
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="kualifikasi" class="form-label">Requirements <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Kualifikasi Mahasiswa" id="kualifikasi" name="kualifikasi"></textarea>
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <div class="border py-2 px-3 rounded-3">
-                                    <label class="form-label" for="basic-default-company">
-                                        Kualifikasi Pendidikan
-                                    </label>
-
-                                    <div class="row">
-                                        <div class="col mb-3 form-input">
-                                            <label for="fakultas" class="form-label">Fakultas<span class="text-danger">*</span></label>
-                                            <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
-                                                <option disabled selected>Pilih Fakultas</option>
-                                                @foreach($fakultas as $f)
-                                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col mb-3 form-input">
-                                            <label for="prodi" class="form-label">Program Studi<span class="text-danger">*</span></label>
-                                            <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                                                <option disabled selected>Pilih Program Studi</option>
-                                                <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
-                                                <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
-                                                <option value="D3 Teknologi Komputer">D3 Teknologi Komputer</option>
-                                                <option value="D3 Teknologi Rekayasa Media">D3 Teknologi Rekayasa Media</option>
-                                            </select>
-                                            {{-- <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
-                                                <option disabled selected>Pilih Prodi</option>
-                                                @foreach($prodi as $p)
-                                                    <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                                @endforeach
-                                            </select> --}}
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="TagifyCustomListSuggestion" class="form-label">Keterampilan<span class="text-danger">*</span></label>
-                                <input
-                                id="TagifyCustomListSuggestion"
-                                name="TagifyCustomListSuggestion"
-                                class="form-control"
-                                placeholder="Pilih Keterampilan"/>
-                                <label for="" style="font-size: 13px">Jika keterampilan belum terdaftar silahkan ketik manual</label>
-                            </div>
-                        </div>
-
-                         <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="gaji" class="form-label" id="gaji" name="gaji">Gaji Ditawarkan<span class="text-danger">*</span></label>
-                                <div class="col mt-2">
-                                    <div class="form-check form-check-inline">
-                                        <input name="gaji" class="form-check-input" type="radio" value="1" checked />
-                                        <label class="form-check-label" for="gaji">Berbayar</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input name="gaji" class="form-check-input" type="radio" value="2" />
-                                        <label class="form-check-label" for="gaji">Tidak Berbayar</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-2 form-input">
-                                <label for="benefit" class="form-label">Benefits (Addtional)<span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan kualifikasi mahasiswa" id="benefit" name="benefit"></textarea>
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="lokasi" class="form-label">Lokasi Pekerjaan<span class="text-danger">*</span></label>
-                                <select class="form-select select2" id="lokasi" name="lokasi" data-placeholder="Masukan Lokasi Pekerjaan">
-                                    <option disabled selected>Masukan Lokasi Pekerjaan</option>
-                                    <option value="1">Bandung</option>
-                                    <option value="2">Jakarta</option>
-                                    <option value="3">Yogyakarta</option>
-                                    <option value="4">Malang</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="tanggal" name="tanggalmulai" placeholder="Masukan Tanggal Ditayangkan"
-                                            id="html5-date-input" />
-                                    </div>
-                                    <div class = "mt-3"
-                                        style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="tanggal" class="form-label">Tanggal Lowongan Diturunkan <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="tanggal" name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan"
-                                            id="html5-date-input"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
-                                <select class="form-select select2" type="int" id="durasimagang" name="durasimagang" data-placeholder="Pilih Durasi Magang">
-                                    <option disabled selected>Pilih Durasi Magang</option>
-                                    <option value="1">1 Semester</option>
-                                    <option value="2">2 Semester</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="tahapan" class="form-label" id="tahapan" name="tahapan">Berapa Banyak Tahapan Seleksi<span class="text-danger">*</span></label>
-                                <div class="col mt-2">
-                                    <div class="form-check form-check-inline">
-                                        <input name="tahapan" class="form-check-input" type="radio" value="1" checked />
-                                        <label class="form-check-label" for="tahapan">1</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input name="tahapan" class="form-check-input" type="radio" value="2"/>
-                                        <label class="form-check-label" for="tahapan">2</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input name="tahapan" class="form-check-input" type="radio" value="3"/>
-                                        <label class="form-check-label" for="tahapan">3</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- <div class="row">
-                            <div class="col mb-3 form-input">
-                                <label for="Pelaksanaan" class="form-label" id="pelaksanaan" name="pelaksanaan">Pelaksanaan<span class="text-danger">*</span></label>
-                                <div class="col mt-2">
-                                    <div class="form-check form-check-inline">
-                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="1" checked />
-                                        <label class="form-check-label" for="Pelaksanaan">online</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="2"/>
-                                        <label class="form-check-label" for="Pelaksanaan">offline</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input name="Pelaksanaan" class="form-check-input" type="radio" value="3"/>
-                                        <label class="form-check-label" for="Pelaksanaan">hybrid</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        <div class="modal-footer">
-                            <a href="/kelola/lowongan">
-                            <button type="submit" id="modal-button" class="btn btn-success">Simpan</button></a>
+                        <hr style="width: 10%; height:60px; border-color: #D3D6DB; border-width: 3px;">
+                        <div class="step d-flex flex-column align-items-center">
+                            <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                                3
+                            </button>
+                            <p>Selesai</p>
                         </div>
                     </div>
+                </div>
+
+                {{-- <div class="row ">
+                    <div class="">
+                        <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
+                            Tambah Lowongan Magang
+                        </h4>
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="col mb-3 form-input">
+                        <label for="jenis" class="form-label">Jenis Magang</label>
+                        <select name="jenismagang" id="jenismagang" class="form-select select2" data-placeholder="Jenis Magang">
+                            <option value="">Magang Fakultas</option>
+                            @foreach ($jenismagang as $j)
+                            <option value="{{$j->id_jenismagang}}">{{$j->namajenis}}</option>
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
+                        <input type="text" id="posisi" name="posisi" class="form-control"
+                            placeholder="Masukan Posisi Pekerjaan" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="kuota" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
+                        <input type="int" id="kuota" name="kuota" class="form-control"
+                            placeholder="Masukkan Kuota Penerimaan" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi" name="deskripsi"></textarea>
+                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                    </div>
+                </div>
+
+                 <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="kualifikasi" class="form-label">Requirements <span class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="2" placeholder="Masukan Kualifikasi Mahasiswa" id="kualifikasi" name="kualifikasi"></textarea>
+                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-3 form-input">
+                        <div class="border py-2 px-3 rounded-3">
+                            <label class="form-label" for="basic-default-company">
+                                Kualifikasi Pendidikan
+                            </label>
+
+                            <div class="row">
+                                <div class="col mb-2 form-input">
+                                    <label for="jenjang" class="form-label">Jenjang<span class="text-danger">*</span></label>
+                                    <input id="jenjang" name="jengjang" class="form-control"
+                                    placeholder="Masukan Jenjang"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col mb-2 form-input">
+                                    <label for="bidang" class="form-label">Bidang Keilmuan<span class="text-danger">*</span></label>
+                                    <input type="text" id="bidang" name="bidang" class="form-control"
+                                        placeholder="Masukan Bidang Keilmuan" />
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="keterampilan" class="form-label">Keterampilan<span class="text-danger">*</span></label>
+                        <input id="keterampilan" name="keterampilan" class="form-control"
+                        placeholder="Pilih Keterampilan"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="gaji" class="form-label" id="gaji" name="gaji">Gaji Ditawarkan<span class="text-danger">*</span></label>
+                        <div class="col mt-2">
+                            <div class="form-check form-check-inline">
+                                <input name="gaji" class="form-check-input" type="radio" value="1" checked />
+                                <label class="form-check-label" for="gaji">Berbayar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input name="gaji" class="form-check-input" type="radio" value="2" />
+                                <label class="form-check-label" for="gaji">Tidak Berbayar</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="benefit" class="form-label">Benefits (Addtional)<span class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="2" id="benefit" name="benefit" placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="lokasi" class="form-label">Lokasi Pekerjaan<span class="text-danger">*</span></label>
+                        <input id="lokasi" name="lokasi" class="form-control"
+                        placeholder="Masukan Lokasi Pekerjaan"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-3 form-input">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan <span class="text-danger">*</span></label>
+                                <input class="form-control" type="date" id="tanggal" name="tanggalmulai" placeholder="Masukan Tanggal Ditayangkan"
+                                    id="html5-date-input" />
+                            </div>
+                            <div class = "mt-3"
+                                style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="tanggal" class="form-label">Tanggal Lowongan Diturunkan <span class="text-danger">*</span></label>
+                                <input class="form-control" type="date" id="tanggal" name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan"
+                                    id="html5-date-input"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-2 form-input">
+                        <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
+                        <input
+                        id="durasimagang"
+                        name="durasimagang"
+                        class="form-control"
+                        placeholder="Pilih Durasi Magang"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-3 form-input">
+                        <label for="tahapan" class="form-label" id="tahapan" name="tahapan">Berapa Banyak Tahapan Seleksi<span class="text-danger">*</span></label>
+                        <div class="col mt-2">
+                            <div class="form-check form-check-inline">
+                                <input name="tahapan" class="form-check-input" type="radio" value="1" checked />
+                                <label class="form-check-label" for="tahapan">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input name="tahapan" class="form-check-input" type="radio" value="2"/>
+                                <label class="form-check-label" for="tahapan">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input name="tahapan" class="form-check-input" type="radio" value="3"/>
+                                <label class="form-check-label" for="tahapan">3</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="/kelola/lowongan">
+                    <button type="submit" id="modal-button" class="btn btn-success">Selanjutnya</button></a>
+                </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </form>
 @endsection
 
+{{-- <div class="row">
+    <div class="mb-2">
+        <label for="seleksi" class="form-label">Jenis Seleksi Tahap Lanjut</label>
+        <select class="form-select select2" id="seleksifilter" name="seleksi"
+            data-placeholder="Pilih Status Seleksi">
+            <option value="Seleksi Tahap 1"> Seleksi Tahap 1</option>
+            <option value="Seleksi Tahap 2"> Seleksi Tahap 2</option>
+            <option value="Seleksi Tahap 3"> Seleksi Tahap 3</option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-2">
+        <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan<span
+                class="text-danger">*</span></label>
+        <div class="form-check form-check-inline ">
+            <input class="form-check-input" type="radio" name="pelaksanaan" id="pelaksanaan1"
+                value="0">
+            <label class="form-check-label" for="0">Onsite</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="pelaksanaan" id="pelaksanaan2"
+                value="1">
+            <label class="form-check-label" for="1">Online</label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-2 form-input">
+        <label for="detail" class="form-label">Detail Pelaksanaan<span class="text-danger">*</span></label>
+        <textarea class="form-control" rows="2" placeholder="Masukan Detail Pelaksanaan" id="detail" name="detail"></textarea>
+        <div class="fv-plugins-message-container invalid-feedback"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6 mb-2">
+        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
+                class="text-danger">*</span></label>
+        <input class="form-control" type="date" id="mulai" name="mulai">
+    </div>
+    <div class="col-6 mb-2">
+        <label for="waktlu" class="form-label">Waktu Mulai Pelaksanaan<span
+                class="text-danger">*</span></label>
+        <input class="form-control" type="time" id="waktu" name="waktu">
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-2 form-input">
+        <label for="tempat" class="form-label">Detail Pelaksanaan</label>
+        <input type="text" class="form-control" id="tempat"
+            placeholder="Masukan Alamat/Link Pelaksanaan"
+            aria-describedby="defaultFormControlHelp" name="tempat">
+    </div>
+</div>
+</div> --}}
 
 @section('page_script')
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
     <script src="../../app-assets/js/forms-tagify.js"></script>
+    <script src="../../app-assets/js/forms-tagify2.js"></script>
+    <script src="../../app-assets/js/forms-tagify3.js"></script>
+    <script src="../../app-assets/js/forms-tagify4.js"></script>
 @endsection

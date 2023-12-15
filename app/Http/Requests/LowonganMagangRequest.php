@@ -19,8 +19,6 @@ class LowonganMagangRequest extends FormRequest
         if (isset($this->id)) {
             return [
                 'posisi' => ['required', 'string','max:255'],
-                'fakultas' => ['required', 'string', 'max:255'],
-                'prodi' => ['required', 'string', 'max:255'],
                 'tahun' => ['required', 'string','max:255'],
                 'durasimagang' => ['required', 'integer'],
             ];

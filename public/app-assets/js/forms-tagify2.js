@@ -17,14 +17,12 @@
 
   // Custom list & inline suggestion
   //------------------------------------------------------
-  const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
-  const TagifyCustomListSuggestionEl = document.querySelector('#keterampilan');
+  const TagifyCustomInlineSuggestionEl = document.querySelector('#durasi');
+  const TagifyCustomListSuggestionEl = document.querySelector('#durasimagang');
 
   const whitelist = [
-    'PostgreSQL',
-    'Figma',
-    'PHP Native',
-    'Sketch',
+    '1 Semester',
+    '2 Semester',
   ];
   // Inline
   let TagifyCustomInlineSuggestion = new Tagify(TagifyCustomInlineSuggestionEl, {
