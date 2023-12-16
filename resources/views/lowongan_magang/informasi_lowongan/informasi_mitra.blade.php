@@ -83,24 +83,28 @@
     ];
 
     var table = $('#table-informasi-mitra').DataTable({
-        "data": jsonData,
+        ajax: "{{route('mitra.show')}}",
+        serverSide: false,
+        processing: true,
+        deferRender: true,
+        type: 'GET',
         columns: [{
-                data: "nomor"
+                data: "DT_RowIndex"
             },
             {
-                data: "nama"
+                data: "namaindustri"
             },
             {
-                data: "totallowongan"
+                data: "total_lowongan"
             },
             {
-                data: "totalpelamar"
+                data: "total_pelamar"
             },
             {
-                data: "statuskerjasama"
+                data: "status"
             },
             {
-                data: "aksi"
+                data: "action"
             }
         ]
     });
