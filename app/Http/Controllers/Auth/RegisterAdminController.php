@@ -24,7 +24,7 @@ class RegisterAdminController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.tambah_mitra');
+        return view('auth.register_mitra');
     }
 
     public function adminregister(Request $request)
