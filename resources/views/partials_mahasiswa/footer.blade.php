@@ -1,53 +1,121 @@
 <!-- Footer -->
 
-<footer class="content-footer footer bg-footer-theme" style="background-color:#1A3826 !important">
+<style>
+    /* Button used to open the chat form - fixed at the bottom of the page */
+    .open-button {
+        background-color: #FFFFFF;
+        color: #418D5E;
+        padding: 0px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        width: 160px;
+        height: 40px;
+    }
+
+    /* The popup chat - hidden by default */
+    .chat-popup {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        overflow-y: auto;
+        /* Atau overflow: auto; sesuai kebutuhan */
+        max-height: 500px;
+        /* Tentukan tinggi maksimum sesuai kebutuhan */
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+    }
+</style>
+
+<footer class="content-footer footer bg-footer-theme" style="background-color:#1A3826 !important" id="footer">
     <div class="container-xxl">
-        <div class="row text-white py-5">
-            <div class="col-md-6 col-12 ps-5">
+        <div class="row text-white py-4">
+            <div class="col-md-5 col-12 ps-5">
                 <img src="{{ url('/app-assets/img/talentern_white.svg') }}">
-                <p class="mt-4">Permata Kuningan Building 17th Floor, Kawasan <br> Epicentrum, HR Rasuna Said, Jl.
-                    Kuningan Mulia, RT.6/RW.1, <br>Menteng Atas, Setiabudi, South Jakarta City, Jakarta 12920</p>
+                <p class="mt-4">Jl. Telekomunikasi No.1, Sukapura, Kec. Dayeuhkolot,<br> Kabupaten Bandung, Jawa Barat 40257</p>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-7 col-12">
                 <div class="row text-white">
-                    <div class="col-md-4 col-12">
-                        <p>Proxsis & Co</p>
-                        <p class="text-secondary">Tentang Kami</p>
-                        <p class="text-secondary">Tentang Proxsis Group</p>
-                        <p class="text-secondary">Techno Infinity</p>
-                        <p class="text-secondary">PROXSIS HR</p>
+                    <div class="col-md-3 col-12">
+                        <p>Kontak Kami</p>
+                        <p class="location text-secondary"><i class="ti ti-mail" style="margin-right: 10px; margin-bottom:5px;"></i>lkmfit@gmail.com</p>
+                        <p class="location text-secondary"><i class="ti ti-brand-whatsapp" style="margin-right: 10px; margin-bottom:5px;"></i>+6281398857641</p>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <p>Legal</p>
                         <p class="text-secondary"><i>Community Guidelines</i></p>
                         <p class="text-secondary"><i>Privacy & Terms</i></p>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <p>Ikuti Kami</p>
-                        <p class="text-secondary">Facebook</p>
-                        <p class="text-secondary">Instagram</p>
-                        <p class="text-secondary">LinkedIn</p>
-                        <p class="text-secondary">Twitter</p>
+                    <div class="col-md-6 col-12">
+                        <p>Tentang Kami</p>
+                        <p class="text-secondary"><i>PT. Teknologi Nirmala Olah Daya Informasi</i></p>
+                        <p class="text-secondary"><i>Layanan Kerjasama dan Magang FIT</i></p>
+                        <p class="text-secondary"><i>Fakultas Ilmu Terapan</i></p>
+                        <button class="open-button" onclick="openForm()"><div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh Bantuan ?</button>
                     </div>
                 </div>
             </div>
             <div class="col-12 ps-5">
-                <div class="copyright-text text-left" style="color: white">© {{ \Carbon\Carbon::today()->year }}
-                    @lang('app.byFooter')
-                    <div class="copyright-text text-left mt-2" style="color: white"><a>Crafted with PASSION by Proxsis Solusi Humaka & Techno Infinity</a>
-                        <div class="social-links mt-2">
-                            <a href="#" class="ml-0"><i class="fab fa-facebook-f" style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-instagram" style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in" style="color: white; margin-right: 20px;"></i></a>
-                            <a href="#"><i class="fab fa-twitter" style="color: white; margin-right: 20px;"></i></a>
-                        </div>
+                <div class="copyright-text text-left mt-2" style="color: white"><a>Social Media : </a>
+                    <div class="social-links mt-2">
+                        <a href="#" class="ml-0"><i class="fab fa-facebook-f" style="color: white; margin-right: 20px;"></i></a>
+                        <a href="#"><i class="fab fa-instagram" style="color: white; margin-right: 20px;"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in" style="color: white; margin-right: 20px;"></i></a>
+                        <a href="#"><i class="fab fa-twitter" style="color: white; margin-right: 20px;"></i></a>
                     </div>
+                </div>
+                <div class="border mt-2 mb-2" style="width: 1494px; margin-left: -89px; border-width: 3px;"></div>
+
+                <div class="copyright-text text-left mt-3" style="color: white">© {{ \Carbon\Carbon::today()->year }}
+                    @lang('app.byFooter') Crafted with PASSION by Proxsis Solusi Humaka & Techno Infinity
                 </div>
             </div>
         </div>
 
+
+        <div class="chat-popup" id="myForm">
+            <form action="#" class="form-container">
+            <button type="button" class="btn-close" aria-label="Close" onclick="closeForm()"></button>
+                <h5 class="mt-3" style="color:#4F4F44">Tinggalkan Pesan Untuk Kami</h5>
+                <label for="msg">Pusat bantuan bagi mahasiswa dan mitra perusahaan Talentern</label>
+                <div class="card-body">
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label mt-3">Nama Lengkap <span class="text-danger">*</span> </label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
+                    </div>
+                    <div>
+                        <label for="exampleFormControlInput1" class="form-label mt-3">Email <span class="text-danger">*</span> </label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label mt-3">Asal Instansi/Perusahaan <span class="text-danger">*</span> </label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Telkom University" aria-describedby="defaultFormControlHelp">
+                    </div>
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label mt-3">Catatan <span class="text-danger">*</span> </label>
+                        <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis Disini" aria-describedby="defaultFormControlHelp"></textarea>
+                    </div>
+                    <div>
+                        <label for="formFile" class="form-label mt-3">Dokumen Pendukung</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3" style="width: 280px;">Kirim</button>
+            </form>
+        </div>
+
         {{-- <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div> --}}
     </div>
+
 
 
 </footer>
@@ -93,6 +161,12 @@
 <script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
 <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+<script src="../../app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+<script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+<script src="../../app-assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+<script src="../../app-assets/vendor/libs/typeahead-js/typeahead.js"></script>
+<script src="../../app-assets/vendor/libs/dropzone/dropzone.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
@@ -100,7 +174,21 @@
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
+<script src="../../app-assets/js/form-wizard-numbered.js"></script>
+<script src="../../app-assets/js/form-wizard-validation.js"></script>
+<script src="../../app-assets/js/form-wizard-icons.js"></script>
+<script src="../../app-assets/js/ui-carousel.js"></script>
+<script src="../../app-assets/js/forms-file-upload.js"></script>
 
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
+</script>
 
 @yield('page_script')
 </body>
