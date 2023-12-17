@@ -16,6 +16,17 @@ class Industri extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    public function relasi()
+    {
+        return $this->hasManyThrough(
+            LowonganMagang::class,
+            PendaftaranMagang::class,
+            'id_pendaftaran',
+            'id_lowongan',
+            'id_pendaftaran',
+            'id_lowongan'
+        );
+    }
     public function total_lowongan()
     {
         return $this->hasMany(LowonganMagang::class, 'id_industri');
