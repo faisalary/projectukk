@@ -305,19 +305,10 @@ Route::get('/konfigurasi', function () {
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
-
-Route::get('/index', function () {
-    return view('company.lowongan.index');
+Route::get('/kegiatan_saya/lamaran_saya', function () {
+    return view('kegiatan_saya.lamaran_saya.index');
 });
 
-Route::get('/detail', function () {
-    return view('company.lowongan.detail');
-});
-
-// Route::get('/tambah-lowongan-magang', function () {
-//     return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
-// });
-
-Route::get('/detail-lowongan-magang', function () {
- return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+Route::get('/kegiatan_saya/lamaran_saya/status', function () {
+    return view('kegiatan_saya.lamaran_saya.status_lamaran');
 });

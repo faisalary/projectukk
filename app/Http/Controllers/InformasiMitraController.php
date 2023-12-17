@@ -27,8 +27,8 @@ class InformasiMitraController extends Controller
     public function index()
     {
         $mitra = LowonganMagang::all();
-        $pelamar = PendaftaranMagang::all();
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra', 'pelamar'));
+
+        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra'));
     }
 
     /**
@@ -53,12 +53,13 @@ class InformasiMitraController extends Controller
     public function show()
     {
 
-        $mitra = Industri::with('total_lowongan.total_pelamar')
+        $mitra = Industri::with('total_lowongan')
             // ->leftJoin('lowongan_magang', 'lowongan_magang.id_industri', 'industri.id_industri')
             // select('industri.namaindustri', 'industri.statuskerjasama')
             ->get();
-        // $lowongan = LowonganMagang::get()->count();
-        return DataTables::of($mitra)
+        $pelamar = LowonganMagang::with('total_pelamar')->get();
+
+        return DataTables::of($mitra, $pelamar)
             ->addIndexColumn()
             ->addColumn('status', function ($mitra) {
                 if ($mitra->statuskerjasama == "Ya") {
@@ -69,7 +70,7 @@ class InformasiMitraController extends Controller
                     return "<span class='badge bg-label-info me-1'>Internal Tel-u</span>";
                 }
             })
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function () {
 
                 $btn = "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
 
@@ -78,8 +79,8 @@ class InformasiMitraController extends Controller
             ->editColumn('total_lowongan', function ($row) {
                 return $row->total_lowongan->count();
             })
-            ->editColumn('total_pelamar', function ($row) {
-                return $row->total_pelamar;
+            ->editColumn('total_pelamar', function ($pelamar) {
+                return $pelamar->total_pelamar;
             })
 
             ->rawColumns(['action', 'status'])

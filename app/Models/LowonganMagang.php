@@ -40,7 +40,7 @@ class LowonganMagang extends Model
     }
     public function total_pelamar()
     {
-        return $this->hasMany(PendaftaranMagang::class, 'id_lowongan');
+        return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
     }
 }
 
