@@ -317,3 +317,7 @@ Route::get('/detail', function () {
 // Route::get('/tambah-lowongan-magang', function () {
 //     return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang');
 // });
+
+Route::get('/detail-lowongan-magang', function () {
+ return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});

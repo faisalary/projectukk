@@ -57,8 +57,6 @@ class LowonganMagangController extends Controller
     {
         try {
         $lowonganmagang = LowonganMagang::create([
-            'id_industri' => $request->namaindustri,
-            'id_year_Akademik' => $request->tahun,
             'id_jenismagang' => $request->jenismagang,
             'intern_position' => $request->posisi,
             'kuota' => $request->kuota,
@@ -103,23 +101,23 @@ class LowonganMagangController extends Controller
      */
     public function show(Request $request)
     {
-        $lowonganmagang = LowonganMagang::query();
-        if($request->type){
-            if ($request->fakultas != null) {
-                $lowonganmagang->where("id_fakultas", $request->fakultas, $request->type);
-            } else if ($request->prodi !=null) {
-                $lowonganmagang->where("id_prodi", $request->prodi, $request->type);
-            } else if ($request->tahun != null) {
-                $lowonganmagang->where("id_year_Akademik", $request->tahun, $request->type);
-            } else if ($request->jenismagang != null) {
-                $lowonganmagang->where("id_jenismagang", $request->jenismagang, $request->type);
-            } else if ($request->industri != null) {
-                $lowonganmagang->where("id_industri", $request->industri, $request->type);
-            } else if ($request->lokasi != null) {
-                $lowonganmagang->where("id_lokasi", $request->lokasi, $request->type);
-            }
-            $lowonganmagang = $lowonganmagang->with("fakultas", "prodi",  "tahun", "jenismagang", "industri", "lokasi")->orderBy('id_fakultas', 'desc');
-        }
+        // $lowonganmagang = LowonganMagang::query();
+        // if($request->type){
+        //     if ($request->fakultas != null) {
+        //         $lowonganmagang->where("id_fakultas", $request->fakultas, $request->type);
+        //     } else if ($request->prodi !=null) {
+        //         $lowonganmagang->where("id_prodi", $request->prodi, $request->type);
+        //     } else if ($request->tahun != null) {
+        //         $lowonganmagang->where("id_year_Akademik", $request->tahun, $request->type);
+        //     } else if ($request->jenismagang != null) {
+        //         $lowonganmagang->where("id_jenismagang", $request->jenismagang, $request->type);
+        //     } else if ($request->industri != null) {
+        //         $lowonganmagang->where("id_industri", $request->industri, $request->type);
+        //     } else if ($request->lokasi != null) {
+        //         $lowonganmagang->where("id_lokasi", $request->lokasi, $request->type);
+        //     }
+        //     $lowonganmagang = $lowonganmagang->with("fakultas", "prodi",  "tahun", "jenismagang", "industri", "lokasi")->orderBy('id_fakultas', 'desc');
+        // }
 
         return DataTables::of($lowonganmagang->get())
             ->addIndexColumn()
@@ -161,8 +159,6 @@ class LowonganMagangController extends Controller
         try {
             $lowonganmagang = LowonganMagang::where();
 
-            $lowonganmagang->id_industri = $request->namaindustri;
-            $lowonganmagang->id_year_Akademik = $request->tahun;
             $lowonganmagang->id_jenismagang = $request->jenismagang;
             $lowonganmagang->intern_position = $request->posisi;
             $lowonganmagang->kuota = $request->kuota;

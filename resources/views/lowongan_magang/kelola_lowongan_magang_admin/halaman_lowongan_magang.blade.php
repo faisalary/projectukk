@@ -348,11 +348,11 @@
 
     $("#modal-title").html("Tambah Lowongan Magang");
     $("#modal-button").html("Save Data");
-    $('#modalTambahLowongan form #mitra').val('').trigger('change');
+    // $('#modalTambahLowongan form #mitra').val('').trigger('change');
     $('#modalTambahLowongan form #tahun').val('').trigger('change');
     $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
-    $('#modalTambahLowongan form #fakultas').val('').trigger('change');
-    $('#modalTambahLowongan form #prodi').val('').trigger('change');
+    // $('#modalTambahLowongan form #fakultas').val('').trigger('change');
+    // $('#modalTambahLowongan form #prodi').val('').trigger('change');
     // $('#modalTambahLowongan form #pendaftar').val('').trigger('change');
     });
 
@@ -368,7 +368,7 @@
                 $("#modal-title").html("Edit LowonganMangang");
                 $("#modal-button").html("Update Data")
                 $('#modalTambahLowongan form').attr('action', action);
-                $('#mitra').val(response.id_industri).change();
+                // $('#mitra').val(response.id_industri).change();
                 $('#tahun').val(response.id_year_Akademik).change();
                 $('#jenismagang').val(response.id_jenismagang).change();
                 $('#posisi').val(response.intern_position);
@@ -396,21 +396,21 @@
         });
     }
 
-        $( document ).ready(function() {
-            });
+        // $( document ).ready(function() {
+        //     });
 
-            $(document).on('submit','#filter',function(e){
-            const offcanvasFilter = $('#modalSlide');
-            e.preventDefault();
-            $('#tooltip-filter').attr('data-bs-original-title', 'programstudi: ' + $('#prodi :selected').text() + ', durasimagang: ' + $('#durasimagang :selected').text() + ', posisipekerjaan: ' + $('#posisipekerjaan :selected').text());
-            offcanvasFilter.offcanvas('hide');
-            });
+        //     $(document).on('submit','#filter',function(e){
+        //     const offcanvasFilter = $('#modalSlide');
+        //     e.preventDefault();
+        //     $('#tooltip-filter').attr('data-bs-original-title', 'programstudi: ' + $('#prodi :selected').text() + ', durasimagang: ' + $('#durasimagang :selected').text() + ', posisipekerjaan: ' + $('#posisipekerjaan :selected').text());
+        //     offcanvasFilter.offcanvas('hide');
+        //     });
 
-            $('.data-reset').on('click',function () {
-            $('#prodi').val(null).trigger('change');
-            $('#durasimagang').val(null).trigger('change');
-            $('#posisipekerjaan').val(null).trigger('change');
-            });
+        //     $('.data-reset').on('click',function () {
+        //     $('#prodi').val(null).trigger('change');
+        //     $('#durasimagang').val(null).trigger('change');
+        //     $('#posisipekerjaan').val(null).trigger('change');
+        //     });
 
 </script>
 
