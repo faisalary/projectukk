@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Industri;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
+use App\Models\PendaftaranMagang;
 use Illuminate\Support\Http\Hash;
 use Illuminate\Support\Http\Storage;
 use Illuminate\Support\Http\Validator;
@@ -24,12 +26,9 @@ class InformasiMitraController extends Controller
      */
     public function index()
     {
-        // return auth()->user();
-        // LowonganMagang::create([
-        //     'id_industri'=>auth()->user()->id_industri
-        // ])
         $mitra = LowonganMagang::all();
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra'));
+        $pelamar = PendaftaranMagang::all();
+        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra', 'pelamar'));
     }
 
     /**
@@ -51,18 +50,23 @@ class InformasiMitraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
 
-        $mitra = LowonganMagang::all();
-
+        $mitra = Industri::with('total_lowongan.total_pelamar')
+            // ->leftJoin('lowongan_magang', 'lowongan_magang.id_industri', 'industri.id_industri')
+            // select('industri.namaindustri', 'industri.statuskerjasama')
+            ->get();
+        // $lowongan = LowonganMagang::get()->count();
         return DataTables::of($mitra)
             ->addIndexColumn()
-            ->editColumn('status', function ($mitra) {
-                if ($mitra->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+            ->addColumn('status', function ($mitra) {
+                if ($mitra->statuskerjasama == "Ya") {
+                    return "<span class='badge bg-label-success me-1'>Ya</span>";
+                } else if ($mitra->statuskerjasama == "Tidak") {
+                    return "<span class='badge bg-label-secondary me-1'>Tidak</span>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<span class='badge bg-label-info me-1'>Internal Tel-u</span>";
                 }
             })
             ->addColumn('action', function ($row) {
@@ -70,6 +74,12 @@ class InformasiMitraController extends Controller
                 $btn = "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
 
                 return $btn;
+            })
+            ->editColumn('total_lowongan', function ($row) {
+                return $row->total_lowongan->count();
+            })
+            ->editColumn('total_pelamar', function ($row) {
+                return $row->total_pelamar;
             })
 
             ->rawColumns(['action', 'status'])

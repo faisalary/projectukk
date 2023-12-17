@@ -22,9 +22,10 @@
     #more {
         display: none;
     }
+
     span.select2-selection.select2-selection--single {
-    width: 200px;
-}
+        width: 200px;
+    }
 </style>
 
 @endsection
@@ -79,43 +80,37 @@
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-belum-proses" aria-controls="navs-pills-justified-belum-proses" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clock ti-xs me-1"></i> Belum Proses
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class=" nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="8" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
@@ -125,7 +120,7 @@
 
     <div class="row cnt">
         <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta" id="tooltip-filter"></i></div>
-        @foreach(['2','3','4','5'] as $statusId)
+        @foreach(['1','2','3','4','5','6','7'] as $statusId)
         @if($statusId == 2)
         @can("ubah.lowongan.admin")
         <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
@@ -556,7 +551,6 @@
                 processing: true,
                 deferRender: true,
                 type: 'GET',
-                destroy: true,
                 columns: [{
                         data: "DT_RowIndex"
                     },
