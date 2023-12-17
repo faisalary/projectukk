@@ -38,4 +38,9 @@ class LowonganMagang extends Model
     public function fakultas(){
         return $this->belongsTo(Fakultas::class,'id_fakultas');
     }
+    public function total_pelamar()
+    {
+        return $this->hasMany(PendaftaranMagang::class, 'id_lowongan');
+    }
 }
+
