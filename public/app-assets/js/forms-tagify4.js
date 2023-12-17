@@ -18,7 +18,7 @@
   // Custom list & inline suggestion
   //------------------------------------------------------
   const TagifyCustomInlineSuggestionEl = document.querySelector('#jenjang1');
-  const TagifyCustomListSuggestionEl = document.querySelector('#Jenjang');
+  const TagifyCustomListSuggestionEl = document.querySelector('#jenjang');
 
   const whitelist = [
     'D3',
