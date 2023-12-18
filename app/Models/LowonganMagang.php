@@ -11,22 +11,10 @@ class LowonganMagang extends Model
     use HasUuids;
 
     protected $table = 'lowongan_magang';
-    protected $fillable = [
-        'created_by',
-        'intern_position',
-        'bidang',
-        'durasimagang',
-        'deskripsi',
-        'requirements',
-        'kuota',
-        'benefitmagang',
-        'startdate',
-        'enddate',
-        'tahapan_seleksi',
-        'date_confirm_closing',
-    ];
+    protected $guarded = [];
     protected $primaryKey = 'id_lowongan';
     protected $keyType = 'string';
+    public $timestamps = false;
 
     public function industri()
     {
@@ -43,5 +31,9 @@ class LowonganMagang extends Model
     public function lokasi()
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
+    }
+    public function total_pelamar()
+    {
+        return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
     }
 }
