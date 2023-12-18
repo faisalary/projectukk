@@ -171,7 +171,7 @@ return [
         Webpatser\Uuid\UuidServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-    ])->toArray(),
+        ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------

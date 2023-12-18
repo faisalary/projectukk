@@ -129,8 +129,8 @@
                                     <th>EMAIL</th>
                                     <th style="min-width: 120px;">NOMOR TELEPON</th>
                                     <th>ALAMAT</th>
-                                    <th style="min-width: 100px;">>DESKRIPSI PERUSAHAAN</th>
-                                    <th KATEGORI MITRA</th>
+                                    <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>STATUS</th>
 
@@ -243,39 +243,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
@@ -316,39 +292,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
@@ -392,39 +344,15 @@
                 },
                 {
                     data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'notelepon'
                 },
                 {
                     data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'alamatindustri'
                 },
                 {
                     data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'description'
                 },
                 {
                     data: 'kategori_industri',
