@@ -201,8 +201,8 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="/informasi/kelola/lowongan" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -374,7 +374,7 @@
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="/informasi/kelola/lowongan" class="menu-link">
+                                <a href="{{ route('lowongan-magang.index')}}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -412,6 +412,15 @@
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
                     </li>
+
+                    <!-- Master Data -->
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
+                        <a href="/master-data-email" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-database"></i>
+                            <div data-i18n="Master Data Email">Master Data Email</div>
+                        </a>
+                    </li>
+
                 </ul>
                 @endcan
             </aside>

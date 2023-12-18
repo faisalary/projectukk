@@ -137,7 +137,9 @@
             <p class="mb-4" style="font-size: 10pt">Silahkan melakukan pendaftaran dengan mengisi data diri berikut</p>
            
             <!-- /Logo -->
+            
             @yield('conten')
+
             <p class="text-center">
               <span>Already have an account?</span>
               <a href="{{ url('/login') }}">
@@ -195,7 +197,7 @@
         if (selectedRole === "user") {
           window.location.href = "/register";
         } else if (selectedRole === "mitra") {
-          window.location.href = "/admin/register";
+          window.location.href = "/mitra/register";
         }
         
       }

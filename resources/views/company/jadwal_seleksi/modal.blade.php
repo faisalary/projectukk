@@ -58,7 +58,7 @@
                  <div class="modal-body">
                      <div class="row">
                          <div class="col mb-2 form-input">
-                             <label for="nama" class="form-label">Nama Kandidat<span
+                             <label for="nama" class="form-label">Jenis Seleksi<span
                                      class="text-danger">*</span></label>
                              <select class="form-select select2" id="nama" name="id_pendaftaran">
                                  @foreach ($pendaftaran as $p)
@@ -67,22 +67,6 @@
                                  @endforeach
                              </select>
                              <div class="invalid-feedback"></div>
-                         </div>
-                     </div>
-                     <div class="row">
-                         <div class="col mb-2">
-                             <label for="pelaksanaan" class="form-label d-block">Jenis Pelaksanaan<span
-                                     class="text-danger">*</span></label>
-                             <div class="form-check form-check-inline ">
-                                 <input class="form-check-input" type="radio" name="pelaksanaan" id="pelaksanaan1"
-                                     value="0">
-                                 <label class="form-check-label" for="0">Onsite</label>
-                             </div>
-                             <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="pelaksanaan" id="pelaksanaan2"
-                                     value="1">
-                                 <label class="form-check-label" for="1">Online</label>
-                             </div>
                          </div>
                      </div>
                      <div class="row">
