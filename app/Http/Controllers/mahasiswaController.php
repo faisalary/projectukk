@@ -12,10 +12,8 @@ use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
 use App\Models\User;
-use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Hash;
-
-use function Laravel\Prompts\select;
+use App\Imports\MhsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class mahasiswaController extends Controller
 {
@@ -73,7 +71,7 @@ class mahasiswaController extends Controller
 
         return response()->json([
             'error' => false,
-            'massage' => 'Data Created!',
+            'message' => 'Data Created!',
             'modal' => '#modal-mahasiswa',
             'table' => '#table-master-mahasiswa'
         ]);
@@ -221,4 +219,11 @@ class mahasiswaController extends Controller
         ]);
     }
 
+    public function import (Request $request){
+        $data = $request->file('import');
+        $namafile = $data-> getClientOriginalName();
+        $data->move('MhsData', $namafile);
+        Excel::import(new MhsImport, \public_path('/MhsData/'.$namafile));
+        return \redirect()->back();
+    }
 }

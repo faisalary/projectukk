@@ -53,19 +53,14 @@
             <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
                     data-bs-toggle="tooltip" data-bs-placement="right"
                     data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
-            {{-- <button class="btn btn-success">Import</button> --}}
-            {{-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-mahasiswa">Tambah Mahasiswa</button> --}}
             <div class="btn-group">
                 <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Tambah Mahasiswa
                 </button>
                 <ul class="dropdown-menu" style="">
-                    <li><label for="importexcel" class="dropdown-item btn text-success" tabindex="0">
-                            <i class="ti ti-upload d-block pe-15"></i>
-                            <span class="d-none d-sm-block">Import Excel</span>
-                            <input type="file" id="importexcel" name="excel" class="file-input" hidden accept="">
-                        </label></li>
+                    <li><a class="dropdown-item btn text-success ti ti-upload d-block pe-15" data-bs-toggle="modal"
+                            data-bs-target="#modal-import">Import</a></li>
                     <li><a class="dropdown-item btn text-success" data-bs-toggle="modal"
                             data-bs-target="#modal-mahasiswa">Tambah Mahasiswa</a></li>
             </div>
@@ -113,6 +108,10 @@
         $('#modal-mahasiswa form #pilihprodi_add').val('').trigger('change');
     });
 
+    $("#modal-import").on("hide.bs.modal", function() {
+
+         $("#buttonImport").html("Save Data");
+    });
 
     function edit(e) {
         let id = e.attr('data-id');
