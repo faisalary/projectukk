@@ -20,7 +20,7 @@ class LowonganMagangRequest extends FormRequest
             return [
                 'jenismagang' => ['required', 'string','max:255'],
                 'posisi' => ['required', 'string','max:255'],
-                'kuota' => ['required', 'integer'],
+                // 'kuota' => ['required', 'integer'],
                 'deskripsi' => ['required', 'string','max:255'],
                 // 'requirements' => ['required', 'text', 'max:255'],
                 // 'jenjang' => ['required', 'string','max:255'],
@@ -33,13 +33,13 @@ class LowonganMagangRequest extends FormRequest
                 // 'enddate' => ['required', 'date', 'max:255'],
                 // 'durasimagang' => ['required', 'integer', 'max:255'],
                 // 'tahapan_seleksi' => ['required', 'string', 'max:255'],
-               
+
             ];
         }
         return [
                 'jenismagang' => ['required', 'string','max:255'],
                 'posisi' => ['required', 'string','max:255'],
-                'kuota' => ['required', 'integer'],
+                // 'kuota' => ['required', 'integer'],
                 'deskripsi' => ['required', 'string','max:255'],
                 // 'requirements' => ['required', 'text', 'max:255'],
                 // 'jenjang' => ['required', 'string','max:255'],
@@ -59,7 +59,7 @@ class LowonganMagangRequest extends FormRequest
         return [
             'jenismagang.required' => 'Type of intership be filled',
             'posisi.required' => 'Position must be filled',
-            'kuota.required' => 'The kuota must be an integer.',
+            // 'kuota.required' => 'The kuota must be an integer.',
             'deskripsi.required' => 'Description must be filled',
             // 'requirements.required' => 'Qualification must be filled',
             // 'jenjang.required' => 'level must be filled',

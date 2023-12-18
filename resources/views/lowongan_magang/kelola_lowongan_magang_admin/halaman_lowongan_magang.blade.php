@@ -369,7 +369,7 @@
                 $("#modal-button").html("Update Data")
                 $('#modalTambahLowongan form').attr('action', action);
                 // $('#mitra').val(response.id_industri).change();
-                $('#tahun').val(response.id_year_Akademik).change();
+                // $('#tahun').val(response.id_year_Akademik).change();
                 $('#jenismagang').val(response.id_jenismagang).change();
                 $('#posisi').val(response.intern_position);
                 $('#kuota').val(response.kuota);

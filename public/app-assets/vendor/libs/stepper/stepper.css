@@ -113,12 +113,12 @@ body {
     color: #ffffff;
     display: inline-block;
     min-width: 100px;
-    min-width: 120px;
+    /* min-width: 120px; */
     padding-top: 8px !important;
     padding-bottom: 8px;
     text-align: center;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .form-wizard .form-wizard-previous-btn {
@@ -126,13 +126,13 @@ body {
     color: #ffffff;
     display: inline-block;
     min-width: 100px;
-    min-width: 100px;
-    width: 150px;
+    /* min-width: 100px; */
+    width: 130px;
     padding-top: 8px !important;
-    padding-bottom: 9px;
+    padding-bottom: 8px;
     text-align: center;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .form-wizard .form-wizard-next-btn:hover,
@@ -155,6 +155,16 @@ body {
 }
 
 .form-wizard .wizard-form-error {
+    display: none;
+    background-color: #d70b0b;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+}
+#form-error {
     display: none;
     background-color: #d70b0b;
     position: absolute;
