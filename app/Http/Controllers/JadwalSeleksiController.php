@@ -37,12 +37,13 @@ class JadwalSeleksiController extends Controller
     }
 
     public function store(Request $request)
-    { $a = [];
-        if(request()->updateMassive == true){
-            foreach(explode(',',$request->checked[0]) as $id){
+    {
+        $a = [];
+        if (request()->updateMassive == true) {
+            foreach (explode(',', $request->checked[0]) as $id) {
                 $a = Seleksi::find($id);
-                if($a){
-                    if($request->hayolo == null){
+                if ($a) {
+                    if ($request->hayolo == null) {
                         return response()->json([
                             'error' => true,
                             'message' => 'No Status Kandidat selected',
@@ -62,7 +63,6 @@ class JadwalSeleksiController extends Controller
         try {
             Seleksi::create([
                 'id_pendaftaran' => $request->id_pendaftaran,
-                'pelaksanaan' => $request->pelaksanaan,
                 'tglseleksi' => $request->mulai,
                 'jamseleksi' => $request->waktu,
                 'detail' => $request->tempat,
@@ -85,11 +85,11 @@ class JadwalSeleksiController extends Controller
 
     public function show()
     {
-        if(request()->tahap == '0'){
+        if (request()->tahap == '0') {
             $statusseleksi = 0;
-        }elseif(request()->tahap == '1'){
+        } elseif (request()->tahap == '1') {
             $statusseleksi = 1;
-        }elseif(request()->tahap == '2'){
+        } elseif (request()->tahap == '2') {
             $statusseleksi = 2;
         }
         $seleksi = Seleksi::select('seleksi.*', 'pendaftaran_magang.tanggaldaftar', 'mahasiswa.namamhs', 'mahasiswa.nim')->join('pendaftaran_magang', 'pendaftaran_magang.id_pendaftaran', 'seleksi.id_pendaftaran')
@@ -108,21 +108,19 @@ class JadwalSeleksiController extends Controller
                 $data = $seleksi->namamhs . "  " . $seleksi->nim;
                 return $data;
             })
-            ->addColumn('pelaksanaan', function ($seleksi) {
-                if ($seleksi->pelaksanaan == 0) {
-                    return "Onsite";
+            ->editColumn('proses', function ($seleksi) {
+                if ($seleksi->statusseleksi == 0) {
+                    return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di proses" . "</div></div>";
                 } else {
-                    return "Online";
+                    return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah di proses" . "</div></div>";
                 }
-                return $seleksi->pelaksanaan;
             })
             ->editColumn('statusseleksi', function ($seleksi) {
-                // if ($seleksi->statusseleksi == 0) {
-                //     return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 1" . "</div></div>";
-                // } else {
-                //     return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 1" . "</div></div>";
-                // }
-                return $seleksi->status_seleksi_text;
+                if ($seleksi->statusseleksi == 0) {
+                    return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum Seleksi Tahap 1" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah Seleksi Tahap 1" . "</div></div>";
+                }
             })
             ->addColumn('action', function ($seleksi) {
                 $icon = ($seleksi->statusseleksi) ? "ti-circle-x" : "ti-circle-check";
@@ -130,10 +128,11 @@ class JadwalSeleksiController extends Controller
 
                 $btn = "<a data-bs-toggle='modal' data-id='{$seleksi->id_seleksi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
                 <a data-bs-toggle='modal' data-id='{$seleksi->id_seleksi}' data-bs-target='#modaldetail' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                
 
                 return $btn;
             })
-            ->rawColumns(['checkbox','statusseleksi', 'action'])
+            ->rawColumns(['checkbox', 'statusseleksi', 'action', 'proses'])
 
             // ->toJson();
             ->make(true);
