@@ -66,10 +66,12 @@
                                     <th style="min-width: 100px;">NAMA</th>
                                     <th>EMAIL</th>
                                     <th>NOMOR TELEPON</th>
-                                    <th>ALAMAT</th>
-                                    <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th>PENANGGUNG JAWAB</th>
+                                    {{-- <th>DESKRIPSI PERUSAHAAN</th> --}}
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
+                                    <th>AKSI</th>
+                                    
                                 </tr>
                             </thead>
                         </table>
@@ -183,18 +185,18 @@
                         }
                     }
                 },
-                {
-                    data: 'alamatindustri',
-                    name: 'alamatindustri',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
-                },
+                // {
+                //     data: 'alamatindustri',
+                //     name: 'alamatindustri',
+                //     render: function(data, type, row, meta) {
+                //         // Check if the data is null or undefined
+                //         if (data === null || data === undefined) {
+                //             return "-"; // You can change this to any default value
+                //         } else {
+                //             return data;
+                //         }
+                //     }
+                // },
                 {
                     data: 'description',
                     name: 'description',

@@ -41,6 +41,7 @@ class RegisterMitraController extends Controller
             'email' => $request->email,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
+            'penanggung_jawab' => $request->name,
             'status' => true,
         ]);
 
@@ -58,9 +59,9 @@ class RegisterMitraController extends Controller
         $admin->assignRole('admin');
         $url=url('/admin/set-password/'.$code);
 
-        // if ($admin) {
-        // Mail::to($admin->email)->send(new VerifyEmail($url));
-        // }
+        if ($admin) {
+        Mail::to($admin->email)->send(new VerifyEmail($url));
+        }
         
         DB::commit();
         return response()->json([
