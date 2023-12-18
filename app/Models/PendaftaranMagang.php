@@ -22,8 +22,8 @@ class PendaftaranMagang extends Model
     protected $primaryKey = 'id_pendaftaran';
     protected $keyType = 'string';
 
-    public function total_pelamar()
-    {
-        return $this->belongsTo(LowonganMagang::class, 'id_lowongan');
-    }
+    // public function total_pelamar()
+    // {
+    //     return $this->hasMany(LowonganMagang::class, 'id_lowongan');
+    // }
 }

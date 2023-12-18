@@ -27,6 +27,9 @@ class LowonganMagang extends Model
     ];
     protected $primaryKey = 'id_lowongan';
     protected $keyType = 'string';
+    protected $casts = [
+        'date_confirm_closing' => 'datetime'
+    ];
 
     public function industri()
     {
@@ -44,8 +47,8 @@ class LowonganMagang extends Model
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
     }
-    public function total_pelamar()
-    {
-        return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
-    }
+    // public function total_pelamar()
+    // {
+    //     return $this->hasMany(PendaftaranMagang::class, 'id_lowongan');
+    // }
 }

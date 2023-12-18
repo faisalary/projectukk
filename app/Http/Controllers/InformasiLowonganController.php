@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lokasi;
 use App\Models\Industri;
 use App\Models\JenisMagang;
-use App\Models\Lokasi;
-use App\Models\LowonganMagang;
-use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
+use App\Models\TahunAkademik;
+use App\Models\LowonganMagang;
+use App\Models\PendaftaranMagang;
 
 class InformasiLowonganController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $id)
     {
-        $lowongan = LowonganMagang::all();
-        $industri = Industri::all();
-        $thnakademik = TahunAkademik::all();
-        $jenisMagang = JenisMagang::all();
+        if ($request->ajax() && $request->component == "card") {
+            $lowongan = LowonganMagang::where('id_industri', $id)->get();
+            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan'))->render();
+        }
+
+        $industri = Industri::find($id);
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('lowongan', 'industri', 'thnakademik', 'lokasi', 'jenisMagang'));
+        $pendaftar =
+            PendaftaranMagang::leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+            ->where('id_industri', $industri->id_industri)
+            ->count();
+
+        $lowongan_count = $industri->total_lowongan->count();
+        $urlGetCard = url('informasi/lowongan', $id);
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri',  'lokasi', 'urlGetCard', 'lowongan_count', 'pendaftar'));
     }
 
     /**

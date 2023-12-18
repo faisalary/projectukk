@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class DashboardMitraController extends Controller
 {
@@ -21,9 +22,8 @@ class DashboardMitraController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($id)
     {
-        return redirect()->route('lowongan.index');
+        return Redirect::route('informasi/lowongan', $id);
     }
-    
 }
