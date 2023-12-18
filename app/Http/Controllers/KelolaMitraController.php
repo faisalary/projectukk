@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Mail;
+use Ramsey\Uuid\Uuid;
+
 class KelolaMitraController extends Controller
 {
     public function __construct()
@@ -59,27 +61,19 @@ class KelolaMitraController extends Controller
         $code = Str::random(64);
         $defaultPassword = '12345678';
         $admin = User::create([
-            'name' => $request->namaindustri,
-            'username' => 'mitra',
+            'name' => 'mitra',
+            'username' => $request->namaindustri,
             'email' => $request->email,
             'password' => Hash::make($defaultPassword),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
-            'id_mahasiswa' => '1'
         ]);
         $admin->assignRole('admin');
         $url=url('/admin/set-password/'.$code);
 
         if ($admin) {
         Mail::to($admin->email)->send(new VerifyEmail($url));
-
-            // Admin berhasil ditambahkan
-            session()->flash('success', 'Admin berhasil ditambahkan. silahkan Cek email anda untuk melakukan verify');
-                
-        } else {
-            // Gagal menambahkan admin
-            session()->flash('error', 'Gagal menambahkan admin.');
         }
         
         DB::commit();
@@ -134,8 +128,6 @@ class KelolaMitraController extends Controller
                     // data-bs-target='#modalreject'
                 return $btn;
             })
-
-            
             ->rawColumns(['action','status','aksi'])
             ->make(true);
     }

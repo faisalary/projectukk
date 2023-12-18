@@ -201,8 +201,8 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="/informasi/kelola/lowongan" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -798,8 +798,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">{{ ucwords($user->name) }}</small>
+                                                    <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                                                    <small class="text-muted">{{ ucwords($user->email) }}</small>
                                                 </div>
                                             </div>
                                         </a>

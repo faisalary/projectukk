@@ -14,6 +14,7 @@ use App\Models\TahunAkademik;
 use App\Models\JenisMagang;
 use App\Models\Industri;
 use App\Models\Lokasi;
+use App\Models\PendaftaranMagang;
 use Illuminate\Routing\Route;
 
 class LowonganMagangController extends Controller
@@ -30,7 +31,8 @@ class LowonganMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $industri = Industri::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowonganmagang','prodi','fakultas','tahun','jenismagang','industri','lokasi'));
+        $pendaftar = PendaftaranMagang::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowonganmagang','prodi','fakultas','tahun','jenismagang','industri','lokasi','pendaftar'));
     }
 
      /**
@@ -44,7 +46,8 @@ class LowonganMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $industri = Industri::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('prodi','fakultas','tahun','jenismagang','industri','lokasi'));
+        $pendaftar = PendaftaranMagang::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('prodi','fakultas','tahun','jenismagang','industri','lokasi','pendaftar'));
     }
 
     /**
@@ -53,38 +56,37 @@ class LowonganMagangController extends Controller
     public function store(LowonganMagangRequest $request)
     {
         try {
-
         $lowonganmagang = LowonganMagang::create([
             'id_industri' => $request->namaindustri,
             'id_year_Akademik' => $request->tahun,
-            'id_jenismagang' => $request->jenismagang,
+            'id_jenismagang' => $request->jenis,
             'intern_position' => $request->posisi,
             'kuota' => $request->kuota,
             'bidang' => $request->bidang,
             'deskripsi' => $request->deskripsi,
             'requirements' => $request->kualifikasi,
-            'id_prodi' => $request->namaprodi,
-            'id_fakultas' => $request->namafakultas,
+            'id_prodi' => $request->prodi,
+            'id_fakultas' => $request->fakultas,
             'paid' => $request->gaji,
-            'benefitmagang' => $request->benefits,
+            'benefitmagang' => $request->benefit,
             'id_lokasi' => $request->lokasi,
             'startdate' => $request->tanggalmulai,
             'enddate' => $request->tanggalakhir,
             'durasimagang' => $request->durasimagang,
             'tahapan_seleksi' => $request->tahapan,
-            // 'created_by' => $request->now(),
-            // 'created_at' => $request->now(),
-            // 'date_confirm_closing' => $request->namainformasilowongan,
-            // 'applicant_status' => $request->tertunda,
+            'created_by' => $request->created_by,
+            'created_at' => $request->created_at,
+            'date_confirm_closing' => $request->tanggalkonfirmasi,
+            // 'pelaksaan' => $request->pelaksanaan,
+            // 'applicant_status' => $request->pendaftar,
 
-            'status' => true,
         ]);
 
         return response()->json([
             'error' => false,
             'massage' => 'Data Created!',
             'modal' => '#modalTambahLowongan',
-            // 'table' => '#table_kelola_lowongan'
+            // 'table' => '#table_kelola_lowtedongan'
         ]);
         } catch (Exception $e) {
             return response()->json([
@@ -174,10 +176,11 @@ class LowonganMagangController extends Controller
             $lowonganmagang->enddate = $request->tanggalakhir;
             $lowonganmagang->durasimagang = $request->durasimagang;
             $lowonganmagang->tahapan_seleksi = $request->tahapan;
-            // $lowonganmagang->created_by = $request->now();
-            // $lowonganmagang->created_at = $request->now();
-            // $lowonganmagang->date_confirm_closing = $request->informasilowongan;
-            // $lowonganmagang->applicant_status = $request->tertunda;
+            $lowonganmagang->created_by = $request->created_by;
+            $lowonganmagang->created_at = $request->created_at;
+            $lowonganmagang->date_confirm_closing = $request->tanggalkonfirmasi;
+            // $lowonganmagang->pelaksaan = $request->pelaksanaan;
+            // $lowonganmagang->applicant_status = $request->pendaftar;
             $lowonganmagang->save();
 
             return response()->json([
