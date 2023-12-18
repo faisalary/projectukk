@@ -76,7 +76,10 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- card-informasi-lowongan -->
                 @include('lowongan_magang.informasi_lowongan.lowongan_card')
+
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end" style="margin-right:25px;">
                         <li class="page-item first">
