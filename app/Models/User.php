@@ -52,4 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function mahasiswa(){
+        return $this->belongsTo(Mahasiswa::class,'nim');
+    }
+    public function industri(){
+        return $this->belongsTo(Industri::class,'id_industri');
+    }
 }
