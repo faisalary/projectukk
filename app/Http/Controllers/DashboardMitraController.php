@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class DashboardMitraController extends Controller
@@ -24,6 +25,6 @@ class DashboardMitraController extends Controller
      */
     public function index($id)
     {
-        return Redirect::route('informasi/lowongan', $id);
+        return Redirect::route('lowongan.index', Auth::user()->id_industri);
     }
 }

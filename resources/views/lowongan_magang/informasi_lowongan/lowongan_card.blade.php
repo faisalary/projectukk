@@ -88,7 +88,7 @@
          <div class="row mt-2">
              <div class="col-12 d-flex justify-content-between">
                  <div class="col-6">
-                     <div class="tf-icons ti ti-calendar text-primary" style="font-size: medium; margin-right:10px;"> Batas data konfirmasi: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
+                     <div class="tf-icons ti ti-calendar text-primary" style="font-size: medium; margin-right:10px;"> Batas konfirmasi penerimaan: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
                      <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : {{$item->kuota}}</div>
                  </div>
                  <div class="col-6 text-end">
@@ -103,7 +103,7 @@
                      </button>
                      @endcan
 
-                     <a href="/informasi/kandidat/"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti bi-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
+                     <a href="/informasi/kandidat/{{$item->id_lowongan}}"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti bi-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
                          </button></a>
                  </div>
              </div>

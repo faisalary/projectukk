@@ -19,19 +19,19 @@ class InformasiLowonganController extends Controller
     {
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
+            // dd($lowongan);
             return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan'))->render();
         }
 
-        $industri = Industri::find($id);
-        $lokasi = Lokasi::all();
+        $industri = Industri::with('total_lowongan')->first();
         $pendaftar =
             PendaftaranMagang::leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
             ->where('id_industri', $industri->id_industri)
             ->count();
-
+        // dd($industri);
         $lowongan_count = $industri->total_lowongan->count();
         $urlGetCard = url('informasi/lowongan', $id);
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri',  'lokasi', 'urlGetCard', 'lowongan_count', 'pendaftar'));
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar'));
     }
 
     /**
