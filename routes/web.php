@@ -193,7 +193,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
         Route::get('/show', [App\Http\Controllers\DatakandidatController::class, 'show'])->name('data-kandidat.show');
-        Route::post('/store', [App\Http\Controllers\DatakandidatControllerta::class, 'store'])->name('data-kandidat.store');
+        Route::post('/store', [App\Http\Controllers\DatakandidatController::class, 'store'])->name('data-kandidat.store');
         Route::post('/update/{id}', [App\Http\Controllers\DatakandidatController::class, 'update'])->name('data-kandidat.update');
         Route::get('/edit/{id}', [App\Http\Controllers\DatakandidatController::class, 'edit'])->name('data-kandidat.edit');
         Route::post('/status/{id}', [App\Http\Controllers\DatakandidatController::class, 'status'])->name('data-kandidat.status');
@@ -229,16 +229,19 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/seleksi/lanjutan')->group(function () {
-        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-        Route::get('show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-        Route::get('store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
+        Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+        Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
     });
 
     Route::prefix('kelola')->group(function () {
-        Route::prefix('lowongan/admin')->group(function () {
+        Route::prefix('lowongan/')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
             Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
             Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
+            Route::post('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
+            Route::post('/detail', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
             Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
@@ -293,7 +296,7 @@ Route::get('/summary-profile', function () {
 Route::prefix('jadwal-seleksi')->group(function () {
     Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
     Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-    Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+    Route::post('/sho w', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
     Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
     Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
     Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
@@ -320,4 +323,12 @@ Route::get('/konfigurasi', function () {
 
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
+});
+
+Route::get('/detail/lowongan/magang', function() {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+});
+
+Route::get('/master-data-email', function() {
+    return view('company.master_data_company.index');
 });

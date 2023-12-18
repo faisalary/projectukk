@@ -24,15 +24,12 @@ class Seleksi extends Model
     protected $primaryKey = 'id_seleksi';
     protected $keyType = 'string';
 
-    public function getStatusSeleksiTextAttribute()
-    {
-        if ($this->statusseleksi == 0) {
-            return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di Proses" . "</div></div>";
-        } else if ($this->statusseleksi == 1) {
-            return "<div class='text-center'><div class='badge bg-label-danger'>" . "Ditolak" . "</div></div>";
-        } else if ($this->statusseleksi == 2) {
-            return "<div class='text-center'><div class='badge bg-label-success'>" . "Diterima" . "</div></div>";
-        } 
-       
-    }
+    // public function getStatusSeleksiTextAttribute()
+    // {
+    //     if ($this->statusseleksi == 0) {
+    //         return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di proses" . "</div></div>";
+    //     } else if ($this->statusseleksi == 1) {
+    //         return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah di proses" . "</div></div>";
+    //     }
+    // }
 }
