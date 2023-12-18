@@ -41,16 +41,9 @@
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-
 
   <!-- Page CSS -->
   <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/dropzone/dropzone.css" />
   <!-- Helpers -->
   <script src="../../app-assets/vendor/js/helpers.js"></script>
 
@@ -66,10 +59,6 @@
       color: #FFF;
       background-color: #4EA971 !important
     }
-
-    .d-flex i:hover {
-      text-decoration: none !important;
-    }
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -80,7 +69,6 @@
 
 <body>
   <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
   <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
     <div class="layout-container">
       <!-- Navbar -->
@@ -150,12 +138,11 @@
 
                 <!-- Lamaran Saya -->
                 <li class="menu-item">
-                  <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                  <a href="javascript:void(0)" class="menu-link">
                     <div data-i18n="Lamaran Saya">Lamaran Saya</div>
                   </a>
-                </li>
 
-                <!-- Layanan LKM -->
+                  <!-- Layanan LKM -->
                 <li class="menu-item">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Layanan LKM">Layanan LKM</div>
@@ -189,28 +176,25 @@
                     </li>
 
                   </ul>
-                </li>
-
-                <li class="menu-item">
-                  <a href="#footer" class="menu-link">
-                    <div data-i18n="Kontak Kami">Kontak Kami</div>
-                  </a>
-                </li>
             </div>
           </aside>
           <!-- / Menu -->
 
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
             <!-- Login dan Daftar -->
-            <a href="{{ route('login')}}">
-              <button class="btn btn-outline-success me-2" style="margin-left:50px; border-radius: 8px;" type="button">Masuk</button>
-            </a>
-            <!-- <a href="{{ route('register')}}">
-               <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
-           </a> -->
 
+            @php
+            $user = Auth::user();
+            @endphp
+            @if (!$user)
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <a href="{{ route('login')}}">
+                <button class="btn btn-outline-success me-2" type="button">Masuk</button>
+              </a>
+            </ul>
+            @else
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Notification -->
               <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -399,35 +383,25 @@
                 </ul>
               </li>
               <!--/ Notification -->
-
-
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                  <div class="d-flex align-items-center">
-                    <div class="avatar avatar-online me-2">
-                      <img src="../../app-assets/img/avatars/1.png" alt="Avatar" class="h-auto rounded-circle" />
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <p class="mb-0 me-2">Jhon Doe</p>
-                      <i class="ti ti-chevron-down"></i>
-                    </div>
+                  <div class="avatar avatar-online">
+                    <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
                   </div>
                 </a>
-
-
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item">
+                    <a class="dropdown-item" href="/informasi/pribadi">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
-                            <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                            <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
-                          <small class="text-muted">Mahasiswa</small>
+                          <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                          <small class="text-muted">{{ ucwords($user->name) }}</small>
                         </div>
                       </div>
                     </a>
@@ -457,7 +431,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
                       <i class="ti ti-logout me-2 ti-sm"></i>
                       <span class="align-middle">Keluar</span>
                     </a>
@@ -466,14 +440,14 @@
               </li>
               <!--/ User -->
             </ul>
-            <!-- </div> -->
-
-            <!-- Search Small Screens -->
-            <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
-              <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
-              <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
-            </div>
           </div>
+          @endif
+          <!-- Search Small Screens -->
+          <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+            <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
+            <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+          </div>
+        </div>
       </nav>
 
       <!-- / Navbar -->
@@ -486,7 +460,6 @@
 
           <!-- Content -->
 
-          <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
           <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
 
           <!-- Modal Delete-->
@@ -502,8 +475,8 @@
                   Apakah Anda Ingin Keluar Dari Akun Ini?
                 </div>
                 <div class="modal-footer" style="display: flex; justify-content:center;">
-                  <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-                  <button type="button" class="btn btn-danger">Tidak</button>
+                  <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
                 </div>
               </div>
             </div>
