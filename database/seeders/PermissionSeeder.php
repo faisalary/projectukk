@@ -81,7 +81,7 @@ class PermissionSeeder extends Seeder
 
             if (isset($value['permissions'])) {
                 foreach ($value['permissions'] as $k => $v) {
-                    # code...
+                    
                     $permission = Permission::findOrCreate($v);
                     $role->givePermissionTo($permission);
                 }
