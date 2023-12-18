@@ -70,19 +70,14 @@ class KelolaMitraController extends Controller
             'id_industri' => $industri->id_industri,
         ]);
         $admin->assignRole('admin');
-        $url=url('/admin/set-password/'.$code);
-
-        if ($admin) {
-        Mail::to($admin->email)->send(new VerifyEmail($url));
-        }
-        
+               
         DB::commit();
         
         return response()->json([
             'error' => false,
             'message' => 'Industri successfully Created!',
             'modal' => '#modalTambahMitra',
-            'table' => '#table-kelola-mitra1'
+            'table' => '#table-kelola-mitra2'
         ]);
 
         } catch (Exception $e) {
@@ -100,44 +95,72 @@ class KelolaMitraController extends Controller
      */
     public function show($statusapprove)
     {
-        $industri = Industri::where('statusapprove',$statusapprove)->orderBy('namaindustri')->get();
+    $industri = Industri::where('statusapprove',$statusapprove)->orderBy('namaindustri')->get();
 
-        return DataTables::of($industri)
-            ->addIndexColumn()
-            ->editColumn('status', function ($industri) {
-                if ($industri->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                }
-            })
-            ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+    return DataTables::of($industri)
+        ->addIndexColumn()
+        ->editColumn('status', function ($industri) {
+            if ($industri->status == 1) {
+                return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+            } else {
+                return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+            }
+        })
+        ->addColumn('action', function ($row) {
+            $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+            $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalTambahMitra' data-id='{$row->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola-mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+            $btn = "<a data-bs-toggle='modal' data-bs-target='#modalTambahMitra' data-id='{$row->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+            <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola-mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
-                return $btn;
-            })
-            
-            ->addColumn('aksi', function ($id) {
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modalreject' class='btn-icon' data-id='{$id->id_industri}'>
-                    <i class='btn-icon ti ti-file-check text-success' onclick='approved({$id->statusapprove})'></i>
-                    <i class='btn-icon ti ti-file-x text-danger' onclick='rejected({$id->statusapprove})'></i></a>";
-                    // data-bs-target='#modalreject'
-                return $btn;
-            })
-            ->rawColumns(['action','status','aksi'])
-            ->make(true);
+            return $btn;
+        })
+        
+        ->addColumn('aksi', function ($id) {
+            $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusapprove='{$id->statusapprove}'>
+                    <i class='btn-icon ti ti-file-check text-success'></i>
+                    </a>
+                    <a onclick='rejected({$id->id_industri})'>
+                    <i class='btn-icon ti ti-file-x text-danger'></i>
+                    </a>";
+            return $btn;
+        })
+        ->rawColumns(['action','status','aksi'])
+        ->make(true);
     }
 
     public function approved($id)
     {
-        $data=Industri::find($id);
-        $data->statusapprove='1';
-        $data->save();
-        return redirect()->back();
+        try {
+            DB::beginTransaction(); 
+            $data = Industri::find($id);
+            $code = Str::random(64);
+
+            if (!$data) {
+                throw new \Exception('Industri data not found.');
+            }
+            $data->statusapprove = 1;
+            $data->save();
+        
+            $code = Str::random(64);
+            $url = url('/admin/set-password/' . $code);
+            
+            Mail::to($data->email)->send(new VerifyEmail($url));
+
+            DB::commit();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Persetujuan berhasil.',
+            ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return response()->json([
+                    'error' => true,
+                    'message' => $e->getMessage(),
+            ]);
+        }
     }
     public function rejected($id)
     {
