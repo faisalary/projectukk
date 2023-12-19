@@ -1,5 +1,36 @@
 jQuery(document).ready(function() {
 	// click on next button
+
+    $('input[name=tahapan]').on('change', function() {
+        console.log(this.value)
+        if (this.value == "2") {
+            $('#tahap-lanjut-2').show();
+            $('#tahap-lanjut-3').hide();
+        } else if (this.value == "3") {
+            $('#tahap-lanjut-2').show();
+            $('#tahap-lanjut-3').show();
+        } else {
+            $('#tahap-lanjut-2').hide();
+            $('#tahap-lanjut-3').hide();
+        }
+    });
+
+    $('.select2-multiple').select2({
+        tags: true,
+        createTag: function (params) {
+          var term = $.trim(params.term);
+
+          if (term === '') {
+            return null;
+          }
+
+          return {
+            id: term,
+            text: term,
+            newTag: true // add additional parameters
+          }
+        }
+      });
 	jQuery('.form-wizard-next-btn').click(function() {
         // $('#jenismagang').select2("enable", true);
 		var parentFieldset = jQuery(this).parents('.wizard-fieldset');
@@ -8,8 +39,14 @@ jQuery(document).ready(function() {
 		var nextWizardStep = true;
 		parentFieldset.find('.wizard-required').each(function(){
 			var thisValue = jQuery(this).val();
-            console.log(thisValue);
-			if( thisValue == "" || thisValue == null) {
+
+            // console.log("sadsd",jQuery(this).prop("tagName"));
+            if(jQuery(this).prop("tagName")=="SELECT" && ( thisValue == "" || thisValue == null)){
+                $(".select2-error-form").slideDown();
+                $("#form-error").slideDown();
+				nextWizardStep = false;
+
+            }else if( thisValue == "" || thisValue == null) {
 				jQuery(this).siblings(".wizard-form-error").slideDown();
 				$("#form-error").slideDown();
 				nextWizardStep = false;
@@ -96,5 +133,16 @@ jQuery(document).ready(function() {
 			jQuery(this).parent().addClass("focus-input");
 			jQuery(this).siblings('.wizard-form-error').slideUp("3000");
 		}
+
+	});
+    jQuery(".select2").change(function(){
+		let thisValue = jQuery(this).val();
+        if(jQuery(this).prop("tagName")=="SELECT" && ( thisValue == "" || thisValue == null)){
+            $(".select2-error-form").slideDown();
+                $("#form-error").slideDown();
+        }else{
+            $(".select2-error-form").slideUp("3000");
+                $("#form-error").slideUp();
+        }
 	});
 });

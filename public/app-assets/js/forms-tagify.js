@@ -17,8 +17,8 @@
 
   // Custom list & inline suggestion
   //------------------------------------------------------
-  const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
-  const TagifyCustomListSuggestionEl = document.querySelector('#keterampilan');
+//   const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
+//   const TagifyCustomListSuggestionEl = document.querySelector('#keterampilan');
 
   const whitelist1 = [
     'PostgreSQL',
