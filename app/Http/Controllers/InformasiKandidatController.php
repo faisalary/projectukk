@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
+use App\Models\Industri;
 use App\Models\Mahasiswa;
-use App\Models\PendaftaranMagang;
 use App\Models\Universitas;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
+use App\Models\PendaftaranMagang;
 use Yajra\DataTables\Facades\DataTables;
 
 class InformasiKandidatController extends Controller
@@ -15,12 +17,14 @@ class InformasiKandidatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $id)
     {
-        $pendaftar = PendaftaranMagang::all();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->get();
+        $lowongan = LowonganMagang::find($id);
 
-        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar'));
+        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +51,7 @@ class InformasiKandidatController extends Controller
         $pendaftar = PendaftaranMagang::query();
 
         if ($request->type) {
-            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("univ", "prodi", "fakultas");
+            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("univ", "prodi", "fakultas", "lowonganMagang");
         }
 
         return DataTables::of($pendaftar->get())

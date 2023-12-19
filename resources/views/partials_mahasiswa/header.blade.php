@@ -70,6 +70,7 @@
 <body>
   <!-- Layout wrapper -->
   <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+<<<<<<< HEAD
     <div class="layout-container">
       <!-- Navbar -->
 
@@ -176,18 +177,154 @@
                     </li>
 
                   </ul>
+=======
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+      <div class="layout-container">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar" style="background-color: #FFF !important;">
+          <div class="container-xxl">
+            <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+              <a href="/" class="app-brand-link gap-2">
+                <img src="{{ url('/app-assets/img/Talentern.svg')}}">
+              </a>
+
+              <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
+                <i class="ti ti-x ti-sm align-middle"></i>
+              </a>
             </div>
-          </aside>
-          <!-- / Menu -->
 
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="ti ti-menu-2 ti-sm"></i>
+              </a>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
+            </div>
 
+            <!-- Menu -->
+            <aside id="layout-menu" class="navbar-nav layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
+              <div class="d-flex h-100" style="width: 50rem;">
+                <ul class="menu-inner">
+
+                  <!-- Perusahaan -->
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                      <div data-i18n="Perusahaan">Perusahaan</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Daftar Mitra">Daftar Mitra</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- Program Magang -->
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                      <div data-i18n="Program Magang">Program Magang</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="/magang_fakultas" class="menu-link">
+                          <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/informasi/magang" class="menu-link">
+                          <div data-i18n="Informasi Magang">Informasi Magang</div>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- Lamaran Saya -->
+                  <li class="menu-item">
+                    <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                      <div data-i18n="Lamaran Saya">Lamaran Saya</div>
+                    </a>
+                  </li>
+
+<<<<<<< HEAD
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Login dan Daftar -->
+=======
+                  <!-- Layanan LKM -->
+                  <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                      <div data-i18n="Layanan LKM">Layanan LKM</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Logbook">Logbook</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Konfirmasi Magang">"Konfirmasi Magang</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Input Dokumen Magang Mandiri">Input Dokumen Magang Mandiri</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                          <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="#footer" class="menu-link">
+                      <div data-i18n="Kontak Kami">Kontak Kami</div>
+                    </a>
+                  </li>
+              </div>
+            </aside>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
 
             @php
             $user = Auth::user();
             @endphp
+<<<<<<< HEAD
             @if (!$user)
+=======
+            @if(!$user)
+            <!-- Login -->
+
+            <div class="d-flex" id="navbar-collapse">
+
+              <!-- Login dan Daftar -->
+              <a href="{{ route('login')}}">
+                <button class="btn btn-outline-success me-2" style=" border-radius: 8px;" type="button">Masuk</button>
+              </a>
+              <!-- <a href="{{ route('register')}}">
+               <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
+              </a> -->
+            </div>
+            @else
+
+            <!-- User -->
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <a href="{{ route('login')}}">
@@ -382,12 +519,29 @@
                   </li>
                 </ul>
               </li>
+<<<<<<< HEAD
               <!--/ Notification -->
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
                     <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
+=======
+              <!-- / Notification -->
+
+
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-online me-2">
+                      <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <p class="mb-0 me-2">{{ ucwords($user->username) }}</p>
+                      <i class="ti ti-chevron-down"></i>
+                    </div>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
                   </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -401,7 +555,11 @@
                         </div>
                         <div class="flex-grow-1">
                           <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+<<<<<<< HEAD
                           <small class="text-muted">{{ ucwords($user->name) }}</small>
+=======
+                          <small class="text-muted">{{ ucwords($user->email) }}</small>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
                         </div>
                       </div>
                     </a>
@@ -438,8 +596,9 @@
                   </li>
                 </ul>
               </li>
-              <!--/ User -->
+              <!-- / User -->
             </ul>
+<<<<<<< HEAD
           </div>
           @endif
           <!-- Search Small Screens -->
@@ -449,26 +608,44 @@
           </div>
         </div>
       </nav>
-
-      <!-- / Navbar -->
-
-      <!-- Layout container -->
-      <div class="layout-page">
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
+=======
+            @endif
 
 
-          <!-- Content -->
+            <!-- Search Small Screens -->
+            <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+              <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
+              <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+            </div>
+          </div>
+        </nav>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
 
+        <!-- / Navbar -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+
+
+            <!-- Content -->
+
+<<<<<<< HEAD
           <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+=======
+            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
 
-          <!-- Modal Delete-->
-          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Modal Delete-->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
+<<<<<<< HEAD
                   </button>
                 </div>
                 <div class="modal-body text-center" style="display:block;">
@@ -477,7 +654,17 @@
                 <div class="modal-footer" style="display: flex; justify-content:center;">
                   <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+=======
+                    </button>
+                  </div>
+                  <div class="modal-body text-center" style="display:block;">
+                    Apakah Anda Ingin Keluar Dari Akun Ini?
+                  </div>
+                  <div class="modal-footer" style="display: flex; justify-content:center;">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
+                    <button type="button" class="btn btn-danger">Tidak</button>
+                  </div>
+>>>>>>> 53e523f7bdd9c7bb494cda1a658aa90d66e7ff1e
                 </div>
               </div>
             </div>
-          </div>

@@ -53,13 +53,9 @@ class InformasiMitraController extends Controller
     public function show()
     {
 
-        $mitra = Industri::with('total_lowongan')
-            // ->leftJoin('lowongan_magang', 'lowongan_magang.id_industri', 'industri.id_industri')
-            // select('industri.namaindustri', 'industri.statuskerjasama')
-            ->get();
-        $pelamar = LowonganMagang::with('total_pelamar')->get();
+        $mitra = Industri::with('total_lowongan')->get();
 
-        return DataTables::of($mitra, $pelamar)
+        return DataTables::of($mitra)
             ->addIndexColumn()
             ->addColumn('status', function ($mitra) {
                 if ($mitra->statuskerjasama == "Ya") {
@@ -70,17 +66,21 @@ class InformasiMitraController extends Controller
                     return "<span class='badge bg-label-info me-1'>Internal Tel-u</span>";
                 }
             })
-            ->addColumn('action', function () {
+            ->addColumn('action', function ($row) {
 
-                $btn = "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
+                $btn = "<a href='/informasi/lowongan/$row->id_industri' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
 
                 return $btn;
             })
             ->editColumn('total_lowongan', function ($row) {
                 return $row->total_lowongan->count();
             })
-            ->editColumn('total_pelamar', function ($pelamar) {
-                return $pelamar->total_pelamar;
+            ->editColumn('total_pelamar', function ($row) {
+                // return $pelamar->total_pelamar;
+                // pendaftara left join lowongan magang where id
+                return PendaftaranMagang::leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+                    ->where('id_industri', $row->id_industri)
+                    ->count();
             })
 
             ->rawColumns(['action', 'status'])
