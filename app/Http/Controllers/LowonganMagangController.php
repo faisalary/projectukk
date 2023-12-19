@@ -108,6 +108,7 @@ class LowonganMagangController extends Controller
         //     $lowonganmagang = $lowonganmagang->with("jenismagang", "lokasi")->orderBy('id_jenismagang', 'desc');
         // }
 
+        
         if(request()->type != 'total'){
             $lowongan = LowonganMagang::where('applicant_status', request()->type);
         }else{
