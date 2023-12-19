@@ -14,7 +14,9 @@ class LowonganMagang extends Model
     protected $guarded = [];
     protected $primaryKey = 'id_lowongan';
     protected $keyType = 'string';
-    public $timestamps = false;
+    protected $casts = [
+        'date_confirm_closing' => 'datetime'
+    ];
 
     public function industri()
     {
@@ -43,4 +45,5 @@ class LowonganMagang extends Model
         return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
     }
 }
+
 
