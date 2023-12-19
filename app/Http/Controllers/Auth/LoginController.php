@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Middleware\IsAdmin;
-use App\Providers\RouteServiceProvider;
-use Doctrine\DBAL\Driver\Middleware;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\Controller;
+use Doctrine\DBAL\Driver\Middleware;
+use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -40,13 +41,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     protected function authenticated(Request $request, $user)
     {
         if ($user->hasRole('superadmin')) {
             return redirect()->route('dashboard.superadmin');
         } elseif ($user->hasRole('admin')) {
-            return redirect()->route('dashboard.admin');
+            return redirect()->route('dashboard.admin', $user->id_industri);
         } else {
             // if (!$user->hasVerifiedEmail()) {
             //     return redirect()->route('verification.notice')->with('warning', 'Please verify your email first.');

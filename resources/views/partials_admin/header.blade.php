@@ -369,7 +369,7 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan.index')}}" class="menu-link">
+                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
