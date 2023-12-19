@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />

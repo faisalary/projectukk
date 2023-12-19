@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="d-flex">
-        <div class="card" style="padding: 50px 30px; width: 100%; margin-right: 20px; !important">
+        <div class="card" style="padding: 50px 30px; width: 80%; margin-right: 20px; !important">
             <div class="card-body d-flex flex-row justify-content-between"
                 style=" border-bottom: 1px solid #D3D6DB;  !important">
                 <div class="">

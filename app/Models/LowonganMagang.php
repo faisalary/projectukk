@@ -34,4 +34,16 @@ class LowonganMagang extends Model
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
     }
+    public function Prodi(){
+        return $this->belongsTo(ProgramStudi::class,'id_prodi');
+    }
+    public function fakultas(){
+        return $this->belongsTo(Fakultas::class,'id_fakultas');
+    }
+    public function total_pelamar()
+    {
+        return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
+    }
 }
+
+
