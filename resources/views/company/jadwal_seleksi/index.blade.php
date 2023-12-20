@@ -158,10 +158,8 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL DAFTAR</th>
                                 <th>TANGGAL SELEKSI</th>
-                                <th>WAKTU SELEKSI</th>
-                                <th style="min-width:100px;">PELAKSANAAN</th>
+                                <th style="min-width: 100px;">PROSES</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -181,10 +179,7 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL DAFTAR</th>
                                 <th>TANGGAL SELEKSI</th>
-                                <th>WAKTU SELEKSI</th>
-                                <th style="min-width:100px;">PELAKSANAAN</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -204,10 +199,8 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL DAFTAR</th>
-                                <th>TANGGAL SELEKSI</th>
-                                <th>WAKTU SELEKSI</th>
-                                <th style="min-width:100px;">PELAKSANAAN</th>
+                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="min-width:100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -255,10 +248,7 @@
                     $("#modal-button").html("Update Data");
                     $('#modalTambahJadwal form').attr('action', action);
                     $('#nama').val(response.id_pendaftaran).trigger('change');
-                    $('#pelaksanaan').val(response.pelaksanaan).trigger('change');
                     $('#mulai').val(response.tglseleksi);
-                    $('#waktu').val(response.jamseleksi);
-                    $('#tempat').val(response.detail);
 
                     $('#modalTambahJadwal').modal('show');
                 }
@@ -284,9 +274,9 @@
             });
         }
 
-        const tahap = [0,1,2];
         tahap.forEach((no) => {
             $('#table-jadwal-seleksi-tahap' + no).DataTable({
+
                 ajax: {
                     url: "{{ url('jadwal-seleksi/show') }}?tahap=" + no,
                     type: 'POST',
@@ -323,20 +313,12 @@
                         name: "id_pendaftaran"
                     },
                     {
-                        data: "tanggaldaftar",
-                        name: "tanggaldaftar"
-                    },
-                    {
                         data: "tglseleksi",
                         name: "mulai"
                     },
                     {
-                        data: "jamseleksi",
-                        name: "waktu"
-                    },
-                    {
-                        data: "pelaksanaan",
-                        name: "pelaksanaan"
+                        data: "proses",
+                        name: "proses"
                     },
                     {
                         data: "statusseleksi"

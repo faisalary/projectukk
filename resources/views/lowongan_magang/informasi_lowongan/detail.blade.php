@@ -22,9 +22,10 @@
     #more {
         display: none;
     }
+
     span.select2-selection.select2-selection--single {
-    width: 200px;
-}
+        width: 200px;
+    }
 </style>
 
 @endsection
@@ -37,18 +38,15 @@
                 <ol class="breadcrumb breadcrumb-style1">
                     @can( "title.info.lowongan.admin")
                     <li class="breadcrumb-item text-secondary">
-                        Admin
-                    </li>
-                    @endcan
-                    @can( "title.info.lowongan.mitra")
-                    <li class="breadcrumb-item text-secondary">
-                        Mitra
+                        Informasi Mitra
                     </li>
                     @endcan
                     <li class="breadcrumb-item">
-                        <a href="/informasi/lowongan/admin" class="text-secondary">Informasi Mitra</a>
+                        <a class="text-secondary">Informasi Lowongan</a>
                     </li>
-                    <li class="breadcrumb-item active">Total Kandidat Content Creator PT Teknologi Nirmala Olah Daya Informasi</li>
+                    @foreach($pendaftar as $item)
+                    <li class="breadcrumb-item active">Lowongan {{$item->lowonganMagang->intern_position}} Periode 21 April - 14 Juni 2023</li>
+                    @endforeach
                 </ol>
             </h4>
         </nav>
@@ -74,48 +72,42 @@
         <ul class="nav nav-pills mb-3 " role="tablist">
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-users ti-xs me-1"></i> Total Kandidat
+                    <i class="tf-icons ti ti-users ti-xs me-1"></i> Data Kandidat
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">3</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-belum-proses" aria-controls="navs-pills-justified-belum-proses" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clock ti-xs me-1"></i> Belum Proses
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class=" nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">2</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="8" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
                 </button>
@@ -225,14 +217,17 @@
         @foreach(['kandidat','belum-proses','screening','tahap1','tahap2','penawaran','diterima','ditolak'] as $tableId)
         <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
+                @foreach($pendaftar as $item)
                 <div class="row mt-3 ms-2">
                     <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:420px; height:40px;border-radius:8px;">
-                        <span style="color:#4B465C;">Total Kandidat Content Creator:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
+                        <span style="color:#4B465C;">Total Kandidat {{$item->lowonganMagang->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                     </div>
                     <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
-                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">20 Juli 2023</span>
+                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($item->lowonganMagang->date_confirm_closing?->format('d-m-Y'))}}</span>
                     </div>
                 </div>
+                @endforeach
+
                 <div class="card-datatable table-responsive">
                     <table class="table tab1c" id="{{$tableId}}" style="width: 100%;">
                         <thead>
@@ -546,7 +541,7 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('informasi/kandidat/show') }}?type=" + idElement;
+            let url = "{{ url('/informasi/kandidat/$item->id_lowongan') }}?type=" + idElement;
 
 
 
@@ -556,12 +551,11 @@
                 processing: true,
                 deferRender: true,
                 type: 'GET',
-                destroy: true,
                 columns: [{
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "namaindsutri"
+                        data: "namaindustri"
                     },
                     {
                         data: "notelpon"

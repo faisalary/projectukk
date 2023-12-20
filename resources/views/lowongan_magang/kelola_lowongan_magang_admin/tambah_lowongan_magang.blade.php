@@ -2,218 +2,354 @@
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/stepper/stepper.css" />
     <style>
+        .form-error {
+            color: red;
+        }
 
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: #4EA971;
+        }
     </style>
 @endsection
 
 @section('main')
     <div class="row ">
-        <div class="">
+        <div class="mb-2">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
                 Tambah Lowongan Magang
             </h4>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="mitra" class="form-label">Mitra<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="mitra"
-                                placeholder="Masukan Nama Mitra" />
+    <form class="default-form" method="POST" action="{{ route('lowongan-magang.store') }}">
+        @csrf
+
+        <div class="modal-body">
+            <div class="wizard-section">
+                <div class="card">
+                    <div class="form-wizard">
+                        <div class="form-wizard-header mb-3">
+                            <ul class="list-unstyled form-wizard-steps clearfix">
+                                <li class="active"><span>1</span></li>
+                                <li><span>2</span></li>
+                                <li><span>3</span></li>
+                            </ul>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="tahun" class="form-label">Tahun Ajaran<span class="text-danger">*</span></label>
-                            <div class="select2-success">
-                                <select id="select2Success" class="select2 form-select"
-                                    data-placeholder="Pilih Tahun Ajaran" multiple>
-                                    <option value="1">2023/2024 - Ganjil</option>
-                                    <option value="2">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
-                                    <option value="3">2023/2024 - Ganjil</option>
-                                    <option value="4">2023/2024 - Genap</option>
+                        <fieldset class="wizard-fieldset show">
+                            <h5>Detail Lowongan</h5>
+                            <div class="form-group">
+                                <label for="jenismagang" class="form-label">Jenis Magang<span
+                                        class="text-danger">*</span></label>
+                                <select name="jenismagang" id="jenismagang" class="select2 form-select wizard-required"
+                                    data-placeholder="Jenis Magang">
+                                    <option value="" disabled selected>Jenis Magang</option>
+                                    @foreach ($jenismagang as $j)
+                                        <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
+                                    @endforeach
                                 </select>
+                                <div class="wizard-form-error select2-error-form"></div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="posisi"
-                                placeholder="Masukan Posisi Pekerjaan" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="kuota penerimaan" class="form-label">Kuota Penerimaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kuotapenerimaan"
-                                placeholder="Masukkan Kuota Penerimaan" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="industri" class="form-label">Industri Pekerjaan<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="industri"
-                                placeholder="Masukkan Industri Pekerjaan" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span class="text-danger">*</span></label>
-                            <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi"></textarea>
-                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                        <div class="mb-3">
-                            <label for="kualifikasi" class="form-label">Requirements <span class="text-danger">*</span></label>
-                            <textarea class="form-control" rows="2" placeholder="Masukan Kualifikasi Mahasiswa" id="kualifikasi"></textarea>
-                            <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                        <div class="mb-3">
-                            <div class="border py-2 px-3 rounded-3">
-                                <label class="form-label" for="basic-default-company">
-                                    Kualifikasi Pendidikan
-                                </label>
-                                <div class="mb-2">
-                                    <label for="fakultas" class="form-label">Fakultas <span class="text-danger">*</span></label>
-                                    <select id="select2basic" class="selectpicker w-100" data-style="btn-default"
-                                        placeholder="Pilih Fakultas">
-                                        <option>Fakultas Ilmu Terapan</option>
-                                        <option>Fakultas Komunikasi Bisnis</option>
-                                        <option>Fakultas Industri Kreatif</option>
-                                        <option>Fakultas Ekonomi Bisnis</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-2 select2-success">
-                                    <label for="lastName" class="form-label">Program Studi <span class="text-danger">*</span></label>
-                                    <select id=" select2-success" class=" select2 form-select"
-                                        data-placeholder="Pilih Program Studi" data-live-search="true" multiple>
-                                        <option value="D3 Rekayasa Perangkat Lunak Aplikasi">D3 Rekayasa Perangkat Lunak Aplikasi</option>
-                                        <option value="D3 Sistem Informasi">D3 Sistem Informasi</option>
-                                        <option value="D3 Teknologi Komputer">D3 Teknologi Komputer</option>
-                                        <option value="D3 Teknologi Rekayasa Media">D3 Teknologi Rekayasa Media</option>
-                                    </select>
-                                </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="posisi" class="form-label">Posisi<span class="text-danger">*</span></label>
+                                <input type="text" id="posisi" name="posisi" class="form-control wizard-required"
+                                    placeholder="Masukan Posisi Pekerjaan" />
+                                <div class="wizard-form-error"></div>
                             </div>
-                        </div>
-                        <div class="mb-3 select2-success">
-                            <label for="fakultas" class="form-label">Keterampilan <span class="text-danger">*</span></label>
-                            <select id="select2-success" class="select2 form-select" data-placeholder="Pilih Fakultas"
-                                multiple>
-                                <option>PostgreSQL</option>
-                                <option>Figma</option>
-                                <option>PHP Native</option>
-                                <option>Sketch</option>
-                            </select>
-                            <label for="" style="font-size: 13px">Jika keterampilan belum terdaftar silahkan ketik
-                                manual</label>
-                        </div>
-                        <div class="mb-3">
-                            <label class="switch switch-success">
-                                <input type="checkbox" class="switch-input" />
-                                <span class="switch-toggle-slider">
-                                    <span class="switch-on"></span>
-                                    <span class="switch-off"></span>
-                                </span>
-                                <span class="switch-label">Tidak Berbayar</span>
-                            </label>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kualifikasi" class="form-label">Gaji Ditawarkan <span class="text-danger">*</span></label>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                                <div style="flex: 1;">
-
-                                    <input type="text" id="multicol-first-name" class="form-control"
-                                        placeholder="Gaji Minimum" style="width: 100%;" />
-                                </div>
-                                <div
-                                    style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                                </div>
-                                <div style="flex: 1;">
-                                    <input type="text" id="multicol-last-name" class="form-control"
-                                        placeholder="Gaji Maksimum" style="width: 100%;" />
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="kuota" class="form-label">Kuota Penerimaan<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" id="kuota" name="kuota" class="form-control wizard-required"
+                                    placeholder="Masukan Kuota Penerimaan" />
+                                <div class="wizard-form-error"></div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control wizard-required" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi"
+                                    name="deskripsi"></textarea>
+                                <div class="wizard-form-error"></div>
+                            </div>
+                            <div class="form-group clearfix text-end">
+                                <a href="javascript:;" class="form-wizard-next-btn float-right" id="next1">Next<i
+                                        class="ti ti-arrow-right ms-2 mb-1"></i></a>
+                            </div>
+                        </fieldset>
+                        <fieldset class="wizard-fieldset">
+                            <h5>Kualifikasi Lowongan</h5>
+                            <div class="form-group">
+                                <label for="kualifikasi" class="form-label">Requirements <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control wizard-required" rows="2" placeholder="Masukan Kualifikasi Mahasiswa"
+                                    id="kualifikasi" name="kualifikasi"></textarea>
+                                <div class="wizard-form-error"></div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <div class="border py-2 px-3 rounded-3">
+                                    <label class="form-label" for="basic-default-company">
+                                        Kualifikasi Pendidikan
+                                    </label>
+                                    <div class="form-group" style="margin-top: -15px;">
+                                        <label for="jenjang" class="form-label">Jenjang<span
+                                                class="text-danger">*</span></label>
+                                        <select name="jenjang" id="jenjang" multiple="multiple"
+                                            class="select2-multiple form-select wizard-required"
+                                            data-placeholder="Pilih Jenjang">
+                                            <option value="d3">D3</option>
+                                            <option value="s1">S1</option>
+                                        </select>
+                                        <div class="wizard-form-error select2-error-form"></div>
+                                    </div>
+                                    <div class="form-group" style="margin-top: -20px;">
+                                        <label for="bidang" class="form-label">Bidang Keilmuan<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" id="bidang" name="bidang"
+                                            class="form-control wizard-required" placeholder="Masukan Bidang Keilmuan" />
+                                        <div class="wizard-form-error"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="basic-default-message">Benefits (Addtional)</label>
-                            <textarea id="basic-default-message" class="form-control" placeholder="Masukan kualifikasi mahasiswa"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="select2Success" class="form-label">Lokasi Pekerjaan</label>
-                            <div class="select2-success">
-                                <select id="select2success" class="select2 form-select"
-                                    data-placeholder="Masukan Lokasi Pekerjaan" multiple>
-                                    <option value="1">Bandung</option>
-                                    <option value="2">Jakarta</option>
-                                    <option value="3">Yogyakarta</option>
-                                    <option value="4">Malang</option>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="keterampilan" class="form-label">Keterampilan<span
+                                        class="text-danger">*</span></label>
+                                <select name="keterampilan" id="keterampilan" multiple="multiple"
+                                    class="select2-multiple form-select wizard-required"
+                                    data-placeholder="Pilih Keterampilan">
+                                    <option value="PostgreSQL">PostgreSQL</option>
+                                    <option value="Figma">Figma</option>
+                                    <option value="PHP Nativ">PHP Native</option>
+                                    <option value="Sketch">Sketch</option>
                                 </select>
+                                <div class="wizard-form-error select2-error-form"></div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="flex: 1;">
-                                    <label for="kualifikasi" class="form-label">Tanggal Lowongan Ditayangkan <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="date" placeholder="Masukan Tanggal Diturunkan"
-                                        id="html5-date-input" />
-
-                                </div>
-                                <div class = "mt-3"
-                                    style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                                </div>
-                                <div style="flex: 1;">
-                                    <label for="kualifikasi" class="form-label">Tanggal Lowongan Diturunkan <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="date" placeholder="Masukan Tanggal Diturunkan"
-                                        id="html5-date-input" />
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="gaji" class="form-label d-block" id="gaji" name="gaji">Tipe
+                                    Magang<span class="text-danger">*</span></label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input name="gaji" class="form-check-input" type="radio" value="0" />
+                                        <label class="form-check-label" for="gaji">Berbayar</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="gaji" class="form-check-input" type="radio" value="1" />
+                                        <label class="form-check-label" for="gaji">Tidak Berbayar</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="durasi" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
-                            <div class="select2-success">
-                                <select id="select2Primary" class="select2 form-select" multiple>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="benefit" class="form-label">Benefits (Addtional)<span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control wizard-required" rows="2" id="benefit" name="benefit"
+                                    placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                                <div class="wizard-form-error"></div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="pelaksanaan" class="form-label" id="pelaksanaan"
+                                    name="tahapan">Pelaksanaan<span class="text-danger">*</span></label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input name="pelaksanaan" class="form-check-input" type="radio"
+                                            value="0" />
+                                        <label class="form-check-label" for="pelaksanaan">Online</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="pelaksanaan" class="form-check-input" type="radio"
+                                            value="1" />
+                                        <label class="form-check-label" for="pelaksanaan">Onsite</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="pelaksanaan" class="form-check-input " type="radio"
+                                            value="2" />
+                                        <label class="form-check-label" for="pelaksanaan">Hybird</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="lokasi" class="form-label">Lokasi Penempatan<span
+                                        class="text-danger">*</span></label>
+                                <select name="lokasi" id="lokasi" multiple="multiple"
+                                    class="select2-multiple form-select wizard-required"
+                                    data-placeholder="Masukan Lokasi Pekerjaan">
+                                    <option value="010bccc8-9daf-11ee-bdcc-70665517fcc8">Bandung</option>
+                                    <option value="010c0aea-9daf-11ee-bdcc-70665517fcc8">Jakarta</option>
+                                </select>
+                                <div class="wizard-form-error select2-error-form"></div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="flex: 1;">
+                                        <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
+                                            <span class="text-danger">*</span></label>
+                                        <input class="form-control wizard-required" type="date" id="tanggal"
+                                            name="tanggalmulai" placeholder="Masukan Tanggal Ditayangkan"
+                                            id="html5-date-input" />
+                                    </div>
+                                    <div class = "mt-3"
+                                        style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="tanggal" class="form-label">Tanggal Lowongan Diturunkan
+                                            <span class="text-danger">*</span></label>
+                                        <input class="form-control wizard-required" type="date" id="tanggal"
+                                            name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan"
+                                            id="html5-date-input" />
+                                    </div>
+                                </div>
+                                <div class="wizard-form-error"></div>
+                            </div>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="durasimagang" class="form-label">Durasi Magang<span
+                                        class="text-danger">*</span></label>
+                                <select name="durasimagang" id="durasimagang" multiple="multiple"
+                                    class="select2-multiple form-select wizard-required"
+                                    data-placeholder="Pilih Durasi Magang">
                                     <option value="1">1 Semester</option>
                                     <option value="2">2 Semester</option>
                                 </select>
+                                <div class="wizard-form-error select2-error-form"></div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="tahapan" class="form-label">Berapa Banyak Tahapan Seleksi<span class="text-danger">*</span></label>
-                            <div class="col mt-2">
-                                <div class="form-check form-check-inline">
-                                    <input name="collapsible-address-type" class="form-check-input" type="radio"
-                                        value="" id="collapsible-address-type-home" checked />
-                                    <label class="form-check-label" for="collapsible-address-type-home">1</label>
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label for="tahapan" class="form-label" id="tahapan" name="tahapan">Berapa Banyak
+                                    Tahapan Seleksi<span class="text-danger">*</span></label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input name="tahapan" class="form-check-input" type="radio" value="1" />
+                                        <label class="form-check-label" for="tahapan">1</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="tahapan" class="form-check-input" type="radio" value="2" />
+                                        <label class="form-check-label" for="tahapan">2</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="tahapan" class="form-check-input" type="radio" value="3" />
+                                        <label class="form-check-label" for="tahapan">3</label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input name="collapsible-address-type" class="form-check-input" type="radio"
-                                        value="" id="collapsible-address-type-home" />
-                                    <label class="form-check-label" for="collapsible-address-type-home">2</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input name="collapsible-address-type" class="form-check-input" type="radio"
-                                        value="" id="collapsible-address-type-home" />
-                                    <label class="form-check-label" for="collapsible-address-type-home">3</label>
-                                </div>
-
                             </div>
-                        </div>
+                            <div class="form-group clearfix">
+                                <div class="row">
+                                    <div class="col text-start">
+                                        <a href="javascript:;" class="form-wizard-previous-btn float-left"><i
+                                                class="ti ti-arrow-left ms-1 mb-1"></i>Previous</a>
+                                    </div>
+                                    <div class="col text-end">
+                                        <a href="javascript:;" class="form-wizard-next-btn float-right">Next<i
+                                                class="ti ti-arrow-right ms-1 mb-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
 
-                        <div class="mb-3 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
-                    </form>
+                        <fieldset class="wizard-fieldset">
+                            <h5>Seleksi Tahap Lanjut</h5>
+
+                            <div class="mb-2">
+                                <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
+                                        class="text-danger">*</span></label>
+                                <select id="select2Disabled" class="select2 form-select" disabled>
+                                    <option value="1"selected>Seleksi Tahap 1</option>
+                                    <option value="2">Option2</option>
+                                    <option value="3">Option3</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="date" id="mulai" name="mulai">
+                                </div>
+
+                                <div class="col-6 mb-2">
+                                    <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="date" id="mulai" name="mulai">
+                                </div>
+                            </div>
+
+                            <div id="tahap-lanjut-2" style="display: none;">
+                                <hr>
+                                <div class="mb-2">
+                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
+                                            class="text-danger">*</span></label>
+                                    <select id="select2Disabled" class="select2 form-select" disabled>
+                                        <option value="1">Seleksi Tahap 1</option>
+                                        <option value="2" selected>Seleksi Tahap 2</option>
+                                        <option value="3">Option3</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="date" id="mulai" name="mulai">
+                                    </div>
+
+                                    <div class="col-6 mb-2">
+                                        <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="date" id="mulai" name="mulai">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tahap-lanjut-3" style="display: none;">
+                                <div class="mb-2">
+                                    <hr>
+                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
+                                            class="text-danger">*</span></label>
+                                    <select id="select2Disabled" class="select2 form-select" disabled>
+                                        <option value="1">Seleksi Tahap 1</option>
+                                        <option value="2">Seleksi Tahap 2</option>
+                                        <option value="3" selected>Seleksi Tahap 3</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="date" id="mulai" name="mulai">
+                                    </div>
+
+                                    <div class="col-6 mb-2">
+                                        <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="date" id="mulai" name="mulai">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="row">
+                                    <div class="col text-start">
+                                        <a href="javascript:;" class="form-wizard-previous-btn float-left"><i
+                                                class="ti ti-arrow-left ms-1 mb-1"></i>Previous</a>
+                                    </div>
+                                    <div class="col text-end">
+                                        <button type="submit" id="modal-button"
+                                            class="form-wizard-submit float-right">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 @endsection
 
 @section('page_script')
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="../../app-assets/js/form-wizard-numbered.js"></script>
+    <script src="../../app-assets/js/form-wizard-validation.js"></script>
+    <script src="../../app-assets/js/form-wizard-icons.js"></script>
+    <script src="../../app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script src="../../app-assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="../../app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../app-assets/js/app-stepper.js"></script>
 @endsection

@@ -11,9 +11,9 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
-use Illuminate\Routing\Route;
-
-use function Laravel\Prompts\select;
+use App\Models\User;
+use App\Imports\MhsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class mahasiswaController extends Controller
 {
@@ -54,11 +54,24 @@ class mahasiswaController extends Controller
             'alamatmhs' => $request->alamatmhs,
             'emailmhs' => $request->emailmhs,
             'nohpmhs' => $request->nohpmhs, 
+            
         ]);
+       
+        $admin = User::create([
+            'name' => 'mahasiswa',
+            'username' => $request->namamhs,
+            'email' => $request->emailmhs,
+            'password' => bcrypt('12345678'),            
+            'isAdmin'=>2,
+            'nim' => $mahasiswa->nim,
+        ]);
+        $admin->assignRole('user');
+     
+
 
         return response()->json([
             'error' => false,
-            'massage' => 'Data Created!',
+            'message' => 'Data Created!',
             'modal' => '#modal-mahasiswa',
             'table' => '#table-master-mahasiswa'
         ]);
@@ -206,4 +219,11 @@ class mahasiswaController extends Controller
         ]);
     }
 
+    public function import (Request $request){
+        $data = $request->file('import');
+        $namafile = $data-> getClientOriginalName();
+        $data->move('MhsData', $namafile);
+        Excel::import(new MhsImport, \public_path('/MhsData/'.$namafile));
+        return \redirect()->back();
+    }
 }

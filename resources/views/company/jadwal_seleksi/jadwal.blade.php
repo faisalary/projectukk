@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="card mt-4">
-                        <a href="/jadwal-seleksi/jadwal" style="hover:" class="card-body">
+                        <a href="/seleksi/lanjutan/jadwal" style="hover:" class="card-body">
                             <div class="row">
                                 <div class="col-2">
                                     <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;"

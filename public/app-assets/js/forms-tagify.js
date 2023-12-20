@@ -17,69 +17,18 @@
 
   // Custom list & inline suggestion
   //------------------------------------------------------
-  const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
-  const TagifyCustomListSuggestionEl = document.querySelector('#TagifyCustomListSuggestion');
+//   const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
+//   const TagifyCustomListSuggestionEl = document.querySelector('#keterampilan');
 
-  const whitelist = [
-    'A# .NET',
-    'A# (Axiom)',
-    'A-0 System',
-    'A+',
-    'A++',
-    'ABAP',
-    'ABC',
-    'ABC ALGOL',
-    'ABSET',
-    'ABSYS',
-    'ACC',
-    'Accent',
-    'Ace DASL',
-    'ACL2',
-    'Avicsoft',
-    'ACT-III',
-    'Action!',
-    'ActionScript',
-    'Ada',
-    'Adenine',
-    'Agda',
-    'Agilent VEE',
-    'Agora',
-    'AIMMS',
-    'Alef',
-    'ALF',
-    'ALGOL 58',
-    'ALGOL 60',
-    'ALGOL 68',
-    'ALGOL W',
-    'Alice',
-    'Alma-0',
-    'AmbientTalk',
-    'Amiga E',
-    'AMOS',
-    'AMPL',
-    'Apex (Salesforce.com)',
-    'APL',
-    'AppleScript',
-    'Arc',
-    'ARexx',
-    'Argus',
-    'AspectJ',
-    'Assembly language',
-    'ATS',
-    'Ateji PX',
-    'AutoHotkey',
-    'Autocoder',
-    'AutoIt',
-    'AutoLISP / Visual LISP',
-    'Averest',
-    'AWK',
-    'Axum',
-    'Active Server Pages',
-    'ASP.NET'
+  const whitelist1 = [
+    'PostgreSQL',
+    'Figma',
+    'PHP Native',
+    'Sketch',
   ];
   // Inline
   let TagifyCustomInlineSuggestion = new Tagify(TagifyCustomInlineSuggestionEl, {
-    whitelist: whitelist,
+    whitelist: whitelist1,
     maxTags: 10,
     dropdown: {
       maxItems: 20,
@@ -90,7 +39,7 @@
   });
   // List
   let TagifyCustomListSuggestion = new Tagify(TagifyCustomListSuggestionEl, {
-    whitelist: whitelist,
+    whitelist: whitelist1,
     maxTags: 10,
     dropdown: {
       maxItems: 20,

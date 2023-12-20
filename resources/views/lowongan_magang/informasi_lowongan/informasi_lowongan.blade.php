@@ -30,7 +30,16 @@
 <div class="row">
 
     <div class="col-md-9 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - Tahun Ajaran 2324</h4>
+        <!-- Company -->
+        @can('title.info.lowongan.mitra')
+        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
+        @endcan
+        <!-- SuperAdmin -->
+        @can('title.info.lowongan.admin')
+        <h4 class="fw-bold">Lowongan Magang {{$industri->namaindustri}}</h4>
+        <h4 class="fw-bold">Tahun Ajaran</h4>
+        @endcan
+
     </div>
     <div class="col-md-3 col-12 mb-3 float-end d-flex justify-content-end">
         <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran" style="width: 95% !important;">
@@ -50,10 +59,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-4" style="border: 2px solid #D3D6DB; width:300px; height:35px; margin:0 13px; border-radius:8px;">
-                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#4EA971;">350</span> <span style="color:#7367F0;">Kandidat</span></div>
+                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#4EA971;">{{$pendaftar}}</span> <span style="color:#4EA971;">Kandidat</span></div>
                     </div>
                     <div class="col-3" style="border: 2px solid #D3D6DB; width:310px; height:35px; border-radius:8px;">
-                        <div class="ti ti-briefcase text-success" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan :</span> <span style="color:#4EA971;">50</span> <span style="color:#7367F0;">Lowongan</span></div>
+                        <div class="ti ti-briefcase text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan :</span> <span style="color:#4EA971;">{{$lowongan_count}}</span> <span style="color:#4EA971;">Lowongan</span></div>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -76,7 +85,10 @@
                         </div>
                     </div>
                 </div>
-                @include('lowongan_magang.informasi_lowongan.lowongan_card')
+
+                <!-- card-informasi-lowongan -->
+                <div id="container-card" class="mb-3"></div>
+
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end" style="margin-right:25px;">
                         <li class="page-item first">
@@ -111,6 +123,18 @@
             $("#datepicker").datepicker({
                 format: 'yyyy-mm-dd'
             });
+
+            loadData();
         });
+
+        function loadData() {
+            $.ajax({
+                url: "{{$urlGetCard}}?component=card",
+                type: "get",
+                success: function(res) {
+                    $("#container-card").html(res);
+                }
+            })
+        }
     </script>
     @endsection
