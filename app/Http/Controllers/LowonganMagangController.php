@@ -109,37 +109,38 @@ class LowonganMagangController extends Controller
         // }
 
         if (request()->type != 'total') {
-        
-        if(request()->type != 'total'){
-            $lowongan = LowonganMagang::where('applicant_status', request()->type);
-        } else {
-            $lowongan = LowonganMagang::all();
-        }
 
-        return DataTables::of($lowongan)
-            ->addIndexColumn()
-            ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                }
-            })
-            ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+            if (request()->type != 'total') {
+                $lowongan = LowonganMagang::where('applicant_status', request()->type);
+            } else {
+                $lowongan = LowonganMagang::all();
+            }
 
-                $btn = "<a href='detail/kelola/lowongan{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+            return DataTables::of($lowongan)
+                ->addIndexColumn()
+                ->editColumn('status', function ($row) {
+                    if ($row->status == 1) {
+                        return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    } else {
+                        return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
+                    $color = ($row->status) ? "danger" : "success";
+
+                    $btn = "<a href='detail/kelola/lowongan{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
                 <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='kelola/lowong/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
-                return $btn;
-            })
-            ->addColumn('tanggal', function ($row) {
-                return $row->startdate . " <br> " . $row->enddate;
-            })
-            ->rawColumns(['action', 'status', 'tanggal'])
+                    return $btn;
+                })
+                ->addColumn('tanggal', function ($row) {
+                    return $row->startdate . " <br> " . $row->enddate;
+                })
+                ->rawColumns(['action', 'status', 'tanggal'])
 
-            ->make(true);
+                ->make(true);
+        }
     }
 
 
