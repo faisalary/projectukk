@@ -74,13 +74,6 @@ class KelolaMitraController extends Controller
 
         if ($admin) {
         Mail::to($admin->email)->send(new VerifyEmail($url));
-
-            // Admin berhasil ditambahkan
-            session()->flash('success', 'Admin berhasil ditambahkan. silahkan Cek email anda untuk melakukan verify');
-                
-        } else {
-            // Gagal menambahkan admin
-            session()->flash('error', 'Gagal menambahkan admin.');
         }
         
         DB::commit();
@@ -135,8 +128,6 @@ class KelolaMitraController extends Controller
                     // data-bs-target='#modalreject'
                 return $btn;
             })
-
-            
             ->rawColumns(['action','status','aksi'])
             ->make(true);
     }

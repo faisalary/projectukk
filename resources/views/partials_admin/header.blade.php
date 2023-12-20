@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
@@ -369,12 +373,12 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan.index')}}" class="menu-link">
+                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
+                                <a href="{{ route('lowongan-magang.index')}}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -412,6 +416,15 @@
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
                     </li>
+
+                    <!-- Master Data -->
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
+                        <a href="/master-data-email" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-database"></i>
+                            <div data-i18n="Master Data Email">Master Data Email</div>
+                        </a>
+                    </li>
+
                 </ul>
                 @endcan
             </aside>

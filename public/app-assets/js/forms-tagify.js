@@ -17,10 +17,10 @@
 
   // Custom list & inline suggestion
   //------------------------------------------------------
-  const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
-  const TagifyCustomListSuggestionEl = document.querySelector('#TagifyCustomListSuggestion');
+//   const TagifyCustomInlineSuggestionEl = document.querySelector('#TagifyCustomInlineSuggestion');
+//   const TagifyCustomListSuggestionEl = document.querySelector('#keterampilan');
 
-  const whitelist = [
+  const whitelist1 = [
     'PostgreSQL',
     'Figma',
     'PHP Native',
@@ -28,7 +28,7 @@
   ];
   // Inline
   let TagifyCustomInlineSuggestion = new Tagify(TagifyCustomInlineSuggestionEl, {
-    whitelist: whitelist,
+    whitelist: whitelist1,
     maxTags: 10,
     dropdown: {
       maxItems: 20,
@@ -39,7 +39,7 @@
   });
   // List
   let TagifyCustomListSuggestion = new Tagify(TagifyCustomListSuggestionEl, {
-    whitelist: whitelist,
+    whitelist: whitelist1,
     maxTags: 10,
     dropdown: {
       maxItems: 20,
