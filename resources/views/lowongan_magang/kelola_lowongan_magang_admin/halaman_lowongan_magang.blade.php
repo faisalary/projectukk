@@ -86,15 +86,13 @@
         @if ($statusId == 1)
         @can('button.tnglbts.mitra')
 
-        <div id="div{{$statusId}}" class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
-            <a href="{{ route('lowongan-magang.create') }}">
+        <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
+            <a id="div{{$statusId}}" class="targetDiv" href="{{ route('lowongan-magang.create') }}">
                 <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
                     Magang</button>
             </a>
         </div>
         @endcan
-        @else
-        <div></div>
         @endif
         @endforeach
     </div>
@@ -183,200 +181,174 @@
         </div>
     </div>
     @endforeach
-    <div class="tab-content p-0">
-        @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $tableId)
-        <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}" id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
-            <div class="card">
-                <div class="row mt-3 ms-2">
-                    <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
-                        <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>Total Lowongan:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Lowongan </span>
-                    </div>
+
+    <!-- Modal Alert-->
+    <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th style="max-width: 80px;">NOMOR</th>
-                                <th style="min-width:100px;">POSISI</th>
-                                <th style="min-width:100px;">TANGGAL</th>
-                                <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:20px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <div class="modal-body text-center">
+                    <img src="../../app-assets/img/alert.png" alt="">
+                    <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Mengahapus Data?</h5>
+                    <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Data yang
+                        dipilih akan dihapus secara permanen!</div>
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content:center;">
+                    <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
+                    <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
                 </div>
             </div>
         </div>
-        @endforeach
+    </div>
+    @endsection
 
-        <!-- Modal Alert-->
-        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img src="../../app-assets/img/alert.png" alt="">
-                        <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Mengahapus Data?</h5>
-                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Data yang
-                            dipilih akan dihapus secara permanen!</div>
-                    </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endsection
+    @section('page_script')
+    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script>
+        // var jsonData = [{
+        //         "nomor": "1",
+        //         "posisi": "UI/UX Designer",
+        //         "fakultas": "fakultas ilmu terapan",
+        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+        //         "durasi magang": "2 semester",
+        //         "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
+        //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        //     },
+        //     {
+        //         "nomor": "2",
+        //         "posisi": "UI/UX Designer",
+        //         "fakultas": "fakultas ilmu terapan",
+        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
+        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
+        //         "durasi magang": "2 semester",
+        //         "status": "<span class='badge bg-label-success'>Aktif</span>",
+        //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
+        //     }
+        // ];
 
-        @section('page_script')
-        <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-        <script src="../../app-assets/js/forms-extras.js"></script>
-        <script>
-            // var jsonData = [{
-            //         "nomor": "1",
-            //         "posisi": "UI/UX Designer",
-            //         "fakultas": "fakultas ilmu terapan",
-            //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            //         "durasi magang": "2 semester",
-            //         "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-            //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-            //     },
-            //     {
-            //         "nomor": "2",
-            //         "posisi": "UI/UX Designer",
-            //         "fakultas": "fakultas ilmu terapan",
-            //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-            //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-            //         "durasi magang": "2 semester",
-            //         "status": "<span class='badge bg-label-success'>Aktif</span>",
-            //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-            //     }
-            // ];
+        $('.table').each(function() {
+            let idElement = $(this).attr('id');
+            let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
+            // console.log(idElement);
+            // console.log(url);
 
-            $('.table').each(function() {
-                let idElement = $(this).attr('id');
-                let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
-                // console.log(idElement);
-                // console.log(url);
-
-                $(this).DataTable({
-                    ajax: url,
-                    serverSide: false,
-                    processing: true,
-                    deferRender: true,
-                    type: 'GET',
-                    destroy: true,
-                    columns: [{
-                            data: "DT_RowIndex"
-                        },
-                        {
-                            data: "intern_position",
-                            name: "intern_position"
-                        },
-                        {
-                            data: "tanggal",
-                            name: "tanggal"
-                        },
-                        {
-                            data: "durasimagang",
-                            name: "durasimagang"
-                        },
-                        {
-                            data: "status",
-                            name: "status"
-                        },
-                        {
-                            data: "action",
-                            name: "action"
-                        }
-                    ],
-                });
-
-            });
-
-            jQuery(function() {
-                jQuery('.showSingle').click(function() {
-                    let idElement = $(this).attr('target');
-
-                    jQuery('.targetDiv').hide('.cnt');
-                    jQuery("#div" + idElement).slideToggle();
-
-                    console.log(idElement);
-                });
-            });
-
-            $('.display').DataTable({
-                responsive: true
-            });
-
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-                $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
-            });
-
-            $("#modalTambahLowongan").on("hide.bs.modal", function() {
-
-                $("#modal-title").html("Tambah Lowongan Magang");
-                $("#modal-button").html("Save Data");
-                // $('#modalTambahLowongan form #mitra').val('').trigger('change');
-                $('#modalTambahLowongan form #tahun').val('').trigger('change');
-                $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
-                // $('#modalTambahLowongan form #pendaftar').val('').trigger('change');
-            });
-
-            function edit(e) {
-                let id = e.attr('data-id');
-
-                let action = `{{ url('kelola/lowongan/update/') }}/${id}`;
-                var url = `{{ url('kelola/lowongan/edit/') }}/${id}`;
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    success: function(response) {
-                        $("#modal-title").html("Edit LowonganMangang");
-                        $("#modal-button").html("Update Data")
-                        $('#modalTambahLowongan form').attr('action', action);
-                        // $('#mitra').val(response.id_industri).change();
-                        $('#jenismagang').val(response.id_jenismagang).change();
-                        $('#posisi').val(response.intern_position);
-                        $('#kuota').val(response.kuota);
-                        $('#deskripsi').val(response.deskripsi);
-                        $('#kualifikasi').val(response.requirements);
-                        $('#jenjang').val(response.jenjang);
-                        $('#bidang').val(response.bidang);
-                        $('#keterampilan').val(response.keterampilan);
-                        $('#gaji').val(response.paid);
-                        $('#benefit').val(response.benefitmagang);
-                        $('#lokasi').val(response.id_lokasi);
-                        $('#tanggalmulai').val(response.startdate);
-                        $('#tanggalakhir').val(response.enddate);
-                        $('#durasimagang').val(response.durasimagang);
-                        $('#tahapan').val(response.tahapan_seleksi);
-                        $('#modalTambahLowongan').modal('show');
+            $(this).DataTable({
+                ajax: url,
+                serverSide: false,
+                processing: true,
+                deferRender: true,
+                type: 'GET',
+                destroy: true,
+                columns: [{
+                        data: "DT_RowIndex"
+                    },
+                    {
+                        data: "intern_position",
+                        name: "intern_position"
+                    },
+                    {
+                        data: "tanggal",
+                        name: "tanggal"
+                    },
+                    {
+                        data: "durasimagang",
+                        name: "durasimagang"
+                    },
+                    {
+                        data: "status",
+                        name: "status"
+                    },
+                    {
+                        data: "action",
+                        name: "action"
                     }
-                });
-            }
-
-            $(document).ready(function() {});
-
-            $(document).on('submit', '#filter', function(e) {
-                const offcanvasFilter = $('#modalSlide');
-                e.preventDefault();
-                $('#tooltip-filter').attr('data-bs-original-title', 'durasimagang: ' + $('#durasimagang :selected').text() + ', posisilowongan: ' + $('#posisi :selected').text() + ', statuslowongan: ' + $('#status :selected').text());
-                offcanvasFilter.offcanvas('hide');
+                ],
             });
 
-            $('.data-reset').on('click', function() {
-                $('#durasimagang').val(null).trigger('change');
-                $('#posisi').val(null).trigger('change');
-                $('#status').val(null).trigger('change');
-            });
-        </script>
+        });
 
-        <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-        <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-        @endsection
+        jQuery(function() {
+            jQuery('.showSingle').click(function() {
+                let idElement = $(this).attr('target');
+
+                jQuery('.targetDiv').hide('.cnt');
+                jQuery("#div" + idElement).slideToggle();
+
+                console.log(idElement);
+            });
+        });
+
+        $('.display').DataTable({
+            responsive: true
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+        });
+
+        $("#modalTambahLowongan").on("hide.bs.modal", function() {
+
+            $("#modal-title").html("Tambah Lowongan Magang");
+            $("#modal-button").html("Save Data");
+            // $('#modalTambahLowongan form #mitra').val('').trigger('change');
+            $('#modalTambahLowongan form #tahun').val('').trigger('change');
+            $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
+            // $('#modalTambahLowongan form #pendaftar').val('').trigger('change');
+        });
+
+        function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('kelola/lowongan/update/') }}/${id}`;
+            var url = `{{ url('kelola/lowongan/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#modal-title").html("Edit LowonganMangang");
+                    $("#modal-button").html("Update Data")
+                    $('#modalTambahLowongan form').attr('action', action);
+                    // $('#mitra').val(response.id_industri).change();
+                    $('#jenismagang').val(response.id_jenismagang).change();
+                    $('#posisi').val(response.intern_position);
+                    $('#kuota').val(response.kuota);
+                    $('#deskripsi').val(response.deskripsi);
+                    $('#kualifikasi').val(response.requirements);
+                    $('#jenjang').val(response.jenjang);
+                    $('#bidang').val(response.bidang);
+                    $('#keterampilan').val(response.keterampilan);
+                    $('#gaji').val(response.paid);
+                    $('#benefit').val(response.benefitmagang);
+                    $('#lokasi').val(response.id_lokasi);
+                    $('#tanggalmulai').val(response.startdate);
+                    $('#tanggalakhir').val(response.enddate);
+                    $('#durasimagang').val(response.durasimagang);
+                    $('#tahapan').val(response.tahapan_seleksi);
+                    $('#modalTambahLowongan').modal('show');
+                }
+            });
+        }
+
+        $(document).ready(function() {});
+
+        $(document).on('submit', '#filter', function(e) {
+            const offcanvasFilter = $('#modalSlide');
+            e.preventDefault();
+            $('#tooltip-filter').attr('data-bs-original-title', 'durasimagang: ' + $('#durasimagang :selected').text() + ', posisilowongan: ' + $('#posisi :selected').text() + ', statuslowongan: ' + $('#status :selected').text());
+            offcanvasFilter.offcanvas('hide');
+        });
+
+        $('.data-reset').on('click', function() {
+            $('#durasimagang').val(null).trigger('change');
+            $('#posisi').val(null).trigger('change');
+            $('#status').val(null).trigger('change');
+        });
+    </script>
+
+    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    @endsection
