@@ -206,6 +206,51 @@
                                     Laporan Harian</button>
                             </div>
                         </div>
+                        <div
+                        style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px; !important">
+                        <div class="d-flex">
+                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center"
+                                style="background-color: #C4E2D0; width: 70px; height: 70px;">
+                                <img src="../assets/images/smile.png" alt="">
+                            </div>
+                            <div class="fw-bold d-flex flex-column justify-content-center" style="margin-left: 12px">
+                                <div class="">
+                                    <h6 class="mb-0">Senin</h6>
+                                </div>
+                                <div class="">
+                                    <p class="fw-normal mb-0">2 Januari 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
+                        <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                            iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
+                            tincidunt.
+                            Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
+                            mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in
+                            feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
+                            Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit
+                            amet,
+                            consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl
+                            vel
+                            nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus
+                            molestie in....</p>
+                            <div class="card-header"></div>                           
+                            <p style="color: #6C7687; margin-top: 15px;">Alasan Logbook Ditolak :</p>
+                            <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                                iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
+                                tincidunt.
+                                Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
+                                mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit.
+                            </p>
+                            <div class="text-center"
+                            style="1px solid #D3D6DB; border-right: 1px solid #D3D6DB; border-left: 1px solid #D3D6DB;  border-radius: 0 0 6px 6px; padding: 20px; margin-bottom: 30px; !important">
+                            <button data-bs-toggle='modal' data-bs-target='#modalEditJadwal' type=""
+                                class="btn btn-danger">Buat
+                                Laporan Harian</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,24 +279,20 @@
                     <label for="mood" class="form-label">Silahkan pilih mood anda pada hari ini :</label>
                     <div class="d-flex mt-1">
                         <div>
-                            <img src="../assets/images/smile.png" alt=""
->                        </div>
-
+                            <img src="../assets/images/smile.png" alt="">
+                        </div>
                         <div class="text-center" style="margin-left: 20px;">
-                            <img src="../assets/images/love.png" alt=""
->                        </div>
-
+                            <img src="../assets/images/love.png" alt="">
+                        </div>
                         <div class="text-center" style="margin-left: 20px;">
-                            <img src="../assets/images/sad.png" alt=""
->                        </div>
-
+                            <img src="../assets/images/sad.png" alt="">                        
+                        </div>
                         <div class="text-center" style="margin-left: 20px;">
-                            <img src="../assets/images/kyaa.png" alt=""
->                        </div>
-
+                            <img src="../assets/images/kyaa.png" alt="">                        
+                        </div>
                         <div class="text-center" style="margin-left: 20px;">
-                            <img src="../assets/images/jutek.png" alt=""
->                        </div>
+                            <img src="../assets/images/jutek.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="text-center mt-4">

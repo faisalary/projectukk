@@ -326,3 +326,4 @@ Route::get('/logbook', function () {
 Route::get('/logbook-detail', function () {
     return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
 });
+
