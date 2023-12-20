@@ -109,6 +109,8 @@ class LowonganMagangController extends Controller
         // }
 
         if (request()->type != 'total') {
+        
+        if(request()->type != 'total'){
             $lowongan = LowonganMagang::where('applicant_status', request()->type);
         } else {
             $lowongan = LowonganMagang::all();
