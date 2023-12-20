@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\DosenController::class, 'list_fakultas'])->name('dosen.list_fakultas');
             Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\DosenController::class, 'list_prodi'])->name('dosen.list_prodi');
+            Route::post('/import', [App\Http\Controllers\DosenController::class, 'import'])->name('dosen.import');
         });
         Route::prefix('komponen-penilaian')->group(function () {
             Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen-penilaian.index');
