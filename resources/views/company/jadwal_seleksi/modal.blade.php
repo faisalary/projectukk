@@ -57,36 +57,35 @@
                  @csrf
                  <div class="modal-body">
                      <div class="row">
+                         <div class="col mb-2">
+                             <label for="select2Disabled" class="form-label">Jenis Tahap</label>
+                             <div class="position-relative">
+                                 <select id="select2Disabled" class="select2 form-select select2-hidden-accessible"
+                                     data-select2-id="select2Disabled" tabindex="-1" aria-hidden="true" disabled>
+                                     <option value="1">Tahap 1</option>
+                                     <option value="2">Option3</option>
+                                     <option value="3">Option4</option>
+                                 </select>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col mb-2">
+                             <label for="flatpickr-multi" class="form-label">Jadwal Pelaksanaan</label>
+                             <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM"
+                                 id="flatpickr-multi" readonly="readonly">
+                         </div>
+                     </div>
+                     <div class="row">
                          <div class="col mb-2 form-input">
-                             <label for="nama" class="form-label">Jenis Seleksi<span
-                                     class="text-danger">*</span></label>
-                             <select class="form-select select2" id="nama" name="id_pendaftaran">
-                                 @foreach ($pendaftaran as $p)
-                                     <option value="{{ $p->id_pendaftaran }}">{{ $p->namamhs }}-{{ $p->nim }}
-                                     </option>
-                                 @endforeach
+                             <label for="seleksi" class="form-label">Subjek Email</label>
+                             <select class="form-select select2" id="subjek" name="subjek"
+                                 data-placeholder="Pilih Subjek Email">
+                                 <option value="Undangan Seleksi Tahap 1">Undangan Seleksi Tahap 1</option>
+                                 <option value="Undangan Seleksi Tahap 2">Undangan Seleksi Tahap 2</option>
+                                 <option value="Undangan Seleksi Tahap 3">Undangan Seleksi Tahap 3</option>
                              </select>
                              <div class="invalid-feedback"></div>
-                         </div>
-                     </div>
-                     <div class="row">
-                         <div class="col-6 mb-2">
-                             <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
-                                     class="text-danger">*</span></label>
-                             <input class="form-control" type="date" id="mulai" name="mulai">
-                         </div>
-                         <div class="col-6 mb-2">
-                             <label for="waktlu" class="form-label">Waktu Mulai Pelaksanaan<span
-                                     class="text-danger">*</span></label>
-                             <input class="form-control" type="time" id="waktu" name="waktu">
-                         </div>
-                     </div>
-                     <div class="row">
-                         <div class="col mb-2 form-input">
-                             <label for="tempat" class="form-label">Detail Pelaksanaan</label>
-                             <input type="text" class="form-control" id="tempat"
-                                 placeholder="Masukan Alamat/Link Pelaksanaan"
-                                 aria-describedby="defaultFormControlHelp" name="tempat">
                          </div>
                      </div>
                  </div>
@@ -209,7 +208,7 @@
                              </div>
                              <div class="col-6">
                                  <span class="text-secondary">Status Seleksi</span>
-                                     <p class="fw-bold mt-1" id="seleksiteks"></p>
+                                 <p class="fw-bold mt-1" id="seleksiteks"></p>
                              </div>
                          </div>
                      </div>

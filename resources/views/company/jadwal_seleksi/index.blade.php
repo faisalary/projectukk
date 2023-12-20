@@ -199,8 +199,8 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL SELEKSI</th>
-                                <th style="min-width:100px;">PROSES</th>
+                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="min-width:100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -274,7 +274,6 @@
             });
         }
 
-        const tahap = [0, 1, 2];
         tahap.forEach((no) => {
             $('#table-jadwal-seleksi-tahap' + no).DataTable({
 
