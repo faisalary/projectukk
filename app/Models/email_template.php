@@ -11,7 +11,7 @@ class email_template extends Model
 
     use HasFactory, HasUuids;
     protected $table = 'email_template';
-    protected $fillable = ['subject_email','headline_email','content_email'];
+    protected $fillable = ['subject_email','headline_email','content_email', 'attachment'];
     protected $keyType = 'string';
     protected $primaryKey = 'id_email_template';
     public $timestamps = false;

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class MasterEmailController extends Controller
 {
@@ -33,13 +34,14 @@ class MasterEmailController extends Controller
      */
     public function store(MasterEmailRequest $request)
     {
+        // return $request->file('attachment')->store('post');
         try {
 
             $email = email_template::create([
                 'subject_email' => $request->subject_email,
                 'headline_email' => $request->headline_email,
                 'content_email' => $request->content_email,
-                'attachment' => $request->attachment,
+                'attachment' => $request->attachment->store('post'),
                 'status' => true,
             ]);
             return response()->json([
@@ -48,6 +50,14 @@ class MasterEmailController extends Controller
                 'modal' => '#modal-email',
                 'table' => '#table-master-email'
             ]);
+             
+            if ($request->file('attachment')){
+                $file = $request->file('attachment');
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('public/post'),$filename);
+                $attachment['attachment'] = $filename;
+            }
+            
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
@@ -55,7 +65,7 @@ class MasterEmailController extends Controller
             ]);
         }
 
-        return $request->file('attachment')->store('post');
+        
     }
 
     /**
@@ -69,13 +79,13 @@ class MasterEmailController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
                 }
             })
             ->addColumn('attachment', function ($row) {
-                return "<a href='" . asset('storage/' . $row->id_email_template) . "' data-id='{$row->id_email_template}'>Attachment</a>";
+                return "<a href='" . asset('storage/'.$row->attachment) . "' data-id='{$row->id_email_template}'>Attachment</a>";
             })
             
             ->addColumn('action', function ($row) {
@@ -112,7 +122,10 @@ class MasterEmailController extends Controller
             $email->subject_email = $request->subject_email;
             $email->headline_email = $request->headline_email;
             $email->content_email = $request->content_email;
-            $email->attachment = $request->attachment;
+            if (!empty($request->attachment)) {
+                $email->attachment = $request->attachment->store('post');
+            }
+            
             $email->save();
 
             return response()->json([
@@ -121,6 +134,8 @@ class MasterEmailController extends Controller
                 'modal' => '#modal-email',
                 'table' => '#table-master-email'
             ]);
+
+            
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,

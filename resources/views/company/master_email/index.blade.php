@@ -85,14 +85,6 @@
                     data: 'subject_email',
                     name: 'subject_email'
                 },
-                // {
-                //     data: 'headline_email',
-                //     name: 'headline_email'
-                // },
-                // {
-                //     data: 'content_email',
-                //     name: 'content_email'
-                // },
                 {
                     data: 'attachment',
                     name: 'attachment'
@@ -131,20 +123,20 @@
 
         function edit(e) {
             let id = e.attr('data-id');
-
             let action = `{{ url('company/master-email/update/') }}/${id}`;
             var url = `{{ url('company/master-email/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
+                    console.log(response);
                     $("#modal-title").html("Edit Template Email");
                     $("#buttonSimpan").html("Update Data")
                     $('#modal-email form').attr('action', action);
-                    $('#subject_email').val(response.subject);
-                    $('#headline_email').val(response.headline);
-                    $('#content_email').val(response.content);
-                    $('#attachment').val(response.attachment);
+                    $('#subject_email').val(response.subject_email);
+                    $('#headline_email').val(response.headline_email);
+                    $('#content_email').val(response.content_email);
+                    // $('#attachment').val(response.attachment);
 
                     $('#modal-email').modal('show');
                 }
@@ -153,7 +145,7 @@
 
         $("#modal-email").on("hide.bs.modal", function() {
 
-            $("#modal-title").html("Add Template Email");
+            $("#modal-title").html("Tambah Template Email");
             $("#buttonSimpan").html("Save Data")
             $('#modal-email form')[0].reset();
             $('#modal-email form').attr('action', "{{ url('company/master-email/store') }}");
@@ -161,10 +153,6 @@
             $('.form-control').removeClass('is-invalid');
         });
 
-        // if ($request - > hasFile(key: 'attachment')) {
-        //     $attachment = $request - > file('attachment') - > store();
-        //     $attachment = Storage::disk(name: 'local') - > put(part: '/', $request - > file(key: 'attachment'));
-        // }
     </script>
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

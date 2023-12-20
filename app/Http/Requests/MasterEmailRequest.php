@@ -28,7 +28,7 @@ class MasterEmailRequest extends FormRequest
                 'subject_email' => ['required', 'string'],
                 'headline_email' => ['required', 'string'],
                 'content_email' => ['required', 'string','max:255'],
-                'attachment' => ['required', File::types(['doc', 'docx','xlsx'])->smallerThan(10000)],
+                'attachment' => ['nullable', File::types(['doc', 'docx','xlsx'])->max(2000)],
             ];    
         }  
         return [
@@ -38,6 +38,7 @@ class MasterEmailRequest extends FormRequest
             'attachment' => ['required'],
         ];
     }          
+    
     
     public function messages(): array
     {
