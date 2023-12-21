@@ -517,8 +517,8 @@
                     Apakah Anda Ingin Keluar Dari Akun Ini?
                   </div>
                   <div class="modal-footer" style="display: flex; justify-content:center;">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-                    <button type="button" class="btn btn-danger">Tidak</button>
+                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
                   </div>
                 </div>
               </div>

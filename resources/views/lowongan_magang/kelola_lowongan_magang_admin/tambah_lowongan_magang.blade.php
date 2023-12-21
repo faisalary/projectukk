@@ -6,20 +6,20 @@
             color: red;
         }
 
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            color: #4EA971;
-        }
-    </style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        color: #4EA971;
+    }
+</style>
 @endsection
 
 @section('main')
-    <div class="row ">
-        <div class="mb-2">
-            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
-                Tambah Lowongan Magang
-            </h4>
-        </div>
+<div class="row ">
+    <div class="mb-2">
+        <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
+            Tambah Lowongan Magang
+        </h4>
     </div>
+</div>
 
     {{-- <form class="default-form" method="POST" action="{{ route('lowongan-magang.store') }}">
         @csrf
@@ -270,72 +270,64 @@
                         <fieldset class="wizard-fieldset">
                             <h5>Proses Seleksi</h5>
 
+                        <div class="mb-2">
+                            <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span class="text-danger">*</span></label>
+                            <select id="select2Disabled" class="select2 form-select" disabled>
+                                <option value="1" selected>Seleksi Tahap 1</option>
+                                <option value="2">Option2</option>
+                                <option value="3">Option3</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span class="text-danger">*</span></label>
+                                <input class="form-control" type="date" id="mulai" name="mulai">
+                            </div>
+
+                            <div class="col-6 mb-2">
+                                <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span class="text-danger">*</span></label>
+                                <input class="form-control" type="date" id="mulai" name="mulai">
+                            </div>
+                        </div>
+
+                        <div id="tahap-lanjut-2" style="display: none;">
+                            <hr>
                             <div class="mb-2">
-                                <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
-                                        class="text-danger">*</span></label>
+                                <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span class="text-danger">*</span></label>
                                 <select id="select2Disabled" class="select2 form-select" disabled>
-                                    <option value="1"selected>Seleksi Tahap 1</option>
-                                    <option value="2">Option2</option>
+                                    <option value="1">Seleksi Tahap 1</option>
+                                    <option value="2" selected>Seleksi Tahap 2</option>
                                     <option value="3">Option3</option>
                                 </select>
                             </div>
                             <div class="row">
                                 <div class="col-6 mb-2">
-                                    <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
-                                            class="text-danger">*</span></label>
+                                    <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span class="text-danger">*</span></label>
                                     <input class="form-control" type="date" id="mulai" name="mulai">
                                 </div>
 
                                 <div class="col-6 mb-2">
-                                    <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
-                                            class="text-danger">*</span></label>
+                                    <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span class="text-danger">*</span></label>
                                     <input class="form-control" type="date" id="mulai" name="mulai">
                                 </div>
                             </div>
+                        </div>
 
-                            <div id="tahap-lanjut-2" style="display: none;">
+                        <div id="tahap-lanjut-3" style="display: none;">
+                            <div class="mb-2">
                                 <hr>
-                                <div class="mb-2">
-                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
-                                            class="text-danger">*</span></label>
-                                    <select id="select2Disabled" class="select2 form-select" disabled>
-                                        <option value="1">Seleksi Tahap 1</option>
-                                        <option value="2" selected>Seleksi Tahap 2</option>
-                                        <option value="3">Option3</option>
-                                    </select>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6 mb-2">
-                                        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="mulai" name="mulai">
-                                    </div>
-
-                                    <div class="col-6 mb-2">
-                                        <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="mulai" name="mulai">
-                                    </div>
-                                </div>
+                                <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span class="text-danger">*</span></label>
+                                <select id="select2Disabled" class="select2 form-select" disabled>
+                                    <option value="1">Seleksi Tahap 1</option>
+                                    <option value="2">Seleksi Tahap 2</option>
+                                    <option value="3" selected>Seleksi Tahap 3</option>
+                                </select>
                             </div>
-
-                            <div id="tahap-lanjut-3" style="display: none;">
-                                <div class="mb-2">
-                                    <hr>
-                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
-                                            class="text-danger">*</span></label>
-                                    <select id="select2Disabled" class="select2 form-select" disabled>
-                                        <option value="1">Seleksi Tahap 1</option>
-                                        <option value="2">Seleksi Tahap 2</option>
-                                        <option value="3" selected>Seleksi Tahap 3</option>
-                                    </select>
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="date" id="mulai" name="mulai">
                                 </div>
-                                <div class="row">
-                                    <div class="col-6 mb-2">
-                                        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
-                                                class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="mulai" name="mulai">
-                                    </div>
 
                                     <div class="col-6 mb-2">
                                         <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
