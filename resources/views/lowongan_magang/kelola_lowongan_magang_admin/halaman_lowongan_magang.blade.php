@@ -195,10 +195,10 @@
                                 <tr>
                                     <th style="max-width: 80px;">NOMOR</th>
                                     <th style="min-width:100px;">POSISI</th>
-                                    <th style="min-width:100px;">TANGGAL</th>
-                                    <th style="min-width:100px;">DURASI MAGANG</th>
-                                    <th style="min-width:20px;">STATUS</th>
-                                    <th style="min-width:100px;">AKSI</th>
+                                    <th style="min-width:50px;">TANGGAL</th>
+                                    <th style="max-width:100px;">DURASI MAGANG</th>
+                                    <th style="max-width:90px;">STATUS</th>
+                                    <th style="max-width:100px;">AKSI</th>
                                 </tr>
                             </thead>
                         </table>

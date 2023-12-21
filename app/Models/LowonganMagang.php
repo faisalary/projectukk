@@ -46,5 +46,3 @@ class LowonganMagang extends Model
         return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
     }
 }
-
-

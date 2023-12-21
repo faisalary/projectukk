@@ -108,7 +108,7 @@ class LowonganMagangController extends Controller
         //     $lowonganmagang = $lowonganmagang->with("jenismagang", "lokasi")->orderBy('id_jenismagang', 'desc');
         // }
 
-        
+
         if(request()->type != 'total'){
             $lowongan = LowonganMagang::where('applicant_status', request()->type);
         }else{
@@ -128,7 +128,8 @@ class LowonganMagangController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a href='detail/kelola/lowongan{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_fakultas}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                <a href='detail/kelola/lowongan{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
                 <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='kelola/lowong/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;

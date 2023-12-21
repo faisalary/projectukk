@@ -60,6 +60,10 @@
 <script src="../../app-assets/vendor/libs/select2/select2.js"></script>
 <script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
+<script src="../../app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="../../app-assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+<script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="../../app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
@@ -69,6 +73,8 @@
 
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
+<script src="../../app-assets/js/form-wizard-numbered.js"></script>
+    <script src="../../app-assets/js/form-wizard-validation.js"></script>
 
 @yield('page_script')
 </body>
