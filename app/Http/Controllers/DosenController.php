@@ -11,6 +11,8 @@ use App\Models\Fakultas;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Imports\DosenImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class DosenController extends Controller
@@ -212,5 +214,13 @@ class DosenController extends Controller
             'error' => false,
             'data' => $select,
         ]);
+    }
+    
+    public function import (Request $request){
+        $data = $request->file('import');
+        $namafile = $data-> getClientOriginalName();
+        $data->move('DosenData', $namafile);
+        Excel::import(new DosenImport, \public_path('/DosenData/'.$namafile));
+        return \redirect()->back();
     }
 }
