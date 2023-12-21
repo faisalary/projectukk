@@ -30,9 +30,10 @@
     .light-style .bs-stepper {
         background-color: #f8f7fa;
     }
+
     .light-style .bs-stepper:not(.wizard-modern) {
-    box-shadow: none;
-}
+        box-shadow: none;
+    }
 </style>
 @endsection
 

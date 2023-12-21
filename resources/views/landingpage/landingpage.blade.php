@@ -4,6 +4,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
 <style>
+
     .btn-success {
         color: #fff;
         background-color: #4EA971 !important;
@@ -93,6 +94,7 @@
     .carousel-control-next-icon {
         background-image: url("{{ asset('assets/images/background/chevron-right.png') }}") !important;
     }
+    
 </style>
 @endsection
 

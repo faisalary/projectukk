@@ -145,3 +145,29 @@
         </form> 
     </div> 
 </div> 
+
+<div class="modal fade" id="modal-import" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header text-center d-block">
+                <h5 class="modal-title" id="modal-title">Import</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="default-form" id="" name="import" method="POST"
+                action="{{ route('dosen.import') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <input type="file" class="form-control" id="basic-default-upload-file" required=""
+                        name="import">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" id="buttonImport" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

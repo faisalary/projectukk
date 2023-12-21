@@ -41,7 +41,18 @@
         </div>
         <div class="col-md-12 d-flex justify-content-between mt-2">
             <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-dosen">Tambah Dosen</button>
+            {{-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-dosen">Tambah Dosen</button> --}}
+            <div class="btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Tambah Dosen
+                </button>
+                <ul class="dropdown-menu" style="">
+                    <li><a class="dropdown-item btn text-success ti ti-upload d-block pe-15" data-bs-toggle="modal"
+                            data-bs-target="#modal-import">Import</a></li>
+                    <li><a class="dropdown-item btn text-success" data-bs-toggle="modal"
+                            data-bs-target="#modal-dosen">Tambah Dosen</a></li>
+            </div>
         </div>
     </div>
     <div class="row mt-2">

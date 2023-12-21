@@ -17,6 +17,7 @@ class LowonganMagang extends Model
     protected $casts = [
         'date_confirm_closing' => 'datetime'
     ];
+    public $timestamps = false;
 
     public function industri()
     {
