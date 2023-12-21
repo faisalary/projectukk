@@ -230,7 +230,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
         });
-        Route::get('detail/kelola/lowongan', function() {
+        Route::get('detail/kelola/lowongan', function () {
             return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
         });
     });
@@ -274,7 +274,7 @@ Route::get('/detail-informasi-dokumen', function () {
 
 Route::get('/profile-company', function () {
     return view('company.profile_company', ['active_menu' => 'profile-company']);
-});
+})->name('profile.company');
 
 Route::get('/summary-profile', function () {
     return view('company.summary_profile');
