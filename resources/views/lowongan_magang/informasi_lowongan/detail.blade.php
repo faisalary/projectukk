@@ -214,7 +214,7 @@
     </div>
 
     <div class="tab-content p-0">
-        @foreach(['kandidat','belum-proses','screening','tahap1','tahap2','penawaran','diterima','ditolak'] as $tableId)
+        @foreach(['kandidat', 'screening','tahap1','tahap2','penawaran','diterima','ditolak'] as $tableId)
         <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
                 @foreach($pendaftar as $item)
@@ -263,7 +263,6 @@
                         </button>
                         <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
                             <option disabled selected>Ubah Status Kandidat</option>
-                            <option>Belum Proses</option>
                             <option>Screening</option>
                             <option>Seleksi Tahap 1</option>
                             <option>Seleksi Tahap 2</option>

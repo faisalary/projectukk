@@ -486,15 +486,15 @@
                 <div class="modal-header">
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                  </button>
-                </div>
-                <div class="modal-body text-center" style="display:block;">
-                  Apakah Anda Ingin Keluar Dari Akun Ini?
-                </div>
-                <div class="modal-footer" style="display: flex; justify-content:center;">
-                  <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                    </button>
+                  </div>
+                  <div class="modal-body text-center" style="display:block;">
+                    Apakah Anda Ingin Keluar Dari Akun Ini?
+                  </div>
+                  <div class="modal-footer" style="display: flex; justify-content:center;">
+                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>

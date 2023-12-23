@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\DosenController::class, 'list_fakultas'])->name('dosen.list_fakultas');
             Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\DosenController::class, 'list_prodi'])->name('dosen.list_prodi');
+            Route::post('/import', [App\Http\Controllers\DosenController::class, 'import'])->name('dosen.import');
         });
         Route::prefix('komponen-penilaian')->group(function () {
             Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen-penilaian.index');
@@ -172,6 +173,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
         });
+        Route::get('/master-data-email', function() {
+            return view('company.master_data_company.index');
+        });
+        Route::prefix('master-email')->group(function () {
+            Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
+            Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
+            Route::post('/store', [App\Http\Controllers\MasterEmailController::class, 'store'])->name('master_email.store');
+            Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
+            Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
+        }); 
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
@@ -230,7 +242,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
         });
-        Route::get('detail/kelola/lowongan', function() {
+        Route::get('detail/kelola/lowongan', function () {
             return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
         });
     });
@@ -274,7 +286,7 @@ Route::get('/detail-informasi-dokumen', function () {
 
 Route::get('/profile-company', function () {
     return view('company.profile_company', ['active_menu' => 'profile-company']);
-});
+})->name('profile.company');
 
 Route::get('/summary-profile', function () {
     return view('company.summary_profile');
