@@ -419,5 +419,34 @@
                 $('#modalapprove').modal('hide');
             });
         }
+        function rejected(e) {
+            $('#modalreject').modal('show');
+            var rejectedUrl = '{{ url("company/kelola-mitra/rejected") }}/' + e.attr('data-id');
+
+            $('#rejected-confirm-button').on('click', function () {
+                var alasan = $('#alasan').val();
+
+                $.ajax({
+                    url: rejectedUrl,
+                    type: "POST",
+                    data: { alasan: alasan, _token: '{{ csrf_token() }}' },
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function (response) {
+                        if (!response.error) {
+                            alert('berhasil');
+                        } else {
+                            alert('tidak berhasil');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+
+                $('#modalreject').modal('hide');
+            });
+        }
     </script>
 @endsection

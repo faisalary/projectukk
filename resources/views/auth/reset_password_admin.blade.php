@@ -12,21 +12,33 @@
                     <div class="card-header">{{ __('Set-Password Baru') }}</div>
 
                     <div class="card-body">
-                        <form method="post"  action="{{ route('admin.update.password') }}">
-                            
+                        <form action="{{ route('admin.update.password') }}" method="POST">
                             @csrf
-                             <!-- Password Reset Token -->
-                             <input type="hidden" name="token" value="{{$token}}">
+                    
+                            <!-- Password Reset Token -->
+                            <input type="hidden" name="token" value="{{ $id }}">
+                            
                             <div class="form-group m-2">
                                 <label for="password">{{ __('Password baru') }}</label>
-                                <input class="form-control" type="password" name="password" required>
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" required>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
+                    
                             <div class="form-group m-2">
                                 <label for="password_confirmation">Konfirmasi Password:</label>
-                                <input class="form-control" type="password" name="password_confirmation" required>
+                                <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" required>
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            
-                            <div class="form-group  m-2">
+                    
+                            <div class="form-group m-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Setel Ulang Kata Sandi') }}
                                 </button>

@@ -127,11 +127,11 @@
                 <div class="row">
                     <div class="col mb-2">
                         <label for="alasan" class="form-label">Alasan Penolakan</label>
-                        <textarea class="form-control" id="alasam" placeholder="Alasan Penolakan"></textarea>
+                        <textarea class="form-control" id="alasan" placeholder="Alasan Penolakan"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Simpan</button>
+                    <button type="button" id="rejected-confirm-button" class="btn btn-success">Simpan</button>
                 </div>
             </div>
         </div>

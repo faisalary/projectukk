@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RejectionNotification;
 use Illuminate\Http\Request;
 use App\Models\Industri;
 use App\Models\User;
@@ -120,7 +121,7 @@ class KelolaMitraController extends Controller
             $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusapprove='{$id->statusapprove}'>
                     <i class='btn-icon ti ti-file-check text-success'></i>
                     </a>
-                    <a onclick='rejected({$id->id_industri})'>
+                    <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusrejected='{$id->rejected}'>
                     <i class='btn-icon ti ti-file-x text-danger'></i>
                     </a>";
             return $btn;
@@ -143,7 +144,7 @@ class KelolaMitraController extends Controller
             $data->save();
         
             $code = Str::random(64);
-            $url = url('/admin/set-password/' . $code);
+            $url = url('/mitra/set-password/' . $code);
             
             Mail::to($data->email)->send(new VerifyEmail($url));
 
@@ -162,11 +163,13 @@ class KelolaMitraController extends Controller
             ]);
         }
     }
-    public function rejected($id)
+    public function rejected($id, Request $request)
     {
         $data=Industri::find($id);
         $data->statusapprove='2';
         $data->save();
+        $alasan = $request->input('alasan');
+        Mail::to($data->email)->send(new RejectionNotification($alasan));
         return redirect()->back();
     }
     
