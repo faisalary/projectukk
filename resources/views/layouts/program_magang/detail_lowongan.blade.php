@@ -17,9 +17,10 @@
         background-color: #4EA971 !important;
         border-color: #4EA971 !important;
     }
+
     .highlight {
-      background-color: #4EA971 !important;
-      color: white !important;
+        background-color: #4EA971 !important;
+        color: white !important;
     }
 </style>
 @endsection
@@ -99,9 +100,9 @@
                         </button>
                     </div>
                     <div class="mt-4"></div>
-                    <button type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
+                    <a  href="/apply" type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
                         Lamar Lowongan
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Modal -->
@@ -191,9 +192,9 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                    <button type="submit" class="btn btn-success waves-effect waves-light" style="width: 510px;">
-                                        Kirim
-                                    </button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light" style="width: 510px;">
+                                            Kirim
+                                        </button>
                                     </div>
                                     <div class="mb-1"></div>
                                     <button type="submit" class="btn btn-secondary waves-effect waves-light" style="width: 510px;">
@@ -340,7 +341,7 @@
 @section('page_script')
 <script>
     function changeColor(button) {
-    button.classList.toggle('highlight');
-  }
+        button.classList.toggle('highlight');
+    }
 </script>
 @endsection
