@@ -169,6 +169,11 @@
 <script src="../../app-assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
 <script src="../../app-assets/vendor/libs/typeahead-js/typeahead.js"></script>
 <script src="../../app-assets/vendor/libs/dropzone/dropzone.js"></script>
+<script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+<script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+<script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+<script src="../../app-assets/vendor/libs/bloodhound/bloodhound.js"></script>    
+<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
@@ -176,11 +181,13 @@
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
+<script src="../../app-assets/js/forms-tagify.js"></script>
 <script src="../../app-assets/js/form-wizard-numbered.js"></script>
 <script src="../../app-assets/js/form-wizard-validation.js"></script>
 <script src="../../app-assets/js/form-wizard-icons.js"></script>
 <script src="../../app-assets/js/ui-carousel.js"></script>
 <script src="../../app-assets/js/forms-file-upload.js"></script>
+<script src="../../app-assets/js/forms-pickers.js"></script>
 
 <script>
     function openForm() {
