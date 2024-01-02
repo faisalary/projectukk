@@ -9,6 +9,9 @@
   //------------------------------------------------------
   const tagifyBasicEl = document.querySelector('#TagifyBasic');
   const TagifyBasic = new Tagify(tagifyBasicEl);
+  
+  const tagifyBasicEl1 = document.querySelector('#TagifyBasic1');
+  const TagifyBasic1 = new Tagify(tagifyBasicEl1);
 
   // Read only
   //------------------------------------------------------

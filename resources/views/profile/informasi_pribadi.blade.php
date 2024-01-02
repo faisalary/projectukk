@@ -58,6 +58,10 @@
     background-color: #4EA971 !important;
     border-color: #4EA971 !important;
   }
+
+  .light-style .tagify__tag .tagify__tag-text {
+    color: #4EA971 !important;
+  }
 </style>
 
 @endsection
@@ -587,107 +591,86 @@
         <div class="modal-header d-block">
           <h5 class="modal-title" id="modal-title">Edit Informasi Tambahan</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <hr />
         </div>
 
-        <div class="modal-body border-top mt-3">
+        <div class="modal-body p-0 ms-5 me-5">
           <form id="" method="POST" onsubmit="return false">
-            <div class="mb-3 col-md-12">
-              <label for="lokasikerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-              <input class="form-control" type="text" id="lokasikerja" name="lokasikerja" placeholder="Lokasi Kerja" />
-            </div>
-            <div class="col-12 mb-3">
-              <div class="border" style="border-radius: 8px;">
-                <form class="form-repeater">
-                  <div data-repeater-list="group-a">
+            <div class="row">
+              <div class="mb-3 col-md-12 p-0 ">
+                <label for="lokasikerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="lokasikerja" name="lokasikerja" placeholder="Lokasi Kerja" />
+              </div>
+              <div class="border mb-3" style="border-radius: 8px;">
+                <div class="form-repeater">
+                  <div data-repeater-list>
                     <div data-repeater-item>
-                      <!-- <div class="row" style="padding: 5px 11px;">
-                        <label for="bahasa" class="form-label">Bahasa <span style="color: red;">*</span></label>
-                        <div class="col-12">
-                          <select id="bahasa" class="select2 form-select">
+                      <div class="row mt-2 me-1">
+                        <div class="mb-3 col-md-11">
+                          <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
+                          <select id="bahasa" class="form-select">
                             <option disabled selected>Pilih Jenis Bahasa</option>
                             <option value="bahasa">Indonesia</option>
                             <option value="bahasa">Inggris</option>
+                            <option value="bahasa">Korea</option>
+                            <option value="bahasa">Jepang</option>
                           </select>
                         </div>
-                      </div> -->
-                      <div class="row pt-3 pe-3 ps-3 pb-0">
-                      <label for="bahasa" class="form-label">Bahasa <span style="color: red;">*</span></label>
-                        <div class="col-11">
-                          <select id="bahasa1" class="select2 form-select">
-                            <option disabled selected>Pilih Jenis Bahasa</option>
-                            <option value="bahasa">Indonesia</option>
-                            <option value="bahasa">Inggris</option>
-                          </select>
-                        </div>
-                        <div class="mb-3 col-1">
-                          <button class="btn btn-outline-danger" style="width: 0px;" data-repeater-delete>
-                            <i class="ti ti-trash"></i>
+                        <div class="mb-3 col-md-1 mb-0">
+                          <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
+                            <i class="ti ti-trash fa-lg"></i>
                           </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="mb-3 ms-3">
-                    <button class="btn btn-outline-success" data-repeater-create>
+                  <div class="mb-3">
+                    <button type="button" class="btn btn-outline-success waves-effect" data-repeater-create="">
                       <span class="align-middle">Tambah</span>
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="border" style="border-radius: 8px;">
-                <form class="form-repeater">
-                  <div data-repeater-list="group-a">
-                    <div data-repeater-item>
-                      <!-- <div class="row" style="padding: 5px 11px;">
-                        <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
-                        <div class="col-4">
-                          <select id="sosial" class="select2 form-select">
-                            <option disabled selected>Pilih Sosial Media</option>
-                            <option value="sosial">Instagram</option>
-                            <option value="sosial">Linkedin</option>
-                          </select>
-                        </div>
-                        <div class="col-8">
-                          <input class="form-control" type="text" id="url" name="url" placeholder="URL/Username" />
-                        </div>
-                      </div> -->
-                      <div class="row pt-3 pe-3 ps-3 pb-0">
-                      <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
-                        <div class="col-4">
-                          <select id="media" class="select2 form-select">
+              <div class="border " style="border-radius: 8px;">
+                <div class="form-repeater">
+                  <div data-repeater-list="">
+                    <div data-repeater-item="">
+                      <div class="row mt-2 me-1">
+                        <div class="mb-3 col-md-4">
+                          <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
+                          <select id="media" class="form-select">
                             <option disabled selected>Pilih Sosial Media</option>
                             <option value="media">Instagram</option>
                             <option value="media">Linkedin</option>
+                            <option value="media">Facebook</option>
+                            <option value="media">Twiteer</option>
                           </select>
                         </div>
-                        <div class="mb-3 col-7">
-                          <input class="form-control" type="text" id="username" name="username" placeholder="URL/Username" />
+                        <div class="mb-3 col-md-7">
+                          <input class="form-control mt-4" type="text" id="username" name="username" placeholder="URL/Username" />
                         </div>
-                        <div class="mb-3 col-1">
-                          <button class="btn btn-outline-danger" style="width: 0px;" data-repeater-delete>
-                            <i class="ti ti-trash"></i>
-                            <!-- <span class="align-middle">Delete</span> -->
+                        <div class="mb-3 col-md-1">
+                          <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
+                            <i class="ti ti-trash fa-lg"></i>
                           </button>
                         </div>
                       </div>
-                      <!-- <hr class="mt-0 ms-3 me-3" /> -->
                     </div>
                   </div>
-                  <div class="mb-3 ms-3">
-                    <button class="btn btn-outline-success" data-repeater-create>
+                  <div class="mb-3">
+                    <button type="button" class="btn btn-outline-success waves-effect" data-repeater-create="">
                       <span class="align-middle">Tambah</span>
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-            <div class="modal-footer p-0">
+            <div class="modal-footer pt-3 pe-0">
               <button type="submit" class="btn btn-success m-0">Simpan Data</button>
             </div>
           </form>
         </div>
+
       </div>
     </div>
   </div>
@@ -794,8 +777,8 @@
           <form id="" method="POST" onsubmit="return false">
             <div class="row">
               <div class="mb-3 col-md-12">
-                <label for="TagifyCustomListSuggestion" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="keahlian" name="keahlian" class="form-control" placeholder="Masukkan Keahlian" value="" />
+                <label for="TagifyBasic" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                <input id="TagifyBasic" class="form-control" name="TagifyBasic" value="" />
               </div>
             </div>
             <div class="modal-footer p-0">
@@ -819,8 +802,8 @@
           <form id="" method="POST" onsubmit="return false">
             <div class="row">
               <div class="mb-3 col-md-12">
-                <label for="TagifyCustomListSuggestion" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="editkeahlian" name="keahlian" class="form-control" placeholder="Masukkan Keahlian" value="" />
+                <label for="TagifyBasic1" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                <input id="TagifyBasic1" class="form-control" name="TagifyBasic1" value="" />
               </div>
             </div>
             <div class="modal-footer p-0">
@@ -1122,6 +1105,7 @@
       }
     });
   });
+
   $(document).ready(function() {
     $(".yearpicker").yearpicker({
       startYear: new Date().getFullYear() - 10,
