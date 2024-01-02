@@ -543,7 +543,7 @@
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="tanggallahir" readonly="readonly">
+                  <input class="form-control" type="date" value="" id="tanggallahir" placeholder="YYYY-MM-DD" >
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
