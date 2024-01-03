@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\PendaftaranMagang;
 use App\Models\MhsMagang;
+use App\Models\StatusSeleksi;
 use Illuminate\Routing\Route;
 
 class JadwalSeleksiController extends Controller
@@ -28,7 +29,8 @@ class JadwalSeleksiController extends Controller
         $mahasiswa = Mahasiswa::all();
         $lowongan = LowonganMagang::all();
         $seleksi = Seleksi::all();
-        return view('company.jadwal_seleksi.index', compact('pendaftaran', 'mahasiswa', 'seleksi'));
+        $status = StatusSeleksi::all();
+        return view('company.jadwal_seleksi.index', compact('pendaftaran', 'mahasiswa', 'seleksi','status'));
     }
 
     public function create()
@@ -38,35 +40,35 @@ class JadwalSeleksiController extends Controller
 
     public function store(Request $request)
     {
-        $a = [];
-        if (request()->updateMassive == true) {
-            foreach (explode(',', $request->checked[0]) as $id) {
-                $a = Seleksi::find($id);
-                if ($a) {
-                    if ($request->hayolo == null) {
-                        return response()->json([
-                            'error' => true,
-                            'message' => 'No Status Kandidat selected',
-                        ], 422);
-                    }
-                    $a->statusseleksi = $request->hayolo;
-                    $a->save();
-                }
-            }
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Updated!',
-                'table' => '.table-jadwal-seleksi',
-                'modal' => 'none'
-            ]);
-        }
+        // $a = [];
+        // if (request()->updateMassive == true) {
+        //     foreach (explode(',', $request->checked[0]) as $id) {
+        //         $a = Seleksi::find($id);
+        //         if ($a) {
+        //             if ($request->hayolo == null) {
+        //                 return response()->json([
+        //                     'error' => true,
+        //                     'message' => 'No Status Kandidat selected',
+        //                 ], 422);
+        //             }
+        //             $a->statusseleksi = $request->hayolo;
+        //             $a->save();
+        //         }
+        //     }
+        //     return response()->json([
+        //         'error' => false,
+        //         'message' => 'Data Updated!',
+        //         'table' => '.table-jadwal-seleksi',
+        //         'modal' => 'none'
+        //     ]);
+        // }
         try {
             Seleksi::create([
                 'id_pendaftaran' => $request->id_pendaftaran,
-                'tglseleksi' => $request->mulai,
-                'jamseleksi' => $request->waktu,
+                'start_date' => $request->mulai,
                 'detail' => $request->tempat,
-                'statusseleksi' => true,
+                'id_email_tamplate' => $request->subjek,
+                'status_seleksi' => true,
             ]);
 
             return response()->json([
@@ -92,10 +94,12 @@ class JadwalSeleksiController extends Controller
         } elseif (request()->tahap == '2') {
             $statusseleksi = 2;
         }
-        $seleksi = Seleksi::select('seleksi.*', 'pendaftaran_magang.tanggaldaftar', 'mahasiswa.namamhs', 'mahasiswa.nim')->join('pendaftaran_magang', 'pendaftaran_magang.id_pendaftaran', 'seleksi.id_pendaftaran')
+        $seleksi = Seleksi::join('pendaftaran_magang', 'pendaftaran_magang.id_pendaftaran', 'status_seleksi.id_pendaftaran')
             ->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
             ->join('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')
-            ->where('statusseleksi', $statusseleksi)
+            ->join('status_seleksi','status_seleksi.status_seleksi','seleksi_lowongan.status_seleksi')
+            // ->join('status_seleksi', 'status_seleksi.id_pendaftaran','seleksi_lowongan.id_pendaftaran')
+            ->where('status_seleksi', $statusseleksi)
             ->get();
 
         return DataTables::of($seleksi)
@@ -108,7 +112,7 @@ class JadwalSeleksiController extends Controller
                 $data = $seleksi->namamhs . "  " . $seleksi->nim;
                 return $data;
             })
-            ->editColumn('proses', function ($seleksi) {
+            ->editColumn('progress', function ($seleksi) {
                 if ($seleksi->statusseleksi == 0) {
                     return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di proses" . "</div></div>";
                 } else {
@@ -132,7 +136,7 @@ class JadwalSeleksiController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['checkbox', 'statusseleksi', 'action', 'proses'])
+            ->rawColumns(['checkbox', 'statusseleksi', 'action', 'progress'])
 
             // ->toJson();
             ->make(true);
