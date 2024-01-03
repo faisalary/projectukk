@@ -252,8 +252,8 @@ Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
 });
 
-Route::get('/apply_alert', function () {
-    return view('apply.apply_alert');
+Route::get('/apply', function () {
+    return view('apply.apply');
 });
 
 Route::get('/magang_fakultas', function () {
@@ -326,11 +326,10 @@ Route::get('/kegiatan_saya/lamaran_saya', function () {
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
 });
+Route::get('/detail_perusahaan', function () {
+    return view('landingpage.detail_perusahaan');
+});
 
 Route::get('/detail-mahasiswa', function () {
     return view('company.jadwal_seleksi.detail_seleksi');
-});
-
-Route::get('detail/kelola/lowongan', function () {
-    return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
 });
