@@ -346,7 +346,7 @@
                                             </div>
 
                                             <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                                Lebih banyak
+                                                Lebih Banyak
                                             </div>
                                         </ul>
                                     </div>
@@ -384,7 +384,7 @@
                                             </div>
 
                                             <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                                Lebih banyak
+                                                Lebih Banyak
                                             </div>
                                         </ul>
                                     </div>
@@ -439,7 +439,7 @@
                                         </div>
 
                                         <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                            Lebih banyak
+                                            Lebih Banyak
                                         </div>
                                         <br>
 
@@ -465,9 +465,9 @@
             $(this).prev('.content-new').slideToggle(100);
             console.log($(this).text().trim())
             if ($(this).text().trim() == "Lebih Banyak") {
-                $(this).text("Lebih Banyak");
+                $(this).text("Lebih Sedikit");
             } else {
-                $(this).text("Lebih Sedikit")
+                $(this).text("Lebih Banyak")
             }
         });
     });
