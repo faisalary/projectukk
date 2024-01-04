@@ -96,7 +96,7 @@
             <div class="col-6 text-end" style="margin-left:100px;">
                 <div class="waktu"> Lamaran terkirim pada 15 juni 2023 <i class="ti ti-clock"></i></div>
                 <button type="button" class="btn btn-sm btn-secondary waves-effect mt-3" style="height:35px; font-size:16px;" disabled>Lowongan Sudah di tutup</button>
-                <div><span class="badge bg-label-info me-1 text-end mt-3" style="height:30px; font-size:16px;">Seleksi Tahap 1</span></div>
+                <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:30px; font-size:16px;">Belum Proses</span></div>
             </div>
         </div>
         <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>

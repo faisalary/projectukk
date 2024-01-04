@@ -244,6 +244,7 @@
       </div>
     </div>
     <div class="col-md-6 col-lg-4 mb-3">
+      <a href="/detail/lowongan/magang" style="color: #6f6b7d; text-decoration:none;">
       <div class="card">
         <div class="card-body">
           <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
@@ -273,6 +274,7 @@
           </div>
         </div>
       </div>
+      </a>
     </div>
     <div class="col-md-6 col-lg-4 mb-3">
       <div class="card">
