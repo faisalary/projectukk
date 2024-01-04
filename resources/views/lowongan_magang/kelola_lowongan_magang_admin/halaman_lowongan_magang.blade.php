@@ -294,7 +294,6 @@
 
             $("#modal-title").html("Tambah Lowongan Magang");
             $("#modal-button").html("Save Data");
-            // $('#modalTambahLowongan form #mitra').val('').trigger('change');
             $('#modalTambahLowongan form #tahun').val('').trigger('change');
             $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
             // $('#modalTambahLowongan form #pendaftar').val('').trigger('change');
@@ -312,14 +311,12 @@
                     $("#modal-title").html("Edit LowonganMangang");
                     $("#modal-button").html("Update Data")
                     $('#modalTambahLowongan form').attr('action', action);
-                    // $('#mitra').val(response.id_industri).change();
                     $('#jenismagang').val(response.id_jenismagang).change();
                     $('#posisi').val(response.intern_position);
                     $('#kuota').val(response.kuota);
                     $('#deskripsi').val(response.deskripsi);
                     $('#kualifikasi').val(response.requirements);
                     $('#jenjang').val(response.jenjang);
-                    $('#bidang').val(response.bidang);
                     $('#keterampilan').val(response.keterampilan);
                     $('#gaji').val(response.paid);
                     $('#benefit').val(response.benefitmagang);

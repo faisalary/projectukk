@@ -1159,15 +1159,15 @@ li.ui-timepicker-selected,
 }
 
 .bs-stepper .step.active .bs-stepper-circle {
-  background-color: #7367f0;
+  background-color: #4EA971;
   color: #fff;
 }
 .bs-stepper .step.active .bs-stepper-icon svg {
-  fill: #7367f0 !important;
+  fill: #4EA971 !important;
 }
 .bs-stepper .step.active .bs-stepper-icon i,
 .bs-stepper .step.active .bs-stepper-label {
-  color: #7367f0 !important;
+  color: #4EA971 !important;
 }
 .bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
   background-color: #f4f3fe !important;

@@ -173,7 +173,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
         });
-        Route::get('/master-data-email', function() {
+        Route::get('/master-data-email', function () {
             return view('company.master_data_company.index');
         });
         Route::prefix('master-email')->group(function () {
@@ -183,7 +183,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
             Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
             Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
-        }); 
+        });
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
@@ -235,16 +235,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
             Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
             Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
+            Route::post('/edit', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
-            Route::post('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
             Route::get('/detail', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
             Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
         });
-        Route::get('detail/kelola/lowongan', function () {
-            return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
-        });
+        // Route::get('detail/kelola/lowongan', function () {
+        //     return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
+        // });
     });
 });
 
@@ -329,4 +329,8 @@ Route::get('/kegiatan_saya/lamaran_saya', function () {
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
+});
+
+Route::get('edit-lowongan-magang', function () {
+    return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang');
 });

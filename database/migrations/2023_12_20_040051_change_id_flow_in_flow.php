@@ -14,7 +14,7 @@ return new class extends Migration
         if (Schema::hasColumn('flow', 'next')) {
             Schema::table('flow', function (Blueprint $table) {
                 // $table->dropForeign('flow_next_foreign');
-                $table->dropColumn('next');
+                // $table->dropColumn('next');
             });
         }
         Schema::table('flow', function (Blueprint $table) {
@@ -34,3 +34,4 @@ return new class extends Migration
         });
     }
 };
+

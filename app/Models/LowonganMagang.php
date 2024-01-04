@@ -17,7 +17,16 @@ class LowonganMagang extends Model
     protected $casts = [
         'date_confirm_closing' => 'datetime'
     ];
-    public $timestamps = false;
+     public $timestamps = false;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->created_at = $model->freshTimestamp();
+        });
+    }
 
     public function industri()
     {

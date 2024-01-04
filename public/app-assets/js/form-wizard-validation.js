@@ -32,31 +32,28 @@
                 jenismagang: {
                     validators: {
                         notEmpty: {
-                            message: 'The Languages is required'
+                            message: 'Jenis Magang must be filled'
                         }
                     }
                 },
                 posisi: {
                     validators: {
                         notEmpty: {
-                            message: 'The Email is required'
+                            message: 'Posisi must be filled'
                         },
-                        // emailAddress: {
-                        //   message: 'The value is not a valid email address'
-                        // }
                     }
                 },
                 kuota: {
                     validators: {
                         notEmpty: {
-                            message: 'The password is required'
+                            message: 'Kuota must be filled'
                         }
                     }
                 },
                 deskripsi: {
                     validators: {
                         notEmpty: {
-                            message: 'The Confirm Password is required'
+                            message: 'Deskripsi must be filled'
                         },
                     }
                 }
@@ -91,56 +88,85 @@
                 kualifikasi: {
                     validators: {
                         notEmpty: {
-                            message: 'The first name is required'
+                            message: 'Kualifikasi must be filled'
+                        }
+                    }
+                },
+                jenis: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Jenis Kelamin must be filled'
                         }
                     }
                 },
                 jenjang: {
                     validators: {
                         notEmpty: {
-                            message: 'The last name is required'
+                            message: 'Jenjang must be filled'
                         }
                     }
                 },
                 keterampilan: {
                     validators: {
                         notEmpty: {
-                            message: 'The Country is required'
+                            message: 'Keterampilan must be filled'
+                        }
+                    }
+                },
+                pelaksanaan: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Pelaksanaan must be filled'
+                        }
+                    }
+                },
+                gaji: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Uang saku must be filled'
+                        }
+                    }
+                },
+                nominal: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Gaji must be filled'
                         }
                     }
                 },
                 benefit: {
                     validators: {
                         notEmpty: {
-                            message: 'The Languages is required'
+                            message: 'Benefit must be filled'
                         }
                     }
                 },
                 lokasi: {
                     validators: {
                         notEmpty: {
-                            message: 'The Country is required'
+                            message: 'Lokasi must be filled'
                         }
                     }
                 },
                 tanggal: {
                     validators: {
                         notEmpty: {
-                            message: 'The Country is required'
+                            message: 'Tanggal must be filled'
                         }
                     }
                 },
+            
                 durasimagang: {
                     validators: {
                         notEmpty: {
-                            message: 'The Country is required'
+                            message: 'Durasi magang must be filled'
                         }
                     }
                 },
-                deskripsi: {
+                tahapan: {
                     validators: {
                         notEmpty: {
-                            message: 'The Country is required'
+                            message: 'Tahapan magang must be filled'
                         }
                     }
                 }
@@ -191,16 +217,13 @@
         // Social links
         const FormValidation3 = FormValidation.formValidation(wizardValidationFormStep3, {
             fields: {
-                formValidationTwitter: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Twitter URL is required'
-                        },
-                        uri: {
-                            message: 'The URL is not proper'
-                        }
-                    }
-                },
+                // deskripsi: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Deskripsi must be filled'
+                //         },
+                //     }
+                // },
                 formValidationFacebook: {
                     validators: {
                         notEmpty: {
