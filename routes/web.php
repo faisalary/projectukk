@@ -154,6 +154,11 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function () {
+        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('.index');
+        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.show');
+        Route::get('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
+        Route::get('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
+        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
     });
     //kelola-mitra
@@ -305,19 +310,12 @@ Route::prefix('jadwal-seleksi')->group(function () {
 Route::get('/detail/lowongan/magang', function () {
     return view('layouts.program_magang.detail_lowongan');
 });
-Route::get('/konfigurasi', function () {
-    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
-});
-
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
 
 Route::get('/detail/lowongan/magang', function () {
     return view('layouts.program_magang.detail_lowongan');
-});
-Route::get('/konfigurasi', function () {
-    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
 
 Route::get('/anggota/tim', function () {
