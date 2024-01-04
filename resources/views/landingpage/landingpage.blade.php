@@ -299,7 +299,7 @@
                         </div>
                         <div class="location mb-3"><i class="ti ti-calendar-time" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>2 Semester</div>
                         <div class=" button-container text-center">
-                            <a class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
+                            <a href="/apply" class="btn btn-success text-white" style="width : 120px; border-radius: 8px; margin-right:10px;">Lamar</a>
                             <a href="/detail/lowongan/magang" class="btn btn-outline-success" style="width : 120px; border-radius: 8px; margin-left:10px; color:#4EA971;">Detail</a>
                         </div>
                     </div>
@@ -582,7 +582,7 @@
                                                                     Jakarta Selatan, 12430.
                                                                 </div>
                                                                 <div class="button-container">
-                                                                    <a class="btn btn-outline-success mt-3" style="color:#4EA971; opacity:0.7!important;">Lihat
+                                                                    <a href="/detail_perusahaan" class="btn btn-outline-success mt-3" style="color:#4EA971; opacity:0.7!important;">Lihat
                                                                         Perusahaan</a>
                                                                 </div>
                                                             </div>
