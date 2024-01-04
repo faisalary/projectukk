@@ -1,250 +1,368 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
+
+<link rel="stylesheet" href="{{ url('assets/css/yearpicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url('assets/css/monthpicker.css') }}">
 <style>
+  .btn-success {
+    color: #fff;
+    background-color: #4EA971 !important;
+    border-color: #4EA971 !important;
+  }
+
+  .breadcrumb-item,
+  .breadcrumb-item a {
+    color: #4b465c !important;
+  }
+
+  .select2-results__option[role="option"][aria-selected="true"] {
+    background-color: #4EA971 !important;
+    color: #fff;
+  }
+
+  .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+    background-color: rgba(115, 103, 240, 0.08) !important;
+    color: #4EA971 !important;
+  }
 </style>
-  
+
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="sec-title mt-4 mb-4">
-      <h4>Profil / Informasi Pribadi / Pengalaman dan Keahlian</h4>
+    <h4>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-style1">
+          <li class="breadcrumb-item">
+            Profil
+          </li>
+          <li class="breadcrumb-item">
+            <a href="/informasi/pribadi">Informasi Pribadi</a>
+          </li>
+          <li class="breadcrumb-item active">Pengalaman dan Keahlian</li>
+        </ol>
+      </nav>
+    </h4>
   </div>
   <!-- Pengalaman dan Keahlian -->
 
-  <div class="row mt-4 mb-4">
-      <div class="col-12">
-      <div class="card">
-          <div class="card-body">
-              <div class="d-flex justify-content-between border-bottom pb-2">
-                  <h5 class="text-secondary">PENGALAMAN DAN KEAHLIAN</h5>
-                  <span class="badge bg-label-success rounded-pill p-2">
-                      <i class="ti ti-plus ti-sm" data-bs-toggle="modal" data-bs-target="#modalTambahPengalaman"></i>
-                    </span>
+  <div class="card mb-4">
+    <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
+      <h5 class="text-secondary">Keahlian</h5>
+      <div class="text-end">
+        <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
+        <br>
+        <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i>
+      </div>
+    </div>
+    <div class="card-body pb-0 pt-0">
+      <div>
+        <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
+        <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
+        <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
+        <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
+      </div>
+      <div class="border-bottom mt-3"></div>
+      <div class="d-flex justify-content-between pt-3 pb-3">
+        <h5 class="text-secondary">Pengalaman</h5>
+        <div class="text-end">
+          <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPengalaman"></i>
+        </div>
+      </div>
+      <ul class="timeline mb-0">
+        <li class="timeline-item timeline-item-transparent">
+          <span class="timeline-point timeline-point-success"></span>
+          <div class="timeline-event">
+            <div class="timeline-header">
+              <h6 class="mb-0">UIUX Designer</h6>
+              <div>
+                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
               </div>
-              <div class="border-bottom item">
-                  <ul class="timeline ms-4 mb-0 mt-4">
-                      <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                          <span class="timeline-point timeline-point-success"></span>
-                          <div class="timeline-event">
-                                  <div class="timeline-header d-flex justify-content-between">
-                                  <h6 class="mb-0">Content Creator</h6> 
-                                  <div>
-                                  <i class="menu-icon tf-icons ti ti-edit text-success" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                                  <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"></i>
-                              </div>
-                                  </div>
-                                  <p class="mb-1">Techno Infinity - Intership</p>
-                                  <p class="mb-1">Aug 2018 - Aug 2022</p>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique eros eget mauris blandit, vel gravida turpis molestie.</p>
-                                  <div class="d-flex align-items-start">
-                                      <div>
-                                        <img src="../../app-assets/img/avatars/2.png">
-                                      </div>
-                                      <div class="me-2 ms-4">
-                                        <h6 class="mt-5">Gambar.jpg</h6>
-                                      </div>
-                                    </div>
-                          </div>
-                      </li>
-                  </ul> 
+            </div>
+            <div class="border-bottom mb-3">
+              <p class="mb-1">Techno Infinity - Internship</p>
+              <p style="font-size: small;">Juli 2022 - Present/p>
+              <div>
+                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
+                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                  See more
+                </u>
               </div>
-              <div class="border-bottom item">
-                  <ul class="timeline ms-4 mb-0 mt-4">
-                      <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                          <span class="timeline-point timeline-point-success"></span>
-                          <div class="timeline-event">
-                                  <div class="timeline-header d-flex justify-content-between">
-                                  <h6 class="mb-0">UKM Badminton</h6> 
-                                  <div>
-                                  <i class="menu-icon tf-icons ti ti-edit text-success"></i>
-                                  <i class="menu-icon tf-icons ti ti-trash text-danger"></i>
-                              </div>
-                                  </div>
-                                  <p class="mb-1">Telkom University</p>
-                                  <p class="mb-1">Aug 2018 - Aug 2022</p>
-                                  <ul>
-                                      <li class="mb-0"> Lorem ipsum dolor sit ame</li>
-                                      <li class="mb-0"> consectetur adipiscing elit.</li>
-                                      <li class="mb-0"> Praesent tristique eros eget mauris</li>
-                                      <li class="mb-0"> vel gravida turpis molestie</li>
-                                  </ul>
-                          </div>
-                      </li>
-                  </ul> 
-              </div>
-              <div class="border-bottom item">
-                  <ul class="timeline ms-4 mb-0 mt-4">
-                      <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                          <span class="timeline-point timeline-point-success"></span>
-                          <div class="timeline-event">
-                                  <div class="timeline-header d-flex justify-content-between">
-                                  <h6 class="mb-0">UKM Badminton</h6> 
-                                  <div>
-                                  <i class="menu-icon tf-icons ti ti-edit text-success"></i>
-                                  <i class="menu-icon tf-icons ti ti-trash text-danger"></i>
-                              </div>
-                                  </div>
-                                  <p class="mb-1">Telkom University</p>
-                                  <p class="mb-1">Aug 2018 - Aug 2022</p>
-                                  <ul>
-                                      <li class="mb-0"> Lorem ipsum dolor sit ame</li>
-                                      <li class="mb-0"> consectetur adipiscing elit.</li>
-                                      <li class="mb-0"> Praesent tristique eros eget mauris</li>
-                                      <li class="mb-0"> vel gravida turpis molestie</li>
-                                  </ul>
-                          </div>
-                      </li>
-                  </ul> 
-              </div>
-              <div class="border-bottom item">
-                  <ul class="timeline ms-4 mb-0 mt-4">
-                      <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                          <span class="timeline-point timeline-point-success"></span>
-                          <div class="timeline-event">
-                                  <div class="timeline-header d-flex justify-content-between">
-                                  <h6 class="mb-0">UKM Badminton</h6> 
-                                  <div>
-                                  <i class="menu-icon tf-icons ti ti-edit text-success"></i>
-                                  <i class="menu-icon tf-icons ti ti-trash text-danger"></i>
-                              </div>
-                                  </div>
-                                  <p class="mb-1">Telkom University</p>
-                                  <p class="mb-1">Aug 2018 - Aug 2022</p>
-                                  <ul>
-                                      <li class="mb-0"> Lorem ipsum dolor sit ame</li>
-                                      <li class="mb-0"> consectetur adipiscing elit.</li>
-                                      <li class="mb-0"> Praesent tristique eros eget mauris</li>
-                                      <li class="mb-0"> vel gravida turpis molestie</li>
-                                  </ul>
-                          </div>
-                      </li>
-                  </ul> 
-              </div>
+            </div>
           </div>
-      </div>
-      </div>
+        </li>
+        <li class="timeline-item timeline-item-transparent">
+          <span class="timeline-point timeline-point-success"></span>
+          <div class="timeline-event pt-0">
+            <div class="timeline-header">
+              <h6 class="mb-0">UIUX Designer</h6>
+              <div>
+                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+              </div>
+            </div>
+            <div class="border-bottom mb-3">
+              <p class="mb-1">Techno Infinity - Internship</p>
+              <p style="font-size: small;">Juli 2022 - Present/p>
+              <div>
+                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
+                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                  See more
+                </u>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item timeline-item-transparent">
+          <span class="timeline-point timeline-point-success"></span>
+          <div class="timeline-event pt-0">
+            <div class="timeline-header">
+              <h6 class="mb-0">UIUX Designer</h6>
+              <div>
+                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+              </div>
+            </div>
+            <div class="border-bottom mb-3">
+              <p class="mb-1">Techno Infinity - Internship</p>
+              <p style="font-size: small;">Juli 2022 - Present/p>
+              <div>
+                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
+                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                  See more
+                </u>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item timeline-item-transparent">
+          <span class="timeline-point timeline-point-success"></span>
+          <div class="timeline-event pt-0">
+            <div class="timeline-header">
+              <h6 class="mb-0">UIUX Designer</h6>
+              <div>
+                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+              </div>
+            </div>
+            <div class="border-bottom mb-3">
+              <p class="mb-1">Techno Infinity - Internship</p>
+              <p style="font-size: small;">Juli 2022 - Present/p>
+              <div>
+                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
+                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                  See more
+                </u>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item timeline-item-transparent border-0">
+          <span class="timeline-point timeline-point-success"></span>
+          <div class="timeline-event pt-0">
+            <div class="timeline-header">
+              <h6 class="mb-0">UIUX Designer</h6>
+              <div>
+                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+              </div>
+            </div>
+            <p class="mb-1">Techno Infinity - Internship</p>
+            <p style="font-size: small;">Juli 2022 - Present/p>
+            <div>
+              <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
+              <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+              <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                See more
+              </u>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <!-- Modal Tambah Pengalaman dan Keahlian -->
+  <!-- Modal Tambah Keahlian -->
+  <div class="modal fade" id="modalTambahKeahlian" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-block">
+          <h5 class="modal-title" id="modal-title">Tambah Keahlian</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body border-top mt-3">
+          <form id="" method="POST" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="TagifyCustomListSuggestion" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                <input id="keahlian" name="keahlian" class="form-control" placeholder="Masukkan Keahlian" value="" />
+              </div>
+            </div>
+            <div class="modal-footer p-0">
+              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Keahlian -->
+  <div class="modal fade" id="modalEditKeahlian" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-block">
+          <h5 class="modal-title" id="modal-title">Edit Keahlian</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body border-top mt-3">
+          <form id="" method="POST" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="TagifyCustomListSuggestion" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                <input id="editkeahlian" name="keahlian" class="form-control" placeholder="Masukkan Keahlian" value="" />
+              </div>
+            </div>
+            <div class="modal-footer p-0">
+              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tambah Pengalaman -->
   <div class="modal fade" id="modalTambahPengalaman" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header d-block">
-                  <h5 class="modal-title" id="modal-title">Tambah Pengalaman dan Keahlian</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-      <!-- Account -->
-      <div class="modal-body border-top mt-3">
-        <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-block">
+          <h5 class="modal-title" id="modal-title">Tambah Pengalaman</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
-          <div class="row">
+        <!-- Account -->
+        <div class="modal-body border-top mt-3">
+          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
+          </div>
+          <form id="formAccountSettings" method="POST" onsubmit="return false">
+            <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="posisi" class="form-label">Posisi / Bidang</label>
-                  <input class="form-control" type="text" id="posisi" name="posisi" placeholder="UI/UX Designer"/>
-                </div>
-            <div class="mb-3 col-md-6">
-              <label for="pekerjaan" class="form-label">Jenis Pekerjaan</label>
-              <select id="pekerjaan" class="select2 form-select">
-                <option disabled selected>Pilih Jenis Pekerjaan</option>
-                <option value="Pekerjaan">Pekerjaan</option>
-                <option value="Pekerjaan">Pekerjaan</option>
-              </select>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-              <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="EX: PT Techno Infinity"/>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="sertifikasi" class="form-label">Sertifikasi</label>
-              <input class="form-control" type="file" id="sertifikasi" multiple="">
+                <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="pekerjaan3" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
+                <select id="pekerjaan3" class="select2 form-select">
+                  <option disabled selected>Pilih Jenis Pekerjaan</option>
+                  <option value="Pekerjaan">Pekerjaan</option>
+                  <option value="Pekerjaan">Pekerjaan</option>
+                </select>
               </div>
               <div class="mb-3 col-md-12">
-                  <label for="deskripsi" class="form-label">Deskripsi</label>
-                  <input class="form-control form-control-lg" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."/>
-                </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success me-2">Simpan</button>
-            <button type="reset" class="btn btn-label-secondary">Batalkan</button>
-          </div>
-        </form>
-      
+                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                <input type="month" id="month" class="form-control" placeholder="Month" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
+                <input type="month" id="month" class="form-control" placeholder="Month" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+              </div>
+            </div>
+            <div class="modal-footer p-0">
+              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+            </div>
+          </form>
+
+        </div>
+        <!-- /Account -->
       </div>
-      <!-- /Account -->
-          </div>
-      </div>
+    </div>
   </div>
 
-  <!-- Modal Edit Pengalaman dan Keahlian -->
+  <!-- Modal Edit Pengalaman -->
   <div class="modal fade" id="modalEditPengalaman" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header d-block">
-                  <h5 class="modal-title" id="modal-title">Edit Pengalaman dan Keahlian</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-      <!-- Account -->
-      <div class="modal-body border-top mt-3">
-        <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-block">
+          <h5 class="modal-title" id="modal-title">Edit Pengalaman</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="formAccountSettings" method="POST" onsubmit="return false">
-          <div class="row">
+        <!-- Account -->
+        <div class="modal-body border-top mt-3">
+          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
+          </div>
+          <form id="formAccountSettings" method="POST" onsubmit="return false">
+            <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="posisi" class="form-label">Posisi / Bidang</label>
-                  <input class="form-control" type="text" id="posisi" name="posisi" placeholder="UI/UX Designer"/>
-                </div>
-            <div class="mb-3 col-md-6">
-              <label for="pekerjaan" class="form-label">Jenis Pekerjaan</label>
-              <select id="pekerjaan" class="select2 form-select">
-                <option disabled selected>Pilih Jenis Pekerjaan</option>
-                <option value="Pekerjaan">Pekerjaan</option>
-                <option value="Pekerjaan">Pekerjaan</option>
-              </select>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-              <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="EX: PT Techno Infinity"/>
-            </div>
-            <div class="mb-3 col-md-6">
-              <label for="sertifikasi" class="form-label">Sertifikasi</label>
-              <input class="form-control" type="file" id="sertifikasi" multiple="">
+                <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="pekerjaan4" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
+                <select id="pekerjaan4" class="select2 form-select">
+                  <option disabled selected>Pilih Jenis Pekerjaan</option>
+                  <option value="Pekerjaan">Pekerjaan</option>
+                  <option value="Pekerjaan">Pekerjaan</option>
+                </select>
               </div>
               <div class="mb-3 col-md-12">
-                  <label for="deskripsi" class="form-label">Deskripsi</label>
-                  <input class="form-control form-control-lg" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."/>
-                </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-success me-2">Simpan</button>
-            <button type="reset" class="btn btn-label-secondary">Batalkan</button>
-          </div>
-        </form>
-      
+                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                <input type="month" id="month" class="form-control" placeholder="Month" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
+                <input type="month" id="month" class="form-control" placeholder="Month" />
+              </div>
+              <div class="mb-3 col-md-12">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+              </div>
+            </div>
+            <div class="modal-footer p-0">
+              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+            </div>
+          </form>
+
+        </div>
+        <!-- /Account -->
       </div>
-      <!-- /Account -->
-          </div>
-      </div>
+    </div>
   </div>
 
-  <!-- Modal Delete Pengalaman dan Keahlian-->
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <!-- Modal Delete Pengalaman -->
+  <div class="modal fade" id="deleteModalPengalaman" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-              <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pengalaman dan Keahlian Ini?</h5>
-            </div>
-                <div class="modal-footer" style="display: flex; justify-content:center;">
-                    <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-                    <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-                </div>
-            
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body text-center">
+          <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pengalaman Ini?</h5>
+        </div>
+        <div class="modal-footer" style="display: flex; justify-content:center;">
+          <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
+          <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -254,5 +372,36 @@
 @endsection
 
 @section('page_script')
+<script>
+  $(document).ready(function() {
+    $(".content-new").hide();
+    $(".show_hide_new").on("click", function() {
+      var content = $(this).prev('.content-new');
+      content.slideToggle(100);
+      if ($(this).text().trim() == "See more") {
+        $(this).text("See less");
+      } else {
+        $(this).text("See more");
+      }
+    });
+  });
+  $(document).ready(function() {
+    $(".yearpicker").yearpicker({
+      startYear: new Date().getFullYear() - 10,
+      endYear: new Date().getFullYear() + 10,
+    });
+  });
 
+  $('#month').flatpickr({
+    altInput: true,
+    altFormat: 'F Y',
+    plugins: [
+      new monthSelectPlugin({
+        dateFormat: "Y-m",
+      })
+    ]
+  });
+</script>
+<script src="{{ url('assets/js/yearpicker.js') }}"></script>
+<script src="{{ url('assets/js/monthpicker.js') }}"></script>
 @endsection
