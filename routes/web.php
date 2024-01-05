@@ -319,16 +319,19 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-
-Route::get('/anggota/tim', function () {
-    return view('company.anggota_tim.index');
-});
 Route::get('/kegiatan_saya/lamaran_saya', function () {
     return view('kegiatan_saya.lamaran_saya.index');
 });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
+});
+Route::get('/detail_perusahaan', function () {
+    return view('landingpage.detail_perusahaan');
+});
+
+Route::get('/detail-mahasiswa', function () {
+    return view('company.jadwal_seleksi.detail_seleksi');
 });
 Route::get('/detail_perusahaan', function () {
     return view('perusahaan.detail_perusahaan');
