@@ -40,8 +40,8 @@
                     <table class="table" id="table-konfig-role">
                         <thead>
                             <tr>
-                                <th>nomor</th>
-                                <th style="min-width: 100px;">Nama Role</th>
+                                <th>NOMOR</th>
+                                <th>NAMA ROLE</th>
                                 <th>STATUS</th>
                                 <th>AKSI</th>
                             </tr>
@@ -61,39 +61,29 @@
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "namarole": "Admin",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        },
-        {
-            "nomor": "2",
-            "namarole": "Mitra",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        },
-        {
-            "nomor": "3",
-            "namarole": "Mahasiswa",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        }
-    ];
 
     var table = $('#table-konfig-role').DataTable({
-        "data": jsonData,
+        ajax: '{{route("konfigurasi.show")}}',
+        processing:true,
+        serverSide:false,
+        deferrender:true,
+        type: 'GET',
+        destroy: true,
         columns: [{
-                data: "nomor"
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex'
             },
             {
-                data: "namarole"
+                data: 'name',
+                name: 'name'
             },
             {
-                data: "status"
+                data: 'status',
+                name: 'status'
             },
             {
-                data: "aksi"
+                data: 'action',
+                name: 'action'
             }
         ]
     });

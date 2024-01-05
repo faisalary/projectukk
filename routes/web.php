@@ -154,12 +154,11 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function () {
-        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('.index');
-        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.show');
-        Route::get('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
-        Route::get('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
-        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
+        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
+        Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
+        Route::post('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
+        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
     });
     //kelola-mitra
     Route::prefix('company')->group(function () {

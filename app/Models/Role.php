@@ -12,5 +12,10 @@ class Role extends SpatieRole
     use HasFactory;
     use HasUuids;
     protected $primaryKey = 'uuid';
+    protected $fillable =  ['name', 'guard_name'];
+
+    public function user(){
+        return $this->belongsTo("App\Models\User"); 
+    }
     
 }
