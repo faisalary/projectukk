@@ -119,12 +119,12 @@
 
                     <ul class="menu-sub">
                       <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
+                        <a href="/daftar_perusahaan" class="menu-link">
                           <div data-i18n="Daftar Mitra">Daftar Mitra</div>
                         </a>
                       </li>
                       <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
+                        <a href="/lowongan/magang" class="menu-link">
                           <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                       </li>
@@ -151,11 +151,29 @@
                     </ul>
                   </li>
 
-                  <!-- Lamaran Saya -->
+                  <!-- Kegiatan Saya -->
                   <li class="menu-item">
-                    <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
-                      <div data-i18n="Lamaran Saya">Lamaran Saya</div>
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                      <div data-i18n="Kegiatan Saya">Kegiatan Saya</div>
                     </a>
+
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                          <div data-i18n="Lamaran Saya">Lamaran Saya</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/konfirmasi/magang" class="menu-link">
+                          <div data-i18n="Konfirmasi Magang">Konfirmasi Magang</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="" class="menu-link">
+                          <div data-i18n="Logbook">Logbook</div>
+                        </a>
+                      </li>
+                    </ul>
                   </li>
 
                   <!-- Layanan LKM -->

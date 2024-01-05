@@ -331,5 +331,14 @@ Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
 });
 Route::get('/detail_perusahaan', function () {
-    return view('landingpage.detail_perusahaan');
+    return view('perusahaan.detail_perusahaan');
+});
+Route::get('/daftar_perusahaan', function () {
+    return view('perusahaan.daftar_perusahaan');
+});
+Route::get('/lowongan/magang', function () {
+    return view('perusahaan.lowongan');
+});
+Route::get('/konfirmasi/magang', function () {
+    return view('konfirmasi.konfirmasi_magang');
 });

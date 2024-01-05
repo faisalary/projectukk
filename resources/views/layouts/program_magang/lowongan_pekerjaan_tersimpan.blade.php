@@ -26,12 +26,10 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     {{-- balum ada lowongan tersimpan --}}
     <!-- <div class="col-3 mt-5 text-left">
-    <img class="image" style="border-radius: 0%; margin-left: 400px; justify-content-center" src="{{ asset('front/assets/img/belum_ada_lowongan.png')}}" alt="admin.upload">
+    <img class="image" style="border-radius: 0%; margin-left: 400px;" src="{{ asset('front/assets/img/belum_ada_lowongan.png')}}" alt="admin.upload">
 </div>
-<div class="sec-title mt-5 mb-4" style="text-align:center">
-    <p style="text-align: center">
-    <h4><b> Belum Ada Lowongan Tersimpan </b></h4>
-    </p>
+<div class="sec-title mt-5 mb-4 text-center">
+    <h4>Belum Ada Lowongan Tersimpan</h4>
     <div class="mt-4">
         <a href="javascript:void(0)" class="btn btn-success" type="submit">Cari Lowongan</a>
     </div>
@@ -211,17 +209,17 @@
 
                 <div class="row mt-3 mb-2">
                     <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
+                        <ul class="pagination" style="margin-left: 100px;">
                             <li class="page-item ">
                                 <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
                             </li>
-                            <li class="page-item">
+                            <li class="page-item active">
                                 <a class="page-link waves-effect" href="javascript:void(0);">1</a>
                             </li>
                             <li class="page-item">
                                 <a class="page-link waves-effect" href="javascript:void(0);">2</a>
                             </li>
-                            <li class="page-item active">
+                            <li class="page-item">
                                 <a class="page-link waves-effect" href="javascript:void(0);">3</a>
                             </li>
                             <li class="page-item ">

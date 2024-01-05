@@ -22,10 +22,11 @@
         background-color: #4EA971 !important;
         color: white !important;
     }
+
     .progress-bar {
-    background-color: #4EA971 !important;
-    color: #fff;
-  }
+        background-color: #4EA971 !important;
+        color: #fff;
+    }
 </style>
 @endsection
 
@@ -35,76 +36,86 @@
         <h4>Anda akan melamar di PT Wings Surya sebagai Human Resources</h4>
     </div>
 
+    <div class="alert alert-warning alert-dismissible ms-4 me-4 mb-4" role="alert">
+        <i class="ti ti-alert-triangle ti-xs"></i>
+        <span style="color: #23314B; padding-left:10px; padding-top:5px;"> Silahkan lakukan pengisian data dengan minimal kelengkapan 70% untuk melanjutkan proses melamar pekerjaan</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="container">
-        <h4>Informasi Data Diri</h4>
-        <div class="row">
-            <div class="col-2">
-                <img class="img-fluid rounded" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
-                <button class="btn btn-outline-secondary btn-label-secondary mt-3" type="button"><i class="ti ti-eye me-1"></i> Pratinjau</button>
-            </div>
-            <div class="col-7">
+        <div class="card">
+            <div class="card-body">
+                <h4>Informasi Data Diri</h4>
                 <div class="row">
-                    <div class="col-3">
-                        <div>
-                            <h6 class="mb-0">Nama Lengkap</h6>
-                            <p>Violet Mendoza</p>
-                        </div>
-                        <div>
-                            <h6 class="mb-0">NIM</h6>
-                            <p>6705513025</p>
+                    <div class="col-2">
+                        <img class="img-fluid rounded" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
+                        <button class="btn btn-outline-secondary btn-label-secondary mt-3" type="button"><i class="ti ti-eye me-1"></i> Pratinjau</button>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-3">
+                                <div>
+                                    <h6 class="mb-0">Nama Lengkap</h6>
+                                    <p>Violet Mendoza</p>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">NIM</h6>
+                                    <p>6705513025</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <h6 class="mb-0">ALamat Email</h6>
+                                    <p>jennieruby123@gmail.com</p>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">No.Telp</h6>
+                                    <p>87654321234</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <h6 class="mb-0">Program Studi</h6>
+                                    <p>D3 Sistem Informasi</p>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Fakultas</h6>
+                                    <p>Fakultas Ilmu Terapan</p>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <h6 class="mb-0">Universitas</h6>
+                                <p>Telkom University</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-3">
-                        <div>
-                            <h6 class="mb-0">ALamat Email</h6>
-                            <p>jennieruby123@gmail.com</p>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="text-start">Kelengkapan Profil</h6>
+                            <h6 class="text-end">68%</h6>
                         </div>
-                        <div>
-                            <h6 class="mb-0">No.Telp</h6>
-                            <p>87654321234</p>
+                        <div class="progress">
+                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <h6 class="mb-0">Program Studi</h6>
-                            <p>D3 Sistem Informasi</p>
-                        </div>
-                        <div>
-                            <h6 class="mb-0">Fakultas</h6>
-                            <p>Fakultas Ilmu Terapan</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <h6 class="mb-0">Universitas</h6>
-                        <p>Telkom University</p>
+                        <a href="/informasi/pribadi" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-3">
-                <div class="d-flex justify-content-between">
-                    <h6 class="text-start">Kelengkapan Profil</h6>
-                    <h6 class="text-end">68%</h6>
+                <div class="mt-5">
+                    <h4>Mengapa Kami Harus Menerima Anda?</h4>
+                    <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Tulis Disini" disabled></textarea>
+                    <h4 class="mt-3">Surat Lamaran Kerja</h4>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" disabled>
+                        <label class="form-check-label text-secondary" for="defaultCheck1"> Saya tidak memiliki surat lamaran
+                            kerja </label>
+                    </div>
+                    <div class="mt-3">
+                        <label for="formFile" class="form-label text-secondary">Unggah Surat Lamaran Kerja</label>
+                        <input class="form-control" type="file" id="formFile" disabled>
+                    </div>
+                    <button type="button" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <a href="/informasi/pribadi" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
             </div>
-        </div>
-        <div class="mt-5">
-            <h4>Mengapa Kami Harus Menerima Anda?</h4>
-            <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Tulis Disini"></textarea>
-            <h4 class="mt-3">Surat Lamaran Kerja</h4>
-            <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label text-secondary" for="defaultCheck1"> Saya tidak memiliki surat lamaran
-                    kerja </label>
-            </div>
-            <div class="mt-3">
-                <label for="formFile" class="form-label text-secondary">Unggah Surat Lamaran Kerja</label>
-                <input class="form-control" type="file" id="formFile">
-            </div>
-            <button type="button" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
         </div>
         <div class="card mt-5">
             <div class="card-body">
@@ -222,50 +233,54 @@
             </div>
         </div>
 
-        <div class="mt-4">
-            <h3>Tentang Perusahaan</h3>
-            <div class="row">
-                <div class="col-6">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
-                    </figure>
-                </div>
-                <div class="col-6 text-end">
-                    <a href="/detail_perusahaan" class="btn btn-outline-success btn-label-success mt-2" type="button">LIhat Perusahaan</a>
-                </div>
-                <div class="col-12">
-                    <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Wings
-                        Surya</p>
+        <div class="card mt-5 mb-5">
+            <div class="card-body">
+                <div class="mt-2">
+                    <h3>Tentang Perusahaan</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                            </figure>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a href="/detail_perusahaan" class="btn btn-outline-success btn-label-success mt-2" type="button">LIhat Perusahaan</a>
+                        </div>
+                        <div class="col-12">
+                            <p style="text-align: left !important; font-size:18px; margin-bottom: 0px;">PT Wings
+                                Surya</p>
+                        </div>
+                    </div>
+                    <p class="mt-3">
+                        ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
+                        driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over
+                        the
+                        world.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li class="mb-1">
+                            <span class="fw-semibold me-1">Kontak:</span>
+                            <span>628123456789</span>
+                        </li>
+                        <li class="mb-2 pt-1">
+                            <span class="fw-semibold me-1">Email:</span>
+                            <span>recruiter@wings.id</span>
+                        </li>
+                        <li class="mb-2 pt-1">
+                            <span class="fw-semibold me-1">Website:</span>
+                            <span><u style="color:#4EA971; cursor: pointer;">www.wingsfood.com</u></span>
+                        </li>
+                        <li class="mb-2 pt-1">
+                            <span class="fw-semibold me-1">Sosial Media:</span>
+                            <span class="social-links">
+                                <a href="#" class="ml-0"><i class="fab fa-facebook-f" style="color: #4EA971; margin-right: 10px;"></i></a>
+                                <a href="#"><i class="fab fa-instagram" style="color: #4EA971; margin-right: 10px;"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in" style="color: #4EA971; margin-right: 10px;"></i></a>
+                                <a href="#"><i class="fab fa-twitter" style="color: #4EA971; margin-right: 10px;"></i></a>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <p class="mt-3">
-                ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
-                driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over
-                the
-                world.
-            </p>
-            <ul class="list-unstyled">
-                <li class="mb-1">
-                    <span class="fw-semibold me-1">Kontak:</span>
-                    <span>628123456789</span>
-                </li>
-                <li class="mb-2 pt-1">
-                    <span class="fw-semibold me-1">Email:</span>
-                    <span>recruiter@wings.id</span>
-                </li>
-                <li class="mb-2 pt-1">
-                    <span class="fw-semibold me-1">Website:</span>
-                    <span><u style="color:#4EA971; cursor: pointer;">www.wingsfood.com</u></span>
-                </li>
-                <li class="mb-2 pt-1">
-                    <span class="fw-semibold me-1">Sosial Media:</span>
-                    <span class="social-links">
-                        <a href="#" class="ml-0"><i class="fab fa-facebook-f" style="color: #4EA971; margin-right: 10px;"></i></a>
-                        <a href="#"><i class="fab fa-instagram" style="color: #4EA971; margin-right: 10px;"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in" style="color: #4EA971; margin-right: 10px;"></i></a>
-                        <a href="#"><i class="fab fa-twitter" style="color: #4EA971; margin-right: 10px;"></i></a>
-                    </span>
-                </li>
-            </ul>
         </div>
     </div>
 </div>

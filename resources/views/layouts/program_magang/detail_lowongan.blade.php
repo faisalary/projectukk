@@ -195,15 +195,13 @@
                                         </button>
                                     </div>
                                     <div class="mb-1"></div>
-                                    <button type="submit" class="btn btn-secondary waves-effect waves-light" style="width: 510px;">
+                                    <button type="submit" class="btn btn-secondary waves-effect waves-light"data-bs-dismiss="modal" aria-label="Close"  style="width: 510px;">
                                         Batal
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- Modal -->
@@ -260,7 +258,7 @@
                                         <div class="border" style="border-radius: 20px;">
                                             <div class="row">
                                                 <div class="col-10">
-                                                    <p class="m-2">https://youtu.be/TGxKkBC6L2k</p>
+                                                    <p class="m-2">http://sample.info/?#UIUX</p>
                                                 </div>
                                                 <div class="col-2">
                                                     <button type="button" class="btn rounded-pill btn-success waves-effect waves-light" style="width: 65px; height:40px;">

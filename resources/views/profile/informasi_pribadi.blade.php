@@ -220,11 +220,11 @@
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Linkedin:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                 </div>
                 <p class="mb-2 pt-0">
