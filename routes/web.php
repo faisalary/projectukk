@@ -345,3 +345,6 @@ Route::get('/lowongan/magang', function () {
 Route::get('/konfirmasi/magang', function () {
     return view('konfirmasi.konfirmasi_magang');
 });
+Route::get('/pratinjau/diri', function () {
+    return view('apply.pratinjau');
+});

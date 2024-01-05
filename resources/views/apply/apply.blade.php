@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="col-2">
                         <img class="img-fluid rounded" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
-                        <button class="btn btn-outline-secondary btn-label-secondary mt-3" type="button"><i class="ti ti-eye me-1"></i> Pratinjau</button>
+                        <a href="pratinjau/diri" class="btn btn-outline-secondary btn-label-secondary mt-3" type="button"><i class="ti ti-eye me-1"></i> Pratinjau</a>
                     </div>
                     <div class="col-7">
                         <div class="row">
