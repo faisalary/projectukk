@@ -220,11 +220,11 @@
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Linkedin:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                 </div>
                 <p class="mb-2 pt-0">
@@ -542,8 +542,8 @@
                   <input class="form-control" type="text" id="tak" name="tak" placeholder="100" autofocus />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="tanggallahir" readonly="readonly">
+                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
+                  <input class="form-control" type="date" value="" id="tanggallahir" placeholder="YYYY-MM-DD" >
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
@@ -736,8 +736,8 @@
                 <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="pendidikan" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                <select id="pendidikan" class="select2 form-select">
+                <label for="pendidikan1" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
+                <select id="pendidikan1" class="select2 form-select">
                   <option disabled selected>Pilih Tingkat Pendidkan</option>
                   <option value="pendidikan">D3</option>
                   <option value="pendidikan">S1</option>
