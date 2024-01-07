@@ -12,6 +12,7 @@ class Role extends SpatieRole
     use HasFactory;
     use HasUuids;
     protected $primaryKey = 'uuid';
+    protected $table = 'roles';
     protected $fillable =  ['name', 'guard_name'];
 
     public function user(){

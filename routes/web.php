@@ -159,6 +159,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
         Route::post('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
         Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfigurasiController::class, 'status'])->name('konfigurasi.status');
     });
     //kelola-mitra
     Route::prefix('company')->group(function () {

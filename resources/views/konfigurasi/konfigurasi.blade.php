@@ -88,44 +88,44 @@
         ]
     });
 
-    // Kelola Lowongan
-const selectAllKelola = document.querySelector('#selectAll'),
-      checkboxListKelola = document.querySelectorAll('.kelola');
+        // Kelola Lowongan
+    const selectAllKelola = document.querySelector('#selectAll'),
+        checkboxListKelola = document.querySelectorAll('.kelola');
 
-selectAllKelola.addEventListener('change', t => {
-  checkboxListKelola.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-// Informasi Lowongan
-const selectAllInformasi = document.querySelector('#selectAll_informasi'),
-      checkboxListInformasi = document.querySelectorAll('.informasi');
-
-selectAllInformasi.addEventListener('change', t => {
-  checkboxListInformasi.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-// Jadwal Seleksi
-const selectAllSeleksi = document.querySelector('#selectAll_seleksi'),
-      checkboxListSeleksi = document.querySelectorAll('.seleksi');
-
-selectAllSeleksi.addEventListener('change', t => {
-  checkboxListSeleksi.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-
-
-    jQuery(function() {
-    jQuery('.showSingle').click(function() {
-        jQuery('.targetDiv').hide('.cnt');
-        jQuery('#div' + $(this).attr('target')).slideToggle();
+    selectAllKelola.addEventListener('change', t => {
+    checkboxListKelola.forEach(e => {
+        e.checked = t.target.checked;
     });
-});
+    });
+
+    // Informasi Lowongan
+    const selectAllInformasi = document.querySelector('#selectAll_informasi'),
+        checkboxListInformasi = document.querySelectorAll('.informasi');
+
+    selectAllInformasi.addEventListener('change', t => {
+    checkboxListInformasi.forEach(e => {
+        e.checked = t.target.checked;
+    });
+    });
+
+    // Jadwal Seleksi
+    const selectAllSeleksi = document.querySelector('#selectAll_seleksi'),
+        checkboxListSeleksi = document.querySelectorAll('.seleksi');
+
+    selectAllSeleksi.addEventListener('change', t => {
+    checkboxListSeleksi.forEach(e => {
+        e.checked = t.target.checked;
+    });
+    });
+
+
+
+        jQuery(function() {
+        jQuery('.showSingle').click(function() {
+            jQuery('.targetDiv').hide('.cnt');
+            jQuery('#div' + $(this).attr('target')).slideToggle();
+        });
+    });
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
