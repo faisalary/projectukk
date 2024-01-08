@@ -114,7 +114,7 @@
                 </div>
                 <div class="col-2">
                     <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
-                    <div class="text-end mt-3"><span class="badge bg-label-danger">Dittolak</span></div>
+                    <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span></div>
                     <div class="text-end mt-3"><button type="button" class="btn btn-outline-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#modalEdit" style="height:35px;"> <i class="ti ti-edit mb-1 me-1"></i> Perbaiki Pengajuan</button></div>
                     <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalDetailDitolak">
                             Lihat Detail
