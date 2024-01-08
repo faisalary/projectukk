@@ -51,17 +51,17 @@ class InformasiKandidatController extends Controller
         $pendaftar = PendaftaranMagang::query();
 
         if ($request->type) {
-            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("univ", "prodi", "fakultas", "lowonganMagang");
+            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("mahasiswa");
         }
 
         return DataTables::of($pendaftar->get())
             ->addIndexColumn()
-            ->editColumn('status', function ($industri) {
-                // if ($industri->status == 1) {
-                //     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                // } else {
-                //     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                // }
+            ->editColumn('status', function ($pendaftar) {
+                if ($pendaftar->applicant_status == "kandidat") {
+                    return "<span class='badge bg-label-secondary me-1'>Belum Proses</span>";
+                } else {
+                    return "<span class='badge bg-label-warning me-1'>Screening</span>";
+                }
                 return null;
             })
             ->addColumn('action', function ($row) {
