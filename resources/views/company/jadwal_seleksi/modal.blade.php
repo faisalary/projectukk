@@ -73,7 +73,7 @@
                          <div class="col mb-2">
                              <label for="flatpickr-multi" class="form-label">Jadwal Pelaksanaan</label>
                              <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM"
-                                 id="flatpickr-multi" readonly="readonly">
+                                 id="flatpickr-multi" name="mulai" readonly="readonly">
                          </div>
                      </div>
                      <div class="row">

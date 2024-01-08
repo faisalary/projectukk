@@ -11,17 +11,16 @@ class Seleksi extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'seleksi';
+    protected $table = 'seleksi_lowongan';
     public $timestamps = false;
     protected $fillable = [
-        'id_pendaftaran',
-        'pelaksanaan',
-        'detail',
-        'tglseleksi',
-        'jamseleksi',
-        'statusseleksi',
+        'id_email_tamplate',
+        'start_date',
+        'end_date',
+        'namatahap_seleksi',
+        'id_status_seleksi'
     ];
-    protected $primaryKey = 'id_seleksi';
+    protected $primaryKey = 'id_seleksi_lowongan';
     protected $keyType = 'string';
 
     // public function getStatusSeleksiTextAttribute()

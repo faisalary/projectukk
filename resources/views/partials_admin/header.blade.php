@@ -386,8 +386,8 @@
                     </li>
 
                     <!-- Anggota Tim -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                        <a href="/anggota/tim" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
                             <div data-i18n="Anggota Tim">Anggota Tim</div>
                         </a>
