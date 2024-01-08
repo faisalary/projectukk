@@ -92,15 +92,29 @@ class KonfigurasiController extends Controller
             return response()->json(['error' => true, 'message' => $messages[0]], 400);
         }
 
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
-                         ->with('success','Role created successfully');
-        
+        $permission_id = $request->permission_id;
+
+        $result = Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web'
+        ]);
+
+        foreach ($permission_id as $key => $value) {
+            $prevent = RoleHas::where('permission_id', $value)->where('role_id', $result->id);
+
+            if ($prevent->get()->isEmpty()) {
+                $rhp = new RoleHas();
+                $rhp->permission_id = $value;
+                $rhp->role_id = $result->id;
+                $rhp->save();
+            } else {
+                $already = $prevent->first();
+                $already->save();
+            }
+        }
+
         Artisan::call('cache:clear');
 
         return response()->json(["error" => false, "message" => "Successfully Added Role!"], 201);
-       
     }
 }

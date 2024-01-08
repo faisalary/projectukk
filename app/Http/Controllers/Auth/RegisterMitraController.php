@@ -62,18 +62,16 @@ class RegisterMitraController extends Controller
         DB::commit();
         return response()->json([
             'error' => false,
-            'message' => 'User berhasil ditambahkan. Notifikasi telah dikirim.',
+            'message' => 'Industri successfully Created!',
+            'modal' => '#register-mitra',
         ]);
         
     } catch (Exception $e) {
-        DB::rollBack();
-    
-        $errorMessage = addslashes($e->getMessage());
-    
+        DB::rollBack();    
         return response()->json([
             'error' => true,
             'message' => $e->getMessage(),
-            'script' => "<script>alert('Error: " . $errorMessage . "');</script>",
+            
         ]);
     }
     }
