@@ -26,20 +26,24 @@ class PendaftaranMagang extends Model
     {
         return $this->belongsTo(LowonganMagang::class, 'id_lowongan');
     }
-    public function univ()
-    {
-        return $this->belongsTo(Universitas::class, 'id_univ');
-    }
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class, 'nim');
     }
-    public function prodi()
+    public function tahun_akademik()
     {
-        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
+        return $this->belongsTo(TahunAkademik::class, 'id_year_akademik');
     }
-    public function fakultas()
-    {
-        return $this->belongsTo(Fakultas::class, 'id_fakultas');
-    }
+    // public function prodi()
+    // {
+    //     return $this->hasMany(ProgramStudi::class, 'id_prodi');
+    // }
+    // public function univ()
+    // {
+    //     return $this->hasMany(Universitas::class, 'id_univ');
+    // }
+    // public function fakultas()
+    // {
+    //     return $this->hasMany(Fakultas::class, "id_fakultas");
+    // }
 }
