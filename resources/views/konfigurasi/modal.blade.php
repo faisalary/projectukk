@@ -6,12 +6,12 @@
                 <h5 class="modal-title" id="modal-title">Tambah Roles</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" method="POST" action="{{ route('universitas.store') }}">
+            <form class="default-form" method="POST" action="{{ route('konfigurasi.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <label for="">Nama Role</label>
+                            <label for="name">Nama Role</label>
                             <input type="text" class="form-control" placeholder="Nama Role">
                         </div>
                         <div class="col-12">

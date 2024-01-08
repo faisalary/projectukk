@@ -11,18 +11,21 @@ class Mahasiswa extends Model
 
     use HasFactory, HasUuids;
     protected $table = 'mahasiswa';
-    protected $fillable = ['namamhs','id_univ','id_prodi','id_fakultas', 'emailmhs', 'nohpmhs', 'alamatmhs', 'angkatan','nim'];
+    protected $fillable = ['namamhs', 'id_univ', 'id_prodi', 'id_fakultas', 'emailmhs', 'nohpmhs', 'alamatmhs', 'angkatan', 'nim'];
     protected $keyType = 'string';
     protected $primaryKey = 'nim';
     public $timestamps = false;
 
-    public function prodi(){
-        return $this->belongsTo(ProgramStudi::class,'id_prodi');
+    public function prodi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
     }
-    public function univ(){
-        return $this->belongsTo(Universitas::class,'id_univ');
+    public function univ()
+    {
+        return $this->belongsTo(Universitas::class, 'id_univ');
     }
-    public function fakultas(){
-       return $this->belongsTo(Fakultas::class,"id_fakultas");
+    public function fakultas()
+    {
+        return $this->belongsTo(Fakultas::class, "id_fakultas");
     }
 }

@@ -49,34 +49,33 @@ class RegisterMitraController extends Controller
         $code = Str::random(64);
         $admin = User::create([
             'name' => $request->name,
-            'username' => $request->namaindustri,
+            'username' => 'mitra',
             'email' => $request->email,
             'password' => bcrypt('12345678'),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
+            'penanggung_jawab' => $industri->id_industri,
         ]);
         $admin->assignRole('admin');
-        $url=url('/admin/set-password/'.$code);
-
-        if ($admin) {
-        Mail::to($admin->email)->send(new VerifyEmail($url));
-        }
-        
+              
         DB::commit();
         return response()->json([
             'error' => false,
             'message' => 'User berhasil ditambahkan. Notifikasi telah dikirim.',
         ]);
         
-        } catch (Exception $e) {
-            DB::rollBack();
-        
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
+    } catch (Exception $e) {
+        DB::rollBack();
+    
+        $errorMessage = addslashes($e->getMessage());
+    
+        return response()->json([
+            'error' => true,
+            'message' => $e->getMessage(),
+            'script' => "<script>alert('Error: " . $errorMessage . "');</script>",
+        ]);
+    }
     }
 
 }

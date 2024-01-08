@@ -234,12 +234,12 @@
                             <tr>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
+                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
                                 <th style="min-width:150px;">EMAIL</th>
                                 <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
                                 <th style="min-width:150px;">UNIVERSITAS</th>
-                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -540,8 +540,11 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('/informasi/kandidat/$item->id_lowongan') }}?type=" + idElement;
-
+            let idLowongan = '{{$lowongan->id_lowongan}}';
+            let url = `{{ url('/informasi/kandidat/${idLowongan}/show') }}?type=` + idElement;
+            // console.log(idElement);
+            // console.log(url);
+            // console.log(idLowongan);
 
 
             $(this).DataTable({
@@ -551,29 +554,40 @@
                 deferRender: true,
                 type: 'GET',
                 columns: [{
-                        data: "DT_RowIndex"
+                        data: "DT_RowIndex",
+                        name: 'nomor'
                     },
                     {
-                        data: "namaindustri"
+                        data: null,
+                        name: 'combined_column',
+                        render: function(data, type, row) {
+                            return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
+                        }
                     },
                     {
-                        data: "notelpon"
+                        data: "tanggaldaftar",
+                        name: 'tanggal_daftar'
+                    },
+                    {
+                        data: "mahasiswa.nohpmhs",
+                        name: 'nohp'
                     },
 
                     {
-                        data: "email"
+                        data: "mahasiswa.emailmhs",
+                        name: 'email'
                     },
                     {
-                        data: "prodi"
+                        data: "mahasiswa.prodi.namaprodi",
+                        name: 'prodi'
                     },
                     {
-                        data: "fakultas"
+                        data: "mahasiswa.fakultas.namafakultas",
+                        name: 'fakultas'
                     },
                     {
-                        data: "universitas"
-                    },
-                    {
-                        data: "tanggaldaftar"
+                        data: "mahasiswa.univ.namauniv",
+                        name: 'univ'
                     },
                     {
                         data: "status"

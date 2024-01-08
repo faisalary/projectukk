@@ -13,7 +13,6 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-
         $role = [
             [
                 //lkm
@@ -41,7 +40,11 @@ class PermissionSeeder extends Seeder
                     'approval.page',
                     'can.view.data.table',
                     'title.info.lowongan.admin',
-                    'ubah.lowongan.admin'
+                    'ubah.lowongan.admin',
+                    'role-list',
+                    'role-create',
+                    'role-edit',
+                    'role-delete'
                 ]
             ],
             [
@@ -66,7 +69,7 @@ class PermissionSeeder extends Seeder
                     'delete.data.table',
                     'button.tnglbts.mitra',
                     'title.info.lowongan.mitra',
-                    'ubah.lowongan.mitra'
+                    'ubah.lowongan.mitra',
                 ]
             ],
             [

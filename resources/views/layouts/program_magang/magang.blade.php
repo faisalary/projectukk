@@ -3,7 +3,6 @@
 @section('page_style')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
 <style>
   .hidden {
     display: none;
@@ -76,41 +75,51 @@
     outline-offset: -2px;
   }
 
-  .form-check-input:checked, .form-check-input[type=checkbox]:indeterminate {
+  .form-check-input:checked,
+  .form-check-input[type=checkbox]:indeterminate {
     background-color: #4EA971 !important;
     border-color: #4EA971 !important;
-}
+  }
+
+  .light-style .flatpickr-input[readonly],
+  .light-style .flatpickr-input~.form-control[readonly] {
+    background: #F8F8F8
+  }
+
+  .light-style .select2-container--default .select2-selection--single {
+    width: 530px;
+  }
 </style>
 
 @endsection
 
 @section('main')
-<div class="row" style=" min-height:10px; background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
-  <div class="col-2 ms-5"></div>
-  <div class="col-3 mt-5">
-    <div class="input-group input-group-merge">
-      <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-      <input type="text" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
-    </div>
-  </div>
-  <div class="col-3 mt-5">
-    <div class="input-group input-group-merge">
-      <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-map-pin"></i></span>
-      <select class="select2 form-control" data-placeholder="Pilih lokasi Magang" aria-describedby="basic-addon-search31">
-        <option disabled selected> Lokasi Magang </option>
-        <option> Bandung </option>
-        <option> Jakarta </option>
-        <option> Medan </option>
-        <option> Surabaya </option>
-        <option> Yogyakarta </option>
-      </select>
-    </div>
-  </div>
-  <div class="col-2 mt-5">
-    <button class="btn btn-success" type="submit" style="width: 160px">Cari sekarang</button>
-  </div>
-  <div class="col-2"></div>
+<div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
 
+  <div class="row mt-5 mb-3" style="margin-left:70px;">
+    <div class="col-5">
+      <div class="input-group input-group-merge">
+        <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+        <input type="text" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="input-group input-group-merge">
+        <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-map-pin"></i></span>
+        <select class="select2 form-control" data-placeholder="Pilih lokasi Magang" aria-describedby="basic-addon-search31">
+          <option disabled selected> Lokasi Magang </option>
+          <option> Bandung </option>
+          <option> Jakarta </option>
+          <option> Medan </option>
+          <option> Surabaya </option>
+          <option> Yogyakarta </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-success" type="submit">Cari sekarang</button>
+    </div>
+  </div>
   <div class="row mt-4 mb-4">
     <div class="col-1 ms-5"></div>
     <div class="col-2">
@@ -159,11 +168,11 @@
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
-           <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Berbayar
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Berbayar
           </li>
 
           <li class="ps-2 pe-5">
-           <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Tidak Berbayar
+            <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Tidak Berbayar
           </li>
         </ul>
       </div>
@@ -205,8 +214,6 @@
   </div>
 </div>
 
-
-
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="sec-title text-start mb-5 mt-4">
     <h4 class="">Magang Fakultas (1 & 2 Semester)</h4>
@@ -245,35 +252,35 @@
     </div>
     <div class="col-md-6 col-lg-4 mb-3">
       <a href="/detail/lowongan/magang" style="color: #6f6b7d; text-decoration:none;">
-      <div class="card">
-        <div class="card-body">
-          <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
-            <div class="col-3 text-left">
-              <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
-              </figure>
+        <div class="card">
+          <div class="card-body">
+            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+              <div class="col-3 text-left">
+                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                </figure>
+              </div>
+              <div class="col-6 ms-3 ">
+                <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
+                <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+              </div>
+              <div class="col-2">
+                <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px; color:#4ea971;"></i>
+              </div>
             </div>
-            <div class="col-6 ms-3 ">
-              <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;"> Human Resources</h5>
-              <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
-            </div>
-            <div class="col-2">
-              <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px; color:#4ea971;"></i>
-            </div>
-          </div>
-          <div class="border"></div>
-          <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
-          <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
-          <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
-          <div class="row">
-            <div class="col-6">
-              <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
-            </div>
-            <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
-              <div class="location"> 8 hari lalu</div>
+            <div class="border"></div>
+            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesis</div>
+            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
+            <div class="row">
+              <div class="col-6">
+                <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+              </div>
+              <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                <div class="location"> 8 hari lalu</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </a>
     </div>
     <div class="col-md-6 col-lg-4 mb-3">
@@ -426,7 +433,6 @@
 
 @section('page_script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
 <script>
   $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
     $(this).closest("li").toggleClass("active", this.checked);
@@ -440,13 +446,5 @@
     x.classList.toggle("fa-bookmark");
     x.classList.toggle("fa-bookmark-o");
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#flatpickr-range", {
-      mode: "range",
-      dateFormat: "Y-m-d",
-      // tambahkan opsi atau konfigurasi lain sesuai kebutuhan
-    });
-  });
 </script>
 @endsection
