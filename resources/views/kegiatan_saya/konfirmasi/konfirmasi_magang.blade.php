@@ -23,7 +23,7 @@
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="col-md-12 col-12 mt-3">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lamaran Saya /</span> Pengajuan Surat Pengantar Magang</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Konfirmasi Penerimaan Magang</h4>
     </div>
 
     {{-- Belum melakukan konfirmasi lowongan magang --}}
