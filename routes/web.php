@@ -175,12 +175,11 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
-            Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
         });
-        Route::get('/master-data-email', function() {
-            return view('company.master_data_company.index');
-        });
+        // Route::get('/master-data-email', function() {
+        //     return view('company.master_data_company.index');
+        // });
         Route::prefix('master-email')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
@@ -289,9 +288,9 @@ Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
 });
 
-Route::get('/profile-company', function () {
-    return view('company.profile_company', ['active_menu' => 'profile-company']);
-})->name('profile.company');
+// Route::get('/profile-company', function () {
+//     return view('company.profile_company', ['active_menu' => 'profile-company']);
+// })->name('profile.company');
 
 Route::get('/summary-profile', function () {
     return view('company.summary_profile');

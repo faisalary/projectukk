@@ -33,19 +33,19 @@ class ProfileCompanyController extends Controller
     {
         
 
-            $industri = Industri::create([
-                'namaindustri' => $request->namaindustri,
-                'notelpon' => $request->notelpon,
-                'alamatindustri' => $request->alamatindustri,
-                'description' => $request->description,
-                'email' => $request->email,
-            ]);
+            // $industri = Industri::create([
+            //     'namaindustri' => $request->namaindustri,
+            //     'notelpon' => $request->notelpon,
+            //     'alamatindustri' => $request->alamatindustri,
+            //     'description' => $request->description,
+            //     'email' => $request->email,
+            // ]);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Mitra Data successfully Created!',
-                'url' => url('company/profile-company')
-            ]);
+            // return response()->json([
+            //     'error' => false,
+            //     'message' => 'Mitra Data successfully Created!',
+            //     'url' => url('company/profile-company')
+            // ]);
         
     }
 
@@ -83,7 +83,6 @@ class ProfileCompanyController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Mitra successfully Updated!',
-                'table' => '#table-kelola-mitra3'
             ]);
         } catch (Exception $e) {
             return response()->json([
