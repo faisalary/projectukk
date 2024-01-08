@@ -110,7 +110,7 @@
             <p class="mt-4 mb-0">Pengembang perangkat lunak berpengalaman selama 7 tahun dengan keahlian dalam pengembangan aplikasi web, manajemen proyek, dan kerja tim lintas disiplin.</p>
             <p class="content-new mb-0 mt-0"> Sertifikasi dalam manajemen proyek. Analitis, adaptif, dan berkomitmen pada kemajuan teknologi.</p>
             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-              See more
+              Show more
             </u>
           </div>
           <div class="info-container">
@@ -349,7 +349,7 @@
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          See more
+                          Show more
                         </u>
                       </div>
                     </div>
@@ -371,7 +371,7 @@
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                       <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                       </u>
                     </div>
                   </div>
@@ -411,7 +411,7 @@
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          See more
+                          Show more
                         </u>
                       </div>
                       <div class="d-flex align-items-start mt-3 mb-3">
@@ -441,7 +441,7 @@
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                       <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                       </u>
                     </div>
                     <div class="d-flex align-items-start mt-3 mb-3">
@@ -1098,10 +1098,10 @@
     $(".show_hide_new").on("click", function() {
       var content = $(this).prev('.content-new');
       content.slideToggle(100);
-      if ($(this).text().trim() == "See more") {
-        $(this).text("See less");
+      if ($(this).text().trim() == "Show more") {
+        $(this).text("Show less");
       } else {
-        $(this).text("See more");
+        $(this).text("Show more");
       }
     });
   });
