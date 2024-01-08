@@ -4,7 +4,15 @@
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
     <style>
-
+        .form-error {
+            color: red;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: #4EA971;
+        }
+        .bs-stepper .step.active .bs-stepper-circle {
+            background-color: #4EA971
+        }
     </style>
 @endsection
 
@@ -18,18 +26,16 @@
                             Lowongan Magang
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/halaman-lowongan-magang" class="text-secondary">Kelola Magang</a>
+                            <a href="/kelola/lowongan" class="text-secondary">Kelola Magang</a>
                         </li>
                         <li class="breadcrumb-item active">Edit Lowongan Magang</li>
                     </ol>
                 </h4>
             </nav>
-            <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
         </div>
 
         <!-- Validation Wizard -->
         <div class="modal-body">
-
             <div class="col-12 mb-4">
                 <div id="wizard-validation" class="bs-stepper mt-2">
                     <div class="bs-stepper-header" style="justify-content: center">
@@ -68,14 +74,15 @@
                         </div>
                     </div>
                     <div class="bs-stepper-content">
-                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST" action="{{ route('lowongan-magang.store') }}">
+                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
+                            action="{{ route('lowongan-magang.store') }}">
                             @csrf
                             <!-- Account Details -->
                             <div id="account-details-validation" class="content">
                                 <div class="content-header mb-3">
                                     <h6 class="mb-0">Detail Lowongan</h6>
                                 </div>
-                                {{-- <div class="row g-3">
+                                <div class="row g-3">
                                     <div class="col-lg-12 col-sm-6">
                                         <label class="form-label" for="jenismagang">Jenis Magang<span
                                                 class="text-danger">*</span></label>
@@ -86,19 +93,16 @@
                                                 <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
                                             @endforeach
                                         </select>
-                                    </div> --}}
-
+                                    </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="posisi" class="form-label">Posisi<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="posisi" name="posisi"
-                                            placeholder="Masukan Posisi Pekerjaan" />
+                                        <input type="text" class="form-control" id="posisi" name="posisi" />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="kuota" class="form-label">Kuota Penerimaan<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="kuota" name="kuota"
-                                            placeholder="Masukkan Kuota Penerimaan" />
+                                        <input type="text" class="form-control" id="kuota" name="kuota" />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span
@@ -174,8 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <<div class="col-lg-12 col-sm-6">
+                                    <div class="col-lg-12 col-sm-6">
                                         <label for="keterampilan" class="form-label">Keterampilan<span
                                                 class="text-danger">*</span></label>
                                         <select name="keterampilan" id="keterampilan" multiple="multiple"
@@ -185,179 +188,147 @@
                                             <option value="PHP Nativ">Leadership</option>
                                             <option value="Sketch">Laravel</option>
                                         </select>
-                                </div>
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="pelaksanaan" class="form-label">Pelaksanaan Magang<span
-                                            class="text-danger">*</span></label>
-                                    <div class="col mt-2">
-                                        <div class="form-check form-check-inline">
-                                            <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                type="radio" value="0" />
-                                            <label class="form-check-label" for="pelaksanaan">Online</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                type="radio" value="1" />
-                                            <label class="form-check-label" for="pelaksanaan">Onsite</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="pelaksanaan" id="pelaksanaan" class="form-check-input "
-                                                type="radio" value="2" />
-                                            <label class="form-check-label" for="pelaksanaan">Hybird</label>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="gaji" class="form-label d-block">Uang
-                                        Saku
-                                        <span class="text-danger">*</span></label>
-                                    <div class="col mt-2">
-                                        <div class="form-check form-check-inline">
-                                            <input name="gaji" id="gaji"class="form-check-input" type="radio"
-                                                value="1" />
-                                            <label class="form-check-label" for="gaji">Ya</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="gaji" id="gaji" class="form-check-input" type="radio"
-                                                value="0" />
-                                            <label class="form-check-label" for="gaji">Tidak</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-sm-6">
-                                    <label class="form-label" for="nominal">Nominal Uang Saku<span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="nominal" id="nominal" class="form-control" />
-                                </div>
-
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="benefit" class="form-label">Benefits (Addtional)<span
-                                            class="text-danger">*</span></label>
-                                    <textarea class="form-control" rows="2" id="benefit" name="benefit"
-                                        placeholder="Masukan kualifikasi mahasiswa"></textarea>
-                                </div>
-
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="lokasi" class="form-label">Lokasi Penempatan<span
-                                            class="text-danger">*</span></label>
-                                    <select name="lokasi" id="lokasi" multiple="multiple"
-                                        class="select2-multiple form-select wizard-required"
-                                        data-placeholder="Masukan Lokasi Pekerjaan">
-                                        <option value="010bccc8-9daf-11ee-bdcc-70665517fcc8">Bandung</option>
-                                        <option value="010c0aea-9daf-11ee-bdcc-70665517fcc8">Jakarta</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-
-                                <div class="col-lg-12 col-sm-6">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="flex: 1;">
-                                            <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
-                                                <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="tanggal"
-                                                name="tanggal" placeholder="Masukan Tanggal Ditayangkan" />
-                                        </div>
-                                        <div class = "mt-3"
-                                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                                        </div>
-                                        <div style="flex: 1;">
-                                            <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan
-                                                <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="tanggalakhir"
-                                                name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="durasimagang" class="form-label">Durasi Magang<span
-                                            class="text-danger">*</span></label>
-                                    <select name="durasimagang" id="durasimagang" multiple="multiple"
-                                        class="select2-multiple form-select wizard-required"
-                                        data-placeholder="Pilih Durasi Magang">
-                                        <option value="1">1 Semester</option>
-                                        <option value="2">2 Semester</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-
-                                <div class="col-lg-12 col-sm-6">
-                                    <label for="tahapan" class="form-label">Tahapan
-                                        Magang<span class="text-danger">*</span></label>
-                                    <div class="col mt-2">
-                                        <div class="form-check form-check-inline">
-                                            <input name="tahapan" class="form-check-input" type="radio"
-                                                value="0" />
-                                            <label class="form-check-label" for="tahapan">1</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="tahapan" class="form-check-input" type="radio"
-                                                value="1" />
-                                            <label class="form-check-label" for="tahapan">2</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="tahapan" class="form-check-input " type="radio"
-                                                value="2" />
-                                            <label class="form-check-label" for="tahapan">3</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-between">
-                                    <button class="btn btn-label-secondary btn-prev">
-                                        <i class="ti ti-arrow-left me-sm-1 me-0"></i>
-                                        <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                                    </button>
-                                    <button class="btn btn-success btn-next" type="button">
-                                        <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
-                                        <i class="ti ti-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Social Links -->
-                            <div id="social-links-validation" class="content">
-                                <div class="content-header mb-3">
-                                    <h4 class="mb-0">Proses Seleksi</h4>
-                                </div>
-                                <div class="row g-3">
                                     <div class="col-lg-12 col-sm-6">
-                                        <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
+                                        <label for="pelaksanaan" class="form-label">Pelaksanaan Magang<span
                                                 class="text-danger">*</span></label>
-                                        <select id="select2Disabled" class="select2 form-select" disabled>
-                                            <option value="1"selected>Seleksi Tahap 1</option>
-                                            <option value="2">Option2</option>
-                                            <option value="3">Option3</option>
+                                        <div class="col mt-2">
+                                            <div class="form-check form-check-inline">
+                                                <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
+                                                    type="radio" value="0" />
+                                                <label class="form-check-label" for="pelaksanaan">Online</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
+                                                    type="radio" value="1" />
+                                                <label class="form-check-label" for="pelaksanaan">Onsite</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input name="pelaksanaan" id="pelaksanaan" class="form-check-input "
+                                                    type="radio" value="2" />
+                                                <label class="form-check-label" for="pelaksanaan">Hybird</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="gaji" class="form-label d-block">Uang Saku<span
+                                                class="text-danger">*</span></label>
+                                        <div class="col mt-2">
+                                            <div class="form-check form-check-inline">
+                                                <input name="gaji" id="gaji"class="form-check-input"
+                                                    type="radio" value="1" />
+                                                <label class="form-check-label" for="gaji">Ya</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input name="gaji" id="gaji" class="form-check-input"
+                                                    type="radio" value="0" />
+                                                <label class="form-check-label" for="gaji">Tidak</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label class="form-label" for="nominal">Nominal Uang Saku<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="nominal" id="nominal" class="form-control" />
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="benefit" class="form-label">Benefits (Addtional)<span
+                                                class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="2" id="benefit" name="benefit"
+                                            placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="lokasi" class="form-label">Lokasi Penempatan<span
+                                                class="text-danger">*</span></label>
+                                        <select name="lokasi" id="lokasi" multiple="multiple"
+                                            class="select2-multiple form-select wizard-required"
+                                            data-placeholder="Masukan Lokasi Pekerjaan">
+                                            <option value="010bccc8-9daf-11ee-bdcc-70665517fcc8">Bandung</option>
+                                            <option value="010c0aea-9daf-11ee-bdcc-70665517fcc8">Jakarta</option>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="col-lg-12 col-sm-6">
-                                        <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
-                                                class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
-                                            placeholder="Masukan Deskripsi Tahapan"></textarea>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-6 mb-2">
-                                            <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan<span
-                                                    class="text-danger">*</span></label>
-                                            <input class="form-control" type="date" id="mulai" name="mulai[]">
-                                        </div>
 
-                                        <div class="col-6 mb-2">
-                                            <label for="mulai" class="form-label">Tanggal Akhir Pelaksanaan<span
-                                                    class="text-danger">*</span></label>
-                                            <input class="form-control" type="date" id="mulai" name="akhir[]">
+                                    <div class="col-lg-12 col-sm-6">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="flex: 1;">
+                                                <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control wizard-required" type="date" id="tanggal"
+                                                    name="tanggal" placeholder="Masukan Tanggal Ditayangkan" />
+                                            </div>
+                                            <div class = "mt-3"
+                                                style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control wizard-required" type="date"
+                                                    id="tanggalakhir" name="tanggalakhir"
+                                                    placeholder="Masukan Tanggal Diturunkan" />
+                                            </div>
                                         </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="durasimagang" class="form-label">Durasi Magang<span
+                                                class="text-danger">*</span></label>
+                                        <select name="durasimagang" id="durasimagang" multiple="multiple"
+                                            class="select2-multiple form-select wizard-required"
+                                            data-placeholder="Pilih Durasi Magang">
+                                            <option value="1">1 Semester</option>
+                                            <option value="2">2 Semester</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="tahapan" class="form-label">Tahapan
+                                            Magang<span class="text-danger">*</span></label>
+                                        <div class="col mt-2">
+                                            <div class="form-check form-check-inline">
+                                                <input name="tahapan" class="form-check-input" type="radio"
+                                                    value="0" />
+                                                <label class="form-check-label" for="tahapan">1</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input name="tahapan" class="form-check-input" type="radio"
+                                                    value="1" />
+                                                <label class="form-check-label" for="tahapan">2</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input name="tahapan" class="form-check-input " type="radio"
+                                                    value="2" />
+                                                <label class="form-check-label" for="tahapan">3</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev">
+                                            <i class="ti ti-arrow-left me-sm-1 me-0"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button class="btn btn-success btn-next" type="button">
+                                            <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                            <i class="ti ti-arrow-right"></i>
+                                        </button>
                                     </div>
                                 </div>
-                                <div id="tahap-lanjut-3" style="display: none;">
-                                    <div class="mb-2">
-                                        <hr>
+                                <!-- Social Links -->
+                                <div id="social-links-validation" class="content">
+                                    <div class="content-header mb-3">
+                                        <h4 class="mb-0">Proses Seleksi</h4>
+                                    </div>
+                                    <div class="row g-3">
                                         <div class="col-lg-12 col-sm-6">
                                             <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
                                                 Lanjut<span class="text-danger">*</span></label>
                                             <select id="select2Disabled" class="select2 form-select" disabled>
-                                                <option value="1">Seleksi Tahap 1</option>
-                                                <option value="2">Seleksi Tahap 2</option>
-                                                <option value="3" selected>Seleksi Tahap 3</option>
+                                                <option value="1"selected>Seleksi Tahap 1</option>
+                                                <option value="2">Option2</option>
+                                                <option value="3">Option3</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-12 col-sm-6">
@@ -366,30 +337,115 @@
                                             <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
                                                 placeholder="Masukan Deskripsi Tahapan"></textarea>
                                         </div>
-                                        <div class="row mt-3">
-                                            <div class="col-6 mb-2">
-                                                <label for="mulai" class="form-label">Tanggal Mulai
-                                                    Pelaksanaan<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="date" id="mulai"
-                                                    name="mulai[]">
-                                            </div>
-
-                                            <div class="col-6 mb-2">
-                                                <label for="mulai" class="form-label">Tanggal Akhir
-                                                    Pelaksanaan<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="date" id="mulai"
-                                                    name="akhir[]">
+                                        <div class="col-lg-12 col-sm-6 mt-3">
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: center;">
+                                                <div style="flex: 1;">
+                                                    <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
+                                                        <span class="text-danger">*</span></label>
+                                                    <input class="form-control wizard-required" type="date"
+                                                        id="mulai[]" name="mulai" />
+                                                </div>
+                                                <div class = "mt-3"
+                                                    style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                                </div>
+                                                <div style="flex: 1;">
+                                                    <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
+                                                        <span class="text-danger">*</span></label>
+                                                    <input class="form-control wizard-required" type="date"
+                                                        id="akhir[]" name="akhir" />
+                                                </div>
                                             </div>
                                         </div>
+                                        <div id="tahap-lanjut-2" style="display: none;">
+                                            <hr>
+                                            <div class="col-lg-12 col-sm-6">
+                                                <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
+                                                    Lanjut<span class="text-danger">*</span></label>
+                                                <select id="select2Disabled" class="select2 form-select" disabled>
+                                                    <option value="1">Seleksi Tahap 1</option>
+                                                    <option value="2" selected>Seleksi Tahap 2</option>
+                                                    <option value="3">Option3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-6 mt-3">
+                                                <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
+                                                        class="text-danger">*</span></label>
+                                                <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
+                                                    placeholder="Masukan Deskripsi Tahapan"></textarea>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-6 mt-3">
+                                                <div
+                                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <div style="flex: 1;">
+                                                        <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
+                                                            <span class="text-danger">*</span></label>
+                                                        <input class="form-control wizard-required" type="date"
+                                                            id="mulai[]" name="mulai" />
+                                                    </div>
+                                                    <div class = "mt-3"
+                                                        style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                                    </div>
+                                                    <div style="flex: 1;">
+                                                        <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
+                                                            <span class="text-danger">*</span></label>
+                                                        <input class="form-control wizard-required" type="date"
+                                                            id="akhir[]" name="akhir" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tahap-lanjut-3" style="display: none;">
+                                            <div class="mb-2">
+                                                <hr>
+                                                <div class="col-lg-12 col-sm-6">
+                                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
+                                                        Lanjut<span class="text-danger">*</span></label>
+                                                    <select id="select2Disabled" class="select2 form-select" disabled>
+                                                        <option value="1">Seleksi Tahap 1</option>
+                                                        <option value="2">Seleksi Tahap 2</option>
+                                                        <option value="3" selected>Seleksi Tahap 3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-12 col-sm-6">
+                                                    <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
+                                                            class="text-danger">*</span></label>
+                                                    <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
+                                                        placeholder="Masukan Deskripsi Tahapan"></textarea>
+                                                </div>
+                                                <div class="col-lg-12 col-sm-6 mt-3">
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <div style="flex: 1;">
+                                                            <label for="mulai" class="form-label">Tanggal Mulai
+                                                                Pelaksanaan
+                                                                <span class="text-danger">*</span></label>
+                                                            <input class="form-control wizard-required" type="date"
+                                                                id="mulai[]" name="mulai[]" />
+                                                        </div>
+                                                        <div class = "mt-3"
+                                                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                                        </div>
+                                                        <div style="flex: 1;">
+                                                            <label for="akhir" class="form-label">Tanggal Akhir
+                                                                Pelaksanaan
+                                                                <span class="text-danger">*</span></label>
+                                                            <input class="form-control wizard-required" type="date"
+                                                                id="akhir[]" name="akhir" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button class="btn btn-label-secondary btn-prev">
+                                                <i class="ti ti-arrow-left me-sm-1 me-0"></i>
+                                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                            </button>
+                                            <button type="submit" class="btn btn-success btn-submit"
+                                                id="modal-button">Submit</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-between">
-                                    <button class="btn btn-label-secondary btn-prev">
-                                        <i class="ti ti-arrow-left me-sm-1 me-0"></i>
-                                        <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-success btn-submit"
-                                        id="modal-button">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -397,23 +453,11 @@
                 </div>
             </div>
         </div>
-    <!-- /Validation Wizard -->
-@endsection
+        <!-- /Validation Wizard -->
+    @endsection
 
-
-{{-- <div class="mb-3 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success">Simpan</button>
-                                </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endsection --}}
-
-@section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
-    <script src="../../app-assets/js/forms-tagify.js"></script>
-@endsection
+    @section('page_script')
+        <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+        <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+        <script src="../../app-assets/js/app-stepper.js"></script>
+    @endsection

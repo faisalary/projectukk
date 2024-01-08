@@ -8,13 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LowonganMagangRequest;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Fakultas;
 use App\Models\ProgramStudi;
 use App\Models\TahunAkademik;
 use App\Models\JenisMagang;
-use App\Models\Industri;
 use App\Models\Lokasi;
 use App\Models\PendaftaranMagang;
+use App\Models\Seleksi;
 use Illuminate\Routing\Route;
 
 class LowonganMagangController extends Controller
@@ -39,12 +38,6 @@ class LowonganMagangController extends Controller
         return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowonganmagang', 'prodi', 'tahun', 'jenismagang', 'lokasi', 'pendaftar'));
     }
 
-    // public function detail()
-    // {
-    //     $lowonganmagang = LowonganMagang::all();
-    //     return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowonganmagang'));
-    // }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -61,12 +54,11 @@ class LowonganMagangController extends Controller
     public function store(LowonganMagangRequest $request)
     {
         try {
-            for ($i = 0; $i <= $request->tahapan; $i++) {
                 $lowonganmagang = LowonganMagang::create([
                     'id_jenismagang' => $request->jenismagang,
                     'intern_position' => $request->posisi,
                     'kuota' => $request->kuota,
-                    'deskripsi' => $request->deskripsi[$i],
+                    'deskripsi' => $request->deskripsi,
                     'requirements' => $request->kualifikasi,
                     'jenjang' => $request->jenjang,
                     'keterampilan' => $request->keterampilan,
@@ -77,9 +69,18 @@ class LowonganMagangController extends Controller
                     'enddate' => $request->tanggalakhir,
                     'durasimagang' => $request->durasimagang,
                     'tahapan_seleksi' => $request->tahapan,
-                    'created_at' => $request->tahapan,
+                    // 'created_at' => $request->tahapan,
                 ]);
-            }
+
+                $i = 0;
+                foreach ((array) $request->mulai as $m) {
+                    $Seleksi = Seleksi::create([
+                        'mulai' => $request->mulai[$i],
+                        'akhir' => $request->akhir[$i],
+                        'deskripsiseleksi' => $request->deskripsiseleksi[$i],
+                    ]);
+                    $i++;
+                }
 
             return response()->json([
                 'error' => false,
@@ -97,9 +98,10 @@ class LowonganMagangController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(Request $request)
     {
-        $lowonganmagang = LowonganMagang::query();
+        $lowongan = LowonganMagang::query();
         // if ($request->type) {
         //     if ($request->jenismagang != null) {
         //         $lowonganmagang->where("id_jenismagang", $request->jenismagang, $request->type);
@@ -118,7 +120,7 @@ class LowonganMagangController extends Controller
         return DataTables::of($lowongan)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
+                if ($row->status == 0) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
@@ -128,14 +130,12 @@ class LowonganMagangController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                // $btn = "<a href='detail/kelola/lowongan{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                // <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='kelola/lowong/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-
-                $btn = "<a href='{{ route('kelola/lowongan/edit') }}' data-id='{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
-                <a href='detail/kelola/lowongan {$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a href='". url('kelola/lowongan/edit') ."' data-id='{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
+                <a href='".url('kelola/lowongan/detail') ."' data-id='{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
                 
                 return $btn;
+
             })
             ->addColumn('tanggal', function ($row) {
                 return $row->startdate . " <br> " . $row->enddate;
@@ -150,7 +150,14 @@ class LowonganMagangController extends Controller
      */
     public function edit($id)
     {
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang');
+        $jenismagang = JenisMagang::all();
+        $lokasi = Lokasi::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi'));
+    }
+
+    public function detail()
+    {
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
     }
 
     /**

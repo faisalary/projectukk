@@ -233,8 +233,6 @@
         $('.table').each(function() {
             let idElement = $(this).attr('id');
             let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
-            // console.log(idElement);
-            // console.log(url);
 
             $(this).DataTable({
                 ajax: url,
@@ -296,7 +294,6 @@
             $("#modal-button").html("Save Data");
             $('#modalTambahLowongan form #tahun').val('').trigger('change');
             $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
-            // $('#modalTambahLowongan form #pendaftar').val('').trigger('change');
         });
 
         function edit(e) {
@@ -308,7 +305,7 @@
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    $("#modal-title").html("Edit LowonganMangang");
+                    $("#modal-title").html("Edit Lowongan Mangang");
                     $("#modal-button").html("Update Data")
                     $('#modalTambahLowongan form').attr('action', action);
                     $('#jenismagang').val(response.id_jenismagang).change();
@@ -325,6 +322,7 @@
                     $('#tanggalakhir').val(response.enddate);
                     $('#durasimagang').val(response.durasimagang);
                     $('#tahapan').val(response.tahapan_seleksi);
+
                     $('#modalTambahLowongan').modal('show');
                 }
             });

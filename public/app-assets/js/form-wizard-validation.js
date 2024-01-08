@@ -155,6 +155,13 @@
                         }
                     }
                 },
+                tanggalakhir: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Tanggal Akhir must be filled'
+                        }
+                    }
+                },
             
                 durasimagang: {
                     validators: {
@@ -223,37 +230,7 @@
                 //             message: 'Deskripsi must be filled'
                 //         },
                 //     }
-                // },
-                formValidationFacebook: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Facebook URL is required'
-                        },
-                        uri: {
-                            message: 'The URL is not proper'
-                        }
-                    }
-                },
-                formValidationGoogle: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Google URL is required'
-                        },
-                        uri: {
-                            message: 'The URL is not proper'
-                        }
-                    }
-                },
-                formValidationLinkedIn: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The LinkedIn URL is required'
-                        },
-                        uri: {
-                            message: 'The URL is not proper'
-                        }
-                    }
-                }
+                // }
             },
             plugins: {
                 trigger: new FormValidation.plugins.Trigger(),

@@ -28,6 +28,8 @@ class LowonganMagang extends Model
         });
     }
 
+    
+
     public function industri()
     {
         return $this->belongsTo(Industri::class, 'id_industri');

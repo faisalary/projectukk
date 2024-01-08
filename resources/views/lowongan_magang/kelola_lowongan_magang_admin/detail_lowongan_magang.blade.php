@@ -122,8 +122,7 @@
                     </li>
                     <li>
                         Support employee Performance Evaluation process.
-                    </li><span class="dots">.... </span>
-                    <span class="hiding">
+                    </li><span class="content-new mb-0">
                         <li>
                             Support Talent Management and Succession Planning function.
                         </li>
@@ -143,8 +142,9 @@
                             Support other HR Indonesia operations activities.
                         </li>
                     </span>
-                    <a href="#" class="read-more">Show More</a>
-                    <a href="#" class="show-less hiding">Show Less</a>
+                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                        Show more
+                    </u>
                 </p>
 
 
@@ -168,8 +168,7 @@
                     <li>
                         Has experience using Workday will be an advantage
 
-                    </li><span class="dots">.... </span>
-                    <span class="hiding">
+                    </li><span class="content-new mb-0">
                         <li>
                             Good command of spoken and written English.
                         </li>
@@ -188,8 +187,9 @@
                             Willing to work in Cikampek area.
                         </li>
                     </span>
-                    <a href="#" class="read-more">Show More</a>
-                    <a href="#" class="show-less hiding">Show Less</a>
+                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                        Show more
+                    </u>
                 </p>
             </ul>
         </div>
@@ -267,18 +267,26 @@
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 
     <script>
-        $('.hiding').addClass('hide-me');
-
-        $('.read-more').on('click', function() {
-            $(this).addClass('hide-me');
-            $('.hiding').toggle();
-            $('.dots').toggle();
-        });
-        $('.show-less').on('click', function() {
-            $(this).removeClass('hide-me');
-            $('.read-more').removeClass('hide-me');
-            $('.hiding').toggle();
-            $('.dots').toggle();
+        $(document).ready(function() {
+            $(".content-new").hide();
+            $(".show_hide_new").on("click", function() {
+                var content = $(this).prev('.content-new');
+                content.slideToggle(100);
+                if ($(this).text().trim() == "Show more") {
+                    $(this).text("Show less");
+                } else {
+                    $(this).text("Show more");
+                }
+            });
         });
     </script>
 @endsection
+<div>
+    <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and
+        advisory company,</p>
+    <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial
+        sectors all over the world.</p>
+    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+        Show more
+    </u>
+</div>
