@@ -252,8 +252,8 @@ Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
 });
 
-Route::get('/apply_alert', function () {
-    return view('apply.apply_alert');
+Route::get('/apply', function () {
+    return view('apply.apply');
 });
 
 Route::get('/magang_fakultas', function () {
@@ -319,14 +319,32 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-
-Route::get('/anggota/tim', function () {
-    return view('company.anggota_tim.index');
-});
 Route::get('/kegiatan_saya/lamaran_saya', function () {
     return view('kegiatan_saya.lamaran_saya.index');
 });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
+});
+Route::get('/detail_perusahaan', function () {
+    return view('landingpage.detail_perusahaan');
+});
+
+Route::get('/detail-mahasiswa', function () {
+    return view('company.jadwal_seleksi.detail_seleksi');
+});
+Route::get('/detail_perusahaan', function () {
+    return view('perusahaan.detail_perusahaan');
+});
+Route::get('/daftar_perusahaan', function () {
+    return view('perusahaan.daftar_perusahaan');
+});
+Route::get('/lowongan/magang', function () {
+    return view('perusahaan.lowongan');
+});
+Route::get('/konfirmasi/magang', function () {
+    return view('konfirmasi.konfirmasi_magang');
+});
+Route::get('/pratinjau/diri', function () {
+    return view('apply.pratinjau');
 });
