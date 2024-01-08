@@ -31,7 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'isAdmin',
         'id_industri',
         'nim',
-        'penanggung_jawab'
     ];
 
     /**
@@ -59,5 +58,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function industri(){
         return $this->belongsTo(Industri::class,'id_industri');
+        return $this->belongsTo(Industri::class,'penanggung_jawab');
     }
 }

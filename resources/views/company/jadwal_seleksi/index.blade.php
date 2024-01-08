@@ -123,28 +123,6 @@
                 </div>
             </div>
         </div>
-        <form class="default-form" method="POST" action="{{ url('jadwal-seleksi/store?updateMassive=true') }}">
-            @csrf
-            <input type="hidden" name="checked[]" id="checkval">
-            <button style="display: none;" type="submit" id="gotcha"></button>
-            <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-4">
-                <div class="dropdown bootstrap-select">
-                    <select id="selectpickerBasic" class="selectpicker " data-style="btn-default" name="hayolo">
-                        <option disabled selected>Ubah Status Kandidat</option>
-                        <option value="0">Belum di Proses</option>
-                        <option value="1">Ditolak</option>
-                        <option value="2">Diterima</option>
-                        {{-- <option value="3">Sudah Seleksi Tahap 2</option>
-                        <option value="4">Belum Seleksi Tahap 3</option>
-                        <option value="5">Sudah Seleksi Tahap 3</option> --}}
-                    </select>
-                </div>
-                <div class="ps-3">
-                    <button class="btn btn-success waves-effect" type="button" onclick="terapkan()"><i
-                            class="tf-icons ti ti-checks me-2"></i>Terapkan</button>
-                </div>
-            </div>
-        </form>
     </div>
 
     <div class="tab-content p-0">
@@ -158,8 +136,8 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL SELEKSI</th>
-                                <th style="min-width: 100px;">PROSES</th>
+                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -179,7 +157,8 @@
                                 <th></th>
                                 <th>NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL SELEKSI</th>
+                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -218,13 +197,6 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
 
     <script>
-        let checked = [];
-
-        function terapkan() {
-            let val = $(".checkbox1:checkbox:checked").map((_, el) => el.value).get();
-            $('#checkval').val(val);
-            $('#gotcha').click();
-        }
         $("#modalTambahJadwal").on("hide.bs.modal", function() {
             $(".modal-title").html("Tambah Jadwal Seleksi Lanjutan");
             $("#modal-button").html("Save Data");
@@ -273,7 +245,7 @@
                 }
             });
         }
-
+        const tahap = [0,1,2];
         tahap.forEach((no) => {
             $('#table-jadwal-seleksi-tahap' + no).DataTable({
 
@@ -290,20 +262,7 @@
                 processing: true,
                 destroy: true,
                 columns: [{
-                        data: "id_seleksi"
-                    },
-                    {
-                        data: "checkbox",
-                        orderable: false,
-                        searchable: false,
-                        responsivePriority: 3,
-                        checkboxes: true,
-                        render: function(data) {
-                            return `<input type="checkbox" class="dt-checkboxes form-check-input checkbox1" value="${data}">`;
-                        },
-                        checkboxes: {
-                            selectAllRender: '<input type="checkbox" class="form-check-input">'
-                        }
+                        data: "id_seleksi_lowongan"
                     },
                     {
                         data: "DT_RowIndex"
@@ -313,31 +272,20 @@
                         name: "id_pendaftaran"
                     },
                     {
-                        data: "tglseleksi",
+                        data: "start_date",
                         name: "mulai"
                     },
+                    // {
+                    //     data: "proses",
+                    //     name: "progress"
+                    // },
                     {
-                        data: "proses",
-                        name: "proses"
-                    },
-                    {
-                        data: "statusseleksi"
+                        data: "status_seleksi"
                     },
                     {
                         data: "action"
                     }
-                ],
-                columnDefs: [{
-                    // For Responsive
-                    className: 'control',
-                    orderable: false,
-                    searchable: false,
-                    responsivePriority: 2,
-                    targets: 0,
-                    render: function(data, type, full, meta) {
-                        return '';
-                    }
-                }, ]
+                ]
             });
         })
     </script>

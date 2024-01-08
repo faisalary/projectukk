@@ -83,7 +83,6 @@
         columns: [{
                 data: "DT_RowIndex"
             },
-
             {
                 data: "namajenis"
             },
