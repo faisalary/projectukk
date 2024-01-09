@@ -344,8 +344,13 @@ Route::get('/lowongan/magang', function () {
     return view('perusahaan.lowongan');
 });
 Route::get('/konfirmasi/magang', function () {
-    return view('konfirmasi.konfirmasi_magang');
+    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
 });
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
+});
+
+
+Route::get('/pengajuan/surat', function () {
+    return view('pengajuan_magang.pengajuan_mandiri');
 });

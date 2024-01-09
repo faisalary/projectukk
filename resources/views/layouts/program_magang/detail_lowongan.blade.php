@@ -89,15 +89,21 @@
                 <div class="w-auto">
                     <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
                     <div class="text-end mt-4">
-                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-placement="bottom" data-bs-target="#modalCenter" data-bs-original-title="Laporkan">
-                            <i class="ti ti-flag"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-placement="bottom" data-bs-target="#modalbagikan" data-bs-original-title="Bagikan">
-                            <i class="ti ti-share"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
-                            <i class="ti ti-heart"></i>
-                        </button>
+                        <div class="row">
+                            <div class="col-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Laporkan"><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                    <i class="ti ti-flag"></i>
+                                </button>
+                            </div>
+                            <div class="col-3 ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan "><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan">
+                                    <i class="ti ti-share"></i>
+                                </button>
+                            </div>
+                            <div class="col-3 ms-2">
+                                <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
+                                    <i class="ti ti-heart"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-4"></div>
                     <a href="/apply" type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
@@ -195,7 +201,7 @@
                                         </button>
                                     </div>
                                     <div class="mb-1"></div>
-                                    <button type="submit" class="btn btn-secondary waves-effect waves-light"data-bs-dismiss="modal" aria-label="Close"  style="width: 510px;">
+                                    <button type="submit" class="btn btn-secondary waves-effect waves-light" data-bs-dismiss="modal" aria-label="Close" style="width: 510px;">
                                         Batal
                                     </button>
                                 </div>
