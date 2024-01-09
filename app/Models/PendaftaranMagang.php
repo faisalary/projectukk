@@ -34,16 +34,4 @@ class PendaftaranMagang extends Model
     {
         return $this->belongsTo(TahunAkademik::class, 'id_year_akademik');
     }
-    // public function prodi()
-    // {
-    //     return $this->hasMany(ProgramStudi::class, 'id_prodi');
-    // }
-    // public function univ()
-    // {
-    //     return $this->hasMany(Universitas::class, 'id_univ');
-    // }
-    // public function fakultas()
-    // {
-    //     return $this->hasMany(Fakultas::class, "id_fakultas");
-    // }
 }
