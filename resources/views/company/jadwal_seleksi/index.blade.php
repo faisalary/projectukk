@@ -6,6 +6,12 @@
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -132,11 +138,9 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap0">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="max-width:90px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
                                 <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
@@ -153,11 +157,9 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="max-width:80px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
                                 <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
@@ -174,12 +176,10 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
-                                <th style="min-width:100px;">PROGRESS</th>
+                                <th style="max-width:80px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
+                                <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -262,9 +262,6 @@
                 processing: true,
                 destroy: true,
                 columns: [{
-                        data: "id_seleksi_lowongan"
-                    },
-                    {
                         data: "DT_RowIndex"
                     },
                     {
@@ -292,5 +289,11 @@
 
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>    
+    <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="../../app-assets/js/forms-pickers.js"></script>
 @endsection
