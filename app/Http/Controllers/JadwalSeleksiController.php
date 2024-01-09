@@ -56,8 +56,8 @@ class JadwalSeleksiController extends Controller
                 $endTime = date('H:i', $endTimestamp);
                 $seleksi = Seleksi::create([
                     'id_pendaftaran' => $p->id_pendaftaran,
-                    'start_date' => $startDate . " ". $startTime,
-                    'end_date' => $endDate . " ". $endTime,
+                    'start_date' => $startDate . " " . $startTime,
+                    'end_date' => $endDate . " " . $endTime,
                     'namatahap_seleksi' => "",
                     // 'detail' => $request->tempat,
                     'id_email_tamplate' => $request->subjek,
@@ -102,7 +102,7 @@ class JadwalSeleksiController extends Controller
                 return $data;
             })
             ->addColumn('start_date', function ($seleksi) {
-                $time = $seleksi->start_date . "  " . $seleksi->end_date;
+                $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . $seleksi->start_date . '</span><br> <span class="text-muted">Tanggal Akhir</span><br> <span>' . $seleksi->end_date . '</span>';
                 return $time;
             })
             // ->editColumn('progress', function ($seleksi) {
@@ -123,12 +123,12 @@ class JadwalSeleksiController extends Controller
                 $icon = ($seleksi->statusseleksi) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($seleksi->statusseleksi) ? "secondary" : "success";
 
-                $btn = "<a href='".url('jadwal-seleksi/detail') ."' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                $btn = "<a href='" . url('jadwal-seleksi/detail') . "' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
 
 
                 return $btn;
             })
-            ->rawColumns(['statusseleksi', 'action', 'progress'])
+            ->rawColumns(['statusseleksi', 'action', 'progress', 'start_date'])
 
             // ->toJson();
             ->make(true);
