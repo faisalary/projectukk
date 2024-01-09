@@ -781,6 +781,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
+   
                                         @if($user->roles[0]->name == 'superadmin')
                                         <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')

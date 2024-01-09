@@ -32,6 +32,7 @@ Route::group(['prefix' => 'mitra', 'as' => 'admin.'], function () {
     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
+
 });
 
 require __DIR__ . '/auth.php';
@@ -154,6 +155,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
+
     });
     //kelola-mitra
     Route::prefix('company')->middleware('can:only.lkm')->group(function () {
@@ -327,3 +329,10 @@ Route::get('/logbook-detail', function () {
     return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
 });
 
+Route::get('/cv', function () {
+    return view('mahasiswa.cv', ['active_menu' => 'CV Mahasiswa']);
+});
+
+Route::get('/admin_kandidat', function () {
+    return view('admin_kandidat.admin_kandidat', ['active_menu' => 'admin_kandidat']);
+});
