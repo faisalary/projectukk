@@ -19,10 +19,11 @@ class InformasiKandidatController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->get();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
+        $total = PendaftaranMagang::where('id_lowongan', $id)->count();
         $lowongan = LowonganMagang::find($id);
 
-        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan'));
+        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan', 'total'));
     }
 
 
@@ -45,13 +46,15 @@ class InformasiKandidatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Request $request, $id_lowongan)
     {
 
-        $pendaftar = PendaftaranMagang::query();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id_lowongan);
 
-        if ($request->type) {
-            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("mahasiswa");
+        if ($request->type == "kandidat") {
+            $pendaftar = $pendaftar->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
+        } else if ($request->type) {
+            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
         }
 
         return DataTables::of($pendaftar->get())
@@ -59,7 +62,7 @@ class InformasiKandidatController extends Controller
             ->editColumn('status', function ($pendaftar) {
                 if ($pendaftar->applicant_status == "kandidat") {
                     return "<span class='badge bg-label-secondary me-1'>Belum Proses</span>";
-                } else {
+                } else if ($pendaftar->applicant_status == "screening") {
                     return "<span class='badge bg-label-warning me-1'>Screening</span>";
                 }
                 return null;
