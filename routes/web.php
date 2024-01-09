@@ -30,9 +30,8 @@ Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 Route::group(['prefix' => 'mitra', 'as' => 'admin.'], function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
-    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'showResetForm'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'reset'])->name('update.password');
-
+    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
+    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
 });
 
 require __DIR__ . '/auth.php';
@@ -142,6 +141,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\DosenController::class, 'status'])->name('dosen.status');
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\DosenController::class, 'list_fakultas'])->name('dosen.list_fakultas');
             Route::get('/list-prodi/{id_fakultas}', [App\Http\Controllers\DosenController::class, 'list_prodi'])->name('dosen.list_prodi');
+            Route::post('/import', [App\Http\Controllers\DosenController::class, 'import'])->name('dosen.import');
         });
         Route::prefix('komponen-penilaian')->group(function () {
             Route::get('/', [App\Http\Controllers\KomponenPenilaianController::class, 'index'])->name('komponen-penilaian.index');
@@ -155,11 +155,15 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
-
+        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
+        Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
+        Route::post('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
+        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfigurasiController::class, 'status'])->name('konfigurasi.status');
     });
     //kelola-mitra
-    Route::prefix('company')->middleware('can:only.lkm')->group(function () {
-        Route::prefix('kelola-mitra')->group(function () {
+    Route::prefix('company')->group(function () {
+        Route::prefix('kelola-mitra')->middleware('can:only.lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
             Route::get('/show/{statusapprove}', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
             Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
@@ -169,11 +173,22 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\KelolaMitraController::class, 'approved'])->name('kelola_mitra.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\KelolaMitraController::class, 'rejected'])->name('kelola_mitra.rejected');
         });
-        Route::prefix('profile-company')->group(function () {
+        Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
             Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
         });
+        Route::get('/master-data-email', function() {
+            return view('company.master_data_company.index');
+        });
+        Route::prefix('master-email')->group(function () {
+            Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
+            Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
+            Route::post('/store', [App\Http\Controllers\MasterEmailController::class, 'store'])->name('master_email.store');
+            Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
+            Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
+        }); 
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
@@ -232,7 +247,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
         });
-        Route::get('detail/kelola/lowongan', function() {
+        Route::get('detail/kelola/lowongan', function () {
             return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
         });
     });
@@ -242,8 +257,8 @@ Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
 });
 
-Route::get('/apply_alert', function () {
-    return view('apply.apply_alert');
+Route::get('/apply', function () {
+    return view('apply.apply');
 });
 
 Route::get('/magang_fakultas', function () {
@@ -276,7 +291,7 @@ Route::get('/detail-informasi-dokumen', function () {
 
 Route::get('/profile-company', function () {
     return view('company.profile_company', ['active_menu' => 'profile-company']);
-});
+})->name('profile.company');
 
 Route::get('/summary-profile', function () {
     return view('company.summary_profile');
@@ -295,10 +310,6 @@ Route::prefix('jadwal-seleksi')->group(function () {
 Route::get('/detail/lowongan/magang', function () {
     return view('layouts.program_magang.detail_lowongan');
 });
-Route::get('/konfigurasi', function () {
-    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
-});
-
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
@@ -309,16 +320,38 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-
-Route::get('/anggota/tim', function () {
-    return view('company.anggota_tim.index');
-});
 Route::get('/kegiatan_saya/lamaran_saya', function () {
     return view('kegiatan_saya.lamaran_saya.index');
 });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
+});
+Route::get('/detail_perusahaan', function () {
+    return view('landingpage.detail_perusahaan');
+});
+
+Route::get('/detail-mahasiswa', function () {
+    return view('company.jadwal_seleksi.detail_seleksi');
+});
+Route::get('/detail_perusahaan', function () {
+    return view('perusahaan.detail_perusahaan');
+});
+Route::get('/daftar_perusahaan', function () {
+    return view('perusahaan.daftar_perusahaan');
+});
+Route::get('/lowongan/magang', function () {
+    return view('perusahaan.lowongan');
+});
+Route::get('/konfirmasi/magang', function () {
+    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
+});
+Route::get('/pratinjau/diri', function () {
+    return view('apply.pratinjau');
+});
+
+Route::get('/pengajuan/surat', function () {
+    return view('pengajuan_magang.pengajuan_mandiri');
 });
 
 Route::get('/logbook', function () {

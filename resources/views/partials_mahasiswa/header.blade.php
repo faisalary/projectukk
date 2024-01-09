@@ -1,164 +1,178 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-    data-assets-path="../../app-assets/" data-template="horizontal-menu-template">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../app-assets/" data-template="horizontal-menu-template">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Talentern</title>
+  <title>Talentern</title>
 
-    <meta name="description" content="" />
+  <meta name="description" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../app-assets/img/favicon/favicon.ico" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../app-assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/fontawesome.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/flag-icons.css" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="../../app-assets/vendor/fonts/fontawesome.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/fonts/tabler-icons.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/fonts/flag-icons.css" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/theme-default.css"
-        class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../../app-assets/css/demo.css" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="../../app-assets/css/demo.css" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/swiper/swiper.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-    <link rel="stylesheet"
-        href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/apex-charts/apex-charts.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/swiper/swiper.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/dropzone/dropzone.css" />
-    <!-- Helpers -->
-    <script src="../../app-assets/vendor/js/helpers.js"></script>
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/dropzone/dropzone.css" />
+  <!-- Helpers -->
+  <script src="../../app-assets/vendor/js/helpers.js"></script>
 
-    @yield('page_style')
-    <style>
-        .dropdown-item:focus,
-        .dropdown-item:hover {
-            color: #4EA971 !important
-        }
+  @yield('page_style')
+  <style>
+    .dropdown-item:focus,
+    .dropdown-item:hover {
+      color: #4EA971 !important
+    }
 
-        .dropdown-item.active,
-        .dropdown-item:active {
-            color: #FFF;
-            background-color: #4EA971 !important
-        }
+    .dropdown-item.active,
+    .dropdown-item:active {
+      color: #FFF;
+      background-color: #4EA971 !important
+    }
 
-        .d-flex i:hover {
-            text-decoration: none !important;
-        }
-    </style>
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="../../app-assets/vendor/js/template-customizer.js"></script>
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../../app-assets/js/config.js"></script>
+    .d-flex i:hover {
+      text-decoration: none !important;
+    }
+  </style>
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+  <script src="../../app-assets/vendor/js/template-customizer.js"></script>
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="../../app-assets/js/config.js"></script>
 </head>
 
 <body>
   <!-- Layout wrapper -->
   <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
-    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
-      <div class="layout-container">
-        <!-- Navbar -->
+    <div class="layout-container">
+      <!-- Navbar -->
 
-        <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar" style="background-color: #FFF !important;">
-          <div class="container-xxl">
-            <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-              <a href="/" class="app-brand-link gap-2">
-                <img src="{{ url('/app-assets/img/Talentern.svg')}}">
-              </a>
+      <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar" style="background-color: #FFF !important;">
+        <div class="container-xxl">
+          <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+            <a href="/" class="app-brand-link gap-2">
+              <img src="{{ url('/app-assets/img/Talentern.svg')}}">
+            </a>
 
-              <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
-                <i class="ti ti-x ti-sm align-middle"></i>
-              </a>
-            </div>
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
+              <i class="ti ti-x ti-sm align-middle"></i>
+            </a>
+          </div>
 
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="ti ti-menu-2 ti-sm"></i>
-              </a>
-            </div>
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="ti ti-menu-2 ti-sm"></i>
+            </a>
+          </div>
 
-            <!-- Menu -->
-            <aside id="layout-menu" class="navbar-nav layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
-              <div class="d-flex h-100" style="width: 50rem;">
-                <ul class="menu-inner">
+          <!-- Menu -->
+          <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
+            <div class="container-xxl d-flex h-100" style="width: 50rem;">
+              <ul class="menu-inner">
 
-                  <!-- Perusahaan -->
-                  <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                      <div data-i18n="Perusahaan">Perusahaan</div>
-                    </a>
+                <!-- Perusahaan -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Perusahaan">Perusahaan</div>
+                  </a>
 
                     <ul class="menu-sub">
                       <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
+                        <a href="/daftar_perusahaan" class="menu-link">
                           <div data-i18n="Daftar Mitra">Daftar Mitra</div>
                         </a>
                       </li>
                       <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
+                        <a href="/lowongan/magang" class="menu-link">
                           <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                       </li>
                     </ul>
                   </li>
 
-                  <!-- Program Magang -->
+                <!-- Program Magang -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Program Magang">Program Magang</div>
+                  </a>
+
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="/magang_fakultas" class="menu-link">
+                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                  <!-- Kegiatan Saya -->
                   <li class="menu-item">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
-                      <div data-i18n="Program Magang">Program Magang</div>
+                      <div data-i18n="Kegiatan Saya">Kegiatan Saya</div>
                     </a>
 
                     <ul class="menu-sub">
                       <li class="menu-item">
-                        <a href="/magang_fakultas" class="menu-link">
-                          <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                        <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                          <div data-i18n="Lamaran Saya">Lamaran Saya</div>
                         </a>
                       </li>
+                      <!-- <li class="menu-item">
+                        <a href="/konfirmasi/magang" class="menu-link">
+                          <div data-i18n="Konfirmasi Magang">Konfirmasi Magang</div>
+                        </a>
+                      </li> -->
                       <li class="menu-item">
-                        <a href="/informasi/magang" class="menu-link">
-                          <div data-i18n="Informasi Magang">Informasi Magang</div>
+                        <a href="" class="menu-link">
+                          <div data-i18n="Logbook">Logbook</div>
                         </a>
                       </li>
                     </ul>
-                  </li>
-
-                  <!-- Lamaran Saya -->
-                  <li class="menu-item">
-                    <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
-                      <div data-i18n="Lamaran Saya">Lamaran Saya</div>
-                    </a>
                   </li>
 
                   <!-- Layanan LKM -->
@@ -166,26 +180,20 @@
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                       <div data-i18n="Layanan LKM">Layanan LKM</div>
                     </a>
-
                     <ul class="menu-sub">
-                      <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Logbook">Logbook</div>
-                        </a>
-                      </li>
                       <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                           <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
                         </a>
                       </li>
-                      <li class="menu-item">
+                      <!-- <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                           <div data-i18n="Konfirmasi Magang">"Konfirmasi Magang</div>
                         </a>
-                      </li>
+                      </li> -->
                       <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Input Dokumen Magang Mandiri">Input Dokumen Magang Mandiri</div>
+                        <a href="/pengajuan/surat" class="menu-link">
+                          <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
                         </a>
                       </li>
                       <li class="menu-item">
@@ -194,37 +202,26 @@
                         </a>
                       </li>
 
-                    </ul>
-                  </li>
+                  </ul>
+            </div>
+          </aside>
+          <!-- / Menu -->
 
-                  <li class="menu-item">
-                    <a href="#footer" class="menu-link">
-                      <div data-i18n="Kontak Kami">Kontak Kami</div>
-                    </a>
-                  </li>
-              </div>
-            </aside>
+
+          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Login dan Daftar -->
 
             @php
             $user = Auth::user();
             @endphp
-            @if(!$user)
-            <!-- Login -->
+            @if (!$user)
 
-            <div class="d-flex" id="navbar-collapse">
-
-              <!-- Login dan Daftar -->
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
               <a href="{{ route('login')}}">
-                <button class="btn btn-outline-success me-2" style=" border-radius: 8px;" type="button">Masuk</button>
+                <button class="btn btn-outline-success me-2" type="button">Masuk</button>
               </a>
-              <!-- <a href="{{ route('register')}}">
-               <button class="btn btn-outline-success me-2 ml-2" style="border-radius: 8px;" type="button">Daftar</button>
-              </a> -->
-            </div>
+            </ul>
             @else
-
-            <!-- User -->
-
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Notification -->
               <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -412,27 +409,17 @@
                   </li>
                 </ul>
               </li>
-              <!-- / Notification -->
-
-
+              <!--/ Notification -->
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                  <div class="d-flex align-items-center">
-                    <div class="avatar avatar-online me-2">
-                      <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <p class="mb-0 me-2">{{ ucwords($user->username) }}</p>
-                      <i class="ti ti-chevron-down"></i>
-                    </div>
+                  <div class="avatar avatar-online">
+                    <img src="{{Auth::user()->profile_image_url ?? '\assets\images\user.png'}}" alt class="h-auto rounded-circle" />
                   </div>
                 </a>
-
-
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item">
+                    <a class="dropdown-item" href="/informasi/pribadi">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
@@ -441,7 +428,7 @@
                         </div>
                         <div class="flex-grow-1">
                           <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
-                          <small class="text-muted">{{ ucwords($user->email) }}</small>
+                          <small class="text-muted">{{ ucwords($user->name) }}</small>
                         </div>
                       </div>
                     </a>
@@ -471,45 +458,43 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" target="_blank">
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
                       <i class="ti ti-logout me-2 ti-sm"></i>
                       <span class="align-middle">Keluar</span>
                     </a>
                   </li>
                 </ul>
               </li>
-              <!-- / User -->
+              <!--/ User -->
             </ul>
-            @endif
-
-
-            <!-- Search Small Screens -->
-            <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
-              <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
-              <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
-            </div>
           </div>
-        </nav>
+          @endif
+          <!-- Search Small Screens -->
+          <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
+            <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
+            <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+          </div>
+        </div>
+      </nav>
 
-        <!-- / Navbar -->
+      <!-- / Navbar -->
 
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
 
 
-            <!-- Content -->
+          <!-- Content -->
 
-            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
-            <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
+          <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
 
-            <!-- Modal Delete-->
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- Modal Delete-->
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                     </button>
                   </div>
@@ -517,8 +502,8 @@
                     Apakah Anda Ingin Keluar Dari Akun Ini?
                   </div>
                   <div class="modal-footer" style="display: flex; justify-content:center;">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button>
-                    <button type="button" class="btn btn-danger">Tidak</button>
+                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
                   </div>
                 </div>
               </div>

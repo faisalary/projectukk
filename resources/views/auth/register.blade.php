@@ -92,12 +92,12 @@
     {{-- form-control --}}
     <div class="form-group">
         <div class="col">
-            <label for="email" class="col-form-label text-md-end">{{ __('Email Address') }}</label>
+            <label for="nim" class="col-form-label text-md-end">{{ __('NIM') }}</label>
 
             <div class="md-6">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter your Email" autofocus>
+                <input id="nim" type="nim" class="form-control @error('nim') is-invalid @enderror" name="nim" value="{{ old('nim') }}" required autocomplete="email" placeholder="Enter your NIM" autofocus>
 
-                @error('email')
+                @error('nim')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

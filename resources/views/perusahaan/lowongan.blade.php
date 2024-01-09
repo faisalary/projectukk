@@ -1,0 +1,664 @@
+@extends('partials_mahasiswa.template')
+
+@section('page_style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .hidden {
+        display: none;
+    }
+
+    .page-item.active .page-link,
+    .pagination li.active>a:not(.page-link) {
+        border-color: #4EA971 !important;
+        background-color: #4EA971 !important;
+        color: #fff;
+    }
+
+    .btn-success {
+        color: #fff;
+        background-color: #4EA971 !important;
+        border-color: #4EA971 !important;
+    }
+
+    .highlight {
+        background-color: #4EA971 !important;
+        color: white !important;
+    }
+
+    .light-style .select2-container--default .select2-selection--single {
+        width: 530px;
+    }
+
+    .light-style .select2-container--default .select2-selection {
+        border-left: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .layout-wrapper,
+    .layout-container {
+        width: 100%;
+        display: flex;
+        flex: 1 1 auto;
+        align-items: stretch;
+        background-color: #fff;
+    }
+
+    input[type="checkbox"]:focus {
+        outline: 0px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+
+    .form-check-input:checked,
+    .form-check-input[type=checkbox]:indeterminate {
+        background-color: #4EA971 !important;
+        border-color: #4EA971 !important;
+    }
+
+    .light-style .flatpickr-input[readonly],
+    .light-style .flatpickr-input~.form-control[readonly] {
+        background: #F8F8F8
+    }
+
+    .select2-results__option[role="option"][aria-selected="true"] {
+        background-color: #4EA971;
+        color: #fff;
+    }
+
+    .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+        background-color: rgba(115, 103, 240, 0.08) !important;
+        color: #4EA971 !important;
+    }
+</style>
+@endsection
+
+@section('main')
+
+<div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
+    <div class="row mt-5 mb-3" style="margin-left:70px;">
+        <div class="col-5">
+            <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                <input type="text" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-map-pin"></i></span>
+                <select class="select2 form-control" data-placeholder="Pilih lokasi Magang" aria-describedby="basic-addon-search31">
+                    <option disabled selected> Lokasi Magang </option>
+                    <option> Bandung </option>
+                    <option> Jakarta </option>
+                    <option> Medan </option>
+                    <option> Surabaya </option>
+                    <option> Yogyakarta </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-success" type="submit">Cari sekarang</button>
+        </div>
+    </div>
+    <div class="row mt-4 mb-4">
+        <div class="col-1 ms-5"></div>
+        <div class="col-2">
+            <p class="flatpickr-input" id="flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
+        </div>
+        <div class="col-2">
+            <div class="dropdown cursor-pointer">
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Perusahaan
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
+                </a>
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px" style="margin-top: 0px; margin-right:3px"> PT Techno Infinity
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Telkom Indonesia
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Inovasi Daya Solusi
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Indo Trans Teknologi
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
+                    </li>
+
+                    <li class="ps-2 pe-3">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Fakultas Ilmu Terapan
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="dropdown cursor-pointer">
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Benefit
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
+                </a>
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Berbayar
+                    </li>
+
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Tidak Berbayar
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="dropdown cursor-pointer">
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Durasi Magang
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
+                </a>
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 1 Semester
+                    </li>
+
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 2 Semester
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="dropdown cursor-pointer">
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tipe Magang
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
+                </a>
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Onsite
+                    </li>
+
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Hybrid
+                    </li>
+                    <li class="ps-2 pe-5">
+                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Online
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+{{-- Lowongn tidak ditemukan --}}
+<!-- <div class="col-3 mt-5 text-left">
+    <img class="image" style="border-radius: 0%; margin-left: 400px;" src="{{ asset('front/assets/img/pana.png')}}" alt="admin.upload">
+</div>
+<div class="sec-title mt-5 mb-4 text-center">
+    <h4> Maaf, lowongan tidak di temukan</h4>
+</div> -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="ms-4">500+ Lowongan Tersedia</h4>
+    <div class="row mt-2 ps-4">
+        <div class="col-5">
+            <div class="row">
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 530px">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="col-3 text-left">
+                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                    </figure>
+                                </div>
+                                <div class="col-6 ms-3 ">
+                                    <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Human Resources</h5>
+                                    <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+                                </div>
+                                <div class="col-2 ms-3">
+                                    <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px;color:#4EA971; "></i>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                                    <div class="location"> 8 hari lalu </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 530px">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="col-3 text-left">
+                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                    </figure>
+                                </div>
+                                <div class="col-6 ms-3 ">
+                                    <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Human Resources</h5>
+                                    <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+                                </div>
+                                <div class="col-2 ms-3">
+                                    <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px;color:#4EA971; "></i>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                                    <div class="location"> 8 hari lalu </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 530px">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="col-3 text-left">
+                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                    </figure>
+                                </div>
+                                <div class="col-6 ms-3 ">
+                                    <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Human Resources</h5>
+                                    <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+                                </div>
+                                <div class="col-2 ms-3">
+                                    <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px; color:#4EA971; "></i>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                                    <div class="location"> 8 hari lalu </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 530px">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="col-3 text-left">
+                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                    </figure>
+                                </div>
+                                <div class="col-6 ms-3 ">
+                                    <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Human Resources</h5>
+                                    <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+                                </div>
+                                <div class="col-2 ms-3">
+                                    <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px; color:#4EA971; "></i>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                                    <div class="location"> 8 hari lalu </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 530px">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="col-3 text-left">
+                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                    </figure>
+                                </div>
+                                <div class="col-6 ms-3 ">
+                                    <h5 class="mb-1" style="text-align: left !important; font-size: 20px; -webkit-line-clamp: 2;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">Human Resources</h5>
+                                    <p style="text-align: left !important; font-size:15px; margin-bottom: 0px;">PT Wings Surya</p>
+                                </div>
+                                <div class="col-2 ms-3">
+                                    <i onclick="myFunction(this)" class="fa fa-bookmark-o ms-4" style="font-size: 40px; color:#4EA971; "></i>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>2 Semester</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px; margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px; margin-left: -10px;">
+                                    <div class="location"> 8 hari lalu </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-2">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination" style="margin-left: 130px; color:black">
+                        <li class="page-item ">
+                            <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link waves-effect" href="javascript:void(0);">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect" href="javascript:void(0);">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect" href="javascript:void(0);">3</a>
+                        </li>
+                        <li class="page-item ">
+                            <a class="page-link waves-effect" href="javascript:void(0);">Next</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-7">
+            
+        {{-- Ada lowongan terpilih--}}
+            <!-- <div class="row">
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 765px; height: auto;">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <figure class="image" style="border-radius: 0%; margin-left: 10px;"><img style="width:180px;" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
+                                    </figure>
+                                    <div style="margin-left: 250px;">
+                                        <small class="text-muted" style="font-size: 18px;">Batas Melamar 13 Juli
+                                            2023</small><br>
+                                        <div class="row mt-2">
+                                            <a href="/detail/lowongan/magang"><button type="button" class="btn btn-sm btn-outline-dark waves-effect" style="width: 200px; margin-left:15px;">Buka dihalaman baru</button>
+                                            </a><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 mb-2 ms-1 p-0">
+                                    <h4 style=" margin-bottom: 0px; ">PT
+                                        Wings Surya</h4>
+                                    <h1 class="mb-1" style="  text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">
+                                        Human Resources</h1>
+                                </div>
+                                <div class="d-flex ms-2 mt-2" style="font-size: 14px;  !important">
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar ti-xs me-2"></i>
+                                            2023/2024 - Ganjil
+                                        </li>
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-users ti-xs me-2"></i>
+                                            100 Mahasiswa
+                                        </li>
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-building-community  ti-xs me-2"></i>
+                                            Fakultas Ilmu Terapan
+                                        </li>
+                                    </ul>
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
+
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-map-pin  ti-xs me-2"></i>
+                                            Bandung & Jakarta
+                                        </li>
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-currency-dollar  ti-xs me-2"></i>
+                                            Berbayar
+                                        </li>
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar-time  ti-xs me-2"></i>
+                                            2 Semerter
+                                        </li>
+                                    </ul>
+                                    <ul style="padding: 0 0 0 20px; !important">
+                                        <li class="list-group-item d-flex align-items-start fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-school ti-xs me-2"></i>
+                                            <div>
+                                                Program Studi
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</button>
+                            </div>
+
+                            <div class="row mt-3 p-2">
+                                <h3>
+                                    <b>Deskripsi Pekerjaan</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Lead HR Internal Communication and Employer Branding.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Manage On-Boarding program for new hire.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Support employee Performance Evaluation process.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Support Talent Management and Succession Planning function.
+                                        </li>
+
+                                        <div class="content-new">
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Lead Employee Engagement activities and events. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Liaise with relevant parties to ensure HR function executed smoothly. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Support other HR Indonesia operations activities. </li>
+                                        </div>
+
+                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                            Show more
+                                        </u>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Requirement</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            At least Bachelor's degree in any field.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            At least 3 years of experience in HR / HRBP.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Has strong numerical capability and excel expertise.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Has experience using Workday will be an advantage.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Good command of spoken and written English.
+                                        </li>
+                                        <div class="content-new">
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Strong attention to detail. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Self-motivated and able to work without supervision. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Willing to work in Cikampek area. </li>
+                                        </div>
+
+                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                            Show more
+                                        </u>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Benefit</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Family Care.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Parking Access.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Reward Compensation.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Kemampuan</b>
+                                </h3>
+                                <div class="row">
+                                    <div class="d-flex" style="column-gap: 20px; padding-bottom: 30px !important">
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft Office</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Google Suite</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling Tools</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top: -5px;">
+                            <div class="row mt-2 mb-2">
+                                <h4 style="text-align: left !important; font-size:20px;">
+                                    <b>Tentang Perusahaan</b>
+                                </h4>
+                            </div>
+                            <div class="row mt-3 mb-2">
+                                <div class="box">
+                                    <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;">Lorem
+                                        ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
+                                        driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.
+                                    </p>
+
+                                    <div class="content-new">
+                                        <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;"> AFRY as a new common brand of ÅF Pöyry is one of the largest international power sector consulting and engineering
+                                            company with about 17,000 experts working across the world to create sustainable solutions for future generations.</p>
+                                    </div>
+
+                                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                        Show more
+                                    </u>
+                                    <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            {{-- Belum ada lowongan terpilih--}}
+            <div class="border text-center mt-3">
+                <figure class="m-5">
+                    <img class="image" src="{{ asset('front/assets/img/amico.png')}}" alt="admin.upload">
+                </figure>
+                <h5>Belum ada lowongan terpilih</h5>
+                <p>Silahkan pilih lowongan yang tersedia untuk mendapatkan detail informasi</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@endsection
+
+@section('page_script')
+<script>
+    $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
+        $(this).closest("li").toggleClass("active", this.checked);
+    });
+
+    $(document).on('click', '.allow-focus', function(e) {
+        e.stopPropagation();
+    });
+
+    function myFunction(x) {
+        x.classList.toggle("fa-bookmark-o");
+        x.classList.toggle("fa-bookmark");
+    }
+
+    $(document).ready(function() {
+        $(".content-new").hide();
+        $(".show_hide_new").on("click", function() {
+            $(this).prev('.content-new').slideToggle(100);
+            console.log($(this).text().trim())
+            if ($(this).text().trim() == "Show more") {
+                $(this).text("Show Less");
+            } else {
+                $(this).text("Show more")
+            }
+        });
+    });
+</script>
+@endsection

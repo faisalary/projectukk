@@ -9,7 +9,6 @@
         border-radius: 20px;
         border: none;
         cursor: pointer;
-        opacity: 0.8;
         width: 160px;
         height: 40px;
     }
@@ -23,9 +22,8 @@
         border: 3px solid #f1f1f1;
         z-index: 9;
         overflow-y: auto;
-        /* Atau overflow: auto; sesuai kebutuhan */
         max-height: 500px;
-        /* Tentukan tinggi maksimum sesuai kebutuhan */
+
     }
 
     /* Add styles to the form container */
@@ -60,7 +58,9 @@
                         <p class="text-secondary"><i>PT. Teknologi Nirmala Olah Daya Informasi</i></p>
                         <p class="text-secondary"><i>Layanan Kerjasama dan Magang FIT</i></p>
                         <p class="text-secondary"><i>Fakultas Ilmu Terapan</i></p>
-                        <button class="open-button" onclick="openForm()"><div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh Bantuan ?</button>
+                        <button class="open-button" onclick="openForm()">
+                            <div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh Bantuan ?
+                        </button>
                     </div>
                 </div>
             </div>
@@ -82,12 +82,14 @@
         </div>
 
 
-        <div class="chat-popup" id="myForm">
-            <form action="#" class="form-container">
-            <button type="button" class="btn-close" aria-label="Close" onclick="closeForm()"></button>
-                <h5 class="mt-3" style="color:#4F4F44">Tinggalkan Pesan Untuk Kami</h5>
-                <label for="msg">Pusat bantuan bagi mahasiswa dan mitra perusahaan Talentern</label>
-                <div class="card-body">
+        <div class="chat-popup" id="myForm" style=" border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <form action="#" class="form-container p-0">
+                <div class="modal-header" style="background-color: #4EA971 !important;">
+                    <i class="ti ti-x text-white mb-4 ms-2 mt-1" aria-label="Close" onclick="closeForm()"></i>
+                    <h6 class="pt-3 text-white" style="padding-right: 40px !important;">Tinggalkan Pesan Untuk Kami</h6>
+                </div>
+                <div class="card-body p-4">
+                    <label for="msg">Pusat bantuan bagi mahasiswa dan mitra perusahaan Talentern</label>
                     <div>
                         <label for="defaultFormControlInput" class="form-label mt-3">Nama Lengkap <span class="text-danger">*</span> </label>
                         <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
@@ -108,8 +110,8 @@
                         <label for="formFile" class="form-label mt-3">Dokumen Pendukung</label>
                         <input class="form-control" type="file" id="formFile">
                     </div>
+                    <button type="submit" class="btn btn-success mt-3 w-100" >Kirim</button>
                 </div>
-                <button type="submit" class="btn btn-success mt-3" style="width: 280px;">Kirim</button>
             </form>
         </div>
 
@@ -167,6 +169,11 @@
 <script src="../../app-assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
 <script src="../../app-assets/vendor/libs/typeahead-js/typeahead.js"></script>
 <script src="../../app-assets/vendor/libs/dropzone/dropzone.js"></script>
+<script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+<script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+<script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+<script src="../../app-assets/vendor/libs/bloodhound/bloodhound.js"></script>    
+<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
 
 <!-- Main JS -->
 <script src="../../app-assets/js/main.js"></script>
@@ -174,11 +181,13 @@
 <!-- Page JS -->
 <script src="../../app-assets/js/dashboards-analytics.js"></script>
 <script src="../../app-assets/js/forms-selects.js"></script>
+<script src="../../app-assets/js/forms-tagify.js"></script>
 <script src="../../app-assets/js/form-wizard-numbered.js"></script>
 <script src="../../app-assets/js/form-wizard-validation.js"></script>
 <script src="../../app-assets/js/form-wizard-icons.js"></script>
 <script src="../../app-assets/js/ui-carousel.js"></script>
 <script src="../../app-assets/js/forms-file-upload.js"></script>
+<script src="../../app-assets/js/forms-pickers.js"></script>
 
 <script>
     function openForm() {
@@ -186,8 +195,8 @@
     }
 
     function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-}
+        document.getElementById("myForm").style.display = "none";
+    }
 </script>
 
 @yield('page_script')
