@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'username' => 'SuperAdmin'
         ], [
             'name' => 'Super Admin Role',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('Password123!'),
             'isAdmin' => 0
         ]);
 

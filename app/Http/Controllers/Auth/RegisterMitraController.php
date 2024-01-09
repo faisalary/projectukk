@@ -32,7 +32,7 @@ class RegisterMitraController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'namaindustri' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email:rfc,dns|unique:users',
         ]);
         try{
             DB::beginTransaction();
@@ -45,7 +45,7 @@ class RegisterMitraController extends Controller
             'status' => true,
         ]);
 
-        
+
         $code = Str::random(64);
         $admin = User::create([
             'name' => $request->name,

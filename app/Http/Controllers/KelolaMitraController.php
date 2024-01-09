@@ -135,7 +135,7 @@ class KelolaMitraController extends Controller
         try {
             DB::beginTransaction(); 
             $data = Industri::find($id);
-            $code = Str::random(64);
+            
 
             if (!$data) {
                 throw new \Exception('Industri data not found.');

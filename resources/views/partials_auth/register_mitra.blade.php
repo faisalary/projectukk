@@ -184,9 +184,9 @@
       var selectedRole = document.getElementById("roleregister").value;
 
       if (selectedRole === "user") {
-        window.location.href = "/register";
+        window.location.href = "/mahasiswa/register";
         } else if (selectedRole === "mitra") {
-          window.location.href = "/mitra/register";
+          return Mitra;
       }
       function store(e) {
             

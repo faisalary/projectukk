@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;;
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\RoleHas;
 use Illuminate\Support\Facades\Validator;
-use LDAP\Result;
-use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 
 class KonfigurasiController extends Controller
@@ -100,7 +98,7 @@ class KonfigurasiController extends Controller
         ]);
 
         foreach ($permission_id as $key => $value) {
-            $prevent = RoleHas::where('permission_id', $value)->where('role_id', $result->id);
+            $prevent = Role::where('permission_id', $value)->where('role_id', $result->id);
 
             if ($prevent->get()->isEmpty()) {
                 $rhp = new RoleHas();
