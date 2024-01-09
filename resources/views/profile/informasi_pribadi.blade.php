@@ -110,7 +110,7 @@
             <p class="mt-4 mb-0">Pengembang perangkat lunak berpengalaman selama 7 tahun dengan keahlian dalam pengembangan aplikasi web, manajemen proyek, dan kerja tim lintas disiplin.</p>
             <p class="content-new mb-0 mt-0"> Sertifikasi dalam manajemen proyek. Analitis, adaptif, dan berkomitmen pada kemajuan teknologi.</p>
             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-              See more
+              Show more
             </u>
           </div>
           <div class="info-container">
@@ -220,11 +220,11 @@
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Linkedin:</span>
-                    <span><u style="color: blue;">jennierubyjane</u></span>
+                    <span> <a href="#"> jennierubyjane </a></span>
                   </p>
                 </div>
                 <p class="mb-2 pt-0">
@@ -349,7 +349,7 @@
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          See more
+                          Show more
                         </u>
                       </div>
                     </div>
@@ -371,7 +371,7 @@
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                       <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                       </u>
                     </div>
                   </div>
@@ -411,7 +411,7 @@
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          See more
+                          Show more
                         </u>
                       </div>
                       <div class="d-flex align-items-start mt-3 mb-3">
@@ -441,7 +441,7 @@
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
                       <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                       </u>
                     </div>
                     <div class="d-flex align-items-start mt-3 mb-3">
@@ -542,8 +542,8 @@
                   <input class="form-control" type="text" id="tak" name="tak" placeholder="100" autofocus />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="tanggallahir" readonly="readonly">
+                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
+                  <input class="form-control" type="date" value="" id="tanggallahir" placeholder="YYYY-MM-DD" >
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
@@ -736,8 +736,8 @@
                 <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="pendidikan" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                <select id="pendidikan" class="select2 form-select">
+                <label for="pendidikan1" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
+                <select id="pendidikan1" class="select2 form-select">
                   <option disabled selected>Pilih Tingkat Pendidkan</option>
                   <option value="pendidikan">D3</option>
                   <option value="pendidikan">S1</option>
@@ -1098,10 +1098,10 @@
     $(".show_hide_new").on("click", function() {
       var content = $(this).prev('.content-new');
       content.slideToggle(100);
-      if ($(this).text().trim() == "See more") {
-        $(this).text("See less");
+      if ($(this).text().trim() == "Show more") {
+        $(this).text("Show less");
       } else {
-        $(this).text("See more");
+        $(this).text("Show more");
       }
     });
   });

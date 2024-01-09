@@ -89,18 +89,24 @@
                 <div class="w-auto">
                     <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
                     <div class="text-end mt-4">
-                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter" data-bs-original-title="Laporkan">
-                            <i class="ti ti-flag"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan">
-                            <i class="ti ti-share"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
-                            <i class="ti ti-heart"></i>
-                        </button>
+                        <div class="row">
+                            <div class="col-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Laporkan"><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                    <i class="ti ti-flag"></i>
+                                </button>
+                            </div>
+                            <div class="col-3 ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan "><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan">
+                                    <i class="ti ti-share"></i>
+                                </button>
+                            </div>
+                            <div class="col-3 ms-2">
+                                <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
+                                    <i class="ti ti-heart"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-4"></div>
-                    <a  href="/apply" type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
+                    <a href="/apply" type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
                         Lamar Lowongan
                     </a>
                 </div>
@@ -155,11 +161,9 @@
                             <div class="card">
                                 <div class="card-body text-center pb-0">
                                     <figure class="image"><img src="{{ url('/app-assets/img/Talentern.svg')}}"></figure>
-                                    <div class="text-center">
-                                        <div class=""></div>
-                                        <h4>Apakah anda akan melaporkan lowongan ini? </h4>
-                                        <p>Jika ya, silahkan plih salah satu alasan berikut dan tim Kepercayaan dan
-                                            Keamanan kami akan memeriksanya. </p>
+                                    <div>
+                                        <h4 class="text-center">Laporkan PT Mencari Cinta Sejati </h4>
+                                        <p class="text-start">Harap tambahkan informasi tambahan dan detail pendukung agar tim Kepercayaan dan Keamanan kami dapat memeriksa laporan Anda dengan lebih baik. </p>
                                     </div>
                                 </div>
                                 <div class="modal-body pt-0">
@@ -197,9 +201,79 @@
                                         </button>
                                     </div>
                                     <div class="mb-1"></div>
-                                    <button type="submit" class="btn btn-secondary waves-effect waves-light" style="width: 510px;">
+                                    <button type="submit" class="btn btn-secondary waves-effect waves-light" data-bs-dismiss="modal" aria-label="Close" style="width: 510px;">
                                         Batal
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalbagikan" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="card">
+                                <div class="card-body text-center pb-0">
+                                    <!-- <figure class="image"><img src="{{ url('/app-assets/img/Talentern.svg')}}"></figure> -->
+                                    <div class="text-start">
+                                        <h4>Share </h4>
+                                    </div>
+                                </div>
+                                <div class="modal-body pt-0">
+                                    <div class="row">
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-dark waves-effect waves-light" style="width: 50px; height:50px;">
+                                                <span class="ti ti-brand-tiktok" style="font-size: 40px;"></span>
+                                            </button>
+                                            <p class="mt-1">TikTok</p>
+                                        </div>
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light" style="width: 50px; height:50px; background-color: #65D072 !important;">
+                                                <span class="ti ti-brand-whatsapp" style="font-size: 35px;"></span>
+                                            </button>
+                                            <p class="mt-1">WhatsApp</p>
+                                        </div>
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-primary waves-effect waves-light" style="width: 50px; height:50px; background-color: #425893 !important;">
+                                                <span class="ti ti-brand-facebook" style="font-size: 30px;"></span>
+                                            </button>
+                                            <p class="mt-1">Facebook</p>
+                                        </div>
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-info waves-effect waves-light" style="width: 50px; height:50px; background-color: #1EA1F2 !important;">
+                                                <span class="ti ti-brand-twitter" style="font-size: 25px;"></span>
+                                            </button>
+                                            <p class="mt-1">Twitter</p>
+                                        </div>
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light" style="width: 50px; height:50px;">
+                                                <span class="ti ti-mail" style="font-size: 35px;"></span>
+                                            </button>
+                                            <p class="mt-1">Email</p>
+                                        </div>
+                                        <div class="col-2 mb-3 text-center p-0">
+                                            <button type="button" class="btn rounded-pill btn-icon btn-danger waves-effect waves-light" style="width: 50px; height:50px; background-color: #FF0000 !important;">
+                                                <span class="ti ti-brand-youtube" style="font-size: 35px;"></span>
+                                            </button>
+                                            <p class="mt-1">Youtube</p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="border" style="border-radius: 20px;">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <p class="m-2">http://sample.info/?#UIUX</p>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn rounded-pill btn-success waves-effect waves-light" style="width: 65px; height:40px;">
+                                                        Copy
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

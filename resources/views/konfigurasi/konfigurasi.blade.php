@@ -40,8 +40,8 @@
                     <table class="table" id="table-konfig-role">
                         <thead>
                             <tr>
-                                <th>nomor</th>
-                                <th style="min-width: 100px;">Nama Role</th>
+                                <th>NOMOR</th>
+                                <th>NAMA ROLE</th>
                                 <th>STATUS</th>
                                 <th>AKSI</th>
                             </tr>
@@ -61,81 +61,71 @@
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "namarole": "Admin",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/edit'class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        },
-        {
-            "nomor": "2",
-            "namarole": "Mitra",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        },
-        {
-            "nomor": "3",
-            "namarole": "Mahasiswa",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a class='btn-icon text-warning waves-effect waves-light'><i class='ti ti-edit'></i></a><a class='btn-icon text-success waves-effect waves-light'><i class='ti ti-circle-check'></i></a>",
-        }
-    ];
 
     var table = $('#table-konfig-role').DataTable({
-        "data": jsonData,
+        ajax: '{{route("konfigurasi.show")}}',
+        processing:true,
+        serverSide:false,
+        deferrender:true,
+        type: 'GET',
+        destroy: true,
         columns: [{
-                data: "nomor"
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex'
             },
             {
-                data: "namarole"
+                data: 'name',
+                name: 'name'
             },
             {
-                data: "status"
+                data: 'status',
+                name: 'status'
             },
             {
-                data: "aksi"
+                data: 'action',
+                name: 'action'
             }
         ]
     });
 
-    // Kelola Lowongan
-const selectAllKelola = document.querySelector('#selectAll'),
-      checkboxListKelola = document.querySelectorAll('.kelola');
+        // Kelola Lowongan
+    const selectAllKelola = document.querySelector('#selectAll'),
+        checkboxListKelola = document.querySelectorAll('.kelola');
 
-selectAllKelola.addEventListener('change', t => {
-  checkboxListKelola.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-// Informasi Lowongan
-const selectAllInformasi = document.querySelector('#selectAll_informasi'),
-      checkboxListInformasi = document.querySelectorAll('.informasi');
-
-selectAllInformasi.addEventListener('change', t => {
-  checkboxListInformasi.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-// Jadwal Seleksi
-const selectAllSeleksi = document.querySelector('#selectAll_seleksi'),
-      checkboxListSeleksi = document.querySelectorAll('.seleksi');
-
-selectAllSeleksi.addEventListener('change', t => {
-  checkboxListSeleksi.forEach(e => {
-    e.checked = t.target.checked;
-  });
-});
-
-
-
-    jQuery(function() {
-    jQuery('.showSingle').click(function() {
-        jQuery('.targetDiv').hide('.cnt');
-        jQuery('#div' + $(this).attr('target')).slideToggle();
+    selectAllKelola.addEventListener('change', t => {
+    checkboxListKelola.forEach(e => {
+        e.checked = t.target.checked;
     });
-});
+    });
+
+    // Informasi Lowongan
+    const selectAllInformasi = document.querySelector('#selectAll_informasi'),
+        checkboxListInformasi = document.querySelectorAll('.informasi');
+
+    selectAllInformasi.addEventListener('change', t => {
+    checkboxListInformasi.forEach(e => {
+        e.checked = t.target.checked;
+    });
+    });
+
+    // Jadwal Seleksi
+    const selectAllSeleksi = document.querySelector('#selectAll_seleksi'),
+        checkboxListSeleksi = document.querySelectorAll('.seleksi');
+
+    selectAllSeleksi.addEventListener('change', t => {
+    checkboxListSeleksi.forEach(e => {
+        e.checked = t.target.checked;
+    });
+    });
+
+
+
+        jQuery(function() {
+        jQuery('.showSingle').click(function() {
+            jQuery('.targetDiv').hide('.cnt');
+            jQuery('#div' + $(this).attr('target')).slideToggle();
+        });
+    });
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
