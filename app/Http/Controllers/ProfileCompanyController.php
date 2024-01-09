@@ -14,8 +14,12 @@ class ProfileCompanyController extends Controller
      */
     public function index()
     {
-        $industri = Industri::all();
-        return view('company.profile_company');
+        $user = auth()->user();
+        $data =[
+            'industri' => Industri::find($user->id_industri)
+            
+        ];
+        return view('company.profile_company',$data);
     }
 
     /**
@@ -34,17 +38,17 @@ class ProfileCompanyController extends Controller
         
 
             // $industri = Industri::create([
-            //     'namaindustri' => $request->namaindustri,
+            //     // 'namaindustri' => $request->namaindustri,
             //     'notelpon' => $request->notelpon,
             //     'alamatindustri' => $request->alamatindustri,
             //     'description' => $request->description,
-            //     'email' => $request->email,
+            //     // 'email' => $request->email,
             // ]);
 
             // return response()->json([
             //     'error' => false,
             //     'message' => 'Mitra Data successfully Created!',
-            //     'url' => url('company/profile-company')
+            //     'url' => url('/dashbord')
             // ]);
         
     }
@@ -62,35 +66,37 @@ class ProfileCompanyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $industri = Industri::where('id_industri', $id)->first();
+        return $industri;
     }
 
     /**
      * Update the specified resource in storage.
      */
 
-        public function update(Request $request, $id)
-    {
-        try {
-            $industri = Industri::where('id_industri', $id)->first();
-
-            $industri->namaindustri = $request->namaindustri;
-            $industri->email = $request->email;
-            $industri->kategori_industri = $request->kategori_industri;
-            $industri->statuskerjasama = $request->statuskerjasama;
-            $industri->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Mitra successfully Updated!',
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
+     public function update(Request $request, $id)
+     {
+         try {
+             $industri = Industri::where('id_industri', $id)->first();
+ 
+             $industri->namaindustri = $request->namaindustri;
+             $industri->email = $request->email;
+             $industri->kategori_industri = $request->kategori_industri;
+             $industri->statuskerjasama = $request->statuskerjasama;
+             $industri->save();
+ 
+             return response()->json([
+                 'error' => false,
+                 'message' => 'Mitra successfully Updated!',
+                 'modal' => '#modal-mitraa'
+             ]);
+         } catch (Exception $e) {
+             return response()->json([
+                 'error' => true,
+                 'message' => $e->getMessage(),
+             ]);
+         }
+     }
     
 
     /**

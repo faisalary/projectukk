@@ -175,7 +175,11 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
+            // Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
+            // Route::get('/edit/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'edit'])->name('profile_company.edit');
+            // Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
+            Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
         // Route::get('/master-data-email', function() {
         //     return view('company.master_data_company.index');
