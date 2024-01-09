@@ -28,7 +28,7 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::group(['prefix' => 'mitra', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'mitra', 'as' => 'users.'], function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'mahasiswa', 'as' => 'users.'], function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'setting'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
+    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'updateset'])->name('update.password');
 });
 
 require __DIR__ . '/auth.php';

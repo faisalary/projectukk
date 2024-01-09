@@ -51,7 +51,7 @@ class RegisterMitraController extends Controller
             'name' => $request->name,
             'username' => 'mitra',
             'email' => $request->email,
-            'password' => bcrypt('12345678'),
+            'password' => Hash::make($industri->penanggung_jawab),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
