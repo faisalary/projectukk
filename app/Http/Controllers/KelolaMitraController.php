@@ -189,6 +189,7 @@ class KelolaMitraController extends Controller
         
         try {
             
+            // dd($request->all());
             $industri = Industri::where('id_industri', $id)->first();
             
             $industri->namaindustri = $request->namaindustri;
@@ -206,7 +207,7 @@ class KelolaMitraController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Mitra successfully Updated!',
+                'message' => 'Data Successfully Updated!',
                 'modal' => '#modalTambahMitra',
                 'table' => '#table-kelola-mitra3'
             ]);
