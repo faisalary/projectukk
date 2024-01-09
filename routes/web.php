@@ -175,15 +175,10 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
-            // Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
-            // Route::get('/edit/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'edit'])->name('profile_company.edit');
-            // Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
-        // Route::get('/master-data-email', function() {
-        //     return view('company.master_data_company.index');
-        // });
+
         Route::prefix('master-email')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
@@ -296,9 +291,9 @@ Route::get('/detail-informasi-dokumen', function () {
 //     return view('company.profile_company', ['active_menu' => 'profile-company']);
 // })->name('profile.company');
 
-Route::get('/summary-profile', function () {
-    return view('company.summary_profile');
-});
+// Route::get('/summary-profile', function () {
+//     return view('company.summary_profile');
+// });
 
 Route::prefix('jadwal-seleksi')->group(function () {
     Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
