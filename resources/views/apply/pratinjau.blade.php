@@ -68,7 +68,7 @@
             <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
                     <p class="content-new mb-0">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                     </u>
             <hr>
 
@@ -81,7 +81,7 @@
                         electronic typesetting, remaining essentially unchanged.</p>
                     <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        See more
+                        Show more
                     </u>
                 </div>
                 <div class="col-4 mt-3">
@@ -197,7 +197,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                See more
+                                Show more
                             </u>
                             <div class="border-bottom mt-4"></div>
                         </div>
@@ -212,7 +212,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                See more
+                                Show more
                             </u>
                             <div class="border-bottom mt-4"></div>
                         </div>
@@ -227,7 +227,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                See more
+                                Show more
                             </u>
                         </div>
                     </li>
@@ -252,7 +252,7 @@
                 it to </p>
             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                See more
+                Show more
             </u>
             <br>
             <a href="#"><u style="color: #0099FF">UI/UX Design.pdf</u></a>
@@ -264,7 +264,7 @@
                 it to </p>
             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                See more
+                Show more
             </u>
             <br>
             <a href="#"><u style="color: #0099FF">UI/UX Design.pdf</u></a>
@@ -313,10 +313,10 @@
         $(".show_hide_new").on("click", function() {
             var content = $(this).prev('.content-new');
             content.slideToggle(100);
-            if ($(this).text().trim() == "See more") {
-                $(this).text("See Less");
+            if ($(this).text().trim() == "Show more") {
+                $(this).text("Show Less");
             } else {
-                $(this).text("See more");
+                $(this).text("Show more");
             }
         });
     });

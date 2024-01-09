@@ -41,6 +41,15 @@
         align-items: stretch;
         background-color: #fff;
     }
+    .select2-results__option[role="option"][aria-selected="true"] {
+    background-color: #4EA971;
+    color: #fff;
+  }
+
+  .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+    background-color: rgba(115, 103, 240, 0.08) !important;
+    color: #4EA971 !important;
+  }
 </style>
 @endsection
 
@@ -271,7 +280,7 @@
     </div>
 </div>
 <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-end mb-5 mt-3 me-5">
+    <ul class="pagination justify-content-end mb-5 mt-3" style="margin-right: 60px;">
         <li class="page-item ">
             <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
         </li>
