@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\LowonganMagang;
+use App\Models\Lokasi;
+use App\Models\JenisMagang;
+use App\Models\ProgramStudi;
+use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
-use App\Http\Requests\LowonganMagangRequest;
+use App\Models\TahunAkademik;
+use Illuminate\Routing\Route;
+use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
+use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\ProgramStudi;
-use App\Models\TahunAkademik;
-use App\Models\JenisMagang;
-use App\Models\Lokasi;
-use App\Models\PendaftaranMagang;
-use App\Models\Seleksi;
-use Illuminate\Routing\Route;
+use App\Http\Requests\LowonganMagangRequest;
 
 class LowonganMagangController extends Controller
 {
@@ -24,7 +25,7 @@ class LowonganMagangController extends Controller
     public function index()
     {
         $lowongan = new LowonganMagang;
-        $lowonganmagang = [
+        $lowongan = [
             'total' => $lowongan->count(),
             'tertunda' => $lowongan->where('applicant_status', 'tertunda')->count(),
             'diterima' => $lowongan->where('applicant_status', 'diterima')->count(),
@@ -35,7 +36,7 @@ class LowonganMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
         $pendaftar = PendaftaranMagang::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowonganmagang', 'prodi', 'tahun', 'jenismagang', 'lokasi', 'pendaftar'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'prodi', 'tahun', 'jenismagang', 'lokasi', 'pendaftar'));
     }
 
     /**
@@ -54,7 +55,7 @@ class LowonganMagangController extends Controller
     public function store(LowonganMagangRequest $request)
     {
         try {
-                $lowonganmagang = LowonganMagang::create([
+                $lowongan = LowonganMagang::create([
                     'id_jenismagang' => $request->jenismagang,
                     'intern_position' => $request->posisi,
                     'kuota' => $request->kuota,
@@ -69,15 +70,15 @@ class LowonganMagangController extends Controller
                     'enddate' => $request->tanggalakhir,
                     'durasimagang' => $request->durasimagang,
                     'tahapan_seleksi' => $request->tahapan,
-                    // 'created_at' => $request->tahapan,
+                    // 'created_at' => Carbon::now(),
                 ]);
 
                 $i = 0;
                 foreach ((array) $request->mulai as $m) {
-                    $Seleksi = Seleksi::create([
-                        'mulai' => $request->mulai[$i],
-                        'akhir' => $request->akhir[$i],
-                        'deskripsiseleksi' => $request->deskripsiseleksi[$i],
+                    $seleksi = SeleksiTahap::create([
+                        'tgl_mulai' => $request->mulai[$i],
+                        'tgl_akhir' => $request->akhir[$i],
+                        'deskripsi' => $request->deskripsiseleksi[$i],
                     ]);
                     $i++;
                 }
@@ -130,9 +131,9 @@ class LowonganMagangController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a href='". url('kelola/lowongan/edit') ."' data-id='{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
-                <a href='".url('kelola/lowongan/detail') ."' data-id='{$row->id_lowonganmagang}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                <a data-status='{$row->status}' data-id='{$row->id_lowonganmagang}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<a href='". url('kelola/lowongan/edit/'. $row->id_lowongan) ."' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
+                <a href='".url('kelola/lowongan/detail') ."' data-id='{$row->id_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
                 
                 return $btn;
 
@@ -150,9 +151,10 @@ class LowonganMagangController extends Controller
      */
     public function edit($id)
     {
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan'));
     }
 
     public function detail()
@@ -166,28 +168,30 @@ class LowonganMagangController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $lowonganmagang = LowonganMagang::where();
+            $lowongan = LowonganMagang::where();
 
-            $lowonganmagang->id_jenismagang = $request->jenismagang;
-            $lowonganmagang->intern_position = $request->posisi;
-            $lowonganmagang->kuota = $request->kuota;
-            $lowonganmagang->deskripsi = $request->deskripsi;
-            $lowonganmagang->requirements = $request->kualifikasi;
-            $lowonganmagang->jenjang = $request->jenjang;
-            $lowonganmagang->keterampilan = $request->keterampilan;
-            $lowonganmagang->paid = $request->gaji;
-            $lowonganmagang->benefitmagang = $request->benefit;
-            $lowonganmagang->id_lokasi = $request->lokasi;
-            $lowonganmagang->startdate = $request->tanggal;
-            $lowonganmagang->enddate = $request->tanggalakhir;
-            $lowonganmagang->durasimagang = $request->durasimagang;
-            $lowonganmagang->tahapan_seleksi = $request->tahapan;
-            $lowonganmagang->save();
+            $lowongan->id_jenismagang = $request->jenismagang;
+            $lowongan->intern_position = $request->posisi;
+            $lowongan->kuota = $request->kuota;
+            $lowongan->deskripsi = $request->deskripsi;
+            $lowongan->requirements = $request->kualifikasi;
+            $lowongan->jenjang = $request->jenjang;
+            $lowongan->keterampilan = $request->keterampilan;
+            $lowongan->paid = $request->gaji;
+            $lowongan->benefitmagang = $request->benefit;
+            $lowongan->id_lokasi = $request->lokasi;
+            $lowongan->startdate = $request->tanggal;
+            $lowongan->enddate = $request->tanggalakhir;
+            $lowongan->durasimagang = $request->durasimagang;
+            $lowongan->tahapan_seleksi = $request->tahapan;
+            $lowongan->save();
 
             return response()->json([
                 'error' => false,
                 'message' => 'lowongan magang successfully Updated!',
                 'modal' => '#modalTambahLowongan',
+                'url' => url('/kelola/lowongan')
+                
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -203,9 +207,9 @@ class LowonganMagangController extends Controller
     public function status($id)
     {
         try {
-            $lowonganmagang = LowonganMagang::where($id)->first();
-            $lowonganmagang->status = ($lowonganmagang->status) ? false : true;
-            $lowonganmagang->save();
+            $lowongan = LowonganMagang::where($id)->first();
+            $lowongan->status = ($lowongan->status) ? false : true;
+            $lowongan->save();
 
             return response()->json([
                 'error' => false,

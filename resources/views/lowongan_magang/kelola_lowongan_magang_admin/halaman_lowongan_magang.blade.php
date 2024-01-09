@@ -1,8 +1,8 @@
 @extends('partials_admin.template')
 
-{{-- @section('meta_header')
+@section('meta_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection --}}
+@endsection
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -54,25 +54,25 @@
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-total" aria-controls="navs-pills-justified-total" aria-selected="true" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Total Lowongan
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowonganmagang['total'] }}</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['total'] }}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowonganmagang['tertunda'] }}</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['tertunda'] }}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Lowongan Diterima
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowonganmagang['diterima'] }}</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['diterima'] }}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Lowongan Ditolak
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowonganmagang['ditolak'] }}</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['ditolak'] }}</span>
                 </button>
             </li>
         </ul>
@@ -190,7 +190,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="../../app-assets/img/alert.png" alt="">
+                    <img src="../../../app-assets/img/alert.png" alt="">
                     <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Mengahapus Data?</h5>
                     <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Data yang
                         dipilih akan dihapus secara permanen!</div>

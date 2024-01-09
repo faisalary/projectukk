@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LowonganMagang extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
 
     protected $table = 'lowongan_magang';
     protected $guarded = [];
@@ -17,7 +17,8 @@ class LowonganMagang extends Model
     protected $casts = [
         'date_confirm_closing' => 'datetime'
     ];
-     public $timestamps = false;
+    const UPDATED_AT = null;
+     public $timestamps = true;
 
     public static function boot()
     {
@@ -27,8 +28,6 @@ class LowonganMagang extends Model
             $model->created_at = $model->freshTimestamp();
         });
     }
-
-    
 
     public function industri()
     {

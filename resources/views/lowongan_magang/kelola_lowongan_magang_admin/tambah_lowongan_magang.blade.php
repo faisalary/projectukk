@@ -233,8 +233,9 @@
                                     <select name="lokasi" id="lokasi" multiple="multiple"
                                         class="select2-multiple form-select wizard-required"
                                         data-placeholder="Masukan Lokasi Pekerjaan">
-                                        <option value="010bccc8-9daf-11ee-bdcc-70665517fcc8">Bandung</option>
-                                        <option value="010c0aea-9daf-11ee-bdcc-70665517fcc8">Jakarta</option>
+                                        @foreach ($lokasi as $l)
+                                            <option value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-12 col-sm-6">
@@ -315,7 +316,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-12 col-sm-6 mt-3">
-                                    <label for="deskripsiseleksi" class="form-label">deskripsiseleksi Seleksi<span
+                                    <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                             class="text-danger">*</span></label>
                                     <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
                                         placeholder="Masukan Deskripsi Tahapan"></textarea>
@@ -351,7 +352,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 mt-3">
-                                        <label for="deskripsiseleksi" class="form-label">deskripsiseleksi Seleksi<span
+                                        <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
                                             placeholder="Masukan Deskripsi Tahapan"></textarea>
@@ -389,7 +390,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-12 col-sm-6 mt-3">
-                                            <label for="deskripsiseleksi" class="form-label">deskripsiseleksi Seleksi<span
+                                            <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
                                                 placeholder="Masukan Deskripsi Tahapan"></textarea>

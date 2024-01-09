@@ -7,9 +7,11 @@
         .form-error {
             color: red;
         }
+
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             color: #4EA971;
         }
+
         .bs-stepper .step.active .bs-stepper-circle {
             background-color: #4EA971
         }
@@ -97,12 +99,14 @@
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="posisi" class="form-label">Posisi<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="posisi" name="posisi" />
+                                        <input type="text" class="form-control" id="posisi" name="posisi"
+                                            placeholder="Masukan Posisi Pekerjaan" required />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="kuota" class="form-label">Kuota Penerimaan<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="kuota" name="kuota" />
+                                        <input type="text" class="form-control" id="kuota" name="kuota"
+                                            placeholder="Masukan Kuota Penerimaan" required />/>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span
