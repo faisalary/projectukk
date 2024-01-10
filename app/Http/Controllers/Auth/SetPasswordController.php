@@ -21,13 +21,13 @@ class SetPasswordController extends Controller
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
-        $admin = User::where('remember_token', $request->token)->first();
-        if (!$admin) {
+        $adminmitra = User::where('remember_token', $request->token)->first();
+        if (!$adminmitra) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
         }
-       
-        $admin->password = bcrypt($request->password);
-        $admin->save();
+        $adminmitra->password = bcrypt($request->password);
+        $adminmitra->remember_token=null;
+        $adminmitra->save();
         
         return redirect('/');
     }
@@ -45,12 +45,12 @@ class SetPasswordController extends Controller
         ]);
 
         $user = User::where('remember_token', $request->token)->first();
-
         if (!$user) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
         }
         $user->password = bcrypt($request->password);
+        $user->remember_token=null;
         $user->save();
-        return redirect('/');
+        return redirect('/login');
     }
 }

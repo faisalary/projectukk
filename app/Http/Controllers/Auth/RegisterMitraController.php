@@ -47,7 +47,7 @@ class RegisterMitraController extends Controller
 
 
         $code = Str::random(64);
-        $admin = User::create([
+        $adminmitra = User::create([
             'name' => $request->name,
             'username' => 'mitra',
             'email' => $request->email,
@@ -57,7 +57,7 @@ class RegisterMitraController extends Controller
             'id_industri' => $industri->id_industri,
             'penanggung_jawab' => $industri->id_industri,
         ]);
-        $admin->assignRole('admin');
+        $adminmitra->assignRole('admin');
               
         DB::commit();
         return response()->json([

@@ -56,18 +56,6 @@ class mahasiswaController extends Controller
             'nohpmhs' => $request->nohpmhs, 
             
         ]);
-       
-        $admin = User::create([
-            'name' => 'mahasiswa',
-            'username' => $request->namamhs,
-            'email' => $request->emailmhs,
-            'password' => bcrypt('12345678'),            
-            'isAdmin'=>2,
-            'nim' => $mahasiswa->nim,
-        ]);
-        $admin->assignRole('user');
-     
-
 
         return response()->json([
             'error' => false,

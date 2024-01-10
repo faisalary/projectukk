@@ -27,43 +27,34 @@
                 @enderror
             </div>
         </div>
-    </div>
-
-    {{-- form-control --}}
-    {{-- <div class="form-group">
-        <div class="col">
-            <label for="password" class="col-form-label text-md-end">{{ __('Password') }}</label>
-
-            <div class="md-6 input-group input-group-merge">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter your Password" autofocus>
-                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- form-control --}}
-    {{-- <div class="form-group">
-        <div class="col">
-        <label for="password-confirm" class="col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-        <div class="md-6 input-group input-group-merge">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password" autofocus/>
-            <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-        </div>
-        </div>
-    </div> --}}
-
-    
+    </div>    
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
-        <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
+        <button type="submit" onclick="openModal()" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
         </div>
     </div>
 </form>
+<!--modal-->
 
+@endsection
+@section('page_script')
+<script>
+    function openModal() {
+            const modal = document.getElementById('successModal');
+            modal.style.display = 'flex';
+
+            setTimeout(function() {
+                closeModal();
+            }, 5000);
+        }
+    
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            modal.style.display = 'none';
+        }
+    //  $("#modal-register-mhs").on("hide.bs.modal", function() {
+
+    //  });
+
+</script>
 @endsection

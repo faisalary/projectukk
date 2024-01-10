@@ -60,7 +60,7 @@ class KelolaMitraController extends Controller
 
         
         $code = Str::random(64);
-        $admin = User::create([
+        $adminmitra = User::create([
             'name' => 'mitra',
             'username' => $request->namaindustri,
             'email' => $request->email,
@@ -69,7 +69,7 @@ class KelolaMitraController extends Controller
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
         ]);
-        $admin->assignRole('admin');
+        $adminmitra->assignRole('admin');
                
         DB::commit();
         
