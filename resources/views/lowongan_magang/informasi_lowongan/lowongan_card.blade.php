@@ -88,7 +88,7 @@
          <div class="row mt-2">
              <div class="col-12 d-flex justify-content-between">
                  <div class="col-6">
-                     <div class="tf-icons ti ti-calendar text-primary" style="font-size: medium; margin-right:10px;"> Batas konfirmasi penerimaan: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
+                     <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;"> Tanggal Posting: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
                      <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : {{$item->kuota}}</div>
                  </div>
                  <div class="col-6 text-end">
