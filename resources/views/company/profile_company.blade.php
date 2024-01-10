@@ -55,7 +55,8 @@
                                 <input type="file" id="changePicture" name="image" class="account-file-input" hidden
                                     accept="image/png, image/jpeg">
                             </label>
-                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect">
+                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect"
+                                onclick="removeImage()">
                                 <i class="ti ti-refresh-dot d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Remove</span>
                             </button>
@@ -84,7 +85,7 @@
                         <div class="mb-3 col-md-12 fv-plugins-icon-container">
                             <label for="deskripsi" class="form-label">Deskripsi Perusahaan <span
                                     class="text-danger">*</span></label>
-                           <textarea class="form-control"  rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description"
+                            <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description"
                                 name="description"></textarea>
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
@@ -146,6 +147,13 @@
                     $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
                 }
             });
+        }
+
+        function removeImage() {
+            // Hapus kode yang tidak diperlukan di sini
+
+            // Ganti foto dengan sumber aset yang diinginkan
+            document.getElementById('imgPreview').src = "{{ asset('storage/' . $industri->image) }}";
         }
     </script>
 @endsection

@@ -208,8 +208,6 @@ class KelolaMitraController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
-                'modal' => '#modalTambahMitra',
-                'table' => '#table-kelola-mitra3'
             ]);
         } catch (Exception $e) {
             return response()->json([

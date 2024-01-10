@@ -15,10 +15,11 @@
                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
                         @if ($industri->image)
                             <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar"
-                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview2">
                         @else
                             <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
-                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+                                class="rounded-circle w-px100 mb-3 pt-1 mt-4" id="imgPreview2"
+                                data-default-src="../../app-assets/img/avatars/14.png">
                         @endif
                         <div class="button-wrapper">
                             <label for="changePicture"
@@ -28,8 +29,8 @@
                                 <input type="file" id="changePicture" name="image" class="account-file-input"
                                     hidden accept="image/png, image/jpeg">
                             </label>
-                            <button type="button"
-                                class="btn btn-white text-danger account-image-reset mb-3 waves-effect">
+                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect"
+                                onclick="removeImage()">
                                 <i class="ti ti-refresh-dot d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Remove</span>
                             </button>
@@ -93,14 +94,3 @@
     <!-- /Account -->
 </div>
 </div>
-
-<script>
-    changePicture.onchange = evt => {
-        const [file] = changePicture.files
-        if (file) {
-            imgPreview.src = URL.createObjectURL(file)
-        } else {
-            imgPreview.src = "../../app-assets/img/avatars/14.png"
-        }
-    }
-</script>

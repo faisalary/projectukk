@@ -61,7 +61,7 @@
                                     @else
                                         <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
                                             class="rounded-circle w-px100 mb-3 pt-1 mt-4" height="125" width="125"
-                                            id="imgPreview">
+                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
                                     @endif
 
                                     <div class="user-info text-center">
@@ -118,39 +118,29 @@
 
     @include('company.summary_profile.modal')
 @endsection
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-{{-- <script>
-    changePicture.onchange = evt => {
-        const [file] = changePicture.files
-        if (file) {
-            imgPreview.src = URL.createObjectURL(file)
-        } else {
-            imgPreview.src = "../../app-assets/img/avatars/14.png"
-        }
-    }
-
-    function edit(e) {
-        let id = e.attr('data-id');
-
-        let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
-        var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function(response) {
-                $("#simpanButton").html("Update Data");
-                $('#modal-mitraa form').attr('action', action);
-                $('#nama').val(response.namaindustri);
-                $('#email').val(response.email);
-                $('#alamatindustri').val(response.alamatindustri);
-                $('#notelpon').val(response.notelpon);
-                $('#kategori').val(response.kategori_industri).trigger('change');
-                $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
-            }
-        });
-    }
-</script> --}}
 
 @section('page_script')
+    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+    <script>
+        // let changePicture = $('#changePicture');
+
+        changePicture.onchange = evt => {
+            const [file] = changePicture.files
+
+            if (file) {
+                imgPreview2.src = URL.createObjectURL(file)
+                console.log(imgPreview2.src);
+            } else {
+                imgPreview2.src = "../../app-assets/img/avatars/14.png"
+            }
+        }
+
+        function removeImage() {
+            // Hapus kode yang tidak diperlukan di sini
+
+            // Ganti foto dengan sumber aset yang diinginkan
+            document.getElementById('imgPreview2').src = "{{ asset('storage/' . $industri->image) }}";
+        }
+    </script>
 @endsection
