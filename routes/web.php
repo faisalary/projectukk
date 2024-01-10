@@ -178,6 +178,11 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
+        Route::prefix('summary-profile')->middleware('can:only.lkm.mitra')->group(function () {
+            Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
+            Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
+        });
 
         Route::prefix('master-email')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
