@@ -186,7 +186,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
             Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
             Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
-        }); 
+        });
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
@@ -218,7 +218,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('kandidat/{id_lowongan}')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
-            Route::get('/show', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
+            Route::get('/show/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
             Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
             Route::post('/status/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'status'])->name('kandidat.status');
             Route::post('/update/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'update'])->name('kandidat.update');
@@ -347,6 +347,7 @@ Route::get('/konfirmasi/magang', function () {
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
 });
+
 
 Route::get('/pengajuan/surat', function () {
     return view('pengajuan_magang.pengajuan_mandiri');
