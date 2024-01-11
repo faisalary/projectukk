@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JadwalSeleksiController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
@@ -314,6 +315,7 @@ Route::prefix('jadwal-seleksi')->group(function () {
     Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
     Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
     Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+    Route::get('/detail', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
     Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
     Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
     Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
@@ -343,9 +345,6 @@ Route::get('/detail_perusahaan', function () {
     return view('landingpage.detail_perusahaan');
 });
 
-Route::get('/detail-mahasiswa', function () {
-    return view('company.jadwal_seleksi.detail_seleksi');
-});
 Route::get('/detail_perusahaan', function () {
     return view('perusahaan.detail_perusahaan');
 });
