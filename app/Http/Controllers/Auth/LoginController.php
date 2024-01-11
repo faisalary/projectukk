@@ -47,7 +47,7 @@ class LoginController extends Controller
         if ($user->hasRole('superadmin')) {
             return redirect()->route('dashboard.superadmin');
         } elseif ($user->hasRole('admin')) {
-            return redirect()->route('profile.company');
+            return redirect()->route('profile_company.index');
         } else {
             // if (!$user->hasVerifiedEmail()) {
             //     return redirect()->route('verification.notice')->with('warning', 'Please verify your email first.');

@@ -44,9 +44,7 @@
                     <li class="breadcrumb-item">
                         <a class="text-secondary">Informasi Lowongan</a>
                     </li>
-                    @foreach($pendaftar as $item)
-                    <li class="breadcrumb-item active">Lowongan {{$item->lowonganMagang->intern_position}} Periode 21 April - 14 Juni 2023</li>
-                    @endforeach
+                    <li class="breadcrumb-item active">Lowongan {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position }} Periode 21 April - 14 Juni 2023</li>
                 </ol>
             </h4>
         </nav>
@@ -73,13 +71,17 @@
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-users ti-xs me-1"></i> Data Kandidat
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">3</span>
+                    @if($lowongan->id_lowongan != null)
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total}}</span>
+                    @else
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">0</span>
+                    @endif
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">1</span>
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
@@ -217,16 +219,14 @@
         @foreach(['kandidat', 'screening','tahap1','tahap2','penawaran','diterima','ditolak'] as $tableId)
         <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
-                @foreach($pendaftar as $item)
                 <div class="row mt-3 ms-2">
                     <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:420px; height:40px;border-radius:8px;">
-                        <span style="color:#4B465C;">Total Kandidat {{$item->lowonganMagang->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
+                        <span style="color:#4B465C;">Total Kandidat {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">{{$total}}</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                     </div>
                     <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
-                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($item->lowonganMagang->date_confirm_closing?->format('d-m-Y'))}}</span>
+                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($lowongan->date_confirm_closing?->format('d-m-Y'))}}</span>
                     </div>
                 </div>
-                @endforeach
 
                 <div class="card-datatable table-responsive">
                     <table class="table tab1c" id="{{$tableId}}" style="width: 100%;">
@@ -234,12 +234,12 @@
                             <tr>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
+                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
                                 <th style="min-width:150px;">EMAIL</th>
                                 <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
                                 <th style="min-width:150px;">UNIVERSITAS</th>
-                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -453,6 +453,7 @@
         </div>
 
     </div>
+
     @endsection
 
     @section('page_script')
@@ -540,8 +541,12 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('/informasi/kandidat/$item->id_lowongan') }}?type=" + idElement;
-
+            let idLowongan = `{{$pendaftar->id_lowongan ?? 0}}`;
+            let url = `{{ url('/informasi/kandidat/${idLowongan}/show/${idLowongan}') }}?type=` + idElement;
+            if ($(this).attr('id') == null) return;
+            // console.log(idElement);
+            // console.log(url);
+            console.log(idLowongan);
 
 
             $(this).DataTable({
@@ -551,29 +556,46 @@
                 deferRender: true,
                 type: 'GET',
                 columns: [{
-                        data: "DT_RowIndex"
+                        data: "DT_RowIndex",
+                        name: 'nomor'
                     },
                     {
-                        data: "namaindustri"
+                        data: null,
+                        name: 'combined_column',
+                        render: function(data, type, row) {
+                            return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
+                        }
                     },
                     {
-                        data: "notelpon"
+                        data: "tanggaldaftar",
+                        name: 'tanggal_daftar'
+                    },
+                    {
+                        data: "mahasiswa.nohpmhs",
+                        name: 'nohp'
                     },
 
                     {
-                        data: "email"
+                        data: "mahasiswa.emailmhs",
+                        name: 'email'
                     },
                     {
-                        data: "prodi"
+                        data: function(data, type, row) {
+                            return data.mahasiswa.prodi.namaprodi;
+                        },
+                        name: 'prodi'
                     },
                     {
-                        data: "fakultas"
+                        data: function(data, type, row) {
+                            return data.mahasiswa.fakultas.namafakultas;
+                        },
+                        name: 'fakultas'
                     },
                     {
-                        data: "universitas"
-                    },
-                    {
-                        data: "tanggaldaftar"
+                        data: function(data, type, row) {
+                            return data.mahasiswa.univ.namauniv;
+                        },
+                        name: 'univ'
                     },
                     {
                         data: "status"
