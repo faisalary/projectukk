@@ -21,7 +21,7 @@ class InformasiKandidatController extends Controller
     {
         $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
         $total = PendaftaranMagang::where('id_lowongan', $id)->count();
-        $lowongan = LowonganMagang::find($id);
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
         return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan', 'total'));
     }

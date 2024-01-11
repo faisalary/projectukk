@@ -44,7 +44,7 @@
                     <li class="breadcrumb-item">
                         <a class="text-secondary">Informasi Lowongan</a>
                     </li>
-                    <li class="breadcrumb-item active">Lowongan {{$pendaftar->lowonganMagang->intern_position}} Periode 21 April - 14 Juni 2023</li>
+                    <li class="breadcrumb-item active">Lowongan {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position }} Periode 21 April - 14 Juni 2023</li>
                 </ol>
             </h4>
         </nav>
@@ -71,7 +71,7 @@
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-users ti-xs me-1"></i> Data Kandidat
-                    @if($pendaftar->lowonganMagang->id_lowongan != null)
+                    @if($lowongan->id_lowongan != null)
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total}}</span>
                     @else
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">0</span>
@@ -221,10 +221,10 @@
             <div class="card">
                 <div class="row mt-3 ms-2">
                     <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:420px; height:40px;border-radius:8px;">
-                        <span style="color:#4B465C;">Total Kandidat {{$pendaftar->lowonganMagang->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">{{$total}}</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
+                        <span style="color:#4B465C;">Total Kandidat {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">{{$total}}</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                     </div>
                     <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
-                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($pendaftar->lowonganMagang->date_confirm_closing?->format('d-m-Y'))}}</span>
+                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($lowongan->date_confirm_closing?->format('d-m-Y'))}}</span>
                     </div>
                 </div>
 
@@ -453,6 +453,7 @@
         </div>
 
     </div>
+
     @endsection
 
     @section('page_script')
@@ -540,7 +541,7 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let idLowongan = `{{$pendaftar->id_lowongan}}`;
+            let idLowongan = `{{$pendaftar->id_lowongan ?? 0}}`;
             let url = `{{ url('/informasi/kandidat/${idLowongan}/show/${idLowongan}') }}?type=` + idElement;
             if ($(this).attr('id') == null) return;
             // console.log(idElement);
