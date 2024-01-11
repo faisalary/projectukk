@@ -254,6 +254,15 @@ Route::middleware('auth')->group(function () {
             return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
         });
     });
+    
+    Route::prefix('mandiri')->group(function () {
+        Route::prefix('/konfirmasi/magang')->group(function () {
+            Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('seleksi.index');
+        //     Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+        //     Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+        //     Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+        });
+    });
 });
 
 Route::get('/pengaturan', function () {
