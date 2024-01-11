@@ -28,14 +28,15 @@
 
     {{-- Belum melakukan konfirmasi lowongan magang --}}
 
-    <!-- <div class="col-3 mt-3 ">
-        <img class="image" style="border-radius: 0%; margin-left: 400px;" src="{{ asset('front/assets/img/pengantar_magang.png')}}" alt="admin.upload">
+    <div class="col-3 mt-5 ">
+        <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;" src="{{ asset('front/assets/img/pengantar_magang.png')}}" alt="admin.upload">
     </div>
     <div class="sec-title mt-5 mb-4 text-center">
         <h4>Anda belum mengajukan Surat Pengantar Magang</h4>
-    </div> -->
+    </div>
+
     {{-- Sudah melakukan konfirmasi lowongan magang --}}
-    <div class="card mb-4" style="background-color: #f8f7fa;">
+    <!-- <div class="card mb-4" style="background-color: #f8f7fa;">
         <div class="card-header p-3" style="background-color: #23314B;">
             <div class="row">
                 <div class="col-6">
@@ -122,7 +123,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+
     <div class="text-center">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAjukan">
             Ajukan sekarang

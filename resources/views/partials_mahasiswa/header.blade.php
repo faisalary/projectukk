@@ -99,13 +99,6 @@
             </a>
           </div>
 
-          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-              <i class="ti ti-menu-2 ti-sm"></i>
-            </a>
-          </div>
-
-          <!-- Menu -->
           <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
             <div class="container-xxl d-flex h-100" style="width: 50rem;">
               <ul class="menu-inner">
@@ -116,19 +109,19 @@
                     <div data-i18n="Perusahaan">Perusahaan</div>
                   </a>
 
-                    <ul class="menu-sub">
-                      <li class="menu-item">
-                        <a href="/daftar_perusahaan" class="menu-link">
-                          <div data-i18n="Daftar Mitra">Daftar Mitra</div>
-                        </a>
-                      </li>
-                      <li class="menu-item">
-                        <a href="/lowongan/magang" class="menu-link">
-                          <div data-i18n="Lowongan Magang">Lowongan Magang</div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="/daftar_perusahaan" class="menu-link">
+                        <div data-i18n="Daftar Mitra">Daftar Mitra</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/lowongan/magang" class="menu-link">
+                        <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
 
                 <!-- Program Magang -->
                 <li class="menu-item">
@@ -150,63 +143,69 @@
                   </ul>
                 </li>
 
-                  <!-- Kegiatan Saya -->
-                  <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                      <div data-i18n="Kegiatan Saya">Kegiatan Saya</div>
-                    </a>
+                <!-- Kegiatan Saya -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Kegiatan Saya">Kegiatan Saya</div>
+                  </a>
 
-                    <ul class="menu-sub">
-                      <li class="menu-item">
-                        <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
-                          <div data-i18n="Lamaran Saya">Lamaran Saya</div>
-                        </a>
-                      </li>
-                      <!-- <li class="menu-item">
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                        <div data-i18n="Lamaran Saya">Lamaran Saya</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
                         <a href="/konfirmasi/magang" class="menu-link">
                           <div data-i18n="Konfirmasi Magang">Konfirmasi Magang</div>
                         </a>
-                      </li> -->
-                      <li class="menu-item">
-                        <a href="" class="menu-link">
-                          <div data-i18n="Logbook">Logbook</div>
-                        </a>
                       </li>
-                    </ul>
-                  </li>
+                    <li class="menu-item">
+                      <a href="" class="menu-link">
+                        <div data-i18n="Logbook">Logbook</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
 
-                  <!-- Layanan LKM -->
-                  <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                      <div data-i18n="Layanan LKM">Layanan LKM</div>
-                    </a>
-                    <ul class="menu-sub">
-                      <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
-                        </a>
-                      </li>
-                      <!-- <li class="menu-item">
+                <!-- Layanan LKM -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Layanan LKM">Layanan LKM</div>
+                  </a>
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="javascript:void(0)" class="menu-link">
+                        <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
+                      </a>
+                    </li>
+                    <!-- <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link">
                           <div data-i18n="Konfirmasi Magang">"Konfirmasi Magang</div>
                         </a>
                       </li> -->
-                      <li class="menu-item">
-                        <a href="/pengajuan/surat" class="menu-link">
-                          <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
-                        </a>
-                      </li>
-                      <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
-                        </a>
-                      </li>
+                    <li class="menu-item">
+                      <a href="/pengajuan/surat" class="menu-link">
+                        <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="javascript:void(0)" class="menu-link">
+                        <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
+                      </a>
+                    </li>
 
                   </ul>
+                </li>
+              </ul>
             </div>
           </aside>
-          <!-- / Menu -->
 
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="ti ti-menu-2 ti-sm"></i>
+            </a>
+          </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Login dan Daftar -->
@@ -468,12 +467,8 @@
               <!--/ User -->
             </ul>
           </div>
+
           @endif
-          <!-- Search Small Screens -->
-          <div class="navbar-search-wrapper search-input-wrapper container-xxl d-none">
-            <input type="text" class="form-control search-input border-0" placeholder="Search..." aria-label="Search..." />
-            <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
-          </div>
         </div>
       </nav>
 
@@ -483,7 +478,6 @@
       <div class="layout-page">
         <!-- Content wrapper -->
         <div class="content-wrapper">
-
 
           <!-- Content -->
 
@@ -496,15 +490,15 @@
                 <div class="modal-header">
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                    </button>
-                  </div>
-                  <div class="modal-body text-center" style="display:block;">
-                    Apakah Anda Ingin Keluar Dari Akun Ini?
-                  </div>
-                  <div class="modal-footer" style="display: flex; justify-content:center;">
-                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
-                  </div>
+                  </button>
+                </div>
+                <div class="modal-body text-center" style="display:block;">
+                  Apakah Anda Ingin Keluar Dari Akun Ini?
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
                 </div>
               </div>
             </div>
+          </div>

@@ -34,32 +34,37 @@
     .light-style .bs-stepper:not(.wizard-modern) {
         box-shadow: none;
     }
+
     .breadcrumb-item,
-  .breadcrumb-item a {
-    color: #4b465c !important;
-  }
+    .breadcrumb-item a {
+        color: #4b465c !important;
+    }
 </style>
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="sec-title mt-4 mb-4">
+    <!-- <div class="sec-title mt-4 mb-4">
         <h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-style1">
                     <li class="breadcrumb-item">
-                        Profil
+                        Kegiatan Saya
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/informasi/pribadi">Informasi Pribadi</a>
+                        <a href="/informasi/pribadi">Lamaran Anda</a>
                     </li>
                     <li class="breadcrumb-item active">Pengalaman dan Keahlian</li>
                 </ol>
             </nav>
         </h4>
+    </div> -->
+
+    <div class="col-md-12 col-12 mt-3">
+        <h4>Lamaran Saya</h4>
     </div>
 
-    <div class="bs-stepper wizard-icons wizard-icons-example mt-5">
+    <div class="bs-stepper wizard-icons wizard-icons-example mt-4">
         <div class="bs-stepper-header">
             <div class="step d-flex flex-column align-items-center">
                 <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">

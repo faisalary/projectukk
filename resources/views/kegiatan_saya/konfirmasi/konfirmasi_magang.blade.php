@@ -28,7 +28,7 @@
 
     {{-- Belum melakukan konfirmasi lowongan magang --}}
     <div class="col-3 mt-3 ">
-        <img class="image" style="border-radius: 0%; margin-left: 400px;" src="{{ asset('front/assets/img/belum_ada_lowongan.png')}}" alt="admin.upload">
+        <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;" src="{{ asset('front/assets/img/belum_ada_lowongan.png')}}" alt="admin.upload">
     </div>
     <div class="sec-title mt-5 mb-4 text-center">
         <h4>Anda belum melakukan konfirmasi lowongan magang</h4>
@@ -133,6 +133,28 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Masukkan Tanggal Batas Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="flatpickr-date" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Simpan</button>
                 </div>
             </div>
         </div>
