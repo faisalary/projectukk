@@ -9,7 +9,7 @@
                  <div class="row">
                      <div class="mb-2">
                          <label for="mulai" class="form-label">Tanggal Seleksi Mulai</label>
-                         <input class="form-control" type="date" id="tanggalmulai">
+                         <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
                      </div>
                  </div>
                  <div class="row">
@@ -68,9 +68,9 @@
                                      data-select2-id="select2Disabled" tabindex="-1" aria-hidden="true" disabled> --}}
                                      <select class="form-select select2" id="nama" name="id_pendaftaran"
                                  data-placeholder="Pilih Jenis Tahap">
-                                     <option value="1">Tahap 1</option>
-                                     <option value="2">Option3</option>
-                                     <option value="3">Option4</option>
+                                     <option value="tahap1">Tahap 1</option>
+                                     <option value="tahap2">Option3</option>
+                                     <option value="tahap3">Option4</option>
                                  </select>
                              </div>
                          </div>
