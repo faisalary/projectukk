@@ -55,6 +55,7 @@ class KelolaMitraController extends Controller
             'email' => $request->email,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
+            'image' => $request->image->store('post'),
             'status' => true,
         ]);
 
@@ -185,20 +186,28 @@ class KelolaMitraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         try {
+            
+            // dd($request->all());
             $industri = Industri::where('id_industri', $id)->first();
-
+            
             $industri->namaindustri = $request->namaindustri;
             $industri->email = $request->email;
             $industri->kategori_industri = $request->kategori_industri;
             $industri->statuskerjasama = $request->statuskerjasama;
+            $industri->alamatindustri = $request->alamatindustri;
+            $industri->description = $request->description;
+            $industri->notelpon = $request->notelpon;
+            if (!empty($request->image)) {
+                $industri->image = $request->image->store('post');
+            }
+            
             $industri->save();
 
             return response()->json([
                 'error' => false,
-                'message' => 'Mitra successfully Updated!',
-                'modal' => '#modalTambahMitra',
-                'table' => '#table-kelola-mitra3'
+                'message' => 'Data Successfully Updated!',
             ]);
         } catch (Exception $e) {
             return response()->json([
