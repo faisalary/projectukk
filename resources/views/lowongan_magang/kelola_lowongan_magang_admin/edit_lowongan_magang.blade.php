@@ -358,7 +358,7 @@
                                         <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" rows="2" id="deskripsiseleksi0" name="deskripsiseleksi[]"
-                                            placeholder="Masukan Deskripsi Tahapan">-</textarea>
+                                            placeholder="Masukan Deskripsi Tahapan">{{$lowongan->deskripsi}}</textarea>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 mt-3">
                                         <div style="display: flex; justify-content: space-between; align-items: center;">

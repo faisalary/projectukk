@@ -60,6 +60,7 @@ class LowonganMagangController extends Controller
                     'jenjang' => $request->jenjang,
                     'keterampilan' => $request->keterampilan,
                     'paid' => $request->gaji,
+                    'nominal_salary' =>$request->nominal,
                     'benefitmagang' => $request->benefit,
                     'id_lokasi' => $request->lokasi,
                     'startdate' => $request->tanggal,
@@ -166,12 +167,21 @@ class LowonganMagangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan'));
+        // $seleksi = SeleksiTahap::create([
+        //     'id_seleksi' => $request->id_seleksi,
+        //     'tgl_mulai' => $request->tgl_mulai,
+        //     'tgl_akhir' => $request->tgl_akhir,
+        //     'deskripsi' => $request->deskripsi,
+        //     'id_lowongan' => $lowongan->id_lowongan
+        // ]);
+
+
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan' ));
 
 
         // $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
@@ -205,6 +215,7 @@ class LowonganMagangController extends Controller
             $lowongan->keterampilan = $request->keterampilan;
             $lowongan->gender = $request->jenis;
             $lowongan->paid = $request->gaji;
+            $lowongan->nominal_salary = $request->gaji;
             $lowongan->benefitmagang = $request->benefit;
             $lowongan->id_lokasi = $request->lokasi;
             $lowongan->startdate = $request->tanggal;

@@ -345,6 +345,7 @@
                     $('#jenjang').val(response.jenjang);
                     $('#keterampilan').val(response.keterampilan);
                     $('#gaji').val(response.paid);
+                    $('#nominal').val(response.nominal_salary);
                     $('#benefit').val(response.benefitmagang);
                     $('#lokasi').val(response.id_lokasi);
                     $('#tanggal').val(response.startdate);
