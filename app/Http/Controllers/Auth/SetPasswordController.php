@@ -21,15 +21,15 @@ class SetPasswordController extends Controller
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
-        $adminmitra = User::where('remember_token', $request->token)->first();
-        if (!$adminmitra) {
+
+        $admin = User::where('remember_token', $request->token)->first();
+
+        if (!$admin) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
         }
-        $adminmitra->password = bcrypt($request->password);
-        $adminmitra->remember_token=null;
-        $adminmitra->save();
-        
-        return redirect('/');
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+        return redirect('/login');
     }
 
     //set password mahasiswa
@@ -40,6 +40,7 @@ class SetPasswordController extends Controller
 
     public function updateset(Request $request)
     {
+        
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);

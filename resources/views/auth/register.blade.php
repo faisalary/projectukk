@@ -30,31 +30,54 @@
     </div>    
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
-        <button type="submit" onclick="openModal()" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
+            <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);" name="register">Buat Akun</button>
         </div>
     </div>
 </form>
-<!--modal-->
-
-@endsection
-@section('page_script')
 <script>
-    function openModal() {
-            const modal = document.getElementById('successModal');
-            modal.style.display = 'flex';
-
-            setTimeout(function() {
-                closeModal();
-            }, 5000);
-        }
+    function handleFormSubmit(event) {
+        
+        event.preventDefault();
+        fetch(event.target.action, {
+            method: event.target.method,
+            body: new FormData(event.target),
+            headers: {
+                'X-CSRF-TOKEN': event.target.querySelector('input[name="_token"]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error === false) {
+                alert(data.message);
+                if (data.script) {
+                    const script = JSON.parse('"' + data.script + '"');
+                    const scriptElement = document.createElement('script');
+                    scriptElement.text = script;
+                    document.body.appendChild(scriptElement);
+                }
+            } else {
+                // Tangani error jika diperlukan
+                console.error(data.message);
+            }
+        })
+        .catch(error => {
+            // Tangani error fetch jika diperlukan
+            console.error('Error Fetch:', error);
+        });
+    }
     
-        function closeModal() {
-            const modal = document.getElementById('successModal');
-            modal.style.display = 'none';
-        }
-    //  $("#modal-register-mhs").on("hide.bs.modal", function() {
-
-    //  });
-
 </script>
+
+
+@if (Session::has('message'))
+<script>
+    swall("Message", "{{Session::get('message') }}", 'succes',{
+        button:true,
+        button: 'Daftar',
+        timer: 3000,
+
+    })
+</script>
+@endif
 @endsection
+

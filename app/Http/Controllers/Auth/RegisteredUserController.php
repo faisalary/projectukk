@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Activated successfully!',
-                'modal' => '#register-mhs'
+                'script' => 'alert("Activated successfully!");'
             ]);
         } catch (Exception $e) {
            DB::rollBack();
@@ -76,9 +76,6 @@ class RegisteredUserController extends Controller
             ]);
         }
         
-    }
-    public function setting(){
-
     }
 
 }
