@@ -106,7 +106,7 @@
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Deskipsi Pekerjaan</span>
             <ul class="job-description"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
-                <p>
+                <p id="deskripsi" name="deskripsi">
                     <li>Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker
                     </li>
                     <li>
@@ -155,7 +155,7 @@
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Requirement</span>
             <ul
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
-                <p>
+                <p id="kualifikasi" name="kualifikasi">
                     <li>
                         At least Bachelor's degree in any field
                     </li>
@@ -196,7 +196,7 @@
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Benefit</span>
-            <ul
+            <ul id="benefit" name="benifit"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <li>
                     Family Care
@@ -214,8 +214,7 @@
 
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Kemampuan</span>
-
+            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important" id="kemampuan" name="kemampuan">Kemampuan</span>
             <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 30px !important">
                 <span class="badge rounded-pill bg-success bg-glow">SPSS</span>
                 <span class="badge rounded-pill bg-success bg-glow">Microsoft Office</span>
@@ -233,7 +232,7 @@
                         <h5 class="mb-0">Seleksi Tahap 1</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 18/10/2023 - 20/10/2023</p>
+                            <p class="mb-0" id="tgltahap1" name="tgltahap1">Tanggal Pelaksanaan : 18/10/2023 - 20/10/2023</p>
                         </div>
                     </div>
                 </li>
@@ -243,7 +242,7 @@
                         <h5 class="mb-0">Seleksi Tahap 2</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 25/10/2023 - 30/10/2023</p>
+                            <p class="mb-0" id="tgltahap2" name="tgltahap2">Tanggal Pelaksanaan : 25/10/2023 - 30/10/2023</p>
                         </div>
                     </div>
                 </li>
@@ -253,7 +252,7 @@
                         <h5 class="mb-0">Seleksi Tahap 3</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 01/11/2023 - 03/11/2023</p>
+                            <p class="mb-0" id="tgltahap3" name="tgltahap3">Tanggal Pelaksanaan : 01/11/2023 - 03/11/2023</p>
                         </div>
                     </div>
                 </li>
@@ -281,12 +280,3 @@
         });
     </script>
 @endsection
-<div>
-    <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and
-        advisory company,</p>
-    <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial
-        sectors all over the world.</p>
-    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-        Show more
-    </u>
-</div>

@@ -38,7 +38,8 @@ jQuery(document).ready(function() {
             newTag: true // add additional parameters
           }
         }
-      });
+    });
+	
 	jQuery('.form-wizard-next-btn').click(function() {
         // $('#jenismagang').select2("enable", true);
 		var parentFieldset = jQuery(this).parents('.wizard-fieldset');

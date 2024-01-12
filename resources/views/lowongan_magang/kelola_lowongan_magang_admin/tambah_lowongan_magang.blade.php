@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    
+
     <!-- Validation Wizard -->
     <div class="modal-body">
         <div class="col-12 mb-4">
@@ -90,7 +90,7 @@
                                     <label class="form-label" for="posisi">Posisi<span
                                             class="text-danger">*</span></label>
                                     <input type="text" name="posisi" id="posisi" class="form-control"
-                                        placeholder="Masukan Posisi Pekerjaan" required/>
+                                        placeholder="Masukan Posisi Pekerjaan" required />
                                 </div>
                                 <div class="col-lg-12 col-sm-6">
                                     <label class="form-label" for="kuota">Kuota Penerimaan<span
@@ -326,8 +326,8 @@
                                         <div style="flex: 1;">
                                             <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="mulai[]"
-                                                name="mulai"/>
+                                            <input class="form-control wizard-required" type="date" id="mulai"
+                                                name="mulai[]" />
                                         </div>
                                         <div class = "mt-3"
                                             style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -335,8 +335,8 @@
                                         <div style="flex: 1;">
                                             <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="akhir[]"
-                                                name="akhir"/>
+                                            <input class="form-control wizard-required" type="date" id="akhir"
+                                                name="akhir[]" />
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +354,7 @@
                                     <div class="col-lg-12 col-sm-6 mt-3">
                                         <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
+                                        <textarea class="form-control" rows="2" id="deskripsiseleksi1" name="deskripsiseleksi[]"
                                             placeholder="Masukan Deskripsi Tahapan"></textarea>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 mt-3">
@@ -362,8 +362,8 @@
                                             <div style="flex: 1;">
                                                 <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date" id="mulai[]"
-                                                    name="mulai"/>
+                                                <input class="form-control wizard-required" type="date" id="mulai1"
+                                                    name="mulai[]" />
                                             </div>
                                             <div class = "mt-3"
                                                 style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -371,8 +371,8 @@
                                             <div style="flex: 1;">
                                                 <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date" id="akhir[]"
-                                                    name="akhir"/>
+                                                <input class="form-control wizard-required" type="date" id="akhir1"
+                                                    name="akhir[]" />
                                             </div>
                                         </div>
                                     </div>
@@ -392,16 +392,17 @@
                                         <div class="col-lg-12 col-sm-6 mt-3">
                                             <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
+                                            <textarea class="form-control" rows="2" id="deskripsiseleksi2" name="deskripsiseleksi[]"
                                                 placeholder="Masukan Deskripsi Tahapan"></textarea>
                                         </div>
                                         <div class="col-lg-12 col-sm-6 mt-3">
-                                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: center;">
                                                 <div style="flex: 1;">
                                                     <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date" id="mulai[]"
-                                                        name="mulai"/>
+                                                    <input class="form-control wizard-required" type="date"
+                                                        id="mulai2" name="mulai[]" />
                                                 </div>
                                                 <div class = "mt-3"
                                                     style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -409,8 +410,8 @@
                                                 <div style="flex: 1;">
                                                     <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date" id="akhir[]"
-                                                        name="akhir"/>
+                                                    <input class="form-control wizard-required" type="date"
+                                                        id="akhir2" name="akhir[]" />
                                                 </div>
                                             </div>
                                         </div>
@@ -435,7 +436,7 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script src="../../app-assets/js/app-stepper.js"></script>
+    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+    <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
 @endsection

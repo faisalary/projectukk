@@ -18,7 +18,7 @@ class LowonganMagang extends Model
         'date_confirm_closing' => 'datetime'
     ];
     const UPDATED_AT = null;
-     public $timestamps = true;
+     public $timestamps = false;
 
     public static function boot()
     {

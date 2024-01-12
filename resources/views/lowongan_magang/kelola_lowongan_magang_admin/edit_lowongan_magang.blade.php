@@ -1,8 +1,6 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
     <style>
         .form-error {
             color: red;
@@ -77,8 +75,12 @@
                     </div>
                     <div class="bs-stepper-content">
                         <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
-                            action="{{ route('lowongan-magang.store') }}">
+                            action="{{ url('kelola/lowongan/update') }}">
                             @csrf
+                            @method('PUT')
+                        {{-- <form class="default-form" id="wizard-validation-form" onSubmit="return false"
+                            action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id }}" method="post">
+                            @csrf --}}
                             <!-- Account Details -->
                             <div id="account-details-validation" class="content">
                                 <div class="content-header mb-3">
@@ -90,29 +92,30 @@
                                                 class="text-danger">*</span></label>
                                         <select name="jenismagang" id="jenismagang" class="select2 form-select"
                                             data-placeholder="Jenis Magang">
-                                            <option value="" disabled selected>Jenis Magang</option>
+                                            <option value="{{ $lowongan->jenisMagang->namajenis }}" disabled selected>
+                                                {{ $lowongan->jenisMagang->namajenis }}</option>
                                             @foreach ($jenismagang as $j)
                                                 <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label for="posisi" class="form-label">Posisi<span
+                                        <label class="form-label" for="posisi">Posisi<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="posisi" name="posisi"
-                                            placeholder="Masukan Posisi Pekerjaan" required />
+                                        <input type="text" value="{{ $lowongan->intern_position }}" name="posisi"
+                                            id="posisi" class="form-control" placeholder="Masukan Posisi Pekerjaan"
+                                            required />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label for="kuota" class="form-label">Kuota Penerimaan<span
+                                        <label class="form-label" for="kuota">Kuota Penerimaan<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="kuota" name="kuota"
-                                            placeholder="Masukan Kuota Penerimaan" required />/>
+                                        <input type="text" value="{{ $lowongan->kuota }}" name="kuota" id="kuota"
+                                            class="form-control" placeholder="Masukan Kuota Penerimaan" required />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label for="deskripsi" class="form-label">Deskripsi Pekerjaan <span
+                                        <label class="form-label" for="deskripsi">Deskripsi Pekerjaan<span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Pekerjaan" id="deskripsi" name="deskripsi"></textarea>
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi" placeholder="Masukan Deskripsi Pekerjaan">{{ $lowongan->deskripsi }}</textarea>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
                                         <button class="btn btn-label-secondary btn-prev" disabled>
@@ -136,33 +139,36 @@
                                         <label for="kualifikasi" class="form-label">Requirements <span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" rows="2" id="kualifikasi" name="kualifikasi"
-                                            placeholder="Masukan Kualifikasi Mahasiswa"></textarea>
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                                            placeholder="Masukan Kualifikasi Mahasiswa" required>{{ $lowongan->requirements }}</textarea>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="jenis" class="form-label">Jenis
                                             kelamin<span class="text-danger">*</span></label>
                                         <div class="col mt-2">
                                             <div class="form-check form-check-inline">
-                                                <input name="jenis" id="jenis" class="form-check-input"
-                                                    type="radio" value="0" />
+                                                <input value="0"
+                                                    {{ $lowongan->gender == '0' ? ' checked="checked"' : '' }}
+                                                    name="jenis" id="jenis" class="form-check-input"
+                                                    type="radio" />
                                                 <label class="form-check-label" for="jenis">Laki-Laki</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input name="jenis" id="jenis" class="form-check-input"
-                                                    type="radio" value="1" />
+                                                <input value="1"
+                                                    {{ $lowongan->gender == '1' ? ' checked="checked"' : '' }}
+                                                    name="jenis" id="jenis" class="form-check-input"
+                                                    type="radio" />
                                                 <label class="form-check-label" for="jenis">Perempuan</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input name="jenis" id="jenis" class="form-check-input "
-                                                    type="radio" value="2" />
+                                                <input value="2"
+                                                    {{ $lowongan->gender == '2' ? ' checked="checked"' : '' }}
+                                                    name="jenis" id="jenis" class="form-check-input "
+                                                    type="radio" />
                                                 <label class="form-check-label" for="jenis">Laki-Laki &
                                                     Perempuan</label>
                                             </div>
-                                            <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <div class="border py-2 px-3 rounded-3">
                                             <label class="form-label" for="basic-default-company">
@@ -173,12 +179,13 @@
                                                         class="text-danger">*</span></label>
                                                 <select name="jenjang" id="jenjang" multiple="multiple"
                                                     class="select2-multiple form-select" data-placeholder="Pilih Jenjang">
-                                                    <option value="d3">D3</option>
-                                                    <option value="s1">S1</option>
-                                                    <option value="s2">S2</option>
-                                                    <option value="s3">S3</option>
+                                                    <option value="{{ $lowongan->jenjang }}">D3</option>
+                                                    <option value="{{ $lowongan->jenjang }}">S1</option>
+                                                    <option value="{{ $lowongan->jenjang }}">S2</option>
+                                                    <option value="{{ $lowongan->jenjang }}">S3</option>
+                                                    <option value="{{ $lowongan->jenjang }}" selected>
+                                                        {{ $lowongan->jenjang }}</option>
                                                 </select>
-                                                <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -187,10 +194,12 @@
                                                 class="text-danger">*</span></label>
                                         <select name="keterampilan" id="keterampilan" multiple="multiple"
                                             class="select2-multiple form-select" data-placeholder="Pilih Keterampilan">
-                                            <option value="PostgreSQL">Figma</option>
-                                            <option value="Figma">Teamwork</option>
-                                            <option value="PHP Nativ">Leadership</option>
-                                            <option value="Sketch">Laravel</option>
+                                            <option value="{{ $lowongan->keterampilan }}">Figma</option>
+                                            <option value="{{ $lowongan->keterampilan }}">Teamwork</option>
+                                            <option value="{{ $lowongan->keterampilan }}">Leadership</option>
+                                            <option value="{{ $lowongan->keterampilan }}">Laravel</option>
+                                            <option value="{{ $lowongan->keterampilan }}" selected>
+                                                {{ $lowongan->keterampilan }}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
@@ -199,69 +208,76 @@
                                         <div class="col mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                    type="radio" value="0" />
+                                                    type="radio" value="0"
+                                                    {{ $lowongan->pelaksanaan == '0' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Online</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                    type="radio" value="1" />
+                                                    type="radio" value="1"
+                                                    {{ $lowongan->pelaksanaan == '1' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Onsite</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input "
-                                                    type="radio" value="2" />
+                                                    type="radio" value="2"
+                                                    {{ $lowongan->pelaksanaan == '2' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Hybird</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label for="gaji" class="form-label d-block">Uang Saku<span
-                                                class="text-danger">*</span></label>
+                                        <label for="gaji" class="form-label d-block">Uang
+                                            Saku
+                                            <span class="text-danger">*</span></label>
                                         <div class="col mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input name="gaji" id="gaji"class="form-check-input"
-                                                    type="radio" value="1" />
+                                                    type="radio" value="1"
+                                                    {{ $lowongan->paid == '1' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="gaji">Ya</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="gaji" id="gaji" class="form-check-input"
-                                                    type="radio" value="0" />
+                                                    type="radio" value="0"
+                                                    {{ $lowongan->paid == '0' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="gaji">Tidak</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label class="form-label" for="nominal">Nominal Uang Saku<span
+                                        <label class="form-label" for="gaji">Nominal Uang Saku<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" name="nominal" id="nominal" class="form-control" />
+                                        <input type="text" value="{{ $lowongan->paid }}" name="gaji"
+                                            id="gaji" class="form-control" />
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="benefit" class="form-label">Benefits (Addtional)<span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" rows="2" id="benefit" name="benefit"
-                                            placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                                            placeholder="Masukan kualifikasi mahasiswa">{{ $lowongan->benefitmagang }}</textarea>
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="lokasi" class="form-label">Lokasi Penempatan<span
                                                 class="text-danger">*</span></label>
                                         <select name="lokasi" id="lokasi" multiple="multiple"
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Masukan Lokasi Pekerjaan">
-                                            <option value="010bccc8-9daf-11ee-bdcc-70665517fcc8">Bandung</option>
-                                            <option value="010c0aea-9daf-11ee-bdcc-70665517fcc8">Jakarta</option>
+                                            <option value="{{ $lowongan->lokasi->kota }}" disabled selected>
+                                                {{ $lowongan->lokasi->kota }}</option>
+                                            @foreach ($lokasi as $l)
+                                                <option value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
+                                            @endforeach
                                         </select>
-                                        <div class="invalid-feedback"></div>
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <div style="display: flex; justify-content: space-between; align-items: center;">
                                             <div style="flex: 1;">
                                                 <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date" id="tanggal"
-                                                    name="tanggal" placeholder="Masukan Tanggal Ditayangkan" />
+                                                <input class="form-control wizard-required" type="date"
+                                                    value="{{ $lowongan->startdate }}" id="tanggal" name="tanggal"
+                                                    placeholder="Masukan Tanggal Ditayangkan" />
                                             </div>
                                             <div class = "mt-3"
                                                 style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -270,41 +286,43 @@
                                                 <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan
                                                     <span class="text-danger">*</span></label>
                                                 <input class="form-control wizard-required" type="date"
-                                                    id="tanggalakhir" name="tanggalakhir"
-                                                    placeholder="Masukan Tanggal Diturunkan" />
+                                                    value="{{ $lowongan->enddate }}" id="tanggalakhir"
+                                                    name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan" />
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="durasimagang" class="form-label">Durasi Magang<span
                                                 class="text-danger">*</span></label>
                                         <select name="durasimagang" id="durasimagang" multiple="multiple"
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Pilih Durasi Magang">
-                                            <option value="1">1 Semester</option>
-                                            <option value="2">2 Semester</option>
+                                            <option value="{{ $lowongan->durasimagang }}">1 Semester</option>
+                                            <option value="{{ $lowongan->durasimagang }}">2 Semester</option>
+                                            <option value="{{ $lowongan->durasimagang }}" selected>
+                                                {{ $lowongan->durasimagang }}</option>
                                         </select>
-                                        <div class="invalid-feedback"></div>
                                     </div>
-
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="tahapan" class="form-label">Tahapan
                                             Magang<span class="text-danger">*</span></label>
                                         <div class="col mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input name="tahapan" class="form-check-input" type="radio"
-                                                    value="0" />
+                                                    value="0"
+                                                    {{ $lowongan->tahapan_seleksi == '0' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="tahapan">1</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="tahapan" class="form-check-input" type="radio"
-                                                    value="1" />
+                                                    value="1"
+                                                    {{ $lowongan->tahapan_seleksi == '1' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="tahapan">2</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="tahapan" class="form-check-input " type="radio"
-                                                    value="2" />
+                                                    value="2"
+                                                    {{ $lowongan->tahapan_seleksi == '2' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="tahapan">3</label>
                                             </div>
                                         </div>
@@ -320,26 +338,63 @@
                                         </button>
                                     </div>
                                 </div>
-                                <!-- Social Links -->
-                                <div id="social-links-validation" class="content">
-                                    <div class="content-header mb-3">
-                                        <h4 class="mb-0">Proses Seleksi</h4>
+                            </div>
+                            <!-- Social Links -->
+                            <div id="social-links-validation" class="content">
+                                <div class="content-header mb-3">
+                                    <h4 class="mb-0">Proses Seleksi</h4>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-lg-12 col-sm-6">
+                                        <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap Lanjut<span
+                                                class="text-danger">*</span></label>
+                                        <select id="select2Disabled" class="select2 form-select" disabled>
+                                            <option value="1"selected>Seleksi Tahap 1</option>
+                                            <option value="2">Option2</option>
+                                            <option value="3">Option3</option>
+                                        </select>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="col-lg-12 col-sm-6 mt-3">
+                                        <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
+                                                class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="2" id="deskripsiseleksi0" name="deskripsiseleksi[]"
+                                            placeholder="Masukan Deskripsi Tahapan">-</textarea>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-6 mt-3">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="flex: 1;">
+                                                <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control wizard-required" type="date"
+                                                    value="{{ $lowongan->startdate }}" id="mulai" name="mulai[]" />
+                                            </div>
+                                            <div class = "mt-3"
+                                                style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control wizard-required" type="date"
+                                                    value="{{ $lowongan->enddate }}" id="akhir" name="akhir[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tahap-lanjut-2" style="display: none;">
+                                        <hr>
                                         <div class="col-lg-12 col-sm-6">
                                             <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
                                                 Lanjut<span class="text-danger">*</span></label>
                                             <select id="select2Disabled" class="select2 form-select" disabled>
-                                                <option value="1"selected>Seleksi Tahap 1</option>
-                                                <option value="2">Option2</option>
+                                                <option value="1">Seleksi Tahap 1</option>
+                                                <option value="2" selected>Seleksi Tahap 2</option>
                                                 <option value="3">Option3</option>
                                             </select>
                                         </div>
-                                        <div class="col-lg-12 col-sm-6">
-                                            <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
+                                        <div class="col-lg-12 col-sm-6 mt-3">
+                                            <label for="deskripsiseleksi1" class="form-label">Deskripsi Seleksi<span
                                                     class="text-danger">*</span></label>
-                                            <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
-                                                placeholder="Masukan Deskripsi Tahapan"></textarea>
+                                            <textarea class="form-control" rows="2" id="deskripsiseleksi1" name="deskripsiseleksi[]"
+                                                placeholder="Masukan Deskripsi Tahapan">{{ $lowongan->deskripsi }}</textarea>
                                         </div>
                                         <div class="col-lg-12 col-sm-6 mt-3">
                                             <div
@@ -348,7 +403,8 @@
                                                     <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                         <span class="text-danger">*</span></label>
                                                     <input class="form-control wizard-required" type="date"
-                                                        id="mulai[]" name="mulai" />
+                                                        value="{{ $lowongan->startdate }}" id="mulai1"
+                                                        name="mulai[]" />
                                                 </div>
                                                 <div class = "mt-3"
                                                     style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -357,26 +413,29 @@
                                                     <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                         <span class="text-danger">*</span></label>
                                                     <input class="form-control wizard-required" type="date"
-                                                        id="akhir[]" name="akhir" />
+                                                        value="{{ $lowongan->enddate }}" id="akhir1"
+                                                        name="akhir[]" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="tahap-lanjut-2" style="display: none;">
+                                    </div>
+                                    <div id="tahap-lanjut-3" style="display: none;">
+                                        <div class="mb-2">
                                             <hr>
                                             <div class="col-lg-12 col-sm-6">
                                                 <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
                                                     Lanjut<span class="text-danger">*</span></label>
                                                 <select id="select2Disabled" class="select2 form-select" disabled>
                                                     <option value="1">Seleksi Tahap 1</option>
-                                                    <option value="2" selected>Seleksi Tahap 2</option>
-                                                    <option value="3">Option3</option>
+                                                    <option value="2">Seleksi Tahap 2</option>
+                                                    <option value="3" selected>Seleksi Tahap 3</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-12 col-sm-6 mt-3">
-                                                <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
+                                                <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                         class="text-danger">*</span></label>
-                                                <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
-                                                    placeholder="Masukan Deskripsi Tahapan"></textarea>
+                                                <textarea class="form-control" rows="2" id="deskripsiseleksi1" name="deskripsiseleksi[]"
+                                                    placeholder="Masukan Deskripsi Tahapan">{{ $lowongan->deskripsi }}</textarea>
                                             </div>
                                             <div class="col-lg-12 col-sm-6 mt-3">
                                                 <div
@@ -385,70 +444,30 @@
                                                         <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                             <span class="text-danger">*</span></label>
                                                         <input class="form-control wizard-required" type="date"
-                                                            id="mulai[]" name="mulai" />
+                                                            value="{{ $lowongan->startdate }}" id="mulai2"
+                                                            name="mulai[]" />
                                                     </div>
                                                     <div class = "mt-3"
                                                         style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                                                     </div>
                                                     <div style="flex: 1;">
-                                                        <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
+                                                        <label for="akhir1" class="form-label">Tanggal Akhir Pelaksanaan
                                                             <span class="text-danger">*</span></label>
                                                         <input class="form-control wizard-required" type="date"
-                                                            id="akhir[]" name="akhir" />
+                                                            value="{{ $lowongan->enddate }}" id="akhir2"
+                                                            name="akhir[]" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="tahap-lanjut-3" style="display: none;">
-                                            <div class="mb-2">
-                                                <hr>
-                                                <div class="col-lg-12 col-sm-6">
-                                                    <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
-                                                        Lanjut<span class="text-danger">*</span></label>
-                                                    <select id="select2Disabled" class="select2 form-select" disabled>
-                                                        <option value="1">Seleksi Tahap 1</option>
-                                                        <option value="2">Seleksi Tahap 2</option>
-                                                        <option value="3" selected>Seleksi Tahap 3</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-12 col-sm-6">
-                                                    <label for="deskripsi" class="form-label">Deskripsi Seleksi<span
-                                                            class="text-danger">*</span></label>
-                                                    <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi[]"
-                                                        placeholder="Masukan Deskripsi Tahapan"></textarea>
-                                                </div>
-                                                <div class="col-lg-12 col-sm-6 mt-3">
-                                                    <div
-                                                        style="display: flex; justify-content: space-between; align-items: center;">
-                                                        <div style="flex: 1;">
-                                                            <label for="mulai" class="form-label">Tanggal Mulai
-                                                                Pelaksanaan
-                                                                <span class="text-danger">*</span></label>
-                                                            <input class="form-control wizard-required" type="date"
-                                                                id="mulai[]" name="mulai[]" />
-                                                        </div>
-                                                        <div class = "mt-3"
-                                                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                                                        </div>
-                                                        <div style="flex: 1;">
-                                                            <label for="akhir" class="form-label">Tanggal Akhir
-                                                                Pelaksanaan
-                                                                <span class="text-danger">*</span></label>
-                                                            <input class="form-control wizard-required" type="date"
-                                                                id="akhir[]" name="akhir" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 d-flex justify-content-between">
-                                            <button class="btn btn-label-secondary btn-prev">
-                                                <i class="ti ti-arrow-left me-sm-1 me-0"></i>
-                                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                                            </button>
-                                            <button type="submit" class="btn btn-success btn-submit"
-                                                id="modal-button">Submit</button>
-                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <button class="btn btn-label-secondary btn-prev">
+                                            <i class="ti ti-arrow-left me-sm-1 me-0"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-success btn-submit"
+                                            id="modal-button">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -461,7 +480,7 @@
     @endsection
 
     @section('page_script')
-        <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-        <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-        <script src="../../app-assets/js/app-stepper.js"></script>
+        <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+        <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
     @endsection
