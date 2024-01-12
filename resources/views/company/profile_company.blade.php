@@ -29,17 +29,24 @@
 @endsection
 
 @section('main')
-    <div class="col-md-12">
+    <div class="col-md-12" id="modal-mitraa">
         <h4 class="fw-bold py-3 mb-4">Profil Perusahaan</h4>
         <div class="card mb-4">
-            <form action="{{ url('company/profile-company/store') }}" method="POST" class="default-form" autocomplete="off">
+            <form action="{{ url('company/profile-company/' . $industri->id_industri) }}" class="default-form"
+                autocomplete="off" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <h5 class="card-header">Informasi Dasar Perusahaan</h5>
                 <!-- Account -->
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
-                            class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+                        @if ($industri->image)
+                            <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar"
+                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+                        @else
+                            <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+                        @endif
                         <div class="button-wrapper">
                             <label for="changePicture" class="btn btn-white text-success me-2 mb-3 waves-effect waves-light"
                                 tabindex="0">
@@ -48,7 +55,8 @@
                                 <input type="file" id="changePicture" name="image" class="account-file-input" hidden
                                     accept="image/png, image/jpeg">
                             </label>
-                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect">
+                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect"
+                                onclick="removeImage()">
                                 <i class="ti ti-refresh-dot d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Remove</span>
                             </button>
@@ -64,7 +72,7 @@
                             <label for="namaperusahaan" class="form-label">Nama Perusahaan <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" type="text" id="namaindustri" name="namaindustri"
-                                placeholder="Nama Perusahaan" autofocus="">
+                                placeholder="Nama Perusahaan" readonly autofocus="" value="{{ $industri->namaindustri }}">
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-12 fv-plugins-icon-container">
@@ -94,13 +102,13 @@
                                     class="text-danger">*</span></label>
                             <input type="text" id="email" name="email" class="form-control"
                                 placeholder="Masukan E-mail Perusahaan" aria-label="john.doe"
-                                aria-describedby="basic-default-email2">
+                                aria-describedby="basic-default-email2" readonly value="{{ $industri->email }}">
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success me-2">Simpan Data</button>
+                    <button type="submit" id="modal-button" class="btn btn-success me-2">Simpan Data</button>
                 </div>
                 <input type="hidden">
             </form>
@@ -111,14 +119,42 @@
     </div>
 
     <script>
-      changePicture.onchange = evt => {
-        const[file] = changePicture.files
-        if (file) {
-          imgPreview.src = URL.createObjectURL(file)
-        } else {
-          imgPreview.src = "../../app-assets/img/avatars/14.png"
+        changePicture.onchange = evt => {
+            const [file] = changePicture.files
+            if (file) {
+                imgPreview.src = URL.createObjectURL(file)
+            } else {
+                imgPreview.src = "../../app-assets/img/avatars/14.png"
+            }
         }
-      }
+
+        function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
+            var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $("#simpanButton").html("Update Data");
+                    $('#modal-mitraa form').attr('action', action);
+                    $('#nama').val(response.namaindustri);
+                    $('#email').val(response.email);
+                    $('#alamatindustri').val(response.alamatindustri);
+                    $('#notelpon').val(response.notelpon);
+                    $('#kategori').val(response.kategori_industri).trigger('change');
+                    $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
+                }
+            });
+        }
+
+        function removeImage() {
+            // Hapus kode yang tidak diperlukan di sini
+
+            // Ganti foto dengan sumber aset yang diinginkan
+            document.getElementById('imgPreview').src = "{{ asset('storage/' . $industri->image) }}";
+        }
     </script>
 @endsection
 
