@@ -74,10 +74,11 @@
                         </div>
                     </div>
                     <div class="bs-stepper-content">
-                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
-                            action="{{ url('kelola/lowongan/update') }}">
+                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" 
+                            method="POST"
+                            action="{{ url('kelola/lowongan/update/') }}">
                             @csrf
-                            @method('PUT')
+                            @method('HEAD')
                         {{-- <form class="default-form" id="wizard-validation-form" onSubmit="return false"
                             action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id }}" method="post">
                             @csrf --}}

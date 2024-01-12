@@ -172,17 +172,15 @@ class LowonganMagangController extends Controller
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
-        // $seleksi = SeleksiTahap::create([
-        //     'id_seleksi' => $request->id_seleksi,
-        //     'tgl_mulai' => $request->tgl_mulai,
-        //     'tgl_akhir' => $request->tgl_akhir,
-        //     'deskripsi' => $request->deskripsi,
-        //     'id_lowongan' => $lowongan->id_lowongan
-        // ]);
-
-
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan' ));
-
+        $seleksi = SeleksiTahap::create([
+            'id_seleksi' => $request->id_seleksi,
+            'tgl_mulai' => $lowongan->startdate,
+            'tgl_akhir' => $lowongan->enddate,
+            'deskripsi' => $lowongan->deskripsi,
+            'id_lowongan' => $lowongan->id_lowongan
+        ]);
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan','seleksi' ));
+        
 
         // $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
         // $magang = JenisMagang::first();
@@ -203,10 +201,10 @@ class LowonganMagangController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            // $lowongan = LowonganMagang::where($id)->first();
-            $lowongan = LowonganMagang::find($id);
-
-            $lowongan->id_jenismagang = $request->jenismagang;
+            $lowongan = LowonganMagang::where($id)->first();
+            // $lowongan = LowonganMagang::find($id);
+           
+            $lowongan->id_jenismagang = $request->id_jenismagang;
             $lowongan->intern_position = $request->posisi;
             $lowongan->kuota = $request->kuota;
             $lowongan->deskripsi = $request->deskripsi;
