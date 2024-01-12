@@ -28,7 +28,7 @@ class InformasiLowonganController extends Controller
             return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan', 'pendaftar_count'))->render();
         }
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
-        $magang = LowonganMagang::where('id_industri', $id)->first();
+        $magang = LowonganMagang::where('id_industri', $id)->with('industri')->first();
 
         $industri = Industri::with('total_lowongan')->first();
         $pelamar =
@@ -37,7 +37,7 @@ class InformasiLowonganController extends Controller
         $pendaftar_count = $pelamar?->lowonganMagang->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
         // dd($lowongan_count);
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count'));
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang'));
     }
 
     /**

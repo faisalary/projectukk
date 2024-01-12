@@ -39,11 +39,11 @@
     <div class="col-md-9 col-12">
         <!-- Company -->
         @can('title.info.lowongan.mitra')
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$magang->industri->namaindustri}}</h4>
         @endcan
         <!-- SuperAdmin -->
         @can('title.info.lowongan.admin')
-        <h4 class="fw-bold">Lowongan Magang {{$industri->namaindustri}}</h4>
+        <h4 class="fw-bold">Lowongan Magang {{$magang->industri->namaindustri}}</h4>
         <h4 class="fw-bold">Tahun Ajaran</h4>
         @endcan
 
