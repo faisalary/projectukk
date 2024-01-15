@@ -2,7 +2,7 @@
 
 
 @section('meta_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('page_style')
@@ -77,9 +77,6 @@
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-
-    
-
     $("#modalTambahProdi").on("hide.bs.modal", function() {
 
         $("#modal-title").html("Tambah Prodi");
@@ -89,155 +86,154 @@
         $('#modalTambahProdi form #namaprodi').val('').trigger('change');
     });
 
-    function edit(e){
-            let id = e.attr('data-id');
+    function edit(e) {
+        let id = e.attr('data-id');
 
-            let action = `{{ url('master/prodi/update/') }}/${id}`;
-            var url = `{{ url('master/prodi/edit/') }}/${id}`;
-            $.ajax({
-                 type: 'GET',
-                 url: url,
-                 success: function (response) {
-                    $("#modal-title").html("Edit Prodi");
-                    $("#modal-button").html("Update Data");
-                    $('#modalTambahProdi form').attr('action',action);
-                    $('#pilihuniversitas_add').val(response.id_univ).trigger("change");
-                    $('#pilihfakultas_add').val(response.id_fakultas).trigger("change");
-                    $('#namaprodi').val(response.namaprodi).trigger("change");
+        let action = `{{ url('master/prodi/update/') }}/${id}`;
+        var url = `{{ url('master/prodi/edit/') }}/${id}`;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+                $("#modal-title").html("Edit Prodi");
+                $("#modal-button").html("Update Data");
+                $('#modalTambahProdi form').attr('action', action);
+                $('#pilihuniversitas_add').val(response.id_univ).trigger("change");
+                $('#pilihfakultas_add').val(response.id_fakultas).trigger("change");
+                $('#namaprodi').val(response.namaprodi).trigger("change");
 
-                    $('#modalTambahProdi').modal('show');
+                $('#modalTambahProdi').modal('show');
 
+            }
+        });
+    }
+
+    $('#pilihuniversitas_add').on('change', function() {
+        id_univ = $("#pilihuniversitas_add option:selected").val();
+
+        $.ajax({
+            url: "{{ url('/master/prodi/list-fakultas') }}" + '/' + id_univ,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if ($('#pilihfakultas_add').data('select2')) {
+                    $("#pilihfakultas_add form").val("");
+                    $("#pilihfakultas_add").trigger("change");
+                    $('#pilihfakultas_add').empty().trigger("change");
                 }
-            });
-        }
+                $("#pilihfakultas_add").select2({
+                    data: response.data,
+                    dropdownParent: $('#modalTambahProdi'),
+                });
+            }
 
-        $('#pilihuniversitas_add').on('change',function(){
-            id_univ = $("#pilihuniversitas_add option:selected").val();
-            
-            $.ajax({
-                url: "{{ url('/master/prodi/list-fakultas') }}"+'/'+id_univ,
-                method: "GET",
-                dataType: "json",
-                success: function(response){
-                    if ($('#pilihfakultas_add').data('select2')) {
-                        $("#pilihfakultas_add form").val(""); 
-                        $("#pilihfakultas_add").trigger("change");
-                        $('#pilihfakultas_add').empty().trigger("change");
-                    }
-                    $("#pilihfakultas_add").select2({
-                        data: response.data,
-                        dropdownParent: $('#modalTambahProdi'),
-                    });
+        })
+    });
+
+    $('#univ').on('change', function() {
+        id_univ = $("#univ option:selected").val();
+
+        $.ajax({
+            url: "{{ url('/master/prodi/list-fakultas') }}" + '/' + id_univ,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if ($('#fakultas').data('select2')) {
+                    $("#fakultas form").val("");
+                    $("#fakultas").trigger("change");
+                    $('#fakultas').empty().trigger("change");
                 }
+                $("#fakultas").select2({
+                    data: response.data,
+                    dropdownParent: $('#modalSlide'),
+                });
+            }
 
-            })
-        });
+        })
+    });
 
-        $('#univ').on('change',function(){
-            id_univ = $("#univ option:selected").val();
-            
-            $.ajax({
-                url: "{{ url('/master/prodi/list-fakultas') }}"+'/'+id_univ,
-                method: "GET",
-                dataType: "json",
-                success: function(response){
-                    if ($('#fakultas').data('select2')) {
-                        $("#fakultas form").val(""); 
-                        $("#fakultas").trigger("change");
-                        $('#fakultas').empty().trigger("change");
-                    }
-                    $("#fakultas").select2({
-                        data: response.data,
-                        dropdownParent: $('#modalSlide'),
-                    });
+    $('#fakultas').on('change', function() {
+        id_fakultas = $("#fakultas option:selected").val();
+
+        $.ajax({
+            url: "{{ url('/master/prodi/list-prodi') }}" + '/' + id_fakultas,
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                if ($('#prodi').data('select2')) {
+                    $("#prodi form").val("");
+                    $("#prodi").trigger("change");
+                    $('#prodi').empty().trigger("change");
                 }
+                $("#prodi").select2({
+                    data: response.data,
+                    dropdownParent: $('#modalSlide'),
+                });
+            }
 
-            })
-        });
+        })
+    });
 
-        $('#fakultas').on('change',function(){
-            id_fakultas = $("#fakultas option:selected").val();
-            
-            $.ajax({
-                url: "{{ url('/master/prodi/list-prodi') }}"+'/'+id_fakultas,
-                method: "GET",
-                dataType: "json",
-                success: function(response){
-                    if ($('#prodi').data('select2')) {
-                        $("#prodi form").val(""); 
-                        $("#prodi").trigger("change");
-                        $('#prodi').empty().trigger("change");
-                    }
-                    $("#prodi").select2({
-                        data: response.data,
-                        dropdownParent: $('#modalSlide'),
-                    });
-                }
+    $(document).ready(function() {
+        table_master_prodi();
+    });
 
-            })
-        });
+    $(document).on('submit', '#filter', function(e) {
+        const offcanvasFilter = $('#modalSlide');
+        e.preventDefault();
+        table_master_prodi();
+        $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() + ', Fakultas: ' + $('#fakultas :selected').text() + ', Prodi: ' + $('#prodi :selected').text());
+        offcanvasFilter.offcanvas('hide');
+    });
 
-        $( document ).ready(function() {
-            table_master_prodi();
-        });
+    $('.data-reset').on('click', function() {
+        $('#univ').val(null).trigger('change');
+        $('#fakultas').val(null).trigger('change');
+        $('#prodi').val(null).trigger('change');
+    });
 
-        $(document).on('submit','#filter',function(e){
-            const offcanvasFilter = $('#modalSlide');
-            e.preventDefault();
-            table_master_prodi();
-            $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() + ', Fakultas: ' + $('#fakultas :selected').text() + ', Prodi: ' + $('#prodi :selected').text());
-            offcanvasFilter.offcanvas('hide');
-        });
-
-        $('.data-reset').on('click',function () {
-            $('#univ').val(null).trigger('change');
-            $('#fakultas').val(null).trigger('change');
-            $('#prodi').val(null).trigger('change');
-        });
-
-        function table_master_prodi() {
-            var table = $('#table-master-prodi').DataTable({
-                ajax: {
-                    url:"{{ url('master/prodi/show') }}",
-                    type: 'POST',
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    data: function(d) {
-                        var frm_data = $('#filter').serializeArray();
-                        $.each(frm_data, function(key, val) {
-                            d[val.name] = val.value;
-                        });
-                    }
+    function table_master_prodi() {
+        var table = $('#table-master-prodi').DataTable({
+            ajax: {
+                url: "{{ url('master/prodi/show') }}",
+                type: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
                 },
-                serverSide: false,
-                processing: true,
-                // deferRender: true,
-                destroy: true,
-                columns: [{
-                        data: "DT_RowIndex"
-                    },
-                    {
-                        data: "univ.namauniv"
-                    },
-                    {
-                        data: "fakultas.namafakultas"
-                    },
-                    {
-                        data: "namaprodi"
-                    },
-                    {
-                        data: "status"
-                    },
-                    {
-                        data: "action"
-                    }
-                ]
-            });
-        }
-
+                data: function(d) {
+                    var frm_data = $('#filter').serializeArray();
+                    $.each(frm_data, function(key, val) {
+                        d[val.name] = val.value;
+                    });
+                }
+            },
+            serverSide: false,
+            processing: true,
+            // deferRender: true,
+            destroy: true,
+            columns: [{
+                    data: "DT_RowIndex"
+                },
+                {
+                    data: "univ.namauniv"
+                },
+                {
+                    data: "fakultas.namafakultas"
+                },
+                {
+                    data: "namaprodi"
+                },
+                {
+                    data: "status"
+                },
+                {
+                    data: "action"
+                }
+            ]
+        });
+    }
 </script>
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

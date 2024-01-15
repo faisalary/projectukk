@@ -18,7 +18,6 @@
         background-color: #4EA971 !important;
         border-color: #4EA971 !important;
     }
-
 </style>
 @endsection
 
@@ -209,7 +208,7 @@
 
                 <div class="row mt-3 mb-2">
                     <nav aria-label="Page navigation">
-                        <ul class="pagination" style="margin-left: 100px;">
+                        <ul class="pagination" style="margin-left: 130px; color:black">
                             <li class="page-item ">
                                 <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
                             </li>
@@ -329,7 +328,7 @@
                                             </li>
 
                                             <div class="content-new">
-                                                
+
                                                 <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                                     Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc. </li>
 
@@ -343,9 +342,9 @@
                                                     Support other HR Indonesia operations activities. </li>
                                             </div>
 
-                                            <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                                Lebih Banyak
-                                            </div>
+                                            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                                Show more
+                                            </u>
                                         </ul>
                                     </div>
                                 </div>
@@ -368,7 +367,7 @@
                                                 Has experience using Workday will be an advantage.
                                             </li>
                                             <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                    Good command of spoken and written English. 
+                                                Good command of spoken and written English.
                                             </li>
                                             <div class="content-new">
                                                 <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
@@ -381,9 +380,9 @@
                                                     Willing to work in Cikampek area. </li>
                                             </div>
 
-                                            <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                                Lebih Banyak
-                                            </div>
+                                            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                                Show more
+                                            </u>
                                         </ul>
                                     </div>
                                 </div>
@@ -436,9 +435,9 @@
                                                 company with about 17,000 experts working across the world to create sustainable solutions for future generations.</p>
                                         </div>
 
-                                        <div class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                            Lebih Banyak
-                                        </div>
+                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                            Show more
+                                        </u>
                                         <br>
 
                                     </div>
@@ -450,7 +449,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 @endsection
 
@@ -462,10 +461,10 @@
         $(".show_hide_new").on("click", function() {
             $(this).prev('.content-new').slideToggle(100);
             console.log($(this).text().trim())
-            if ($(this).text().trim() == "Lebih Banyak") {
-                $(this).text("Lebih Sedikit");
+            if ($(this).text().trim() == "Show more") {
+                $(this).text("Show Less");
             } else {
-                $(this).text("Lebih Banyak")
+                $(this).text("Show more")
             }
         });
     });

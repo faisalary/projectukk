@@ -1,7 +1,7 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   .hidden {
@@ -41,20 +41,7 @@
     border-left: 0px;
     border-bottom-right-radius: 0.375rem;
     border-top-right-radius: 0.375rem;
-  }
-
-  .pagination>li>a,
-  .pagination>li>span {
-    position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: #333;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
-  }
+  } 
 
   .menu-link {
     text-decoration: none !important;
@@ -95,7 +82,6 @@
 
 @section('main')
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
-
   <div class="row mt-5 mb-3" style="margin-left:70px;">
     <div class="col-5">
       <div class="input-group input-group-merge">
@@ -127,7 +113,9 @@
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">
-        <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Perusahaan
+        <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+          Perusahaan
+          <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
 
@@ -164,7 +152,9 @@
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">
-        <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Banefit
+        <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+          Benefit
+          <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
@@ -179,7 +169,9 @@
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">
-        <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Durasi Magang
+        <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+          Durasi Magang
+          <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
@@ -194,7 +186,9 @@
     </div>
     <div class="col-2">
       <div class="dropdown cursor-pointer">
-        <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Tipe Magang
+        <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+          Tipe Magang
+          <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
         </a>
         <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
           <li class="ps-2 pe-5">
@@ -410,8 +404,8 @@
   </div>
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-end">
-      <li class="page-item prev">
-        <a class="page-link" href="javascript:void(0);" style="height: 36px;">Previous</a>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">Previous</a>
       </li>
       <li class="page-item active">
         <a class="page-link" href="javascript:void(0);">1</a>
@@ -432,7 +426,7 @@
 @endsection
 
 @section('page_script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script> -->
 <script>
   $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
     $(this).closest("li").toggleClass("active", this.checked);

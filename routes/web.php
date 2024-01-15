@@ -182,12 +182,15 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
-            Route::post('/store', [App\Http\Controllers\ProfileCompanyController::class, 'store'])->name('profile_company.store');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileCompanyController::class, 'update'])->name('profile_company.update');
+            Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
-        Route::get('/master-data-email', function() {
-            return view('company.master_data_company.index');
+        Route::prefix('summary-profile')->middleware('can:only.lkm.mitra')->group(function () {
+            Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
+            Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
+
         Route::prefix('master-email')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
@@ -195,7 +198,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
             Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
             Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
-        }); 
+        });
     });
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');
@@ -227,7 +230,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('kandidat/{id_lowongan}')->group(function () {
             Route::get('/', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
-            Route::get('/show', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
+            Route::get('/show/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
             Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
             Route::post('/status/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'status'])->name('kandidat.status');
             Route::post('/update/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'update'])->name('kandidat.update');
@@ -300,13 +303,13 @@ Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
 });
 
-Route::get('/profile-company', function () {
-    return view('company.profile_company', ['active_menu' => 'profile-company']);
-})->name('profile.company');
+// Route::get('/profile-company', function () {
+//     return view('company.profile_company', ['active_menu' => 'profile-company']);
+// })->name('profile.company');
 
-Route::get('/summary-profile', function () {
-    return view('company.summary_profile');
-});
+// Route::get('/summary-profile', function () {
+//     return view('company.summary_profile');
+// });
 
 Route::prefix('jadwal-seleksi')->group(function () {
     Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
@@ -355,8 +358,13 @@ Route::get('/lowongan/magang', function () {
     return view('perusahaan.lowongan');
 });
 Route::get('/konfirmasi/magang', function () {
-    return view('konfirmasi.konfirmasi_magang');
+    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
 });
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
+});
+
+
+Route::get('/pengajuan/surat', function () {
+    return view('pengajuan_magang.pengajuan_mandiri');
 });

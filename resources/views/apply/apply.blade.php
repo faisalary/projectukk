@@ -113,7 +113,7 @@
                         <label for="formFile" class="form-label text-secondary">Unggah Surat Lamaran Kerja</label>
                         <input class="form-control" type="file" id="formFile" disabled>
                     </div>
-                    <button type="button" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
+                    <button type="button" class="btn btn-success waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
                 </div>
             </div>
         </div>

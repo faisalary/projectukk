@@ -1,7 +1,6 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     .hidden {
@@ -61,9 +60,14 @@
         background: #F8F8F8
     }
 
-    .pagination>li>a,
-    .pagination>li>span {
-        color: #000;
+    .select2-results__option[role="option"][aria-selected="true"] {
+        background-color: #4EA971;
+        color: #fff;
+    }
+
+    .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+        background-color: rgba(115, 103, 240, 0.08) !important;
+        color: #4EA971 !important;
     }
 </style>
 @endsection
@@ -71,7 +75,6 @@
 @section('main')
 
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
-
     <div class="row mt-5 mb-3" style="margin-left:70px;">
         <div class="col-5">
             <div class="input-group input-group-merge">
@@ -103,7 +106,9 @@
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
-                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Perusahaan
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Perusahaan
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
                 <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
 
@@ -140,7 +145,9 @@
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
-                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Banefit
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Benefit
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
                 <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
                     <li class="ps-2 pe-5">
@@ -155,7 +162,9 @@
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
-                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Durasi Magang
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Durasi Magang
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
                 <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
                     <li class="ps-2 pe-5">
@@ -170,7 +179,9 @@
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
-                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Tipe Magang
+                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tipe Magang
+                    <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
                 <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
                     <li class="ps-2 pe-5">
@@ -198,10 +209,10 @@
     <h4> Maaf, lowongan tidak di temukan</h4>
 </div> -->
 
-<div class="auto-container m-5">
-    <h4 style="margin-left:65px;">300+ Lowongan Tersedia</h4>
-    <div class="row ms-5 me-5">
-        <div class="col-6">
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="ms-4">500+ Lowongan Tersedia</h4>
+    <div class="row mt-2 ps-4">
+        <div class="col-5">
             <div class="row">
                 <div class="col-12 mt-3 mb-2">
                     <div class="card" style="width: 530px">
@@ -364,9 +375,9 @@
                 </div>
             </div>
 
-            <div class="row mt-2 mb-2">
+            <div class="row mt-3 mb-2">
                 <nav aria-label="Page navigation">
-                    <ul class="pagination" style="margin-left: 100px; color:black">
+                    <ul class="pagination" style="margin-left: 130px; color:black">
                         <li class="page-item ">
                             <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
                         </li>
@@ -387,8 +398,228 @@
                 </nav>
             </div>
         </div>
-        <div class="col-6 mt-3">
-            <div class="border text-center">
+
+        <div class="col-7">
+            
+        {{-- Ada lowongan terpilih--}}
+            <!-- <div class="row">
+                <div class="col-12 mt-3 mb-2">
+                    <div class="card" style="width: 765px; height: auto;">
+                        <div class="card-body">
+                            <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <figure class="image" style="border-radius: 0%; margin-left: 10px;"><img style="width:180px;" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
+                                    </figure>
+                                    <div style="margin-left: 250px;">
+                                        <small class="text-muted" style="font-size: 18px;">Batas Melamar 13 Juli
+                                            2023</small><br>
+                                        <div class="row mt-2">
+                                            <a href="/detail/lowongan/magang"><button type="button" class="btn btn-sm btn-outline-dark waves-effect" style="width: 200px; margin-left:15px;">Buka dihalaman baru</button>
+                                            </a><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 mb-2 ms-1 p-0">
+                                    <h4 style=" margin-bottom: 0px; ">PT
+                                        Wings Surya</h4>
+                                    <h1 class="mb-1" style="  text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">
+                                        Human Resources</h1>
+                                </div>
+                                <div class="d-flex ms-2 mt-2" style="font-size: 14px;  !important">
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar ti-xs me-2"></i>
+                                            2023/2024 - Ganjil
+                                        </li>
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-users ti-xs me-2"></i>
+                                            100 Mahasiswa
+                                        </li>
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-building-community  ti-xs me-2"></i>
+                                            Fakultas Ilmu Terapan
+                                        </li>
+                                    </ul>
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
+
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-map-pin  ti-xs me-2"></i>
+                                            Bandung & Jakarta
+                                        </li>
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-currency-dollar  ti-xs me-2"></i>
+                                            Berbayar
+                                        </li>
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar-time  ti-xs me-2"></i>
+                                            2 Semerter
+                                        </li>
+                                    </ul>
+                                    <ul style="padding: 0 0 0 20px; !important">
+                                        <li class="list-group-item d-flex align-items-start fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-school ti-xs me-2"></i>
+                                            <div>
+                                                Program Studi
+                                                <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</button>
+                            </div>
+
+                            <div class="row mt-3 p-2">
+                                <h3>
+                                    <b>Deskripsi Pekerjaan</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Lead HR Internal Communication and Employer Branding.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Manage On-Boarding program for new hire.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Support employee Performance Evaluation process.
+                                        </li>
+
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Support Talent Management and Succession Planning function.
+                                        </li>
+
+                                        <div class="content-new">
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Lead Employee Engagement activities and events. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Liaise with relevant parties to ensure HR function executed smoothly. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Support other HR Indonesia operations activities. </li>
+                                        </div>
+
+                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                            Show more
+                                        </u>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Requirement</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            At least Bachelor's degree in any field.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            At least 3 years of experience in HR / HRBP.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Has strong numerical capability and excel expertise.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Has experience using Workday will be an advantage.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Good command of spoken and written English.
+                                        </li>
+                                        <div class="content-new">
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Strong attention to detail. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Self-motivated and able to work without supervision. </li>
+
+                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                                Willing to work in Cikampek area. </li>
+                                        </div>
+
+                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                            Show more
+                                        </u>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Benefit</b>
+                                </h3>
+                                <div class="row">
+                                    <ul style="margin-left: 20px; margin-bottom:0;">
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Family Care.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Parking Access.
+                                        </li>
+                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            Reward Compensation.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <h3>
+                                    <b>Kemampuan</b>
+                                </h3>
+                                <div class="row">
+                                    <div class="d-flex" style="column-gap: 20px; padding-bottom: 30px !important">
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft Office</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Google Suite</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling Tools</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top: -5px;">
+                            <div class="row mt-2 mb-2">
+                                <h4 style="text-align: left !important; font-size:20px;">
+                                    <b>Tentang Perusahaan</b>
+                                </h4>
+                            </div>
+                            <div class="row mt-3 mb-2">
+                                <div class="box">
+                                    <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;">Lorem
+                                        ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
+                                        driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.
+                                    </p>
+
+                                    <div class="content-new">
+                                        <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;"> AFRY as a new common brand of ÅF Pöyry is one of the largest international power sector consulting and engineering
+                                            company with about 17,000 experts working across the world to create sustainable solutions for future generations.</p>
+                                    </div>
+
+                                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                                        Show more
+                                    </u>
+                                    <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            {{-- Belum ada lowongan terpilih--}}
+            <div class="border text-center mt-3">
                 <figure class="m-5">
                     <img class="image" src="{{ asset('front/assets/img/amico.png')}}" alt="admin.upload">
                 </figure>
@@ -403,7 +634,6 @@
 @endsection
 
 @section('page_script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 <script>
     $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
         $(this).closest("li").toggleClass("active", this.checked);
@@ -417,5 +647,18 @@
         x.classList.toggle("fa-bookmark-o");
         x.classList.toggle("fa-bookmark");
     }
+
+    $(document).ready(function() {
+        $(".content-new").hide();
+        $(".show_hide_new").on("click", function() {
+            $(this).prev('.content-new').slideToggle(100);
+            console.log($(this).text().trim())
+            if ($(this).text().trim() == "Show more") {
+                $(this).text("Show Less");
+            } else {
+                $(this).text("Show more")
+            }
+        });
+    });
 </script>
 @endsection

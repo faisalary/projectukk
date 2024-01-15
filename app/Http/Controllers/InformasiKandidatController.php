@@ -19,10 +19,21 @@ class InformasiKandidatController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->get();
-        $lowongan = LowonganMagang::find($id);
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
+        $pelamar = PendaftaranMagang::where('id_lowongan', $id)->get();
+        $total = [
+            'kandidat' => $pelamar->count(),
+            'screening' => $pelamar->where('applicant_status', 'screening')->count(),
+            'tahap1' => $pelamar->where('applicant_status', 'tahap1')->count(),
+            'tahap2' => $pelamar->where('applicant_status', 'tahap2')->count(),
+            'tahap3' => $pelamar->where('applicant_status', 'tahap3')->count(),
+            'penawaran' => $pelamar->where('applicant_status', 'penawaran')->count(),
+            'diterima' => $pelamar->where('applicant_status', 'diterima')->count(),
+            'ditolak' => $pelamar->where('applicant_status', 'ditolak')->count()
+        ];
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
-        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan'));
+        return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan', 'total'));
     }
 
 
@@ -45,23 +56,25 @@ class InformasiKandidatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Request $request, $id_lowongan)
     {
 
-        $pendaftar = PendaftaranMagang::query();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id_lowongan);
 
-        if ($request->type) {
-            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("univ", "prodi", "fakultas", "lowonganMagang");
+        if ($request->type == "kandidat") {
+            $pendaftar = $pendaftar->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
+        } else if ($request->type) {
+            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
         }
 
         return DataTables::of($pendaftar->get())
             ->addIndexColumn()
-            ->editColumn('status', function ($industri) {
-                // if ($industri->status == 1) {
-                //     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                // } else {
-                //     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                // }
+            ->editColumn('status', function ($pendaftar) {
+                if ($pendaftar->applicant_status == "kandidat") {
+                    return "<span class='badge bg-label-secondary me-1'>Belum Proses</span>";
+                } else if ($pendaftar->applicant_status == "screening") {
+                    return "<span class='badge bg-label-warning me-1'>Screening</span>";
+                }
                 return null;
             })
             ->addColumn('action', function ($row) {
