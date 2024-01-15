@@ -56,9 +56,9 @@ class JadwalSeleksiController extends Controller
                     'id_pendaftaran' => $p->id_pendaftaran,
                     'start_date' => $startDate . " " . $startTime,
                     'end_date' => $endDate . " " . $endTime,
-                    'namatahap_seleksi' => " ",
+                    'namatahap_seleksi' => $request->tahap,
                     'id_email_tamplate' => $request->subjek,
-                    'status_seleksi' => true,
+                    'status_seleksi' => true,  
                 ]);
             }
 
@@ -76,38 +76,27 @@ class JadwalSeleksiController extends Controller
         }
     }
 
-    public function show()
+    public function show(Request $request)
     {
-       
+
         $pelamar = PendaftaranMagang::first();
 
         $statusseleksi = $pelamar->applicant_status;
         if ($statusseleksi == 'tahap1') {
             $statusseleksi = 'tahap1';
-        } elseif (request()->tahap == '1') {
+        } elseif ($statusseleksi == 'tahap2') {
             $statusseleksi = 1;
-        } elseif (request()->tahap == '2') {
+        } elseif ($statusseleksi == 'tahap3') {
             $statusseleksi = 2;
         }
 
-        $seleksi = Seleksi::leftjoin('status_seleksi', 'status_seleksi.id_status_seleksi', '=', 'seleksi_lowongan.id_status_seleksi')
-            ->leftjoin('email_template', 'email_template.id_email_template', 'seleksi_lowongan.id_email_tamplate')
-            ->leftjoin('pendaftaran_magang', 'status_seleksi.id_pendaftaran', '=', 'pendaftaran_magang.id_pendaftaran')
-            ->leftjoin('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')
-            // ->where('status_seleksi', $statusseleksi)
-            ->where('namatahap_seleksi', $statusseleksi)->with('seleksi_status', 'seleksi_status.pendaftaran', 'seleksi_status.pendaftaran.mahasiswa')
-            // ->with('status_seleksi')
-            ->get();
-        
-        // $seleksi = Seleksi::where('namatahap_seleksi', $statusseleksi)->with('seleksi_status', 'seleksi_status.pendaftaran', 'seleksi_status.pendaftaran.mahasiswa')
-        //     ->get();
+        $seleksi = Seleksi::with("seleksi_status", "seleksi_status.pendaftaran", "seleksi_status.pendaftaran.mahasiswa");
 
-        return DataTables::of($seleksi)
+        if ($request->type) {
+            $seleksi = $seleksi->where('namatahap_seleksi', $request->type);
+        }
+        return DataTables::of($seleksi->get())
             ->addIndexColumn()
-            // ->addColumn('id_pendaftaran', function ($seleksi) {
-            //     $data = $seleksi->status_seleksi->pendaftaran->namamhs . "  " . $seleksi->nim;
-            //     return $data;
-            // })
             ->addColumn('start_date', function ($seleksi) {
                 $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . $seleksi->start_date . '</span><br> <span class="text-muted">Tanggal Akhir</span><br> <span>' . $seleksi->end_date . '</span>';
                 return $time;

@@ -67,19 +67,12 @@
 @section('main')
     <div class="row">
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - 2023/2024
+            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - Periode 21 April
                 -
-                Ganjil</h4>
+                11 Mei 2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
-            <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
-                <option value="1">2023/2024 Genap</option>
-                <option value="2">2023/2024 Ganjil</option>
-                <option value="3">2022/2023 Genap</option>
-                <option value="4">2022/2023 Ganjil</option>
-                <option value="5">2021/2022 Genap</option>
-                <option value="6">2021/2022 Ganjil</option>
-            </select>
+            <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" readonly="readonly">
             <div class="ps-3">
                 <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
@@ -133,62 +126,27 @@
     </div>
 
     <div class="tab-content p-0">
-        <div class="tab-pane fade show active" id="navs-pills-justified-tahap1" role="tabpanel">
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap0">
-                        <thead>
-                            <tr>
-                                <th style="max-width:90px;">NOMOR</th>
-                                <th style="min-width:110px;">NAMA</th>
-                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
-                                <th style="min-width: 100px;">PROGRESS</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
+        @foreach (['tahap1', 'tahap2', 'tahap3'] as $tableId)
+            <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}"
+                id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
+                <div class="card">
+                    <div class="card-datatable table-responsive">
+                        <table class="table table-jadwal-seleksi" id="{{ $tableId }}">
+                            <thead>
+                                <tr>
+                                    <th style="max-width:90px;">NOMOR</th>
+                                    <th style="min-width:110px;">NAMA</th>
+                                    <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
+                                    <th style="min-width: 100px;">PROGRESS</th>
+                                    <th style="min-width:100px;">STATUS</th>
+                                    <th style="min-width:100px;">AKSI</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="tab-pane fade show" id="navs-pills-justified-tahap2" role="tabpanel">
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
-                        <thead>
-                            <tr>
-                                <th style="max-width:80px;">NOMOR</th>
-                                <th style="min-width:110px;">NAMA</th>
-                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
-                                <th style="min-width: 100px;">PROGRESS</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane fade show" id="navs-pills-justified-tahap3" role="tabpanel">
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
-                        <thead>
-                            <tr>
-                                <th style="max-width:80px;">NOMOR</th>
-                                <th style="min-width:110px;">NAMA</th>
-                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
-                                <th style="min-width: 100px;">PROGRESS</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
     @include('company.jadwal_seleksi.modal')
 @endsection
@@ -198,6 +156,7 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
 
     <script>
+
         $("#modalTambahJadwal").on("hide.bs.modal", function() {
             $(".modal-title").html("Tambah Jadwal Seleksi Lanjutan");
             $("#modal-button").html("Save Data");
@@ -208,69 +167,29 @@
             $('.form-control').removeClass('is-invalid');
         });
 
-        function edit(e) {
-            let id = e.attr('data-id');
+        $('.table').each(function() {
+            let idElement = $(this).attr('id');
+            let url = "{{ url('jadwal-seleksi/show') }}?type=" + idElement;
+            if ($(this).attr('id') == null) return;
 
-            let action = `{{ url('jadwal-seleksi/update/') }}/${id}`;
-            var url = `{{ url('jadwal-seleksi/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $(".modal-title").html("Edit Jadwal Seleksi Lanjutan");
-                    $("#modal-button").html("Update Data");
-                    $('#modalTambahJadwal form').attr('action', action);
-                    $('#nama').val(response.id_pendaftaran).trigger('change');
-                    $('#mulai').val(response.tglseleksi);
-
-                    $('#modalTambahJadwal').modal('show');
-                }
-            });
-        }
-
-        function get(e) {
-            let id = e.attr('data-id');
-
-            let action = `{{ url('jadwal-seleksi/update/') }}/${id}`;
-            var url = `{{ url('jadwal-seleksi/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $(".modal-title").html("Jadwal Seleksi Tahap 1");
-                    $('#jpelaksanaan').html(response.pelaksanaan);
-                    $('#tpelaksanaan').html(response.detail);
-                    $('#tglpelaksanaan').html(response.tglseleksi);
-                    $('#wpelaksanaan').html(response.jamseleksi);
-                    $('#seleksiteks').html(response.teks);
-                }
-            });
-        }
-        const tahap = [0, 1, 2];
-        tahap.forEach((no) => {
-            $('#table-jadwal-seleksi-tahap' + no).DataTable({
-
-                ajax: {
-                    url: "{{ url('jadwal-seleksi/show') }}?tahap=" + no,
-                    type: 'POST',
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    }
-                },
+            $(this).DataTable({
+                ajax: url,
                 serverSide: false,
                 processing: true,
-                destroy: true,
+                deferRender: true,
+                type: 'GET',
                 columns: [{
                         data: "DT_RowIndex"
                     },
                     {
                         data: null,
-                        name: "id_pendaftaran",
+                        name: "tahap",
                         render: function(data, type, row) {
-                            return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' + (
-                                data.seleksi_status.pendaftaran.mahasiswa.nim);
+                            if (data.seleksi_status){
+                                return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' + (
+                                    data.seleksi_status.pendaftaran.mahasiswa.nim);
+                            } 
+                            return '-';
                         }
                     },
                     {
@@ -281,7 +200,7 @@
                         data: "progress",
                     },
                     {
-                        data: "status_seleksi"
+                        data: "status_seleksi",
                     },
                     {
                         data: "action"
@@ -289,6 +208,25 @@
                 ]
             });
         })
+
+        jQuery(function() {
+            jQuery('.showSingle').click(function() {
+                let idElement = $(this).attr('target');
+
+                jQuery('.targetDiv').hide('.cnt');
+                jQuery("#div" + idElement).slideToggle();
+
+                console.log(idElement);
+            });
+        });
+
+        $('.display').DataTable({
+            responsive: true
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+        });
     </script>
 
 
