@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
@@ -257,6 +258,14 @@ Route::middleware('auth')->group(function () {
             return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang');
         });
     });
+
+    Route::prefix('mahasiswa')->group(function (){
+        Route::prefix('profile/pribadi')->group(function (){
+            Route::get('/', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.mahasiswa.index');
+            Route::get('/show', [App\Http\Controllers\ProfileMahasiswaController::class,'show'])->name('profile.mahasiswa.show');
+            Route::get('/store', [App\Http\Controllers\ProfileMahasiswaController::class,'store'])->name('profile.mahasiswa.store');
+        });
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -281,10 +290,6 @@ Route::get('/lowongan-magang-tersimpan', function () {
 
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
     return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
-});
-
-Route::get('/informasi/pribadi', function () {
-    return view('profile.informasi_pribadi');
 });
 
 Route::get('/detail-informasi-pengalaman', function () {

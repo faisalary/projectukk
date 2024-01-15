@@ -425,7 +425,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="/mahasiswa/profile/pribadi">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
@@ -443,7 +443,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="/mahasiswa/profile/pribadi">
                       <i class="ti ti-user-circle me-2 ti-sm"></i>
                       <span class="align-middle">Profil Saya</span>
                     </a>
