@@ -131,7 +131,8 @@
                                     <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>DESKRIPSI PERUSAHAAN</th>
-                                    <th>STATUS</th>
+                                    <th>AKSI</th>
+                                    {{-- <th>STATUS</th> --}}
 
                                 </tr>
                             </thead>
@@ -189,7 +190,6 @@
                     data: 'aksi',
                     name: 'aksi'
                 }
-
             ]
         });
     </script>
@@ -239,8 +239,8 @@
                     name: 'description'
                 },
                 {
-                    data: 'editverivied',
-                    name: 'editverivied'
+                    data: 'editverified',
+                    name: 'editverified'
                 }
             ]
         });
@@ -286,14 +286,15 @@
                     data: 'description',
                     name: 'description'
                 },
+                {
+                    data: 'editrejected',
+                    name: 'editrejected'
+                },   
+                
                 // {
                 //     data: 'status',
                 //     name: 'status'
                 // }
-                {
-                    data: 'editrejected',
-                    name: 'editrejected'
-                }   
             ]
         });
 
@@ -354,6 +355,7 @@
                 $('#modalapprove').modal('hide');
             });
         }
+        
         function rejected(e) {
             $('#modalreject').modal('show');
             var rejectedUrl = '{{ url("company/kelola-mitra/rejected") }}/' + e.attr('data-id');
