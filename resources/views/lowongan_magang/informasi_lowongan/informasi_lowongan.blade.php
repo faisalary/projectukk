@@ -3,7 +3,14 @@
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+<!-- Vendors CSS -->
+
+<link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
 <style>
     .swal2-icon {
         border-color: transparent !important;
@@ -32,11 +39,11 @@
     <div class="col-md-9 col-12">
         <!-- Company -->
         @can('title.info.lowongan.mitra')
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$magang->industri->namaindustri}}</h4>
         @endcan
         <!-- SuperAdmin -->
         @can('title.info.lowongan.admin')
-        <h4 class="fw-bold">Lowongan Magang {{$industri->namaindustri}}</h4>
+        <h4 class="fw-bold">Lowongan Magang {{$magang->industri->namaindustri}}</h4>
         <h4 class="fw-bold">Tahun Ajaran</h4>
         @endcan
 
@@ -59,10 +66,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-4" style="border: 2px solid #D3D6DB; width:300px; height:35px; margin:0 13px; border-radius:8px;">
-                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#4EA971;">{{$pendaftar}}</span> <span style="color:#4EA971;">Kandidat</span></div>
+                        <div class="ti ti-users text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Pelamar : </span><span style="color:#4EA971;">{{$pendaftar_count}}</span> <span style="color:#4EA971;">Kandidat</span></div>
                     </div>
                     <div class="col-3" style="border: 2px solid #D3D6DB; width:310px; height:35px; border-radius:8px;">
-                        <div class="ti ti-briefcase text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan :</span> <span style="color:#4EA971;">{{$lowongan_count}}</span> <span style="color:#4EA971;">Lowongan</span></div>
+                        <div class="ti ti-briefcase text-primary" style="margin-top: 5px;"> <span style="color:#4B465C;">Total Lowongan : </span> <span style="color:#4EA971;">{{$lowongan_count}}</span> <span style="color:#4EA971;">Lowongan</span></div>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -117,7 +124,6 @@
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(function() {
             $("#datepicker").datepicker({
@@ -137,4 +143,14 @@
             })
         }
     </script>
+    <!-- Vendors JS -->
+    <script src="../../app-assets/vendor/libs/moment/moment.js"></script>
+    <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../app-assets/js/forms-pickers.js"></script>
     @endsection

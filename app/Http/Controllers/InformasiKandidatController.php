@@ -20,8 +20,18 @@ class InformasiKandidatController extends Controller
     public function index(Request $request, $id)
     {
         $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
-        $total = PendaftaranMagang::where('id_lowongan', $id)->count();
-        $lowongan = LowonganMagang::find($id);
+        $pelamar = PendaftaranMagang::where('id_lowongan', $id)->get();
+        $total = [
+            'kandidat' => $pelamar->count(),
+            'screening' => $pelamar->where('applicant_status', 'screening')->count(),
+            'tahap1' => $pelamar->where('applicant_status', 'tahap1')->count(),
+            'tahap2' => $pelamar->where('applicant_status', 'tahap2')->count(),
+            'tahap3' => $pelamar->where('applicant_status', 'tahap3')->count(),
+            'penawaran' => $pelamar->where('applicant_status', 'penawaran')->count(),
+            'diterima' => $pelamar->where('applicant_status', 'diterima')->count(),
+            'ditolak' => $pelamar->where('applicant_status', 'ditolak')->count()
+        ];
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
         return view('lowongan_magang.informasi_lowongan.detail', compact('pendaftar', 'lowongan', 'total'));
     }

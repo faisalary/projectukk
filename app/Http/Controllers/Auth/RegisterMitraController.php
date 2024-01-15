@@ -32,7 +32,7 @@ class RegisterMitraController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'namaindustri' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email:rfc,dns|unique:users',
         ]);
         try{
             DB::beginTransaction();
@@ -45,13 +45,13 @@ class RegisterMitraController extends Controller
             'status' => true,
         ]);
 
-        
+
         $code = Str::random(64);
         $admin = User::create([
             'name' => $request->name,
             'username' => 'mitra',
             'email' => $request->email,
-            'password' => bcrypt('12345678'),
+            'password' => Hash::make($industri->penanggung_jawab),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
@@ -62,18 +62,16 @@ class RegisterMitraController extends Controller
         DB::commit();
         return response()->json([
             'error' => false,
-            'message' => 'User berhasil ditambahkan. Notifikasi telah dikirim.',
+            'message' => 'Industri successfully Created!',
+            'modal' => '#register-mitra',
         ]);
         
     } catch (Exception $e) {
-        DB::rollBack();
-    
-        $errorMessage = addslashes($e->getMessage());
-    
+        DB::rollBack();    
         return response()->json([
             'error' => true,
             'message' => $e->getMessage(),
-            'script' => "<script>alert('Error: " . $errorMessage . "');</script>",
+            
         ]);
     }
     }
