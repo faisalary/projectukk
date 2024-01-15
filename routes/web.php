@@ -48,7 +48,6 @@ Auth::routes();
 
 
 Route::middleware('auth')->group(function () {
-
     //untuk lkm
     Route::prefix('master')->middleware('can:only.lkm')->group(function () {
         Route::prefix('fakultas')->group(function () {
@@ -160,7 +159,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
         });
     });
-    Route::prefix('konfigurasi')->middleware('permission:only.lkm')->group(function () {
+    Route::prefix('konfigurasi')->middleware('can:slidebar.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
         Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
         Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
@@ -174,8 +173,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [App\Http\Controllers\KelolaMitraController::class, 'index'])->name('kelola_mitra.index');
             Route::get('/show/{statusapprove}', [App\Http\Controllers\KelolaMitraController::class, 'show'])->name('kelola_mitra.show');
             Route::post('/store', [App\Http\Controllers\KelolaMitraController::class, 'store'])->name('kelola_mitra.store');
-            Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::post('/status/{id}', [App\Http\Controllers\KelolaMitraController::class, 'status'])->name('kelola_mitra.status');
             Route::post('/approved/{id}', [App\Http\Controllers\KelolaMitraController::class, 'approved'])->name('kelola_mitra.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\KelolaMitraController::class, 'rejected'])->name('kelola_mitra.rejected');

@@ -122,10 +122,20 @@ class KelolaMitraController extends Controller
                     </a>
                     <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusrejected='{$id->rejected}'>
                     <i class='btn-icon ti ti-file-x text-danger'></i>
-                    </a>";
+                    </a>
+                    <a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
+                    
             return $btn;
         })
-        ->rawColumns(['action','status','aksi'])
+        ->addColumn('editverivied', function ($id) {
+            $btn = "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
+            return $btn;
+        })
+        ->addColumn('editrejected', function ($id) {
+            $btn = "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
+            return $btn;
+        })
+        ->rawColumns(['action', 'status', 'aksi', 'editverivied', 'editrejected'])
         ->make(true);
     }
 

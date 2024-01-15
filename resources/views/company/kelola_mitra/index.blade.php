@@ -111,6 +111,7 @@
                                     <th>STATUS KERJASAMA</th>
                                     <th>ALAMAT</th>
                                     <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -129,7 +130,7 @@
                                     <th>ALAMAT</th>
                                     <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
-                                    <th>STATUS</th>
+                                    <th>DESKRIPSI PERUSAHAAN</th>
                                     <th>STATUS</th>
 
                                 </tr>
@@ -237,6 +238,10 @@
                     data: 'description',
                     name: 'description'
                 },
+                {
+                    data: 'editverivied',
+                    name: 'editverivied'
+                }
             ]
         });
     </script>
@@ -270,10 +275,6 @@
                     name: 'alamatindustri'
                 },
                 {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
                     data: 'kategori_industri',
                     name: 'kategori_industri'
                 },
@@ -282,9 +283,17 @@
                     name: 'statuskerjasama'
                 },
                 {
-                    data: 'status',
-                    name: 'status'
-                }
+                    data: 'description',
+                    name: 'description'
+                },
+                // {
+                //     data: 'status',
+                //     name: 'status'
+                // }
+                {
+                    data: 'editrejected',
+                    name: 'editrejected'
+                }   
             ]
         });
 

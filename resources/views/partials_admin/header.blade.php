@@ -307,14 +307,12 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="menu-item">
                         <a href="{{ url('/konfigurasi') }}" class="menu-link">
                             <i class="ti ti-user"></i>
                             <div data-i18n="Konfigurasi">Konfigurasi</div>
                         </a>
                     </li>
-
                     <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
