@@ -364,3 +364,21 @@ Route::get('/pratinjau/diri', function () {
 Route::get('/pengajuan/surat', function () {
     return view('pengajuan_magang.pengajuan_mandiri');
 });
+Route::get('/logbook', function () {
+    return view('logbook.logbook', ['active_menu' => 'logbook']);
+});
+
+Route::get('/logbook-detail', function () {
+    return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
+});
+
+Route::get('/cv', function () {
+    return view('mahasiswa.cv', ['active_menu' => 'CV Mahasiswa']);
+});
+
+Route::get('magang-fakultas', function () {
+    return view('admin_kandidat.magang_fakultas');
+});
+Route::get('/magang-mandiri', function () {
+    return view('admin_kandidat.magang_mandiri');
+});
