@@ -20,9 +20,9 @@ class InformasiLowonganController extends Controller
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
 
-            $magang = LowonganMagang::pluck('id_lowongan')->first();
+            $magang = LowonganMagang::where('id_industri', $id)->first();
             $pelamar =
-                PendaftaranMagang::where('id_lowongan', $magang)->with('lowonganMagang')->first();
+                PendaftaranMagang::where('id_lowongan', $magang->id_lowongan)->with('lowonganMagang')->get();
             $pendaftar_count = $pelamar?->lowonganMagang->count() ?? "0";
 
             return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan', 'pendaftar_count'))->render();
@@ -30,14 +30,14 @@ class InformasiLowonganController extends Controller
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
         $magang = LowonganMagang::where('id_industri', $id)->with('industri')->first();
 
-        $industri = Industri::with('total_lowongan')->first();
+        $industri = Industri::where('id_industri', $id)->with('total_lowongan')->first();
         $pelamar =
-            PendaftaranMagang::where('id_lowongan', $magang->id_lowongan)->with('lowonganMagang')->first();
+            PendaftaranMagang::where('id_lowongan', $magang->id_lowongan ?? "")->with('lowonganMagang')->first();
         $lowongan_count = $lowongan->count();
-        $pendaftar_count = $pelamar?->lowonganMagang->count() ?? "0";
+        $pendaftar_count = $pelamar?->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
         // dd($lowongan_count);
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang'));
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
     }
 
     /**

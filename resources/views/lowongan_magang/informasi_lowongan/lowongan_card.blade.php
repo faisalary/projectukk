@@ -24,7 +24,7 @@
                      </div>
                      <div class="card-info">
                          <small>Total Pelamar</small>
-                         <h5 class="mb-0">{{$pendaftar_count ?? "0"}}</h5>
+                         <h5 class="mb-0">{{$pendaftar_count}}</h5>
                      </div>
                  </div>
              </div>
@@ -88,7 +88,7 @@
          <div class="row mt-2">
              <div class="col-12 d-flex justify-content-between">
                  <div class="col-6">
-                     <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;"> Tanggal Posting: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
+                     <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;"> Tanggal Posting: {{($item->startdate?->format('d M Y') ?? '-')}} - {{($item->enddate?->format('d M Y') ?? '-')}}</div>
                      <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : {{$item->kuota}}</div>
                  </div>
                  <div class="col-6 text-end">
@@ -123,7 +123,7 @@
                  <div class="row">
                      <div class="col mb-3">
                          <label for="flatpickr-date" class="form-label">Tanggal Konfirmasi<span style="color: red;">*</span></label>
-                         <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
+                         <input type="date" data-date="" data-date-format="d M Y" class="form-control flatpickr-input active" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
                      </div>
                  </div>
              </div>
