@@ -127,13 +127,13 @@
                         }
                     }
                 },
-                nominal: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Gaji must be filled'
-                        }
-                    }
-                },
+                // nominal: {
+                //     validators: {
+                //         notEmpty: {
+                //             message: 'Gaji must be filled'
+                //         }
+                //     }
+                // },
                 benefit: {
                     validators: {
                         notEmpty: {

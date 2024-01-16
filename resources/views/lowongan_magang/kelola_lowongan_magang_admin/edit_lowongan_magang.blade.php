@@ -1,6 +1,11 @@
 @extends('partials_admin.template')
 
 @section('page_style')
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}"/>
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .form-error {
             color: red;
@@ -74,14 +79,10 @@
                         </div>
                     </div>
                     <div class="bs-stepper-content">
-                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" 
-                            method="POST"
-                            action="{{ url('kelola/lowongan/update/') }}">
+                        <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
+                            action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id_lowongan }}">
                             @csrf
-                            @method('HEAD')
-                        {{-- <form class="default-form" id="wizard-validation-form" onSubmit="return false"
-                            action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id }}" method="post">
-                            @csrf --}}
+                            @method('PUT')
                             <!-- Account Details -->
                             <div id="account-details-validation" class="content">
                                 <div class="content-header mb-3">
@@ -91,12 +92,12 @@
                                     <div class="col-lg-12 col-sm-6">
                                         <label class="form-label" for="jenismagang">Jenis Magang<span
                                                 class="text-danger">*</span></label>
-                                        <select name="jenismagang" id="jenismagang" class="select2 form-select"
+                                        <select name="id_jenismagang" id="jenismagang" class="select2 form-select"
                                             data-placeholder="Jenis Magang">
-                                            <option value="{{ $lowongan->jenisMagang->namajenis }}" disabled selected>
-                                                {{ $lowongan->jenisMagang->namajenis }}</option>
+                                            <option value="" disabled>Select</option>
                                             @foreach ($jenismagang as $j)
-                                                <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
+                                                <option @if ($j->id_jenismagang == $lowongan->id_jenismagang) selected @endif
+                                                    value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -116,7 +117,8 @@
                                     <div class="col-lg-12 col-sm-6">
                                         <label class="form-label" for="deskripsi">Deskripsi Pekerjaan<span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi" placeholder="Masukan Deskripsi Pekerjaan">{{ $lowongan->deskripsi }}</textarea>
+                                        <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi"
+                                            placeholder="Masukan Deskripsi Pekerjaan">{{ $lowongan->deskripsi }}</textarea>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
                                         <button class="btn btn-label-secondary btn-prev" disabled>
@@ -183,7 +185,6 @@
                                                     <option value="{{ $lowongan->jenjang }}">D3</option>
                                                     <option value="{{ $lowongan->jenjang }}">S1</option>
                                                     <option value="{{ $lowongan->jenjang }}">S2</option>
-                                                    <option value="{{ $lowongan->jenjang }}">S3</option>
                                                     <option value="{{ $lowongan->jenjang }}" selected>
                                                         {{ $lowongan->jenjang }}</option>
                                                 </select>
@@ -247,16 +248,15 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <label class="form-label" for="gaji">Nominal Uang Saku<span
+                                        <label class="form-label" for="nominal">Nominal Uang Saku<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" value="{{ $lowongan->paid }}" name="gaji"
-                                            id="gaji" class="form-control" />
+                                        <input type="text" value="{{ $lowongan->nominal_salary }}" name="nominal"
+                                            id="nominal" class="form-control" />
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="benefit" class="form-label">Benefits (Addtional)<span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" id="benefit" name="benefit"
-                                            placeholder="Masukan kualifikasi mahasiswa">{{ $lowongan->benefitmagang }}</textarea>
+                                        <textarea class="form-control" rows="2" id="benefit" name="benefit" placeholder="Masukan Benefits">{{ $lowongan->benefitmagang }}</textarea>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="lokasi" class="form-label">Lokasi Penempatan<span
@@ -264,10 +264,10 @@
                                         <select name="lokasi" id="lokasi" multiple="multiple"
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Masukan Lokasi Pekerjaan">
-                                            <option value="{{ $lowongan->lokasi->kota }}" disabled selected>
-                                                {{ $lowongan->lokasi->kota }}</option>
+                                            <option value="" disabled>Select</option>
                                             @foreach ($lokasi as $l)
-                                                <option value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
+                                                <option @if ($l->id_lokasi == $lowongan->id_lokasi) selected @endif
+                                                    value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -276,9 +276,12 @@
                                             <div style="flex: 1;">
                                                 <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date"
+                                                {{-- <input class="form-control flatpickr-date wizard-required" type="date"
                                                     value="{{ $lowongan->startdate }}" id="tanggal" name="tanggal"
-                                                    placeholder="Masukan Tanggal Ditayangkan" />
+                                                    placeholder="YYYY-MM-DD" readonly="readonly"> --}}
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
+                                                    value="{{ $lowongan->startdate }}" id="tanggal" name="tanggal"
+                                                    placeholder="YYYY-MM-DD" readonly="readonly">
                                             </div>
                                             <div class = "mt-3"
                                                 style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -286,9 +289,9 @@
                                             <div style="flex: 1;">
                                                 <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date"
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
                                                     value="{{ $lowongan->enddate }}" id="tanggalakhir"
-                                                    name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan" />
+                                                    name="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
@@ -358,16 +361,17 @@
                                     <div class="col-lg-12 col-sm-6 mt-3">
                                         <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" rows="2" id="deskripsiseleksi0" name="deskripsiseleksi[]"
-                                            placeholder="Masukan Deskripsi Tahapan">{{$lowongan->deskripsi}}</textarea>
+                                        <textarea class="form-control" rows="2" id="deskripsiseleksi" name="deskripsiseleksi[]"
+                                            placeholder="Masukan Deskripsi Tahapan">{{ $seleksi[0]->deskripsi ?? '' }}</textarea>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 mt-3">
                                         <div style="display: flex; justify-content: space-between; align-items: center;">
                                             <div style="flex: 1;">
                                                 <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date"
-                                                    value="{{ $lowongan->startdate }}" id="mulai" name="mulai[]" />
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
+                                                    value="{{ $seleksi[0]->tgl_mulai ?? '' }}" id="mulai"
+                                                    name="mulai[]" placeholder="YYYY-MM-DD" readonly="readonly">
                                             </div>
                                             <div class = "mt-3"
                                                 style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -375,12 +379,14 @@
                                             <div style="flex: 1;">
                                                 <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date"
-                                                    value="{{ $lowongan->enddate }}" id="akhir" name="akhir[]" />
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
+                                                    value="{{ $seleksi[0]->tgl_akhir ?? '' }}" id="akhir"
+                                                    name="akhir[]" placeholder="YYYY-MM-DD" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="tahap-lanjut-2" style="display: none;">
+                                    <div id="tahap-lanjut-2"
+                                        @if ($lowongan->tahapan_seleksi == 0) style="display: none;" @endif>
                                         <hr>
                                         <div class="col-lg-12 col-sm-6">
                                             <label for="select2Disabled" class="form-label">Jenis Seleksi Tahap
@@ -395,7 +401,7 @@
                                             <label for="deskripsiseleksi1" class="form-label">Deskripsi Seleksi<span
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control" rows="2" id="deskripsiseleksi1" name="deskripsiseleksi[]"
-                                                placeholder="Masukan Deskripsi Tahapan">{{ $lowongan->deskripsi }}</textarea>
+                                                placeholder="Masukan Deskripsi Tahapan">{{ $seleksi[1]->deskripsi ?? '' }}</textarea>
                                         </div>
                                         <div class="col-lg-12 col-sm-6 mt-3">
                                             <div
@@ -403,9 +409,10 @@
                                                 <div style="flex: 1;">
                                                     <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date"
-                                                        value="{{ $lowongan->startdate }}" id="mulai1"
-                                                        name="mulai[]" />
+                                                    <input class="form-control flatpickr-date wizard-required"
+                                                        type="date" value="{{ $seleksi[1]->tgl_mulai ?? '' }}"
+                                                        id="mulai1" name="mulai[]" placeholder="YYYY-MM-DD"
+                                                        readonly="readonly">
                                                 </div>
                                                 <div class = "mt-3"
                                                     style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -413,14 +420,16 @@
                                                 <div style="flex: 1;">
                                                     <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date"
-                                                        value="{{ $lowongan->enddate }}" id="akhir1"
-                                                        name="akhir[]" />
+                                                    <input class="form-control flatpickr-date wizard-required"
+                                                        type="date" value="{{ $seleksi[1]->tgl_akhir ?? '' }}"
+                                                        id="akhir1" name="akhir[]" placeholder="YYYY-MM-DD"
+                                                        readonly="readonly">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="tahap-lanjut-3" style="display: none;">
+                                    <div id="tahap-lanjut-3"
+                                        @if ($lowongan->tahapan_seleksi != 2) style="display: none;" @endif>
                                         <div class="mb-2">
                                             <hr>
                                             <div class="col-lg-12 col-sm-6">
@@ -436,7 +445,7 @@
                                                 <label for="deskripsiseleksi" class="form-label">Deskripsi Seleksi<span
                                                         class="text-danger">*</span></label>
                                                 <textarea class="form-control" rows="2" id="deskripsiseleksi1" name="deskripsiseleksi[]"
-                                                    placeholder="Masukan Deskripsi Tahapan">{{ $lowongan->deskripsi }}</textarea>
+                                                    placeholder="Masukan Deskripsi Tahapan">{{ $seleksi[2]->deskripsi ?? '' }}</textarea>
                                             </div>
                                             <div class="col-lg-12 col-sm-6 mt-3">
                                                 <div
@@ -444,9 +453,10 @@
                                                     <div style="flex: 1;">
                                                         <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                             <span class="text-danger">*</span></label>
-                                                        <input class="form-control wizard-required" type="date"
-                                                            value="{{ $lowongan->startdate }}" id="mulai2"
-                                                            name="mulai[]" />
+                                                        <input class="form-control flatpickr-date wizard-required"
+                                                            type="date" value="{{ $seleksi[2]->tgl_mulai ?? '' }}"
+                                                            id="mulai2" name="mulai[]" placeholder="YYYY-MM-DD"
+                                                            readonly="readonly">
                                                     </div>
                                                     <div class = "mt-3"
                                                         style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -454,9 +464,10 @@
                                                     <div style="flex: 1;">
                                                         <label for="akhir1" class="form-label">Tanggal Akhir Pelaksanaan
                                                             <span class="text-danger">*</span></label>
-                                                        <input class="form-control wizard-required" type="date"
-                                                            value="{{ $lowongan->enddate }}" id="akhir2"
-                                                            name="akhir[]" />
+                                                        <input class="form-control flatpickr-date wizard-required"
+                                                            type="date" value="{{ $seleksi[2]->tgl_akhir ?? '' }}"
+                                                            id="akhir2" name="akhir[]" placeholder="YYYY-MM-DD"
+                                                            readonly="readonly">
                                                     </div>
                                                 </div>
                                             </div>
@@ -484,4 +495,17 @@
         <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
         <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
         <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+        <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+        <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+        <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+        <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+        <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
+        <script>
+            $(".flatpickr-date").flatpickr({
+                altInput: true,
+                altFormat: 'j F Y',
+                dateFormat: 'Y-m-d'
+            });
+        </script>
     @endsection

@@ -19,29 +19,26 @@ class LowonganMagangRequest extends FormRequest
         if (isset($this->id)) {
             return [
                 'posisi' => ['required', 'string','max:255'],
-                // 'kuota' => ['required', 'integer'],
-                // 'deskripsi' => ['required', 'string','max:255'],
+                'kuota' => ['required', 'integer'],
+                'deskripsi' => ['required', 'string','max:255'],
                 // 'requirements' => ['required', 'text', 'max:255'],
-                // 'paid' => ['required', 'boolean']
 
             ];
         }
         return [
                 'posisi' => ['required', 'string','max:255'],
-                // 'kuota' => ['required', 'integer'],
-                // 'deskripsi' => ['required', 'string','max:255'],
+                'kuota' => ['required', 'integer'],
+                'deskripsi' => ['required', 'string','max:255'],
                 // 'requirements' => ['required', 'text', 'max:255'],
-                // 'paid' => ['required', 'boolean']
         ];
     }
     public function messages(): array
     {
         return [
             'posisi.required' => 'Position must be filled',
-            // 'kuota.required' => 'The kuota must be an integer.',
-            // 'deskripsi.required' => 'Description must be filled',
+            'kuota.required' => 'The kuota must be an integer.',
+            'deskripsi.required' => 'Description must be filled',
             // 'requirements.required' => 'Qualification must be filled',
-            // 'paid.required' => 'paid must be filled',
         ];
     }
 }

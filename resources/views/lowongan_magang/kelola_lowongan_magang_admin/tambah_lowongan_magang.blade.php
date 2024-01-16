@@ -1,6 +1,11 @@
 @extends('partials_admin.template')
 
 @section('page_style')
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .form-error {
             color: red;
@@ -24,7 +29,6 @@
             </h4>
         </div>
     </div>
-
 
     <!-- Validation Wizard -->
     <div class="modal-body">
@@ -162,7 +166,6 @@
                                                 <option value="d3">D3</option>
                                                 <option value="s1">S1</option>
                                                 <option value="s2">S2</option>
-                                                <option value="s3">S3</option>
                                             </select>
                                         </div>
                                     </div>
@@ -224,8 +227,7 @@
                                 <div class="col-lg-12 col-sm-6">
                                     <label for="benefit" class="form-label">Benefits (Addtional)<span
                                             class="text-danger">*</span></label>
-                                    <textarea class="form-control" rows="2" id="benefit" name="benefit"
-                                        placeholder="Masukan kualifikasi mahasiswa"></textarea>
+                                    <textarea class="form-control" rows="2" id="benefit" name="benefit" placeholder="Masukan Benefits"></textarea>
                                 </div>
                                 <div class="col-lg-12 col-sm-6">
                                     <label for="lokasi" class="form-label">Lokasi Penempatan<span
@@ -243,8 +245,9 @@
                                         <div style="flex: 1;">
                                             <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="tanggal"
-                                                name="tanggal" placeholder="Masukan Tanggal Ditayangkan" />
+                                            <input class="form-control flatpickr-date wizard-required" type="date"
+                                                id="tanggal" name="tanggal" placeholder="YYYY-MM-DD"
+                                                readonly="readonly">
                                         </div>
                                         <div class = "mt-3"
                                             style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -252,8 +255,9 @@
                                         <div style="flex: 1;">
                                             <label for="tanggalakhir" class="form-label">Tanggal Lowongan Diturunkan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="tanggalakhir"
-                                                name="tanggalakhir" placeholder="Masukan Tanggal Diturunkan" />
+                                            <input class="form-control flatpickr-date wizard-required" type="date"
+                                                id="tanggalakhir" name="tanggalakhir" placeholder="YYYY-MM-DD"
+                                                readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
@@ -326,8 +330,9 @@
                                         <div style="flex: 1;">
                                             <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="mulai"
-                                                name="mulai[]" />
+                                            <input class="form-control flatpickr-date wizard-required" type="date"
+                                                id="mulai" name="mulai[]" placeholder="YYYY-MM-DD"
+                                                readonly="readonly">
                                         </div>
                                         <div class = "mt-3"
                                             style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -335,8 +340,9 @@
                                         <div style="flex: 1;">
                                             <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                 <span class="text-danger">*</span></label>
-                                            <input class="form-control wizard-required" type="date" id="akhir"
-                                                name="akhir[]" />
+                                            <input class="form-control flatpickr-date wizard-required" type="date"
+                                                id="akhir" name="akhir[]" placeholder="YYYY-MM-DD"
+                                                readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
@@ -362,8 +368,9 @@
                                             <div style="flex: 1;">
                                                 <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date" id="mulai1"
-                                                    name="mulai[]" />
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
+                                                    id="mulai1" name="mulai[]" placeholder="YYYY-MM-DD"
+                                                    readonly="readonly">
                                             </div>
                                             <div class = "mt-3"
                                                 style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -371,8 +378,9 @@
                                             <div style="flex: 1;">
                                                 <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                     <span class="text-danger">*</span></label>
-                                                <input class="form-control wizard-required" type="date" id="akhir1"
-                                                    name="akhir[]" />
+                                                <input class="form-control flatpickr-date wizard-required" type="date"
+                                                    id="akhir1" name="akhir[]" placeholder="YYYY-MM-DD"
+                                                    readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
@@ -401,8 +409,9 @@
                                                 <div style="flex: 1;">
                                                     <label for="mulai" class="form-label">Tanggal Mulai Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date"
-                                                        id="mulai2" name="mulai[]" />
+                                                    <input class="form-control flatpickr-date wizard-required"
+                                                        type="date" id="mulai2" name="mulai[]"
+                                                        placeholder="YYYY-MM-DD" readonly="readonly">
                                                 </div>
                                                 <div class = "mt-3"
                                                     style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
@@ -410,8 +419,9 @@
                                                 <div style="flex: 1;">
                                                     <label for="akhir" class="form-label">Tanggal Akhir Pelaksanaan
                                                         <span class="text-danger">*</span></label>
-                                                    <input class="form-control wizard-required" type="date"
-                                                        id="akhir2" name="akhir[]" />
+                                                    <input class="form-control flatpickr-date wizard-required"
+                                                        type="date" id="akhir2" name="akhir[]"
+                                                        placeholder="YYYY-MM-DD" readonly="readonly">
                                                 </div>
                                             </div>
                                         </div>
@@ -439,4 +449,17 @@
     <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
     <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+    <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+    <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
+    <script>
+        $(".flatpickr-date").flatpickr({
+            altInput: true,
+            altFormat: 'j F Y',
+            dateFormat: 'Y-m-d'
+        });
+    </script>
 @endsection
