@@ -39,11 +39,11 @@
     <div class="col-md-9 col-12">
         <!-- Company -->
         @can('title.info.lowongan.mitra')
-        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$magang->industri->namaindustri}}</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
         @endcan
         <!-- SuperAdmin -->
         @can('title.info.lowongan.admin')
-        <h4 class="fw-bold">Lowongan Magang {{$magang->industri->namaindustri}}</h4>
+        <h4 class="fw-bold">Lowongan Magang {{$industri->namaindustri}}</h4>
         <h4 class="fw-bold">Tahun Ajaran</h4>
         @endcan
 
@@ -94,7 +94,12 @@
                 </div>
 
                 <!-- card-informasi-lowongan -->
-                <div id="container-card" class="mb-3"></div>
+                <div id="container-card" class="mb-3">
+                    @if($lowongan_count == 0)
+                    <img src="\assets\images\no-data.png" alt="no-data" style="display: flex; margin-left: 
+                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 40%;">
+                    @endif
+                </div>
 
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end" style="margin-right:25px;">
@@ -127,7 +132,7 @@
     <script>
         $(function() {
             $("#datepicker").datepicker({
-                format: 'yyyy-mm-dd'
+                format: 'dd-mm-yyyy'
             });
 
             loadData();
@@ -138,7 +143,10 @@
                 url: "{{$urlGetCard}}?component=card",
                 type: "get",
                 success: function(res) {
-                    $("#container-card").html(res);
+                    // $("#container-card").html(res);
+                    if (res != "") {
+                        $("#container-card").html(res);
+                    }
                 }
             })
         }
