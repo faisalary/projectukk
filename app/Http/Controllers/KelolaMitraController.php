@@ -61,12 +61,11 @@ class KelolaMitraController extends Controller
 
         
         $code = Str::random(64);
-        $defaultPassword = '12345678';
         $admin = User::create([
             'name' => 'mitra',
             'username' => $request->namaindustri,
             'email' => $request->email,
-            'password' => Hash::make($defaultPassword),
+            'password' => Hash::make($industri->penanggung_jawab),
             'remember_token' => $code,
             'isAdmin'=>1,
             'id_industri' => $industri->id_industri,
@@ -136,7 +135,7 @@ class KelolaMitraController extends Controller
         try {
             DB::beginTransaction(); 
             $data = Industri::find($id);
-            $code = Str::random(64);
+            
 
             if (!$data) {
                 throw new \Exception('Industri data not found.');
@@ -145,10 +144,9 @@ class KelolaMitraController extends Controller
             $data->save();
         
             $code = Str::random(64);
-            $url = url('/mitra/set-password/' . $code);
             
+            $url = url('/mitra/set-password/' . $code);
             Mail::to($data->email)->send(new VerifyEmail($url));
-
             DB::commit();
 
             return response()->json([

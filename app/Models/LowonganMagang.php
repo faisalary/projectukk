@@ -15,7 +15,9 @@ class LowonganMagang extends Model
     protected $primaryKey = 'id_lowongan';
     protected $keyType = 'string';
     protected $casts = [
-        'date_confirm_closing' => 'datetime'
+        'date_confirm_closing' => 'datetime',
+        'startdate' => 'datetime',
+        'enddate' => 'datetime'
     ];
     const UPDATED_AT = null;
      public $timestamps = false;
