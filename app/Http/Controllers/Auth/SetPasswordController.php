@@ -10,54 +10,47 @@ use App\Models\User;
 
 class SetPasswordController extends Controller
 {
-    public function index($id)
+    //set password mitra
+    public function index($token)
     {
-        
-        return view('auth.reset_password_admin', compact('id'));
+        return view('auth.reset_password_admin', compact('token'));
     }
     public function update(Request $request)
     {
+
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        $admin = User::where('remember_token', $request->token)->first();
+        if (!$admin) {
+            return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
+        }
+       
+        $admin->password = bcrypt($request->password);
+        $admin->save();
         
-       $this->validate($request, [
+        return redirect('/');
+    }
+
+    //set password mahasiswa
+    public function setting($token)
+    {
+        return view('auth.reset_password_mahasiswa', compact('token'));
+    }
+
+    public function updateset(Request $request)
+    {
+        $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $admin = User::where('remember_token', $request->id)->first();
+        $user = User::where('remember_token', $request->token)->first();
 
-        if (!$admin) {
-            return redirect()->back()->with('error', 'Invalid token.');
+        if (!$user) {
+            return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
         }
-        // dd($admin);
-        $admin->password = bcrypt($request->password);
-        $admin->remember_token = null; 
-        $admin->save();
-        if (!$admin->save()) {
-            return redirect()->back()->with('error', 'Password update failed.');
-        }
-
-        return redirect('/company/profile-company')->with('success', 'Password updated successfully.');
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect('/');
     }
-
-
-    // public function index($token)
-    // {
-    //     return view('auth.reset_password_admin', compact('token'));
-    // }
-
-    // public function update(Request $request)
-    // {
-    //     $request->validate([
-    //         'password' => 'required|string|min:8|confirmed',
-    //     ]);
-
-    //     $admin = User::where('remember_token', $request->token)->first();
-
-    //     if (!$admin) {
-    //         return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
-    //     }
-    //     $admin->password = bcrypt($request->password);
-    //     $admin->save();
-    //     // $admin->
-    //     return redirect('/informasi/lowongan');
-    // }
 }
