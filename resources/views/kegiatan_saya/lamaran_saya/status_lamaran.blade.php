@@ -110,11 +110,11 @@
                     <figure class="image ms-3"><img style="width:170px; height:100px;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
                     </figure>
                 </div>
-                <div class="col-3 text-start" style="margin-left:-100px;">
+                <div class="col-3 ms-sm-0 text-start" style="margin-left:-100px;">
                     <h3>Back End Developer</h3>
                     <p style="font-size:15px;">PT Wings Surya</p>
                 </div>
-                <div class="col-6 text-end" style="margin-left:100px;">
+                <div class="col-6 ms-sm-0 text-end" style="margin-left:100px;">
                     <div class="waktu"> Lamaran terkirim pada 15 juni 2023 <i class="ti ti-clock"></i></div>
                     <button type="button" class="btn btn-sm btn-secondary waves-effect mt-3" style="height:35px; font-size:16px;" disabled>Lowongan Sudah di tutup</button>
                     <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:30px; font-size:16px;">Belum Proses</span></div>

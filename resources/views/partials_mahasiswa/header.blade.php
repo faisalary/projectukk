@@ -39,14 +39,14 @@
   <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
+  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
+  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
+  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css')}}" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 
 

@@ -28,15 +28,15 @@
 
     {{-- Belum melakukan konfirmasi lowongan magang --}}
 
-    <div class="col-3 mt-5 ">
+    <!-- <div class="col-3 mt-5 ">
         <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;" src="{{ asset('front/assets/img/pengantar_magang.png')}}" alt="admin.upload">
     </div>
     <div class="sec-title mt-5 mb-4 text-center">
         <h4>Anda belum mengajukan Surat Pengantar Magang</h4>
-    </div>
+    </div> -->
 
     {{-- Sudah melakukan konfirmasi lowongan magang --}}
-    <!-- <div class="card mb-4" style="background-color: #f8f7fa;">
+    <div class="card mb-4" style="background-color: #f8f7fa;">
         <div class="card-header p-3" style="background-color: #23314B;">
             <div class="row">
                 <div class="col-6">
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
 
     <div class="text-center">
@@ -350,7 +350,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="tanggalmulai" class="form-label">Tanggal Pengajuan</label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalpengajuan" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
@@ -392,13 +392,13 @@
                     <div class="row g-2 mb-3">
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalmulai" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                         </div>
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalakhir" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                 </div>
@@ -421,7 +421,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="tanggalmulai" class="form-label">Tanggal Pengajuan</label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalmulai" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
@@ -463,13 +463,13 @@
                     <div class="row g-2 mb-3">
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalmulai" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                         </div>
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalakhir" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                 </div>
@@ -527,13 +527,13 @@
                     <div class="row g-2 mb-3">
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalmulai" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                         </div>
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalakhir" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
@@ -556,5 +556,11 @@
 @endsection
 
 @section('page_script')
-
+<script>
+    $(".flatpickr-date").flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
+</script>
 @endsection

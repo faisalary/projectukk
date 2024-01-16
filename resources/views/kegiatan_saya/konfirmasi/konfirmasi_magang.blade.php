@@ -138,28 +138,6 @@
         </div>
     </div> -->
 
-    <!-- <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCenterTitle">Masukkan Tanggal Batas Konfirmasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="flatpickr-date" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- Modal -->
     <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -184,13 +162,13 @@
                     <div class="row g-2 mb-3">
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control flatpickr-date" id="tanggalmulai" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                         </div>
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalakhir" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
@@ -231,13 +209,13 @@
                     <div class="row g-2 mb-3">
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalmulai" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
                         </div>
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
-                            <input type="date" id="tanggalakhir" class="form-control" placeholder="DD / MM / YY" />
+                            <input type="text" class="form-control  flatpickr-date" id="tanggalakhir" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
@@ -260,5 +238,11 @@
 @endsection
 
 @section('page_script')
-
+<script>
+    $(".flatpickr-date").flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
+</script>
 @endsection
