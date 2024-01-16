@@ -9,19 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RejectionNotification extends Mailable
+class VerifyEMailMhs extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $alasan;
-
+    public $verifymhs;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($alasan)
+    public function __construct($verifymhs)
     {
-        $this->alasan = $alasan;
+        $this->verifymhs=$verifymhs;
     }
 
     /**
@@ -30,7 +28,7 @@ class RejectionNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rejection Notification',
+            subject: 'Verify e-mail anda',
         );
     }
 
@@ -40,7 +38,7 @@ class RejectionNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.rejected',
+            view: 'email.verifymhs'
         );
     }
 
@@ -56,6 +54,7 @@ class RejectionNotification extends Mailable
 
     public function build()
     {
-        return $this->view('email.rejected');         
+        return $this->view('email.verifymhs');
+                 
     }
 }

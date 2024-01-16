@@ -24,7 +24,7 @@
                      </div>
                      <div class="card-info">
                          <small>Total Pelamar</small>
-                         <h5 class="mb-0">20</h5>
+                         <h5 class="mb-0">{{$pendaftar_count}}</h5>
                      </div>
                  </div>
              </div>
@@ -88,7 +88,7 @@
          <div class="row mt-2">
              <div class="col-12 d-flex justify-content-between">
                  <div class="col-6">
-                     <div class="tf-icons ti ti-calendar text-primary" style="font-size: medium; margin-right:10px;"> Batas konfirmasi penerimaan: {{($item->date_confirm_closing?->format('d/m/Y') ?? 'Set Date Closing')}}</div>
+                     <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;"> Tanggal Posting: {{($item->startdate?->format('d M Y') ?? '-')}} - {{($item->enddate?->format('d M Y') ?? '-')}}</div>
                      <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : {{$item->kuota}}</div>
                  </div>
                  <div class="col-6 text-end">
@@ -98,7 +98,7 @@
 
                      </a>
                      <!-- <input class="form-control" type="date" value="0000-00-00" id="mulai"> -->
-                     <button class="btn btn-outline-success my-2 waves-effect" type="button" id="datepicker">
+                     <button class="btn btn-outline-success my-2 waves-effect" type="button" id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">
                          <i class="ti bi-pencil-square text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
                      </button>
                      @endcan
@@ -110,4 +110,37 @@
          </div>
      </div>
  </div>
+
+ <!-- Modal set date before closing -->
+ <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="modalCenterTitle">Masukkan Tanggal Batas Konfirmasi</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+                     <div class="col mb-3">
+                         <label for="flatpickr-date" class="form-label">Tanggal Konfirmasi<span style="color: red;">*</span></label>
+                         <input type="date" data-date="" data-date-format="d M Y" class="form-control flatpickr-input active" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
+                     </div>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-success">Simpan</button>
+             </div>
+         </div>
+     </div>
+ </div>
+ <!-- Vendors JS -->
+ <script src="../../app-assets/vendor/libs/moment/moment.js"></script>
+ <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+ <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+ <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+ <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+ <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+
+ <!-- Page JS -->
+ <script src="../../app-assets/js/forms-pickers.js"></script>
  @endforeach

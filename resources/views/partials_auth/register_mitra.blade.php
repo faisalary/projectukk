@@ -160,17 +160,59 @@
         <!-- /Left Text -->
       </div>
     </div>
+    <div class="modal fade" id="registrasi-mitra" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-center">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  
+                  </button>
+              </div>
+              <div class="modal-body text-center" style="display:block;">
+                  Konfirmasi Persetujuan Data Mitra
+              </div>
+              <div class="modal-footer" style="display: flex; justify-content:center;">
+                  <a class="btn btn-primary text-white" id="approve-confirm-button">Iya, Yakin</a>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+              </div>
+          </div>
+      </div>
+    </div>
 
     <script>
     function redirectToPage() {
       var selectedRole = document.getElementById("roleregister").value;
 
       if (selectedRole === "user") {
-        window.location.href = "/register";
+        window.location.href = "/mahasiswa/register";
         } else if (selectedRole === "mitra") {
-          window.location.href = "/mitra/register";
+          return Mitra;
       }
-      
+      function store(e) {
+            
+            $('#registrasi-mitra').modal('store');
+            var approveUrl = '{{url("/mitra/register")}}/' + e.attr('data-id');
+
+            $('#register-mitra').on('click', function () {
+
+                $.ajax({
+                    url: approveUrl,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN" : "{{csrf_token()}}"
+                    },
+                    success: function (response) {
+                        if (!response.error) {
+                            alert('berhasil');
+                        } else {
+                            alert('tidak berhasil');
+                        }
+                    }
+                });
+
+                $('#registrasi-mitra').modal('hide');
+            });
+        }
     }
     </script>
   </body>
