@@ -148,79 +148,6 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    {{-- <script>
-        // $("#modalTambahMitra").on("hide.bs.modal", function() {
-
-
-        //     $("#simpanButton").html("Save Data");
-        // });
-        var table = $('#table-kelola-mitra1').DataTable({
-            ajax: "{{ url('company/kelola-mitra/show/0') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
-
-                {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'notelepon',
-                    name: 'notelepon',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
-                },
-                // {
-                //     data: 'alamatindustri',
-                //     name: 'alamatindustri',
-                //     render: function(data, type, row, meta) {
-                //         // Check if the data is null or undefined
-                //         if (data === null || data === undefined) {
-                //             return "-"; // You can change this to any default value
-                //         } else {
-                //             return data;
-                //         }
-                //     }
-                // },
-                {
-                    data: 'description',
-                    name: 'description',
-                    render: function(data, type, row, meta) {
-                        // Check if the data is null or undefined
-                        if (data === null || data === undefined) {
-                            return "-"; // You can change this to any default value
-                        } else {
-                            return data;
-                        }
-                    }
-                },
-                {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
-                },
-                {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
-                }
-            ]
-        });
-    </script> --}}
-
     <script>
         var table = $('#table-kelola-mitra2').DataTable({
             ajax: "{{ url('company/kelola-mitra/show/0') }}",
@@ -363,7 +290,6 @@
 
         function edit(e) {
             let id = e.attr('data-id');
-
             let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
             var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
             $.ajax({
