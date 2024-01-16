@@ -106,7 +106,7 @@
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Deskipsi Pekerjaan</span>
             <ul class="job-description"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
-                <p>
+                <p id="deskripsi" name="deskripsi">
                     <li>Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker
                     </li>
                     <li>
@@ -122,8 +122,7 @@
                     </li>
                     <li>
                         Support employee Performance Evaluation process.
-                    </li><span class="dots">.... </span>
-                    <span class="hiding">
+                    </li><span class="content-new mb-0">
                         <li>
                             Support Talent Management and Succession Planning function.
                         </li>
@@ -143,8 +142,9 @@
                             Support other HR Indonesia operations activities.
                         </li>
                     </span>
-                    <a href="#" class="read-more">Show More</a>
-                    <a href="#" class="show-less hiding">Show Less</a>
+                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                        Show more
+                    </u>
                 </p>
 
 
@@ -155,7 +155,7 @@
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Requirement</span>
             <ul
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
-                <p>
+                <p id="kualifikasi" name="kualifikasi">
                     <li>
                         At least Bachelor's degree in any field
                     </li>
@@ -168,8 +168,7 @@
                     <li>
                         Has experience using Workday will be an advantage
 
-                    </li><span class="dots">.... </span>
-                    <span class="hiding">
+                    </li><span class="content-new mb-0">
                         <li>
                             Good command of spoken and written English.
                         </li>
@@ -188,15 +187,16 @@
                             Willing to work in Cikampek area.
                         </li>
                     </span>
-                    <a href="#" class="read-more">Show More</a>
-                    <a href="#" class="show-less hiding">Show Less</a>
+                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                        Show more
+                    </u>
                 </p>
             </ul>
         </div>
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Benefit</span>
-            <ul
+            <ul id="benefit" name="benifit"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <li>
                     Family Care
@@ -214,8 +214,7 @@
 
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Kemampuan</span>
-
+            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important" id="kemampuan" name="kemampuan">Kemampuan</span>
             <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 30px !important">
                 <span class="badge rounded-pill bg-success bg-glow">SPSS</span>
                 <span class="badge rounded-pill bg-success bg-glow">Microsoft Office</span>
@@ -233,7 +232,7 @@
                         <h5 class="mb-0">Seleksi Tahap 1</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 18/10/2023 - 20/10/2023</p>
+                            <p class="mb-0" id="tgltahap1" name="tgltahap1">Tanggal Pelaksanaan : 18/10/2023 - 20/10/2023</p>
                         </div>
                     </div>
                 </li>
@@ -243,7 +242,7 @@
                         <h5 class="mb-0">Seleksi Tahap 2</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 25/10/2023 - 30/10/2023</p>
+                            <p class="mb-0" id="tgltahap2" name="tgltahap2">Tanggal Pelaksanaan : 25/10/2023 - 30/10/2023</p>
                         </div>
                     </div>
                 </li>
@@ -253,7 +252,7 @@
                         <h5 class="mb-0">Seleksi Tahap 3</h5>
                         <div class="d-flex align-items-center" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0">Tanggal Pelaksanaan : 01/11/2023 - 03/11/2023</p>
+                            <p class="mb-0" id="tgltahap3" name="tgltahap3">Tanggal Pelaksanaan : 01/11/2023 - 03/11/2023</p>
                         </div>
                     </div>
                 </li>
@@ -267,18 +266,17 @@
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 
     <script>
-        $('.hiding').addClass('hide-me');
-
-        $('.read-more').on('click', function() {
-            $(this).addClass('hide-me');
-            $('.hiding').toggle();
-            $('.dots').toggle();
-        });
-        $('.show-less').on('click', function() {
-            $(this).removeClass('hide-me');
-            $('.read-more').removeClass('hide-me');
-            $('.hiding').toggle();
-            $('.dots').toggle();
+        $(document).ready(function() {
+            $(".content-new").hide();
+            $(".show_hide_new").on("click", function() {
+                var content = $(this).prev('.content-new');
+                content.slideToggle(100);
+                if ($(this).text().trim() == "Show more") {
+                    $(this).text("Show less");
+                } else {
+                    $(this).text("Show more");
+                }
+            });
         });
     </script>
 @endsection
