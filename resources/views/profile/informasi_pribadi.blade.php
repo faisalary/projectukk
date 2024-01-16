@@ -105,15 +105,20 @@
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
+              {{-- @if ($infromasiprib->profile_picture)
+                  <img src="{{ asset('storage/' . $infromasiprib->profile_picture) }}" alt="user-avatar"
+                      class="d-block w-px-100 h-px-100 rounded" id="imgPreview">
+              @else --}}
               <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
+              {{-- @endif --}}
               <div class="user-info text-center">
-                <h4 class="mb-2">Violet Mendoza</h4>
-                <span class="badge bg-label-success mt-1">Fullstack Developer</span>
+                <h4 class="mb-2">{{$mahasiswa->namamhs}}</h4>
+                <span class="badge bg-label-success mt-1">{{$informasiprib?->headliner?? ''}}</span>
               </div>
             </div>
           </div>
           <div class="border-bottom mb-3">
-            <p class="mt-4 mb-0">Pengembang perangkat lunak berpengalaman selama 7 tahun dengan keahlian dalam pengembangan aplikasi web, manajemen proyek, dan kerja tim lintas disiplin.</p>
+            <p class="mt-4 mb-0">{{$informasiprib?->deskripsi_diri?? '' }}</p>
             <p class="content-new mb-0 mt-0"> Sertifikasi dalam manajemen proyek. Analitis, adaptif, dan berkomitmen pada kemajuan teknologi.</p>
             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
               Show more
@@ -123,55 +128,55 @@
             <ul class="list-unstyled">
               <li class="mb-1">
                 <span class="fw-semibold me-1">NIM:</span>
-                <span>6705513025</span>
+                <span>{{$mahasiswa->nim}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Universitas:</span>
-                <span>Universitas Telkom</span>
+                <span>{{$mahasiswa->univ->namauniv}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Fakultas:</span>
-                <span>Fakultas Ilmu Terapan</span>
+                <span>{{$mahasiswa->fakultas->namafakultas}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Program Studi:</span>
-                <span>D3 Sistem Informasi</span>
+                <span>{{$mahasiswa->prodi->namaprodi}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Angkatan:</span>
-                <span>2021</span>
+                <span>{{$mahasiswa->angkatan}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">IPK:</span>
-                <span>4.00</span>
+                <span>{{$informasiprib?->ipk??''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Eprt:</span>
-                <span>1000</span>
+                <span>{{$informasiprib?->eprt?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">TAK:</span>
-                <span>100</span>
+                <span>{{$informasiprib?->TAK?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Email:</span>
-                <span>jennieruby123@gmail.com</span>
+                <span>{{$mahasiswa->emailmhs}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">No.Telp:</span>
-                <span>087654321234</span>
+                <span>{{$mahasiswa->nohpmhs }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Tanggal Lahir:</span>
-                <span>01 Januari 2000</span>
+                <span>{{$informasiprib?->tgl_lahir??''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Jenis Kelamin:</span>
-                <span>Perempuan</span>
+                <span>{{$informasiprib?->gender?? ''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Alamat:</span>
-                <span>Jln. Rancabolang No. 12</span>
+                <span>{{$mahasiswa->alamatmhs}}</span>
               </li>
             </ul>
           </div>
@@ -484,75 +489,77 @@
         </div>
         <!-- Account -->
         <div class="modal-body">
-          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
-            <img src="../../app-assets/img/avatars/15.png" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
-            <div class="button-wrapper">
-              <label for="upload" class="btn btn-success me-2 mb-3" tabindex="0">
-                <span class="d-none d-sm-block">Unggah Foto Baru</span>
-                <i class="ti ti-upload d-block d-sm-none"></i>
-                <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
-              </label>
-              <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
-                <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Atur Ulang</span>
-              </button>
+          <form action="{{ url('mahasiswa/profile/pribadi/update/')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
+              <img src="../../app-assets/img/avatars/15.png" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
+              <div class="button-wrapper">
+                <label for="upload" class="btn btn-success me-2 mb-3" tabindex="0">
+                  <span class="d-none d-sm-block">Unggah Foto Baru</span>
+                  <i class="ti ti-upload d-block d-sm-none"></i>
+                  <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
+                </label>
+                <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
+                  <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Atur Ulang</span>
+                </button>
 
-              <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
+                <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
+              </div>
             </div>
-          </div>
-          <div class="border-top">
-            <form id="formAccountSettings" method="POST" onsubmit="return false">
+            <div class="border-top">
               <div class="row mt-4">
                 <div class="mb-3 col-md-6">
                   <label for="NIM" class="form-label">NIM <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nim" name="nim" value="6705513025" placeholder="6705513025" disabled />
+                  <input class="form-control" type="text" id="nim" name="nim" value="{{$mahasiswa->nim}}" placeholder="" disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Name" class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="namalengkap" name="namalengkap" value="Violet Mendoza" autofocus disabled />
+                  <input class="form-control" type="text" id="namalengkap" name="namalengkap" value="{{$mahasiswa->namamhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Universitas" class="form-label">Universitas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="universitas" name="universitas" value="Telkom University" autofocus disabled />
+                  <input class="form-control" type="text" id="universitas" name="universitas" value="{{$mahasiswa->univ->namauniv}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Fakultas" class="form-label">Fakultas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="fakultas" name="fakultas" value="Fakultas Ilmu Terapan" autofocus disabled />
+                  <input class="form-control" type="text" id="fakultas" name="fakultas" value="{{$mahasiswa->fakultas->namafakultas}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Prodi" class="form-label">Program Studi <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="prodi" name="prodi" value="D3 Sistem Informasi" autofocus disabled />
+                  <input class="form-control" type="text" id="prodi" name="prodi" value="{{$mahasiswa->prodi->namaprodi}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="angkatan" class="form-label">Angkatan <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="angkatan" name="prodi" value="2021" autofocus disabled />
+                  <input class="form-control" type="text" id="angkatan" name="prodi" value="{{$mahasiswa->angkatan}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Email" class="form-label">Email <span style="color: red;">*</span></label>
-                  <input class="form-control" type="email" id="email" name="email" value="jennieruby123@gmail.com" autofocus disabled />
+                  <input class="form-control" type="email" id="email" name="email" value="{{$mahasiswa->emailmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label class="form-label" for="notelp">No. Telp</label>
-                  <input type="text" id="notelp" name="notelp" class="form-control" placeholder="089123456789" autofocus disabled />
+                  <input type="text" id="notelp" name="notelp" class="form-control" placeholder="{{$mahasiswa->nohpmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="IPK" class="form-label">IPK <span style="color: red;">*</span></label>
+                  <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
                   <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="EPRT" class="form-label">EPRT <span style="color: red;">*</span></label>
+                  <label for="eprt" class="form-label">EPRT <span style="color: red;">*</span></label>
                   <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="TAK" class="form-label">TAK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="tak" name="tak" placeholder="100" autofocus />
+                  <input class="form-control" type="text" id="TAK" name="TAK" placeholder="100" autofocus />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
+                  <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
                   <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
+                  <label for="gender" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
                   <div class="form-check">
                     <div class="row">
                       <div class="col-3">
@@ -572,19 +579,19 @@
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="alamat" class="form-label">Alamat <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="alamat" name="alamat" placeholder="Jln. Rancabolang No. 12" disabled />
+                  <input class="form-control" type="text" id="alamat" name="alamat" value="{{$mahasiswa->alamatmhs}}" placeholder="" disabled />
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="deskripsi" class="form-label">Deskripsi Diri</label>
-                  <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Deskripsi Diri"></textarea>
+                  <label for="deskripsi_diri" class="form-label">Deskripsi Diri</label>
+                  <textarea class="form-control" type="text" id="deskripsi_diri" name="deskripsi_diri" placeholder="Deskripsi Diri"></textarea>
                 </div>
               </div>
               <div class="modal-footer p-0">
-                <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+                <button id="modal-button" type="submit" class="btn btn-success m-0">Simpan Data</button>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
         <!-- /Account -->
       </div>
     </div>
@@ -601,11 +608,12 @@
         </div>
 
         <div class="modal-body p-0 ms-5 me-5">
-          <form id="" method="POST" onsubmit="return false">
+          <form action="{{ url('mahasiswa/profile/informasi/store')}}" id="informasitambahan" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-12 p-0 ">
-                <label for="lokasikerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="lokasikerja" name="lokasikerja" placeholder="Lokasi Kerja" />
+                <label for="lok_kerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="lok_kerja" name="lok_kerja" placeholder="Lokasi Kerja" />
               </div>
               <div class="border mb-3" style="border-radius: 8px;">
                 <div class="form-repeater">
@@ -653,7 +661,7 @@
                           </select>
                         </div>
                         <div class="mb-3 col-md-7">
-                          <input class="form-control mt-4" type="text" id="username" name="username" placeholder="URL/Username" />
+                          <input class="form-control mt-4" type="text" id="sosmed" name="sosmed" placeholder="URL/Username" />
                         </div>
                         <div class="mb-3 col-md-1">
                           <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">

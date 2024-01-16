@@ -28,4 +28,8 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Fakultas::class, "id_fakultas");
     }
+    public function informasiprib()
+    {
+        return $this->belongsTo(InforamasiPribadi::class, "id_infoprib");
+    }
 }

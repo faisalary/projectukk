@@ -15,3 +15,5 @@ class Universitas extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 }
+
+
