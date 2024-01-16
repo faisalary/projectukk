@@ -366,6 +366,9 @@ Route::get('/cv', function () {
     return view('mahasiswa.cv', ['active_menu' => 'CV Mahasiswa']);
 });
 
-Route::get('/admin_kandidat', function () {
-    return view('admin_kandidat.admin_kandidat', ['active_menu' => 'admin_kandidat']);
+Route::get('magang-fakultas', function () {
+    return view('admin_kandidat.magang_fakultas');
+});
+Route::get('/magang-mandiri', function () {
+    return view('admin_kandidat.magang_mandiri');
 });
