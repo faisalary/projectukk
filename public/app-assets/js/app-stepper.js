@@ -3,15 +3,23 @@ jQuery(document).ready(function() {
 
     $('input[name=tahapan]').on('change', function() {
         console.log(this.value)
-        if (this.value == "2") {
+        if (this.value == "1") {
             $('#tahap-lanjut-2').show();
             $('#tahap-lanjut-3').hide();
-        } else if (this.value == "3") {
+        } else if (this.value == "2") {
             $('#tahap-lanjut-2').show();
             $('#tahap-lanjut-3').show();
         } else {
             $('#tahap-lanjut-2').hide();
             $('#tahap-lanjut-3').hide();
+        }
+    });
+
+	$('input[name=gaji]').on('change', function() {
+        if (this.value == "1") {
+            $('#nominal').prop('disabled', false).prop('required',true);;
+        } else {
+            $('#nominal').prop('disabled', true).prop('required',false);;
         }
     });
 
@@ -30,7 +38,8 @@ jQuery(document).ready(function() {
             newTag: true // add additional parameters
           }
         }
-      });
+    });
+	
 	jQuery('.form-wizard-next-btn').click(function() {
         // $('#jenismagang').select2("enable", true);
 		var parentFieldset = jQuery(this).parents('.wizard-fieldset');
