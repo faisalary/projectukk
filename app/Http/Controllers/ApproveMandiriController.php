@@ -10,7 +10,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
 
-class KonfirmasiMandiriController extends Controller
+class ApproveMandiriController extends Controller
 {
     public function __construct()
     {
@@ -23,7 +23,7 @@ class KonfirmasiMandiriController extends Controller
     {
         $mandiri = PengajuanMandiri::all();
         $mahasiswa = Mahasiswa::all();
-        return view('mandiri.mahasiswa_mandiri.index', compact('mandiri','mahasiswa'));
+        return view('mandiri.approve_mandiri.index', compact('mandiri','mahasiswa'));
     }
 
     // public function show(Request $request)

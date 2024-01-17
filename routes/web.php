@@ -258,6 +258,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
         });
     });
+    
+    Route::prefix('mandiri')->group(function () {
+        Route::prefix('approve_mandiri')->group(function () {
+
+        });
+    });
+    
 });
 
 Route::get('/pengaturan', function () {
