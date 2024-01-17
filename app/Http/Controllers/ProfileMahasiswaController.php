@@ -38,9 +38,9 @@ class ProfileMahasiswaController extends Controller
      */
     public function edit($id)
     {
-        $informasiprib = InforamasiPribadi::where('nim', auth()->user()->nim)->first();
-        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->with('informasiprib', 'fakultas', 'univ', 'prodi')->first();
-        return view('profile.informasi_pribadi', compact('informasiprib', 'mahasiswa'));
+        $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
+        return $mahasiswa;
+        
     }
 
     /**
@@ -50,11 +50,11 @@ class ProfileMahasiswaController extends Controller
     {
         
         try {
-            $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->with('informasiprib', 'fakultas', 'univ', 'prodi')->first();
-            $infromasiprib = InforamasiPribadi::where('di_infoprib', $id)->first();
+            $informasiprib = InforamasiPribadi::where('nim',auth()->user()->nim)->first();
+            $mahasiswa = Mahasiswa::where('nim', auth()->user()->nim)->first();
             
-            if ($infromasiprib !== null)
-                $infromasiprib = InforamasiPribadi::create([
+            if ($informasiprib !== null)
+                $informasiprib = InforamasiPribadi::create([
                     'ipk' => $request->ipk,
                     'nim' => $mahasiswa->nim,
                     'eprt' => $request->eprt,
@@ -65,17 +65,16 @@ class ProfileMahasiswaController extends Controller
                     'profile_picture' => $request->profile_picture,
                     'gender' => $request->gender
                 ]);
-            
-            $infromasiprib->ipk = $request->ipk;    
-            $infromasiprib->eprt = $request->eprt;    
-            $infromasiprib->TAK = $request->TAK;    
-            $infromasiprib->tgl_lahir = $request->tgl_lahir;    
-            $infromasiprib->headliner = $request->headliner;    
-            $infromasiprib->deskripsi_diri = $request->deskripsi_diri;    
-            $infromasiprib->gender = $request->gender;  
+            $informasiprib->ipk = $request->ipk;    
+            $informasiprib->eprt = $request->eprt;    
+            $informasiprib->TAK = $request->TAK;    
+            $informasiprib->tgl_lahir = $request->tgl_lahir;    
+            $informasiprib->headliner = $request->headliner;    
+            $informasiprib->deskripsi_diri = $request->deskripsi_diri;    
+            $informasiprib->gender = $request->gender;  
               
             if (!empty($request->profile_picture)) {
-                $infromasiprib->profile_picture = $request->profile_picture->store('post');
+                $informasiprib->profile_picture = $request->profile_picture->store('post');
             }
             DB::commit();
             $mahasiswa->save();

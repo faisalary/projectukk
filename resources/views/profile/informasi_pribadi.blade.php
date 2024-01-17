@@ -489,7 +489,7 @@
         </div>
         <!-- Account -->
         <div class="modal-body">
-          <form action="{{ url('mahasiswa/profile/pribadi/update/')}}" method="POST">
+          <form action="{{ url('mahasiswa/profile/pribadi/update/'. $mahasiswa->nim)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
@@ -622,7 +622,7 @@
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-11">
                           <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
-                          <select id="bahasa" class="form-select">
+                          <select id="bahasa" class="form-select select2">
                             <option disabled selected>Pilih Jenis Bahasa</option>
                             <option value="bahasa">Indonesia</option>
                             <option value="bahasa">Inggris</option>
@@ -652,7 +652,7 @@
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-4">
                           <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
-                          <select id="media" class="form-select">
+                          <select id="media" class="form-select select2">
                             <option disabled selected>Pilih Sosial Media</option>
                             <option value="media">Instagram</option>
                             <option value="media">Linkedin</option>
