@@ -88,6 +88,12 @@
     </div>
   </div>
 
+  <!-- <div class="alert alert-warning alert-dismissible ms-4 me-4 mb-4" role="alert">
+        <i class="ti ti-alert-triangle ti-xs"></i>
+        <span style="color: #23314B; padding-left:10px; padding-top:5px;"> Untuk mencapai <b>70%</b> wajib mengisi semua data di <b>informasi pribadi</b>!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> -->
+
   <div class="row">
     <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
       <!-- User Profile-->
@@ -543,7 +549,7 @@
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input class="form-control" type="date" value="" id="tanggallahir" placeholder="YYYY-MM-DD" >
+                  <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>

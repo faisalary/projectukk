@@ -34,32 +34,37 @@
     .light-style .bs-stepper:not(.wizard-modern) {
         box-shadow: none;
     }
+
     .breadcrumb-item,
-  .breadcrumb-item a {
-    color: #4b465c !important;
-  }
+    .breadcrumb-item a {
+        color: #4b465c !important;
+    }
 </style>
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="sec-title mt-4 mb-4">
+    <!-- <div class="sec-title mt-4 mb-4">
         <h4>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-style1">
                     <li class="breadcrumb-item">
-                        Profil
+                        Kegiatan Saya
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/informasi/pribadi">Informasi Pribadi</a>
+                        <a href="/informasi/pribadi">Lamaran Anda</a>
                     </li>
                     <li class="breadcrumb-item active">Pengalaman dan Keahlian</li>
                 </ol>
             </nav>
         </h4>
+    </div> -->
+
+    <div class="col-md-12 col-12 mt-3">
+        <h4>Lamaran Saya</h4>
     </div>
 
-    <div class="bs-stepper wizard-icons wizard-icons-example mt-5">
+    <div class="bs-stepper wizard-icons wizard-icons-example mt-4">
         <div class="bs-stepper-header">
             <div class="step d-flex flex-column align-items-center">
                 <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
@@ -105,11 +110,11 @@
                     <figure class="image ms-3"><img style="width:170px; height:100px;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
                     </figure>
                 </div>
-                <div class="col-3 text-start" style="margin-left:-100px;">
+                <div class="col-3 ms-sm-0 text-start" style="margin-left:-100px;">
                     <h3>Back End Developer</h3>
                     <p style="font-size:15px;">PT Wings Surya</p>
                 </div>
-                <div class="col-6 text-end" style="margin-left:100px;">
+                <div class="col-6 ms-sm-0 text-end" style="margin-left:100px;">
                     <div class="waktu"> Lamaran terkirim pada 15 juni 2023 <i class="ti ti-clock"></i></div>
                     <button type="button" class="btn btn-sm btn-secondary waves-effect mt-3" style="height:35px; font-size:16px;" disabled>Lowongan Sudah di tutup</button>
                     <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:30px; font-size:16px;">Belum Proses</span></div>
