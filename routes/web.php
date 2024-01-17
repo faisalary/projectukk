@@ -260,8 +260,11 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::prefix('mandiri')->group(function () {
-        Route::prefix('approve_mandiri')->group(function () {
-
+        Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('kelola_mitra.index');
+            Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('kelola_mitra.show');
+            Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('kelola_mitra.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('kelola_mitra.rejected');
         });
     });
     
