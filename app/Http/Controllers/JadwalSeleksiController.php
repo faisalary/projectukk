@@ -40,7 +40,7 @@ class JadwalSeleksiController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(SeleksiRequest $request)
     {
         try {
             $pendaftaran = PendaftaranMagang::where('status', '1')->get();
@@ -58,7 +58,7 @@ class JadwalSeleksiController extends Controller
                     'end_date' => $endDate . " " . $endTime,
                     'namatahap_seleksi' => $request->tahap,
                     'id_email_tamplate' => $request->subjek,
-                    'status_seleksi' => true,  
+                    'status_seleksi' => true,
                 ]);
             }
 
@@ -91,10 +91,16 @@ class JadwalSeleksiController extends Controller
         }
 
         $seleksi = Seleksi::with("seleksi_status", "seleksi_status.pendaftaran", "seleksi_status.pendaftaran.mahasiswa");
+        // ->whereHas('seleksi_status', function($query) use ($request){
+        //     $query->where ('progress', '!=', '0')
+        //     ->where('status_seleksi', '!=', '0');
+        // });
 
         if ($request->type) {
             $seleksi = $seleksi->where('namatahap_seleksi', $request->type);
         }
+
+        // return $seleksi->get();
         return DataTables::of($seleksi->get())
             ->addIndexColumn()
             ->addColumn('start_date', function ($seleksi) {
@@ -104,9 +110,9 @@ class JadwalSeleksiController extends Controller
             ->editColumn('progress', function ($seleksi) {
                 return "<div class='col-md-12'>
                     <div class='position-relative'>
-                            <select class='form-select select2'>
-                            <option value='1'>Belum Seleksi</option>
-                            <option value='2'>Sudah Seleksi</option>
+                            <select class='form-select select2' onchange='progress($(this))' data-type='progress' data-id='" . $seleksi->id_seleksi_lowongan . "'>
+                            <option value='0' " . ((isset($seleksi->seleksi_status->progress) && $seleksi->seleksi_status->progress == '0') ? "selected" : '') . ">Belum Seleksi</option>
+                            <option value='1' " . ((isset($seleksi->seleksi_status->progress) && $seleksi->seleksi_status->progress == '1') ? "selected" : '') . ">Sudah Seleksi</option>
                         </select>
                     </div>
                 </div>";
@@ -114,9 +120,9 @@ class JadwalSeleksiController extends Controller
             ->editColumn('status_seleksi', function ($seleksi) {
                 return "<div class='col-md-12'>
                     <div class='position-relative'>
-                            <select class='form-select select2'>
-                            <option value='1'>Diterima</option>
-                            <option value='2'>Ditolak</option>
+                            <select class='form-select select2'  ". ((empty($seleksi->seleksi_status->progress )) ? "disabled" : '') . " onchange='progress($(this))' data-type='status_seleksi' data-id='" . $seleksi->id_seleksi_lowongan . "'>
+                            <option value='0' " . ((isset($seleksi->seleksi_status->status_seleksi) && $seleksi->seleksi_status->status_seleksi == '0') ? "selected" : '') . ">Ditolak</option>
+                            <option value='1' " . ((isset($seleksi->seleksi_status->status_seleksi) && $seleksi->seleksi_status->status_seleksi == '1') ? "selected" : '') . ">Diterima</option>
                         </select>
                     </div>
                 </div>";
@@ -142,6 +148,14 @@ class JadwalSeleksiController extends Controller
 
     public function update(Request $request, $id)
     {
+        $seleksilowongan = Seleksi::find($id);
+        $status = StatusSeleksi::find($seleksilowongan->id_status_seleksi);
+        if ($request->type == 'progress'){
+            $status->progress = $request->value;
+        } else {
+            $status->status_seleksi = $request->value;
+        }
+        $status->save();
     }
 
     public function status()

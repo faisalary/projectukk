@@ -9,7 +9,8 @@
                  <div class="row">
                      <div class="mb-2">
                          <label for="mulai" class="form-label">Tanggal Seleksi Mulai</label>
-                         <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
+                         <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD"
+                             id="flatpickr-date" readonly="readonly">
                      </div>
                  </div>
                  <div class="row">
@@ -44,37 +45,38 @@
  </div>
 
  <!-- Modal Tambah-->
- <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true" style="display: none">
      <div class="modal-dialog modal-dialog-centered" role="document">
          <div class="modal-content">
              <div class="modal-header d-block border-bottom">
                  <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
-             <form class="default-form" method="POST" action="{{ url('jadwal-seleksi/store') }}">
+             <form class="alert" method="POST" action="{{ url('jadwal-seleksi/store') }}">
                  @csrf
                  <div class="modal-body">
                      <div class="row">
-                         <div class="col mb-2">
+                         <div class="col mb-2 form-input">
                              <label for="select2Disabled" class="form-label">Jenis Tahap</label>
                              <div class="position-relative">
-                                 {{-- <select id="select2Disabled" class="select2 form-select select2-hidden-accessible"
-                                     data-select2-id="select2Disabled" tabindex="-1" aria-hidden="true" disabled> --}}
-                                     <select class="form-select select2" id="tahap" name="tahap"
-                                 data-placeholder="Pilih Jenis Tahap">
-                                 <option disabled selected>Pilih Jenis Tahap</option>
+                                 <select class="form-select select2" id="tahap" name="tahap"
+                                     data-placeholder="Pilih Jenis Tahap">
+                                     <option disabled selected>Pilih Jenis Tahap</option>
                                      <option value="tahap1">Tahap 1</option>
                                      <option value="tahap2">Tahap 2</option>
                                      <option value="tahap3">Tahap 3</option>
                                  </select>
                              </div>
+                             <div class="invalid-feedback"></div>
                          </div>
                      </div>
                      <div class="row">
-                         <div class="col mb-2">
-                            <label for="flatpickr-range" class="form-label">Jadwal Pelaksanaan</label>
-                            <input type="text" class="form-control" name="mulai" placeholder="Jadwal Pelaksanaan" id="flatpickr-range" />
-                          </div>
+                         <div class="col mb-2 form-input">
+                             <label for="flatpickr-range" class="form-label">Jadwal Pelaksanaan</label>
+                             <input type="text" class="form-control" name="mulai" placeholder="Jadwal Pelaksanaan"
+                                 id="flatpickr-range" />
+                             <div class="invalid-feedback"></div>
+                         </div>
                      </div>
                      <div class="row">
                          <div class="col mb-2 form-input">
@@ -91,31 +93,9 @@
                      </div>
                  </div>
                  <div class="modal-footer">
-                     <button type="submit"class="btn btn-success" data-bs-target="#modalalert">Simpan</button>
+                     <button type="submit" class="btn btn-success">Simpan</button>
                  </div>
              </form>
-         </div>
-     </div>
- </div>
-
- <!-- Modal Alert-->
- <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body text-center">
-                 <img src="../../app-assets/img/alert.png" alt="">
-                 <h5 class="modal-title" id="modal-title">Apakah Data Jadwal Seleksi lanjutan anda sudah benar?</h5>
-                 <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Jadwal seleksi
-                     lanjutan akan otomatis terkirim melalui email aktif kandidat!</div>
-             </div>
-             <div class="modal-footer" style="display: flex; justify-content:center;">
-                 <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
-                 {{-- <button type="submit" id="modal-button" class="btn btn-danger">Batal</button> --}}
-             </div>
-
          </div>
      </div>
  </div>

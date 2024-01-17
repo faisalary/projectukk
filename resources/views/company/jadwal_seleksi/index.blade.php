@@ -7,6 +7,7 @@
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
     <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
@@ -67,12 +68,20 @@
 @section('main')
     <div class="row">
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - Periode 21 April
+            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - Periode 21
+                April
                 -
                 11 Mei 2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
-            <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" readonly="readonly">
+            <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
+                <option value="1">2023/2024 Genap</option>
+                <option value="2">2023/2024 Ganjil</option>
+                <option value="3">2022/2023 Genap</option>
+                <option value="4">2022/2023 Ganjil</option>
+                <option value="5">2021/2022 Genap</option>
+                <option value="6">2021/2022 Ganjil</option>
+            </select>
             <div class="ps-3">
                 <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
@@ -154,9 +163,9 @@
 @section('page_script')
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
 
     <script>
-
         $("#modalTambahJadwal").on("hide.bs.modal", function() {
             $(".modal-title").html("Tambah Jadwal Seleksi Lanjutan");
             $("#modal-button").html("Save Data");
@@ -185,10 +194,11 @@
                         data: null,
                         name: "tahap",
                         render: function(data, type, row) {
-                            if (data.seleksi_status){
-                                return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' + (
-                                    data.seleksi_status.pendaftaran.mahasiswa.nim);
-                            } 
+                            if (data.seleksi_status) {
+                                return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' +
+                                    (
+                                        data.seleksi_status.pendaftaran.mahasiswa.nim);
+                            }
                             return '-';
                         }
                     },
@@ -227,6 +237,36 @@
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
         });
+
+        function progress(e) {
+            var id = e.attr('data-id');
+            var value = e.val();
+            var type = e.attr('data-type');
+            $.ajax({
+                method: "POST",
+                data: {
+                    'id': id,
+                    'value': value,
+                    'type': type
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/jadwal-seleksi/update/' + id,
+                success: function(data) {
+                    if (data.error) {
+                        Swal.fire({
+                            type: "error",
+                            title: 'Oops...',
+                            text: data.message,
+                            confirmButtonClass: 'btn btn-success',
+                        })
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+        }
     </script>
 
 
@@ -238,4 +278,5 @@
     <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
     <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
     <script src="../../app-assets/js/forms-pickers.js"></script>
-@endsection
+    <script src="../../assets/js/forms-selects.js"></script>
+    @endsection
