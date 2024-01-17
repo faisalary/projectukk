@@ -38,7 +38,7 @@
 
     <div class="alert alert-warning alert-dismissible ms-4 me-4 mb-4" role="alert">
         <i class="ti ti-alert-triangle ti-xs"></i>
-        <span style="color: #23314B; padding-left:10px; padding-top:5px;"> Silahkan lakukan pengisian data dengan minimal kelengkapan 70% untuk melanjutkan proses melamar pekerjaan</span>
+        <span style="color: #23314B; padding-left:10px; padding-top:5px;"> Silahkan melakukan pengisian data dengan minimal kelengkapan 70% untuk melanjutkan proses melamar pekerjaan</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 

@@ -56,7 +56,6 @@ class RejectionNotification extends Mailable
 
     public function build()
     {
-        return $this->view('email.rejected');
-            
+        return $this->view('email.rejected');         
     }
 }

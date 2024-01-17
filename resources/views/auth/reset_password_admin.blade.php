@@ -12,11 +12,10 @@
                     <div class="card-header">{{ __('Set-Password Baru') }}</div>
 
                     <div class="card-body">
-                        <form action="{{ route('admin.update.password') }}" method="POST">
+                        <form action="{{ url('mitra/set-password') }}" method="POST">
                             @csrf
-                    
                             <!-- Password Reset Token -->
-                            <input type="hidden" name="token" value="{{ $id }}">
+                            <input type="hidden" name="token" value="{{ $token }}">
                             
                             <div class="form-group m-2">
                                 <label for="password">{{ __('Password baru') }}</label>
@@ -31,6 +30,7 @@
                             <div class="form-group m-2">
                                 <label for="password_confirmation">Konfirmasi Password:</label>
                                 <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" required>
+                                
                                 @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

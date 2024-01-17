@@ -155,11 +155,11 @@
   <div class="row">
     <div class="card mt-4">
       <div class="card-body">
-        <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
         <div class="alert alert-danger alert-dismissible" role="alert">
           Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
         <div class="row">
           <div class="col-2">
             <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
