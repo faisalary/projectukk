@@ -17,6 +17,15 @@
         background-color: #4EA971 !important;
         border-color: #4EA971 !important;
     }
+    .select2-results__option[role="option"][aria-selected="true"] {
+    background-color: #4EA971 !important;
+    color: #fff;
+  }
+
+  .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+    background-color: rgba(115, 103, 240, 0.08) !important;
+    color: #4EA971 !important;
+  }
 </style>
 @endsection
 
@@ -149,14 +158,34 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
+                        <label class="form-label" for="bahasa">Jenis Magang <span style="color: red;">*</span></label>
+                          <select id="jenis" class="form-select select2">
+                            <option disabled selected>Pilih Jenis Magang</option>
+                            <option value="jenis">Magang Fakultas</option>
+                            <option value="jenis">Magang Mandiri</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
                             <input type="text" id="namaperusahaan" class="form-control" placeholder="PT. Techno Infinity" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
-                            <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
+                            <label for="namaposisi" class="form-label">Nama Posisi Magang <span style="color: red;">*</span></label>
                             <input type="text" id="namaperusahaan" class="form-control" placeholder="UIUX Designer" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                        <label class="form-label" for="bahasa">Status Magang <span style="color: red;">*</span></label>
+                          <select id="status" class="form-select select2">
+                            <option disabled selected>Pilih Status Magang</option>
+                            <option value="status">Diterima</option>
+                            <option value="status">Ditolak</option>
+                          </select>
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
@@ -194,6 +223,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                <div class="row">
+                        <div class="col mb-3">
+                        <label class="form-label" for="bahasa">Jenis Magang <span style="color: red;">*</span></label>
+                          <select id="jenis1" class="form-select select2">
+                            <option disabled selected>Pilih Jenis Magang</option>
+                            <option value="jenis">Magang Fakultas</option>
+                            <option value="jenis">Magang Mandiri</option>
+                          </select>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
@@ -204,6 +243,16 @@
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
                             <input type="text" id="namaperusahaan" class="form-control" placeholder="UIUX Designer" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                        <label class="form-label" for="bahasa">Status Magang <span style="color: red;">*</span></label>
+                          <select id="status1" class="form-select select2">
+                            <option disabled selected>Pilih Status Magang</option>
+                            <option value="status">Diterima</option>
+                            <option value="status">Ditolak</option>
+                          </select>
                         </div>
                     </div>
                     <div class="row g-2 mb-3">
@@ -233,7 +282,6 @@
     </div>
 
 </div>
-
 
 @endsection
 
