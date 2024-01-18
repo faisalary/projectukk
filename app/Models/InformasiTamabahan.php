@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class InformasiTamabahan extends Model
 {
     use HasFactory;
-    protected $table = 'bahasa';
+    protected $table = 'info_tambahan';
     protected $fillable = ['id_infotab','nim', 'lok_kerja', 'sosmed', 'id_bahasa'];
-    protected $primaryKey = 'id_bahasa';
+    protected $primaryKey = 'id_infotab';
     protected $keyType = 'string';
     public $timestamps = false;
 
