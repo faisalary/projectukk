@@ -343,6 +343,7 @@
                     $('#kualifikasi').val(response.requirements);
                     $('#jenis').val(response.gender);
                     $('#jenjang').val(response.jenjang);
+                    // $('#prodi').val(response.id_prodi);
                     $('#keterampilan').val(response.keterampilan);
                     $('#gaji').val(response.paid);
                     $('#nominal').val(response.nominal_salary);
@@ -352,9 +353,9 @@
                     $('#tanggalakhir').val(response.enddate);
                     $('#durasimagang').val(response.durasimagang);
                     $('#tahapan').val(response.tahapan_seleksi);
-                    $('#deskripsiseleksi').val(response.deskripsi);
-                    $('#mulai').val(response.tgl_mulai);
-                    $('#akhir').val(response.tgl_akhir);
+                    $('#deskripsiseleksi[]').val(response.deskripsi);
+                    $('#mulai[]').val(response.tgl_mulai);
+                    $('#akhir[]').val(response.tgl_akhir);
 
                     $('#modalTambahLowongan').modal('show');
                 }

@@ -23,6 +23,9 @@
 @endsection
 
 @section('main')
+    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
     <div class="row ">
         <div class="col-md-12 col-12">
             <nav aria-label="breadcrumb">
@@ -32,7 +35,7 @@
                             Lowongan Magang
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/kelola/lowongan" class="text-secondary">Kelola Magang</a>
+                            <a href="" class="text-secondary">Kelola Magang</a>
                         </li>
                         <li class="breadcrumb-item active">Edit Lowongan Magang</li>
                     </ol>
@@ -192,6 +195,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- <div class="col-lg-12 col-sm-6">
+                                        <label class="form-label" for="jenismagang">Prodi<span
+                                                class="text-danger">*</span></label>
+                                        <select name="id_prodi" id="prodi" class="select2 form-select"
+                                            data-placeholder="Pilih Program Studi">
+                                            @foreach ($prodi as $p)
+                                                <option @if ($p->id_prodi == $lowongan->id_prodi) selected @endif
+                                                value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="keterampilan" class="form-label">Keterampilan<span
                                                 class="text-danger">*</span></label>

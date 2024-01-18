@@ -3,8 +3,8 @@
 @section('page_style')
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-    <link rel="stylesheet"href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
-    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link
+        rel="stylesheet"href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .form-error {
@@ -22,6 +22,9 @@
 @endsection
 
 @section('main')
+    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>
+    </a>
     <div class="row ">
         <div class="mb-2">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
@@ -170,6 +173,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- <div class="col-lg-12 col-sm-6">
+                                    <label class="form-label" for="jenismagang">Prodi<span
+                                            class="text-danger">*</span></label>
+                                    <select name="prodi" id="prodi" class="select2 form-select"
+                                        data-placeholder="Pilih Program Studi">
+                                        <option value="" disabled selected>Pilih Prodi</option>
+                                        @foreach ($prodi as $p)
+                                            <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                        @endforeach
+                                    </select>
+                                </div> --}}
                                 <div class="col-lg-12 col-sm-6">
                                     <label for="keterampilan" class="form-label">Keterampilan<span
                                             class="text-danger">*</span></label>
@@ -452,7 +466,6 @@
     <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-    <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
     <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
     <script>

@@ -10,6 +10,9 @@
 @endsection
 
 @section('main')
+    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
     <div class="row ">
         <div class="">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /
@@ -60,43 +63,54 @@
 
                 <div class="d-flex" style="margin-top: 40px; font-size: 15px; color: #23314B; !important">
                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
+
                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                            <i class="ti ti-users me-2"></i>
-                            100 Mahasiswa
+                            <i class="ti ti-users me-2">
+                                {{ $lowongan->kuota }}
+                            </i>
                         </li>
+
                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                            <i class="ti ti-building-community me-2"></i>
-                            Fakultas Ilmu Terapan
+                            <i class="ti ti-building-community me-2">
+                                {{-- {{ $lowongan->fakultas->namafakultas }} --}}
+                            </i>
                         </li>
+
                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                            <i class="ti ti-calendar-time me-2"></i>
-                            2 Semerter
+                            <i class="ti ti-calendar-time me-2">
+                                {{ $lowongan->durasimagang }}
+                            </i>
                         </li>
                     </ul>
                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
-
+                        @foreach ($lokasi as $l)
+                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                <i class="ti ti-map-pin me-2">
+                                    {{ $l->kota }}
+                                </i>
+                            </li>
+                        @endforeach
                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                            <i class="ti ti-map-pin me-2"></i>
-                            Bandung & Jakarta
-                        </li>
-                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                            <i class="ti ti-currency-dollar me-2"></i>
-                            Berbayar
+                            <i class="ti ti-currency-dollar me-2">
+                                {{ $lowongan->nominal_salary }}
+                            </i>
                         </li>
                     </ul>
                     <ul style="padding: 0 0 0 20px; !important">
+                        {{-- @foreach ($prodi as $p) --}}
                         <li class="list-group-item d-flex align-items-start fw-semibold"
                             style="margin-top: 15px !important">
                             <i class="ti ti-school me-2"></i>
                             <div>
                                 Bidang
                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                    <li>Rekayasa Perangkat Lunak Aplikasi</li>
+                                    {{-- <li> {{ $p->prodi }}</li> --}}
                                     <li>Sistem Informasi</li>
                                     <li>Teknik Komputer</li>
                                 </ul>
                             </div>
                         </li>
+                        {{-- @endforeach --}}
                     </ul>
                 </div>
             </div>
@@ -107,47 +121,16 @@
             <ul class="job-description"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <p id="deskripsi" name="deskripsi">
-                    <li>Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker
-                    </li>
                     <li>
-                        Lead HR Internal Communication and Employer Branding
+                       {{ $lowongan->deskripsi }} <p>
                     </li>
-                    <li>
-                        Manage On-Boarding program for new hire.
-                    </li>
-                    <li>
-                        Manage People Development process from training need analysis into post-training
-                        effectiveness
-                        evaluation including ROI.
-                    </li>
-                    <li>
-                        Support employee Performance Evaluation process.
-                    </li><span class="content-new mb-0">
-                        <li>
-                            Support Talent Management and Succession Planning function.
-                        </li>
-                        <li>
-                            Manage HR Digital function (Workday) in the country by ensuring data accuracy and
-                            updates.
-                        <li>
-                            Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc.
-                        </li>
-                        <li>
-                            Lead Employee Engagement activities and events.
-                        </li>
-                        <li>
-                            Liaise with relevant parties to ensure HR function executed smoothly.
-                        </li>
-                        <li>
-                            Support other HR Indonesia operations activities.
-                        </li>
-                    </span>
+                    <span class="content-new mb-0"></span>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                     </u>
+
+
                 </p>
-
-
             </ul>
         </div>
 
@@ -156,40 +139,14 @@
             <ul
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <p id="kualifikasi" name="kualifikasi">
-                    <li>
-                        At least Bachelor's degree in any field
+                    <li>{{ $lowongan->requirements }}
                     </li>
-                    <li>
-                        At least 3 years of experience in HR / HRBP
-                    </li>
-                    <li>
-                        Has strong numerical capability and excel expertise
-                    </li>
-                    <li>
-                        Has experience using Workday will be an advantage
-
-                    </li><span class="content-new mb-0">
-                        <li>
-                            Good command of spoken and written English.
-                        </li>
-                        <li>
-                            Experience within a rapidly changing organization in Multinational Company preferably
-                            within a
-                            Manufacturing environment.
-                        </li>
-                        <li>
-                            Strong attention to detail
-                        </li>
-                        <li>
-                            Self-motivated and able to work without supervision
-                        </li>
-                        <li>
-                            Willing to work in Cikampek area.
-                        </li>
-                    </span>
+                    {{-- <li> --}}
+                    <span class="content-new mb-0"></span>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                     </u>
+                    {{-- </li> --}}
                 </p>
             </ul>
         </div>
@@ -199,63 +156,40 @@
             <ul id="benefit" name="benifit"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <li>
-                    Family Care
+                    {{ $lowongan->benefitmagang }}
                 </li>
-                <li>
-                    Parking Access
-                </li>
-                <li>
-                    Reward Compensation
-                </li>
-
             </ul>
         </div>
         </ul>
 
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important" id="kemampuan" name="kemampuan">Kemampuan</span>
+            <span class="fw-bold" style="font-size: 26px; color: #23314B; !important" id="kemampuan"
+                name="kemampuan">Kemampuan</span>
             <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 30px !important">
-                <span class="badge rounded-pill bg-success bg-glow">SPSS</span>
-                <span class="badge rounded-pill bg-success bg-glow">Microsoft Office</span>
-                <span class="badge rounded-pill bg-success bg-glow">Google Suite</span>
-                <span class="badge rounded-pill bg-success bg-glow">Counseling Tools</span>
+                <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
+                {{-- <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
+                <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
+                <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span> --}}
             </div>
         </div>
 
         <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Seleksi Tahap Lanjut</span>
             <ul class="timeline ms-1 mb-0 mt-3">
-                <li class="timeline-item timeline-item-transparent">
-                    <span class="timeline-point timeline-point-success"></span>
-                    <div class="timeline-event">
-                        <h5 class="mb-0">Seleksi Tahap 1</h5>
-                        <div class="d-flex align-items-center" style="margin-top: 15px !important">
-                            <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0" id="tgltahap1" name="tgltahap1">Tanggal Pelaksanaan : 18/10/2023 - 20/10/2023</p>
+                @foreach ($seleksi as $s)
+                    <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-success"></span>
+                        <div class="timeline-event">
+                            <h5 class="mb-0">Seleksi Tahap {{ $loop->iteration }}</h5>
+                            <div class="d-flex align-items-center" style="margin-top: 15px !important">
+                                <i class="ti ti-calendar-event me-2"></i>
+                                <p class="mb-0" id="tgltahap1" name="tgltahap1">
+                                    {{ $s->tgl_mulai }}-{{ $s->tgl_akhir }}</p>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent">
-                    <span class="timeline-point timeline-point-success"></span>
-                    <div class="timeline-event">
-                        <h5 class="mb-0">Seleksi Tahap 2</h5>
-                        <div class="d-flex align-items-center" style="margin-top: 15px !important">
-                            <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0" id="tgltahap2" name="tgltahap2">Tanggal Pelaksanaan : 25/10/2023 - 30/10/2023</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                    <span class="timeline-point timeline-point-success"></span>
-                    <div class="timeline-event">
-                        <h5 class="mb-0">Seleksi Tahap 3</h5>
-                        <div class="d-flex align-items-center" style="margin-top: 15px !important">
-                            <i class="ti ti-calendar-event me-2"></i>
-                            <p class="mb-0" id="tgltahap3" name="tgltahap3">Tanggal Pelaksanaan : 01/11/2023 - 03/11/2023</p>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
