@@ -156,11 +156,6 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                        <a href="/konfirmasi/magang" class="menu-link">
-                          <div data-i18n="Konfirmasi Magang">Konfirmasi Magang</div>
-                        </a>
-                      </li>
-                    <li class="menu-item">
                       <a href="" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
                       </a>
@@ -179,11 +174,11 @@
                         <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
                       </a>
                     </li>
-                    <!-- <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Konfirmasi Magang">"Konfirmasi Magang</div>
+                    <li class="menu-item">
+                        <a href="/konfirmasi/magang" class="menu-link">
+                          <div data-i18n="Konfirmasi Status Penerimaan Magang">Konfirmasi Status Penerimaan Magang</div>
                         </a>
-                      </li> -->
+                      </li>
                     <li class="menu-item">
                       <a href="/pengajuan/surat" class="menu-link">
                         <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
