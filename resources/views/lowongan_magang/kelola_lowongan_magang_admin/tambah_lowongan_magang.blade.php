@@ -3,8 +3,8 @@
 @section('page_style')
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
-    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link
+        rel="stylesheet"href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .form-error {
@@ -22,6 +22,9 @@
 @endsection
 
 @section('main')
+    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
     <div class="row ">
         <div class="mb-2">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
@@ -108,7 +111,7 @@
                                     <textarea class="form-control" rows="2" id="deskripsi" name="deskripsi" placeholder="Masukan Deskripsi Pekerjaan"></textarea>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between">
-                                    <button class="btn btn-label-secondary btn-prev" disabled>
+                                    <button type="button" class="btn btn-label-secondary btn-prev" disabled>
                                         <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                         <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                     </button>
@@ -166,6 +169,35 @@
                                                 <option value="d3">D3</option>
                                                 <option value="s1">S1</option>
                                                 <option value="s2">S2</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 5px;">
+                                            <label class="form-label" for="fakultas">Fakultas<span
+                                                    class="text-danger">*</span></label>
+                                            <select name="fakultas" id="fakultas" class="select2 form-select"
+                                                data-placeholder="Pilih Fakultas">
+                                                {{-- <option value="" disabled selected>Pilih Fakultas</option> --}}
+                                                @foreach ($fakultas as $f)
+                                                    <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- <div class="form-group" style="margin-top: 5px;">
+                                            <label class="form-label" for="prodi">Prodi<span
+                                                    class="text-danger">*</span></label>
+                                            <select name="prodi" id="prodi" class="select2 form-select"
+                                                data-placeholder="Pilih Prodi">
+                                                <option value="" disabled selected>Pilih Prodi</option>
+                                                @foreach ($prodi as $p)
+                                                    <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> --}}
+                                        <div class="col-lg-12 col-sm-6">
+                                            <label for="select2Disabled" class="form-label">Prodi<span
+                                                    class="text-danger">*</span></label>
+                                            <select id="select2Disabled" class="select2 form-select" disabled>
+                                                <option value="1"selected>Pilih Prodi</option>
                                             </select>
                                         </div>
                                     </div>
@@ -293,7 +325,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between">
-                                    <button class="btn btn-label-secondary btn-prev">
+                                    <button type="button" class="btn btn-label-secondary btn-prev">
                                         <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                         <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                     </button>
@@ -428,7 +460,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-between">
-                                    <button class="btn btn-label-secondary btn-prev">
+                                    <button type="button" class="btn btn-label-secondary btn-prev">
                                         <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                         <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                     </button>
@@ -452,7 +484,6 @@
     <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-    <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
     <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
     <script>

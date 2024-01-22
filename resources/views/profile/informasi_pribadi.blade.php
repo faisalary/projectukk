@@ -659,8 +659,8 @@
               </div>
               <div class="border mb-3" style="border-radius: 8px;">
                 <div class="form-repeater">
-                  <div data-repeater-list>
-                    <div data-repeater-item>
+                  <div data-repeater-list="">
+                    <div data-repeater-item="">
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-11">
                           <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
@@ -1143,7 +1143,6 @@
   </div>
 
 </div>
-
 
 @endsection
 

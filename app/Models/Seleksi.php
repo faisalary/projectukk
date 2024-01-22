@@ -23,6 +23,11 @@ class Seleksi extends Model
     protected $primaryKey = 'id_seleksi_lowongan';
     protected $keyType = 'string';
 
+    public function seleksi_status()
+    {
+        return $this->belongsTo(StatusSeleksi::class, 'id_status_seleksi');
+    }
+
     // public function getStatusSeleksiTextAttribute()
     // {
     //     if ($this->statusseleksi == 0) {

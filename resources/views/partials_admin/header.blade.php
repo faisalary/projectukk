@@ -421,7 +421,7 @@
 
                     <!-- Logbook Mahasiswa -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                        <a href="/logbook/mahasiswa" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
