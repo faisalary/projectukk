@@ -193,19 +193,40 @@
                                                         {{ $lowongan->jenjang }}</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="fakultas">Fakultas<span
+                                                        class="text-danger">*</span></label>
+                                                <select name="fakultas" id="fakultas" class="select2 form-select"
+                                                    data-placeholder="Pilih Fakultas">
+                                                    <option value="" disabled>Pilih Fakultas</option>
+                                                    @foreach ($fakultas as $f)
+                                                        <option @if ($f->id_fakultas == $lowongan->id_fakultas) selected @endif
+                                                            value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="prodi">Prodi<span
+                                                        class="text-danger">*</span></label>
+                                                <select name="prodi" id="prodi" class="select2 form-select"
+                                                    data-placeholder="Pilih Prodi">
+                                                    <option value="" disabled>Pilih Prodi</option>
+                                                    @foreach ($prodi as $p)
+                                                        <option @if ($p->id_prodi == $lowongan->id_prodi) selected @endif
+                                                            value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div> --}}
+                                            <div class="col-lg-12 col-sm-6">
+                                                <label for="select2Disabled" class="form-label">Prodi<span
+                                                        class="text-danger">*</span></label>
+                                                <select id="select2Disabled" class="select2 form-select" disabled>
+                                                    <option value="1"selected>Pilih Prodi</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-12 col-sm-6">
-                                        <label class="form-label" for="jenismagang">Prodi<span
-                                                class="text-danger">*</span></label>
-                                        <select name="id_prodi" id="prodi" class="select2 form-select"
-                                            data-placeholder="Pilih Program Studi">
-                                            @foreach ($prodi as $p)
-                                                <option @if ($p->id_prodi == $lowongan->id_prodi) selected @endif
-                                                value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div> --}}
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="keterampilan" class="form-label">Keterampilan<span
                                                 class="text-danger">*</span></label>

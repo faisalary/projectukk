@@ -343,12 +343,11 @@
                     $('#kualifikasi').val(response.requirements);
                     $('#jenis').val(response.gender);
                     $('#jenjang').val(response.jenjang);
-                    // $('#prodi').val(response.id_prodi);
                     $('#keterampilan').val(response.keterampilan);
                     $('#gaji').val(response.paid);
                     $('#nominal').val(response.nominal_salary);
                     $('#benefit').val(response.benefitmagang);
-                    $('#lokasi').val(response.id_lokasi);
+                    $('#lokasi').val(response.id_lokasi).change();
                     $('#tanggal').val(response.startdate);
                     $('#tanggalakhir').val(response.enddate);
                     $('#durasimagang').val(response.durasimagang);
@@ -356,6 +355,8 @@
                     $('#deskripsiseleksi[]').val(response.deskripsi);
                     $('#mulai[]').val(response.tgl_mulai);
                     $('#akhir[]').val(response.tgl_akhir);
+                    $('#prodi').val(response.id_prodi);
+                    $('#fakultas').val(response.id_fakultas);
 
                     $('#modalTambahLowongan').modal('show');
                 }

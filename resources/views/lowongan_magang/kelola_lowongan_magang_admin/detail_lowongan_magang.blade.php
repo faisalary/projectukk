@@ -52,30 +52,25 @@
                             <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
                                 Disetujui : <span class="fw-semibold">29/08/2020</span>
                             </p>
-                            <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                Oleh : <span class="fw-semibold">Admin 1</span>
-                            </p>
                         </div>
 
                     </div>
                 </div>
 
-
                 <div class="d-flex" style="margin-top: 40px; font-size: 15px; color: #23314B; !important">
                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
-
                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                             <i class="ti ti-users me-2">
                                 {{ $lowongan->kuota }}
                             </i>
                         </li>
-
+                        @foreach ($fakultas as $f)
                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                             <i class="ti ti-building-community me-2">
-                                {{-- {{ $lowongan->fakultas->namafakultas }} --}}
+                                {{ $f->namafakultas }}
                             </i>
                         </li>
-
+                        @endforeach
                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                             <i class="ti ti-calendar-time me-2">
                                 {{ $lowongan->durasimagang }}
@@ -97,20 +92,18 @@
                         </li>
                     </ul>
                     <ul style="padding: 0 0 0 20px; !important">
-                        {{-- @foreach ($prodi as $p) --}}
+                        @foreach ($prodi as $p)
                         <li class="list-group-item d-flex align-items-start fw-semibold"
                             style="margin-top: 15px !important">
                             <i class="ti ti-school me-2"></i>
                             <div>
                                 Bidang
                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                    {{-- <li> {{ $p->prodi }}</li> --}}
-                                    <li>Sistem Informasi</li>
-                                    <li>Teknik Komputer</li>
+                                    <li> {{ $p->namaprodi }}</li>
                                 </ul>
                             </div>
                         </li>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -121,15 +114,19 @@
             <ul class="job-description"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <p id="deskripsi" name="deskripsi">
-                    <li>
-                       {{ $lowongan->deskripsi }} <p>
-                    </li>
+                    @php
+                        $deskripsi = nl2br($lowongan->deskripsi);
+                        $desc = explode('<br />', $deskripsi);
+                    @endphp
+                    @foreach ($desc as $d)
+                        <li>
+                            {{ $d }}
+                        </li>
+                    @endforeach
                     <span class="content-new mb-0"></span>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                     </u>
-
-
                 </p>
             </ul>
         </div>
@@ -139,14 +136,19 @@
             <ul
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
                 <p id="kualifikasi" name="kualifikasi">
-                    <li>{{ $lowongan->requirements }}
-                    </li>
-                    {{-- <li> --}}
+                    @php
+                        $requirements = nl2br($lowongan->requirements);
+                        $req = explode('<br />', $requirements);
+                    @endphp
+                    @foreach ($req as $r)
+                        <li>
+                            {{ $r }}
+                        </li>
+                    @endforeach
                     <span class="content-new mb-0"></span>
                     <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                     </u>
-                    {{-- </li> --}}
                 </p>
             </ul>
         </div>
@@ -155,9 +157,17 @@
             <span class="fw-bold" style="font-size: 26px; color: #23314B; !important">Benefit</span>
             <ul id="benefit" name="benifit"
                 style="list-style-type: disc; padding-left: 20px; margin-top: 5px; padding-bottom: 30px; font-size: 15px; color: #23314B;">
-                <li>
-                    {{ $lowongan->benefitmagang }}
-                </li>
+                <p id="benefitmagang" name="benefitmagang">
+                    @php
+                        $benefitmagang = nl2br($lowongan->benefitmagang);
+                        $benefit = explode('<br />', $benefitmagang);
+                    @endphp
+                    @foreach ($benefit as $b)
+                        <li>
+                            {{ $b }}
+                        </li>
+                    @endforeach
+                </p>
             </ul>
         </div>
         </ul>
