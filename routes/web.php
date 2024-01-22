@@ -387,3 +387,11 @@ Route::get('magang-fakultas', function () {
 Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
 });
+
+Route::get('/logbook/mahasiswa', function () {
+    return view('company.logbook_mahasiswa.logbook');
+});
+
+Route::get('/logbook/detail', function () {
+    return view('company.logbook_mahasiswa.detail_logbook');
+});
