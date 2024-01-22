@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMandiri;
 use Yajra\DataTables\Facades\DataTables;
-
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
+use Exception;
 
 class KonfirmasiMandiriController extends Controller
 {
@@ -23,23 +23,42 @@ class KonfirmasiMandiriController extends Controller
     {
         $mandiri = PengajuanMandiri::all();
         $mahasiswa = Mahasiswa::all();
-        return view('mandiri.mahasiswa_mandiri.index', compact('mandiri','mahasiswa'));
+        return view('pengajuan_magang.mandiri.index', compact('mandiri','mahasiswa'));
     }
 
-    // public function show(Request $request)
-    // {
-    //     $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
+    public function store(Request $request)
+    {
+        try{
+            DB::beginTransaction();
+            $mandiri = PengajuanMandiri::create([
+            'tglpeng' => $request->tglpeng,
+            'nama_industri' => $request->nama_industri,
+            'posisi_magang' => $request->posisi_magang,
+            'jabatan' => $request->jabatan,
+            'alamat_industri' => $request->alamat_industri,
+            'nohp' => $request->nohp,
+            'email' => $request->email,
+            'startdate' => $request->startdate,
+            'enddate' => $request->enddate,
+            'status' => true,
+        ]);
         
-    //     if($request->type){
-    //         $mandiri = $mandiri->where('status', $request->type);
-    //     }
-       
+        return response()->json([
+            'error' => false,
+            'message' => 'Pengajuan successfully Created!',
+            'modal' => '#modalAjukan',
+        ]);
 
-    // return DataTables::of($mandiri->get())
-    //     ->addIndexColumn()
-    //     ->make(true);
-    // }
-
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    
     public function show($statusapprove)
     {
         // $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
