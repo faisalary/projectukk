@@ -9,10 +9,11 @@ use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use App\Models\LowonganMagang;
-use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
+use App\Models\Fakultas;
+use App\Models\ProgramStudi;
 
 class LowonganMagangController extends Controller
 {
@@ -30,7 +31,9 @@ class LowonganMagangController extends Controller
         ];
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi'));
+        $prodi = ProgramStudi::all();
+        $fakultas = Fakultas::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas'));
     }
 
     /**
@@ -41,7 +44,10 @@ class LowonganMagangController extends Controller
         $seleksi = SeleksiTahap::all();
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi'));
+        $fakultas = Fakultas::all();
+        $prodi = ProgramStudi::where('id_prodi')->get();
+        // $prodi->foreign('id_prodi')->references('id')->on('program_studi')->nullable();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas'));
     }
 
     /**
@@ -49,6 +55,7 @@ class LowonganMagangController extends Controller
      */
     public function store(LowonganMagangRequest $request)
     {
+        DB::beginTransaction();
         try {
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
@@ -67,18 +74,25 @@ class LowonganMagangController extends Controller
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
+                'id_fakultas' => $request->fakultas,
+                'fakultas' => $request->fakultas,
+                'id_prodi' => $request->prodi
             ]);
 
             $i = 0;
             foreach ((array) $request->mulai as $m) {
-                $seleksi = SeleksiTahap::create([
-                    'id_lowongan' => $lowongan->id_lowongan,
-                    'tgl_mulai' => $request->mulai[$i],
-                    'tgl_akhir' => $request->akhir[$i],
-                    'deskripsi' => $request->deskripsiseleksi[$i],
-                ]);
+                if ($m != null) {
+                    SeleksiTahap::create([
+                        'id_lowongan' => $lowongan->id_lowongan,
+                        'tgl_mulai' => $request->mulai[$i],
+                        'tgl_akhir' => $request->akhir[$i],
+                        'deskripsi' => $request->deskripsiseleksi[$i],
+                    ]);
+                }
                 $i++;
             }
+
+            DB::commit();
 
             return response()->json([
                 'error' => false,
@@ -86,6 +100,7 @@ class LowonganMagangController extends Controller
                 'url' => url('/kelola/lowongan')
             ]);
         } catch (Exception $e) {
+            DB::rollback();
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
@@ -105,8 +120,12 @@ class LowonganMagangController extends Controller
                 $lowongan->where("id_jenismagang", $request->jenismagang, $request->type);
             } else if ($request->lokasi != null) {
                 $lowongan->where("id_lokasi", $request->lokasi, $request->type);
+            } else if ($request->prodi != null) {
+                $lowongan->where("id_prodi", $request->prodi, $request->type);
+            } else if ($request->fakultas != null) {
+                $lowongan->where("id_fakultas", $request->fakultas, $request->type);
             }
-            $lowongan = $lowongan->with("jenismagang", "lokasi")->orderBy('id_jenismagang', 'desc')->get();
+            $lowongan = $lowongan->with("jenismagang", "lokasi", "prodi", "fakultas")->orderBy('id_jenismagang', 'desc')->get();
         }
 
         if (request()->type != 'total') {
@@ -129,7 +148,7 @@ class LowonganMagangController extends Controller
                 $color = ($row->status) ? "danger" : "success";
 
                 $btn = "<a href='" . url('kelola/lowongan/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
-                 <a href='" . url('kelola/lowongan/detail') . "' data-id='{$row->id_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                 <a href='" . url('kelola/lowongan/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
                  <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
@@ -149,16 +168,23 @@ class LowonganMagangController extends Controller
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
+        $prodi = ProgramStudi::all();
+        $fakultas = Fakultas::all();
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan', 'seleksi'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan', 'seleksi', 'prodi', 'fakultas'));
     }
 
-    public function detail()
+    public function detail($id)
     {
-        $lowongan = LowonganMagang::all();
-        $jenismagang = JenisMagang::all();
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi')->first();
         $lokasi = Lokasi::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan'));
+        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
+        $fakultas = Fakultas::all();
+        $prodi = ProgramStudi::all();
+        if (!$lowongan) {
+            return redirect()->route('lowongan-magang.index');
+        }
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lokasi', 'lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
     }
 
     /**
@@ -166,6 +192,7 @@ class LowonganMagangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         try {
             $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
@@ -185,20 +212,25 @@ class LowonganMagangController extends Controller
             $lowongan->enddate = $request->tanggalakhir;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan;
-            if($lowongan->save()){
-                $seleksi = SeleksiTahap::where('id_lowongan',$id)->delete();
+            $lowongan->id_prodi = $request->prodi;
+            $lowongan->id_fakultas = $request->fakultas;
+            if ($lowongan->save()) {
+                $seleksi = SeleksiTahap::where('id_lowongan', $id)->delete();
                 $i = 0;
                 foreach ((array) $request->mulai as $m) {
-                    $seleksi = SeleksiTahap::create([
-                        'id_lowongan' => $id,
-                        'tgl_mulai' => $request->mulai[$i],
-                        'tgl_akhir' => $request->akhir[$i],
-                        'deskripsi' => $request->deskripsiseleksi[$i],
-                    ]);
+                    if ($m != null) {
+                        SeleksiTahap::create([
+                            'id_lowongan' => $lowongan->id_lowongan,
+                            'tgl_mulai' => $request->mulai[$i],
+                            'tgl_akhir' => $request->akhir[$i],
+                            'deskripsi' => $request->deskripsiseleksi[$i],
+                        ]);
+                    }
                     $i++;
                 }
-
             }
+
+            DB::commit();
 
             return response()->json([
                 'error' => false,
@@ -207,6 +239,7 @@ class LowonganMagangController extends Controller
 
             ]);
         } catch (Exception $e) {
+            DB::rollback();
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
