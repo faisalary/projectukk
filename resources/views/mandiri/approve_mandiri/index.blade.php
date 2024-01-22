@@ -25,7 +25,7 @@
                     <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending"
                         aria-selected="true">
-                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Pending                       
+                        <i class="tf-icons ti ti-clock ti-xs me-1"></i> Pending
                     </button>
                 </li>
                 <li class="nav-item">
@@ -53,7 +53,7 @@
                                     <th style="min-width: 100px;">DATA MAHASISWA</th>
                                     <th>PROGRAM STUDI</th>
                                     <th style="min-width: 120px;">POSISI MAGANG</th>
-                                    <th>TANGGAL MAGANG</th>
+                                    <th style="min-width: 120px;">TANGGAL MAGANG</th>
                                     <th>NAMA PERUSAHAAN</th>
                                     <th>JABATAN YANG DITUJU</th>
                                     <th>KONTAK PERUSAHAAN</th>
@@ -74,7 +74,7 @@
                                     <th style="min-width: 100px;">DATA MAHASISWA</th>
                                     <th>PROGRAM STUDI</th>
                                     <th style="min-width: 120px;">POSISI MAGANG</th>
-                                    <th>TANGGAL MAGANG</th>
+                                    <th style="min-width: 120px;">TANGGAL MAGANG</th>
                                     <th>NAMA PERUSAHAAN</th>
                                     <th>JABATAN YANG DITUJU</th>
                                     <th>KONTAK PERUSAHAAN</th>
@@ -94,7 +94,7 @@
                                     <th style="min-width: 100px;">DATA MAHASISWA</th>
                                     <th>PROGRAM STUDI</th>
                                     <th style="min-width: 120px;">POSISI MAGANG</th>
-                                    <th>TANGGAL MAGANG</th>
+                                    <th style="min-width: 120px;">TANGGAL MAGANG</th>
                                     <th>NAMA PERUSAHAAN</th>
                                     <th>JABATAN YANG DITUJU</th>
                                     <th>KONTAK PERUSAHAAN</th>
@@ -135,7 +135,7 @@
                 },
                 {
                     data: null,
-                    name: 'combined_column',
+                    name: 'combined_column1',
                     render: function(data, type, row) {
                         return data.mahasiswa.prodi.namaprodi;
                     }
@@ -145,16 +145,35 @@
                     name: 'posisi_magang'
                 },
                 {
-                    data: 'penanggung_jawab',
-                    name: 'penanggung_jawab'
+                    data: null,
+                    name: 'tanggal_magang',
+                    render: function(data, type, row) { 
+                        var startDate = new Date(data.startdate);
+                        var endDate = new Date(data.enddate);
+                        var formattedStartDate = startDate.toISOString().split('T')[0];
+                        var formattedEndDate = endDate.toISOString().split('T')[0];
+                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
+                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
+                    }
                 },
                 {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
+                    data: 'nama_industri',
+                    name: 'nama_industri'
                 },
                 {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
+                    data: 'jabatan',
+                    name: 'jabatan'
+                },
+                {
+                    data: null,
+                    name: 'kontak_perusahaan',
+                    render: function(data, type, row) {
+                        return data.email + '<br>' + data.nohp;
+                    }
+                },
+                {
+                    data: 'alamat_industri',
+                    name: 'alamat_industri'
                 },
                 {
                     data: 'aksi',
@@ -176,39 +195,55 @@
             columns: [{
                     data: 'DT_RowIndex'
                 },
-
                 {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
+                    data: null,
+                    name: 'combined_column',
+                    render: function(data, type, row) {
+                        return data.mahasiswa.namamhs + '<br>' + data.mahasiswa.nim;
+                    }
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: null,
+                    name: 'combined_column1',
+                    render: function(data, type, row) {
+                        return data.mahasiswa.prodi.namaprodi;
+                    }
                 },
                 {
-                    data: 'notelpon',
-                    name: 'notelpon'
+                    data: 'posisi_magang',
+                    name: 'posisi_magang'
                 },
                 {
-                    data: 'penanggung_jawab',
-                    name: 'penanggung_jawab'
+                    data: null,
+                    name: 'tanggal_magang',
+                    render: function(data, type, row) { 
+                        var startDate = new Date(data.startdate);
+                        var endDate = new Date(data.enddate);
+                        var formattedStartDate = startDate.toISOString().split('T')[0];
+                        var formattedEndDate = endDate.toISOString().split('T')[0];
+                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
+                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
+                    }
                 },
                 {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
+                    data: 'nama_industri',
+                    name: 'nama_industri'
                 },
                 {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
+                    data: 'jabatan',
+                    name: 'jabatan'
                 },
                 {
-                    data: 'alamatindustri',
-                    name: 'alamatindustri'
+                    data: null,
+                    name: 'kontak_perusahaan',
+                    render: function(data, type, row) {
+                        return data.email + '<br>' + data.nohp;
+                    }
                 },
                 {
-                    data: 'description',
-                    name: 'description'
-                },
+                    data: 'alamat_industri',
+                    name: 'alamat_industri'
+                }
             ]
         });
     </script>
@@ -224,58 +259,74 @@
             columns: [{
                     data: 'DT_RowIndex'
                 },
-
                 {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
+                    data: null,
+                    name: 'combined_column',
+                    render: function(data, type, row) {
+                        return data.mahasiswa.namamhs + '<br>' + data.mahasiswa.nim;
+                    }
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: null,
+                    name: 'combined_column1',
+                    render: function(data, type, row) {
+                        return data.mahasiswa.prodi.namaprodi;
+                    }
                 },
                 {
-                    data: 'notelpon',
-                    name: 'notelpon'
+                    data: 'posisi_magang',
+                    name: 'posisi_magang'
                 },
                 {
-                    data: 'alamatindustri',
-                    name: 'alamatindustri'
+                    data: null,
+                    name: 'tanggal_magang',
+                    render: function(data, type, row) { 
+                        var startDate = new Date(data.startdate);
+                        var endDate = new Date(data.enddate);
+                        var formattedStartDate = startDate.toISOString().split('T')[0];
+                        var formattedEndDate = endDate.toISOString().split('T')[0];
+                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
+                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
+                    }
                 },
                 {
-                    data: 'description',
-                    name: 'description'
+                    data: 'nama_industri',
+                    name: 'nama_industri'
                 },
                 {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
+                    data: 'jabatan',
+                    name: 'jabatan'
                 },
                 {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
+                    data: null,
+                    name: 'kontak_perusahaan',
+                    render: function(data, type, row) {
+                        return data.email + '<br>' + data.nohp;
+                    }
                 },
                 {
-                    data: 'status',
-                    name: 'status'
+                    data: 'alamat_industri',
+                    name: 'alamat_industri'
                 }
             ]
         });
 
-        
+
 
         function approved(e) {
-            
-            $('#modalapprove').modal('show');
-            var approveUrl = '{{url("mandiri/status=approve/approved")}}/' + e.attr('data-id');
 
-            $('#approve-confirm-button').on('click', function () {
+            $('#modalapprove').modal('show');
+            var approveUrl = '{{ url("mandiri/approve-mandiri/approved") }}/' + e.attr('data-id');
+
+            $('#approve-confirm-button').on('click', function() {
 
                 $.ajax({
                     url: approveUrl,
                     type: "POST",
                     headers: {
-                        "X-CSRF-TOKEN" : "{{csrf_token()}}"
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (!response.error) {
                             alert('berhasil');
                         } else {
@@ -287,28 +338,32 @@
                 $('#modalapprove').modal('hide');
             });
         }
+
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url("mandiri/status=approve/rejected") }}/' + e.attr('data-id');
+            var rejectedUrl = '{{ url("mandiri/approve-mandiri/rejected") }}/' + e.attr('data-id');
 
-            $('#rejected-confirm-button').on('click', function () {
+            $('#rejected-confirm-button').on('click', function() {
                 var alasan = $('#alasan').val();
 
                 $.ajax({
                     url: rejectedUrl,
                     type: "POST",
-                    data: { alasan: alasan, _token: '{{ csrf_token() }}' },
+                    data: {
+                        alasan: alasan,
+                        _token: '{{ csrf_token() }}'
+                    },
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (!response.error) {
                             alert('berhasil');
                         } else {
                             alert('tidak berhasil');
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });

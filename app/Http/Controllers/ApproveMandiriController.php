@@ -34,7 +34,6 @@ class ApproveMandiriController extends Controller
     //         $mandiri = $mandiri->where('status', $request->type);
     //     }
        
-
     // return DataTables::of($mandiri->get())
     //     ->addIndexColumn()
     //     ->make(true);
@@ -42,8 +41,9 @@ class ApproveMandiriController extends Controller
 
     public function show($statusapprove)
     {
-        $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
-        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
+        // $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
+        // $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
+        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->where("statusapprove",$statusapprove)->orderBy('id_pengajuan', "asc")->get();
         
 
     return DataTables::of($mandiri)

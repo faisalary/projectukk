@@ -42,8 +42,8 @@ class KonfirmasiMandiriController extends Controller
 
     public function show($statusapprove)
     {
-        $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
-        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
+        // $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
+        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->where("statusapprove",$statusapprove)->orderBy('id_pengajuan', "asc")->get();
         
 
     return DataTables::of($mandiri)
@@ -96,5 +96,6 @@ class KonfirmasiMandiriController extends Controller
         $alasan = $request->input('alasan');
         return redirect()->back();
     }
+
 
 }
