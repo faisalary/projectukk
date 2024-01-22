@@ -14,6 +14,19 @@ jQuery(document).ready(function() {
             $('#tahap-lanjut-3').hide();
         }
     });
+	
+	$(document).ready(function() {
+		$(".content-new").hide();
+		$(".show_hide_new").on("click", function() {
+			var content = $(this).prev('.content-new');
+			content.slideToggle(100);
+			if ($(this).text().trim() == "Show more") {
+				$(this).text("Show less");
+			} else {
+				$(this).text("Show more");
+			}
+		});
+	});
 
 	$('input[name=gaji]').on('change', function() {
         if (this.value == "1") {
