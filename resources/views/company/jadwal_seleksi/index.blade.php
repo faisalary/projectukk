@@ -6,6 +6,12 @@
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -61,7 +67,8 @@
 @section('main')
     <div class="row">
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - 2023/2024 -
+            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - 2023/2024
+                -
                 Ganjil</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
@@ -132,11 +139,9 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap0">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="max-width:90px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
                                 <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
@@ -153,11 +158,9 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap1">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
+                                <th style="max-width:80px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
                                 <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
@@ -174,12 +177,10 @@
                     <table class="table table-jadwal-seleksi" id="table-jadwal-seleksi-tahap2">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th>TANGGAL PELAKSANAAN</th>
-                                <th style="min-width:100px;">PROGRESS</th>
+                                <th style="max-width:80px;">NOMOR</th>
+                                <th style="min-width:110px;">NAMA</th>
+                                <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
+                                <th style="min-width: 100px;">PROGRESS</th>
                                 <th style="min-width:100px;">STATUS</th>
                                 <th style="min-width:100px;">AKSI</th>
                             </tr>
@@ -245,7 +246,7 @@
                 }
             });
         }
-        const tahap = [0,1,2];
+        const tahap = [0, 1, 2];
         tahap.forEach((no) => {
             $('#table-jadwal-seleksi-tahap' + no).DataTable({
 
@@ -262,23 +263,23 @@
                 processing: true,
                 destroy: true,
                 columns: [{
-                        data: "id_seleksi_lowongan"
-                    },
-                    {
                         data: "DT_RowIndex"
                     },
                     {
-                        data: "id_pendaftaran",
-                        name: "id_pendaftaran"
+                        data: null,
+                        name: "id_pendaftaran",
+                        render: function(data, type, row) {
+                            return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' + (
+                                data.seleksi_status.pendaftaran.mahasiswa.nim);
+                        }
                     },
                     {
                         data: "start_date",
                         name: "mulai"
                     },
-                    // {
-                    //     data: "proses",
-                    //     name: "progress"
-                    // },
+                    {
+                        data: "progress",
+                    },
                     {
                         data: "status_seleksi"
                     },
@@ -293,4 +294,10 @@
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="../../app-assets/js/forms-pickers.js"></script>
 @endsection

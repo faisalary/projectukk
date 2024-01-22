@@ -8,18 +8,22 @@
              <div class="col-12 mb-2">
                  <div class="row">
                      <div class="mb-2">
-                         <label for="pelaksanaan" class="form-label">Pelaksanaan Seleksi</label>
-                         <select class="form-select select2" data-placeholder="Pilih Pelaksanaan Seleksi"
-                             id="pelaksanaanseleksi">
-                             <option value="Onsite">Onsite</option>
-                             <option value="Online">Online</option>
-                         </select>
+                         <label for="mulai" class="form-label">Tanggal Seleksi Mulai</label>
+                         <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
                      </div>
                  </div>
                  <div class="row">
                      <div class="mb-2">
-                         <label for="mulai" class="form-label">Tanggal Seleksi Mulai</label>
-                         <input class="form-control" type="date" value="0000-00-00" id="tanggalmulai">
+                         <label for="seleksi" class="form-label">Progress Seleksi</label>
+                         <select class="form-select select2" id="progressfilter" name="progress"
+                             data-placeholder="Pilih Status Seleksi">
+                             <option value="Sudah Seleksi Tahap 1">Sudah Seleksi Tahap 1</option>
+                             <option value="Belum Seleksi Tahap 1">Belum Seleksi Tahap 1</option>
+                             <option value="Sudah Seleksi Tahap 2">Sudah Seleksi Tahap 2</option>
+                             <option value="Belum Seleksi Tahap 2">Belum Seleksi Tahap 2</option>
+                             <option value="Sudah Seleksi Tahap 3">Sudah Seleksi Tahap 3</option>
+                             <option value="Belum Seleksi Tahap 3">Belum Seleksi Tahap 3</option>
+                         </select>
                      </div>
                  </div>
                  <div class="row">
@@ -60,30 +64,31 @@
                          <div class="col mb-2">
                              <label for="select2Disabled" class="form-label">Jenis Tahap</label>
                              <div class="position-relative">
-                                 <select id="select2Disabled" class="select2 form-select select2-hidden-accessible"
-                                     data-select2-id="select2Disabled" tabindex="-1" aria-hidden="true" disabled>
-                                     <option value="1">Tahap 1</option>
-                                     <option value="2">Option3</option>
-                                     <option value="3">Option4</option>
+                                 {{-- <select id="select2Disabled" class="select2 form-select select2-hidden-accessible"
+                                     data-select2-id="select2Disabled" tabindex="-1" aria-hidden="true" disabled> --}}
+                                     <select class="form-select select2" id="nama" name="id_pendaftaran"
+                                 data-placeholder="Pilih Jenis Tahap">
+                                     <option value="tahap1">Tahap 1</option>
+                                     <option value="tahap2">Option3</option>
+                                     <option value="tahap3">Option4</option>
                                  </select>
                              </div>
                          </div>
                      </div>
                      <div class="row">
                          <div class="col mb-2">
-                             <label for="flatpickr-multi" class="form-label">Jadwal Pelaksanaan</label>
-                             <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM"
-                                 id="flatpickr-multi" name="mulai" readonly="readonly">
-                         </div>
+                            <label for="flatpickr-range" class="form-label">Jadwal Pelaksanaan</label>
+                            <input type="text" class="form-control" name="mulai" placeholder="Jadwal Pelaksanaan" id="flatpickr-range" />
+                          </div>
                      </div>
                      <div class="row">
                          <div class="col mb-2 form-input">
                              <label for="seleksi" class="form-label">Subjek Email</label>
                              <select class="form-select select2" id="subjek" name="subjek"
                                  data-placeholder="Pilih Subjek Email">
-                                 <option value="Undangan Seleksi Tahap 1">Undangan Seleksi Tahap 1</option>
-                                 <option value="Undangan Seleksi Tahap 2">Undangan Seleksi Tahap 2</option>
-                                 <option value="Undangan Seleksi Tahap 3">Undangan Seleksi Tahap 3</option>
+                                 @foreach ($email as $e)
+                                     <option value="{{ $e->id_email_template }}">{{ $e->subject_email }}</option>
+                                 @endforeach
                              </select>
                              <div class="invalid-feedback"></div>
                          </div>
@@ -98,7 +103,7 @@
  </div>
 
  <!-- Modal Detail-->
- <div class="modal fade" id="modaldetail" tabindex="-1" aria-hidden="true">
+ {{-- <div class="modal fade" id="modaldetail" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
          <div class="modal-content">
              <div class="modal-header d-block border-bottom">
@@ -216,7 +221,7 @@
              </form>
          </div>
      </div>
- </div>
+ </div> --}}
 
  <!-- Modal Alert-->
  <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
