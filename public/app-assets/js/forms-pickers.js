@@ -52,7 +52,8 @@
   // Range
   if (typeof flatpickrRange != undefined) {
     flatpickrRange.flatpickr({
-      mode: 'range'
+      mode: 'range',
+      enableTime: true,
     });
   }
 

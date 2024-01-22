@@ -155,6 +155,33 @@
             // Ganti foto dengan sumber aset yang diinginkan
             document.getElementById('imgPreview').src = "{{ asset('storage/' . $industri->image) }}";
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.default-form');
+            const modalButton = document.getElementById('modal-button');
+
+            modalButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah tindakan default tombol submit
+
+                // Kirim formulir menggunakan AJAX
+                fetch(form.action, {
+                        method: 'PUT',
+                        body: new FormData(form)
+                    })
+                    .then(response => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data berhasil disimpan',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href =
+                                '{{ url('company/summary-profile') }}';
+                        });
+
+                    })
+            });
+        });
     </script>
 @endsection
 
