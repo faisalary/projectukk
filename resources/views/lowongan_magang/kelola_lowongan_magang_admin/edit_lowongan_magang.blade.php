@@ -125,7 +125,7 @@
                                             placeholder="Masukan Deskripsi Pekerjaan">{{ $lowongan->deskripsi }}</textarea>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev" disabled>
+                                        <button type="button" class="btn btn-label-secondary btn-prev" disabled>
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>
@@ -365,7 +365,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev">
+                                        <button type="button" class="btn btn-label-secondary btn-prev">
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>
@@ -507,7 +507,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev">
+                                        <button type="button" class="btn btn-label-secondary btn-prev">
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>

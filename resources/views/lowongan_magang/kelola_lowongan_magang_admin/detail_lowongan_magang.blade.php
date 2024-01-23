@@ -27,11 +27,11 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="d-flex items-center justify-content-start">
-                            <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt=""
+                            {{-- <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="" --}}
+                            <img src="{{ asset('storage/posts/'.$lowongan->industri?->image??'') }}" alt=""
                                 style="width: 150px; height: 90px; !important">
                             <div class="ms-5">
-                                <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">Human
-                                    Resources
+                                <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">{{$lowongan->industri?->namaindustri??''}}
                                 </p>
                                 <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
                             </div>
@@ -41,7 +41,7 @@
                     <div class="col-2 d-flex items-center justify-content-start">
                         <div class="w-auto">
                             <div class='text-center'>
-                                <div class='badge bg-label-success' style="width: 180px">Disetujui</div>
+                                <div class='badge bg-label-success' style="width: 180px">{{$lowongan->status}}</div>
                             </div>
                             <p class="mt-2" style="font-size: 22px; color: #4B465C !important"><b>Detail
                                     Pengajuan</b>
@@ -78,13 +78,12 @@
                         </li>
                     </ul>
                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
-                        @foreach ($lokasi as $l)
+                        
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-map-pin me-2">
-                                    {{ $l->kota }}
+                                    {{ $lowongan->lokasi->kota}}
                                 </i>
                             </li>
-                        @endforeach
                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                             <i class="ti ti-currency-dollar me-2">
                                 {{ $lowongan->nominal_salary }}

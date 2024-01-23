@@ -410,3 +410,7 @@ Route::get('/logbook/mahasiswa', function () {
 Route::get('/logbook/detail', function () {
     return view('company.logbook_mahasiswa.detail_logbook');
 });
+
+Route::get('/lowongan/detail', function () {
+    return view('company.lowongan.detail');
+});

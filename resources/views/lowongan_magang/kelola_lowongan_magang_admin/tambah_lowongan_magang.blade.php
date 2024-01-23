@@ -196,7 +196,7 @@
                                         <div class="col-lg-12 col-sm-6">
                                             <label for="select2Disabled" class="form-label">Prodi<span
                                                     class="text-danger">*</span></label>
-                                            <select id="select2Disabled" class="select2 form-select" disabled>
+                                            <select name="id_prodi" id="select2Disabled" class="select2 form-select" disabled>
                                                 <option value="1"selected>Pilih Prodi</option>
                                             </select>
                                         </div>
@@ -207,10 +207,10 @@
                                             class="text-danger">*</span></label>
                                     <select name="keterampilan" id="keterampilan" multiple="multiple"
                                         class="select2-multiple form-select" data-placeholder="Pilih Keterampilan">
-                                        <option value="PostgreSQL">Figma</option>
-                                        <option value="Figma">Teamwork</option>
-                                        <option value="PHP Nativ">Leadership</option>
-                                        <option value="Sketch">Laravel</option>
+                                        <option value="Figma">Figma</option>
+                                        <option value="Teamwork">Teamwork</option>
+                                        <option value="Leadership">Leadership</option>
+                                        <option value="Laravel">Laravel</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-12 col-sm-6">

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
 use App\Models\Fakultas;
+use App\Models\Industri;
 use App\Models\ProgramStudi;
 
 class LowonganMagangController extends Controller
@@ -57,6 +58,12 @@ class LowonganMagangController extends Controller
     {
         DB::beginTransaction();
         try {
+            $industri = Industri::where('id_industri',auth()->user()->id_industri)->first();
+            $prodi = ProgramStudi::all();
+            $lokasi = Lokasi::create([
+                'kota' => $request->lokasi
+            ]);
+
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
                 'intern_position' => $request->posisi,
@@ -69,16 +76,16 @@ class LowonganMagangController extends Controller
                 'paid' => $request->gaji,
                 'nominal_salary' => $request->nominal,
                 'benefitmagang' => $request->benefit,
-                'id_lokasi' => $request->lokasi,
+                'id_industri' => $industri->id_industri,
+                'id_lokasi' => $lokasi->id_lokasi,
                 'startdate' => $request->tanggal,
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
                 'id_fakultas' => $request->fakultas,
                 'fakultas' => $request->fakultas,
-                'id_prodi' => $request->prodi
+                // 'id_prodi' => $prodi->id_prodi
             ]);
-
             $i = 0;
             foreach ((array) $request->mulai as $m) {
                 if ($m != null) {
@@ -91,7 +98,6 @@ class LowonganMagangController extends Controller
                 }
                 $i++;
             }
-
             DB::commit();
 
             return response()->json([
@@ -176,15 +182,14 @@ class LowonganMagangController extends Controller
 
     public function detail($id)
     {
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi')->first();
-        $lokasi = Lokasi::all();
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lokasi', 'lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
     }
 
     /**
@@ -194,6 +199,8 @@ class LowonganMagangController extends Controller
     {
         DB::beginTransaction();
         try {
+            // $lokasi = Lokasi::where('id_lokasi', $id)->first();
+            // $prodi = ProgramStudi::where('id_prodi', $id)->first();
             $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
             $lowongan->id_jenismagang = $request->id_jenismagang;
@@ -207,12 +214,12 @@ class LowonganMagangController extends Controller
             $lowongan->paid = $request->gaji;
             $lowongan->nominal_salary = $request->nominal;
             $lowongan->benefitmagang = $request->benefit;
-            $lowongan->id_lokasi = $request->lokasi;
+            $lowongan->id_lokasi = $request->id_lokasi;
             $lowongan->startdate = $request->tanggal;
             $lowongan->enddate = $request->tanggalakhir;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan;
-            $lowongan->id_prodi = $request->prodi;
+            // $lowongan->id_prodi = $request->id_prodi;
             $lowongan->id_fakultas = $request->fakultas;
             if ($lowongan->save()) {
                 $seleksi = SeleksiTahap::where('id_lowongan', $id)->delete();
