@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
 use App\Models\Fakultas;
+use App\Models\Industri;
 use App\Models\ProgramStudi;
 
 class LowonganMagangController extends Controller
@@ -33,7 +34,8 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas'));
+        $industri = Industri::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
     }
 
     /**
@@ -46,8 +48,8 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
-        // $prodi->foreign('id_prodi')->references('id')->on('program_studi')->nullable();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas'));
+        // $industri = Industri::where('id_industri')->get();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas','industri'));
     }
 
     /**
@@ -76,7 +78,8 @@ class LowonganMagangController extends Controller
                 'tahapan_seleksi' => $request->tahapan,
                 'id_fakultas' => $request->fakultas,
                 'fakultas' => $request->fakultas,
-                'id_prodi' => $request->prodi
+                'id_prodi' => $request->prodi,
+                // 'id_industri' => $request->industri
             ]);
 
             $i = 0;
