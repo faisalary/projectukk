@@ -52,7 +52,7 @@
                  <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
-             <form class="alert" method="POST" action="{{ url('jadwal-seleksi/store') }}">
+             <form class="alert" method="POST" action="{{ url('jadwal-seleksi/lanjutan/store') }}">
                  @csrf
                  <div class="modal-body">
                      <div class="row">

@@ -91,6 +91,7 @@
             <div class="row">
                 <div class="col-6">
                     <ul class="nav nav-pills mb-3 " role="tablist">
+                       @if ($pendaftaran->lowongan_magang->tahapan_seleksi)
                         <li class="nav-item" style="font-size: small;">
                             <button type="button" class="nav-link active showSingle" target="2" role="tab"
                                 data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
@@ -118,6 +119,7 @@
                                     style="background-color: #DCEEE3; color: #4EA971;"></span>
                             </button>
                         </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-6 text-end">
@@ -171,14 +173,14 @@
             $("#modal-button").html("Save Data");
             $('#modalTambahJadwal form')[0].reset();
             $('#modalTambahJadwal form #nama').val('').trigger('change');
-            $('#modalTambahJadwal form').attr('action', "{{ url('jadwal-seleksi/store') }}");
+            $('#modalTambahJadwal form').attr('action', "{{ url('jadwal-seleksi/lanjutan/store') }}");
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
         });
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('jadwal-seleksi/show') }}?type=" + idElement;
+            let url = "{{ url('jadwal-seleksi/lanjutan/show') }}?type=" + idElement;
             if ($(this).attr('id') == null) return;
 
             $(this).DataTable({
@@ -252,7 +254,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/jadwal-seleksi/update/' + id,
+                url: '/jadwal-seleksi/lanjutan/update/' + id,
                 success: function(data) {
                     if (data.error) {
                         Swal.fire({

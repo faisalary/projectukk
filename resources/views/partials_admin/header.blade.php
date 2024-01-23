@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../../app-assets/" data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-assets-path="../../../app-assets/" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
     @yield('meta_header')
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Talentern</title>
 
@@ -17,7 +19,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
 
     <!-- Icons -->
     <link rel="stylesheet" href="../../../app-assets/vendor/fonts/fontawesome.css" />
@@ -26,7 +30,8 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../../app-assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../../app-assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../../app-assets/vendor/css/rtl/theme-default.css"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../../../app-assets/css/demo.css" />
 
     <!-- Vendors CSS -->
@@ -37,7 +42,8 @@
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/swiper/swiper.css" />
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-    <link rel="stylesheet" href="../../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+    <link rel="stylesheet"
+        href="../../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/select2/select2.css" />
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
     <link rel="stylesheet" href="../../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -150,12 +156,13 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            {{-- <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" />
                                 <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
                                 <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" />
-                            </svg>
+                            </svg> --}}
+                            <img src="{{ url('/app-assets/img/logo.png') }}">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">
                             <img src="{{ url('/app-assets/img/Talentern.svg') }}">
@@ -173,271 +180,293 @@
                 <!-- Admin -->
 
                 @can('slidebar.lkm')
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Admin</span>
-                </li>
-                <ul class="menu-inner py-1">
-                    <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
-                            <div data-i18n="Dashboards">Dashboards</div>
-                        </a>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Admin</span>
                     </li>
+                    <ul class="menu-inner py-1">
+                        <!-- Dashboards -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                                <div data-i18n="Dashboards">Dashboards</div>
+                            </a>
+                        </li>
 
-                    <!-- Kelola Mitra -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola-mitra' ? 'active' : '' }} @endif">
-                        <a href="/company/kelola-mitra" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-building"></i>
-                            <div data-i18n="Kelola Mitra">Kelola Mitra</div>
-                        </a>
-                    </li>
+                        <!-- Kelola Mitra -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola-mitra' ? 'active' : '' }} @endif">
+                            <a href="/company/kelola-mitra" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                <div data-i18n="Kelola Mitra">Kelola Mitra</div>
+                            </a>
+                        </li>
 
-                    <!-- Lowongan Magang -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-briefcase"></i>
-                            <div data-i18n="Lowongan Magang">Lowongan Magang</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
-                                <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
-                                    <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <!-- Lowongan Magang -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-briefcase"></i>
+                                <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('mitra.index') }}" class="menu-link">
+                                        <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
+                                        <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <!-- Data Kandidat -->
-                     <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
-                        <a href="" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-fakultas') }}" class="menu-link">
-                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-mandiri') }}" class="menu-link">
-                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
-                                </a>
-                            </li>        
-                        </ul>
-                    </li>
-                   
-                    <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
-                        <a href="/seleksi/lanjutan" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
-                        </a>
-                    </li>
+                        <!-- Data Kandidat -->
+                        <li
+                            class="menu-item {{ request()->is('magang-fakultas*') || request()->is('magang-mandiri*') ? 'active open' : '' }}">
+                            <a href="" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
+                                    <a href="{{ url('magang-fakultas') }}" class="menu-link">
+                                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
+                                    <a href="{{ url('magang-mandiri') }}" class="menu-link">
+                                        <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <!-- Kelola Pengguna -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
-                        </a>
-                    </li>
+                        <!-- Jadwal Seleksi -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                            <a href="/seleksi/lanjutan" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-clock"></i>
+                                <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
+                            </a>
+                        </li>
+
+                        <!-- Kelola Pengguna -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            </a>
+                        </li>
 
 
-                    <!-- Master Data -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-database"></i>
-                            <div data-i18n="Master Data">Master Data</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
-                                <a href="{{ route('universitas.index') }}" class="menu-link">
-                                    <div data-i18n="Master Universitas">Master Universitas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_fakultas' ? 'active' : '' }} @endif">
-                                <a href="{{ route('fakultas.index') }}" class="menu-link">
-                                    <div data-i18n="Master Fakultas">Master Fakultas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-prodi' ? 'active' : '' }} @endif">
-                                <a href=/master/prodi class="menu-link">
-                                    <div data-i18n="Master Prodi">Master Prodi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
-                                <a href="{{ route('thn-akademik.index') }}" class="menu-link">
-                                    <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-jenis-magang' ? 'active' : '' }} @endif">
-                                <a href=/master/jenis-magang class="menu-link">
-                                    <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
-                                </a>
-                            </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
-                                <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Master Industri">Master Industri</div>
-                                </a>
-                            </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>
-                                <a href="{{ route('dosen.index') }}" class="menu-link">
-                                    <div data-i18n="Master Dosen">Master Dosen</div>
-                                </a>
-                            </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mahasiswa' ? 'active' : '' }} @endif>
-                                <a href="{{ route('mahasiswa.index') }}" class="menu-link">
-                                    <div data-i18n="Master Mahasiswa">Master Mahasiswa</div>
-                                </a>
-                            </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-pegawai-industri' ? 'active' : '' }} @endif>
-                                <a href="{{ route('pegawaiindustri.index') }}" class="menu-link">
-                                    <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
-                                <a href="{{ route('nilai-mutu.index') }}" class="menu-link">
-                                    <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
-                                    <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ route('doc-syarat.index') }}" class="menu-link">
-                                    <div data-i18n="Dokumen Persyaratan">Dokumen Persyaratan</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <!-- Master Data -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-database"></i>
+                                <div data-i18n="Master Data">Master Data</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('universitas.index') }}" class="menu-link">
+                                        <div data-i18n="Master Universitas">Master Universitas</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_fakultas' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('fakultas.index') }}" class="menu-link">
+                                        <div data-i18n="Master Fakultas">Master Fakultas</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-prodi' ? 'active' : '' }} @endif">
+                                    <a href=/master/prodi class="menu-link">
+                                        <div data-i18n="Master Prodi">Master Prodi</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('thn-akademik.index') }}" class="menu-link">
+                                        <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-jenis-magang' ? 'active' : '' }} @endif">
+                                    <a href=/master/jenis-magang class="menu-link">
+                                        <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item"
+                                    @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
+                                    <a href="{{ route('mitra.index') }}" class="menu-link">
+                                        <div data-i18n="Master Industri">Master Industri</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item"
+                                    @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>
+                                    <a href="{{ route('dosen.index') }}" class="menu-link">
+                                        <div data-i18n="Master Dosen">Master Dosen</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item"
+                                    @if (!empty($active_menu)) {{ $active_menu == 'master_mahasiswa' ? 'active' : '' }} @endif>
+                                    <a href="{{ route('mahasiswa.index') }}" class="menu-link">
+                                        <div data-i18n="Master Mahasiswa">Master Mahasiswa</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item"
+                                    @if (!empty($active_menu)) {{ $active_menu == 'master-pegawai-industri' ? 'active' : '' }} @endif>
+                                    <a href="{{ route('pegawaiindustri.index') }}" class="menu-link">
+                                        <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('nilai-mutu.index') }}" class="menu-link">
+                                        <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('komponen-penilaian.index') }}" class="menu-link">
+                                        <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('doc-syarat.index') }}" class="menu-link">
+                                        <div data-i18n="Dokumen Persyaratan">Dokumen Persyaratan</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="menu-item">
-                        <a href="{{ url('/konfigurasi') }}" class="menu-link">
-                            <i class="ti ti-user"></i>
-                            <div data-i18n="Konfigurasi">Konfigurasi</div>
-                        </a>
-                    </li>
+                        <li class="menu-item">
+                            <a href="{{ url('/konfigurasi') }}" class="menu-link">
+                                <i class="ti ti-user"></i>
+                                <div data-i18n="Konfigurasi">Konfigurasi</div>
+                            </a>
+                        </li>
 
-                    <!-- Pengaturan -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-settings"></i>
-                            <div data-i18n="Pengaturan">Pengaturan</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Profil Saya">Profil Saya</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Pengaturan Bahasa">Pengaturan Bahasa</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link ">
-                                    <i class="menu-icon tf-icons ti ti-file"></i>
-                                    <div data-i18n="Pengaturan Tema">Pengaturan Tema</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="javascript:void(0);" class="menu-link ">
-                                    <i class="menu-icon tf-icons ti ti-lock"></i>
-                                    <div data-i18n="Pengaturan Email">Pengaturan Email</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        <!-- Pengaturan -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-settings"></i>
+                                <div data-i18n="Pengaturan">Pengaturan</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item">
+                                    <a href="" class="menu-link">
+                                        <div data-i18n="Profil Saya">Profil Saya</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="" class="menu-link">
+                                        <div data-i18n="Pengaturan Bahasa">Pengaturan Bahasa</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="javascript:void(0);" class="menu-link ">
+                                        <i class="menu-icon tf-icons ti ti-file"></i>
+                                        <div data-i18n="Pengaturan Tema">Pengaturan Tema</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="javascript:void(0);" class="menu-link ">
+                                        <i class="menu-icon tf-icons ti ti-lock"></i>
+                                        <div data-i18n="Pengaturan Email">Pengaturan Email</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 @endcan
 
 
                 <!-- Mitra -->
                 @can('slidebar.mitra')
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Mitra</span>
-                </li>
-                <ul class="menu-inner py-2">
-                    <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
-                            <div data-i18n="Dashboards">Dashboards</div>
-                        </a>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Mitra</span>
                     </li>
+                    <ul class="menu-inner py-2">
+                        <!-- Dashboards -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                                <div data-i18n="Dashboards">Dashboards</div>
+                            </a>
+                        </li>
 
-                    <!-- Lowongan Magang -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-briefcase"></i>
-                            <div data-i18n="Lowongan Magang">Lowongan Magang</div>
-                        </a>
+                        <!-- Lowongan Magang -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-briefcase"></i>
+                                <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                            </a>
 
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
-                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index')}}" class="menu-link">
-                                    <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                            <ul class="menu-sub">
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
+                                    <a href="{{ url('informasi/lowongan', Auth::user()->id_industri) }}"
+                                        class="menu-link">
+                                        <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    </a>
+                                </li>
+                                <li
+                                    class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                                    <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
+                                        <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
-                        <a href="/anggota/tim" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Anggota Tim">Anggota Tim</div>
-                        </a>
-                    </li>
+                        <!-- Anggota Tim -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                            <a href="/anggota/tim" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Anggota Tim">Anggota Tim</div>
+                            </a>
+                        </li>
 
-                    <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi' ? 'active' : '' }} @endif">
-                        <a href="/jadwal-seleksi" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
-                        </a>
-                    </li>
+                        <!-- Jadwal Seleksi -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi/lowongan/' ? 'active' : '' }} @endif">
+                            <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-clock"></i>
+                                <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
+                            </a>
+                        </li>
 
-                    <!-- Profile Perusahaan -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
-                        <a href="/profile-company" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-building"></i>
-                            <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
-                        </a>
-                    </li>
+                        <!-- Profile Perusahaan -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
+                            <a href="/profile-company" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
+                            </a>
+                        </li>
 
-                    <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                        </a>
-                    </li>
+                        <!-- Logbook Mahasiswa -->
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
+                            </a>
+                        </li>
 
-                    <!-- Master Data -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
-                        <a href="/master-data-email" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-database"></i>
-                            <div data-i18n="Master Data Email">Master Data Email</div>
-                        </a>
-                    </li>
+                        <!-- Master Data -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
+                            <a href="/master-data-email" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-database"></i>
+                                <div data-i18n="Master Data Email">Master Data Email</div>
+                            </a>
+                        </li>
 
-                </ul>
+                    </ul>
                 @endcan
             </aside>
 
@@ -447,7 +476,8 @@
             <div class="layout-page">
                 <!-- Navbar -->
 
-                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar">
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="ti ti-menu-2 ti-sm"></i>
@@ -469,7 +499,8 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Language -->
                             <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown">
                                     <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -511,14 +542,17 @@
 
                             <!-- Quick links  -->
                             <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <i class="ti ti-layout-grid-add ti-md"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end py-0">
                                     <div class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
                                             <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
-                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
+                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
                                         </div>
                                     </div>
                                     <div class="dropdown-shortcuts-list scrollable-container">
@@ -567,7 +601,8 @@
                                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                                     <i class="ti ti-settings fs-4"></i>
                                                 </span>
-                                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
+                                                <a href="pages-account-settings-account.html"
+                                                    class="stretched-link">Setting</a>
                                                 <small class="text-muted mb-0">Account Settings</small>
                                             </div>
                                         </div>
@@ -595,7 +630,8 @@
 
                             <!-- Notification -->
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <i class="ti ti-bell ti-md"></i>
                                     <span class="badge bg-danger rounded-pill badge-notifications">5</span>
                                 </a>
@@ -603,16 +639,20 @@
                                     <li class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
                                             <h5 class="text-body mb-0 me-auto">Notification</h5>
-                                            <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read"><i class="ti ti-mail-opened fs-4"></i></a>
+                                            <a href="javascript:void(0)" class="dropdown-notifications-all text-body"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Mark all as read"><i class="ti ti-mail-opened fs-4"></i></a>
                                         </div>
                                     </li>
                                     <li class="dropdown-notifications-list scrollable-container">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="../../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                                                            <img src="../../../app-assets/img/avatars/1.png" alt
+                                                                class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -621,16 +661,22 @@
                                                         <small class="text-muted">1h ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <span class="avatar-initial rounded-circle bg-label-danger">CF</span>
+                                                            <span
+                                                                class="avatar-initial rounded-circle bg-label-danger">CF</span>
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -639,16 +685,22 @@
                                                         <small class="text-muted">12hr ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="../../../app-assets/img/avatars/2.png" alt class="h-auto rounded-circle" />
+                                                            <img src="../../../app-assets/img/avatars/2.png" alt
+                                                                class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -657,16 +709,23 @@
                                                         <small class="text-muted">1h ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <span class="avatar-initial rounded-circle bg-label-success"><i class="ti ti-shopping-cart"></i></span>
+                                                            <span
+                                                                class="avatar-initial rounded-circle bg-label-success"><i
+                                                                    class="ti ti-shopping-cart"></i></span>
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -675,16 +734,22 @@
                                                         <small class="text-muted">1 day ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="../../../app-assets/img/avatars/9.png" alt class="h-auto rounded-circle" />
+                                                            <img src="../../../app-assets/img/avatars/9.png" alt
+                                                                class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -695,16 +760,23 @@
                                                         <small class="text-muted">2 days ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <span class="avatar-initial rounded-circle bg-label-success"><i class="ti ti-chart-pie"></i></span>
+                                                            <span
+                                                                class="avatar-initial rounded-circle bg-label-success"><i
+                                                                    class="ti ti-chart-pie"></i></span>
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -714,16 +786,22 @@
                                                         <small class="text-muted">3 days ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="../../../app-assets/img/avatars/5.png" alt class="h-auto rounded-circle" />
+                                                            <img src="../../../app-assets/img/avatars/5.png" alt
+                                                                class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -732,16 +810,22 @@
                                                         <small class="text-muted">4 days ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="../../../app-assets/img/avatars/6.png" alt class="h-auto rounded-circle" />
+                                                            <img src="../../../app-assets/img/avatars/6.png" alt
+                                                                class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -750,16 +834,23 @@
                                                         <small class="text-muted">5 days ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                            <li
+                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <span class="avatar-initial rounded-circle bg-label-warning"><i class="ti ti-alert-triangle"></i></span>
+                                                            <span
+                                                                class="avatar-initial rounded-circle bg-label-warning"><i
+                                                                    class="ti ti-alert-triangle"></i></span>
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -770,15 +861,20 @@
                                                         <small class="text-muted">5 days ago</small>
                                                     </div>
                                                     <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ti ti-x"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"><span
+                                                                class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-menu-footer border-top">
-                                        <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
+                                        <a href="javascript:void(0);"
+                                            class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
                                             View all notifications
                                         </a>
                                     </li>
@@ -788,16 +884,19 @@
 
                             <!-- User -->
                             @php
-                            $user = Auth::user();
+                                $user = Auth::user();
                             @endphp
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                    data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-   
-                                        @if($user->roles[0]->name == 'superadmin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+
+                                        @if ($user->roles[0]->name == 'superadmin')
+                                            <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}"
+                                                alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                            <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}"
+                                                alt class="h-auto rounded-circle" />
                                         @endif
                                     </div>
                                 </a>
@@ -807,15 +906,18 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        @if($user->roles[0]->name == 'superadmin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                                        @if ($user->roles[0]->name == 'superadmin')
+                                                            <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}"
+                                                                alt class="h-auto rounded-circle" />
                                                         @elseif($user->roles[0]->name == 'admin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}"
+                                                                alt class="h-auto rounded-circle" />
                                                         @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
+                                                    <span
+                                                        class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
                                                     <small class="text-muted">{{ ucwords($user->email) }}</small>
                                                 </div>
                                             </div>
@@ -841,7 +943,8 @@
                                             <span class="d-flex align-items-center align-middle">
                                                 <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
                                                 <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
+                                                <span
+                                                    class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
                                             </span>
                                         </a>
                                     </li>
@@ -870,7 +973,8 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            href="{{ route('logout') }}">
                                             <i class="ti ti-logout me-2 ti-sm"></i>
                                             <span class="align-middle">Logout</span>
                                         </a>
@@ -883,7 +987,8 @@
 
                     <!-- Search Small Screens -->
                     <div class="navbar-search-wrapper search-input-wrapper d-none">
-                        <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..." aria-label="Search..." />
+                        <input type="text" class="form-control search-input container-xxl border-0"
+                            placeholder="Search..." aria-label="Search..." />
                         <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
                     </div>
                 </nav>
@@ -894,11 +999,13 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <!-- Modal Delete-->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                        aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
 
                                     </button>
                                 </div>
@@ -906,8 +1013,10 @@
                                     Apakah Anda Ingin Keluar Dari Akun Ini?
                                 </div>
                                 <div class="modal-footer" style="display: flex; justify-content:center;">
-                                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success"
+                                            data-dismiss="modal">Iya</button></a>
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">Tidak</button>
                                 </div>
                             </div>
                         </div>

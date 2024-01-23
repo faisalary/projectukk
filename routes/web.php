@@ -304,15 +304,18 @@ Route::get('/detail-informasi-dokumen', function () {
 //     return view('company.summary_profile');
 // });
 
-Route::prefix('jadwal-seleksi')->group(function () {
-    Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
-    Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-    Route::get('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-    Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
-    Route::get('/detail', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
+Route::prefix('jadwal-seleksi/')->group(function () {
+    Route::prefix('lowongan/{id_industri}')->group(function () {
+        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
+    });
+    Route::prefix('lanjutan/{id_lowongan}')->group(function () {
+        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+        Route::get('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+        Route::get('/detail', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+        Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
+    });
 });
 
 Route::get('/detail/lowongan/magang', function () {
@@ -377,3 +380,4 @@ Route::get('magang-fakultas', function () {
 Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
 });
+Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

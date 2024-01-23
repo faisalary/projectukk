@@ -24,7 +24,7 @@ class JadwalSeleksiController extends Controller
         return view('company.jadwal_seleksi.jadwal', compact('seleksi'));
     }
 
-    public function index()
+    public function index(Request $request, $id)
     {
         $pendaftaran = PendaftaranMagang::select('pendaftaran_magang.*', 'lowongan_magang.intern_position', 'mahasiswa.namamhs')->join('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')->where('lowongan_magang.intern_position', 'UI/UX Designer')->get();
         $mahasiswa = Mahasiswa::all();
@@ -108,7 +108,7 @@ class JadwalSeleksiController extends Controller
                 return $time;
             })
             ->editColumn('progress', function ($seleksi) {
-                return "<div class='col-md-12'>
+                return "<div class='col-md-12'>a
                     <div class='position-relative'>
                             <select class='form-select select2' onchange='progress($(this))' data-type='progress' data-id='" . $seleksi->id_seleksi_lowongan . "'>
                             <option value='0' " . ((isset($seleksi->seleksi_status->progress) && $seleksi->seleksi_status->progress == '0') ? "selected" : '') . ">Belum Seleksi</option>
@@ -128,7 +128,7 @@ class JadwalSeleksiController extends Controller
                 </div>";
             })
             ->addColumn('action', function ($seleksi) {
-                $btn = "<a href='" . url('jadwal-seleksi/detail') . "' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                $btn = "<a href='" . url('jadwal-seleksi//lanjutan/detail') . "' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
                 return $btn;
             })
             ->rawColumns(['status_seleksi', 'action', 'progress', 'start_date',])
