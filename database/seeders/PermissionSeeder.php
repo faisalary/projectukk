@@ -41,6 +41,7 @@ class PermissionSeeder extends Seeder
                     'can.view.data.table',
                     'title.info.lowongan.admin',
                     'ubah.lowongan.admin',
+                    'btn.edit.lowongan',
                     'role-list',
                     'role-create',
                     'role-edit',

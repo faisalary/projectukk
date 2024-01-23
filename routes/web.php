@@ -255,6 +255,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::put('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+            Route::post('/approved/{id}', [App\Http\Controllers\LowonganMagangController::class, 'approved'])->name('lowongan-magang.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\LowonganMagangController::class, 'rejected'])->name('lowongan-magang.rejected');
         });
     });
     

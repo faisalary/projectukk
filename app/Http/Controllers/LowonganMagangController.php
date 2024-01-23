@@ -77,7 +77,7 @@ class LowonganMagangController extends Controller
                 'nominal_salary' => $request->nominal,
                 'benefitmagang' => $request->benefit,
                 'id_industri' => $industri->id_industri,
-                'id_lokasi' => $lokasi->id_lokasi,
+                'id_lokasi' => $lokasi->kota,
                 'startdate' => $request->tanggal,
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
@@ -191,6 +191,43 @@ class LowonganMagangController extends Controller
         }
         return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
     }
+
+    public function approved($id)
+    {
+        try {
+            DB::beginTransaction(); 
+            $data = LowonganMagang::find($id);
+            
+
+            if (!$data) {
+                throw new \Exception('this Lowongan not found.');
+            }
+            $data->status = 1;
+            $data->save();
+            
+            DB::commit();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Persetujuan berhasil.',
+            ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return response()->json([
+                    'error' => true,
+                    'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function rejected($id, Request $request)
+    {
+        $data=LowonganMagang::find($id);
+        $data->status='2';
+        $data->save();
+        return redirect()->back();
+    }
+    
 
     /**
      * Update the specified resource in storage.

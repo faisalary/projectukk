@@ -21,6 +21,7 @@
             </h4>
         </div>
     </div>
+    <div class="d-flex">
     <div class="card" style="padding: 50px 30px; width: 100%; margin-right: 20px; !important">
         <div class="card-body" style=" border-bottom: 1px solid #D3D6DB;  !important">
             <div class="">
@@ -37,23 +38,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2"></div>
-                    <div class="col-2 d-flex items-center justify-content-start">
-                        <div class="w-auto">
-                            <div class='text-center'>
-                                <div class='badge bg-label-success' style="width: 180px">{{$lowongan->status}}</div>
+                    <div class="col-2 row justify-content-end">
+                        <div class="col-2 d-flex items-center justify-content-start">
+                            <div class="w-auto">
+                                <div class='text-center'>
+                                    <div class='badge bg-label-success' style="width: 180px">{{$lowongan->status}}</div>
+                                </div>
+                                <p class="mt-2" style="font-size: 22px; color: #4B465C !important"><b>Detail
+                                        Pengajuan</b>
+                                </p>
+                                <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
+                                    Pengajuan : <span class="fw-semibold">25/08/2020</span>
+                                </p>
+                                <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
+                                    Disetujui : <span class="fw-semibold">29/08/2020</span>
+                                </p>
                             </div>
-                            <p class="mt-2" style="font-size: 22px; color: #4B465C !important"><b>Detail
-                                    Pengajuan</b>
-                            </p>
-                            <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                Pengajuan : <span class="fw-semibold">25/08/2020</span>
-                            </p>
-                            <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                Disetujui : <span class="fw-semibold">29/08/2020</span>
-                            </p>
                         </div>
-
                     </div>
                 </div>
 
@@ -90,13 +91,14 @@
                             </i>
                         </li>
                     </ul>
+                    
                     <ul style="padding: 0 0 0 20px; !important">
                         @foreach ($prodi as $p)
                         <li class="list-group-item d-flex align-items-start fw-semibold"
                             style="margin-top: 15px !important">
                             <i class="ti ti-school me-2"></i>
                             <div>
-                                Bidang
+                                <p>Program Studi</p>
                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
                                     <li> {{ $p->namaprodi }}</li>
                                 </ul>
@@ -104,6 +106,7 @@
                         </li>
                         @endforeach
                     </ul>
+                    
                 </div>
             </div>
 
@@ -202,6 +205,61 @@
             </ul>
         </div>
     </div>
+    @can('btn.edit.lowongan')
+    <div style="width: 20%">
+        <button type="button" class="btn btn-label-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalapprove"
+            style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+            <i class="ti ti-file-check text-success" style="margin-right: 15px"></i><a href="">
+            Setujui
+        </button>
+        <button type="button" class="btn btn-label-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalreject"
+            style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+            <i class="ti ti-file-x text-danger" style="margin-right: 15px"></i><a href="">
+            Tolak
+        </button>
+    </div>
+    @endcan
+    </div>
+    <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+                    </button>
+                </div>
+                <div class="modal-body text-center" style="display:block;">
+                    Apakah Anda Yaking Menyetujui Lowongan
+                </div>
+                <div class="modal-footer" style="display: flex; justify-content:center;">
+                    <a class="btn btn-primary text-white" id="approve-confirm-button">Iya, Yakin</a>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block">
+                    <h5 class="modal-title" id="modalreject">Alasan Penolakan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="alasan" class="form-label">Alasan Penolakan</label>
+                            <textarea class="form-control" id="alasan" placeholder="Alasan Penolakan"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" id="rejected-confirm-button" class="btn btn-success">Kirim</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('page_script')
@@ -221,5 +279,64 @@
                 }
             });
         });
+
+
+        function approved(e) {
+            
+            $('#modalapprove').modal('show');
+            var approveUrl = '{{url("kelola/lowongan/approved")}}/' + e.attr('data-id');
+
+            $('#approve-confirm-button').on('click', function () {
+
+                $.ajax({
+                    url: approveUrl,
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN" : "{{csrf_token()}}"
+                    },
+                    success: function (response) {
+                        if (!response.error) {
+                            alert('berhasil');
+                        } else {
+                            alert('tidak berhasil');
+                        }
+                    }
+                });
+
+                $('#modalapprove').modal('hide');
+            });
+        }
+        
+        function rejected(e) {
+            $('#modalreject').modal('show');
+            var rejectedUrl = '{{ url("kelola/lowongan/rejected/") }}/' + e.attr('data-id');
+
+            $('#rejected-confirm-button').on('click', function () {
+                var alasan = $('#alasan').val();
+
+                $.ajax({
+                    url: rejectedUrl,
+                    type: "POST",
+                    data: { alasan: alasan, _token: '{{ csrf_token() }}' },
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function (response) {
+                        if (!response.error) {
+                            alert('berhasil');
+                        } else {
+                            alert('tidak berhasil');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+
+                $('#modalreject').modal('hide');
+            });
+        }
     </script>
+
+
 @endsection
