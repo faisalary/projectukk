@@ -21,15 +21,12 @@ class LowonganMagangRequest extends FormRequest
                 'posisi' => ['required', 'string','max:255'],
                 'kuota' => ['required', 'integer'],
                 'deskripsi' => ['required', 'string','max:255'],
-                // 'requirements' => ['required', 'text', 'max:255'],
-
             ];
         }
         return [
                 'posisi' => ['required', 'string','max:255'],
                 'kuota' => ['required', 'integer'],
                 'deskripsi' => ['required', 'string','max:255'],
-                // 'requirements' => ['required', 'text', 'max:255'],
         ];
     }
     public function messages(): array
@@ -38,7 +35,6 @@ class LowonganMagangRequest extends FormRequest
             'posisi.required' => 'Position must be filled',
             'kuota.required' => 'The kuota must be an integer.',
             'deskripsi.required' => 'Description must be filled',
-            // 'requirements.required' => 'Qualification must be filled',
         ];
     }
 }

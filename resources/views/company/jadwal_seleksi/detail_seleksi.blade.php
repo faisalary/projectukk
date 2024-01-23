@@ -74,7 +74,7 @@
                 electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
                 release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                 publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span> <u
-                onclick="myFunction()" id="myBtn" style="color:#4EA971">Lebih Banyak</u></p>
+                onclick="myFunction()" id="myBtn" style="color:#4EA971">Show more</u></p>
         <hr>
         
         <h4>Informasi Pribadi</h4>
@@ -86,7 +86,7 @@
                     electronic typesetting, remaining essentially unchanged.</p>
                 <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                 <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                  See more
+                  Show more
                 </u>
               </div>
             <div class="col-4 mt-3">
@@ -202,7 +202,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                              See more
+                              Show more
                             </u>
                         <div class="border-bottom mt-4"></div>
                     </div>
@@ -217,7 +217,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                              See more
+                              Show more
                             </u>
                         <div class="border-bottom mt-4"></div>
                     </div>
@@ -232,7 +232,7 @@
                                 it to </p>
                             <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                             <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                              See more
+                              Show more
                             </u>
                     </div>
                 </li>
@@ -257,7 +257,7 @@
             it to </p>
         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-          See more
+          Show more
         </u>
         <br>
         <u style="color: #0099FF">UI/UX Design.pdf</u>
@@ -269,7 +269,7 @@
             it to </p>
         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-          See more
+          Show more
         </u>
         <br>
         <u style="color: #0099FF">UI/UX Design.pdf</u>
@@ -328,11 +328,11 @@
 
             if (dots.style.display === "none") {
                 dots.style.display = "inline";
-                btnText.innerHTML = "Lebih Banyak";
+                btnText.innerHTML = "Show more";
                 moreText.style.display = "none";
             } else {
                 dots.style.display = "none";
-                btnText.innerHTML = "Lebih Sedikit";
+                btnText.innerHTML = "Show less";
                 moreText.style.display = "inline";
             }
         }
@@ -342,10 +342,10 @@
     $(".show_hide_new").on("click", function() {
       var content = $(this).prev('.content-new');
       content.slideToggle(100);
-      if ($(this).text().trim() == "See more") {
-        $(this).text("Lebih Sedikit");
+      if ($(this).text().trim() == "Show more") {
+        $(this).text("Show less");
       } else {
-        $(this).text("Lebih Banyak");
+        $(this).text("Show more");
       }
     });
   });

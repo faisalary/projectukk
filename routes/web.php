@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JadwalSeleksiController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
@@ -252,10 +253,19 @@ Route::middleware('auth')->group(function () {
             Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
             Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
             Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
-            Route::get('/detail', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
+            Route::get('/detail/{id}', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
             Route::put('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.update');
             Route::post('/status/{id}', [App\Http\Controllers\LowonganMagangController::class, 'status'])->name('lowongan-magang.status');
+        });
+    });
+
+    Route::prefix('mandiri')->group(function () {
+        Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
+            Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
+            Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
         });
     });
 });
@@ -309,6 +319,7 @@ Route::prefix('jadwal-seleksi')->group(function () {
     Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
     Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
     Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+    Route::get('/detail', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
     Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
     Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
     Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
@@ -338,9 +349,6 @@ Route::get('/detail_perusahaan', function () {
     return view('landingpage.detail_perusahaan');
 });
 
-Route::get('/detail-mahasiswa', function () {
-    return view('company.jadwal_seleksi.detail_seleksi');
-});
 Route::get('/detail_perusahaan', function () {
     return view('perusahaan.detail_perusahaan');
 });
@@ -378,4 +386,13 @@ Route::get('magang-fakultas', function () {
 });
 Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
+});
+
+
+Route::get('/logbook/mahasiswa', function () {
+    return view('company.logbook_mahasiswa.logbook');
+});
+
+Route::get('/logbook/detail', function () {
+    return view('company.logbook_mahasiswa.detail_logbook');
 });

@@ -21,4 +21,9 @@ class StatusSeleksi extends Model
     ];
     protected $primaryKey = 'id_status_seleksi';
     protected $keyType = 'string';
+
+    public function pendaftaran()
+    {
+        return $this->belongsTo(PendaftaranMagang::class, 'id_pendaftaran');
+    }
 }
