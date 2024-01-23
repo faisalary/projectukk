@@ -20,7 +20,7 @@ class LowonganMagang extends Model
         'enddate' => 'datetime'
     ];
     const UPDATED_AT = null;
-     public $timestamps = false;
+    public $timestamps = false;
 
     public static function boot()
     {
@@ -57,7 +57,7 @@ class LowonganMagang extends Model
     }
     public function total_pelamar()
     {
-        return $this->belongsTo(PendaftaranMagang::class, 'id_lowongan');
+        return $this->hasMany(PendaftaranMagang::class, 'id_lowongan');
     }
     public function mahasiswa()
     {

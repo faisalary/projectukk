@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Lokasi;
 use App\Models\Industri;
 use App\Models\JenisMagang;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
 use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 
 class InformasiLowonganController extends Controller
@@ -20,12 +22,16 @@ class InformasiLowonganController extends Controller
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
 
-            $magang = LowonganMagang::where('id_industri', $id)->first();
-            $pelamar =
-                PendaftaranMagang::where('id_lowongan', $magang->id_lowongan)->with('lowonganMagang')->get();
-            $pendaftar_count = $pelamar?->lowonganMagang->count() ?? "0";
+            $lowongan->transform(function ($item) {
+                $item->kandidat = $item->total_pelamar->count();
+                $item->screening = $item->total_pelamar->where('applicant_status', 'screening')->count();
+                $item->penawaran = $item->total_pelamar->where('applicant_status', 'penawaran')->count();
+                $item->diterima = $item->total_pelamar->where('applicant_status', 'diterima')->count();
+                $item->ditolak = $item->total_pelamar->where('applicant_status', 'ditolak')->count();
+                return $item;
+            });
 
-            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan', 'pendaftar_count'))->render();
+            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan'))->render();
         }
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
         $magang = LowonganMagang::where('id_industri', $id)->with('industri')->first();
@@ -88,9 +94,28 @@ class InformasiLowonganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function date(Request $request, string $id_lowongan)
     {
-        //
+        try {
+            $date = LowonganMagang::where('id_lowongan', $id_lowongan)->first();
+
+            if (is_null($date->date_confirm_closing)) {
+                $date->date_confirm_closing = Carbon::parse($request->date)->format('Y-m-d');
+            }
+            $date->save();
+
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Confirmation cutoff date added successfully!!',
+                'modal' => '#modalKonfirmasi',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
