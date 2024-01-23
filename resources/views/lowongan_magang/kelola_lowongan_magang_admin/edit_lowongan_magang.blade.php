@@ -3,7 +3,8 @@
 @section('page_style')
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}"/>
+    <link rel="stylesheet"
+        href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
@@ -22,6 +23,9 @@
 @endsection
 
 @section('main')
+    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
     <div class="row ">
         <div class="col-md-12 col-12">
             <nav aria-label="breadcrumb">
@@ -31,7 +35,7 @@
                             Lowongan Magang
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/kelola/lowongan" class="text-secondary">Kelola Magang</a>
+                            <a href="" class="text-secondary">Kelola Magang</a>
                         </li>
                         <li class="breadcrumb-item active">Edit Lowongan Magang</li>
                     </ol>
@@ -189,6 +193,38 @@
                                                         {{ $lowongan->jenjang }}</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="fakultas">Fakultas<span
+                                                        class="text-danger">*</span></label>
+                                                <select name="fakultas" id="fakultas" class="select2 form-select"
+                                                    data-placeholder="Pilih Fakultas">
+                                                    <option value="" disabled>Pilih Fakultas</option>
+                                                    @foreach ($fakultas as $f)
+                                                        <option @if ($f->id_fakultas == $lowongan->id_fakultas) selected @endif
+                                                            value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="prodi">Prodi<span
+                                                        class="text-danger">*</span></label>
+                                                <select name="prodi" id="prodi" class="select2 form-select"
+                                                    data-placeholder="Pilih Prodi">
+                                                    <option value="" disabled>Pilih Prodi</option>
+                                                    @foreach ($prodi as $p)
+                                                        <option @if ($p->id_prodi == $lowongan->id_prodi) selected @endif
+                                                            value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div> --}}
+                                            <div class="col-lg-12 col-sm-6">
+                                                <label for="select2Disabled" class="form-label">Prodi<span
+                                                        class="text-danger">*</span></label>
+                                                <select id="select2Disabled" class="select2 form-select" disabled>
+                                                    <option value="1"selected>Pilih Prodi</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
@@ -276,9 +312,6 @@
                                             <div style="flex: 1;">
                                                 <label for="tanggal" class="form-label">Tanggal Lowongan Ditayangkan
                                                     <span class="text-danger">*</span></label>
-                                                {{-- <input class="form-control flatpickr-date wizard-required" type="date"
-                                                    value="{{ $lowongan->startdate }}" id="tanggal" name="tanggal"
-                                                    placeholder="YYYY-MM-DD" readonly="readonly"> --}}
                                                 <input class="form-control flatpickr-date wizard-required" type="date"
                                                     value="{{ $lowongan->startdate }}" id="tanggal" name="tanggal"
                                                     placeholder="YYYY-MM-DD" readonly="readonly">

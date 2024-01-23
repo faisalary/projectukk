@@ -2,6 +2,7 @@
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <style>
     .tooltip-inner {
         min-width: 100%;
@@ -31,6 +32,9 @@
 @endsection
 
 @section('main')
+<button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 10%; height:5%;">
+    <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
+</button>
 <div class="row">
     <div class="col-md-12 col-12">
         <nav aria-label="breadcrumb">
@@ -80,6 +84,27 @@
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['screening'] ?? "0"}}</span>
                 </button>
             </li>
+            @if($lowongan->tahapan_seleksi == '1')
+            <li class="nav-item" style="font-size: small;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap1'] ?? "0"}}</span>
+                </button>
+            </li>
+            @elseif($lowongan->tahapan_seleksi == '2')
+            <li class="nav-item" style="font-size: small;">
+                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap1'] ?? "0"}}</span>
+                </button>
+            </li>
+            <li class="nav-item" style="font-size: small;">
+                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap2'] ?? "0"}}</span>
+                </button>
+            </li>
+            @else
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
@@ -93,19 +118,26 @@
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3" aria-controls="navs-pills-justified-tahap3" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap3'] ?? "0"}}</span>
+                </button>
+            </li>
+            @endif
+            <li class="nav-item" style="font-size: small;">
+                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['penawaran'] ?? "0"}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['diterima'] ?? "0"}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                <button type="button" class="nav-link showSingle" target="8" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['ditolak'] ?? "0"}}</span>
                 </button>
@@ -212,7 +244,7 @@
     </div>
 
     <div class="tab-content p-0">
-        @foreach(['kandidat', 'screening','tahap1','tahap2','penawaran','diterima','ditolak'] as $tableId)
+        @foreach(['kandidat', 'screening','tahap1','tahap2','tahap3','penawaran','diterima','ditolak'] as $tableId)
         <div class="tab-pane fade show {{$loop->iteration == 1 ? 'active' : ''}}" id="navs-pills-justified-{{$tableId}}" role="tabpanel">
             <div class="card">
                 <div class="row mt-3 ms-2">
@@ -639,6 +671,10 @@
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+        });
+
+        document.getElementById("back").addEventListener("click", () => {
+            history.back();
         });
     </script>
 

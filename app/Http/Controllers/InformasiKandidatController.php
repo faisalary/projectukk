@@ -74,6 +74,18 @@ class InformasiKandidatController extends Controller
                     return "<span class='badge bg-label-secondary me-1'>Belum Proses</span>";
                 } else if ($pendaftar->applicant_status == "screening") {
                     return "<span class='badge bg-label-warning me-1'>Screening</span>";
+                } else if ($pendaftar->applicant_status == "tahap1") {
+                    return "<span class='badge bg-label-primary me-1'>Tahap 1</span>";
+                } else if ($pendaftar->applicant_status == "tahap2") {
+                    return "<span class='badge bg-label-primary me-1'>Tahap 2</span>";
+                } else if ($pendaftar->applicant_status == "tahap3") {
+                    return "<span class='badge bg-label-primary me-1'>Tahap 3</span>";
+                } else if ($pendaftar->applicant_status == "diterima") {
+                    return "<span class='badge bg-label-success me-1'>Diterima</span>";
+                } else if ($pendaftar->applicant_status == "ditolak") {
+                    return "<span class='badge bg-label-danger me-1'>Ditolak</span>";
+                } else if ($pendaftar->applicant_status == "penawaran") {
+                    return "<span class='badge bg-label-info me-1'>Penawaran</span>";
                 }
                 return null;
             })
@@ -81,8 +93,7 @@ class InformasiKandidatController extends Controller
                 // $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 // $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>
-                <a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>";
+                $btn = "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>";
 
                 return $btn;
             })
