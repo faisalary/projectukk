@@ -279,19 +279,19 @@ Route::get('/apply', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang');
+    return view('program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
-    return view('layouts.program_magang.informasi_magang');
+    return view('program_magang.informasi_magang');
 });
 
 Route::get('/lowongan-magang-tersimpan', function () {
-    return view('layouts.program_magang.lowongan_magang_tersimpan');
+    return view('program_magang.lowongan_magang_tersimpan');
 });
 
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
-    return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
+    return view('program_magang.lowongan_pekerjaan_tersimpan');
 });
 
 Route::get('/informasi/pribadi', function () {
@@ -326,14 +326,14 @@ Route::prefix('jadwal-seleksi')->group(function () {
 });
 
 Route::get('/detail/lowongan/magang', function () {
-    return view('layouts.program_magang.detail_lowongan');
+    return view('program_magang.detail_lowongan');
 });
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
 
 Route::get('/detail/lowongan/magang', function () {
-    return view('layouts.program_magang.detail_lowongan');
+    return view('program_magang.detail_lowongan');
 });
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
@@ -365,7 +365,6 @@ Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
 });
 
-
 Route::get('/pengajuan/surat', function () {
     return view('pengajuan_magang.pengajuan_mandiri');
 });
@@ -387,7 +386,6 @@ Route::get('magang-fakultas', function () {
 Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
 });
-
 
 Route::get('/logbook/mahasiswa', function () {
     return view('company.logbook_mahasiswa.logbook');

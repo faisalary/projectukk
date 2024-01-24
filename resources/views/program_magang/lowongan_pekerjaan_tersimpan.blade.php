@@ -298,7 +298,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <button type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</button>
+                                    <a href="/apply" type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
                                 </div>
 
                                 <div class="row mt-3 p-2">
