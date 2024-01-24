@@ -51,7 +51,7 @@
           Informasi selanjutnya mengenai program magang MBKM dan lowongan Magang MBKM dapat klik tombol dibawah ini.
         </p>
         <div class="text-center mb-4">
-          <a href="#">
+          <a href="/lowongan/magang">
             <button class="btn btn-success">Cari magang </button>
           </a>
         </div>
