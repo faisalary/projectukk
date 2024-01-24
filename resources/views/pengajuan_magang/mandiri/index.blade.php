@@ -166,11 +166,96 @@
 @endsection
 
 @section('page_script')
+    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
+        // var table = $('#table-riwayat').DataTable({
+        //     ajax: "{{ url('pengajuan/surat/show') }}",
+        //     serverSide: false,
+        //     processing: true,
+        //     deferRender: true,
+        //     type: 'GET',
+        //     destroy: true,
+        //     columns: [{
+        //             data: 'DT_RowIndex'
+        //         },
+
+        //         {
+        //             data: 'namaindustri',
+        //             name: 'namaindustri'
+        //         },
+        //         {
+        //             data: 'email',
+        //             name: 'email'
+        //         },
+        //         {
+        //             data: 'notelpon',
+        //             name: 'notelpon'
+        //         },
+        //         {
+        //             data: 'alamatindustri',
+        //             name: 'alamatindustri'
+        //         },
+        //         {
+        //             data: 'description',
+        //             name: 'description'
+        //         },
+        //         {
+        //             data: 'kategori_industri',
+        //             name: 'kategori_industri'
+        //         },
+        //         {
+        //             data: 'statuskerjasama',
+        //             name: 'statuskerjasama'
+        //         },
+        //         {
+        //             data: 'status',
+        //             name: 'status'
+        //         }
+        //     ]
+        // });
+
         $(".flatpickr-date").flatpickr({
             altInput: true,
             altFormat: 'j F Y',
             dateFormat: 'Y-m-d'
         });
+
+        // $("#modalAjukan").on("hide.bs.modal", function() {
+
+        //     $("#simpanButton").html("Save Data")
+        //     $('#modalAjukan form')[0].reset();
+        //     $('#modalAjukan form').attr('action', "{{ route('mandiri.store') }}");
+        //     $('.invalid-feedback').removeClass('d-block');
+        //     $('.form-control').removeClass('is-invalid');
+        // });
+
+
+        // function ajukan(e) {
+        //     $('#modalAjukan').modal('store');
+        //     var approveUrl = "{{ url('pengajuan/surat/store') }}/" + e.attr('data-id');
+
+        //     $('#simpanButton').on('click', function() {
+
+        //         $.ajax({
+        //             url: approveUrl,
+        //             type: "POST",
+        //             headers: {
+        //                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        //             },
+        //             success: function(response) {
+        //                 if (!response.error) {
+        //                     alert('berhasil');
+        //                 } else {
+        //                     alert('tidak berhasil');
+        //                 }
+        //             }
+        //         });
+
+        //         $('#modalAjukan').modal('hide');
+        //     });
+        // }
     </script>
 @endsection
