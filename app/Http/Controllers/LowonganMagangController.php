@@ -198,28 +198,30 @@ class LowonganMagangController extends Controller
             DB::beginTransaction(); 
             $data = LowonganMagang::find($id);
             
-
             if (!$data) {
-                throw new \Exception('this Lowongan not found.');
+                throw new \Exception('Lowongan tidak ditemukan.');
             }
-            $data->status = 1;
+
+            $data->status = 2;
+
             $data->save();
-            
             DB::commit();
 
             return response()->json([
                 'error' => false,
                 'message' => 'Persetujuan berhasil.',
             ]);
-            } catch (\Exception $e) {
-                DB::rollBack();
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
             ]);
         }
     }
+
+
     public function rejected($id, Request $request)
     {
         $data=LowonganMagang::find($id);
