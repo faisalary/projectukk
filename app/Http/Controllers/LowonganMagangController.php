@@ -221,11 +221,10 @@ class LowonganMagangController extends Controller
         }
     }
 
-
     public function rejected($id, Request $request)
     {
         $data=LowonganMagang::find($id);
-        $data->status='2';
+        $data->status='0';
         $data->save();
         return redirect()->back();
     }

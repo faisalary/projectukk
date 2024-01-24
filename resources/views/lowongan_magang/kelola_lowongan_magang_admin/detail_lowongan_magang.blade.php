@@ -254,7 +254,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                            <button type="button" id="rejected-confirm-button" class="btn btn-success">Kirim</button>
+                            <button type="button" onclick='rejected($(this))' id="rejected-confirm-button" data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}"
+                                class="btn btn-success">Kirim</button>
                         </div>
                     </div>
                 </div>
@@ -283,8 +284,6 @@
 
 
         function approved(e) {
-            // var idLowongan = $('#approve-confirm-button').data('id');
-            // var status = $('#approve-confirm-button').data('status');
             var approveUrl = '{{url("kelola/lowongan/approved")}}/' + $('#approve-confirm-button').attr('data-id');
 
             $.ajax({
@@ -307,7 +306,7 @@
         
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url("kelola/lowongan/rejected") }}/' + e.attr('data-id');
+            var rejectedUrl = '{{ url("kelola/lowongan/rejected") }}/' + $('#rejected-confirm-button').attr('data-id');
 
             $('#rejected-confirm-button').on('click', function () {
                 var alasan = $('#alasan').val();
