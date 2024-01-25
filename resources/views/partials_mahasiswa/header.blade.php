@@ -124,7 +124,7 @@
                 </li>
 
                 <!-- Program Magang -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Program Magang">Program Magang</div>
                   </a>
@@ -141,6 +141,11 @@
                       </a>
                     </li>
                   </ul>
+                </li> -->
+                <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
                 </li>
 
                 <!-- Kegiatan Saya -->
@@ -156,7 +161,7 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="" class="menu-link">
+                      <a href="/logbook" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
                       </a>
                     </li>
