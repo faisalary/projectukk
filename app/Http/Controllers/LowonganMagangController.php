@@ -221,12 +221,31 @@ class LowonganMagangController extends Controller
         }
     }
 
-    public function rejected($id, Request $request)
+    public function rejected($id)
     {
-        $data=LowonganMagang::find($id);
-        $data->status='0';
-        $data->save();
-        return redirect()->back();
+        try{
+            $data=LowonganMagang::find($id);
+            if (!$data) {
+                    throw new \Exception('Lowongan tidak ditemukan.');
+                }
+
+                $data->status = 0;
+
+                $data->save();
+                DB::commit();
+
+                return response()->json([
+                    'error' => false,
+                    'message' => 'Penolakan berhasil.',
+                ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
     
 
