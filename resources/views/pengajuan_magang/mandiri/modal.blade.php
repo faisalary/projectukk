@@ -215,9 +215,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form class="default-form" action="{{ url('pengajuan/surat/') }}">
+            <form class="default-form" action="{{ url('pengajuan/surat/store') }}" method="POST">
                 @csrf
-                @method('POST')
+               <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
@@ -287,7 +287,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" id="simpanButton">Simpan</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </form>
         </div>

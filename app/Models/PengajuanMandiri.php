@@ -11,7 +11,7 @@ class PengajuanMandiri extends Model
     use HasUuids;
 
     protected $table = 'pengajuan_mandiri';
-    protected $fillable = ['tglpeng', 'nama_industri', 'email', 'posisi_magang', 'jabatan', 'alamat_industri', 'nohp', 'startdate', 'enddate','statusapprove'];
+    protected $fillable = ['nim', 'tglpeng', 'nama_industri', 'email', 'posisi_magang', 'jabatan', 'alamat_industri', 'nohp', 'startdate', 'enddate','statusapprove', 'alasan'];
     protected $primaryKey = 'id_pengajuan';
     protected $keyType = 'string';
     public $timestamps = false;
