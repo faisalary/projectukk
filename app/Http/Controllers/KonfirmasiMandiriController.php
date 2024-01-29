@@ -22,12 +22,16 @@ class KonfirmasiMandiriController extends Controller
      */
     public function index()
     {
-        $mandiri = PengajuanMandiri::all();
-        $mahasiswa = Mahasiswa::all();
         $user = auth()->user();
+        $mandiri = PengajuanMandiri::where("nim",$user->nim)->get();
+        $mahasiswa = Mahasiswa::all();
+        
         $nim = Mahasiswa::find($user->nim);
         $nim = $nim->nim;
-        return view('pengajuan_magang.mandiri.index',  compact('mandiri','mahasiswa', 'nim'));
+
+        $mandiri_nim = $mandiri->pluck('nim')->toArray();
+
+        return view('pengajuan_magang.mandiri.index',  compact('mandiri','mahasiswa', 'nim', 'mandiri_nim'));
     }
     
     public function store(Request $request)
