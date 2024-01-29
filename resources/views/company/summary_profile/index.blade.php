@@ -34,7 +34,7 @@
     </div>
     <div class="alert alert-danger alert-dismissible" role="alert">
 
-        Harap lakukan pengecekan secara rutin karena akun perusahaan Anda masih menunggu konfirmasi dari admin.
+        Harap lakukan pengecekan data apakah sudah sesuai.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 

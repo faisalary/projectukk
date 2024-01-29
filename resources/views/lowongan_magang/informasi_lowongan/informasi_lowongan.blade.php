@@ -1,16 +1,16 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
 <!-- Vendors CSS -->
 
-<link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
 <style>
     .swal2-icon {
         border-color: transparent !important;
@@ -36,7 +36,14 @@
 @section('main')
 <div class="row">
 
+
     <div class="col-md-9 col-12">
+        <!-- superAdmin -->
+        @can( "only.lkm" )
+        <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
+            <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
+        </button>
+        @endcan
         <!-- Company -->
         @can('title.info.lowongan.mitra')
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
@@ -131,7 +138,7 @@
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
         $(function() {
-            $("#datepicker").datepicker({
+            $("#flatpickr-date").datepicker({
                 format: 'dd-mm-yyyy'
             });
 
@@ -150,15 +157,19 @@
                 }
             })
         }
+
+        document.getElementById("back").addEventListener("click", () => {
+            history.back();
+        });
     </script>
     <!-- Vendors JS -->
-    <script src="../../app-assets/vendor/libs/moment/moment.js"></script>
-    <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="../../app-assets/js/forms-pickers.js"></script>
+    <script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
     @endsection

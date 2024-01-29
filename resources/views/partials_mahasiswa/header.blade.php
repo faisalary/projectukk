@@ -124,7 +124,7 @@
                 </li>
 
                 <!-- Program Magang -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Program Magang">Program Magang</div>
                   </a>
@@ -141,6 +141,11 @@
                       </a>
                     </li>
                   </ul>
+                </li> -->
+                <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
                 </li>
 
                 <!-- Kegiatan Saya -->
@@ -155,11 +160,6 @@
                         <div data-i18n="Lamaran Saya">Lamaran Saya</div>
                       </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="/konfirmasi/magang" class="menu-link">
-                          <div data-i18n="Konfirmasi Magang">Konfirmasi Magang</div>
-                        </a>
-                      </li>
                     <li class="menu-item">
                       <a href="/logbook" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
@@ -179,11 +179,11 @@
                         <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
                       </a>
                     </li>
-                    <!-- <li class="menu-item">
-                        <a href="javascript:void(0)" class="menu-link">
-                          <div data-i18n="Konfirmasi Magang">"Konfirmasi Magang</div>
+                    <li class="menu-item">
+                        <a href="/konfirmasi/magang" class="menu-link">
+                          <div data-i18n="Konfirmasi Status Penerimaan Magang">Konfirmasi Status Penerimaan Magang</div>
                         </a>
-                      </li> -->
+                      </li>
                     <li class="menu-item">
                       <a href="/pengajuan/surat" class="menu-link">
                         <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
