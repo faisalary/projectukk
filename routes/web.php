@@ -191,6 +191,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
 
+        
         Route::prefix('master-email')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
@@ -381,4 +382,7 @@ Route::get('magang-fakultas', function () {
 });
 Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
+});
+Route::get('/kelola-pengguna', function () {
+    return view('admin.kelola-pengguna.index');
 });
