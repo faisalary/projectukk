@@ -33,7 +33,7 @@ class PegawaiIndustriController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PegawaiIndustriRequest $request)
+    public function store(Request $request)
     {
         try{
             $pegawai_industri = PegawaiIndustri::create([

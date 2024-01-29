@@ -290,11 +290,6 @@
                     data: 'editrejected',
                     name: 'editrejected'
                 },   
-                
-                // {
-                //     data: 'status',
-                //     name: 'status'
-                // }
             ]
         });
 

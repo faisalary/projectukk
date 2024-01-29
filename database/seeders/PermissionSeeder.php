@@ -42,6 +42,7 @@ class PermissionSeeder extends Seeder
                     'title.info.lowongan.admin',
                     'ubah.lowongan.admin',
                     'btn.edit.lowongan',
+                    'status.lowongan.lkm',
                     'role-list',
                     'role-create',
                     'role-edit',

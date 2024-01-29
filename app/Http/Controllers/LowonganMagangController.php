@@ -21,14 +21,14 @@ class LowonganMagangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $id)
     {
         $lowongan = new LowonganMagang;
         $lowongan = [
             'total' => $lowongan->count(),
-            'tertunda' => $lowongan->where('applicant_status', 'tertunda')->count(),
-            'diterima' => $lowongan->where('applicant_status', 'diterima')->count(),
-            'ditolak' => $lowongan->where('applicant_status', 'ditolak')->count(),
+            'tertunda' => $lowongan->where('statusaprove', 'tertunda')->count(),
+            'diterima' => $lowongan->where('statusaprove', 'diterima')->count(),
+            'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
         ];
         $jenismagang = JenisMagang::all();
         $lokasi = Lokasi::all();
@@ -84,7 +84,7 @@ class LowonganMagangController extends Controller
                 'tahapan_seleksi' => $request->tahapan,
                 'id_fakultas' => $request->fakultas,
                 'fakultas' => $request->fakultas,
-                // 'id_prodi' => $prodi->id_prodi
+                'statusaprove' => 0
             ]);
             $i = 0;
             foreach ((array) $request->mulai as $m) {
@@ -120,6 +120,7 @@ class LowonganMagangController extends Controller
 
     public function show(Request $request)
     {
+        // $namaindustri = LowonganMagang::where('id_industri', auth()->user()->industri)->with('industri')->first();
         $lowongan = LowonganMagang::query();
         if ($request->type) {
             if ($request->jenismagang != null) {
@@ -131,13 +132,7 @@ class LowonganMagangController extends Controller
             } else if ($request->fakultas != null) {
                 $lowongan->where("id_fakultas", $request->fakultas, $request->type);
             }
-            $lowongan = $lowongan->with("jenismagang", "lokasi", "prodi", "fakultas")->orderBy('id_jenismagang', 'desc')->get();
-        }
-
-        if (request()->type != 'total') {
-            $lowongan = LowonganMagang::where('applicant_status', request()->type);
-        } else {
-            $lowongan = LowonganMagang::all();
+            $lowongan = $lowongan->with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->orderBy('id_jenismagang', 'desc')->get();
         }
 
         return DataTables::of($lowongan)
@@ -202,7 +197,7 @@ class LowonganMagangController extends Controller
                 throw new \Exception('Lowongan tidak ditemukan.');
             }
 
-            $data->status = 2;
+            $data->statusaprove = 'terima';
 
             $data->save();
             DB::commit();
@@ -221,7 +216,7 @@ class LowonganMagangController extends Controller
         }
     }
 
-    public function rejected($id)
+    public function rejected($id, Request $request)
     {
         try{
             $data=LowonganMagang::find($id);
@@ -229,7 +224,8 @@ class LowonganMagangController extends Controller
                     throw new \Exception('Lowongan tidak ditemukan.');
                 }
 
-                $data->status = 0;
+                $data->alasantolak = $request->alasan;
+                $data->statusaprove = 'ditolak';
 
                 $data->save();
                 DB::commit();

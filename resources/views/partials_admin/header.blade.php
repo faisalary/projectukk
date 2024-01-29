@@ -206,7 +206,7 @@
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
+                                <a href="{{ url('kelola/lowongan/') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>

@@ -180,9 +180,6 @@
                     name="kemampuan">Kemampuan</span>
                 <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 30px !important">
                     <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
-                    {{-- <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
-                    <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span>
-                    <span class="badge rounded-pill bg-success bg-glow"> {{ $lowongan->keterampilan }}</span> --}}
                 </div>
             </div>
 
@@ -254,7 +251,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                            <button type="button" onclick='rejected($(this))' id="rejected-confirm-button" data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}"
+                            <button type="button" onclick='rejected($(this))' id="rejected-confirm-button" data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->statusapprove}}"
                                 class="btn btn-success">Kirim</button>
                         </div>
                     </div>

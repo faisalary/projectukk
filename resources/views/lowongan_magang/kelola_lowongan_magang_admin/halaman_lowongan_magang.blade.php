@@ -99,7 +99,7 @@
                         data-bs-original-title="Durasi Magang : -, Posisi Lowongan Magang : -, Status Lowongan Magang : -"
                         id="tooltip-filter"></i></div>
             </div>
-            @foreach (['1', '2', '3', '4'] as $statusId)
+            @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $statusId)
                 @if ($statusId == 1)
                     @can('button.tnglbts.mitra')
                         <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
@@ -192,11 +192,16 @@
                         <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 80px;">NOMOR</th>
+                                    <th style="max-width:70px;">NOMOR</th>
+                                    @can('status.lowongan.lkm')
+                                    <th style="max-width: 100px;">PERUSAHAAN</th>
+                                    @endcan
                                     <th style="min-width:100px;">POSISI</th>
                                     <th style="min-width:100px;">TANGGAL</th>
                                     <th style="min-width:100px;">DURASI MAGANG</th>
-                                    <th style="min-width:50px;">STATUS</th>
+                                    @can('status.lowongan.lkm')
+                                        <th style="min-width:50px;">STATUS</th>
+                                    @endcan
                                     <th style="min-width:100px;">AKSI</th>
                                 </tr>
                             </thead>
@@ -205,29 +210,6 @@
                 </div>
             </div>
         @endforeach 
-
-
-        {{-- <!-- Modal Alert-->
-        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img src="../../../app-assets/img/alert.png" alt="">
-                        <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Mengahapus Data?</h5>
-                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Data yang
-                            dipilih akan dihapus secara permanen!</div>
-                    </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 
@@ -235,31 +217,11 @@
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
-        // var jsonData = [{
-        //         "nomor": "1",
-        //         "posisi": "UI/UX Designer",
-        //         "fakultas": "fakultas ilmu terapan",
-        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-        //         "durasi magang": "2 semester",
-        //         "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-        //         "aksi": "<div class='d-flex'><a href='/lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        //     },
-        //     {
-        //         "nomor": "2",
-        //         "posisi": "UI/UX Designer",
-        //         "fakultas": "fakultas ilmu terapan",
-        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-        //         "durasi magang": "2 semester",
-        //         "status": "<span class='badge bg-label-success'>Aktif</span>",
-        //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        //     }
-        // ];
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
             let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
+            if ($(this).attr('id') == null) return;
 
             $(this).DataTable({
                 ajax: url,
@@ -271,6 +233,13 @@
                 columns: [{
                         data: "DT_RowIndex"
                     },
+                    @can('status.lowongan.lkm')
+                    {
+                        data: 'industri.namaindustri',
+                        name: 'namaindustri',
+
+                    },
+                    @endcan
                     {
                         data: "intern_position",
                         name: "intern_position"
@@ -283,10 +252,12 @@
                         data: "durasimagang",
                         name: "durasimagang"
                     },
+                    @can('status.lowongan.lkm')
                     {
                         data: "status",
                         name: "status"
                     },
+                    @endcan
                     {
                         data: "action",
                         name: "action"
@@ -362,27 +333,6 @@
                 }
             });
         }
-
-        // function get(e) {
-        //     let id = e.attr('data-id');
-
-        //     let action = {{ url('kelola/lowonga/update/') }}/${id};
-        //     var url = {{ url('kelola/lowongan/edit/') }}/${id};
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: url,
-        //         success: function(response) {
-        //             // $(".modal-title").html("Jadwal Seleksi Tahap 1");
-        //             $('#deskripsi').html(response.deskripsi);
-        //             $('#kualifikasi').html(response.requirements);
-        //             $('#tgltahap1').html(response.tgl_mulai);
-        //             // $('#tgltahap1').html(response.tgl_akhir);
-        //             $('#tgltahap2').html(response.tgl_mulai);
-        //             $('#tgltahap3').html(response.tgl_mulai);
-        //         }
-        //     });
-        // }
-
 
         $(document).ready(function() {});
 
