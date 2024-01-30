@@ -448,7 +448,7 @@
                                 <span class="icon ti ti-map-pin"> 34 lokasi</span>
                             </div>
                             <div class="col-6">
-                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;""> 56 Lowongan</span>
+                                <span class="icon ti ti-report" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"> 56 Lowongan</span>
                             </div>
                         </div>
                     </div>

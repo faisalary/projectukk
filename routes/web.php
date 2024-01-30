@@ -398,3 +398,15 @@ Route::get('/logbook/detail', function () {
 Route::get('/kelola-pengguna', function () {
     return view('admin.kelola-pengguna.index');
 });
+
+Route::get('/aboutus/talentern', function () {
+    return view('landingpage.about_us_talentern');
+});
+
+Route::get('/aboutus/techno', function () {
+    return view('landingpage.about_us_techno');
+});
+
+Route::get('/aboutus/lkmfit', function () {
+    return view('landingpage.about_us_lkm');
+});

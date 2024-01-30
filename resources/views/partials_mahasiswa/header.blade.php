@@ -100,7 +100,7 @@
           </div>
 
           <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
-            <div class="container-xxl d-flex h-100" style="width: 50rem;">
+            <div class="container-xxl d-flex h-100" style="width: 55rem;">
               <ul class="menu-inner">
 
                 <!-- Perusahaan -->
@@ -194,8 +194,13 @@
                         <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
                       </a>
                     </li>
-
                   </ul>
+                </li>
+
+                <li class="menu-item">
+                      <a href="#footer" class="menu-link">
+                        <div data-i18n="Kontak Kami">Kontak Kami</div>
+                      </a>
                 </li>
               </ul>
             </div>

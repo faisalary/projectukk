@@ -55,9 +55,9 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <p>Tentang Kami</p>
-                        <p class="text-secondary"><i>PT. Teknologi Nirmala Olah Daya Informasi</i></p>
-                        <p class="text-secondary"><i>Layanan Kerjasama dan Magang FIT</i></p>
-                        <p class="text-secondary"><i>Fakultas Ilmu Terapan</i></p>
+                        <a href="/aboutus/talentern"> <p class="text-secondary">Talentern</p></a>
+                        <a href="/aboutus/techno"> <p class="text-secondary"> PT. Teknologi Nirmala Olah Daya Informasi</p></a>
+                        <a href="/aboutus/lkmfit"> <p class="text-secondary"> Layanan Kerjasama dan Magang FIT</p></a>
                         <button class="open-button" onclick="openForm()">
                             <div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh Bantuan ?
                         </button>
