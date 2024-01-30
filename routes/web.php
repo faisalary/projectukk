@@ -403,3 +403,7 @@ Route::get('/logbook/mahasiswa', function () {
 Route::get('/logbook/detail', function () {
     return view('company.logbook_mahasiswa.detail_logbook');
 });
+
+Route::get('/kelola-pengguna', function () {
+    return view('admin.kelola-pengguna.index');
+});
