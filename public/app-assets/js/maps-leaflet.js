@@ -4431,11 +4431,24 @@
   // --------------------------------------------------------------------
   const dragMapVar = document.getElementById('dragMap');
   if (dragMapVar) {
-    const draggableMap = L.map('dragMap').setView([48.817152, 2.455], 12);
-    const markerLocation = L.marker([48.817152, 2.455], {
+    const draggableMap = L.map('dragMap').setView([-6.973247, 107.632765], 12);
+    const markerLocation = L.marker([-6.973247, 107.632765], {
       draggable: 'true'
     }).addTo(draggableMap);
-    markerLocation.bindPopup("<b>You're here!</b>").openPopup();
+    markerLocation.bindPopup("<b>LKM FIT</b>").openPopup();
+    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(draggableMap);
+  }
+
+  const dragMapVars = document.getElementById('dragMaps');
+  if (dragMapVars) {
+    const draggableMap = L.map('dragMaps').setView([-6.948306, 107.664336], 12);
+    const markerLocation = L.marker([-6.948306, 107.664336], {
+      draggable: 'true'
+    }).addTo(draggableMap);
+    markerLocation.bindPopup("<b>Techno Infinity</b>").openPopup();
     L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
       maxZoom: 18
