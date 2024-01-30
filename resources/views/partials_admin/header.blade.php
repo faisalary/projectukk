@@ -237,8 +237,8 @@
                     </li>
 
                     <!-- Kelola Pengguna -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : ''}}">
+                        <a href="{{ url('kelola-pengguna')}}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
                             <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
                         </a>

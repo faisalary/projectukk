@@ -570,7 +570,7 @@
         $('.table').each(function() {
             let idElement = $(this).attr('id');
             let idLowongan = `{{$pendaftar->id_lowongan ?? 0}}`;
-            let url = `{{ url('/informasi/kandidat/${idLowongan}/show/${idLowongan}') }}?type=` + idElement;
+            let url = `{{ url('/informasi/kandidat/show/${idLowongan}') }}?type=` + idElement;
             if ($(this).attr('id') == null) return;
             // console.log(idElement);
             // console.log(url);
