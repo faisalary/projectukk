@@ -20,7 +20,7 @@
                                 <span class="fw-semibold me-1">Bagian/Jabatan Dituju :</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span class="fw-semibold me-1">Program Studi :</span>
+                                <span class="fw-semibold me-1">NIM :</span>
                             </li>
                             <li class="mb-2 pt-1">
                                 <span class="fw-semibold me-1">Email :</span>
@@ -39,28 +39,28 @@
                     <div class="col-6">
                         <ul class="list-unstyled">
                             <li class="mb-1">
-                                <span>PT Techno Infinity</span>
+                                <span>{{ $item->nama_industri }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>UI/UX Designer</span>
+                                <span>{{ $item->posisi_magang }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>Kepala HRD</span>
+                                <span>{{ $item->jabatan }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>D3 Sistem Informasi</span>
+                                <span>{{ $item->nim }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>jennieruby123@gmail.com</span>
+                                <span>{{ $item->email }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>087654321234</span>
+                                <span>{{ $item->nohp }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>02 Januari - 02 Juli 2024</span>
+                                <span>{{ $item->startdate }} - {{ $item->enddate }}</span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>Jl. Mars Sel. X No.19B</span>
+                                <span>{{ $item->alamat_industri }}</span>
                             </li>
                         </ul>
                     </div>
@@ -217,7 +217,7 @@
 
             <form class="default-form" action="{{ url('pengajuan/surat/store') }}" method="POST">
                 @csrf
-               <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
+                <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">

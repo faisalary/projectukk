@@ -38,7 +38,7 @@
         </div>
 
         {{-- Belum melakukan konfirmasi lowongan magang --}}
-        @if(!in_array($nim, $mandiri_nim))
+        @if (!in_array($nim, $mandiri_nim))
             <div id="container-card" class="mb-3">
                 <div class="col-3 mt-3 ">
                     <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;"
@@ -49,118 +49,118 @@
                 </div>
             </div>
         @else
-        {{-- Sudah melakukan konfirmasi lowongan magang --}}
-        <div class="card mb-4" style="background-color: #f8f7fa;">
-            <div class="card-header p-3" style="background-color: #23314B;">
-                <div class="row">
-                    <div class="col-6">
-                        <h4 class="mb-0 ps-2" style="color: #FFFFFF;">Riwayat Pengajuan Surat Pengantar Magang</h4>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-9">
-                                <div class="input-group input-group-merge ">
-                                    <span class="input-group-text" id="basic-addon-search31"><i
-                                            class="ti ti-search"></i></span>
-                                    <input type="text" class="form-control" placeholder="Surat Pengantar Magang"
-                                        aria-label="Search..." aria-describedby="basic-addon-search31">
+            {{-- Sudah melakukan konfirmasi lowongan magang --}}
+            <div class="card mb-4" style="background-color: #f8f7fa;">
+                <div class="card-header p-3" style="background-color: #23314B;">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4 class="mb-0 ps-2" style="color: #FFFFFF;">Riwayat Pengajuan Surat Pengantar Magang</h4>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="input-group input-group-merge ">
+                                        <span class="input-group-text" id="basic-addon-search31"><i
+                                                class="ti ti-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Surat Pengantar Magang"
+                                            aria-label="Search..." aria-describedby="basic-addon-search31">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-success waves-effect waves-light">Cari
-                                    Sekarang</button>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-success waves-effect waves-light">Cari
+                                        Sekarang</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @foreach ($mandiri as $item)
+                    @if ($item->nim == $nim)
+                        <div class="card-body mt-4">
+                            @if ($item->statusapprove == 1)
+                                <div class="row border-bottom">
+                                    <div class="col-2">
+                                        <figure class="image text-center" style="border-radius: 0%;"><img
+                                                style="border-radius: 0%; width:100px;"
+                                                src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
+                                        </figure>
+                                    </div>
+                                    <div class="col-8">
+                                        <h2>{{ $item->posisi_magang }}</h2>
+                                        <p>{{ $item->nama_industri }}</p>
+                                        <p>{{ $item->alamat_industri }}</p>
+                                        <div class="text-left mb-3">
+                                            <button type="button" class="btn btn-success waves-effect me-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima</button>
+                                            <button type="button" class="btn btn-danger waves-effect"
+                                                data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
+                                        </div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
+                                                data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
+                                                Lihat Detail
+                                            </u><i class="ti ti-chevron-right mb-1"></i></div>
+                                    </div>
+                                </div>
+                            @elseif($item->statusapprove == 0)
+                                <div class="row border-bottom">
+                                    <div class="col-2">
+                                        <figure class="image text-center" style="border-radius: 0%;"><img
+                                                style="border-radius: 0%; width:100px;"
+                                                src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
+                                        </figure>
+                                    </div>
+                                    <div class="col-8">
+                                        <h2>{{ $item->posisi_magang }}</h2>
+                                        <p>{{ $item->nama_industri }}</p>
+                                        <p>{{ $item->alamat_industri }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        <div class="text-end mt-3"><span class="badge bg-label-warning">Pending</span>
+                                        </div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
+                                                data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
+                                                Lihat Detail
+                                            </u><i class="ti ti-chevron-right mb-1"></i></div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row border-bottom mt-4">
+                                    <div class="col-2">
+                                        <figure class="image text-center" style="border-radius: 0%;"><img
+                                                style="border-radius: 0%; width:100px;"
+                                                src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
+                                        </figure>
+                                    </div>
+                                    <div class="col-8">
+                                        <h2>{{ $item->posisi_magang }}</h2>
+                                        <p>{{ $item->nama_industri }}</p>
+                                        <p>{{ $item->alamat_industri }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span></div>
+                                        <div class="text-end mt-3"><button type="button"
+                                                class="btn btn-outline-danger waves-effect waves-light"
+                                                data-bs-toggle="modal" data-bs-target="#modalEdit" style="height:35px;">
+                                                <i class="ti ti-edit mb-1 me-1"></i>
+                                                Perbaiki Pengajuan</button></div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
+                                                data-bs-toggle="modal" data-bs-target="#modalDetailDitolak">
+                                                Lihat Detail
+                                            </u><i class="ti ti-chevron-right mb-1"></i></div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                @endforeach
             </div>
-            @foreach ($mandiri as $item)
-                @if ($item->nim == $nim)
-                    <div class="card-body mt-4">
-                        @if ($item->statusapprove == 1)
-                            <div class="row border-bottom">
-                                <div class="col-2">
-                                    <figure class="image text-center" style="border-radius: 0%;"><img
-                                            style="border-radius: 0%; width:100px;"
-                                            src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
-                                    </figure>
-                                </div>
-                                <div class="col-8">
-                                    <h2>{{ $item->posisi_magang }}</h2>
-                                    <p>{{ $item->nama_industri }}</p>
-                                    <p>{{ $item->alamat_industri }}</p>
-                                    <div class="text-left mb-3">
-                                        <button type="button" class="btn btn-success waves-effect me-2"
-                                            data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima</button>
-                                        <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal"
-                                            data-bs-target="#modalDitolak">Ditolak</button>
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
-                                    <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
-                                    </div>
-                                    <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                            data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
-                                            Lihat Detail
-                                        </u><i class="ti ti-chevron-right mb-1"></i></div>
-                                </div>
-                            </div>
-                        @elseif($item->statusapprove == 0)
-                            <div class="row border-bottom">
-                                <div class="col-2">
-                                    <figure class="image text-center" style="border-radius: 0%;"><img
-                                            style="border-radius: 0%; width:100px;"
-                                            src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
-                                    </figure>
-                                </div>
-                                <div class="col-8">
-                                    <h2>{{ $item->posisi_magang }}</h2>
-                                    <p>{{ $item->nama_industri }}</p>
-                                    <p>{{ $item->alamat_industri }}</p>
-                                </div>
-                                <div class="col-2">
-                                    <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
-                                    <div class="text-end mt-3"><span class="badge bg-label-warning">Pending</span>
-                                    </div>
-                                    <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                            data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
-                                            Lihat Detail
-                                        </u><i class="ti ti-chevron-right mb-1"></i></div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="row border-bottom mt-4">
-                                <div class="col-2">
-                                    <figure class="image text-center" style="border-radius: 0%;"><img
-                                            style="border-radius: 0%; width:100px;"
-                                            src="{{ asset('front/assets/img/letter.png') }}" alt="admin.upload">
-                                    </figure>
-                                </div>
-                                <div class="col-8">
-                                    <h2>{{ $item->posisi_magang }}</h2>
-                                    <p>{{ $item->nama_industri }}</p>
-                                    <p>{{ $item->alamat_industri }}</p>
-                                </div>
-                                <div class="col-2">
-                                    <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
-                                    <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span></div>
-                                    <div class="text-end mt-3"><button type="button"
-                                            class="btn btn-outline-danger waves-effect waves-light" data-bs-toggle="modal"
-                                            data-bs-target="#modalEdit" style="height:35px;"> <i
-                                                class="ti ti-edit mb-1 me-1"></i>
-                                            Perbaiki Pengajuan</button></div>
-                                    <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                            data-bs-toggle="modal" data-bs-target="#modalDetailDitolak">
-                                            Lihat Detail
-                                        </u><i class="ti ti-chevron-right mb-1"></i></div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @endif
-            @endforeach
-        </div>
         @endif
 
 
