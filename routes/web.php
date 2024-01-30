@@ -394,3 +394,15 @@ Route::get('/logbook/mahasiswa', function () {
 Route::get('/logbook/detail', function () {
     return view('company.logbook_mahasiswa.detail_logbook');
 });
+
+Route::get('/aboutus/talentern', function () {
+    return view('landingpage.about_us_talentern');
+});
+
+Route::get('/aboutus/techno', function () {
+    return view('landingpage.about_us_techno');
+});
+
+Route::get('/aboutus/lkmfit', function () {
+    return view('landingpage.about_us_lkm');
+});
