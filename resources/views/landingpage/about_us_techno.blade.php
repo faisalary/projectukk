@@ -1,6 +1,7 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
+<link rel="stylesheet" href="../../app-assets/vendor/libs/leaflet/leaflet.css" />
 <style>
     .col-3 {
         flex: 0 0 auto;
@@ -37,6 +38,7 @@
             </div>
         </div>
     </div>
+
     <div class="row m-5">
         <div class="col-6 text-center" style="padding-left: 100px;">
             <div style="border-radius: 10px; background: linear-gradient(0deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.30) 100%), rgba(220, 238, 227, 0.60); width:63%; height:90%;">
@@ -84,6 +86,7 @@
             </div>
         </div>
     </div>
+
     <div class="row m-5">
         <div class="col-12 text-center">
             <h4 style="color: #4EA971;">Pondasi Techno Infinity</h4>
@@ -119,6 +122,31 @@
             </div>
         </div>
     </div>
+
+    <div class="row m-5">
+        <div class="col-12 text-center">
+            <h4 style="color: #4EA971;">Kunjungi Kami</h4>
+        </div>
+        <div class="row mt-4 ms-1">
+            <div class="col-6 pt-5" style="padding-left: 100px;">
+                <h6>PT. Teknologi Nirmala Olah Daya Informasi (Techno Infinity)</h6>
+                <h6>Jl. Mars Sel. X No.19B, Manjahlega, Kec. Rancasari, Kota,<br>Bandung, Jawa Barat 40286</h6>
+
+                <div class="mb-3">
+                    <i class="ti ti-mail me-1"></i><a href="mailto:info@technoinfinity.co.id" style="color: #6F6B7D;">info@technoinfinity.co.id</a>
+                </div>
+                <div class="mb-3">
+                    <i class="ti ti-phone-call me-1"></i><a>(022) 8750 - 5501</a>
+                </div>
+                <div>
+                    <i class="ti ti-brand-instagram me-1"></i><a href="https://www.instagram.com/techno_infinity?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" style="color: #6F6B7D;">techno_infinity</a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="leaflet-map" id="dragMap"></div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -127,4 +155,6 @@
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+<script src="../../app-assets/vendor/libs/leaflet/leaflet.js"></script>
+<script src="../../app-assets/js/maps-leaflet.js"></script>
 @endsection
