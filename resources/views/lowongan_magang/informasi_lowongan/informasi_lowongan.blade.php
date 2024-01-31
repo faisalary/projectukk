@@ -161,15 +161,6 @@
         document.getElementById("back").addEventListener("click", () => {
             history.back();
         });
-
-        $("#modalKonfirmasi").on("hide.bs.modal", function() {
-            $("#modalCenterTitle").html("Masukkan Tanggal Batas Konfirmasi");
-            $("#modal-button").html("Simpan");
-            $('#modalKonfirmasi form')[0].reset();
-            $('#modalKonfirmasi form #flatpickr-date').val('').trigger('change');
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
-        });
     </script>
     <!-- Vendors JS -->
     <script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>

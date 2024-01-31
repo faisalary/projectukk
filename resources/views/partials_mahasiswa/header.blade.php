@@ -100,7 +100,7 @@
           </div>
 
           <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
-            <div class="container-xxl d-flex h-100" style="width: 50rem;">
+            <div class="container-xxl d-flex h-100" style="width: 55rem;">
               <ul class="menu-inner">
 
                 <!-- Perusahaan -->
@@ -124,7 +124,7 @@
                 </li>
 
                 <!-- Program Magang -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Program Magang">Program Magang</div>
                   </a>
@@ -141,6 +141,11 @@
                       </a>
                     </li>
                   </ul>
+                </li> -->
+                <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
                 </li>
 
                 <!-- Kegiatan Saya -->
@@ -156,7 +161,7 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="" class="menu-link">
+                      <a href="/logbook" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
                       </a>
                     </li>
@@ -189,8 +194,13 @@
                         <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
                       </a>
                     </li>
-
                   </ul>
+                </li>
+
+                <li class="menu-item">
+                      <a href="#footer" class="menu-link">
+                        <div data-i18n="Kontak Kami">Kontak Kami</div>
+                      </a>
                 </li>
               </ul>
             </div>

@@ -86,9 +86,10 @@ class InformasiLowonganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function add(string $id)
     {
-        //
+        $date = LowonganMagang::where('id_lowongan', $id)->first();
+        return $date;
     }
 
     /**
@@ -98,10 +99,14 @@ class InformasiLowonganController extends Controller
     {
         try {
             $date = LowonganMagang::where('id_lowongan', $id_lowongan)->first();
+            // dd($id_lowongan);
 
-            if (is_null($date->date_confirm_closing)) {
-                $date->date_confirm_closing = Carbon::parse($request->date)->format('Y-m-d');
+            if ($date->id_lowongan == $id_lowongan) {
+                if (is_null($date->date_confirm_closing)) {
+                    $date->date_confirm_closing = Carbon::parse($request->date)->format('Y-m-d');
+                }
             }
+
             $date->save();
 
 
