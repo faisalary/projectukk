@@ -89,15 +89,15 @@
                                         <h2>{{ $item->posisi_magang }}</h2>
                                         <p>{{ $item->nama_industri }}</p>
                                         <p>{{ $item->alamat_industri }}</p>
-                                        <div class="text-left mb-3">
+                                        {{-- <div class="text-left mb-3">
                                             <button type="button" class="btn btn-success waves-effect me-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima</button>
                                             <button type="button" class="btn btn-danger waves-effect"
                                                 data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="col-2">
-                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        {{-- <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div> --}}
                                         <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
                                         </div>
                                         <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
@@ -120,13 +120,13 @@
                                         <p>{{ $item->alamat_industri }}</p>
                                     </div>
                                     <div class="col-2">
-                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        {{-- <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div> --}}
                                         <div class="text-end mt-3"><span class="badge bg-label-warning">Pending</span>
                                         </div>
-                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
+                                        {{-- <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
                                                 data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
                                                 Lihat Detail
-                                            </u><i class="ti ti-chevron-right mb-1"></i></div>
+                                            </u><i class="ti ti-chevron-right mb-1"></i></div> --}}
                                     </div>
                                 </div>
                             @else
@@ -143,7 +143,7 @@
                                         <p>{{ $item->alamat_industri }}</p>
                                     </div>
                                     <div class="col-2">
-                                        <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div>
+                                        {{-- <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div> --}}
                                         <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span></div>
                                         <div class="text-end mt-3"><button type="button"
                                                 class="btn btn-outline-danger waves-effect waves-light"
