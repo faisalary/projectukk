@@ -48,7 +48,7 @@
                     <li class="breadcrumb-item">
                         <a class="text-secondary">Informasi Lowongan</a>
                     </li>
-                    <li class="breadcrumb-item active">Lowongan {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position }} Periode 21 April - 14 Juni 2023</li>
+                    <li class="breadcrumb-item active">Lowongan {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position}} Periode 21 April - 14 Juni 2023</li>
                 </ol>
             </h4>
         </nav>
@@ -64,7 +64,7 @@
             <option value="5">2021/2022 Genap</option>
             <option value="6">2021/2022 Ganjil</option>
         </select>
-        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i>
+        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalfilter"><i class="tf-icons ti ti-filter"></i>
         </button>
     </div>
 </div>
@@ -184,7 +184,8 @@
         @endforeach
     </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
+    <!-- Modal Filter -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalfilter" aria-labelledby="offcanvasAddUserLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan</h5>
         </div>
@@ -252,7 +253,7 @@
                         <span style="color:#4B465C;">Total Kandidat {{$pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position}}:</span>&nbsp;<span style="color:#7367F0;">{{$total['kandidat'] ?? "0"}}</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
                     </div>
                     <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
-                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($lowongan->date_confirm_closing?->format('d-m-Y'))}}</span>
+                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{($lowongan->date_confirm_closing?->format('d-m-Y') ?? 'Masukan batas konfirmasi penerimaan')}}</span>
                     </div>
                 </div>
 
@@ -277,208 +278,6 @@
             </div>
         </div>
         @endforeach
-
-        <!-- pop-up detail -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="modalslide" aria-labelledby="offcanvasAddUserLabel" style="width: 750px;">
-            <div class="offcanvas-header">
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-
-            <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="" style="min-width: 220px;"><i class="tf-icons ti ti-file-symlink"> Unduh Format CV</i>
-                        </button>
-                        <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
-                            <option disabled selected>Ubah Status Kandidat</option>
-                            <option>Screening</option>
-                            <option>Seleksi Tahap 1</option>
-                            <option>Seleksi Tahap 2</option>
-                            <option>Penawaran</option>
-                            <option>Diterima</option>
-                            <option>Ditolak</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
-                        <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-                            <img src="../../app-assets/img/avatars/2.png" alt="user image" class="d-block h-auto ms-0 ms-sm-4 mt-4  rounded user-profile-img" />
-                        </div>
-                        <div class="flex-grow-1 mt-0 mt-sm-5">
-                            <div class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start ms-3 flex-md-row flex-column gap-4">
-                                <div class="me-2 ms-1">
-                                    <h4 class="mb-0">Cecilia Payne</h4>
-                                    <large class="text">UI UX Designer</large>
-                                </div>
-                                <div class="ms-auto">
-                                    <button class="rounded-circle btn-label-success btn-icon btn-sm waves-effect" style="min-width: 40px; height:40px;">
-                                        <i class="ti ti-mail" style="font-size: 25px;"></i>
-                                    </button>
-                                    <button class="rounded-circle btn-label-success btn-icon btn-sm waves-effect" style="min-width: 40px; height:40px;">
-                                        <i class="ti ti-phone-call" style="font-size: 25px;"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h5> Mengapa Saya Harus Di Terima?</h5>
-                <p class="cursor-pointer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an <span id="dots">...</span><span id="more"> unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span> <u onclick="myFunction()" id="myBtn" style="color:#4EA971">Lebih Banyak</u></p>
-                <hr>
-                <h5>Informasi Pribadi</h5>
-                <div class="row">
-                    <div class="col-3">
-                        <h6>Nama Lengkap</h6>
-                        <p>Cecilia Payne</p>
-                    </div>
-                    <div class="col-3">
-                        <h6>Tanggal Lahir</h6>
-                        <p>25 Desember 2020</p>
-                    </div>
-                    <div class="col-3">
-                        <h6>Jenis Kelamin</h6>
-                        <p>Perempuan</p>
-                    </div>
-                    <div class="col-3">
-                        <h6>Marital Status</h6>
-                        <p>Belum Menikah</p>
-                    </div>
-
-                </div>
-                <div class="row mt-2">
-                    <div class="col-3">
-                        <h6>Warga Negara</h6>
-                        <p>WNA</p>
-                    </div>
-                    <div class="col-2">
-                        <h6>Negara</h6>
-                        <p>Jamaika</p>
-                    </div>
-                    <div class="col-2">
-                        <h6>Provisi</h6>
-                        <p>Stockholm</p>
-                    </div>
-                    <div class="col-2">
-                        <h6>Kota</h6>
-                        <p>Birmingham</p>
-                    </div>
-                    <div class="col-2">
-                        <h6>Kode Pos</h6>
-                        <p>203044</p>
-                    </div>
-
-                </div>
-                <hr>
-                <h5>Pendidikan</h5>
-                <div class="card-body pb-0">
-                    <ul class="timeline ms-1 mb-0">
-                        <li class="timeline-item timeline-item-transparent">
-                            <span class="timeline-point timeline-point-success"></span>
-                            <div class="row">
-                                <div class="col-3">
-                                    <h6>Sekolah/Universitas</h6>
-                                    <p>Glasgow University</p>
-                                </div>
-                                <div class="col-2">
-                                    <h6>Tingkat </h6>
-                                    <p>Bachelor</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Mulai - Akhir</h6>
-                                    <p>18/10/2011 - 18/10/2015</p>
-                                </div>
-                                <div class="col-2">
-                                    <h6>IPK</h6>
-                                    <p>3.89/4.00</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-item timeline-item-transparent border-0">
-                            <span class="timeline-point timeline-point-success"></span>
-                            <div class="row">
-                                <div class="col-3">
-                                    <h6>Sekolah/Universitas</h6>
-                                    <p>Glasgow University</p>
-                                </div>
-                                <div class="col-2">
-                                    <h6>Tingkat</h6>
-                                    <p>Bachelor</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Mulai - Akhir</h6>
-                                    <p>18/10/2011 - 18/10/2015</p>
-                                </div>
-                                <div class="col-2">
-                                    <h6>IPK</h6>
-                                    <p>3.89/4.00</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <hr>
-                <h5>Pengalaman Kerja</h5>
-                <div class="card-body pb-0">
-                    <ul class="timeline ms-1 mb-0">
-                        <li class="timeline-item timeline-item-transparent">
-                            <span class="timeline-point timeline-point-success"></span>
-                            <div class="row">
-                                <div class="col-4">
-                                    <h6>Nama Perusahaan</h6>
-                                    <p>PT ABCD</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Posisi</h6>
-                                    <p>Product Designer</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Mulai - Akhir</h6>
-                                    <p>18/10/2011 - 18/10/2015</p>
-                                </div>
-                                <h6>Deskripsi</h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</p>
-                            </div>
-
-                        </li>
-                        <li class="timeline-item timeline-item-transparent border-0">
-                            <span class="timeline-point timeline-point-success"></span>
-
-                            <div class="row">
-                                <div class="col-4">
-                                    <h6>Nama Perusahaan</h6>
-                                    <p>PT ABCD</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Posisi</h6>
-                                    <p>Product Designer</p>
-                                </div>
-                                <div class="col-4">
-                                    <h6>Mulai - Akhir</h6>
-                                    <p>18/10/2011 - 18/10/2015</p>
-                                </div>
-                                <h6>Deskripsi</h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</p>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-                <h5>Keahlian</h5>
-                <span class='badge rounded-pill bg-label-success me-1'>Figma</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Figma</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Figma</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Figma</span>
-                <hr>
-                <h5>Bahasa</h5>
-                <span class='badge rounded-pill bg-label-success me-1'>Inggris</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Inggris</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Inggris</span>
-                <span class='badge rounded-pill bg-label-success me-1'>Inggris</span>
-            </div>
-        </div>
 
     </div>
 
