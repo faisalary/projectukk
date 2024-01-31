@@ -5,14 +5,13 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -68,7 +67,7 @@
 @section('main')
     <div class="row">
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi UI/UX Designer - Periode 21
+            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi {{ $lowongan->intern_position }} - Periode 21
                 April
                 -
                 11 Mei 2023</h4>
@@ -91,34 +90,69 @@
             <div class="row">
                 <div class="col-6">
                     <ul class="nav nav-pills mb-3 " role="tablist">
-                       @if ($pendaftaran->lowongan_magang->tahapan_seleksi)
-                        <li class="nav-item" style="font-size: small;">
-                            <button type="button" class="nav-link active showSingle" target="2" role="tab"
-                                data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
-                                aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                                <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
-                            </button>
-                        </li>
-                        <li class="nav-item" style="font-size: small;">
-                            <button type="button" class="nav-link showSingle" target="2" role="tab"
-                                data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2"
-                                aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
-                                <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
-                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
-                            </button>
-                        </li>
-                        <li class="nav-item" style="font-size: small;">
-                            <button type="button" class="nav-link showSingle" target="2" role="tab"
-                                data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3"
-                                aria-controls="navs-pills-justified-tahap3" aria-selected="false" style="padding: 8px 9px;">
-                                <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
-                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
-                            </button>
-                        </li>
+                        @if (($lowongan->tahapan_seleksi) == '1')
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link active showSingle" target="1" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
+                                    aria-controls="navs-pills-justified-tahap1" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
+                        @elseif ($lowongan->tahapan_seleksi == '2')
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link active showSingle" target="1" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
+                                    aria-controls="navs-pills-justified-tahap1" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link showSingle" target="2" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2"
+                                    aria-controls="navs-pills-justified-tahap2" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
+                        @else
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link active showSingle" target="1" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
+                                    aria-controls="navs-pills-justified-tahap1" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link showSingle" target="2" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2"
+                                    aria-controls="navs-pills-justified-tahap2" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
+                            <li class="nav-item" style="font-size: small;">
+                                <button type="button" class="nav-link showSingle" target="3" role="tab"
+                                    data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3"
+                                    aria-controls="navs-pills-justified-tahap3" aria-selected="false"
+                                    style="padding: 8px 9px;">
+                                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
+                                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                        style="background-color: #DCEEE3; color: #4EA971;"></span>
+                                </button>
+                            </li>
                         @endif
                     </ul>
                 </div>
@@ -163,9 +197,9 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-    <script src="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+    <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
 
     <script>
         $("#modalTambahJadwal").on("hide.bs.modal", function() {
@@ -180,7 +214,9 @@
 
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('jadwal-seleksi/lanjutan/show') }}?type=" + idElement;
+            let idLowongan = '{{ $pendaftaran->id_lowongan ?? 0 }}';
+            // console.log(idElement);
+            let url = "{{ url('jadwal-seleksi/lanjutan/show/${idLowongan}') }}?type=" + idElement;
             if ($(this).attr('id') == null) return;
 
             $(this).DataTable({
@@ -228,7 +264,7 @@
                 jQuery('.targetDiv').hide('.cnt');
                 jQuery("#div" + idElement).slideToggle();
 
-                console.log(idElement);
+                // console.log(idElement);
             });
         });
 
@@ -244,12 +280,15 @@
             var id = e.attr('data-id');
             var value = e.val();
             var type = e.attr('data-type');
+            var tahap = e.attr('data-tahap');
+            // console.log(id);
             $.ajax({
                 method: "POST",
                 data: {
                     'id': id,
                     'value': value,
-                    'type': type
+                    'type': type,
+                    'tahap': tahap
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -264,7 +303,11 @@
                             confirmButtonClass: 'btn btn-success',
                         })
                     } else {
-                        location.reload();
+                        for (let index = 1; index <= 3; index++) {
+                            $('#tahap2'+index).DataTable().ajax.reload();
+                            console.log(index);
+                        }
+                        // location.reload();
                     }
                 }
             });
@@ -272,13 +315,13 @@
     </script>
 
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-    <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
-    <script src="../../app-assets/js/forms-pickers.js"></script>
-    <script src="../../assets/js/forms-selects.js"></script>
-    @endsection
+    <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+    <script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
+    <script src="{{ asset('app-assets/js/forms-selects.js') }}"></script>
+@endsection

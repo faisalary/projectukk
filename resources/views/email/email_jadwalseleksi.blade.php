@@ -1,11 +1,3 @@
-{{-- <x-mail::message>
-    <h1> </h1>
-    <div style="text-align: center;">
-        <img src="">
-    </div>
-</x-mail::message> --}}
-
-
 <!DOCTYPE html>
 <html>
 <head>

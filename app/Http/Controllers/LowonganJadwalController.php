@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LowonganMagang;
+use App\Models\Seleksi;
 use Illuminate\Http\Request;
 
 class LowonganJadwalController extends Controller
@@ -12,8 +13,35 @@ class LowonganJadwalController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $lowongan = LowonganMagang::all();
-        
+        if ($request->ajax() && $request->component == "card") {
+            $lowongan = LowonganMagang::where('id_industri', $id)->get();
+            $seleksi= Seleksi::where('id_seleksi_lowongan', $id)->get();
+
+            // $seleksi->transform(function ($item) {
+            //     // $item->kandidat = $item->total_pelamar->count();
+            //     $item->tahap1 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap1')->count();
+            //     $item->tahap2 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap2')->count();
+            //     $item->tahap3 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap3')->count();
+            //     return $item;
+            // });
+
+            $seleksi = $seleksi->map(function ($item) {
+                $item->tahap1 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap1')->count();
+                $item->tahap2 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap2')->count();
+                $item->tahap3 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap3')->count();
+                return $item;
+            });
+            
+
+            return view('company.jadwal_seleksi.jadwal_card ', compact('lowongan','seleksi'))->render();
+        }
+        $urlGetCard = url('jadwal-seleksi/lowongan', $id);
+        $LMagang = LowonganMagang::where('id_industri', $id)->get();
+        $lowongan_count = $LMagang->count();
+
+        $lowongan = LowonganMagang::where('id_industri', $id)->first();
+        $seleksi = Seleksi::all();
+        return view('company.jadwal_seleksi.jadwal', compact('seleksi', 'lowongan', 'urlGetCard', 'lowongan_count'));
     }
 
     /**

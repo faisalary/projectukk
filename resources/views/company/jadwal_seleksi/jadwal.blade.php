@@ -1,7 +1,7 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <style>
         .swal2-icon {
             border-color: transparent !important;
@@ -69,85 +69,16 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="card mt-4">
-                        <a href="/seleksi/lanjutan/jadwal" style="hover:" class="card-body">
-                            <div class="row">
-                                <div class="col-2">
-                                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;"
-                                            src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                    </figure>
-                                </div>
-                                <div class="col-10 d-flex justify-content-between">
-                                    <div>
-                                        <h5>UI/UX Designer</h5>
-                                        <p>IT-Computer - Software</p>
-                                    </div>
-                                    <div>
-                                        <span class="badge bg-label-success me-1 text-end">Aktif</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gy-3 mt-3">
-                                <div class="col-md-2 col-6">
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge rounded-pill bg-label-success me-3 p-2">
-                                            <i class="ti ti-users ti-sm"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <small>Total Pelamar</small>
-                                            <h5 class="mb-0">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-6">
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge rounded-pill bg-label-success me-3 p-2">
-                                            <i class="ti ti-file-report ti-sm"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <small>Seleksi Tahap 1</small>
-                                            <h5 class="mb-0">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-6">
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge rounded-pill bg-label-success me-3 p-2">
-                                            <i class="ti ti-file-report ti-sm"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <small>Seleksi Tahap 2</small>
-                                            <h5 class="mb-0">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-6">
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge rounded-pill bg-label-success me-3 p-2">
-                                            <i class="ti ti-file-report ti-sm"></i>
-                                        </div>
-                                        <div class="card-info">
-                                            <small>Seleksi Tahap 3</small>
-                                            <h5 class="mb-0">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row mt-2">
-                                <div class="col-12 d-flex justify-content-between">
-                                    <div class="col-6">
-                                        <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;">
-                                            30 Juli 2023 - 30 Juni 2024</div>
-                                        <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                    <!-- card-informasi-lowongan -->
+                    <div id="container-card" class="mb-3">
+                        @if ($lowongan_count == 0)
+                            <img src="\assets\images\no-data.png" alt="no-data"
+                                style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 40%;">
+                        @endif
                     </div>
                 </div>
+
+
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end" style="margin-right:25px;">
                         <li class="page-item first">
@@ -173,6 +104,24 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+
+    <script>
+        $(function() {
+            loadData();
+        });
+        function loadData() {
+            $.ajax({
+                url: "{{ $urlGetCard }}?component=card",
+                type: "get",
+                success: function(res) {
+                    // $("#container-card").html(res);
+                    if (res != "") {
+                        $("#container-card").html(res);
+                    }
+                }
+            })
+        }
+    </script>
 @endsection
