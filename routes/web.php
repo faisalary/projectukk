@@ -280,19 +280,19 @@ Route::get('/apply', function () {
 });
 
 Route::get('/magang_fakultas', function () {
-    return view('layouts.program_magang.magang');
+    return view('program_magang.magang');
 });
 
 Route::get('/informasi/magang', function () {
-    return view('layouts.program_magang.informasi_magang');
+    return view('program_magang.informasi_magang');
 });
 
 Route::get('/lowongan-magang-tersimpan', function () {
-    return view('layouts.program_magang.lowongan_magang_tersimpan');
+    return view('program_magang.lowongan_magang_tersimpan');
 });
 
 Route::get('/lowongan-pekerjaan-tersimpan', function () {
-    return view('layouts.program_magang.lowongan_pekerjaan_tersimpan');
+    return view('program_magang.lowongan_pekerjaan_tersimpan');
 });
 
 Route::get('/informasi/pribadi', function () {
@@ -327,14 +327,14 @@ Route::prefix('jadwal-seleksi')->group(function () {
 });
 
 Route::get('/detail/lowongan/magang', function () {
-    return view('layouts.program_magang.detail_lowongan');
+    return view('program_magang.detail_lowongan');
 });
 Route::get('/anggota/tim', function () {
     return view('company.anggota_tim.index');
 });
 
 Route::get('/detail/lowongan/magang', function () {
-    return view('layouts.program_magang.detail_lowongan');
+    return view('program_magang.detail_lowongan');
 });
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
@@ -366,9 +366,17 @@ Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
 });
 
-
-Route::get('/pengajuan/surat', function () {
-    return view('pengajuan_magang.pengajuan_mandiri');
+// Route::get('/pengajuan/surat', function () {
+//     return view('pengajuan_magang.pengajuan_mandiri');
+// });
+Route::prefix('/pengajuan/surat')->group(function () {
+    Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('mandiri.index');
+    Route::post('/show', [App\Http\Controllers\KonfirmasiMandiriController::class, 'show'])->name('mandiri.show');
+    Route::post('/store', [App\Http\Controllers\KonfirmasiMandiriController::class, 'store'])->name('mandiri.store');
+    Route::get('/detail', [App\Http\Controllers\KonfirmasiMandiriController::class, 'detail'])->name('mandiri.detail');
+    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
 });
 Route::get('/logbook', function () {
     return view('logbook.logbook', ['active_menu' => 'logbook']);
@@ -389,11 +397,26 @@ Route::get('/magang-mandiri', function () {
     return view('admin_kandidat.magang_mandiri');
 });
 
-
 Route::get('/logbook/mahasiswa', function () {
     return view('company.logbook_mahasiswa.logbook');
 });
 
 Route::get('/logbook/detail', function () {
     return view('company.logbook_mahasiswa.detail_logbook');
+});
+
+Route::get('/kelola-pengguna', function () {
+    return view('admin.kelola-pengguna.index');
+});
+
+Route::get('/aboutus/talentern', function () {
+    return view('landingpage.about_us_talentern');
+});
+
+Route::get('/aboutus/techno', function () {
+    return view('landingpage.about_us_techno');
+});
+
+Route::get('/aboutus/lkmfit', function () {
+    return view('landingpage.about_us_lkm');
 });
