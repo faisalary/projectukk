@@ -89,20 +89,15 @@
                                         <h2>{{ $item->posisi_magang }}</h2>
                                         <p>{{ $item->nama_industri }}</p>
                                         <p>{{ $item->alamat_industri }}</p>
-                                        {{-- <div class="text-left mb-3">
-                                            <button type="button" class="btn btn-success waves-effect me-2"
-                                                data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima</button>
-                                            <button type="button" class="btn btn-danger waves-effect"
-                                                data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak</button>
-                                        </div> --}}
+
                                     </div>
                                     <div class="col-2">
-                                        {{-- <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div> --}}
+
                                         <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
                                         </div>
-                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                                data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
-                                                Lihat Detail
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer">
+                                                <a data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="detailDisetujui($(this))">Lihat Detail</a>
                                             </u><i class="ti ti-chevron-right mb-1"></i></div>
                                     </div>
                                 </div>
@@ -120,13 +115,10 @@
                                         <p>{{ $item->alamat_industri }}</p>
                                     </div>
                                     <div class="col-2">
-                                        {{-- <div class="text-end ps-5"> <i class="ti ti-clock"> </i> 8 hari lalu</div> --}}
+
                                         <div class="text-end mt-3"><span class="badge bg-label-warning">Pending</span>
                                         </div>
-                                        {{-- <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                                data-bs-toggle="modal" data-bs-target="#modalDetailDisetujui">
-                                                Lihat Detail
-                                            </u><i class="ti ti-chevron-right mb-1"></i></div> --}}
+
                                     </div>
                                 </div>
                             @else
@@ -147,13 +139,13 @@
                                         <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span></div>
                                         <div class="text-end mt-3"><button type="button"
                                                 class="btn btn-outline-danger waves-effect waves-light"
-                                                data-bs-toggle="modal" data-bs-target="#modalEdit" style="height:35px;">
+                                                data-id="{{ $item->id_pengajuan }}" onclick="edit($(this))"
+                                                style="height:35px;">
                                                 <i class="ti ti-edit mb-1 me-1"></i>
                                                 Perbaiki Pengajuan</button></div>
-                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"
-                                                data-bs-toggle="modal" data-bs-target="#modalDetailDitolak">
-                                                Lihat Detail
-                                            </u><i class="ti ti-chevron-right mb-1"></i></div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><a
+                                                data-id="{{ $item->id_pengajuan }}" onclick="detailDitolak($(this))">Lihat
+                                                Detail</a><i class="ti ti-chevron-right mb-1"></i></div>
                                     </div>
                                 </div>
                             @endif
@@ -181,91 +173,88 @@
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
-        // var table = $('#table-riwayat').DataTable({
-        //     ajax: "{{ url('pengajuan/surat/show') }}",
-        //     serverSide: false,
-        //     processing: true,
-        //     deferRender: true,
-        //     type: 'GET',
-        //     destroy: true,
-        //     columns: [{
-        //             data: 'DT_RowIndex'
-        //         },
+        $("#modalAjukan").on("hide.bs.modal", function() {
 
-        //         {
-        //             data: 'namaindustri',
-        //             name: 'namaindustri'
-        //         },
-        //         {
-        //             data: 'email',
-        //             name: 'email'
-        //         },
-        //         {
-        //             data: 'notelpon',
-        //             name: 'notelpon'
-        //         },
-        //         {
-        //             data: 'alamatindustri',
-        //             name: 'alamatindustri'
-        //         },
-        //         {
-        //             data: 'description',
-        //             name: 'description'
-        //         },
-        //         {
-        //             data: 'kategori_industri',
-        //             name: 'kategori_industri'
-        //         },
-        //         {
-        //             data: 'statuskerjasama',
-        //             name: 'statuskerjasama'
-        //         },
-        //         {
-        //             data: 'status',
-        //             name: 'status'
-        //         }
-        //     ]
-        // });
+            $('#modalAjukan form')[0].reset();
+            $('#modalAjukan form').attr('action', "{{ url('pengajuan/surat/store') }}");
+            $('.invalid-feedback').removeClass('d-block');
+            $('.form-control').removeClass('is-invalid');
+        });
+
+        function detailDisetujui(e) {
+            let id_pengajuan = e.attr("data-id");
+
+            var url = `{{ url('pengajuan/surat/detail/') }}/${id_pengajuan}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $('#nama_industri').text(response.nama_industri);
+                    $('#posisi_magang').text(response.posisi_magang);
+                    $('#jabatan').text(response.jabatan);
+                    $('#nim').text(response.nim);
+                    $('#email').text(response.email);
+                    $('#nohp').text(response.nohp);
+                    $('#date').text(response.startdate + '-' + response.enddate);
+                    $('#alamat_industri').text(response.alamat_industri);
+
+                    $('#modalDetailDisetujui').modal('show');
+                }
+            });
+        }
+
+        function detailDitolak(e) {
+            let id_pengajuan = e.attr("data-id");
+
+            var url = `{{ url('pengajuan/surat/detail/') }}/${id_pengajuan}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    $('#nama_industris').text(response.nama_industri);
+                    $('#posisi_magangs').text(response.posisi_magang);
+                    $('#jabatans').text(response.jabatan);
+                    $('#nims').text(response.nim);
+                    $('#emails').text(response.email);
+                    $('#nohps').text(response.nohp);
+                    $('#dates').text(response.startdate + '-' + response.enddate);
+                    $('#alamat_industris').text(response.alamat_industri);
+                    $('#alasans').text(response.alasan);
+                    $('#modalDetailDitolak').modal('show');
+                }
+            });
+        }
+
+        function edit(e) {
+            let id = e.attr('data-id');
+
+            let action = `{{ url('pengajuan/surat/update/') }}/${id}`;
+            var url = `{{ url('pengajuan/surat/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    $('#modalAjukan form').attr('action', action);
+                    $('#nama_industri').val(response.nama_industri);
+                    $('#posisi_magang').val(response.posisi_magang);
+                    $('#jabatan').val(response.jabatan);
+                    $('#nim').val(response.nim);
+                    $('#email').val(response.email);
+                    $('#nohp').val(response.nohp);
+                    $('#date').val(response.startdate + '-' + response.enddate);
+                    $('#alamat_industri').val(response.alamat_industri);
+                    $('#alasan').val(response.alasan);
+
+                    $('#modalAjukan').modal('show');
+                }
+            });
+        }
 
         $(".flatpickr-date").flatpickr({
             altInput: true,
             altFormat: 'j F Y',
             dateFormat: 'Y-m-d'
         });
-
-        // $("#modalAjukan").on("hide.bs.modal", function() {
-
-        //     $("#simpanButton").html("Save Data")
-        //     $('#modalAjukan form')[0].reset();
-        //     $('#modalAjukan form').attr('action', "{{ route('mandiri.store') }}");
-        //     $('.invalid-feedback').removeClass('d-block');
-        //     $('.form-control').removeClass('is-invalid');
-        // });
-
-
-        // function ajukan(e) {
-        //     $('#modalAjukan').modal('store');
-        //     var approveUrl = "{{ url('pengajuan/surat/store') }}/" + e.attr('data-id');
-
-        //     $('#simpanButton').on('click', function() {
-
-        //         $.ajax({
-        //             url: approveUrl,
-        //             type: "POST",
-        //             headers: {
-        //                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        //             },
-        //             success: function(response) {
-        //                 if (!response.error) {
-        //                     alert('berhasil');
-        //                 } else {
-        //                     alert('tidak berhasil');
-        //                 }
-        //             }
-        //         });
-
-        //         $('#modalAjukan').modal('hide');
-        //     });
-        // }
     </script>
 @endsection

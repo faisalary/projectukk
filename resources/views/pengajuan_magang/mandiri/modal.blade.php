@@ -39,33 +39,33 @@
                     <div class="col-6">
                         <ul class="list-unstyled">
                             <li class="mb-1">
-                                <span>{{ $item->nama_industri }}</span>
+                                <span id="nama_industri"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->posisi_magang }}</span>
+                                <span id="posisi_magang"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->jabatan }}</span>
+                                <span id="jabatan"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->nim }}</span>
+                                <span id="nim"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->email }}</span>
+                                <span id="email"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->nohp }}</span>
+                                <span id="nohp"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->startdate }} - {{ $item->enddate }}</span>
+                                <span id="date"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->alamat_industri }}</span>
+                                <span id="alamat_industri"></span>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="row text-start">
+                {{-- <div class="row text-start">
                     <h4 class="ms-2 mt-2">Detail Pengajuan</h4>
                     <div class="col-6">
                         <ul class="list-unstyled ms-2">
@@ -93,7 +93,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -140,39 +140,37 @@
                     <div class="col-6">
                         <ul class="list-unstyled">
                             <li class="mb-1">
-                                <span>{{ $item->nama_industri }}</span>
+                                <span id="nama_industris"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->posisi_magang }}</span>
+                                <span id="posisi_magangs"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->jabatan }}</span>
+                                <span id="jabatans"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->nim }}</span>
+                                <span id="nims"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->email }}</span>
+                                <span id="emails"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->nohp }}</span>
+                                <span id="nohps"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->startdate }} - {{ $item->enddate }}</span>
+                                <span id="dates"></span>
                             </li>
                             <li class="mb-2 pt-1">
-                                <span>{{ $item->alamat_industri }}</span>
+                                <span id="alamat_industris"></span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="border-bottom">
                     <h4 class="ms-2 mt-2">Komentar</h4>
-                    <p class="mt-2 ms-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis
-                        lacinia erat in auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor.</p>
+                    <p class="mt-2 ms-2" id="alasans"></p>
                 </div>
-                <div class="row text-start">
+                {{-- <div class="row text-start">
                     <h4 class="ms-2 mt-2">Detail Pengajuan</h4>
                     <div class="col-6">
                         <ul class="list-unstyled ms-2">
@@ -200,7 +198,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -295,86 +293,92 @@
 </div>
 
 <!-- Modal Edit-->
-<div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalEdit">Pengajuan Surat Pengantar Magang</h5>
+                <h5 class="modal-title" id="modalAjukan">Pengajuan Surat Pengantar Magang</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="tanggalmulai" class="form-label">Tanggal Pengajuan</label>
-                        <input type="text" class="form-control  flatpickr-date" id="tanggalmulai"
-                            placeholder="YYYY-MM-DD" readonly="readonly">
+
+            <form class="default-form" action="{{ url('pengajuan/surat/edit') }}" method="POST">
+                @csrf
+                <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="tanggalmulai" class="form-label">Tanggal Pengajuan</label>
+                            <input type="text" class="form-control  flatpickr-date" id="tglpeng" name="tglpeng"
+                                placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
+                            <input type="text" id="nama_industris" name="nama_industri" class="form-control"
+                                placeholder="Masukkan Nama Perusahaan" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
+                            <input type="text" id="posisi_magangs" name="posisi_magang" class="form-control"
+                                placeholder="Masukkan Nama Posisi Magang" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaposisi" class="form-label">Bagian/Jabatan yang Dituju</label>
+                            <input type="text" id="jabatans" name="jabatan" class="form-control"
+                                placeholder="Masukkan Bagian/Jabatan yang Dituju" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaposisi" class="form-label">Alamat Perusahaan</label>
+                            <input type="text" id="alamat_industris" name="alamat_industri" class="form-control"
+                                placeholder="Masukkan Alamat Perusahaan" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaposisi" class="form-label">No.Telp Perusahaan</label>
+                            <input type="text" id="nohp" name="nohp" class="form-control"
+                                placeholder="083xxxxxxx" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="namaposisi" class="form-label">Email Perusahaan</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="name@example.com">
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col mb-0">
+                            <label for="tanggalmulai" class="form-label">Tanggal Mulai<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control  flatpickr-date" id="startdate"
+                                name="startdate" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                        <div class="mt-5"
+                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                        </div>
+                        <div class="col mb-0">
+                            <label for="tanggalakhir" class="form-label">Tanggal Akhir<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control  flatpickr-date" id="enddate" name="enddate"
+                                placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-                        <input type="text" id="namaperusahaan" class="form-control"
-                            placeholder="Masukkan Nama Perusahaan" />
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
-                        <input type="text" id="namaperusahaan" class="form-control"
-                            placeholder="Masukkan Nama Posisi Magang" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaposisi" class="form-label">Bagian/Jabatan yang Dituju</label>
-                        <input type="text" id="namaperusahaan" class="form-control"
-                            placeholder="Masukkan Bagian/Jabatan yang Dituju" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaposisi" class="form-label">Alamat Perusahaan</label>
-                        <input type="text" id="namaperusahaan" class="form-control"
-                            placeholder="Masukkan Alamat Perusahaan" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaposisi" class="form-label">No.Telp Perusahaan</label>
-                        <input type="text" id="namaperusahaan" class="form-control" placeholder="083xxxxxxx" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="namaposisi" class="form-label">No.Telp Perusahaan</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1"
-                            placeholder="name@example.com">
-                    </div>
-                </div>
-                <div class="row g-2 mb-3">
-                    <div class="col mb-0">
-                        <label for="tanggalmulai" class="form-label">Tanggal Mulai<span
-                                style="color: red;">*</span></label>
-                        <input type="text" class="form-control  flatpickr-date" id="tanggalmulai"
-                            placeholder="YYYY-MM-DD" readonly="readonly">
-                    </div>
-                    <div class="mt-5"
-                        style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
-                    </div>
-                    <div class="col mb-0">
-                        <label for="tanggalakhir" class="form-label">Tanggal Akhir<span
-                                style="color: red;">*</span></label>
-                        <input type="text" class="form-control  flatpickr-date" id="tanggalakhir"
-                            placeholder="YYYY-MM-DD" readonly="readonly">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
+            </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Modal Ditolak-->
 <div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
