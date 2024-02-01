@@ -232,6 +232,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('kandidat/')->group(function () {
             Route::get('/{id_lowongan}', [App\Http\Controllers\InformasiKandidatController::class, 'index'])->name('kandidat.index');
+            Route::get('/detail/{id_pendaftaran}', [App\Http\Controllers\InformasiKandidatController::class, 'detail'])->name('kandidat.detail');
             Route::get('/show/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'show'])->name('kandidat.show');
             Route::post('/store', [App\Http\Controllers\InformasiKandidatController::class, 'store'])->name('kandidat.store');
             Route::post('/status/{id}', [App\Http\Controllers\InformasiKandidatController::class, 'status'])->name('kandidat.status');

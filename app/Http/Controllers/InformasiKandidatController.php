@@ -90,10 +90,8 @@ class InformasiKandidatController extends Controller
                 return null;
             })
             ->addColumn('action', function ($row) {
-                // $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                // $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>";
+                $btn = "<a href='/informasi/kandidat/detail/{$row->id_pendaftaran}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i>";
 
                 return $btn;
             })
@@ -125,5 +123,15 @@ class InformasiKandidatController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function detail(Request $request, $id)
+    {
+        $pelamar = PendaftaranMagang::where('id_pendaftaran', $id)->first();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $pelamar->id_lowongan)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
+
+        $lowongan = LowonganMagang::where('id_lowongan', $pelamar->id_lowongan)->first();
+
+        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan'));
     }
 }
