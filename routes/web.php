@@ -359,9 +359,7 @@ Route::get('/daftar_perusahaan', function () {
 Route::get('/lowongan/magang', function () {
     return view('perusahaan.lowongan');
 });
-Route::get('/konfirmasi/magang', function () {
-    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
-});
+
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
 });
@@ -419,4 +417,14 @@ Route::get('/aboutus/techno', function () {
 
 Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
+});
+
+Route::prefix('konfirmasi/magang')->group(function () {
+    Route::get('/', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('konfirmasi.index');
+    Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('konfirmasi.show');
+    Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('konfirmasi.store');
+    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('konfirmasi.detail');
+    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('konfirmasi.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('konfirmasi.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('konfirmasi.status');
 });

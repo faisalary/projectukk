@@ -143,9 +143,10 @@
                                                 style="height:35px;">
                                                 <i class="ti ti-edit mb-1 me-1"></i>
                                                 Perbaiki Pengajuan</button></div>
-                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><a
-                                                data-id="{{ $item->id_pengajuan }}" onclick="detailDitolak($(this))">Lihat
-                                                Detail</a><i class="ti ti-chevron-right mb-1"></i></div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"><a
+                                                    data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="detailDitolak($(this))">Lihat
+                                                    Detail</a></u><i class="ti ti-chevron-right mb-1"></i></div>
                                     </div>
                                 </div>
                             @endif

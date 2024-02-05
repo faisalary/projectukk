@@ -168,7 +168,7 @@
                 </div>
                 <div class="border-bottom">
                     <h4 class="ms-2 mt-2">Komentar</h4>
-                    <p class="mt-2 ms-2" id="alasans"></p>
+                    <p class="ms-2 text-area" contenteditable="true" id="alasans"></p>
                 </div>
                 {{-- <div class="row text-start">
                     <h4 class="ms-2 mt-2">Detail Pengajuan</h4>
