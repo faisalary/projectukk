@@ -223,49 +223,49 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="tanggalmulai" class="form-label">Tanggal Pengajuan</label>
-                            <input type="text" class="form-control  flatpickr-date" id="tglpeng" name="tglpeng"
+                            <input type="text" class="form-control  flatpickr-date" id="tglpeng_" name="tglpeng"
                                 placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
-                            <input type="text" id="nama_industri" name="nama_industri" class="form-control"
+                            <input type="text" id="nama_industri_" name="nama_industri" class="form-control"
                                 placeholder="Masukkan Nama Perusahaan" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
-                            <input type="text" id="posisi_magang" name="posisi_magang" class="form-control"
+                            <input type="text" id="posisi_magang_" name="posisi_magang" class="form-control"
                                 placeholder="Masukkan Nama Posisi Magang" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">Bagian/Jabatan yang Dituju</label>
-                            <input type="text" id="jabatan" name="jabatan" class="form-control"
+                            <input type="text" id="jabatan_" name="jabatan" class="form-control"
                                 placeholder="Masukkan Bagian/Jabatan yang Dituju" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">Alamat Perusahaan</label>
-                            <input type="text" id="alamat_industri" name="alamat_industri" class="form-control"
+                            <input type="text" id="alamat_industri_" name="alamat_industri" class="form-control"
                                 placeholder="Masukkan Alamat Perusahaan" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">No.Telp Perusahaan</label>
-                            <input type="text" id="nohp" name="nohp" class="form-control"
+                            <input type="text" id="nohp_" name="nohp" class="form-control"
                                 placeholder="083xxxxxxx" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">Email Perusahaan</label>
-                            <input type="email" class="form-control" id="email" name="email"
+                            <input type="email" class="form-control" id="email_" name="email"
                                 placeholder="name@example.com">
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                         <div class="col mb-0">
                             <label for="tanggalmulai" class="form-label">Tanggal Mulai<span
                                     style="color: red;">*</span></label>
-                            <input type="text" class="form-control  flatpickr-date" id="startdate"
+                            <input type="text" class="form-control  flatpickr-date" id="startdate_"
                                 name="startdate" placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                         <div class="mt-5"
@@ -282,7 +282,7 @@
                         <div class="col mb-0">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir<span
                                     style="color: red;">*</span></label>
-                            <input type="text" class="form-control  flatpickr-date" id="enddate" name="enddate"
+                            <input type="text" class="form-control  flatpickr-date" id="enddate_" name="enddate"
                                 placeholder="YYYY-MM-DD" readonly="readonly">
                         </div>
                     </div>

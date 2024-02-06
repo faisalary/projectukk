@@ -237,15 +237,16 @@
                 success: function(response) {
                     console.log(response);
                     $('#modalAjukan form').attr('action', action);
-                    $('#nama_industri').val(response.nama_industri);
-                    $('#posisi_magang').val(response.posisi_magang);
-                    $('#jabatan').val(response.jabatan);
-                    $('#nim').val(response.nim);
-                    $('#email').val(response.email);
-                    $('#nohp').val(response.nohp);
-                    $('#date').val(response.startdate + '-' + response.enddate);
-                    $('#alamat_industri').val(response.alamat_industri);
-                    $('#alasan').val(response.alasan);
+                    $('#tglpeng_').val(response.tglpeng).trigger('change');
+                    $('#nama_industri_').val(response.nama_industri);
+                    $('#posisi_magang_').val(response.posisi_magang);
+                    $('#jabatan_').val(response.jabatan);
+                    $('#nim_').val(response.nim);
+                    $('#email_').val(response.email);
+                    $('#nohp_').val(response.nohp);
+                    $('#date_').val(response.startdate + '-' + response.enddate).trigger('change');
+                    $('#alamat_industri_').val(response.alamat_industri);
+                    $('#alasan_').val(response.alasan);
 
                     $('#modalAjukan').modal('show');
                 }
