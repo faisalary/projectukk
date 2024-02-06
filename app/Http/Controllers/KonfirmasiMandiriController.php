@@ -79,15 +79,47 @@ class KonfirmasiMandiriController extends Controller
      */
     public function edit(string $id)
     {
-
+        $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+        return $mandiri;
     }
 
+    public function detail($id)
+    {
+        $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+        return $mandiri;
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        try {
+            $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
 
+            $mandiri->nim = $request->nim;
+            $mandiri->tglpeng = $request->tglpeng;
+            $mandiri->nama_industri = $request->nama_industri;
+            $mandiri->posisi_magang = $request->posisi_magang;
+            $mandiri->jabatan = $request->jabatan;
+            $mandiri->alamat_industri = $request->alamat_industri;
+            $mandiri->nohp = $request->nohp;
+            $mandiri->email = $request->email;
+            $mandiri->startdate = $request->startdate;
+            $mandiri->enddate = $request->enddate;
+            $mandiri->alasan = $request->alasan;
+            $mandiri->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data successfully Updated!',
+                'modal' => '#modalEdit',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
