@@ -8,30 +8,36 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\email_template;
+use Illuminate\Http\Request;
 
 class EmailJadwalSeleksi extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $details;
+    public $user;
+    public $subjek;
+    // public $pathToFile;
 
     /**
      * Create a new message instance.
      * 
      * @return void
      */
-    public function __construct($details)
+    public function __construct($user,$subjek)
     {
-        $this->details = $details;
+        $this->user = $user;
+        $this->subjek = $subjek;
     }
 
     /**
      * Get the message envelope.
      * @return $this
      */
-    public function build()
+    public function build(Request $request)
     {
-        return $this->subject('Mail from websitepercobaan.com')
+        $email = email_template::where('id_email_template', $request->subjek)->first();
+        return $this->subject($this->subjek)
                     ->view('email.email_jadwalseleksi');
     }
     // public function envelope(): Envelope

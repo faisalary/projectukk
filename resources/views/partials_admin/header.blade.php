@@ -449,7 +449,7 @@
                         <!-- Master Data -->
                         <li
                             class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
-                            <a href="/master-data-email" class="menu-link">
+                            <a href="/company/master-email" class="menu-link">
                                 <i class="menu-icon tf-icons ti ti-database"></i>
                                 <div data-i18n="Master Data Email">Master Data Email</div>
                             </a>

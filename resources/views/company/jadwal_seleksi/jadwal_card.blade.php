@@ -76,7 +76,7 @@
                                 <div class="card-info">
                                     <small>Seleksi Tahap 1</small>
                                     @foreach ($seleksi as $s)
-                                        <h5 class="mb-0">{{ $s->namatahap_seleksi ?? '0' }}</h5>
+                                        <h5 class="mb-0">{{ $s->tahap1 ?? '0' }}</h5>
                                     @endforeach
                                 </div>
                             </div>

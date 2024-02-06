@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
@@ -67,7 +68,8 @@
 @section('main')
     <div class="row">
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi {{ $lowongan->intern_position }} - Periode 21
+            <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi
+                asdfg - Periode 21
                 April
                 -
                 11 Mei 2023</h4>
@@ -90,7 +92,7 @@
             <div class="row">
                 <div class="col-6">
                     <ul class="nav nav-pills mb-3 " role="tablist">
-                        @if (($lowongan->tahapan_seleksi) == '1')
+                        @if ($lowongan->tahapan_seleksi == '1')
                             <li class="nav-item" style="font-size: small;">
                                 <button type="button" class="nav-link active showSingle" target="1" role="tab"
                                     data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1"
@@ -303,10 +305,9 @@
                             confirmButtonClass: 'btn btn-success',
                         })
                     } else {
-                        for (let index = 1; index <= 3; index++) {
-                            $('#tahap2'+index).DataTable().ajax.reload();
-                            console.log(index);
-                        }
+                        setTimeout(function() {
+                            $('.table').DataTable().ajax.reload();
+                        }, 1000);
                         // location.reload();
                     }
                 }

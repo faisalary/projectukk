@@ -249,7 +249,8 @@
             },
             buttonsStyling: false,
         }).then(function (result) {
-            if (result.value) {
+            if (result.isConfirmed) {
+                console.log('apa aja');
                 // var id = $(e).attr("data-id");
                 // let data = {
                 //     id: id,
@@ -292,7 +293,6 @@
                                     // $(reset_form).removeClass('was-validated');
                                     reset_form.reset();
                                     $(response.modal).modal("hide");
-                                    if (typeof matrix === "function") matrix();
                                 } else {
                                     if (response.url) {
                                         location = response.url;

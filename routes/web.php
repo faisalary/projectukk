@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JadwalSeleksiController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
@@ -248,7 +249,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('kelola')->group(function () {
-        Route::prefix('lowongan')->group(function () {
+        Route::prefix('
+        
+        
+        
+        
+        
+        
+        
+        ')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
             Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
             Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
@@ -324,6 +333,7 @@ Route::prefix('jadwal-seleksi/')->group(function () {
         Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
         Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
         Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+        Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
     });
 });
 
@@ -422,4 +432,4 @@ Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
 });
 
-Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
+// Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

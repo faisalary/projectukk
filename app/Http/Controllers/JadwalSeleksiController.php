@@ -15,6 +15,8 @@ use App\Models\PendaftaranMagang;
 use App\Models\MhsMagang;
 use App\Models\StatusSeleksi;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Mail;
+use PhpParser\Node\Expr\New_;
 
 class JadwalSeleksiController extends Controller
 {
@@ -23,6 +25,14 @@ class JadwalSeleksiController extends Controller
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
         $mahasiswa = Mahasiswa::all();
         $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
+        // dd($lowongan);
+        // $lowongan = new LowonganMagang();
+        // $lowongan = [
+        //     'tahap1' => $lowongan->where('tahapan_seleksi', 1)->cound(),
+        //     'tahap2' => $lowongan->where('tahapan_seleksi', 2)->cound(),
+        //     'tahap3' => $lowongan->where('tahapan_seleksi', 3)->cound(),
+
+        // ];
         // dd($id);
         $seleksi = Seleksi::all();
         $status = StatusSeleksi::all();
@@ -38,6 +48,7 @@ class JadwalSeleksiController extends Controller
     public function store(SeleksiRequest $request)
     {
         try {
+           
             $pendaftaran = PendaftaranMagang::where('status', '1')->get();
             foreach ($pendaftaran as $p) {
                 list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
@@ -55,6 +66,9 @@ class JadwalSeleksiController extends Controller
                     'id_email_tamplate' => $request->subjek,
                     'status_seleksi' => true,
                 ]);
+
+                $user = 'Mita Mutiara';
+                Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
             }
 
             return response()->json([
@@ -73,15 +87,9 @@ class JadwalSeleksiController extends Controller
 
     public function show(Request $request, $id)
     {
-        // dd($request->all());
         // $pelamar = PendaftaranMagang::first();
 
         $seleksi = Seleksi::with("seleksi_status", "seleksi_status.pendaftaran", "seleksi_status.pendaftaran.mahasiswa");
-        // ->where('namatahap_seleksi')
-        // ->whereHas('seleksi_status', function($query) use ($request){
-        //     $query->where ('progress', '!=', '0')
-        //     ->where('status_seleksi', '!=', '0');
-        // });
 
         if ($request->type) {
             $seleksi = $seleksi->where('namatahap_seleksi', $request->type);
@@ -159,11 +167,9 @@ class JadwalSeleksiController extends Controller
             } else {
                 $seleksilowongan->namatahap_seleksi = 'tahap' . $request->value + 1;
             }
-            
-            $seleksilowongan->save();
 
+            $seleksilowongan->save();
         }
         $status->save();
     }
-
 }

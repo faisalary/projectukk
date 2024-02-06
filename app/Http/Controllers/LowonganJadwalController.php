@@ -31,7 +31,7 @@ class LowonganJadwalController extends Controller
                 $item->tahap3 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap3')->count();
                 return $item;
             });
-            
+// dd($seleksi);            
 
             return view('company.jadwal_seleksi.jadwal_card ', compact('lowongan','seleksi'))->render();
         }
