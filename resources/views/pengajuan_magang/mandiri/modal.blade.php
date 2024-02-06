@@ -2,9 +2,10 @@
 <div class="modal fade" id="modalDetailDisetujui" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header border-bottom ms-3 me-3 p-3">
+            <div class="modal-header border-bottom  p-3">
                 <h5 class="modal-title" id="modalDetailDisetujui">Riwayat Pengajuan Surat Pengantar Magang</h5>
-                <span class="badge bg-label-success text-end">Disetujui</span>
+                <span class="badge bg-label-success me-3">Disetujui</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row text-start border-bottom">
@@ -103,9 +104,11 @@
 <div class="modal fade" id="modalDetailDitolak" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header border-bottom ms-3 me-3 p-3">
+            <div class="modal-header border-bottom p-3">
                 <h5 class="modal-title" id="modalDetailDitolak">Riwayat Pengajuan Surat Pengantar Magang</h5>
-                <span class="badge bg-label-danger text-end">Ditolak</span>
+
+                <span class="badge bg-label-danger me-3">Ditolak</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row text-start border-bottom">
