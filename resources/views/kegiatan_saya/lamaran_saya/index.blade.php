@@ -195,9 +195,9 @@
                     </div>
                   </a>
                   <div class="text-left">
-                    <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalalert">Ambil Tawaran
+                    <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="">Ambil Tawaran
                     </button>
-                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="#modalalertterima">Tolak Tawaran
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="">Tolak Tawaran
                     </button>
                   </div>
                   <hr />
@@ -290,6 +290,10 @@
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
                     </div>
                   </a>
+                  <div class="text-left">
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="">Mengundurkan Diri
+                    </button>
+                  </div>
                   <hr />
                   <div class="row mt-2">
                     <div class="col-12 d-flex justify-content-between">
