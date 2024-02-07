@@ -39,8 +39,7 @@
         <div class="row text-white py-4">
             <div class="col-md-5 col-12 ps-5">
                 <img src="{{ url('/app-assets/img/talentern_white.svg') }}">
-                <p class="mt-4">Jl. Telekomunikasi No.1, Sukapura, Kec. Dayeuhkolot,<br> Kabupaten Bandung, Jawa Barat
-                    40257</p>
+                <p class="mt-4">Berkarya dan Belajar: Temukan Pengalaman Magang dan Perusahaan Terbaik Bersama Kami!</p>
             </div>
             <div class="col-md-7 col-12">
                 <div class="row text-white">
@@ -58,9 +57,9 @@
                     </div>
                     <div class="col-md-6 col-12">
                         <p>Tentang Kami</p>
-                        <p class="text-secondary"><i>PT. Teknologi Nirmala Olah Daya Informasi</i></p>
-                        <p class="text-secondary"><i>Layanan Kerjasama dan Magang FIT</i></p>
-                        <p class="text-secondary"><i>Fakultas Ilmu Terapan</i></p>
+                        <a href="/aboutus/talentern"> <p class="text-secondary">Talentern</p></a>
+                        <a href="/aboutus/techno"> <p class="text-secondary"> PT. Teknologi Nirmala Olah Daya Informasi</p></a>
+                        <a href="/aboutus/lkmfit"> <p class="text-secondary"> Layanan Kerjasama dan Magang FIT</p></a>
                         <button class="open-button" onclick="openForm()">
                             <div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh Bantuan ?
                         </button>
@@ -142,6 +141,7 @@
 
 
 
+
 </footer>
 <!-- / Footer -->
 
@@ -210,6 +210,7 @@
 <script src="{{ url('app-assets/js/ui-carousel.js') }}"></script>
 <script src="{{ url('app-assets/js/forms-file-upload.js') }}"></script>
 <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
+<script src="{{ url('js/content.js') }}"></script>
 
 <script>
     function openForm() {

@@ -1,281 +1,429 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
-<!-- <style>
-  .col-1-5 {
-    flex: 0 0 12.5%;
-    max-width: 12.5%;
+<style>
+  .nav~.tab-content {
+    background: none !important;
   }
 
-  .page-item.active .page-link,
-  .pagination li.active>a:not(.page-link) {
-    border-color: #FFFFFF !important;
+  .nav-pills .nav-link.active,
+  .nav-pills .nav-link.active:hover,
+  .nav-pills .nav-link.active:focus {
     background-color: #4EA971 !important;
-  }
-
-  /* .select2-container {
-    margin: 0;
-    width: 220px !important;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    box-sizing: border-box;
-  }
-
-  .select2-results__option[role="option"][aria-selected="true"] {
-    background-color: #4EA971;
     color: #fff;
   }
 
-  .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
-    background-color: rgba(115, 103, 240, 0.08) !important;
+  .nav-pills .nav-link:not(.active):hover,
+  .nav-pills .nav-link:not(.active):focus {
     color: #4EA971 !important;
   }
 
-  .select2-container--default.select2-container--focus .select2-selection,
-  .select2-container--default.select2-container--open .select2-selection {
+  .btn-success {
+    color: #fff;
+    background-color: #4EA971 !important;
     border-color: #4EA971 !important;
-  } */
-</style> -->
+  }
+</style>
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="col-md-12 col-12 mt-3">
-    <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Lamaran Saya</h4>
-  </div>
-  <!-- <div class="row ms-5 me-5">
-  <div class="col-lg-4 col-sm-6 mb-4 p-0">
-    <div class="card">
-      <div class="p-2">
-        <div class="d-flex justify-content-between">
-          <h5 class="mb-0 ms-2">Lamaran Pekerjaan</h5>
-          <div class="card-icon pe-4">
-            <span class="badge bg-label-success rounded-pill p-2">
-              <i class="ti ti-file-analytics ti-sm"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3" style="margin-left:1px; margin-right:1px; border-bottom: 8px solid black; border-bottom-left-radius:5px; border-bottom-right-radius:5px">
-        <div class="col-5 text-center">
-          <h6 class="mb-0 me-2">Total Lamaran</h6>
-          <h4 class="mt-2 mb-0">8</h4>
-        </div>
-        <div class="col-2">
-          <div class="divider divider-vertical">
-          </div>
-        </div>
-        <div class="col-5 text-center">
-          <h6 class="mb-0 me-2">Belum di Proses</h6>
-          <h4 class="mt-2 mb-0">3</h4>
-        </div>
-      </div>
-    </div>
+    <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Status Lamaran Magang</h4>
   </div>
 
-  <div class="col-lg-4 col-sm-6 mb-4">
-    <div class="card">
-      <div class="p-2">
-        <div class="d-flex justify-content-between">
-          <h5 class="mb-0 ms-2">Proses Seleksi</h5>
-          <div class="card-icon pe-4">
-            <span class="badge bg-label-success rounded-pill p-2">
-              <i class="ti ti-clock ti-sm"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3" style="margin-left:1px; margin-right:1px; border-bottom: 8px solid #00CFE8; border-bottom-left-radius:5px; border-bottom-right-radius:5px">
-        <div class="col-3 text-center">
-          <h6 class="mb-0 me-2">Screening</h6>
-          <h4 class="mt-2 mb-0">8</h4>
-        </div>
-        <div class="col-1-5">
-          <div class="divider divider-vertical">
-          </div>
-        </div>
-        <div class="col-3 text-center">
-          <h6 class="mb-0 me-2">Seleksi</h6>
-          <h4 class="mt-2 mb-0">3</h4>
-        </div>
-        <div class="col-1-5">
-          <div class="divider divider-vertical">
-          </div>
-        </div>
-        <div class="col-3 text-center">
-          <h6 class="mb-0 me-2">Penawaran</h6>
-          <h4 class="mt-2 mb-0">3</h4>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-sm-6 mb-4">
-    <div class="card">
-      <div class="p-2">
-        <div class="d-flex justify-content-between">
-          <h5 class="mb-0 ms-2">Hasil Akhir</h5>
-          <div class="card-icon pe-4">
-            <span class="badge bg-label-success rounded-pill p-2">
-              <i class="ti ti-clipboard ti-sm"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-5 text-center" style=" border-bottom: 8px solid green; border-bottom-left-radius:5px; margin-left: 10px; width: 222px;">
-          <h6 class="mb-0 me-2">Total Lamaran</h6>
-          <h4 class="mt-2 mb-0">8</h4>
-        </div>
-        <div class="col-2 p-0" style="width: 2px;">
-          <div class="divider divider-vertical">
-          </div>
-        </div>
-        <div class="col-5 text-center" style=" border-bottom: 8px solid red; border-bottom-right-radius:5px; width: 221px;">
-          <h6 class="mb-0 me-2">Belum di Proses</h6>
-          <h4 class="mt-2 mb-0">3</h4>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <div class="row ps-3">
+    <ul class="nav nav-pills mb-3 " role="tablist">
+      <li class="nav-item" style="font-size: 15px;">
+        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-magang-fakultas" aria-controls="navs-pills-justified-magang-fakultas" aria-selected="false">
+          Magang Fakultas
+        </button>
+      </li>
+      <li class="nav-item" style="font-size: 15px;">
+        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-magang-mandiri" aria-controls="navs-pills-justified-magang-mandiri" aria-selected="false">
+          Magang Mandiri
+        </button>
+      </li>
+    </ul>
 
-<div class="col-md-3 col-12 ms-5 mt-2 mb-2">
-  <select class="select2 form-select" data-placeholder="Status Lamaran">
-    <option value="1">Status Lamaran</option>
-    <option value="2">Seleksi Tahap 1</option>
-    <option value="3">Seleksi Tahap 2</option>
-    <option value="4">Screening</option>
-    <option value="5">Penawaran</option>
-    <option value="6">Diterima</option>
-    <option value="7">Ditolak</option>
-  </select>
-</div> -->
+    <div class="tab-content p-0">
+      <!-- Magang Fakultas -->
+      <div class="tab-pane fade show active" id="navs-pills-justified-magang-fakultas" role="tabpanel">
+        <div class="row mt-2" style="padding-left: 12px;">
+          <ul class="nav nav-pills mb-3 " role="tablist">
+            <li class="nav-item" style="font-size: 15px;">
+              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-proses-seleksi" aria-controls="navs-pills-justified-proses-seleksi" aria-selected="false">
+                <i class="ti ti-presentation-analytics pe-1"></i> Proses Seleksi
+              </button>
+            </li>
+            <li class="nav-item" style="font-size: 15px;">
+              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false">
+                <i class="ti ti-speakerphone pe-1"></i> Penawaran
+              </button>
+            </li>
+            <li class="nav-item" style="font-size: 15px;">
+              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-terima" aria-controls="
+              " aria-selected="false">
+                <i class="ti ti-clipboard-check pe-1"></i> Terima Tawaran
+              </button>
+            </li>
+            <li class="nav-item" style="font-size: 15px;">
+              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tolak" aria-controls="navs-pills-justified-tolak" aria-selected="false">
+                <i class="ti ti-clipboard-x pe-1"></i> Tolak Tawaran
+              </button>
+            </li>
+          </ul>
 
-  <div class="row">
-    <div class="card mt-4">
-      <div class="card-body">
-        <div class="alert alert-danger alert-dismissible" role="alert">
-          Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
-        <div class="row">
-          <div class="col-2">
-            <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
-            </figure>
-          </div>
-          <div class="col-10 d-flex justify-content-between">
-            <div>
-              <h5>Fullstack Developer</h5>
-              <p>IT-Computer - Software</p>
-            </div>
-            <div>
-              <span class="badge bg-label-warning me-1 text-end">Penawaran</span>
-            </div>
-          </div>
-        </div>
-        <div class="text-left">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
-        </div>
-        </a>
-        <div class="text-left">
-          <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalalert">Ambil Tawaran
-          </button>
-          <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="#modalalertterima">Tolak
-          </button>
-        </div>
-        <hr />
-        <div class="row mt-2">
-          <div class="col-12 d-flex justify-content-between">
-            <div class="col-6">
-              <div class="tf-icons ti ti-map-pin" style="font-size: medium;"> Jakarta Selatan, Indonesia</div>
-              <div class="tf-icons ti ti-currency-dollar ms-3" style="font-size: medium;"> Berbayar</div>
-              <div class="tf-icons ti ti-calendar-time ms-3" style="font-size: medium;"> 2 Semester</div>
-              <div class="tf-icons ti ti-users ms-3" style="font-size: medium;"> 5 Kuota Penerimaan</div>
-            </div>
-            <div class="col-6">
-              <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mt-4 mb-4">
-      <div class="card-body"> <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
-          <div class="row">
-            <div class="col-2">
-              <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
-              </figure>
-            </div>
-            <div class="col-10 d-flex justify-content-between">
-              <div>
-                <h5>Fullstack Developer</h5>
-                <p>IT-Computer - Software</p>
-              </div>
-              <div>
-                <span class="badge bg-label-secondary me-1 text-end">Belum Proses</span>
+          <div class="cnt">
+            <div id="div2" class="col-1 targetDiv" style="display: none;">
+              <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
+                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                </select>
+                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks">
+                    Terapkan</i>
+                </button>
               </div>
             </div>
           </div>
-          <div class="text-left">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+
+          <div class="tab-content p-0">
+            <div class="tab-pane fade show active" id="navs-pills-justified-proses-seleksi" role="tabpanel">
+              <div class="card mt-2">
+                <div class="card-body">
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-secondary me-1 text-end">Penawaran</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-body">
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-info me-1 text-end">Seleksi Tahap 1</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="navs-pills-justified-penawaran" role="tabpanel">
+              <div class="card mt-2">
+                <div class="card-body">
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-secondary me-1 text-end">Penawaran</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <div class="text-left">
+                    <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="">Ambil Tawaran
+                    </button>
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="">Tolak Tawaran
+                    </button>
+                  </div>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-body">
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-secondary me-1 text-end">Penawaran</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <div class="text-left">
+                    <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalalert">Ambil Tawaran
+                    </button>
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="#modalalertterima">Tolak Tawaran
+                    </button>
+                  </div>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="navs-pills-justified-terima" role="tabpanel">
+              <div class="card mt-2">
+                <div class="card-body">
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-success me-1 text-end">Menerima Tawaran</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <div class="text-left">
+                    <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="">Mengundurkan Diri
+                    </button>
+                  </div>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="navs-pills-justified-tolak" role="tabpanel">
+              <div class="card mt-2">
+                <div class="card-body">
+                  <a href="/kegiatan_saya/lamaran_saya/status" style="color:#4B4B4B">
+                    <div class="row mb-2">
+                      <div class="col-2">
+                        <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                        </figure>
+                      </div>
+                      <div class="col-10 d-flex justify-content-between">
+                        <div>
+                          <h5>Human Resources</h5>
+                          <p>PT Wings Surya</p>
+                        </div>
+                        <div>
+                          <span class="badge bg-label-danger me-1 text-end">Menolak Tawaran</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-left mb-2">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                    </div>
+                  </a>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col-12 d-flex justify-content-between">
+                      <div class="col-6">
+                        <span> <i class="ti ti-map-pin" style="font-size: medium;"></i> Jakarta Selatan, Indonesia</span>
+                        <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                        <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> 2 Semester</span>
+                        <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> 5 Kuota Penerimaan</span>
+                      </div>
+                      <div class="col-6">
+                        <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <hr />
-          <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-between">
+
+        </div>
+      </div>
+      <!-- /Magang Fakultas -->
+
+      <!-- Magang Mandiri -->
+      <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
+        <div class="card mt-2">
+          <div class="card-body">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="row">
+              <div class="ps-4">
+                <h4>Human Resources</h4>
+                <p>PT Wings Surya</p>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-6">
-                <div class="tf-icons ti ti-map-pin" style="font-size: medium;"> Jakarta Selatan, Indonesia</div>
-                <div class="tf-icons ti ti-currency-dollar ms-3" style="font-size: medium;"> Berbayar</div>
-                <div class="tf-icons ti ti-calendar-time ms-3" style="font-size: medium;"> 2 Semester</div>
-                <div class="tf-icons ti ti-users ms-3" style="font-size: medium;"> 5 Kuota Penerimaan</div>
+                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin" style="font-size: 18px;"></i> Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, Cakung, Jakarta Timur, Jakarta 13910, ID</span>
               </div>
-              <div class="col-6">
-                <div class="text-end" style="font-size: medium; color : #4EA971"> Lamaran terkirim pada 15 juni 2023</div>
+              <div class="col-2">
+                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1" style="font-size: 18px;"></i>02298765543</span>
+              </div>
+              <div class="col-2">
+                <span><i class="tf-icons ti ti-mail pe-1" style="font-size: 18px;"></i>perusahaan1@gmail.com</span>
               </div>
             </div>
+            <div class="text-left mt-3">
+              <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalalert">Diterima
+              </button>
+              <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="#modalalertterima">Diolak
+              </button>
+            </div>
           </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <!-- Modal Alert-->
-  <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body text-center">
-          <img src="../../app-assets/img/alert.png" alt="">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Menolak Tawaran ini?</h5>
-          <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-          <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
-          <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-        </div>
-      </div>
-    </div>
-  </div>
-   <!-- Modal Alert-->
-   <div class="modal fade" id="modalalertterima" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <img src="../../app-assets/img/alert.png" alt="">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Menerina Tawaran ini?</h5>
-          <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-          <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
-          <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
+        <div class="card mt-4">
+          <div class="card-body">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="row">
+              <div class="ps-4">
+                <h4>Human Resources</h4>
+                <p>PT Wings Surya</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin" style="font-size: 18px;"></i> Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, Cakung, Jakarta Timur, Jakarta 13910, ID</span>
+              </div>
+              <div class="col-2">
+                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1" style="font-size: 18px;"></i>02298765543</span>
+              </div>
+              <div class="col-2">
+                <span><i class="tf-icons ti ti-mail pe-1" style="font-size: 18px;"></i>perusahaan1@gmail.com</span>
+              </div>
+            </div>
+            <div class="text-left mt-3">
+              <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalalert">Diterima
+              </button>
+              <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal" data-bs-target="#modalalertterima">Diolak
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- /Magang Mandiri -->
     </div>
   </div>
 </div>

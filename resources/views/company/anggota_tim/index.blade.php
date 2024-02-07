@@ -63,10 +63,10 @@
                         <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                         <input type="text" id="nameWithTitle" class="form-control" placeholder="Masukkan Email" />
                     </div>
-                    <div class="col-12 mb-3">
+                    <!-- <div class="col-12 mb-3">
                         <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
                         <input type="text" id="nameWithTitle" class="form-control" placeholder="Masukkan Password" />
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="row">
@@ -109,10 +109,10 @@
                         <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                         <input type="text" id="nameWithTitle" class="form-control" placeholder="Masukkan Email" />
                     </div>
-                    <div class="col-12 mb-3">
+                    <!-- <div class="col-12 mb-3">
                         <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
                         <input type="text" id="nameWithTitle" class="form-control" placeholder="Masukkan Password" />
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="row">
@@ -146,7 +146,7 @@
             "email": "arvinbgskr@gmail.com",
             "telepon": "+6281298076589",
             "role": "Pembimbing Lapangan",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
@@ -154,7 +154,7 @@
             "email": "kdviws@gmail.com",
             "telepon": "+6281298076589",
             "role": "Pembimbing Lapangan",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>"
         },
         {
             "nomor": "3",
@@ -162,7 +162,7 @@
             "email": "kevnath@gmail.com",
             "telepon": "+6281298076589",
             "role": "Pembimbing Lapangan",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalEditAnggota' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         }
     ];
     var table = $('#table-anggota-tim').DataTable({

@@ -63,7 +63,7 @@ class InformasiMitraController extends Controller
                 } else if ($mitra->statuskerjasama == "Tidak") {
                     return "<span class='badge bg-label-secondary me-1'>Tidak</span>";
                 } else {
-                    return "<span class='badge bg-label-info me-1'>Internal Tel-u</span>";
+                    return "<span class='badge bg-label-info me-1'>Internal Telyu</span>";
                 }
             })
             ->addColumn('action', function ($row) {

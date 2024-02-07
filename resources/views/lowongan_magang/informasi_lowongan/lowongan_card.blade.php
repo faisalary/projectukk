@@ -93,7 +93,7 @@
                  </div>
                  <div class="col-6 text-end">
                      @can( "button.tnglbts.mitra" )
-                     <button class="btn btn-outline-success my-2 waves-effect" type="button" id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">
+                     <button class="btn btn-outline-success my-2 waves-effect" type="button" onclick=confirm($(this)) id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi" data-id="{{$item->id_lowongan}}">
                          <i class="ti bi-pencil-square text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
                      </button>
                      @endcan
@@ -132,6 +132,33 @@
          </div>
      </div>
  </div>
+ <script>
+     //  $("#modalKonfirmasi").on("hide.bs.modal", function() {
+     //      $("#modalCenterTitle").html("Masukkan Tanggal Batas Konfirmasi");
+     //      $("#modal-button").html("Simpan");
+     //      $('#modalKonfirmasi form')[0].reset();
+     //      $('#modalKonfirmasi form #flatpickr-date').val('').trigger('change');
+     //      $('.invalid-feedback').removeClass('d-block');
+     //      $('.form-control').removeClass('is-invalid');
+     //  });
+
+     function confirm(e) {
+         let id = e.attr('data-id');
+
+         let action = `{{ url('/informasi/lowongan/date/') }}/${id}`;
+         var url = `{{ url('/informasi/lowongan/add/') }}/${id}`;
+         $.ajax({
+             type: 'GET',
+             url: url,
+             success: function(response) {
+                 $('#modalKonfirmasi form').attr('action', action);
+                 $('#modalKonfirmasi form #flatpickr-date').val(moment(response.date_confirm_closing).format('DD MMMM YYYY')).trigger('change');
+
+                 $('#modalKonfirmasi').modal('show');
+             }
+         });
+     }
+ </script>
  <!-- Vendors JS -->
  <script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
  <script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
