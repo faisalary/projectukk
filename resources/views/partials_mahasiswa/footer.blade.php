@@ -39,8 +39,7 @@
         <div class="row text-white py-4">
             <div class="col-md-5 col-12 ps-5">
                 <img src="{{ url('/app-assets/img/talentern_white.svg') }}">
-                <p class="mt-4">Jl. Telekomunikasi No.1, Sukapura, Kec. Dayeuhkolot,<br> Kabupaten Bandung, Jawa Barat
-                    40257</p>
+                <p class="mt-4">Berkarya dan Belajar: Temukan Pengalaman Magang dan Perusahaan Terbaik Bersama Kami!</p>
             </div>
             <div class="col-md-7 col-12">
                 <div class="row text-white">
