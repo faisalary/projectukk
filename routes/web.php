@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JadwalSeleksiController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
@@ -249,7 +250,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('kelola')->group(function () {
-        Route::prefix('lowongan')->group(function () {
+        Route::prefix('
+        
+        
+        
+        
+        
+        
+        
+        ')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
             Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
             Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
@@ -315,15 +324,18 @@ Route::get('/detail-informasi-dokumen', function () {
 //     return view('company.summary_profile');
 // });
 
-Route::prefix('jadwal-seleksi')->group(function () {
-    Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
-    Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-    Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-    Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
-    Route::get('/detail', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'edit'])->name('seleksi.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'status'])->name('seleksi.status');
+Route::prefix('jadwal-seleksi/')->group(function () {
+    Route::prefix('lowongan/{id_industri}')->group(function () {
+        Route::get('/', [App\Http\Controllers\LowonganJadwalController::class, 'index'])->name('jadwal.index');
+    });
+    Route::prefix('lanjutan/')->group(function () {
+        Route::get('/{id_lowongan}', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+        Route::get('/show/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+        Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+        Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
+    });
 });
 
 Route::get('/detail/lowongan/magang', function () {
@@ -419,12 +431,4 @@ Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
 });
 
-Route::prefix('konfirmasi/magang')->group(function () {
-    Route::get('/', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('konfirmasi.index');
-    Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('konfirmasi.show');
-    Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('konfirmasi.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('konfirmasi.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('konfirmasi.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('konfirmasi.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('konfirmasi.status');
-});
+// Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
