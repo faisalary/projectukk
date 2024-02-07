@@ -32,46 +32,19 @@ class KonfirmasiMagangController extends Controller
 
         $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
-        return view('kegiatan_saya.konfirmasi.index',  compact('mandiri','mahasiswa', 'nim', 'mandiri_nim'));
+        return view('kegiatan_saya.lamaran_saya.index',  compact('mandiri','mahasiswa', 'nim', 'mandiri_nim'));
 
     }
     
     public function store(Request $request)
     {
-        try {
-            $mandiri = PengajuanMandiri::create([
-                'nim' => $request->nim,
-                'tglpeng' => $request->tglpeng,
-                'nama_industri' => $request->nama_industri,
-                'posisi_magang' => $request->posisi_magang,
-                'jabatan' => $request->jabatan,
-                'alamat_industri' => $request->alamat_industri,
-                'nohp' => $request->nohp,
-                'email' => $request->email,
-                'startdate' => $request->startdate,
-                'enddate' => $request->enddate,
-                'alasan' => '-',
-                'statusapprove' => false,
-            ]);
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Created!',
-                'url' => url('konfirmasi/magang')
-
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
+    
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id_univ)
+    public function show()
     {
 
     }
@@ -85,11 +58,6 @@ class KonfirmasiMagangController extends Controller
         return $mandiri;
     }
 
-    public function detail($id)
-    {
-        $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
-        return $mandiri;
-    }
     /**
      * Update the specified resource in storage.
      */
@@ -114,7 +82,7 @@ class KonfirmasiMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
-                'modal' => '#modalEdit',
+                'modal' => '#modalDiterima',
             ]);
         } catch (Exception $e) {
             return response()->json([
