@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\JadwalSeleksiController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
@@ -396,3 +397,7 @@ Route::get('/logbook/mahasiswa', function () {
 Route::get('/logbook/detail', function () {
     return view('company.logbook_mahasiswa.detail_logbook');
 });
+
+Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
+
+
