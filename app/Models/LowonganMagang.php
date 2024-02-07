@@ -43,7 +43,7 @@ class LowonganMagang extends Model
         'id_prodi',
         'fakultas',
         'alasantolak',
-        'statusapprove'
+        'statusaprove'
     ];
     protected $keyType = 'string';
     protected $casts = [

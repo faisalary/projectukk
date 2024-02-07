@@ -205,8 +205,8 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ url('kelola/lowongan/') }}" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan/lkm' ? 'active' : '' }} @endif">
+                                <a href="{{ url('kelola/lowongan/lkm') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -388,7 +388,7 @@
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index')}}" class="menu-link">
+                                <a href="{{ url('kelola/lowongan/mitra',  Auth::user()->id_industri)}}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>

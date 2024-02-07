@@ -246,10 +246,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('kelola')->group(function () {
-        Route::prefix('lowongan')->group(function () {
-            Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
-            Route::get('/show', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show');
-            Route::get('/create', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
+        Route::prefix('lowongan/mitra')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index.mitra');
+            Route::get('/show/{id}', [App\Http\Controllers\LowonganMagangController::class, 'show'])->name('lowongan-magang.show.mitra');
+            Route::get('/create/{id}', [App\Http\Controllers\LowonganMagangController::class, 'create'])->name('lowongan-magang.create');
             Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
             Route::get('/detail/{id}', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
@@ -258,6 +258,12 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\LowonganMagangController::class, 'approved'])->name('lowongan-magang.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\LowonganMagangController::class, 'rejected'])->name('lowongan-magang.rejected');
         });
+        Route::prefix('lowongan/lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\LowonganMagangLkmController::class, 'index'])->name('lowongan-magang.index.lkm');
+            Route::get('/show', [App\Http\Controllers\LowonganMagangLkmController::class, 'show'])->name('lowongan-magang.show.lkm');
+
+        });
+
     });
     
     Route::prefix('mandiri')->group(function () {
@@ -414,5 +420,8 @@ Route::get('/logbook/detail', function () {
 });
 
 Route::get('/lowongan/detail', function () {
+    return view('company.lowongan.detail');
+});
+Route::get('/company/lowongan/index', function () {
     return view('company.lowongan.detail');
 });

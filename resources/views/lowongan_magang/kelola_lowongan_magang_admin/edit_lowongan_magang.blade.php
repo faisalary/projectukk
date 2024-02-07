@@ -218,13 +218,21 @@
                                                     @endforeach
                                                 </select>
                                             </div> --}}
-                                            <div class="col-lg-12 col-sm-6">
-                                                <label for="select2Disabled" class="form-label">Prodi<span
+                                            @can('btn.pilih.prodi')
+                                            <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="fakultas">Fakultas<span
                                                         class="text-danger">*</span></label>
-                                                <select id="select2Disabled" class="select2 form-select" disabled>
-                                                    <option value="1"selected>Pilih Prodi</option>
+                                                <select name="prodi" id="prodi" class="select2 form-select"
+                                                    data-placeholder="Pilih Fakultas">
+                                                    <option value="" disabled>Pilih Prodi</option>
+                                                    @foreach ($prodi as $f)
+                                                        <option @if ($f->id_prodi == $lowongan->id_prodi) selected @endif
+                                                            value="{{ $f->id_prodi }}">{{ $f->namaprodi }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">

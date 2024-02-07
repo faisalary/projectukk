@@ -32,7 +32,7 @@
 @section('main')
     <div class="row">
         <div class="col-md-8 col-12">
-            <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
+            <h4 class="fw-bold">Kelola admin Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
             <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
@@ -103,7 +103,7 @@
                 @if ($statusId == 1)
                     @can('button.tnglbts.mitra')
                         <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
-                            <a id="div{{ $statusId }}" class="targetDiv" href="{{ route('lowongan-magang.create') }}">
+                            <a id="div{{ $statusId }}" class="targetDiv" href="{{ url('kelola/lowongan/create') }}">
                                 <button class="btn btn-success" type="button" data-bs-toggle="modal"
                                     data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
                                     Magang</button>
@@ -217,11 +217,9 @@
     <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script>
-
-        $('.table').each(function() {
+    $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
-            if ($(this).attr('id') == null) return;
+            let url = "{{ url('kelola/lowongan/lkm/show') }}?type=" + idElement;
 
             $(this).DataTable({
                 ajax: url,
