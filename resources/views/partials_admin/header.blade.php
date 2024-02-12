@@ -30,7 +30,8 @@
 
     <!-- Core CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" /> -->
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/theme-default.css') }}"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('app-assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
@@ -40,13 +41,16 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/swiper/swiper.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 
     <!-- Page CSS -->
@@ -154,7 +158,7 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                        <img src="{{ url('/app-assets/img/Logo.svg') }}">
+                            <img src="{{ url('/app-assets/img/Logo.svg') }}">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">
                             <img src="{{ url('/app-assets/img/Talentern.svg') }}">
@@ -215,42 +219,43 @@
                             </ul>
                         </li>
 
-                    <!-- Data Kandidat -->
-                    <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
-                        <a href="" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-fakultas') }}" class="menu-link">
-                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-mandiri') }}" class="menu-link">
-                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <!-- Data Kandidat -->
+                        <li
+                            class="menu-item {{ request()->is('magang-fakultas*') || request()->is('magang-mandiri*') ? 'active open' : '' }}">
+                            <a href="" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
+                                    <a href="{{ url('magang-fakultas') }}" class="menu-link">
+                                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
+                                    <a href="{{ url('magang-mandiri') }}" class="menu-link">
+                                        <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <!-- Jadwal Seleksi -->
-                    <li
-                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
-                            <a href="/seleksi/lanjutan" class="menu-link">
+                        <!-- Jadwal Seleksi -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/jadwal-seleksi/mitra' ? 'active' : '' }} @endif">
+                            <a href="/jadwal-seleksi/mitra" class="menu-link">
                                 <i class="menu-icon tf-icons ti ti-clock"></i>
                                 <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                             </a>
                         </li>
 
-                    <!-- Kelola Pengguna -->
-                    <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : ''}}">
-                        <a href="{{ url('kelola-pengguna')}}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
-                        </a>
-                    </li>
+                        <!-- Kelola Pengguna -->
+                        <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : '' }}">
+                            <a href="{{ url('kelola-pengguna') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            </a>
+                        </li>
 
 
                         <!-- Master Data -->
@@ -413,13 +418,14 @@
                             </ul>
                         </li>
 
-                    <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
-                        <a href=" /anggota/tim" class="menu-link">
-                        <i class="menu-icon tf-icons ti ti-users"></i>
-                        <div data-i18n="Anggota Tim">Anggota Tim</div>
-                        </a>
-                    </li>
+                        <!-- Anggota Tim -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                            <a href=" /anggota/tim" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Anggota Tim">Anggota Tim</div>
+                            </a>
+                        </li>
 
                         <!-- Jadwal Seleksi -->
                         <li
@@ -430,21 +436,22 @@
                             </a>
                         </li>
 
-                    <!-- Profile Perusahaan -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
-                        <a href="/company/profile-company" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-building"></i>
-                            <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
-                        </a>
-                    </li>
+                        <!-- Profile Perusahaan -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
+                            <a href="/company/profile-company" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
+                            </a>
+                        </li>
 
-                    <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
-                        <a href="/logbook/mahasiswa" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                        </a>
-                    </li>
+                        <!-- Logbook Mahasiswa -->
+                        <li class="menu-item">
+                            <a href="/logbook/mahasiswa" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
+                            </a>
+                        </li>
 
                         <!-- Master Data -->
                         <li
@@ -878,8 +885,9 @@
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
 
-                                        @if($user->roles[0]->name == 'superadmin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                        @if ($user->roles[0]->name == 'superadmin')
+                                            <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}"
+                                                alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')
                                             <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}"
                                                 alt class="h-auto rounded-circle" />

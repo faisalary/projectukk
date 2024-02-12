@@ -15,12 +15,17 @@
 <p style="color: #222; font-weight: 600;">Regards, <br>
 Harmonie</p>
 
-{{-- <html subcopy>
-  <div style="text-align: center;">
-    <a href="https://www.instagram.com/techno_infinity/"><img src="{{ $message->embed(public_path() . '/assets/app/img/icons/brands/instagram.png') }}" style="margin-right: 8px;"></a>
-    <a href="https://www.linkedin.com/company/techno-infinity/"><img src="{{ $message->embed(public_path() . '/assets/app/img/icons/brands/linkedin.png') }}"></a>
-  </div>
-  <p style="text-align: center; color: #4B465C;">Copyright by PT Teknologi Nirmala Olah Daya Informasi (Techno Infinity)</p>  
-</html> --}}
+<div> 
+    {{-- <x-mail::subcopy> --}} 
+    <hr> 
+    <div style="text-align: center;"> 
+        <a href="https://www.instagram.com/techno_infinity/"><img src="{{ $message->embed(public_path() . '/app-assets/img/icons/brands/ig.png') }}" style="margin-right: 8px;"></a> 
+        <a href="https://www.linkedin.com/company/techno-infinity/"><img src="{{ $message->embed(public_path() . '/app-assets/img/icons/brands/linkedin.png') }}"></a> 
+    </div> 
+    <hr> 
+    <p style="text-align: center; color: #4EA971;">© 2024 talentern.id All Rights Reserved. Crafted with PASSION by 
+        Proxsis Solusi Humakan & Techno Infinity</p> 
+    {{-- </x-mail::subcopy> --}} 
+</div>
 
 </html>

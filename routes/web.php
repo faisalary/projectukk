@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -242,21 +243,8 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::prefix('/seleksi/lanjutan')->group(function () {
-        Route::get('/', [App\Http\Controllers\JadwalSeleksiController::class, 'jadwal'])->name('seleksi.jadwal');
-        Route::get('/jadwal', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-        Route::post('/show', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
-    });
-
     Route::prefix('kelola')->group(function () {
         Route::prefix('
-        
-        
-        
-        
-        
-        
         
         ')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangController::class, 'index'])->name('lowongan-magang.index');
@@ -276,6 +264,25 @@ Route::middleware('auth')->group(function () {
             Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
             Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
+        });
+    });
+
+    Route::prefix('jadwal-seleksi')->middleware([RoleMiddleware::class])->group(function () {
+
+        Route::prefix('/lowongan')->group(function () {
+            Route::get('/{id_industri}', [App\Http\Controllers\LowonganJadwalController::class, 'index'])->name('jadwal.index');
+        });
+        Route::prefix('/mitra')->middleware('can:only.lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\MitraJadwalController::class, 'index'])->name('mitrajadwal.index');
+            Route::get('/show', [App\Http\Controllers\MitraJadwalController::class, 'show'])->name('mitrajadwal.show');
+        });
+        Route::prefix('/lanjutan')->group(function () {
+            Route::get('/{id_lowongan}', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+            Route::get('/show/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+            Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+            Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
+            Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+            Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
         });
     });
 });
@@ -324,19 +331,7 @@ Route::get('/detail-informasi-dokumen', function () {
 //     return view('company.summary_profile');
 // });
 
-Route::prefix('jadwal-seleksi/')->group(function () {
-    Route::prefix('lowongan/{id_industri}')->group(function () {
-        Route::get('/', [App\Http\Controllers\LowonganJadwalController::class, 'index'])->name('jadwal.index');
-    });
-    Route::prefix('lanjutan/')->group(function () {
-        Route::get('/{id_lowongan}', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-        Route::get('/show/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
-        Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
-        Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
-        Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
-    });
-});
+
 
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');

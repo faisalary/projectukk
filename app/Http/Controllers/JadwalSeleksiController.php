@@ -48,7 +48,7 @@ class JadwalSeleksiController extends Controller
     public function store(SeleksiRequest $request)
     {
         try {
-           
+
             $pendaftaran = PendaftaranMagang::where('status', '1')->get();
             foreach ($pendaftaran as $p) {
                 list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
@@ -66,11 +66,11 @@ class JadwalSeleksiController extends Controller
                     'id_email_tamplate' => $request->subjek,
                     'status_seleksi' => true,
                 ]);
-
-                $user = 'Mita Mutiara';
-                Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
             }
-
+            $email = email_template::where('id_email_template', $request->subjek)->first();
+            $user = 'Mita Mutiara';
+            Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
+                
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Created!',
