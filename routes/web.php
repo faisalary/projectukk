@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Auth;
@@ -434,3 +435,5 @@ Route::get('/aboutus/lkmfit', function () {
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
+
+Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
