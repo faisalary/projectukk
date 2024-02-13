@@ -231,6 +231,132 @@
         });
     }
 
+    function alert(content, button) {
+        $("input").blur();
+        let form_data = new FormData(content);
+        let action = $(content).attr("action");
+        Swal.fire({
+            title: "Apakah Data Jadwal Seleksi lanjutan anda sudah benar?",
+            text: "Jadwal seleksi lanjutan akan otomatis terkirim melalui email aktif kandidat! ",
+            icon: "warning",
+            confirmButtonText: "Ya, sudah",
+            cancelButtonText: "Batal",
+            showConfirmButton: true,
+            showCancelButton: true,
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger",
+            },
+            buttonsStyling: false,
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                console.log('apa aja');
+                // var id = $(e).attr("data-id");
+                // let data = {
+                //     id: id,
+                // };
+                jQuery.ajax({
+                    url: action,
+                    type: "POST",
+                    data: form_data,
+                    processData: false, // tell jQuery not to process the data
+                    contentType: false, // tell jQuery not to set contentType
+                    cache: false,
+                    success: function (response) {
+                        if (response.error) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                    cancelButton: "btn btn-danger",
+                                },
+                                buttonsStyling: false,
+                            });
+                        } else {
+                            Swal.fire({
+                                // position: "top-end",
+                                type: "success",
+                                icon: "success",
+                                title: "Succeed!",
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(() => {
+                                if (response.modal) {
+                                    if (response.table)
+                                        setTimeout(function () {
+                                            $(response.table).DataTable().ajax.reload();
+                                        }, 1000);
+                                    var reset_form = content;
+                                    // $(reset_form).removeClass('was-validated');
+                                    reset_form.reset();
+                                    $(response.modal).modal("hide");
+                                } else {
+                                    if (response.url) {
+                                        location = response.url;
+                                    } else {
+                                        location.reload();
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    error: (xhr, status, error) => {
+                        // Swal.fire({
+                        //     icon: "error",
+                        //     title: "Oops... Some data are still missing! ",
+                        //     text: "Please fill out all required fields.",
+                        // });
+
+                        const { responseJSON: response } = xhr;
+
+                        if (response.errors) {
+                            for (let form_data in response.errors) {
+                                let form_name = form_data.replace(
+                                    /\.(\d+)\.(\w+)/g,
+                                    "[$1][$2]"
+                                );
+
+                                $(`[name^="${form_name}"]`, content).addClass(
+                                    "is-invalid"
+                                );
+                                $(`[name^="${form_name}"]`, content)
+                                    .parents(".form-input")
+                                    .find(".invalid-feedback")
+                                    .addClass("d-block");
+                                $(`[name^="${form_name}"]`, content)
+                                    .parents(".form-input")
+                                    .find(".invalid-feedback")
+                                    .html(response.errors[form_data][0]);
+                                $(`[name^="${form_name}"]`, content)
+                                    .parents(".form-input")
+                                    .find(".invalid-tooltip")
+                                    .html(response.errors[form_data][0]);
+                            }
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: response.message,
+                                icon: "error",
+                                heightAuto: false,
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                    cancelButton: "btn btn-danger",
+                                },
+                                buttonsStyling: false,
+                            });
+                        }
+                    },
+                }).always(function () {
+                    button.prop("disabled", false);
+                    button.text("Save Data");
+                });
+            }
+        });
+    }
+
     $(document).on("submit", ".default-form", function (event) {
         event.preventDefault();
         var button = $(this).find(":submit");
@@ -251,6 +377,14 @@
             url: $(this).attr("data-url"),
             id: $(this).attr("data-id"),
         });
+    });
+
+    $(document).on("submit", ".alert", function (event) {
+        event.preventDefault();
+        var button = $(this).find(":submit");
+        button.prop("disabled", true);
+        button.text("Saving...");
+        alert(this, button);
     });
 
     $("form input").on("keyup change paste", function () {
@@ -291,6 +425,6 @@
         }
     });
 
-    
-   
+
+
 })();

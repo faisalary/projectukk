@@ -27,13 +27,4 @@ class Seleksi extends Model
     {
         return $this->belongsTo(StatusSeleksi::class, 'id_status_seleksi');
     }
-
-    // public function getStatusSeleksiTextAttribute()
-    // {
-    //     if ($this->statusseleksi == 0) {
-    //         return "<div class='text-center'><div class='badge bg-label-secondary'>" . "Belum di proses" . "</div></div>";
-    //     } else if ($this->statusseleksi == 1) {
-    //         return "<div class='text-center'><div class='badge bg-label-success'>" . "Sudah di proses" . "</div></div>";
-    //     }
-    // }
 }

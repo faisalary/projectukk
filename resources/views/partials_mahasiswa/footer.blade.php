@@ -85,9 +85,20 @@
             </div>
         </div>
 
+        {{-- @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif --}}
 
         <div class="chat-popup" id="myForm" style=" border-top-left-radius: 10px; border-top-right-radius: 10px;">
-            <form action="#" class="form-container p-0">
+            <form action="{{ route('submit-contact') }}" method="POST" class="form-container p-0" enctype="multipart/form-data">
+                @csrf
+
                 <div class="modal-header" style="background-color: #4EA971 !important;">
                     <i class="ti ti-x text-white mb-4 ms-2 mt-1" aria-label="Close" onclick="closeForm()"></i>
                     <h6 class="pt-3 text-white" style="padding-right: 40px !important;">Tinggalkan Pesan Untuk Kami</h6>
@@ -95,40 +106,39 @@
                 <div class="card-body p-4">
                     <label for="msg">Pusat bantuan bagi mahasiswa dan mitra perusahaan Talentern</label>
                     <div>
-                        <label for="defaultFormControlInput" class="form-label mt-3">Nama Lengkap <span
-                                class="text-danger">*</span> </label>
-                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                        <label for="name" class="form-label mt-3">Nama Lengkap <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="name"
                             aria-describedby="defaultFormControlHelp">
                     </div>
                     <div>
-                        <label for="exampleFormControlInput1" class="form-label mt-3">Email <span
-                                class="text-danger">*</span> </label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                        <label for="email" class="form-label mt-3">Email <span class="text-danger">*</span> </label>
+                        <input type="email" class="form-control" id="email" name="email"
                             placeholder="name@example.com">
                     </div>
                     <div>
-                        <label for="defaultFormControlInput" class="form-label mt-3">Asal Instansi/Perusahaan <span
+                        <label for="institutions" class="form-label mt-3">Asal Instansi/Perusahaan <span
                                 class="text-danger">*</span> </label>
-                        <input type="text" class="form-control" id="defaultFormControlInput"
+                        <input type="text" class="form-control" id="institutions" name="institutions"
                             placeholder="Telkom University" aria-describedby="defaultFormControlHelp">
                     </div>
                     <div>
-                        <label for="defaultFormControlInput" class="form-label mt-3">Catatan <span
-                                class="text-danger">*</span> </label>
-                        <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis Disini"
+                        <label for="note" class="form-label mt-3">Catatan <span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control" id="note" name="note" placeholder="Tulis Disini"
                             aria-describedby="defaultFormControlHelp"></textarea>
                     </div>
                     <div>
-                        <label for="formFile" class="form-label mt-3">Dokumen Pendukung</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <label for="file" class="form-label mt-3">Dokumen Pendukung</label>
+                        <input type="file" class="form-control" id="file" name="file" autofocus>
                     </div>
                     <button type="submit" class="btn btn-success mt-3 w-100">Kirim</button>
                 </div>
             </form>
         </div>
-
         {{-- <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div> --}}
     </div>
+
 
 
 
