@@ -102,9 +102,7 @@ class InformasiLowonganController extends Controller
             // dd($id_lowongan);
 
             if ($date->id_lowongan == $id_lowongan) {
-                if (is_null($date->date_confirm_closing)) {
-                    $date->date_confirm_closing = Carbon::parse($request->date)->format('Y-m-d');
-                }
+                $date->date_confirm_closing = Carbon::parse($request->date)->format('Y-m-d');
             }
 
             $date->save();

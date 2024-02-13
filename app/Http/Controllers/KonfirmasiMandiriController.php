@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMandiri;
 use Yajra\DataTables\Facades\DataTables;
-
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class KonfirmasiMandiriController extends Controller
 {
@@ -21,81 +22,112 @@ class KonfirmasiMandiriController extends Controller
      */
     public function index()
     {
-        $mandiri = PengajuanMandiri::all();
+        $user = auth()->user();
+        $mandiri = PengajuanMandiri::where("nim",$user->nim)->get();
         $mahasiswa = Mahasiswa::all();
-        return view('mandiri.mahasiswa_mandiri.index', compact('mandiri','mahasiswa'));
-    }
-
-    // public function show(Request $request)
-    // {
-    //     $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
         
-    //     if($request->type){
-    //         $mandiri = $mandiri->where('status', $request->type);
-    //     }
-       
+        $nim = Mahasiswa::find($user->nim);
+        $nim = $nim->nim;
 
-    // return DataTables::of($mandiri->get())
-    //     ->addIndexColumn()
-    //     ->make(true);
-    // }
+        $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
-    public function show($statusapprove)
-    {
-        // $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
-        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->where("statusapprove",$statusapprove)->orderBy('id_pengajuan', "asc")->get();
-        
-
-    return DataTables::of($mandiri)
-        ->addIndexColumn()
-        ->addColumn('aksi', function ($id) {
-            $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusapprove='{$id->statusapprove}'>
-                    <i class='btn-icon ti ti-file-check text-success'></i>
-                    </a>
-                    <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusrejected='{$id->rejected}'>
-                    <i class='btn-icon ti ti-file-x text-danger'></i>
-                    </a>";
-            return $btn;
-        })
-        ->rawColumns(['aksi'])
-        ->make(true);
+        return view('pengajuan_magang.mandiri.index',  compact('mandiri','mahasiswa', 'nim', 'mandiri_nim'));
     }
-
     
-    public function approved($id)
+    public function store(Request $request)
     {
         try {
-            DB::beginTransaction(); 
-            $data = PengajuanMandiri::find($id);
-            
-
-            if (!$data) {
-                throw new \Exception('Data not found.');
-            }
-            $data->statusapprove = 1;
-            $data->save();
+            $mandiri = PengajuanMandiri::create([
+                'nim' => $request->nim,
+                'tglpeng' => $request->tglpeng,
+                'nama_industri' => $request->nama_industri,
+                'posisi_magang' => $request->posisi_magang,
+                'jabatan' => $request->jabatan,
+                'alamat_industri' => $request->alamat_industri,
+                'nohp' => $request->nohp,
+                'email' => $request->email,
+                'startdate' => $request->startdate,
+                'enddate' => $request->enddate,
+                'alasan' => '-',
+                'statusapprove' => false,
+            ]);
 
             return response()->json([
                 'error' => false,
-                'message' => 'Persetujuan berhasil.',
-            ]);
-            } catch (\Exception $e) {
-                DB::rollBack();
+                'message' => 'Data successfully Created!',
+                'url' => url('pengajuan/surat')
 
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
             ]);
         }
     }
-    public function rejected($id, Request $request)
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id_univ)
     {
-        $data=PengajuanMandiri::find($id);
-        $data->statusapprove='2';
-        $data->save();
-        $alasan = $request->input('alasan');
-        return redirect()->back();
+
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+        return $mandiri;
+    }
+
+    public function detail($id)
+    {
+        $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+        return $mandiri;
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        try {
+            $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+
+            $mandiri->nim = $request->nim;
+            $mandiri->tglpeng = $request->tglpeng;
+            $mandiri->nama_industri = $request->nama_industri;
+            $mandiri->posisi_magang = $request->posisi_magang;
+            $mandiri->jabatan = $request->jabatan;
+            $mandiri->alamat_industri = $request->alamat_industri;
+            $mandiri->nohp = $request->nohp;
+            $mandiri->email = $request->email;
+            $mandiri->startdate = $request->startdate;
+            $mandiri->enddate = $request->enddate;
+            $mandiri->alasan = $request->alasan;
+            $mandiri->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data successfully Updated!',
+                'modal' => '#modalEdit',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function status($id)
+    {
+        
+    }
 
 }

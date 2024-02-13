@@ -28,7 +28,9 @@
 @section('main')
 <div class="row">
     <div class="col-md-9 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / Posisi UI/UX Designer / </span>Detail Mahasiswa </h4>
+        @foreach($lowongan as $lowongan)
+        <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / Posisi {{ $lowongan->intern_position }} / </span>Detail Mahasiswa </h4>
+        @endforeach
     </div>
 <div class="card">
     <div class="card-body mt-3 flex-grow-0 pt-0 h-100">
