@@ -212,7 +212,7 @@
                     <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
