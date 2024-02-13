@@ -62,7 +62,7 @@ class ContactController extends Controller
         //   $message->subject($data['subject']);
         // });
 
-        Mail::to('luluputriaprilia@gmail.com')->send(new ContactMail($data));
+        Mail::to('lkmfit@gmail.com')->send(new ContactMail($data));
         return redirect()->back();
     }
 
