@@ -1,4 +1,7 @@
 @extends('partials_admin.template')
+@section('meta_header')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -75,71 +78,60 @@
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-users ti-xs me-1"></i> Data Kandidat
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['kandidat'] ?? "0"}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['screening'] ?? "0"}}</span>
                 </button>
             </li>
             @if($lowongan->tahapan_seleksi == '1')
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap1'] ?? "0"}}</span>
+                    <i class="tf-icons ti ti-display ti-xs me-1"></i> Seleksi Tahap 1
                 </button>
             </li>
             @elseif($lowongan->tahapan_seleksi == '2')
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap1'] ?? "0"}}</span>
+                    <i class="tf-icons bi bi-display ti-xs me-1"></i> Seleksi Tahap 1
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap2'] ?? "0"}}</span>
+                    <i class="tf-icons bi bi-display ti-xs me-1"></i> Seleksi Tahap 2
                 </button>
             </li>
             @else
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap1'] ?? "0"}}</span>
+                    <i class="tf-icons bi bi-display ti-xs me-1"></i> Seleksi Tahap 1
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap2'] ?? "0"}}</span>
+                    <i class="tf-icons bi bi-display ti-xs me-1"></i> Seleksi Tahap 2
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3" aria-controls="navs-pills-justified-tahap3" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['tahap3'] ?? "0"}}</span>
+                    <i class="tf-icons bi bi-display ti-xs me-1"></i> Seleksi Tahap 3
                 </button>
             </li>
             @endif
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['penawaran'] ?? "0"}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['diterima'] ?? "0"}}</span>
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
                 <button type="button" class="nav-link showSingle" target="8" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
                     <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{$total['ditolak'] ?? "0"}}</span>
                 </button>
             </li>
         </ul>
@@ -153,34 +145,87 @@
         <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
 
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
-                    <option disabled selected>Ubah Status Kandidat</option>
-                    <option>Screening</option>
-                    <option>Ditolak</option>
-                </select>
-                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                </button>
+                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
+                    @csrf
+                    <select class="form-select select2" data-placeholder="Ubah Status Kandidat" name="status">
+                        <option value="" disabled selected>Ubah Status Kandidat</option>
+                        <option value="tahap1">Tahap 1</option>
+                        <option value="ditolak">Ditolak</option>
+                    </select>
+
+                    <button class="btn btn-success waves-effect waves-light mr-4" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                    </button>
+                </form>
             </div>
         </div>
         @endcan
         @else
         @can("ubah.lowongan.mitra")
+        @switch($lowongan->tahapan_seleksi)
+        @case(1)
         <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
 
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
-                    <option disabled selected>Ubah Status Kandidat</option>
-                    <option>Seleksi Tahap 1</option>
-                    <option>Seleksi Tahap 2</option>
-                    <option>Penawaran</option>
-                </select>
-                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                </button>
+                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
+                    @csrf
+
+                    <select class="form-select select2" data-placeholder="Ubah Status Kandidat" name="status">
+                        <option value="" disabled selected>Ubah Status Kandidat</option>
+                        @if($statusId == 3)
+                        <option value="penawaran">Penawaran</option>
+                        @endif
+                    </select>
+                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                    </button>
+                </form>
             </div>
         </div>
+        @break
+        @case(2)
+        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
+
+            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
+                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
+                    @csrf
+                    <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" name="status">
+                        <option value="" disabled selected>Ubah Status Kandidat</option>
+                        @if($statusId == '3')
+                        <option value="tahap2">Seleksi Tahap 2</option>
+                        @elseif($statusId == 4)
+                        <option value="penawaran">Penawaran</option>
+                        @endif
+                    </select>
+                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        @break
+        @case(3)
+        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
+
+            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
+                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
+                    @csrf
+                    <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" name="status">
+                        <option value="" disabled selected>Ubah Status Kandidat</option>
+                        @if($statusId == 3)
+                        <option value="tahap2">Seleksi Tahap 2</option>
+                        @elseif($statusId == 4)
+                        <option value="tahap3">Seleksi Tahap 3</option>
+                        @elseif($statusId == 5)
+                        <option value="penawaran">Penawaran</option>
+                        @endif
+                    </select>
+                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        @break
+        @endswitch
         @endcan
         @endif
-
         @endforeach
     </div>
 
@@ -261,6 +306,7 @@
                     <table class="table tab1c" id="{{$tableId}}" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th style="min-width: auto;">SELECT</th>
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:150px;">TANGGAL DAFTAR</th>
@@ -373,7 +419,7 @@
             if ($(this).attr('id') == null) return;
             // console.log(idElement);
             // console.log(url);
-            console.log(idLowongan);
+            // console.log(idLowongan);
 
 
             $(this).DataTable({
@@ -383,6 +429,9 @@
                 deferRender: true,
                 type: 'GET',
                 columns: [{
+                        data: "check"
+                    },
+                    {
                         data: "DT_RowIndex",
                         name: 'nomor'
                     },
@@ -430,9 +479,13 @@
                     {
                         data: "action"
                     }
-                ],
+                ]
             });
 
+        });
+
+        $(document).ready(function() {
+            $('.form-select').select2();
         });
 
         jQuery(function() {
@@ -442,7 +495,7 @@
                 jQuery('.targetDiv').hide('.cnt');
                 jQuery("#div" + idElement).slideToggle();
 
-                console.log(idElement);
+                // console.log(idElement);
             });
         });
 
@@ -477,7 +530,7 @@
         });
     </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 
     @endsection

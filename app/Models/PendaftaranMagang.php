@@ -19,6 +19,7 @@ class PendaftaranMagang extends Model
         'status',
 
     ];
+    public $timestamps = false;
     protected $primaryKey = 'id_pendaftaran';
     protected $keyType = 'string';
 
