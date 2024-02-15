@@ -197,7 +197,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
