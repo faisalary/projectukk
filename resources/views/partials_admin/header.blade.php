@@ -26,7 +26,8 @@
 
     <!-- Core CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" /> -->
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/theme-default.css') }}"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('app-assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
@@ -36,13 +37,16 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/swiper/swiper.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 
     <!-- Page CSS -->
@@ -236,13 +240,13 @@
                         </a>
                     </li>
 
-                    <!-- Kelola Pengguna -->
-                    <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : ''}}">
-                        <a href="{{ url('kelola-pengguna')}}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
-                        </a>
-                    </li>
+                        <!-- Kelola Pengguna -->
+                        <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : '' }}">
+                            <a href="{{ url('kelola-pengguna') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            </a>
+                        </li>
 
 
                     <!-- Master Data -->
@@ -392,13 +396,14 @@
                         </ul>
                     </li>
 
-                    <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
-                        <a href=" /anggota/tim" class="menu-link">
-                        <i class="menu-icon tf-icons ti ti-users"></i>
-                        <div data-i18n="Anggota Tim">Anggota Tim</div>
-                        </a>
-                    </li>
+                        <!-- Anggota Tim -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                            <a href=" /anggota/tim" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Anggota Tim">Anggota Tim</div>
+                            </a>
+                        </li>
 
                     <!-- Jadwal Seleksi -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi/lowongan/' ? 'active' : '' }} @endif">
@@ -408,21 +413,22 @@
                         </a>
                     </li>
 
-                    <!-- Profile Perusahaan -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
-                        <a href="/company/profile-company" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-building"></i>
-                            <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
-                        </a>
-                    </li>
+                        <!-- Profile Perusahaan -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
+                            <a href="/company/profile-company" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
+                            </a>
+                        </li>
 
-                    <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
-                        <a href="/logbook/mahasiswa" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                        </a>
-                    </li>
+                        <!-- Logbook Mahasiswa -->
+                        <li class="menu-item">
+                            <a href="/logbook/mahasiswa" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
+                            </a>
+                        </li>
 
                     <!-- Master Data -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">

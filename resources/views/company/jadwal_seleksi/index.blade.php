@@ -69,20 +69,14 @@
     <div class="row">
         <div class="col-md-9 col-12">
             <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / </span>Posisi
-                asdfg - Periode 21
+                {{ $lowongan->intern_position }} - Periode 21
                 April
                 -
                 11 Mei 2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
-            <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
-                <option value="1">2023/2024 Genap</option>
-                <option value="2">2023/2024 Ganjil</option>
-                <option value="3">2022/2023 Genap</option>
-                <option value="4">2022/2023 Ganjil</option>
-                <option value="5">2021/2022 Genap</option>
-                <option value="6">2021/2022 Ganjil</option>
-            </select>
+            {{-- <input type="text" class="form-control" id="flatpickr-range-filter" />
+            <div class="invalid-feedback"></div> --}}
             <div class="ps-3">
                 <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>

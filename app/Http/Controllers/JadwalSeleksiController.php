@@ -14,6 +14,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\PendaftaranMagang;
 use App\Models\MhsMagang;
 use App\Models\StatusSeleksi;
+use Carbon\Carbon;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Expr\New_;
@@ -48,7 +49,7 @@ class JadwalSeleksiController extends Controller
     public function store(SeleksiRequest $request)
     {
         try {
-           
+
             $pendaftaran = PendaftaranMagang::where('status', '1')->get();
             foreach ($pendaftaran as $p) {
                 list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
@@ -66,11 +67,11 @@ class JadwalSeleksiController extends Controller
                     'id_email_tamplate' => $request->subjek,
                     'status_seleksi' => true,
                 ]);
-
-                $user = 'Mita Mutiara';
-                Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
             }
-
+            $email = email_template::where('id_email_template', $request->subjek)->first();
+            $user = 'Mita Mutiara';
+            Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
+                
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Created!',
@@ -99,7 +100,7 @@ class JadwalSeleksiController extends Controller
         return DataTables::of($seleksi->get())
             ->addIndexColumn()
             ->addColumn('start_date', function ($seleksi) {
-                $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . $seleksi->start_date . '</span><br> <span class="text-muted">Tanggal Akhir</span><br> <span>' . $seleksi->end_date . '</span>';
+                $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . Carbon::parse($seleksi->start_date)->format('d F Y H:i') . '</span><br> <span class="text-muted">Tanggal Akhir</span><br> <span>' . Carbon::parse($seleksi->end_date)->format('d F Y H:i') . '</span>';
                 return $time;
             })
             ->editColumn('progress', function ($seleksi) {

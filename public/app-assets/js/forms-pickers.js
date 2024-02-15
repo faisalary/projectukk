@@ -12,6 +12,7 @@
     flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
     flatpickrMulti = document.querySelector('#flatpickr-multi'),
     flatpickrRange = document.querySelector('#flatpickr-range'),
+    flatpickrRangeFilter = document.querySelector('#flatpickr-range-filter'),
     flatpickrInline = document.querySelector('#flatpickr-inline'),
     flatpickrFriendly = document.querySelector('#flatpickr-human-friendly'),
     flatpickrDisabledRange = document.querySelector('#flatpickr-disabled-range');
@@ -54,6 +55,14 @@
     flatpickrRange.flatpickr({
       mode: 'range',
       enableTime: true,
+    });
+  }
+
+  // Range Filter
+  if (typeof flatpickrRangeFilter != undefined) {
+    flatpickrRangeFilter.flatpickr({
+      mode: 'range',
+      enableTime: false,
     });
   }
 
