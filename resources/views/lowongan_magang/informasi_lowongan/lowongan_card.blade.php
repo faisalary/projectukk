@@ -133,15 +133,6 @@
      </div>
  </div>
  <script>
-     //  $("#modalKonfirmasi").on("hide.bs.modal", function() {
-     //      $("#modalCenterTitle").html("Masukkan Tanggal Batas Konfirmasi");
-     //      $("#modal-button").html("Simpan");
-     //      $('#modalKonfirmasi form')[0].reset();
-     //      $('#modalKonfirmasi form #flatpickr-date').val('').trigger('change');
-     //      $('.invalid-feedback').removeClass('d-block');
-     //      $('.form-control').removeClass('is-invalid');
-     //  });
-
      function confirm(e) {
          let id = e.attr('data-id');
 
