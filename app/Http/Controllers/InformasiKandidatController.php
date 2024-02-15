@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Fakultas;
 use App\Models\Industri;
 use App\Models\Mahasiswa;
@@ -68,6 +69,13 @@ class InformasiKandidatController extends Controller
         }
 
         return DataTables::of($pendaftar->get())
+            ->addColumn('check', function ($row) {
+                // return '<div class="form-check form-check-inline"><input class="form-check-input student" type="checkbox" value="' . $row['id'] . '" name="student[]" /></div>';
+
+                // $box = '<input type="checkbox" value="' . $row['id_pendaftaran'] . '" class="form-check-inline form-check-input pendaftar">';
+                $box = '<div class="form-check form-check-inline"><input class="form-check-input pendaftar" type="checkbox" value="' . $row['id_pendaftaran'] . '" name="pendaftar[]" /></div>';
+                return $box;
+            })
             ->addIndexColumn()
             ->editColumn('status', function ($pendaftar) {
                 if ($pendaftar->applicant_status == "kandidat") {
@@ -96,7 +104,7 @@ class InformasiKandidatController extends Controller
                 return $btn;
             })
 
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status', 'check'])
 
             ->make(true);
     }
@@ -118,6 +126,40 @@ class InformasiKandidatController extends Controller
     }
 
     /**
+     * Update status.
+     */
+    public function status(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            // dd($request->status);
+
+            if (is_array($request->input('id')) || is_object($request->input('id'))) {
+                foreach ($id as $key => $value) {
+                    // Ambil data berdasarkan ID
+
+                    $selected = PendaftaranMagang::where('id_pendaftaran', $value)->first();
+
+                    $selected->applicant_status = $request->input('status');
+                    $selected->save();
+                }
+            }
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Status kandidat berhasil diubah!',
+                'modal' => '.targetDiv',
+                'table' => '.tab1c',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -127,10 +169,9 @@ class InformasiKandidatController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $pelamar = PendaftaranMagang::where('id_pendaftaran', $id)->first();
-        $pendaftar = PendaftaranMagang::where('id_lowongan', $pelamar->id_lowongan)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
+        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
 
-        $lowongan = LowonganMagang::where('id_lowongan', $pelamar->id_lowongan)->first();
+        $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
 
         return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan'));
     }
