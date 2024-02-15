@@ -2,14 +2,14 @@
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 <style>
-
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
     }
 
-    .bs-stepper .step.active .bs-stepper-circle {
-        background-color: #4EA971
+    .light-style .tagify__tag .tagify__tag-text {
+        color: #4EA971 !important;
     }
 </style>
 @endsection
@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Data Mahasiswa Magang / </span>
-        Mahasiswa Magang Mandiri Tahun Ajaran 2023/2024
+            Mahasiswa Magang Mandiri Tahun Ajaran 2023/2024
         </h4>
     </div>
     <div class="col-md-3 col-12 mb-3  d-flex align-items-center justify-content-between">
@@ -147,9 +147,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-2">
-                        <label for="nama" class="form-label">Nama Dosen Pembimbing Akademik<span class="text-danger">*</span></label>
-                        <select name="nama" id="nama" multiple="multiple" class="select2-multiple form-select" >
-                        </select>
+                        <label for="TagifyBasic1" class="form-label">Nama Dosen Pembimbing Akademik<span style="color: red;">*</span></label>
+                        <input id="TagifyBasic1" class="form-control" name="TagifyBasic1" value="" />
                     </div>
                 </div>
             </div>
@@ -160,24 +159,24 @@
     </div>
 </div>
 
-<!-- Modal Alert--> 
-<div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true"> 
-        <div class="modal-dialog modal-dialog-centered" role="document"> 
-            <div class="modal-content"> 
-                <div class="modal-header"> 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
-                </div> 
-                <div class="modal-body text-center"> 
-                    <img src="../../app-assets/img/alert.png" alt=""> 
-                    <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin menetapkan dosen pembimbing akademik?</h5> 
-                </div> 
-                <div class="modal-footer" style="display: flex; justify-content:center;"> 
-                    <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button> 
-                    <button type="submit" id="modal-button" class="btn btn-danger">Batal</button> 
-                </div> 
-            </div> 
-        </div> 
+<!-- Modal Alert-->
+<div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="../../app-assets/img/alert.png" alt="">
+                <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin menetapkan dosen pembimbing akademik?</h5>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content:center;">
+                <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
+                <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
+            </div>
+        </div>
     </div>
+</div>
 
 @endsection
 
@@ -295,5 +294,6 @@
 
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-<script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
+<script src="../../app-assets/js/forms-tagify.js"></script>
 @endsection
