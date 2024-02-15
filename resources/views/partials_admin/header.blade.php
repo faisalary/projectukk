@@ -150,7 +150,7 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                        <img src="{{ url('/app-assets/img/Logo.svg') }}">
+                            <img src="{{ url('/app-assets/img/Logo.svg') }}">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">
                             <img src="{{ url('/app-assets/img/Talentern.svg') }}">
@@ -197,7 +197,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
@@ -381,7 +381,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
                                 <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">

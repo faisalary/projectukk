@@ -182,7 +182,7 @@
             </div>
             <hr>
 
-            <h4>Pengalaman Kerja</h4>
+            <h4>Pengalaman</h4>
             <div class="card-body pb-0">
                 <ul class="timeline ms-1 mb-0 mt-3">
                     <li class="timeline-item timeline-item-transparent">

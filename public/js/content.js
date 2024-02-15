@@ -18,7 +18,6 @@
                         text: "Something went wrong!",
                         customClass: {
                             confirmButton: "btn btn-success",
-                            cancelButton: "btn btn-danger",
                         },
                         buttonsStyling: false,
                     });
@@ -92,7 +91,6 @@
                         heightAuto: false,
                         customClass: {
                             confirmButton: "btn btn-success",
-                            cancelButton: "btn btn-danger",
                         },
                         buttonsStyling: false,
                     });
@@ -207,10 +205,13 @@
                     success: function (data) {
                         if (data.error) {
                             Swal.fire({
-                                type: "error",
+                                icon: "error",
                                 title: "Oops...",
                                 text: data.message,
-                                confirmButtonClass: "btn btn-success",
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                },
+                                buttonsStyling: false,
                             });
                         } else {
                             setTimeout(function () {
@@ -290,7 +291,4 @@
             event.preventDefault();
         }
     });
-
-    
-   
 })();
