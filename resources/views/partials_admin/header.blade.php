@@ -219,26 +219,25 @@
                             </ul>
                         </li>
 
-                        <!-- Data Kandidat -->
-                        <li
-                            class="menu-item {{ request()->is('magang-fakultas*') || request()->is('magang-mandiri*') ? 'active open' : '' }}">
-                            <a href="" class="menu-link menu-toggle">
-                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                                <div data-i18n="Data Kandidat">Data Kandidat</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
-                                    <a href="{{ url('magang-fakultas') }}" class="menu-link">
-                                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
-                                    <a href="{{ url('magang-mandiri') }}" class="menu-link">
-                                        <div data-i18n="Magang Mandiri">Magang Mandiri</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <!-- Data Kandidat -->
+                    <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
+                        <a href="" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
+                                <a href="{{ url('magang-fakultas') }}" class="menu-link">
+                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
+                                <a href="{{ url('magang-mandiri') }}" class="menu-link">
+                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                         <!-- Jadwal Seleksi -->
                         <li

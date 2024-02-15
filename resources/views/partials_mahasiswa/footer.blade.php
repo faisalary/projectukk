@@ -37,25 +37,25 @@
 <footer class="content-footer footer bg-footer-theme" style="background-color:#1A3826 !important" id="footer">
     <div class="container-xxl">
         <div class="row text-white py-4">
-            <div class="col-md-5 col-12 ps-5">
+            <div class="col-md-4 col-12 ps-5">
                 <img src="{{ url('/app-assets/img/talentern_white.svg') }}">
                 <p class="mt-4">Berkarya dan Belajar: Temukan Pengalaman Magang dan Perusahaan Terbaik Bersama Kami!</p>
             </div>
-            <div class="col-md-7 col-12">
+            <div class="col-md-8 col-12">
                 <div class="row text-white">
-                    <div class="col-md-3 col-12">
+                    <div class="col-md-4 col-12">
                         <p>Kontak Kami</p>
                         <p class="location text-secondary"><i class="ti ti-mail"
-                                style="margin-right: 10px; margin-bottom:5px;"></i>lkmfit@gmail.com</p>
+                                style="margin-right: 10px; margin-bottom:5px;"></i><a href="mailto:magangfit@telkomuniversity.ac.id" style="color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;">magangfit@telkomuniversity.ac.id</a></p>
                         <p class="location text-secondary"><i class="ti ti-brand-whatsapp"
-                                style="margin-right: 10px; margin-bottom:5px;"></i>+6281398857641</p>
+                                style="margin-right: 10px; margin-bottom:5px;"></i><a href="https://wa.me/6285161415115" style="color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;">+62 851-6141-5115</a></p>
                     </div>
                     <div class="col-md-3 col-12">
                         <p>Legal</p>
                         <p class="text-secondary"><i>Community Guidelines</i></p>
                         <p class="text-secondary"><i>Privacy & Terms</i></p>
                     </div>
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-5 col-12">
                         <p>Tentang Kami</p>
                         <a href="/aboutus/talentern"> <p class="text-secondary">Talentern</p></a>
                         <a href="/aboutus/techno"> <p class="text-secondary"> PT. Teknologi Nirmala Olah Daya Informasi</p></a>
@@ -76,7 +76,7 @@
                                 style="color: white; margin-right: 20px;"></i></a>
                         <a href="#"><i class="fab fa-twitter" style="color: white; margin-right: 20px;"></i></a>
                     </div>
-                </div>
+                </div> 
                 <div class="border mt-2 mb-2" style="width: 1494px; margin-left: -89px; border-width: 3px;"></div>
 
                 <div class="copyright-text text-left mt-3" style="color: white">© {{ \Carbon\Carbon::today()->year }}
