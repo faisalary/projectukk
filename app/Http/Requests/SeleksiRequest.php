@@ -24,30 +24,24 @@ class SeleksiRequest extends FormRequest
     {
         if (isset($this->id)){
             return [
-                'nama' => ['required'],
-                'pelaksanaan' => ['required'],
-                'mulai' => ['required'],
+                'tahap' => ['required'],
                 'waktu' => ['required'],
-                'tempat' => ['required'],
+                'subjek' => ['required'],
             ];
         }
         return [
-            'nama' => ['required'],
-            'pelaksanaan' => ['required'],
+            'tahap' => ['required'],
             'mulai' => ['required'],
-            'waktu' => ['required'],
-            'tempat' => ['required'],
+            'subjek' => ['required'],
         ];
     }
 
     public function messages()
     {
        return [
-            'nama.required' => 'Name must be filled',
-            'pelaksanaan.required' =>'Place must be filled',
-            'mulai.required' =>'Start Date must be filled',
-            'waktu.required' => 'Start Time must be filled',
-            'tempat.required' => 'Location details must be filled'
+            'tahap.required' => 'Tahap must be filled',
+            'mulai.required' =>'Date must be filled',
+            'subjek.required' => 'Email subject must be filled'
         ];
     }
 }

@@ -197,7 +197,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
@@ -212,7 +212,7 @@
                     <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
@@ -303,7 +303,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
+                                <a href="{{ route('komponen-penilaian.index') }}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
@@ -380,12 +380,12 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
-                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
+                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index')}}" class="menu-link">
+                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -401,8 +401,8 @@
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi' ? 'active' : '' }} @endif">
-                        <a href="/jadwal-seleksi" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi/lowongan/' ? 'active' : '' }} @endif">
+                        <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
@@ -426,7 +426,7 @@
 
                     <!-- Master Data -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
-                        <a href="/master-data-email" class="menu-link">
+                        <a href="/company/master-email" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data Email">Master Data Email</div>
                         </a>
@@ -513,7 +513,9 @@
                                     <div class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
                                             <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
-                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
+                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
                                         </div>
                                     </div>
                                     <div class="dropdown-shortcuts-list scrollable-container">
@@ -562,7 +564,8 @@
                                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                                     <i class="ti ti-settings fs-4"></i>
                                                 </span>
-                                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
+                                                <a href="pages-account-settings-account.html"
+                                                    class="stretched-link">Setting</a>
                                                 <small class="text-muted mb-0">Account Settings</small>
                                             </div>
                                         </div>
@@ -792,7 +795,7 @@
                                         @if($user->roles[0]->name == 'superadmin')
                                         <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                         @endif
                                     </div>
                                 </a>
@@ -802,10 +805,10 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        @if($user->roles[0]->name == 'superadmin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                                        @if ($user->roles[0]->name == 'superadmin')
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
                                                         @elseif($user->roles[0]->name == 'admin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                                         @endif
                                                     </div>
                                                 </div>
