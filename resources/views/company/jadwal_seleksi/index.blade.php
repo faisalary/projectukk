@@ -75,8 +75,8 @@
                 11 Mei 2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 d-flex justify-content-end align-items-center">
-            <input type="text" class="form-control" id="flatpickr-range-filter" />
-            <div class="invalid-feedback"></div>
+            {{-- <input type="text" class="form-control" id="flatpickr-range-filter" />
+            <div class="invalid-feedback"></div> --}}
             <div class="ps-3">
                 <button class="btn btn-success waves-effect" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
