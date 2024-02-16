@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../app-assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('app-assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,41 +20,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
     <!-- Icons -->
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/fontawesome.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/fonts/flag-icons.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/fonts/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/fonts/tabler-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../../app-assets/css/demo.css" />
+    <!-- <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" /> -->
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/rtl/theme-default.css') }}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/swiper/swiper.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/swiper/swiper.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet"
+        href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/css/pages/cards-advance.css') }}" />
     <!-- Helpers -->
-    <script src="../../app-assets/vendor/js/helpers.js"></script>
+    <script src="{{ asset('app-assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="../../app-assets/vendor/js/template-customizer.js"></script>
+    <script src="{{ asset('app-assets/vendor/js/template-customizer.js') }}"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../../app-assets/js/config.js"></script>
+    <script src="{{ asset('app-assets/js/config.js') }}"></script>
 
     <style>
         .bg-menu-theme.menu-vertical .menu-item.active>.menu-link:not(.menu-toggle) {
@@ -150,12 +154,7 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" />
-                            </svg>
+                            <img src="{{ url('/app-assets/img/Logo.svg') }}">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">
                             <img src="{{ url('/app-assets/img/Talentern.svg') }}">
@@ -202,7 +201,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan/lkm' ? 'active' : '' }} @endif">
@@ -214,10 +213,10 @@
                     </li>
 
                     <!-- Data Kandidat -->
-                     <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
@@ -229,10 +228,10 @@
                                 <a href="{{ url('magang-mandiri') }}" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
-                            </li>        
+                            </li>
                         </ul>
                     </li>
-                   
+
                     <!-- Jadwal Seleksi -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
                         <a href="/seleksi/lanjutan" class="menu-link">
@@ -241,13 +240,13 @@
                         </a>
                     </li>
 
-                    <!-- Kelola Pengguna -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
-                        </a>
-                    </li>
+                        <!-- Kelola Pengguna -->
+                        <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : '' }}">
+                            <a href="{{ url('kelola-pengguna') }}" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            </a>
+                        </li>
 
 
                     <!-- Master Data -->
@@ -308,7 +307,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
+                                <a href="{{ route('komponen-penilaian.index') }}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
@@ -383,53 +382,55 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
-                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/kelola/lowongan/mitra' ? 'active' : '' }} @endif">
-                                <a href="{{ url('kelola/lowongan/mitra',  Auth::user()->id_industri)}}" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/kelola/lowongan' ? 'active' : '' }} @endif">
+                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
-                        <a href="/anggota/tim" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Anggota Tim">Anggota Tim</div>
-                        </a>
-                    </li>
+                        <!-- Anggota Tim -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                            <a href=" /anggota/tim" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-users"></i>
+                                <div data-i18n="Anggota Tim">Anggota Tim</div>
+                            </a>
+                        </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi' ? 'active' : '' }} @endif">
-                        <a href="/jadwal-seleksi" class="menu-link">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi/lowongan/' ? 'active' : '' }} @endif">
+                        <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
                     </li>
 
-                    <!-- Profile Perusahaan -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
-                        <a href="/profile-company" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-building"></i>
-                            <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
-                        </a>
-                    </li>
+                        <!-- Profile Perusahaan -->
+                        <li
+                            class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
+                            <a href="/company/profile-company" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
+                            </a>
+                        </li>
 
-                    <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
-                        <a href="/logbook/mahasiswa" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                        </a>
-                    </li>
+                        <!-- Logbook Mahasiswa -->
+                        <li class="menu-item">
+                            <a href="/logbook/mahasiswa" class="menu-link">
+                                <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                                <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
+                            </a>
+                        </li>
 
                     <!-- Master Data -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
-                        <a href="/master-data-email" class="menu-link">
+                        <a href="/company/master-email" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data Email">Master Data Email</div>
                         </a>
@@ -466,7 +467,7 @@
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Language -->
-                            <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+                            <!-- <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
                                 </a>
@@ -496,19 +497,19 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <!--/ Language -->
 
                             <!-- Style Switcher -->
-                            <li class="nav-item me-2 me-xl-0">
+                            <!-- <li class="nav-item me-2 me-xl-0">
                                 <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
                                     <i class="ti ti-md"></i>
                                 </a>
-                            </li>
+                            </li> -->
                             <!--/ Style Switcher -->
 
                             <!-- Quick links  -->
-                            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+                            <!-- <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <i class="ti ti-layout-grid-add ti-md"></i>
                                 </a>
@@ -516,7 +517,9 @@
                                     <div class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
                                             <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
-                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
+                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
                                         </div>
                                     </div>
                                     <div class="dropdown-shortcuts-list scrollable-container">
@@ -565,7 +568,8 @@
                                                 <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                                     <i class="ti ti-settings fs-4"></i>
                                                 </span>
-                                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
+                                                <a href="pages-account-settings-account.html"
+                                                    class="stretched-link">Setting</a>
                                                 <small class="text-muted mb-0">Account Settings</small>
                                             </div>
                                         </div>
@@ -588,7 +592,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <!-- Quick links -->
 
                             <!-- Notification -->
@@ -791,11 +795,11 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-   
+
                                         @if($user->roles[0]->name == 'superadmin')
                                         <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                         @endif
                                     </div>
                                 </a>
@@ -805,10 +809,10 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        @if($user->roles[0]->name == 'superadmin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                                        @if ($user->roles[0]->name == 'superadmin')
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
                                                         @elseif($user->roles[0]->name == 'admin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                                         @endif
                                                     </div>
                                                 </div>

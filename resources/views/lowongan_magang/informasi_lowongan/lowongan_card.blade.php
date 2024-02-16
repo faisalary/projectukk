@@ -24,7 +24,7 @@
                      </div>
                      <div class="card-info">
                          <small>Total Pelamar</small>
-                         <h5 class="mb-0">{{$pendaftar_count}}</h5>
+                         <h5 class="mb-0">{{$item->kandidat ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -35,7 +35,7 @@
                      </div>
                      <div class="card-info">
                          <small>Screening</small>
-                         <h5 class="mb-0">0</h5>
+                         <h5 class="mb-0">{{$item->screening ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -46,7 +46,7 @@
                      </div>
                      <div class="card-info">
                          <small>Proses Seleksi</small>
-                         <h5 class="mb-0">0</h5>
+                         <h5 class="mb-0">{{$item->tahapan_seleksi ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -57,7 +57,7 @@
                      </div>
                      <div class="card-info">
                          <small>Penawaran</small>
-                         <h5 class="mb-0">0</h5>
+                         <h5 class="mb-0">{{$item->penawaran ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -68,7 +68,7 @@
                      </div>
                      <div class="card-info">
                          <small>Diterima</small>
-                         <h5 class="mb-0">0</h5>
+                         <h5 class="mb-0">{{$item->diterima ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -79,7 +79,7 @@
                      </div>
                      <div class="card-info">
                          <small>Ditolak</small>
-                         <h5 class="mb-0">0</h5>
+                         <h5 class="mb-0">{{$item->ditolak ?? "0"}}</h5>
                      </div>
                  </div>
              </div>
@@ -93,12 +93,7 @@
                  </div>
                  <div class="col-6 text-end">
                      @can( "button.tnglbts.mitra" )
-                     <a href="">
-
-
-                     </a>
-                     <!-- <input class="form-control" type="date" value="0000-00-00" id="mulai"> -->
-                     <button class="btn btn-outline-success my-2 waves-effect" type="button" id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">
+                     <button class="btn btn-outline-success my-2 waves-effect" type="button" onclick=confirm($(this)) id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi" data-id="{{$item->id_lowongan}}">
                          <i class="ti bi-pencil-square text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
                      </button>
                      @endcan
@@ -119,28 +114,50 @@
                  <h5 class="modal-title" id="modalCenterTitle">Masukkan Tanggal Batas Konfirmasi</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body">
-                 <div class="row">
-                     <div class="col mb-3">
-                         <label for="flatpickr-date" class="form-label">Tanggal Konfirmasi<span style="color: red;">*</span></label>
-                         <input type="date" data-date="" data-date-format="d M Y" class="form-control flatpickr-input active" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
+             <form class="default-form" method="POST" action="/informasi/lowongan/date/{{$item->id_lowongan}}">
+                 @csrf
+                 <div class="modal-body">
+                     <div class="row">
+                         <div class="col mb-3 form-input">
+                             <label for="flatpickr-date" class="form-label">Tanggal Konfirmasi<span style="color: red;">*</span></label>
+                             <input type="datetime" name="date" data-date-format="d M Y" class="form-control flatpickr-input active" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
+                             <div class="invalid-feedback"></div>
+                         </div>
                      </div>
                  </div>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-success">Simpan</button>
-             </div>
+                 <div class="modal-footer">
+                     <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                 </div>
+             </form>
          </div>
      </div>
  </div>
+ <script>
+     function confirm(e) {
+         let id = e.attr('data-id');
+
+         let action = `{{ url('/informasi/lowongan/date/') }}/${id}`;
+         var url = `{{ url('/informasi/lowongan/add/') }}/${id}`;
+         $.ajax({
+             type: 'GET',
+             url: url,
+             success: function(response) {
+                 $('#modalKonfirmasi form').attr('action', action);
+                 $('#modalKonfirmasi form #flatpickr-date').val(moment(response.date_confirm_closing).format('DD MMMM YYYY')).trigger('change');
+
+                 $('#modalKonfirmasi').modal('show');
+             }
+         });
+     }
+ </script>
  <!-- Vendors JS -->
- <script src="../../app-assets/vendor/libs/moment/moment.js"></script>
- <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
- <script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
- <script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
- <script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
- <script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
+ <script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
+ <script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+ <script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+ <script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+ <script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+ <script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
 
  <!-- Page JS -->
- <script src="../../app-assets/js/forms-pickers.js"></script>
+ <script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
  @endforeach

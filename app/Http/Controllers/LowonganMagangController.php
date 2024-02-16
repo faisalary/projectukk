@@ -35,9 +35,8 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        
-        return view('company.lowongan_magang.halaman_lowongan_magang_mitra', 
-        compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas'));
+        $industri = Industri::all();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
     }
     
     /**
@@ -50,7 +49,8 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas'));
+        // $industri = Industri::where('id_industri')->get();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas','industri'));
     }
 
     /**
@@ -85,9 +85,10 @@ class LowonganMagangController extends Controller
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
-                // 'id_fakultas' => $request->fakultas,
-                'statusaprove' => 'tertunda',
-                'status' => 1
+                'id_fakultas' => $request->fakultas,
+                'fakultas' => $request->fakultas,
+                'id_prodi' => $request->prodi,
+                // 'id_industri' => $request->industri
             ]);
             $i = 0;
             foreach ((array) $request->mulai as $m) {
