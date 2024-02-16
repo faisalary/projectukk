@@ -49,11 +49,11 @@
             <div class="col-6">
                 <ul class="nav nav-pills mb-3 " role="tablist">
                     <li class="nav-item" style="font-size: small;">
-                        <button type="button" class="nav-link active" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;"> Pembimbing Akademik
+                        <button type="button" class="nav-link active" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-akademik" aria-controls="navs-pills-justified-akademik" aria-selected="false" style="padding: 8px 9px;"> Pembimbing Akademik
                         </button>
                     </li>
                     <li class="nav-item" style="font-size: small;">
-                        <button type="button" class="nav-link" target="0" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;"> Pembimbing Lapangan
+                        <button type="button" class="nav-link" target="0" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-lapangan" aria-controls="navs-pills-justified-lapangan" aria-selected="false" style="padding: 8px 9px;"> Pembimbing Lapangan
                         </button>
                     </li>
                 </ul>
@@ -61,10 +61,10 @@
         </div>
     </div>
     <div class="tab-content p-0">
-        <div class="tab-pane fade show active" id="navs-pills-justified-diterima" role="tabpanel">
+        <div class="tab-pane fade show active" id="navs-pills-justified-akademik" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table table-bordered" id="table-diterima">
+                    <table class="table table-bordered" id="table-akademik">
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
@@ -83,10 +83,10 @@
             </div>
         </div>
 
-        <div class="tab-pane fade show" id="navs-pills-justified-ditolak" role="tabpanel">
+        <div class="tab-pane fade show" id="navs-pills-justified-lapangan" role="tabpanel">
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <table class="table table-bordered" id="table-ditolak">
+                    <table class="table table-bordered" id="table-lapangan">
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
@@ -212,12 +212,12 @@
 
 <script>
     $(document).ready(function() {
-        var dataDiterima = [
-            ['1', 'Magang Fakultas', 'Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li> <li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-70', '30%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Presentasi dan Tanya Jawab <li> Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang </li><li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-30', '10%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+        var dataAkademik = [
+            ['1', 'Magang Fakultas', 'Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li> <li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-70', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Presentasi dan Tanya Jawab <li> Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang </li><li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-30', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
         ];
 
-        var tableDiterima = $('#table-diterima').DataTable({
+        var tableAkademik = $('#table-akademik').DataTable({
             scrollX: true,
             columns: [{
                     title: 'NOMOR'
@@ -284,18 +284,18 @@
                     "targets": 8
                 }
             ],
-            data: dataDiterima,
-            'rowsGroup': [0, 1],
+            data: dataAkademik,
+            'rowsGroup': [0, 1, 6],
         });
 
 
-        var dataDitolak = [
-            ['1', 'Magang Fakultas', 'Komunikasi, Adaptasi, Kerjasama', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '10%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Disiplin dan Tanggung Jawab dalam pengerjaan tugas', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '10%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-40', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+        var dataLapangan = [
+            ['1', 'Magang Fakultas', 'Komunikasi, Adaptasi, Kerjasama', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Disiplin dan Tanggung Jawab dalam pengerjaan tugas', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-40', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
         ];
 
-        var tableDitolak = $('#table-ditolak').DataTable({
+        var tableLapangan = $('#table-lapangan').DataTable({
             scrollX: true,
             columns: [{
                     title: 'NOMOR',
@@ -362,8 +362,8 @@
                     "targets": 8
                 }
             ],
-            data: dataDitolak,
-            'rowsGroup': [0, 1],
+            data: dataLapangan,
+            'rowsGroup': [0, 1, 6],
         });
     });
 </script>
