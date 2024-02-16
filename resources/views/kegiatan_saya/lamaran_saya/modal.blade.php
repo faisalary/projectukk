@@ -6,17 +6,26 @@
                 <h5 class="modal-title" id="modalDitolak">Konfirmasi Penolakan Magang Mandiri</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-0">
-                        <label for="formFile" class="form-label">Bukti Penolakan Magang</label>
-                        <input class="form-control" type="file" id="formFile">
+            <form class="default-form" method="POST" action="{{ route('lamaran_saya.store') }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="bukti_doc" class="form-label">Bukti Penolakan Magang</label>
+                            <input class="form-control @error('bukti_doc') is-invalid @enderror" type="file" id="bukti_doc" name="bukti_doc" multiple="">
+                            @error('bukti_doc')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Simpan</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -66,7 +75,7 @@
                     </div>
                     <div class="row">
                         <div class="col mb-0">
-                            <label for="formFile" class="form-label">Bukti Penolakan Magang</label>
+                            <label for="formFile" class="form-label">Bukti Penerimaan Magang</label>
                             <input class="form-control" type="file" id="formFile">
                         </div>
                     </div>
