@@ -36,7 +36,7 @@ class EmailJadwalSeleksi extends Mailable
      */
     public function build(Request $request)
     {
-        $email = email_template::where('id_email_template', $request->subjek)->first();
+        // $email = email_template::where('id_email_template', $request->subjek)->first();
         return $this->subject($this->subjek)
                     ->view('email.email_jadwalseleksi');
     }

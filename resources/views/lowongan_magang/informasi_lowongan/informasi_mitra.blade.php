@@ -53,35 +53,6 @@
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "totallowongan": "100",
-            "lowonganbaru": "5",
-            "totalpelamar": "500",
-            "statuskerjasama": "<span class='badge bg-label-success me-1'>Ya</span>",
-            "aksi": "<a href='/informasi/lowongan/' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
-        },
-        {
-            "nomor": "2",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "totallowongan": "100",
-            "lowonganbaru": "5",
-            "totalpelamar": "500",
-            "statuskerjasama": "<span class='badge bg-label-success me-1'>Ya</span>",
-            "aksi": "<a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
-        },
-        {
-            "nomor": "3",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "totallowongan": "100",
-            "lowonganbaru": "5",
-            "totalpelamar": "500",
-            "statuskerjasama": "<span class='badge bg-label-info me-1'>Internal Tel-u</span>",
-            "aksi": "<a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>",
-        },
-    ];
-
     var table = $('#table-informasi-mitra').DataTable({
         ajax: "{{route('mitra.show')}}",
         serverSide: false,
@@ -105,69 +76,6 @@
             },
             {
                 data: "action"
-            }
-        ]
-    });
-</script>
-
-<script>
-    var jsonData = [{
-            "nomor": "1",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "email": "info@technoinfinity.co.id",
-            "alamat": "Indonesia, Jawa Barat, Kota Bandung, Manjahlega, 40286",
-            "deskripsi": "Techno infinity adalah sebuah perusahaan pengembang perangkat lunak yang berlokasi di Bandung, Jawa Barat.",
-            "npwp": "<a href='#'>Dokumen NPWP</a>",
-            "sosial": "Instagram : <a href='#'>techno-infinity</a> Linkedin : <a href='#'>techno-infinity</a> ",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check' ></i></a> <a data-bs-toggle='modal' data-bs-target='#modalreject'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x' ></i></i></a>"
-        },
-        {
-            "nomor": "2",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "email": "info@technoinfinity.co.id",
-            "alamat": "Indonesia, Jawa Barat, Kota Bandung, Manjahlega, 40286",
-            "deskripsi": "Techno infinity adalah sebuah perusahaan pengembang perangkat lunak yang berlokasi di Bandung, Jawa Barat.",
-            "npwp": "<a href='#'>Dokumen NPWP</a>",
-            "sosial": "Instagram : <a href='#'>techno-infinity</a> Linkedin : <a href='#'>techno-infinity</a> ",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check' ></i></a> <a data-bs-toggle='modal' data-bs-target='#modalreject'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x' ></i></i></a>"
-        },
-        {
-            "nomor": "3",
-            "nama": "PT Teknologi Nirmala Olah Daya informasi",
-            "email": "info@technoinfinity.co.id",
-            "alamat": "Indonesia, Jawa Barat, Kota Bandung, Manjahlega, 40286",
-            "deskripsi": "Techno infinity adalah sebuah perusahaan pengembang perangkat lunak yang berlokasi di Bandung, Jawa Barat.",
-            "npwp": "<a href='#'>Dokumen NPWP</a>",
-            "sosial": "Instagram : <a href='#'>techno-infinity</a> Linkedin : <a href='#'>techno-infinity</a> ",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check' ></i></a> <a data-bs-toggle='modal' data-bs-target='#modalreject'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x' ></i></i></a>"
-        }
-    ];
-    var table = $('#table-kelola-mitra2').DataTable({
-        "data": jsonData,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "nama"
-            },
-            {
-                data: "email"
-            },
-
-            {
-                data: "alamat"
-            },
-            {
-                data: "deskripsi"
-            },
-            {
-                data: "npwp"
-            },
-            {
-                data: "sosial"
-            },
-            {
-                data: "aksi"
             }
         ]
     });
