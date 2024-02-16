@@ -13,6 +13,38 @@ class LowonganMagang extends Model
     protected $table = 'lowongan_magang';
     protected $guarded = [];
     protected $primaryKey = 'id_lowongan';
+    protected $fillable = [
+        'id_lowongan', 
+        'created_by', 
+        'id_jenismagang', 
+        'created_at',
+        'intern_position',
+        'durasimagang',
+        'deskripsi',
+        'requirements',
+        'id_lokasi',
+        'kuota',
+        'benefitmagang',
+        'startdate',
+        'enddate',
+        'tahapan_seleksi',
+        'date_confirm_closing',
+        'applicant_status',
+        'paid',
+        'pelaksanaan',
+        'jenjang',
+        'keterampilan',
+        'id_industri',
+        'id_flow',
+        'nominal_salary',
+        'gender',
+        'status',
+        'prodi',
+        'id_prodi',
+        'fakultas',
+        'alasantolak',
+        'statusaprove'
+    ];
     protected $keyType = 'string';
     protected $casts = [
         'date_confirm_closing' => 'datetime',

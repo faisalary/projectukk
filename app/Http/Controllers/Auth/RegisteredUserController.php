@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -58,24 +59,23 @@ class RegisteredUserController extends Controller
                         'isAdmin' => 2
                     ]);
                 $user->syncRoles('user');         
+                DB::commit();
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
-                dd($verifymhs);
-                Mail::to($user->emailmhs)->send(new VerifyEmailMhs($verifymhs));
+                Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
 
             return response()->json([
                 'error' => false,
                 'message' => 'Activated successfully!',
-                'modal' => '#register-mhs'
+                'script' => 'alert("Activated successfully!");'
             ]);
-
-            
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+        } catch (Exception $e) {
+           DB::rollBack();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
         }
         
-    }
-    public function setting(){
-
     }
 
 }

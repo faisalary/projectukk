@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
         .tooltip-inner {
             min-width: 100%;
@@ -32,7 +32,7 @@
 @section('main')
     <div class="row">
         <div class="col-md-8 col-12">
-            <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
+            <h4 class="fw-bold">Kelola mitra Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
             <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
@@ -57,8 +57,6 @@
                         data-bs-toggle="tab" data-bs-target="#navs-pills-justified-total"
                         aria-controls="navs-pills-justified-total" aria-selected="true" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Total Lowongan
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['total'] }}</span>
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
@@ -66,27 +64,21 @@
                         data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['tertunda'] }}</span>
-                    </button>
+                        </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Lowongan Diterima
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['diterima'] }}</span>
-                    </button>
+                        </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Lowongan Ditolak
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['ditolak'] }}</span>
-                    </button>
+                        </button>
                 </li>
             </ul>
         </div>
@@ -99,18 +91,17 @@
                         data-bs-original-title="Durasi Magang : -, Posisi Lowongan Magang : -, Status Lowongan Magang : -"
                         id="tooltip-filter"></i></div>
             </div>
-            @foreach (['1', '2', '3', '4'] as $statusId)
-                @if ($statusId == 1)
-                    @can('button.tnglbts.mitra')
-                        <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
-                            <a id="div{{ $statusId }}" class="targetDiv" href="{{ route('lowongan-magang.create') }}">
-                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
-                                    Magang</button>
-                            </a>
-                        </div>
-                    @endcan
-                @endif
+            @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $statusId)
+                @if ($statusId == "total" )
+                    <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
+                        <a id="div{{ $statusId }}" class="targetDiv" href="{{ url('kelola/lowongan/mitra/create', Auth::user()->id_industri)}}">
+                            <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalTambahLowongan">
+                                + Tambah Lowongan Magang
+                            </button>
+                        </a>
+                    </div>
+                    @endif
             @endforeach
         </div>
     </div>
@@ -192,11 +183,13 @@
                         <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 80px;">NOMOR</th>
+                                    <th style="max-width:70px;">NOMOR</th>
                                     <th style="min-width:100px;">POSISI</th>
                                     <th style="min-width:100px;">TANGGAL</th>
                                     <th style="min-width:100px;">DURASI MAGANG</th>
+                                   
                                     <th style="min-width:50px;">STATUS</th>
+                                  
                                     <th style="min-width:100px;">AKSI</th>
                                 </tr>
                             </thead>
@@ -205,61 +198,14 @@
                 </div>
             </div>
         @endforeach 
-
-
-        {{-- <!-- Modal Alert-->
-        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img src="../../../app-assets/img/alert.png" alt="">
-                        <h5 class="modal-title" id="modal-title">Apakah Anda Yakin Ingin Mengahapus Data?</h5>
-                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;">Data yang
-                            dipilih akan dihapus secara permanen!</div>
-                    </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, yakin</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
-
-
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="{{url("app-assets/vendor/libs/jquery-repeater/jquery-repeater.js")}}"></script>
+    <script src="{{url("app-assets/js/forms-extras.js")}}"></script>
     <script>
-        // var jsonData = [{
-        //         "nomor": "1",
-        //         "posisi": "UI/UX Designer",
-        //         "fakultas": "fakultas ilmu terapan",
-        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-        //         "durasi magang": "2 semester",
-        //         "status": "<span class='badge bg-label-danger'>Non-aktif</span>",
-        //         "aksi": "<div class='d-flex'><a href='/lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        //     },
-        //     {
-        //         "nomor": "2",
-        //         "posisi": "UI/UX Designer",
-        //         "fakultas": "fakultas ilmu terapan",
-        //         "program studi": "D3 Rekayasa Perangkat Lunak <br> D3 Sistem Informasi <br> D3 Sistem Informatika",
-        //         "tanggal": "<div class='flex'><small class='text-light fw-semibold'>Publish</small><h6>20 juli 2023</h6><small class='text-light fw-semibold '>Takedown</small><h6>11 juli 2024</h6></div>",
-        //         "durasi magang": "2 semester",
-        //         "status": "<span class='badge bg-label-success'>Aktif</span>",
-        //         "aksi": "<div class='d-flex'><a href='/edit-lowongan-magang'class='btn-icon text-warning waves-effect waves-light'>@can('only.lkm')<i class='ti ti-edit'>@endcan</i></a><a href='/detail-lowongan-magang' class='btn-icon text-success waves-effect waves-light'><i class='ti ti-file-invoice'></i></a> <a data-bs-toggle='modal' data-bs-target='#modalalert' class='btn-icon text-danger waves-effect waves-light'><i class='ti ti-trash'></i></a>",
-        //     }
-        // ];
-
-        $('.table').each(function() {
+    $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/show') }}?type=" + idElement;
+            let url = "{{ url('kelola/lowongan/mitra/show/{id_industri}') }}?type=" + idElement;
 
             $(this).DataTable({
                 ajax: url,
@@ -283,6 +229,7 @@
                         data: "durasimagang",
                         name: "durasimagang"
                     },
+                    
                     {
                         data: "status",
                         name: "status"
@@ -327,8 +274,8 @@
             let id = e.attr('data-id');
             console.log(id);
 
-            let action = `{{ url('kelola/lowongan/update/') }}/${id}`;
-            var url = `{{ url('kelola/lowongan/edit/') }}/${id}`;
+            let action = `{{ url('kelola/lowongan/mitra/update/') }}/${id}`;
+            var url = `{{ url('kelola/lowongan/mitra/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -363,27 +310,6 @@
             });
         }
 
-        // function get(e) {
-        //     let id = e.attr('data-id');
-
-        //     let action = {{ url('kelola/lowonga/update/') }}/${id};
-        //     var url = {{ url('kelola/lowongan/edit/') }}/${id};
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: url,
-        //         success: function(response) {
-        //             // $(".modal-title").html("Jadwal Seleksi Tahap 1");
-        //             $('#deskripsi').html(response.deskripsi);
-        //             $('#kualifikasi').html(response.requirements);
-        //             $('#tgltahap1').html(response.tgl_mulai);
-        //             // $('#tgltahap1').html(response.tgl_akhir);
-        //             $('#tgltahap2').html(response.tgl_mulai);
-        //             $('#tgltahap3').html(response.tgl_mulai);
-        //         }
-        //     });
-        // }
-
-
         $(document).ready(function() {});
 
         $(document).on('submit', '#filter', function(e) {
@@ -402,6 +328,6 @@
         });
     </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{url("/app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
+    <script src="{{url("/app-assets/js/extended-ui-sweetalert2.js")}}"></script>
 @endsection

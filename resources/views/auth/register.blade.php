@@ -27,43 +27,57 @@
                 @enderror
             </div>
         </div>
-    </div>
-
-    {{-- form-control --}}
-    {{-- <div class="form-group">
-        <div class="col">
-            <label for="password" class="col-form-label text-md-end">{{ __('Password') }}</label>
-
-            <div class="md-6 input-group input-group-merge">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter your Password" autofocus>
-                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- form-control --}}
-    {{-- <div class="form-group">
-        <div class="col">
-        <label for="password-confirm" class="col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-        <div class="md-6 input-group input-group-merge">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password" autofocus/>
-            <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-        </div>
-        </div>
-    </div> --}}
-
-    
+    </div>    
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
-        <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);"  name="register">Buat Akun</button>
+            <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);" name="register">Buat Akun</button>
         </div>
     </div>
 </form>
+<script>
+    function handleFormSubmit(event) {
+        
+        event.preventDefault();
+        fetch(event.target.action, {
+            method: event.target.method,
+            body: new FormData(event.target),
+            headers: {
+                'X-CSRF-TOKEN': event.target.querySelector('input[name="_token"]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error === false) {
+                alert(data.message);
+                if (data.script) {
+                    const script = JSON.parse('"' + data.script + '"');
+                    const scriptElement = document.createElement('script');
+                    scriptElement.text = script;
+                    document.body.appendChild(scriptElement);
+                }
+            } else {
+                // Tangani error jika diperlukan
+                console.error(data.message);
+            }
+        })
+        .catch(error => {
+            // Tangani error fetch jika diperlukan
+            console.error('Error Fetch:', error);
+        });
+    }
+    
+</script>
 
+
+@if (Session::has('message'))
+<script>
+    swall("Message", "{{Session::get('message') }}", 'succes',{
+        button:true,
+        button: 'Daftar',
+        timer: 3000,
+
+    })
+</script>
+@endif
 @endsection
+

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../../app-assets/" data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../app-assets/" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -204,8 +204,8 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan' ? 'active' : '' }} @endif">
-                                <a href="{{ route('lowongan-magang.index') }}" class="menu-link">
+                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan/lkm' ? 'active' : '' }} @endif">
+                                <a href="{{ url('kelola/lowongan/lkm') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -318,14 +318,12 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="menu-item">
                         <a href="{{ url('/konfigurasi') }}" class="menu-link">
                             <i class="ti ti-user"></i>
                             <div data-i18n="Konfigurasi">Konfigurasi</div>
                         </a>
                     </li>
-
                     <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">

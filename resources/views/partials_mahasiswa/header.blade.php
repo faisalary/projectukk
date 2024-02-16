@@ -39,14 +39,14 @@
   <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css')}}" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+  <link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
   <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 
 
@@ -78,7 +78,7 @@
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
   <script src="../../app-assets/vendor/js/template-customizer.js"></script>
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="../../app-assets/js/config.js"></script>
+  <script src="../../app-assets/js/config.js"></script>>
 </head>
 
 <body>
@@ -436,7 +436,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="{{url("mahasiswa/profile/pribadi", Auth::user()->nim)}}">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
@@ -454,7 +454,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="/mahasiswa/profile/pribadi">
                       <i class="ti ti-user-circle me-2 ti-sm"></i>
                       <span class="align-middle">Profil Saya</span>
                     </a>

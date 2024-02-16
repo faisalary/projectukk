@@ -81,47 +81,47 @@
                                         <input class="form-check-input" type="checkbox" value="" id="selectAll_informasi" />
                                         <label class="form-check-label" for="defaultCheck1">Pilih Semua</label>
                                     </div>
-                                    {{-- <div class='form-group'>
-                                        <div class="row">
-                                            @php
-                                                $i = 0;
-                                                
-                                                foreach ($permissions as $p) {
-                                                    $temp = [];
-                                                    $temp = explode('.', $p->name);
-                                                
-                                                    $permissions_list['group'][$i] = $temp[0];
-                                                    $permissions_list['function'][$temp[0]][] = ['name' => $temp[1], 'id' => $p->id];
-                                                    $permissions_list['id'][$temp[0]][] = $p->name;
-                                                
-                                                    $i++;
-                                                }
-                                                
-                                                $permissions_list['group'] = array_unique($permissions_list['group']);
-                                                $listIdCheckbox = '';
-                                            @endphp
-            
-                                            @foreach ($permissions_list['group'] as $val)
-                                                <div class="col-sm-3">
-                                                    <span
-                                                        class="badge text-wrap text-left bg-primary mt-1 mb-1">{{ ucwords(str_replace('_', ' ', $val)) }}</span>
-                                                    @foreach ($permissions_list['function'][$val] as $index => $value)
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input checkbox check-all"
-                                                                id="{{ $permissions_list['function'][$val][$index]['name'] . $i }}"
-                                                                name="permission_id[]" value="{{ $value['id'] }}">
-                                                            <label class="custom-control-label"
-                                                                for="{{ $permissions_list['function'][$val][$index]['name'] . $i }}">{{ ucwords(str_replace('_', ' ', $value['name'])) }}</label>
-                                                        </div>
-                                                        @php
-                                                            $listIdCheckbox = strval($permissions_list['function'][$val][$index]['name'] . $i) . '|' . $listIdCheckbox;
-                                                            $i++;
-                                                        @endphp
-                                                    @endforeach
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div> --}}
+                                <div class='form-group'>
+                                    <div class="row">
+                                        {{-- @php
+                                            $i = 0;
+                                            
+                                            foreach ($permissions as $p) {
+                                                $temp = [];
+                                                $temp = explode('.', $p->name);
+                                            
+                                                $permissions_id['group'][$i] = $temp[0];
+                                                $permissions_id['function'][$temp[0]][] = ['name' => $temp[1], 'id' => $p->id];
+                                                $permissions_id['id'][$temp[0]][] = $p->name;
+                                            
+                                                $i++;
+                                            }
+                                            
+                                            $permissions_id['group'] = array_unique($permissions_id['group']);
+                                            $listIdCheckbox = '';
+                                        @endphp --}}
+        
+                                        {{-- @foreach ($permissions_id['group'] as $val)
+                                            <div class="col-sm-3">
+                                                <span
+                                                    class="badge text-wrap text-left bg-primary mt-1 mb-1">{{ ucwords(str_replace('_', ' ', $val)) }}</span>
+                                                @foreach ($permissions_id['function'][$val] as $index => $value)
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input checkbox check-all"
+                                                            id="{{ $permissions_id['function'][$val][$index]['name'] . $i }}"
+                                                            name="permission_id[]" value="{{ $value['id'] }}">
+                                                        <label class="custom-control-label"
+                                                            for="{{ $permissions_id['function'][$val][$index]['name'] . $i }}">{{ ucwords(str_replace('_', ' ', $value['name'])) }}</label>
+                                                    </div>
+                                                    @php
+                                                        $listIdCheckbox = strval($permissions_id['function'][$val][$index]['name'] . $i) . '|' . $listIdCheckbox;
+                                                        $i++;
+                                                    @endphp
+                                                @endforeach
+                                            </div>
+                                        @endforeach --}}
+                                    </div>
+                                </div>
                                     <span class="badge bg-success mt-3
                                         mb-1">Informasi Lowongan</span>
                                     <div class="form-check mt-3">

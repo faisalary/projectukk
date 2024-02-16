@@ -87,13 +87,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="alert alert-warning alert-dismissible ms-4 me-4 mb-4" role="alert">
-        <i class="ti ti-alert-triangle ti-xs"></i>
-        <span style="color: #23314B; padding-left:10px; padding-top:5px;"> Untuk mencapai <b>70%</b> wajib mengisi semua data di <b>informasi pribadi</b>!</span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> -->
-
   <div class="row">
     <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
       <!-- User Profile-->
@@ -101,77 +94,80 @@
         <div class="card-body pb-0">
           <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditInformasi"></i>
+            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this))" data-bs-target="#modalEditInformasi"></i>
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
-              <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
+              @if ($informasiprib?->profile_picture??'')
+                  <img src="{{ asset('storage/' . $informasiprib?->profile_picture??'') }}" alt="user-avatar"
+                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+              @else
+                  <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+              @endif
+              
               <div class="user-info text-center">
-                <h4 class="mb-2">Violet Mendoza</h4>
-                <span class="badge bg-label-success mt-1">Fullstack Developer</span>
+                <h4 class="mb-2">{{$mahasiswa?->namamhs??''}}</h4>
+                <span class="badge bg-label-success mt-1">{{$informasiprib?->headliner??''}}</span>
               </div>
             </div>
           </div>
           <div class="border-bottom mb-3">
-            <p class="mt-4 mb-0">Pengembang perangkat lunak berpengalaman selama 7 tahun dengan keahlian dalam pengembangan aplikasi web, manajemen proyek, dan kerja tim lintas disiplin.</p>
-            <p class="content-new mb-0 mt-0"> Sertifikasi dalam manajemen proyek. Analitis, adaptif, dan berkomitmen pada kemajuan teknologi.</p>
-            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-              Show more
-            </u>
+            <p class="mt-4 mb-0">{{$informasiprib?->deskripsi_diri?? '' }}</p>
           </div>
           <div class="info-container">
             <ul class="list-unstyled">
               <li class="mb-1">
                 <span class="fw-semibold me-1">NIM:</span>
-                <span>6705513025</span>
+                <span>{{$mahasiswa->nim}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Universitas:</span>
-                <span>Universitas Telkom</span>
+                <span>{{$mahasiswa->univ->namauniv}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Fakultas:</span>
-                <span>Fakultas Ilmu Terapan</span>
+                <span>{{$mahasiswa->fakultas->namafakultas}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Program Studi:</span>
-                <span>D3 Sistem Informasi</span>
+                <span>{{$mahasiswa->prodi->namaprodi}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Angkatan:</span>
-                <span>2021</span>
+                <span>{{$mahasiswa->angkatan}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">IPK:</span>
-                <span>4.00</span>
+                <span>{{$informasiprib?->ipk??''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Eprt:</span>
-                <span>1000</span>
+                <span>{{$informasiprib?->eprt?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">TAK:</span>
-                <span>100</span>
+                <span>{{$informasiprib?->TAK?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Email:</span>
-                <span>jennieruby123@gmail.com</span>
+                <span>{{$mahasiswa->emailmhs}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">No.Telp:</span>
-                <span>087654321234</span>
+                <span>{{$mahasiswa->nohpmhs }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Tanggal Lahir:</span>
-                <span>01 Januari 2000</span>
+                <span>{{$informasiprib?->tgl_lahir??''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Jenis Kelamin:</span>
-                <span>Perempuan</span>
+                <span>{{$informasiprib?->gender?? ''}}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Alamat:</span>
-                <span>Jln. Rancabolang No. 12</span>
+                <span>{{$mahasiswa->alamatmhs}}</span>
               </li>
             </ul>
           </div>
@@ -220,27 +216,24 @@
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Lokasi Kerja yang diharapkan:</span>
-                    <span>Bandung</span>
+                    <span>{{$informasitambahan?->lok_kerja??''}}</span>
                   </p>
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#"> jennierubyjane </a></span>
+                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
                   </p>
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Linkedin:</span>
-                    <span> <a href="#"> jennierubyjane </a></span>
+                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
                   </p>
                 </div>
                 <p class="mb-2 pt-0">
                   <span class="fw-semibold me-1">Bahasa:</span>
                 </p>
                 <p class="mb-4">
-                  <span class="btn rounded-pill btn-success waves-effect waves-light">Bahasa Indonesia</span>
-                  <span class="btn rounded-pill btn-success waves-effect waves-light">Bahasa Inggris</span>
-                  <span class="btn rounded-pill btn-success waves-effect waves-light">Bahasa Jepang</span>
-                  <span class="btn rounded-pill btn-success waves-effect waves-light">Bahasa Korea</span>
+                  <span class="btn rounded-pill btn-success waves-effect waves-light" value="1">{{$informasitambahan->bahasa?->bahasa??''}}</span>
                 </p>
               </div>
             </div>
@@ -353,7 +346,7 @@
                       <p style="font-size: small;">Juli 2022 - Present/p>
                       <div>
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                           Show more
                         </u>
@@ -375,7 +368,7 @@
                     <p style="font-size: small;">Juli 2022 - Present/p>
                     <div>
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                       </u>
@@ -415,7 +408,7 @@
                       <p style="font-size: small;">Juli 2022 - Present/p>
                       <div>
                         <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                           Show more
                         </u>
@@ -445,7 +438,7 @@
                     <p style="font-size: small;">Juli 2022 - Present/p>
                     <div>
                       <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                       <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                         Show more
                       </u>
@@ -483,112 +476,185 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Account -->
+    
+        <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. $mahasiswa->nim)}}" method="POST">
+          @csrf
         <div class="modal-body">
-          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
-            <img src="../../app-assets/img/avatars/15.png" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
-            <div class="button-wrapper">
-              <label for="upload" class="btn btn-success me-2 mb-3" tabindex="0">
-                <span class="d-none d-sm-block">Unggah Foto Baru</span>
-                <i class="ti ti-upload d-block d-sm-none"></i>
-                <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
-              </label>
-              <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
-                <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Atur Ulang</span>
-              </button>
-
-              <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
+            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
+              @if ($informasiprib?->profile_picture?? '')
+                <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
+                    class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+              @else
+                  <img src="../../app-assets/img/avatars/15.png" alt="user-avatar" 
+                  class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
+              @endif
+              <div class="button-wrapper">
+                <label for="changePicture" class="btn btn-white text-success me-2 mb-3 waves-effect waves-light"
+                  tabindex="0">
+                  <i class="ti ti-upload d-block pe-2"></i>
+                  <span class="d-none d-sm-block">Upload</span>
+                  <input type="file" id="changePicture" name="profile_picture" class="account-file-input" hidden
+                      accept="image/png, image/jpeg">
+                </label>
+                <button type="button" 
+                class="btn btn-label-secondary account-image-reset mb-3" 
+                onclick="removeImage()">
+                  <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Atur Ulang</span>
+                </button>
+                <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
+              </div>
             </div>
-          </div>
-          <div class="border-top">
-            <form id="formAccountSettings" method="POST" onsubmit="return false">
+            <div class="border-top">
               <div class="row mt-4">
                 <div class="mb-3 col-md-6">
                   <label for="NIM" class="form-label">NIM <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nim" name="nim" value="6705513025" placeholder="6705513025" disabled />
+                  <input class="form-control" type="text" id="nim" name="nim" value="{{$mahasiswa->nim}}" placeholder="" disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Name" class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="namalengkap" name="namalengkap" value="Violet Mendoza" autofocus disabled />
+                  <input class="form-control" type="text" id="namalengkap" name="namalengkap" value="{{$mahasiswa->namamhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Universitas" class="form-label">Universitas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="universitas" name="universitas" value="Telkom University" autofocus disabled />
+                  <input class="form-control" type="text" id="universitas" name="universitas" value="{{$mahasiswa->univ->namauniv}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Fakultas" class="form-label">Fakultas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="fakultas" name="fakultas" value="Fakultas Ilmu Terapan" autofocus disabled />
+                  <input class="form-control" type="text" id="fakultas" name="fakultas" value="{{$mahasiswa->fakultas->namafakultas}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Prodi" class="form-label">Program Studi <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="prodi" name="prodi" value="D3 Sistem Informasi" autofocus disabled />
+                  <input class="form-control" type="text" id="prodi" name="prodi" value="{{$mahasiswa->prodi->namaprodi}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="angkatan" class="form-label">Angkatan <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="angkatan" name="prodi" value="2021" autofocus disabled />
+                  <input class="form-control" type="text" id="angkatan" name="prodi" value="{{$mahasiswa->angkatan}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Email" class="form-label">Email <span style="color: red;">*</span></label>
-                  <input class="form-control" type="email" id="email" name="email" value="jennieruby123@gmail.com" autofocus disabled />
+                  <input class="form-control" type="email" id="email" name="email" value="{{$mahasiswa->emailmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label class="form-label" for="notelp">No. Telp</label>
-                  <input type="text" id="notelp" name="notelp" class="form-control" placeholder="089123456789" autofocus disabled />
+                  <input type="text" id="notelp" name="notelp" class="form-control" value="{{$mahasiswa->nohpmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="IPK" class="form-label">IPK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" autofocus />
+                  <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
+                  <input class="form-control" type="text" id="ipka" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="EPRT" class="form-label">EPRT <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" autofocus />
+                  <label for="eprt" class="form-label">EPRT<span style="color: red;">*</span></label>
+                  <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" value="{{$informasiprib?->eprt??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="TAK" class="form-label">TAK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="tak" name="tak" placeholder="100" autofocus />
+                  <input class="form-control" type="text" id="TAK" name="TAK" placeholder="100" value="{{$informasiprib?->TAK??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="tanggallahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
+                  <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
+                  <input name="tgl_lahir" value="{{$informasiprib?->tgl_lahir??''}}" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="jeniskelamin" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
+                  <label for="gender" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
                   <div class="form-check">
                     <div class="row">
-                      <div class="col-3">
-                        <input name="default-radio-1" class="form-check-input" type="radio" value="" id="defaultRadio2" checked="">
-                        <label class="form-check-label" for="defaultRadio2"> Laki-Laki </label>
+                      <div class="col-3" >
+                        <input name="gender" class="form-check-input" type="radio" value="Laki-Laki" id="gender" checked="">
+                        <label class="form-check-label" for="gender"> Laki-Laki </label>
                       </div>
                       <div class="col-3 ms-2">
-                        <input name="default-radio-1" class="form-check-input" type="radio" value="" id="defaultRadio2" checked="">
-                        <label class="form-check-label" for="defaultRadio2"> Perempuan </label>
+                        <input name="gender" class="form-check-input" type="radio" value="Perempuan" id="gender" checked="">
+                        <label class="form-check-label" for="gender"> Perempuan </label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="headliner" class="form-label">Headliner</label>
-                  <input class="form-control" type="text" id="headliner" name="headliner" placeholder="cth. UI/UX Desginer" />
+                  <input class="form-control" value="{{$informasiprib?->headliner??''}}" type="text" id="headliner" name="headliner" placeholder="cth. UI/UX Desginer" />
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="alamat" class="form-label">Alamat <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="alamat" name="alamat" placeholder="Jln. Rancabolang No. 12" disabled />
+                  <input class="form-control" type="text" id="alamat" name="alamat" value="{{$mahasiswa?->alamatmhs??''}}" placeholder="jln. merdeka" disabled />
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="deskripsi" class="form-label">Deskripsi Diri</label>
-                  <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Deskripsi Diri"></textarea>
+                  <label for="deskripsi_diri" class="form-label">Deskripsi Diri</label>
+                  <input class="form-control" value="{{$informasiprib?->deskripsi_diri??''}}" type="textarea" id="deskripsi_diri" name="deskripsi_diri" placeholder="Deskripsi Diri">
                 </div>
               </div>
               <div class="modal-footer p-0">
-                <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+                <button id="modal-button"  type="submit" class="btn btn-success m-0">Simpan Data</button>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
         <!-- /Account -->
       </div>
     </div>
   </div>
+  @section('page_script')
+  <script>
+    changePicture.onchange = evt => {
+      const [file] = changePicture.files
+      if (file) {
+          imgPreview.src = URL.createObjectURL(file)
+      } else {
+          imgPreview.src = "../../app-assets/img/avatars/14.png"
+      }
+    }
+
+
+    function edit(e) {
+    let id = e.attr('data-id');
+    var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
+    let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+              $("#modal-button").html("Update Data");
+              $('#modalEditInformasi form').attr('action', action);
+              $('#ipk').val(response.ipk).trigger('change');
+              $('#eprt').val(response.eprt).trigger('change');
+              $('#TAk').val(response.TAk).trigger('change');
+              $('#tgl_lahir').val(response.tgl_lahir).trigger('change');
+              $('#headliner').val(response.headliner).trigger('change');
+              $('#deskripsi_diri').val(response.deskripsi_diri).trigger('change');
+              $('#profile_picture').val(response.profile_picture).trigger('change');
+              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+          }
+      });
+    }
+
+
+    function removeImage() {
+        document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
+    }
+
+    $("#modalEditInformasi").on("hide.bs.modal", function() {
+
+    $("#modal-title").html("Update Data");
+    $("#simpanButton").html("Save Data")
+    $('#modalEditInformasi form')[0].reset();
+    $('#modalEditInformasi form #kategori').val('').trigger('change');
+    $('#modalEditInformasi form #statuskerjasama').val('').trigger('change');
+    $('.invalid-feedback').removeClass('d-block');
+    $('.form-control').removeClass('is-invalid');
+    });
+  </script>
+<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+<script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
+@endsection
+
 
   <!-- Modal Edit Informasi Tambahan -->
   <div class="modal fade" id="modalEditInformasiTambahan" tabindex="-1" aria-hidden="true">
@@ -601,11 +667,13 @@
         </div>
 
         <div class="modal-body p-0 ms-5 me-5">
-          <form id="" method="POST" onsubmit="return false">
+          <form action="{{ url('mahasiswa/profile/informasi/store' )}}" id="informasitambahan" method="POST">
+            @csrf
+            @method('PUT')
             <div class="row">
               <div class="mb-3 col-md-12 p-0 ">
-                <label for="lokasikerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="lokasikerja" name="lokasikerja" placeholder="Lokasi Kerja" />
+                <label for="lok_kerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="lok_kerja" name="lok_kerja" value="{{$informasitambahan?->lok_kerja??''}}" placeholder="Lokasi Kerja" />
               </div>
               <div class="border mb-3" style="border-radius: 8px;">
                 <div class="form-repeater">
@@ -615,7 +683,7 @@
                         <div class="mb-3 col-md-11">
                           <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
                           <select id="bahasa" class="form-select select2">
-                            <option disabled selected>Pilih Jenis Bahasa</option>
+                            <option disabled selected value="{{$informasitamabahan->bahasa?->bahasa??''}}">Pilih Jenis Bahasa</option>
                             <option value="bahasa">Indonesia</option>
                             <option value="bahasa">Inggris</option>
                             <option value="bahasa">Korea</option>
@@ -653,7 +721,7 @@
                           </select>
                         </div>
                         <div class="mb-3 col-md-7">
-                          <input class="form-control mt-4" type="text" id="username" name="username" placeholder="URL/Username" />
+                          <input class="form-control mt-4" type="text" id="sosmed" name="sosmed" value="{{$informasitambahan?->sosmed??''}}" placeholder="URL/Username" />
                         </div>
                         <div class="mb-3 col-md-1">
                           <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
@@ -1130,8 +1198,8 @@
 </script>
 <script src="{{ url('assets/js/yearpicker.js') }}"></script>
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+<script src="{{ url('urlapp-assets/js/forms-extras.js')}}"></script>
+<script src="{{ url('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 
 
 @endsection

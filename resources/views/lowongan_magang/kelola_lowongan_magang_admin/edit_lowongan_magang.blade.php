@@ -23,9 +23,16 @@
 @endsection
 
 @section('main')
-    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
-        <span class="ti ti-arrow-left me-2"></span>Kembali
-    </a>
+@can('btn.back.lkm')
+<a href="{{url("/kelola/lowongan/lkm")}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <span class="ti ti-arrow-left me-2"></span>Kembali
+</a>
+@endcan
+@can('btn.back.mitra')
+<a href="{{url("/kelola/lowongan/mitra", Auth::user()->id_industri)}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <span class="ti ti-arrow-left me-2"></span>Kembali
+</a>
+@endcan
     <div class="row ">
         <div class="col-md-12 col-12">
             <nav aria-label="breadcrumb">
@@ -84,7 +91,7 @@
                     </div>
                     <div class="bs-stepper-content">
                         <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
-                            action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id_lowongan }}">
+                            action="{{ url('kelola/lowongan/mitra/update') }}/{{ $lowongan->id_lowongan }}">
                             @csrf
                             @method('PUT')
                             <!-- Account Details -->
@@ -125,7 +132,7 @@
                                             placeholder="Masukan Deskripsi Pekerjaan">{{ $lowongan->deskripsi }}</textarea>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev" disabled>
+                                        <button type="button" class="btn btn-label-secondary btn-prev" disabled>
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>
@@ -218,13 +225,21 @@
                                                     @endforeach
                                                 </select>
                                             </div> --}}
-                                            <div class="col-lg-12 col-sm-6">
-                                                <label for="select2Disabled" class="form-label">Prodi<span
+                                            @can('btn.pilih.prodi')
+                                            <div class="form-group" style="margin-top: 5px;">
+                                                <label class="form-label" for="fakultas">Fakultas<span
                                                         class="text-danger">*</span></label>
-                                                <select id="select2Disabled" class="select2 form-select" disabled>
-                                                    <option value="1"selected>Pilih Prodi</option>
+                                                <select name="prodi" id="prodi" class="select2 form-select"
+                                                    data-placeholder="Pilih Fakultas">
+                                                    <option value="" disabled>Pilih Prodi</option>
+                                                    @foreach ($prodi as $f)
+                                                        <option @if ($f->id_prodi == $lowongan->id_prodi) selected @endif
+                                                            value="{{ $f->id_prodi }}">{{ $f->namaprodi }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
@@ -297,7 +312,7 @@
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="lokasi" class="form-label">Lokasi Penempatan<span
                                                 class="text-danger">*</span></label>
-                                        <select name="lokasi" id="lokasi" multiple="multiple"
+                                        <select name="lokasi" id="id_lokasi" multiple="multiple"
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Masukan Lokasi Pekerjaan">
                                             <option value="" disabled>Select</option>
@@ -365,7 +380,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev">
+                                        <button type="button" class="btn btn-label-secondary btn-prev">
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>
@@ -507,7 +522,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <button class="btn btn-label-secondary btn-prev">
+                                        <button type="button" class="btn btn-label-secondary btn-prev">
                                             <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                                             <span class="align-middle d-sm-inline-block d-none">Previous</span>
                                         </button>
