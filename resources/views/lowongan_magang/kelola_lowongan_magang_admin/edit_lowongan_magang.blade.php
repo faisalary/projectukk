@@ -23,9 +23,16 @@
 @endsection
 
 @section('main')
-    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
-        <span class="ti ti-arrow-left me-2"></span>Kembali
-    </a>
+@can('btn.back.lkm')
+<a href="{{url("/kelola/lowongan/lkm")}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <span class="ti ti-arrow-left me-2"></span>Kembali
+</a>
+@endcan
+@can('btn.back.mitra')
+<a href="{{url("/kelola/lowongan/mitra", Auth::user()->id_industri)}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <span class="ti ti-arrow-left me-2"></span>Kembali
+</a>
+@endcan
     <div class="row ">
         <div class="col-md-12 col-12">
             <nav aria-label="breadcrumb">
@@ -84,7 +91,7 @@
                     </div>
                     <div class="bs-stepper-content">
                         <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
-                            action="{{ url('kelola/lowongan/update') }}/{{ $lowongan->id_lowongan }}">
+                            action="{{ url('kelola/lowongan/mitra/update') }}/{{ $lowongan->id_lowongan }}">
                             @csrf
                             @method('PUT')
                             <!-- Account Details -->
@@ -305,7 +312,7 @@
                                     <div class="col-lg-12 col-sm-6">
                                         <label for="lokasi" class="form-label">Lokasi Penempatan<span
                                                 class="text-danger">*</span></label>
-                                        <select name="lokasi" id="lokasi" multiple="multiple"
+                                        <select name="lokasi" id="id_lokasi" multiple="multiple"
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Masukan Lokasi Pekerjaan">
                                             <option value="" disabled>Select</option>

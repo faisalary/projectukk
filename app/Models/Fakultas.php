@@ -20,4 +20,7 @@ class Fakultas extends Model
     public function univ(){
         return $this->belongsTo(Universitas::class,'id_univ');
     }
+    public function lowongan(){
+        return $this->belongsTo(Universitas::class,'id_lowongan');
+    }
 }

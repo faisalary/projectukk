@@ -94,7 +94,7 @@
         <div class="card-body pb-0">
           <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditInformasi"></i>
+            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this))" data-bs-target="#modalEditInformasi"></i>
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
@@ -476,9 +476,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Account -->
-        <form action="{{ url('mahasiswa/profile/pribadi/update/'. $mahasiswa->nim)}}" method="POST">
+    
+        <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. $mahasiswa->nim)}}" method="POST">
           @csrf
-          @method('PUT')
         <div class="modal-body">
             <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
               @if ($informasiprib?->profile_picture?? '')
@@ -541,7 +541,7 @@
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
+                  <input class="form-control" type="text" id="ipka" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="eprt" class="form-label">EPRT<span style="color: red;">*</span></label>
@@ -584,7 +584,7 @@
                 </div>
               </div>
               <div class="modal-footer p-0">
-                <button id="modal-button" type="submit" class="btn btn-success m-0">Simpan Data</button>
+                <button id="modal-button"  type="submit" class="btn btn-success m-0">Simpan Data</button>
               </div>
             </div>
           </div>
@@ -607,8 +607,8 @@
 
     function edit(e) {
     let id = e.attr('data-id');
-    let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
     var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
+    let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
 
       $.ajax({
           type: 'GET',
@@ -632,9 +632,27 @@
     function removeImage() {
         document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
     }
+
+    $("#modalEditInformasi").on("hide.bs.modal", function() {
+
+    $("#modal-title").html("Update Data");
+    $("#simpanButton").html("Save Data")
+    $('#modalEditInformasi form')[0].reset();
+    $('#modalEditInformasi form #kategori').val('').trigger('change');
+    $('#modalEditInformasi form #statuskerjasama').val('').trigger('change');
+    $('.invalid-feedback').removeClass('d-block');
+    $('.form-control').removeClass('is-invalid');
+    });
   </script>
 <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+<script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
 @endsection
 
 
@@ -649,7 +667,7 @@
         </div>
 
         <div class="modal-body p-0 ms-5 me-5">
-          <form action="{{ url('mahasiswa/profile/informasi/store/' . $mahasiswa->nim)}}" id="informasitambahan" method="POST">
+          <form action="{{ url('mahasiswa/profile/informasi/store' )}}" id="informasitambahan" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -1180,8 +1198,8 @@
 </script>
 <script src="{{ url('assets/js/yearpicker.js') }}"></script>
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+<script src="{{ url('urlapp-assets/js/forms-extras.js')}}"></script>
+<script src="{{ url('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 
 
 @endsection

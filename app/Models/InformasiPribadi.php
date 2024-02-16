@@ -8,13 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class InformasiPribadi extends Model
 {
-    use HasFactory;
-    use HasUlids;
+    use HasFactory, HasUlids;
 
     protected $table = 'informasi_prib';
-    protected $fillable = ['id_infoprib', 'nim', 'ipk', 'eprt', 'TAK', 'tgl_lahir', 'headliner', 'deskripsi_diri', 'gender', 'profile_picture'];
-    protected $primaryKey = 'id_infoprib';
+    protected $fillable = [
+        'id_infoprib',
+        'nim', 
+        'ipk',
+        'eprt',
+        'TAK', 
+        'tgl_lahir', 
+        'headliner', 
+        'deskripsi_diri', 
+        'gender', 
+        'profile_picture'];
     protected $keyType = 'string';
+    protected $primaryKey = 'id_infoprib';
     public $timestamps = false;
 
     public function relasi()

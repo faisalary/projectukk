@@ -1,7 +1,7 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
         .hide-me {
             display: none;
@@ -10,9 +10,16 @@
 @endsection
 
 @section('main')
-    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    @can('btn.back.lkm')
+    <a href="{{url("/kelola/lowongan/lkm")}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
+    @endcan
+    @can('btn.back.mitra')
+    <a href="{{url("/kelola/lowongan/mitra", Auth::user()->id_industri)}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
+    @endcan
     <div class="row ">
         <div class="">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /
@@ -262,8 +269,8 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{url("app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
+    <script src="{{url("app-assets/js/extended-ui-sweetalert2.js")}}"></script>
 
     <script>
         $(document).ready(function() {
@@ -281,7 +288,7 @@
 
 
         function approved(e) {
-            var approveUrl = '{{url("kelola/lowongan/approved")}}/' + $('#approve-confirm-button').attr('data-id');
+            var approveUrl = '{{url("kelola/lowongan/lkm/approved")}}/' + $('#approve-confirm-button').attr('data-id');
 
             $.ajax({
                 url: approveUrl,
@@ -303,7 +310,7 @@
         
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url("kelola/lowongan/rejected") }}/' + $('#rejected-confirm-button').attr('data-id');
+            var rejectedUrl = '{{ url("kelola/lowongan/lkm/rejected") }}/' + $('#rejected-confirm-button').attr('data-id');
 
             $('#rejected-confirm-button').on('click', function () {
                 var alasan = $('#alasan').val();

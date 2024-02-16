@@ -99,19 +99,6 @@
                         data-bs-original-title="Durasi Magang : -, Posisi Lowongan Magang : -, Status Lowongan Magang : -"
                         id="tooltip-filter"></i></div>
             </div>
-            @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $statusId)
-                @if ($statusId == 1)
-                    @can('button.tnglbts.mitra')
-                        <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
-                            <a id="div{{ $statusId }}" class="targetDiv" href="{{ url('kelola/lowongan/create') }}">
-                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
-                                    Magang</button>
-                            </a>
-                        </div>
-                    @endcan
-                @endif
-            @endforeach
         </div>
     </div>
 
@@ -296,8 +283,8 @@
             let id = e.attr('data-id');
             console.log(id);
 
-            let action = `{{ url('kelola/lowongan/update/') }}/${id}`;
-            var url = `{{ url('kelola/lowongan/edit/') }}/${id}`;
+            let action = `{{ url('kelola/lowongan/lkm/update/') }}/${id}`;
+            var url = `{{ url('kelola/lowongan/lkm/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,

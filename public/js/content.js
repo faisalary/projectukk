@@ -38,7 +38,7 @@
                                     $(response.table).DataTable().ajax.reload();
                                 }, 1000);
                             var reset_form = content;
-                            // $(reset_form).removeClass('was-validated');
+                            // $(reset_form).removeClasshidevr('was-validated');
                             reset_form.reset();
                             $(response.modal).modal("hide");
                             if (typeof matrix === "function") matrix();

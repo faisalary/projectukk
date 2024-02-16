@@ -22,7 +22,7 @@
 @endsection
 
 @section('main')
-    <a href="/kelola/lowongan" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <a href="{{url("kelola/lowongan/mitra", Auth::user()->id_industri)}}" type="button" class="btn btn-outline-success mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="row ">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="bs-stepper-content">
                     <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
-                        action="{{ route('lowongan-magang.store') }}">
+                        action="{{ url('kelola/lowongan/mitra/store') }}">
                         @csrf
                         <!-- Account Details -->
                         <div id="account-details-validation" class="content">
@@ -174,25 +174,14 @@
                                         <div class="form-group" style="margin-top: 5px;">
                                             <label class="form-label" for="fakultas">Fakultas<span
                                                     class="text-danger">*</span></label>
-                                            <select name="fakultas" id="fakultas" class="select2 form-select"
+                                            <select name="fakultas" id="fakultas" 
+                                                class="select2 form-select"
                                                 data-placeholder="Pilih Fakultas">
-                                                {{-- <option value="" disabled selected>Pilih Fakultas</option> --}}
                                                 @foreach ($fakultas as $f)
                                                     <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        {{-- <div class="form-group" style="margin-top: 5px;">
-                                            <label class="form-label" for="prodi">Prodi<span
-                                                    class="text-danger">*</span></label>
-                                            <select name="prodi" id="prodi" class="select2 form-select"
-                                                data-placeholder="Pilih Prodi">
-                                                <option value="" disabled selected>Pilih Prodi</option>
-                                                @foreach ($prodi as $p)
-                                                    <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
                                         <div class="col-lg-12 col-sm-6">
                                             <label for="select2Disabled" class="form-label">Prodi<span
                                                     class="text-danger">*</span></label>

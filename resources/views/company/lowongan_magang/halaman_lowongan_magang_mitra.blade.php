@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
         .tooltip-inner {
             min-width: 100%;
@@ -57,8 +57,6 @@
                         data-bs-toggle="tab" data-bs-target="#navs-pills-justified-total"
                         aria-controls="navs-pills-justified-total" aria-selected="true" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Total Lowongan
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['total'] }}</span>
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
@@ -66,27 +64,21 @@
                         data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['tertunda'] }}</span>
-                    </button>
+                        </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Lowongan Diterima
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['diterima'] }}</span>
-                    </button>
+                        </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak"
                         aria-selected="false" style="padding: 8px 9px;">
                         <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Lowongan Ditolak
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
-                            style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['ditolak'] }}</span>
-                    </button>
+                        </button>
                 </li>
             </ul>
         </div>
@@ -100,17 +92,16 @@
                         id="tooltip-filter"></i></div>
             </div>
             @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $statusId)
-                @if ($statusId == 1)
-                    @can('button.tnglbts.mitra')
-                        <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
-                            <a id="div{{ $statusId }}" class="targetDiv" href="{{ url('kelola/lowongan/mitra/create',  Auth::user()->id_industri) }}">
-                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalTambahLowongan">+ Tambah Lowongan
-                                    Magang</button>
-                            </a>
-                        </div>
-                    @endcan
-                @endif
+                @if ($statusId == "total" )
+                    <div class="targetDiv col-md-4 d-flex justify-content-end align-items-center">
+                        <a id="div{{ $statusId }}" class="targetDiv" href="{{ url('kelola/lowongan/mitra/create', Auth::user()->id_industri)}}">
+                            <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalTambahLowongan">
+                                + Tambah Lowongan Magang
+                            </button>
+                        </a>
+                    </div>
+                    @endif
             @endforeach
         </div>
     </div>
@@ -193,15 +184,12 @@
                             <thead>
                                 <tr>
                                     <th style="max-width:70px;">NOMOR</th>
-                                    @can('status.lowongan.lkm')
-                                    <th style="max-width: 100px;">PERUSAHAAN</th>
-                                    @endcan
                                     <th style="min-width:100px;">POSISI</th>
                                     <th style="min-width:100px;">TANGGAL</th>
                                     <th style="min-width:100px;">DURASI MAGANG</th>
-                                    @can('status.lowongan.lkm')
-                                        <th style="min-width:50px;">STATUS</th>
-                                    @endcan
+                                   
+                                    <th style="min-width:50px;">STATUS</th>
+                                  
                                     <th style="min-width:100px;">AKSI</th>
                                 </tr>
                             </thead>
@@ -212,12 +200,12 @@
         @endforeach 
 @endsection
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="{{url("app-assets/vendor/libs/jquery-repeater/jquery-repeater.js")}}"></script>
+    <script src="{{url("app-assets/js/forms-extras.js")}}"></script>
     <script>
     $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/mitra/show/{id}') }}?type=" + idElement;
+            let url = "{{ url('kelola/lowongan/mitra/show/{id_industri}') }}?type=" + idElement;
 
             $(this).DataTable({
                 ajax: url,
@@ -229,13 +217,6 @@
                 columns: [{
                         data: "DT_RowIndex"
                     },
-                    @can('status.lowongan.lkm')
-                    {
-                        data: 'industri.namaindustri',
-                        name: 'namaindustri',
-
-                    },
-                    @endcan
                     {
                         data: "intern_position",
                         name: "intern_position"
@@ -248,12 +229,11 @@
                         data: "durasimagang",
                         name: "durasimagang"
                     },
-                    @can('status.lowongan.lkm')
+                    
                     {
                         data: "status",
                         name: "status"
                     },
-                    @endcan
                     {
                         data: "action",
                         name: "action"
@@ -294,8 +274,8 @@
             let id = e.attr('data-id');
             console.log(id);
 
-            let action = `{{ url('kelola/lowongan/update/') }}/${id}`;
-            var url = `{{ url('kelola/lowongan/edit/') }}/${id}`;
+            let action = `{{ url('kelola/lowongan/mitra/update/') }}/${id}`;
+            var url = `{{ url('kelola/lowongan/mitra/edit/') }}/${id}`;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -348,6 +328,6 @@
         });
     </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{url("/app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
+    <script src="{{url("/app-assets/js/extended-ui-sweetalert2.js")}}"></script>
 @endsection

@@ -44,6 +44,7 @@ class PermissionSeeder extends Seeder
                     'btn.edit.lowongan',
                     'status.lowongan.lkm',
                     'btn.pilih.prodi',
+                    'btn.back.lkm',
                     'role-list',
                     'role-create',
                     'role-edit',
@@ -73,6 +74,7 @@ class PermissionSeeder extends Seeder
                     'button.tnglbts.mitra',
                     'title.info.lowongan.mitra',
                     'ubah.lowongan.mitra',
+                    'btn.back.mitra',
                 ]
             ],
             [
