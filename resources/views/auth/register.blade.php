@@ -2,7 +2,7 @@
 
 @section('conten')
 
-<form method="POST" action="{{ url('/mahasiswa/register') }}">
+<form class="default-form" method="POST"  action="{{ url('/mahasiswa/register') }}">
     @csrf
     <div class="row">
         <div class="col mb-2 form-input">
@@ -30,10 +30,11 @@
     </div>    
     <div class="form-group mt-3">
         <div class="col-sm-12 mt-4">
-            <button type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);" name="register">Buat Akun</button>
+            <button id="modal-button" type="submit" class="btn btn-primary d-grid w-100" style="background: var(--primary-500-base, #4EA971);" name="register">Buat Akun</button>
         </div>
     </div>
 </form>
+
 <script>
     function handleFormSubmit(event) {
         
@@ -65,19 +66,17 @@
             console.error('Error Fetch:', error);
         });
     }
-    
+
+
+    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+  <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+  <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+  <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
 </script>
-
-
-@if (Session::has('message'))
-<script>
-    swall("Message", "{{Session::get('message') }}", 'succes',{
-        button:true,
-        button: 'Daftar',
-        timer: 3000,
-
-    })
-</script>
-@endif
 @endsection
 

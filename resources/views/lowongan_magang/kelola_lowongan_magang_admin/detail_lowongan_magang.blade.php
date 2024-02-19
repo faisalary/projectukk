@@ -1,7 +1,7 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-    <link rel="stylesheet" href="{{("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
+    <link rel="stylesheet" href="{{asset("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
         .hide-me {
             display: none;

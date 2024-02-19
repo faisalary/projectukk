@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerifyEmailMhs;
+use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -58,18 +59,24 @@ class RegisteredUserController extends Controller
                         'remember_token' => $code,
                         'isAdmin' => 2
                     ]);
-                $user->syncRoles('user');         
-                DB::commit();
+                $user->syncRoles('user');   
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
                 Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
+                $user->save();
+                DB::commit();
+                
+                // $informsiPrib = InformasiPribadi::create([
+                //     'nim' => $mahasiswa->nim,
+                //     'tgl_lahir' => $request->11
+                // ]);
+                // $informsiPrib->save();
 
             return response()->json([
                 'error' => false,
                 'message' => 'Activated successfully!',
-                'script' => 'alert("Activated successfully!");'
             ]);
         } catch (Exception $e) {
-           DB::rollBack();
+            DB::rollBack();
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),

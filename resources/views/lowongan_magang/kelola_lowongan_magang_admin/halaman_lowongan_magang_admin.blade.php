@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{asset("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
         .tooltip-inner {
             min-width: 100%;
@@ -201,8 +201,8 @@
 
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="{{asset("app-assets/vendor/libs/jquery-repeater/jquery-repeater.js")}}"></script>
+    <script src="{{asset("app-assets/js/forms-extras.js")}}"></script>
     <script>
     $('.table').each(function() {
             let idElement = $(this).attr('id');
@@ -337,6 +337,6 @@
         });
     </script>
 
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{asset("app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
+    <script src="{{asset("app-assets/js/extended-ui-sweetalert2.js")}}"></script>
 @endsection

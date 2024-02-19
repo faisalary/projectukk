@@ -410,7 +410,7 @@ if (typeof $ !== 'undefined') {
       }
       // Search API AJAX call
       var searchData = $.ajax({
-        url: assetsPath + 'json/' + searchJson, //? Use your own search api instead
+        url: assetsPath + '/json/' + searchJson, //? Use your own search api instead
         dataType: 'json',
         async: false
       }).responseJSON;
