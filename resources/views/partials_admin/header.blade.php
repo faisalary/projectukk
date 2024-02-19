@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset("app-assets/img/favicon/favicon.ico")}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('app-assets/img/favicon/favicon.ico'}}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,17 +48,17 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{url("/app-assets/vendor/css/pages/cards-advance.css")}}" />
+    <link rel="stylesheet" href="{{asset('/app-assets/vendor/css/pages/cards-advance.css')}}" />
     <!-- Helpers -->
-    <script src="{{url("app-assets/vendor/js/helpers.js")}}"></script>
+    <script src="{{asset('app-assets/vendor/js/helpers.js')}}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="{{url("app-assets/vendor/js/template-customizer.js")}}"></script>
+    <script src="{{asset('app-assets/vendor/js/template-customizer.js')}}"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ url('app-assets/vendor/js/template-customizer.js')}}"></script>
+    <script src="{{ asset('app-assets/vendor/js/template-customizer.js')}}"></script>
 
-    <script src="{{ url("app-assets/js/config.js")}}"></script>
+    <script src="{{ asset('app-assets/js/config.js')}}"></script>
 
     <style>
         .bg-menu-theme.menu-vertical .menu-item.active>.menu-link:not(.menu-toggle) {
