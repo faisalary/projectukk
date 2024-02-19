@@ -433,6 +433,16 @@ Route::get('/nilai/magang', function () {
     return view('kegiatan_saya.nilai_magang.nilai');
 });
 
+Route::get('/kelola/mahasiswa', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.index');
+});
+Route::get('/kelola/mahasiswa/input', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.modal');
+});
+Route::get('/view/logbook', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
