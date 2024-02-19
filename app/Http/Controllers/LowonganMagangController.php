@@ -36,7 +36,7 @@ class LowonganMagangController extends Controller
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
         $industri = Industri::all();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
+        return view('company.lowongan_magang.halaman_lowongan_magang_mitra', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
     }
     
     /**

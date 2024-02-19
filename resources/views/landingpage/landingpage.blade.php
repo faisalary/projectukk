@@ -2,7 +2,6 @@
 
 @section('page_style')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-
 <style>
     .btn-success {
         color: #fff;
@@ -365,7 +364,6 @@
                 Semua Lowongan <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
         </div>
     </div>
-
     {{--Cari Kemampuanmu Lewat Kategori--}}
     <div class="auto-container" style="background-image: url({{asset('front/assets/landing/images/background/Section.png')}});background-size: cover; background-repeat: no-repeat;">
         <header class="section-header">

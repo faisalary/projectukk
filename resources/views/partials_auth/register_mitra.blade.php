@@ -5,13 +5,13 @@
   class="light-style customizer-hide"
   dir="ltr"
   data-theme="theme-default"
-  data-app-assets-path="../../app-assets/"
+  data-app-assets-path="{{ url("app-assets")}}"
   data-template="vertical-menu-template"
 >
   <head>
     <meta charset="utf-8" /><!DOCTYPE html>
 
-    <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../app-assets/" data-template="horizontal-menu-template">
+    <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ url("app-assets")}}" data-template="horizontal-menu-template">
     
     <head>
       <meta charset="utf-8" />

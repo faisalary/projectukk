@@ -2,9 +2,9 @@
 
 @section('page_style')
 
-<link rel="stylesheet" href="{{ url('assets/css/yearpicker.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ url('assets/css/monthpicker.css') }}">
-
+<link rel="stylesheet" href="{{ asset('assets/css/yearpicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/monthpicker.css') }}">
+<link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
 
 <style>
   .hidden {
@@ -94,7 +94,7 @@
         <div class="card-body pb-0">
           <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this))" data-bs-target="#modalEditInformasi"></i>
+            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this)" data-bs-target="#modalEditInformasi"></i>
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
@@ -102,7 +102,7 @@
                   <img src="{{ asset('storage/' . $informasiprib?->profile_picture??'') }}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
               @else
-                  <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                  <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
               @endif
               
@@ -209,7 +209,7 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Informasi Tambahan</h5>
-              <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this)" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
               <div class="row">
@@ -415,7 +415,7 @@
                       </div>
                       <div class="d-flex align-items-start mt-3 mb-3">
                         <div>
-                          <img src="../../app-assets/img/avatars/2.png">
+                          <img src="{{ url("app-assets/img/avatars/2.png")}}">
                         </div>
                         <div class="me-2 ms-4">
                           <h6 class="mt-5">UI/UX Website.pdf</h6>
@@ -445,7 +445,7 @@
                     </div>
                     <div class="d-flex align-items-start mt-3 mb-3">
                       <div>
-                        <img src="../../app-assets/img/avatars/2.png">
+                        <img src="{{ url("app-assets/img/avatars/2.png")}}">
                       </div>
                       <div class="me-2 ms-4">
                         <h6 class="mt-5">UI/UX Website.pdf</h6>
@@ -477,7 +477,7 @@
         </div>
         <!-- Account -->
     
-        <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. $mahasiswa->nim)}}" method="POST">
+        <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. Auth::user()->nim)}}" method="POST">
           @csrf
         <div class="modal-body">
             <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
@@ -485,7 +485,7 @@
                 <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
                     class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
               @else
-                  <img src="../../app-assets/img/avatars/15.png" alt="user-avatar" 
+                  <img src="{{ url("app-assets/img/avatars/15.png")}}" alt="user-avatar" 
                   class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
               @endif
               <div class="button-wrapper">
@@ -509,62 +509,62 @@
               <div class="row mt-4">
                 <div class="mb-3 col-md-6">
                   <label for="NIM" class="form-label">NIM <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nim" name="nim" value="{{$mahasiswa->nim}}" placeholder="" disabled />
+                  <input class="form-control" type="text" id="nnim" name="nim" value="{{Auth::user()->nim}}" placeholder="" disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Name" class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="namalengkap" name="namalengkap" value="{{$mahasiswa->namamhs}}" autofocus disabled />
+                  <input class="form-control" type="text" id="nnamalengkap" name="namalengkap" value="{{$mahasiswa->namamhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Universitas" class="form-label">Universitas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="universitas" name="universitas" value="{{$mahasiswa->univ->namauniv}}" autofocus disabled />
+                  <input class="form-control" type="text" id="nuniversitas" name="universitas" value="{{$mahasiswa->univ->namauniv}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Fakultas" class="form-label">Fakultas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="fakultas" name="fakultas" value="{{$mahasiswa->fakultas->namafakultas}}" autofocus disabled />
+                  <input class="form-control" type="text" id="nfakultas" name="fakultas" value="{{$mahasiswa->fakultas->namafakultas}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Prodi" class="form-label">Program Studi <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="prodi" name="prodi" value="{{$mahasiswa->prodi->namaprodi}}" autofocus disabled />
+                  <input class="form-control" type="text" id="nprodi" name="prodi" value="{{$mahasiswa->prodi->namaprodi}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="angkatan" class="form-label">Angkatan <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="angkatan" name="prodi" value="{{$mahasiswa->angkatan}}" autofocus disabled />
+                  <input class="form-control" type="text" id="nangkatan" name="prodi" value="{{$mahasiswa->angkatan}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="Email" class="form-label">Email <span style="color: red;">*</span></label>
-                  <input class="form-control" type="email" id="email" name="email" value="{{$mahasiswa->emailmhs}}" autofocus disabled />
+                  <input class="form-control" type="email" id="nemail" name="email" value="{{$mahasiswa->emailmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label class="form-label" for="notelp">No. Telp</label>
-                  <input type="text" id="notelp" name="notelp" class="form-control" value="{{$mahasiswa->nohpmhs}}" autofocus disabled />
+                  <input type="text" id="nnotelp" name="notelp" class="form-control" value="{{$mahasiswa->nohpmhs}}" autofocus disabled />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="ipka" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
+                  <input class="form-control" type="text" id="nipka" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="eprt" class="form-label">EPRT<span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" value="{{$informasiprib?->eprt??''}}" autofocus />
+                  <input class="form-control" type="text" id="neprt" name="eprt" placeholder="550" value="{{$informasiprib?->eprt??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="TAK" class="form-label">TAK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="TAK" name="TAK" placeholder="100" value="{{$informasiprib?->TAK??''}}" autofocus />
+                  <input class="form-control" type="text" id="nTAK" name="TAK" placeholder="100" value="{{$informasiprib?->TAK??''}}" autofocus />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input name="tgl_lahir" value="{{$informasiprib?->tgl_lahir??''}}" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date">
+                  <input name="tgl_lahir" value="{{$informasiprib?->tgl_lahir??''}}" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" required>
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="gender" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
                   <div class="form-check">
                     <div class="row">
                       <div class="col-3" >
-                        <input name="gender" class="form-check-input" type="radio" value="Laki-Laki" id="gender" checked="">
+                        <input name="gender" class="form-check-input" type="radio" value="Laki-Laki" id="ngender" checked="">
                         <label class="form-check-label" for="gender"> Laki-Laki </label>
                       </div>
                       <div class="col-3 ms-2">
-                        <input name="gender" class="form-check-input" type="radio" value="Perempuan" id="gender" checked="">
+                        <input name="gender" class="form-check-input" type="radio" value="Perempuan" id="ngender" checked="">
                         <label class="form-check-label" for="gender"> Perempuan </label>
                       </div>
                     </div>
@@ -572,7 +572,7 @@
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="headliner" class="form-label">Headliner</label>
-                  <input class="form-control" value="{{$informasiprib?->headliner??''}}" type="text" id="headliner" name="headliner" placeholder="cth. UI/UX Desginer" />
+                  <input class="form-control" value="{{$informasiprib?->headliner??''}}" type="text" id="nheadliner" name="headliner" placeholder="cth. UI/UX Desginer" />
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="alamat" class="form-label">Alamat <span style="color: red;">*</span></label>
@@ -580,7 +580,7 @@
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="deskripsi_diri" class="form-label">Deskripsi Diri</label>
-                  <input class="form-control" value="{{$informasiprib?->deskripsi_diri??''}}" type="textarea" id="deskripsi_diri" name="deskripsi_diri" placeholder="Deskripsi Diri">
+                  <input class="form-control" value="{{$informasiprib?->deskripsi_diri??''}}" type="textarea" id="ndeskripsi_diri" name="deskripsi_diri" placeholder="Deskripsi Diri">
                 </div>
               </div>
               <div class="modal-footer p-0">
@@ -593,69 +593,6 @@
       </div>
     </div>
   </div>
-  @section('page_script')
-  <script>
-    changePicture.onchange = evt => {
-      const [file] = changePicture.files
-      if (file) {
-          imgPreview.src = URL.createObjectURL(file)
-      } else {
-          imgPreview.src = "../../app-assets/img/avatars/14.png"
-      }
-    }
-
-
-    function edit(e) {
-    let id = e.attr('data-id');
-    var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
-    let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
-
-      $.ajax({
-          type: 'GET',
-          url: url,
-          success: function (response) {
-              $("#modal-button").html("Update Data");
-              $('#modalEditInformasi form').attr('action', action);
-              $('#ipk').val(response.ipk).trigger('change');
-              $('#eprt').val(response.eprt).trigger('change');
-              $('#TAk').val(response.TAk).trigger('change');
-              $('#tgl_lahir').val(response.tgl_lahir).trigger('change');
-              $('#headliner').val(response.headliner).trigger('change');
-              $('#deskripsi_diri').val(response.deskripsi_diri).trigger('change');
-              $('#profile_picture').val(response.profile_picture).trigger('change');
-              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
-          }
-      });
-    }
-
-
-    function removeImage() {
-        document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
-    }
-
-    $("#modalEditInformasi").on("hide.bs.modal", function() {
-
-    $("#modal-title").html("Update Data");
-    $("#simpanButton").html("Save Data")
-    $('#modalEditInformasi form')[0].reset();
-    $('#modalEditInformasi form #kategori').val('').trigger('change');
-    $('#modalEditInformasi form #statuskerjasama').val('').trigger('change');
-    $('.invalid-feedback').removeClass('d-block');
-    $('.form-control').removeClass('is-invalid');
-    });
-  </script>
-<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
-<script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
-@endsection
-
-
   <!-- Modal Edit Informasi Tambahan -->
   <div class="modal fade" id="modalEditInformasiTambahan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -667,7 +604,7 @@
         </div>
 
         <div class="modal-body p-0 ms-5 me-5">
-          <form action="{{ url('mahasiswa/profile/informasi/store' )}}" id="informasitambahan" method="POST">
+          <form class="default-form" action="{{ url('mahasiswa/profile/informasi/update'. Auth::user()->nim )}}" id="informasitambahan" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -740,7 +677,7 @@
               </div>
             </div>
             <div class="modal-footer pt-3 pe-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+              <button id="modal-button-infotam"  type="submit" class="btn btn-success m-0">Simpan Data</button>
             </div>
           </form>
         </div>
@@ -1165,6 +1102,75 @@
 @endsection
 
 @section('page_script')
+  <script>
+    changePicture.onchange = evt => {
+      const [file] = changePicture.files
+      if (file) {
+          imgPreview.src = URL.createObjectURL(file)
+      } else {
+          imgPreview.src = "{{ Url("app-assets/img/avatars/14.png")}}"
+      }
+    }
+    function removeImage() {
+        document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
+    }
+
+    function edit(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+              $("#modal-button").html("Update Data");
+              $('#modalEditInformasi form').attr('action', action);
+              $('#nim').val(response.nim);
+              $('#ipk').val(response.ipk);
+              $('#eprt').val(response.eprt);
+              $('#TAK').val(response.TAK);
+              $('#tgl_lahir').val(response.tgl_lahir);
+              $('#headliner').val(response.headliner);
+              $('#deskripsi_diri').val(response.deskripsi_diri);
+              $('#profile_picture').val(response.profile_picture);
+              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+          }
+      });
+    }
+
+    function editInformasiTambahan(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/informasi/edit/') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/informasi/update/') }}/${id}`;
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+              $("#modal-button-infotam").html("Update Data");
+              $('#modalEditInformasiTambahan form').attr('action', action);
+              $('#lok_kerja').val(response.lok_kerja); 
+              $('#sosmed').val(response.sosmed);
+              $('#bahasa').val(response.id_bahasa);
+              $('#url_sosmed').val(response.url_sosmed);
+            
+          }
+      });
+    }
+  </script>
+  <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+  <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+  <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+  <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+  <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
+
+
+
 <script>
   $(document).ready(function() {
     $(".content-new").hide();

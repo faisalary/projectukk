@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
 
     </style>
