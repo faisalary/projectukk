@@ -105,9 +105,9 @@ class KonfirmasiMagangController extends Controller
             $mandiri->startdate = $request->startdate;
             $mandiri->enddate = $request->enddate;
             $mandiri->alasan = $request->alasan;
-            // if (!empty($request->bukti_doc)) {
-            //     $mandiri->bukti_doc = $request->bukti_doc->store('post');
-            // }
+            if (!empty($request->bukti_doc)) {
+                $mandiri->bukti_doc = $request->bukti_doc->store('post');
+            }
             $mandiri->save();
 
             return response()->json([

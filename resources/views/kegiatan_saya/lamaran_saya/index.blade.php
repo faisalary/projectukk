@@ -487,76 +487,154 @@
                 <!-- /Magang Fakultas -->
 
                 <!-- Magang Mandiri -->
-                <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
-                    <div class="card mt-2">
-                        @foreach ($mandiri as $item)
-                            @if ($item->nim == $nim)
-                                <div class="card-body">
-                                    {{-- <div class="alert alert-danger alert-dismissible" role="alert">
-                  Lakukan konfirmasi penerimaan sebelum tanggal 28 Juli 2023!
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div> --}}
-                                    <div class="row">
-                                        <div class="ps-4">
-                                            <h4>{{ $item->posisi_magang }}</h4>
-                                            <p>{{ $item->nama_industri }}</p>
+                <div class="tab-pane fade show active" id="navs-pills-justified-magang-fakultas" role="tabpanel">
+                    <div class="row mt-2" style="padding-left: 12px;">
+                        <ul class="nav nav-pills mb-3 " role="tablist">
+
+                            <li class="nav-item" style="font-size: 15px;">
+                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#navs-pills-justified-magang-mandiri"
+                                    aria-controls="navs-pills-justified-magang-mandiri" aria-selected="false">
+                                    <i class="ti ti-presentation-analytics pe-1"></i> Proses Seleksi
+                                </button>
+                            </li>
+                            <li class="nav-item" style="font-size: 15px;">
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#navs-pills-terima-magang-mandiri"
+                                    aria-controls="navs-pills-terima-magang-mandiri" aria-selected="false">
+                                    <i class="ti ti-clipboard-check pe-1"></i> Terima Tawaran
+                                </button>
+                            </li>
+                            <li class="nav-item" style="font-size: 15px;">
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#navs-pills-justified-tolak"
+                                    aria-controls="navs-pills-justified-tolak" aria-selected="false">
+                                    <i class="ti ti-clipboard-x pe-1"></i> Tolak Tawaran
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($mandiri as $item)
+                                    @if ($item->nim == $nim)
+                                        <div class="card-body">
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                Lakukan konfirmasi penerimaan segera!
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="row">
+                                                <div class="ps-4">
+                                                    <h4>{{ $item->posisi_magang }}</h4>
+                                                    <p>{{ $item->nama_industri }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
+                                                            style="font-size: 18px;"></i>
+                                                        {{ $item->alamat_industri }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="border-end pe-2 me-2"><i
+                                                            class="tf-icons ti ti-phone-call pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span><i class="tf-icons ti ti-mail pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-left mt-3">
+                                                <button type="button" class="btn btn-success waves-effect me-2"
+                                                    data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="terima($(this))">Diterima
+                                                </button>
+                                                <button type="button" class="btn btn-danger waves-effect"
+                                                    data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
-                                                    style="font-size: 18px;"></i> {{ $item->alamat_industri }}</span>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="terima-magang-mandiri" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($mandiri as $item)
+                                    @if ($item->nim == $nim)
+                                        <div class="card-body">
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                Lakukan konfirmasi penerimaan segera!
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="row">
+                                                <div class="ps-4">
+                                                    <h4>{{ $item->posisi_magang }}</h4>
+                                                    <p>{{ $item->nama_industri }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
+                                                            style="font-size: 18px;"></i>
+                                                        {{ $item->alamat_industri }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="border-end pe-2 me-2"><i
+                                                            class="tf-icons ti ti-phone-call pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span><i class="tf-icons ti ti-mail pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-left mt-3">
+                                                <button type="button" class="btn btn-success waves-effect me-2"
+                                                    data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="terima($(this))">Diterima
+                                                </button>
+                                                <button type="button" class="btn btn-danger waves-effect"
+                                                    data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="col-2">
-                                            <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1"
-                                                    style="font-size: 18px;"></i>{{ $item->nohp }}</span>
-                                        </div>
-                                        <div class="col-2">
-                                            <span><i class="tf-icons ti ti-mail pe-1"
-                                                    style="font-size: 18px;"></i>{{ $item->email }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="text-left mt-3">
-                                        <button type="button" class="btn btn-success waves-effect me-2"
-                                            data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
-                                        </button>
-                                        <button type="button" class="btn btn-danger waves-effect" data-bs-toggle="modal"
-                                            data-bs-target="#modalDitolak">Ditolak
-                                        </button>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        <!-- /Magang Mandiri -->
                     </div>
                 </div>
-                <!-- /Magang Mandiri -->
             </div>
-        </div>
-    </div>
-@endsection
+        @endsection
 
-@section('page_script')
-    <script>
-        function terima(e) {
-            let id = e.attr('data-id');
+        @section('page_script')
+            <script>
+                function terima(e) {
+                    let id = e.attr('data-id');
 
-            let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
-            var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    console.log(response);
-                    $('#modalDiterima form').attr('action', action);
-                    $('#tglpeng_').val(response.tglpeng).trigger('change');
-                    $('#nama_industri').val(response.nama_industri);
-                    $('#posisi_magang').val(response.posisi_magang);
-                    $('#date_').val(response.startdate).trigger('change');
-                    $('#date').val(response.enddate).trigger('change');
+                    let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
+                    var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        success: function(response) {
+                            console.log(response);
+                            $('#modalDiterima form').attr('action', action);
+                            $('#tglpeng_').val(response.tglpeng).trigger('change');
+                            $('#nama_industri').val(response.nama_industri);
+                            $('#posisi_magang').val(response.posisi_magang);
+                            $('#date_').val(response.startdate).trigger('change');
+                            $('#date').val(response.enddate).trigger('change');
 
-                    $('#modalDiterima').modal('show');
+                            $('#modalDiterima').modal('show');
+                        }
+                    });
                 }
-            });
-        }
-    </script>
-@endsection
+            </script>
+        @endsection
