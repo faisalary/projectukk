@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('deskripsi_diri')->nullable()->change();
             $table->text('headliner')->change();
             $table->string('profile_picture', 255)->nullable()->change();
+            $table->decimal('ipk', 5, 2)->nullable()->change();
         });
     }
 
