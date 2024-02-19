@@ -254,49 +254,17 @@
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
                     <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
+                      <h6 class="mb-0">{{$pendidikan?->name_intitutions??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">Magister Management</p>
-                      <p class="mb-1">IPK 3.89/4.00 </p>
-                      <p style="font-size: small;">Juli 2022 - Juli 2024</p>
+                      <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
+                      <p class="mb-1">Nilai {{$pendidikan?->ipk??''}}</p>
+                      <p style="font-size: small;">{{$pendidikan?->startdate??''}}-{{$pendidikan?->enddate??''}} </p>
                     </div>
-                  </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
-                      </div>
-                    </div>
-                    <div class="border-bottom mb-3">
-                      <p class="mb-1">Magister Management</p>
-                      <p class="mb-1">IPK 3.89/4.00 </p>
-                      <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                    </div>
-                  </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-0">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Magister Management</p>
-                    <p class="mb-1">IPK 3.89/4.00 </p>
-                    <p style="font-size: small;">Juli 2022 - Juli 2024</p>
                   </div>
                 </li>
               </ul>
@@ -694,31 +662,32 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="form" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/pendidikan/update/'. Auth::user()->nim)}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
                 <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="pendidikan" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                <select id="pendidikan" class="select2 form-select">
+                <label for="pendidikan" class="form-label">Jenis Pendidkan<span style="color: red;">*</span></label>
+                <select name="tingkat" id="pendidikan" class="select2 form-select">
                   <option disabled selected>Pilih Tingkat Pendidkan</option>
-                  <option value="pendidikan">D3</option>
-                  <option value="pendidikan">S1</option>
+                  <option value="SMA">SMA</option>
+                  <option value="SMA">SMK</option>
                 </select>
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" name="startdate" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" name="enddate" id="month" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="IPK" class="form-label">IPK</label>
-                <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" autofocus />
+                <label for="IPK" class="form-label">Nilai Akhir</label>
+                <input class="form-control" type="text" id="ipk" name="ipk" autofocus />
               </div>
             </div>
             <div class="modal-footer p-0">

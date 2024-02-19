@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bahasa;
+use App\Models\Education;
 use App\Models\InformasiPribadi;
 use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
@@ -17,10 +18,11 @@ class ProfileMahasiswaController extends Controller
      * Display a listing of the resource.
      */
     public function index($id) {   
+        $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('informasiprib', 'mahasiswa', 'informasitambahan'));
+        return view('profile.informasi_pribadi', compact('informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -103,17 +105,17 @@ class ProfileMahasiswaController extends Controller
             DB::beginTransaction();
             $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
             
-            $data = [
+            $data1 = [
                 'lok_kerja' => $request->lok_kerja,
                 'sosmed' => $request->sosmed,
                 'id_bahasa'=> $request->bahasa,
                 'url_sosmed' => $request->url_sosmed,
             ];
             if ($informasitambahan) {
-                $informasitambahan->update($data);
+                $informasitambahan->update($data1);
             } else {
-                $data['nim'] = $id;
-                InformasiTamabahan::create($data);
+                $data1['nim'] = $id;
+                InformasiTamabahan::create($data1);
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -127,15 +129,37 @@ class ProfileMahasiswaController extends Controller
 
     public function editpedidikan(Request $request, $id) { 
 
-        // $mahasiswa = Mahasiswa::where('nim', $id)->first();
-        // return $mahasiswa;
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        return $mahasiswa;
         
     }
 
     public function updatependidikan(Request $request, $id) { 
 
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
-        return $mahasiswa;
+        try{
+            $pendidikan = Education::where('nim', $id)->first();
+            
+            $data2 = [
+                'name_intitutions' => $request->namasekolah,
+                'tingkat' => $request->tingkat,
+                'startdate'=> $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'ipk' => $request->ipk,
+            ];
+
+            if ($pendidikan) {
+                $pendidikan->update($data2);
+            } else {
+                $data2['nim'] = $id;
+                Education::create($data2);
+            }
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
         
     }
     
