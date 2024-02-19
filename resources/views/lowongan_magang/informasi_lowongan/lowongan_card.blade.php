@@ -12,7 +12,7 @@
                      <p>{{$item->bidang}}</p>
                  </div>
                  <div>
-                     <span class="badge bg-label-success me-1 text-end">Aktif</span>
+                     <span class="badge bg-label-{{$item->color}} me-1 text-end">{{$item->status}}</span>
                  </div>
              </div>
          </div>
