@@ -447,6 +447,10 @@ Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
 });
 
+Route::get('/nilai/magang', function () {
+    return view('kegiatan_saya.nilai_magang.nilai');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

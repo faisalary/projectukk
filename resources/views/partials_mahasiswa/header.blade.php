@@ -141,6 +141,11 @@
                         <div data-i18n="Informasi Magang">Informasi Magang</div>
                       </a>
                     </li>
+                    <li class="menu-item">
+                      <a href="/nilai/magang" class="menu-link">
+                        <div data-i18n="Nilai Magang">Nilai Magang</div>
+                      </a>
+                    </li>
                   </ul>
                 </li>
 
