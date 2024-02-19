@@ -462,7 +462,7 @@ Route::get('/view/logbook', function () {
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
-Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');\
+Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
 
 Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
     Route::get('/', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
