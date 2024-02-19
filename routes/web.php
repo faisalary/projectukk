@@ -268,21 +268,23 @@ Route::middleware('auth')->group(function () {
     Route::prefix('mahasiswa')->group(function (){
         Route::prefix('profile/pribadi')->group(function (){
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.mahasiswa.index');
-            // Route::get('/show', [App\Http\Controllers\ProfileMahasiswaController::class,'show'])->name('profile.mahasiswa.show');
-            // Route::get('/store', [App\Http\Controllers\ProfileMahasiswaController::class,'store'])->name('profile.mahasiswa.store');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'edit'])->name('profile.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'update'])->name('profile.mahasiswa.update');
         
         });
-        // Route::prefix('profile/update')->group(function (){
-            // Route::get('/update', [App\Http\Controllers\ProfileMahasiswaController::class,'update'])->name('profile.mahasiswa.update');
-        // });
+        Route::prefix('profile/update')->group(function (){
+            Route::get('/update', [App\Http\Controllers\ProfileMahasiswaController::class,'update'])->name('profile.mahasiswa.update');
+        });
         
-        Route::prefix('profile/informasi')->group(function (){
-            Route::put('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.infromasi.mahasiswa.index');
-            Route::put('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updateinformasitambahan'])->name('profile.infromasi.mahasiswa.update');
+        Route::prefix('profile/informasi-tambahan')->group(function (){
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.infromasi.mahasiswa.index');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updateinformasitambahan'])->name('profile.infromasi.mahasiswa.update');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editinformasi'])->name('profile.infromasi.mahasiswa.edit');
-            // Route::put('/store', [App\Http\Controllers\ProfileMahasiswaController::class,'informasistore'])->name('profile.infromasi.mahasiswa.store');
+        });
+        Route::prefix('profile/pendidikan')->group(function (){
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.pendidikan.mahasiswa.index');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editpedidikan'])->name('profile.pendidikan.mahasiswa.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatependidikan'])->name('profile.pendidikan.mahasiswa.update');
         });
     });
 

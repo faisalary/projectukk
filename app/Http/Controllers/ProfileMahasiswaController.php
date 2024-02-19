@@ -46,6 +46,9 @@ class ProfileMahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'tgl_lahir' => 'required|before:today'
+        ]);
         try {
             $informasiprib = InformasiPribadi::where('nim', $id)->first();
             $file = $informasiprib->profile_picture;
@@ -91,23 +94,27 @@ class ProfileMahasiswaController extends Controller
     }
 
     public function updateinformasitambahan(Request $request, $id) { 
-        $bahasa = Bahasa::all();
-        $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
+
+        $this->validate($request, [
+            'url_sosmed' => 'required|active_url'
+        ]);
         
         try{
             DB::beginTransaction();
+            $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
+            
             $data = [
                 'lok_kerja' => $request->lok_kerja,
                 'sosmed' => $request->sosmed,
-                'id_bahasa' => $informasitambahan->bahasa->id_bahasa
+                'id_bahasa'=> $request->bahasa,
+                'url_sosmed' => $request->url_sosmed,
             ];
             if ($informasitambahan) {
                 $informasitambahan->update($data);
             } else {
                 $data['nim'] = $id;
-                InformasiPribadi::create($data);
+                InformasiTamabahan::create($data);
             }
-
         } catch (Exception $e) {
             DB::rollBack();
             
@@ -117,5 +124,20 @@ class ProfileMahasiswaController extends Controller
             ]);
         }
     }
+
+    public function editpedidikan(Request $request, $id) { 
+
+        // $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        // return $mahasiswa;
+        
+    }
+
+    public function updatependidikan(Request $request, $id) { 
+
+        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        return $mahasiswa;
+        
+    }
+    
 
 }
