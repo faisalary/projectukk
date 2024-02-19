@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Fakultas;
 use App\Models\Industri;
+use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
 use App\Models\Universitas;
 use App\Models\ProgramStudi;
@@ -170,9 +171,13 @@ class InformasiKandidatController extends Controller
     public function detail(Request $request, $id)
     {
         $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
-
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
+        $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
+        $picture = $prib->profile_picture ? url('assets/images/' . $prib->profile_picture) : url('\assets\images\no-pictures.png');
+        $img = $picture . '.png';
 
-        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan'));
+        // dd($img);
+
+        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img'));
     }
 }

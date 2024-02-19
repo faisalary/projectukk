@@ -2,35 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class InformasiPribadi extends Model
 {
-    use HasFactory, HasUlids;
+    use HasUuids;
 
     protected $table = 'informasi_prib';
     protected $fillable = [
-        'id_infoprib',
-        'nim', 
         'ipk',
+        'nim',
         'eprt',
-        'TAK', 
-        'tgl_lahir', 
-        'headliner', 
-        'deskripsi_diri', 
-        'gender', 
-        'profile_picture'];
-    protected $keyType = 'string';
-    protected $primaryKey = 'id_infoprib';
-    public $timestamps = false;
+        'TAK',
+        'tgl_lahir',
+        'headliner',
+        'deskripsi_diri',
+        'profile_picture',
 
-    public function relasi()
+    ];
+    public $timestamps = false;
+    protected $primaryKey = 'id_infoprib';
+    protected $keyType = 'string';
+
+    public function mahasiswa()
     {
-        return $this->hasManyThrough(
-            Mahasiswa::class,
-            'nim',
-        );
+        return $this->hasManyThrough(Mahasiswa::class, 'nim');
     }
 }

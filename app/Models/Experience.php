@@ -4,28 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Skill extends Model
+class Experience extends Model
 {
     use HasUuids;
 
-    protected $table = 'skills';
+    protected $table = 'experience';
     protected $fillable = [
-        'skills',
+        'posisi',
         'nim',
+        'jenis',
+        'name_intitutions',
+        'startdate',
+        'enddate',
+        'deskripsi',
     ];
     public $timestamps = false;
-    protected $primaryKey = 'id_skills';
+    protected $primaryKey = 'id_experience';
     protected $keyType = 'string';
 
-    public function category()
-    {
-        return $this->belongsTo(JobCategory::class, 'category_id');
-    }
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class, 'nim');
     }
-
-    protected $guarded = ['id'];
 }

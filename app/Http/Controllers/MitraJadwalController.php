@@ -21,7 +21,7 @@ class MitraJadwalController extends Controller
     {
         $mitra = LowonganMagang::all();
 
-        return view('company.jadwal_seleksi.seleksi', compact('mitra'));
+        return view('company.jadwal_seleksi.mitra_seleksi', compact('mitra'));
     }
 
     /**
