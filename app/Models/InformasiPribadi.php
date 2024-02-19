@@ -27,6 +27,6 @@ class InformasiPribadi extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class, 'nim');
+        return $this->hasManyThrough(Mahasiswa::class, 'nim');
     }
 }

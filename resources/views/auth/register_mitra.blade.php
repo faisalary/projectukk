@@ -1,7 +1,7 @@
 @extends('partials_auth.register_mitra')
 @section('conten')
 
-    <form method="POST" action="{{ route('admin.register.store') }}">
+    <form method="POST" action="{{ url('mitra/register') }}">
         @csrf
         <div class="row">
             <div class="col mb-2 form-input">

@@ -38,7 +38,7 @@
     <div class="container-xxl">
         <div class="row text-white py-4">
             <div class="col-md-4 col-12 ps-5">
-                <img src="{{ url('/app-assets/img/talentern_white.svg') }}">
+                <img src="{{ url('app-assets/img/talentern_white.svg') }}">
                 <p class="mt-4">Berkarya dan Belajar: Temukan Pengalaman Magang dan Perusahaan Terbaik Bersama Kami!</p>
             </div>
             <div class="col-md-8 col-12">
@@ -84,16 +84,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif --}}
 
         <div class="chat-popup" id="myForm" style=" border-top-left-radius: 10px; border-top-right-radius: 10px;">
             <form action="{{ route('submit-contact') }}" method="POST" class="form-container p-0" enctype="multipart/form-data">

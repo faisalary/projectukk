@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../app-assets/" data-template="horizontal-menu-template">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ url("app-assets")}}" data-template="horizontal-menu-template">
 
 <head>
   <meta charset="utf-8" />
@@ -11,7 +11,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../../app-assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="{{url("app-assets/img/favicon/favicon.ico")}}" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,43 +19,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
   <!-- Icons -->
-  <link rel="stylesheet" href="../../app-assets/vendor/fonts/fontawesome.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/fonts/tabler-icons.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/fonts/flag-icons.css" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/fontawesome.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/tabler-icons.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/flag-icons.css")}}" />
 
   <!-- Core CSS -->
-  <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="../../app-assets/css/demo.css" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/css/rtl/core.css')}}" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/css/rtl/theme-default.css")}}" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="{{url("app-assets/css/demo.css")}}" />
 
   <!-- Vendors CSS -->
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/node-waves/node-waves.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/apex-charts/apex-charts.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/swiper/swiper.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/select2/select2.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/bs-stepper/bs-stepper.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/typeahead-js/typeahead.css" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
-  <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css')}}" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/node-waves/node-waves.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/typeahead-js/typeahead.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/apex-charts/apex-charts.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/swiper/swiper.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/select2/select2.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-select/bootstrap-select.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bs-stepper/bs-stepper.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/typeahead-js/typeahead.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/flatpickr/flatpickr.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/pickr/pickr-themes.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/tagify/tagify.css")}}" />
 
 
   <!-- Page CSS -->
-  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/cards-advance.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/css/pages/ui-carousel.css" />
-  <link rel="stylesheet" href="../../app-assets/vendor/libs/dropzone/dropzone.css" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/css/pages/cards-advance.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/css/pages/ui-carousel.css")}}" />
+  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/dropzone/dropzone.css")}}" />
   <!-- Helpers -->
-  <script src="../../app-assets/vendor/js/helpers.js"></script>
+  <script src="{{url("app-assets/vendor/js/helpers.js")}}"></script>
+  
 
   @yield('page_style')
   <style>
@@ -76,9 +77,9 @@
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-  <script src="../../app-assets/vendor/js/template-customizer.js"></script>
+  <script src="{{url('app-assets/vendor/js/template-customizer.js')}}"></script>
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="../../app-assets/js/config.js"></script>
+  <script src="{{ url("app-assets/js/config.js")}}"></script>
 </head>
 
 <body>
@@ -100,7 +101,7 @@
           </div>
 
           <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
-            <div class="container-xxl d-flex h-100" style="width: 60rem;">
+            <div class="container-xxl d-flex h-100" style="width: 50rem;">
               <ul class="menu-inner">
 
                 <!-- Perusahaan -->
@@ -108,6 +109,7 @@
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Perusahaan">Perusahaan</div>
                   </a>
+
                   <ul class="menu-sub">
                     <li class="menu-item">
                       <a href="/daftar_perusahaan" class="menu-link">
@@ -116,7 +118,32 @@
                     </li>
                     <li class="menu-item">
                       <a href="/lowongan/magang" class="menu-link">
-                        <div data-i18n="Daftar Lowongan Magang">Daftar Lowongan Magang</div>
+                        <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Program Magang -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Program Magang">Program Magang</div>
+                  </a>
+
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="/magang_fakultas" class="menu-link">
+                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/nilai/magang" class="menu-link">
+                        <div data-i18n="Nilai Magang">Nilai Magang</div>
                       </a>
                     </li>
                   </ul>
@@ -127,25 +154,16 @@
                   <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <div data-i18n="Kegiatan Saya">Kegiatan Saya</div>
                   </a>
+
                   <ul class="menu-sub">
                     <li class="menu-item">
-                      <a href="/logbook" class="menu-link">
-                        <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
                       <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
-                        <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
+                        <div data-i18n="Lamaran Saya">Lamaran Saya</div>
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="/konfirmasi/magang" class="menu-link">
-                        <div data-i18n="Status Penerimaan Magang">Status Penerimaan Magang</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/lowongan-pekerjaan-tersimpan" class="menu-link">
-                        <div data-i18n="Lowongan Tersimpan">Lowongan Tersimpan</div>
+                      <a href="" class="menu-link">
+                        <div data-i18n="Logbook">Logbook</div>
                       </a>
                     </li>
                   </ul>
@@ -157,63 +175,28 @@
                     <div data-i18n="Layanan LKM">Layanan LKM</div>
                   </a>
                   <ul class="menu-sub">
-                    <!-- <li class="menu-item">
+                    <li class="menu-item">
                       <a href="javascript:void(0)" class="menu-link">
                         <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
                       </a>
-                    </li> -->
+                    </li>
+                    <li class="menu-item">
+                        <a href="/konfirmasi/magang" class="menu-link">
+                          <div data-i18n="Konfirmasi Status Penerimaan Magang">Konfirmasi Status Penerimaan Magang</div>
+                        </a>
+                      </li>
                     <li class="menu-item">
                       <a href="/pengajuan/surat" class="menu-link">
                         <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
                       </a>
                     </li>
-                    <!-- <li class="menu-item">
+                    <li class="menu-item">
                       <a href="javascript:void(0)" class="menu-link">
                         <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
                       </a>
-                    </li> -->
+                    </li>
+
                   </ul>
-                </li>
-
-                <!-- Tentang Kami -->
-                <li class="menu-item">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div data-i18n="Tentang Kami">Tentang Kami</div>
-                  </a>
-
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="/aboutus/talentern" class="menu-link">
-                        <div data-i18n="Talentern">Talentern</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/aboutus/techno" class="menu-link">
-                        <div data-i18n="Techno Infinity">Techno Infinity</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/aboutus/lkmfit" class="menu-link">
-                        <div data-i18n="Layanan Kerjasama & Magang Fakultas Ilmu Terapan">Layanan Kerjasama & Magang Fakultas Ilmu Terapan</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <!-- Informasi Magang -->
-                <li class="menu-item">
-                  <a href="/informasi/magang" class="menu-link">
-                    <div data-i18n="Informasi Magang">Informasi Magang</div>
-                  </a>
-                </li>
-
-                <!-- Kontak Kami -->
-                <li class="menu-item">
-                  <a href="#footer" class="menu-link">
-                    <u>
-                      <div data-i18n="Kontak Kami">Kontak Kami</div>
-                    </u>
-                  </a>
                 </li>
               </ul>
             </div>
@@ -259,7 +242,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="../../app-assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                              <img src="{{url("app-assets/img/avatars/1.png")}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -295,7 +278,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="../../app-assets/img/avatars/2.png" alt class="h-auto rounded-circle" />
+                              <img src="{{url("app-assets/img/avatars/2.png")}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -331,7 +314,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="../../app-assets/img/avatars/9.png" alt class="h-auto rounded-circle" />
+                              <img src="{{url("app-assets/img/avatars/9.png")}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -367,7 +350,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="../../app-assets/img/avatars/5.png" alt class="h-auto rounded-circle" />
+                              <img src="{{url("app-assets/img/avatars/5.png")}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -385,7 +368,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="../../app-assets/img/avatars/6.png" alt class="h-auto rounded-circle" />
+                              <img src="{{url("app-assets/img/avatars/6.png")}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -436,7 +419,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
@@ -454,17 +437,17 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="/informasi/pribadi">
+                    <a class="dropdown-item" href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}">
                       <i class="ti ti-user-circle me-2 ti-sm"></i>
                       <span class="align-middle">Profil Saya</span>
                     </a>
                   </li>
-                  <!-- <li>
+                  <li>
                     <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
                       <i class="ti ti-briefcase me-2 ti-sm"></i>
                       <span class="align-middle">Lowongan Tersimpan</span>
                     </a>
-                  </li> -->
+                  </li>
                   <li>
                     <a class="dropdown-item" href="/pengaturan">
                       <i class="ti ti-settings me-2 ti-sm"></i>

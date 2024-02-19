@@ -228,7 +228,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success">Kirimi Komentar</button>
+                        <button type="button" class="btn btn-success">Kirim Komentar</button>
                     </div>
                 </div>
             </div>
