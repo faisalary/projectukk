@@ -23,16 +23,34 @@ class InformasiLowonganController extends Controller
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
 
             $lowongan->transform(function ($item) {
+                $now = Carbon::now();
+                if ($now->lessThan($item->enddate) && $now->greaterThan($item->startdate)) {
+                    $item->status = true;
+                } elseif ($now->greaterThan($item->enddate)) {
+                    $item->status = false;
+                }
+
+                if ($item->status == 'true') {
+                    $item->status = 'Aktif';
+                    $item->color = 'success';
+                } else {
+                    $item->status = 'Non-aktif';
+                    $item->color = 'danger';
+                }
+
                 $item->kandidat = $item->total_pelamar->count();
                 $item->screening = $item->total_pelamar->where('applicant_status', 'screening')->count();
                 $item->penawaran = $item->total_pelamar->where('applicant_status', 'penawaran')->count();
                 $item->diterima = $item->total_pelamar->where('applicant_status', 'diterima')->count();
                 $item->ditolak = $item->total_pelamar->where('applicant_status', 'ditolak')->count();
+
                 return $item;
             });
 
+
             return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan'))->render();
         }
+
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
         $magang = LowonganMagang::where('id_industri', $id)->with('industri')->first();
 

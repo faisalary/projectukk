@@ -18,7 +18,7 @@
 @endsection
  
 @section('main')
-
+@can('slidebar.lkm')
 <div class="row">
     <div class="col-md-9 col-12"><nav aria-label="breadcrumb">
     <div class="row ">
@@ -53,6 +53,7 @@
     </div>        
 </div>
 @include('konfigurasi.modal')
+
 
 @endsection
 
@@ -131,4 +132,5 @@
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 
+@endcan
 @endsection

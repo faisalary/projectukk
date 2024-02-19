@@ -38,7 +38,7 @@ class JadwalSeleksiController extends Controller
         $seleksi = Seleksi::all();
         $status = StatusSeleksi::all();
         $email = email_template::all();
-        return view('company.jadwal_seleksi.index', compact('pendaftaran', 'mahasiswa', 'seleksi', 'status', 'email', 'lowongan'));
+        return view('company.jadwal_seleksi.tambah', compact('pendaftaran', 'mahasiswa', 'seleksi', 'status', 'email', 'lowongan'));
     }
 
     public function create()
@@ -71,7 +71,7 @@ class JadwalSeleksiController extends Controller
             $email = email_template::where('id_email_template', $request->subjek)->first();
             $user = 'Mita Mutiara';
             Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
-                
+
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Created!',
@@ -136,7 +136,7 @@ class JadwalSeleksiController extends Controller
     public function detail()
     {
         $lowongan = LowonganMagang::all();
-        return view('company.jadwal_seleksi.detail_seleksi', compact('lowongan'));
+        return view('company.jadwal_seleksi.detail_mahasiswa', compact('lowongan'));
     }
 
     public function edit($id)

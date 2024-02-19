@@ -9,11 +9,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyEMailMhs extends Mailable
+class VerifyEmailMhs extends Mailable
 {
     use Queueable, SerializesModels;
     public $verifymhs;
-
     /**
      * Create a new message instance.
      */
@@ -28,7 +27,7 @@ class VerifyEMailMhs extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify e-mail anda',
+            subject: 'Verify Email',
         );
     }
 
@@ -38,7 +37,7 @@ class VerifyEMailMhs extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.verifymhs'
+            view: 'email.verifymhs',
         );
     }
 
@@ -54,7 +53,9 @@ class VerifyEMailMhs extends Mailable
 
     public function build()
     {
-        return $this->view('email.verifymhs');
+        return $this
+        ->subject("Email Verification")
+        ->markdown('email.verifymhs');
                  
     }
 }

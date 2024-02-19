@@ -4,8 +4,7 @@
 @endsection
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
 <style>
     .tooltip-inner {
         min-width: 100%;
@@ -189,11 +188,20 @@
                     @csrf
                     <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" name="status">
                         <option value="" disabled selected>Ubah Status Kandidat</option>
-                        @if($statusId == '3')
+                        <!-- @if($statusId === '3')
                         <option value="tahap2">Seleksi Tahap 2</option>
-                        @elseif($statusId == 4)
+                        @elseif($statusId === '4')
                         <option value="penawaran">Penawaran</option>
-                        @endif
+                        @endif -->
+
+                        @switch($statusId)
+                        @case('3')
+                        <option value="tahap2">Seleksi Tahap 2</option>
+                        @break
+                        @case('4')
+                        <option value="penawaran">Penawaran</option>
+                        @break
+                        @endswitch
                     </select>
                     <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
                     </button>
@@ -330,8 +338,8 @@
     @endsection
 
     @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
+    <script src="{{ asset('app-assets/js/forms-extras.js')}}"></script>
     <script>
         // var jsonData = [{
         //         "nomor": "1",
