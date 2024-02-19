@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
     <style>
 
     </style>
@@ -111,6 +111,7 @@
                                     <th>STATUS KERJASAMA</th>
                                     <th>ALAMAT</th>
                                     <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                         </table>
@@ -129,8 +130,9 @@
                                     <th>ALAMAT</th>
                                     <th style="min-width: 100px;">KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
-                                    <th>STATUS</th>
-                                    <th>STATUS</th>
+                                    <th>DESKRIPSI PERUSAHAAN</th>
+                                    <th>AKSI</th>
+                                    {{-- <th>STATUS</th> --}}
 
                                 </tr>
                             </thead>
@@ -188,7 +190,6 @@
                     data: 'aksi',
                     name: 'aksi'
                 }
-
             ]
         });
     </script>
@@ -237,6 +238,10 @@
                     data: 'description',
                     name: 'description'
                 },
+                {
+                    data: 'editverified',
+                    name: 'editverified'
+                }
             ]
         });
     </script>
@@ -270,10 +275,6 @@
                     name: 'alamatindustri'
                 },
                 {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
                     data: 'kategori_industri',
                     name: 'kategori_industri'
                 },
@@ -282,9 +283,13 @@
                     name: 'statuskerjasama'
                 },
                 {
-                    data: 'status',
-                    name: 'status'
-                }
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'editrejected',
+                    name: 'editrejected'
+                },   
             ]
         });
 
@@ -345,6 +350,7 @@
                 $('#modalapprove').modal('hide');
             });
         }
+        
         function rejected(e) {
             $('#modalreject').modal('show');
             var rejectedUrl = '{{ url("company/kelola-mitra/rejected") }}/' + e.attr('data-id');

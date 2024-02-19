@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerifyEmailMhs;
+use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -57,25 +59,30 @@ class RegisteredUserController extends Controller
                         'remember_token' => $code,
                         'isAdmin' => 2
                     ]);
-                $user->syncRoles('user');         
+                $user->syncRoles('user');   
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
-                dd($verifymhs);
-                Mail::to($user->emailmhs)->send(new VerifyEmailMhs($verifymhs));
+                Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
+                $user->save();
+                DB::commit();
+                
+                // $informsiPrib = InformasiPribadi::create([
+                //     'nim' => $mahasiswa->nim,
+                //     'tgl_lahir' => $request->11
+                // ]);
+                // $informsiPrib->save();
 
             return response()->json([
                 'error' => false,
                 'message' => 'Activated successfully!',
-                'modal' => '#register-mhs'
             ]);
-
-            
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
         }
         
-    }
-    public function setting(){
-
     }
 
 }

@@ -14,4 +14,10 @@ class Lokasi extends Model
     protected $primaryKey = 'id_lokasi';
     protected $keyType = 'string';
     public $timestamps = false;
+
+    public function lowonganmagang(){
+        return $this->belongsTo(LowonganMagang::class,"id_lowongan");
+     }
+ 
 }
+
