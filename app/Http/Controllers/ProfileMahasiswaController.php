@@ -8,8 +8,10 @@ use App\Models\Experience;
 use App\Models\InformasiPribadi;
 use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
+use App\Models\Sertifikat;
 use App\Models\Skill;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -20,13 +22,15 @@ class ProfileMahasiswaController extends Controller
      * Display a listing of the resource.
      */
     public function index($id) { 
+        $dokumen = Sertifikat::where('nim', $id)->first();
+        $dokumen1 = Sertifikat::where('nim', $id)->get();
         $pengalaman = Experience::where('nim', $id)->first();
         $skill = Skill::where('nim', $id)->first();  
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        return view('profile.informasi_pribadi', compact('dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -217,7 +221,6 @@ class ProfileMahasiswaController extends Controller
             $pengalaman = Experience::where('id_experience', $id)->first();
 
             $pengalaman->update([
-                // 'nim' => $id,
                 'posisi' => $request->posisi,
                 'jenis' => $request->jenis,
                 'name_intitutions' => $request->name_institutions,
@@ -241,13 +244,63 @@ class ProfileMahasiswaController extends Controller
     
     public function storedokumen(Request $request, $id) { 
 
-        //
+        try {
+            $dokumen = Sertifikat::where('nim', $id)->first();
+
+            Sertifikat::create([
+                'nim' => $id,
+                'nama_sertif' => $request->sertifikat,
+                'penerbit' => $request->penerbit,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'file_sertif' => $request->file_sertif,
+                'link_sertif' => $request->link_sertif,
+                'deskripsi' => $request->deskripsi,
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
     
     public function updatedokumen(Request $request, $id) { 
 
-        //
+        $this->validate($request,[
+            'file_sertif'  =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
+            'link_sertif' => 'required|url'
+        ]);
+
+        try {
+            $dokumen = Sertifikat::where('id_sertif', $id)->first();
+
+            $dokumen->update([
+                'nama_sertif' => $request->sertifikat,
+                'penerbit' => $request->penerbit,
+                'startdate' => Carbon::createFromFormat('Y-m-d', $request->startdate),
+                'enddate' => Carbon::createFromFormat('Y-m-d', $request->enddate),
+                'file_sertif' => $request->file_sertif,
+                'link_sertif' => $request->link_sertif,
+                'deskripsi' => $request->deskripsi,
+            ]);
+        
+            return response()->json([
+                'error' => false,
+                'message' => 'Dokumen berhasil diperbarui',
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function detail(Request $request, $id) { 
+        $dokumen1 = Sertifikat::where('nim', $id)->get();
+        return view('profile.dokumen', compact('dokumen1'));
     }
     
-
 }

@@ -299,6 +299,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.dokumen.mahasiswa.index');
             Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'storedokumen'])->name('profile.dokumen.mahasiswa.store');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatedokumen'])->name('profile.dokumen.mahasiswa.update');
+            Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detail'])->name('profile.dokumen.mahasiswa.detail');
             Route::get('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletedokumen'])->name('profile.dokumen.mahasiswa.delete');
         });
     });

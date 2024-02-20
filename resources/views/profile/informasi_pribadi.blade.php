@@ -335,24 +335,25 @@
               <h5 class="text-secondary">Dokumen Pendukung</h5>
               <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i>
             </div>
-            <div class="card-body pb-0">
+            <div class="card-body">
               <ul class="timeline mb-0">
+                @foreach($dokumen1 as $dok)
                 <li class="timeline-item timeline-item-transparent">
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
                     <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
+                      <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">Coursera</p>
-                      <p style="font-size: small;">Juli 2022 - Present/p>
+                      <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
+                      <p style="font-size: small;">{{$dok?->startdate??''}} - {{$dok?->enddate??''}}
                       <div>
-                        <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
+                        <p class="mb-0">{{$dok?->deskripsi??''}}</p>
+                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                           Show more
                         </u>
@@ -362,15 +363,19 @@
                           <img src="{{ url("app-assets/img/avatars/2.png")}}">
                         </div>
                         <div class="me-2 ms-4">
-                          <h6 class="mt-5">UI/UX Website.pdf</h6>
+                          <h6 class="mt-5">{{$dok?->file_sertif??''}}</h6>
                         </div>
                       </div>
                     </div>
                   </div>
                 </li>
+                @endforeach
+                <li class="timeline-item timeline-item-transparent">
+                  <span class="timeline-point timeline-point-success"></span>
+                </li>
               </ul>
             </div>
-            <a href='/detail-informasi-dokumen'>
+            <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
               <button class="btn btn-outline-success btn-lg toggle-button ms-5 me-5 mb-5 mt-2" style="width: 824px" type="button">Selengkapnya</button>
             </a>
           </div>
@@ -625,12 +630,12 @@
                 </select>
               </div>
               <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" name="startdate" class="form-control" placeholder="Month" />
+                <label for="" class="form-label">Tanggal Mulai<span style="color: red;"></span></label>
+                <input type="month" id="month" value="{{$pendidikan?->startdate??''}}" name="startdate" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" name="enddate" id="month" class="form-control" placeholder="Month" />
+                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;"></span></label>
+                <input type="month" name="enddate" id="month" value="{{$pendidikan?->enddate??''}}" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="NILAI" class="form-label">Nilai Akhir</label>
@@ -834,11 +839,11 @@
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" value="{{$pengalaman?->startdate??''}}" class="form-control" name="startdate" placeholder="Month" />
+                <input type="date" id="startdate" value="{{$pengalaman ? $pengalaman->startdate : ''}}" name="startdate" class="form-control" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" value="{{$pengalaman?->enddate??''}}" class="form-control" name="enddate" placeholder="Month" />
+                <input type="date" id="startdate" value="{{$pengalaman ? $pengalaman->enddate : ''}}" name="startdate" class="form-control" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -868,32 +873,32 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen/store/' . Auth::user()->nim)}})}}" method="POST">
+          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/store/' . Auth::user()->nim)}}" method="POST">
             @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
-                <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
+                <label for="sertifikat" class="form-label">Nama Sertifikasi<span style="color: red;">*</span></label>
                 <input class="form-control" type="text" id="sertifikat" name="sertifikat" placeholder="Masukkan nama sertifikasi " />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="penerbit" class="form-label"> Penerbit Sertifikasi <span style="color: red;">*</span></label>
+                <label for="penerbit" class="form-label">Penerbit Sertifikasi<span style="color: red;">*</span></label>
                 <input class="form-control" type="text" id="penerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" name="startdate" class="form-control" placeholder="Month"/>
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" name="enddate" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
-                <input class="form-control" type="file" id="unggahfile" multiple="">
+                <input class="form-control" type="file" name="file_sertif" id="unggahfile" multiple="">
               </div>
               <div class="mb-3 col-md-12">
                 <label for="link" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="link" name="link" placeholder="Masukkan link Sertifikat  " />
+                <input class="form-control" type="text" id="link" name="link_sertif" placeholder="Masukkan link Sertifikat  " />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -916,40 +921,41 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Dokumen Pendukung</h5>
+          <h5 class="modal-title" id="modal-title">Edit Dokumen Pendukung</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Account -->
         <div class="modal-body border-top mt-3">
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/update/' . $dokumen?->id_sertif)}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="sertifikat" name="sertifikat" placeholder="Masukkan nama sertifikasi " />
+                <input class="form-control" type="text" id="sertifikat" value="{{$dokumen?->nama_sertif}}" name="sertifikat" placeholder="Masukkan nama sertifikasi " />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="penerbit" class="form-label"> Penerbit Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="penerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
+                <input class="form-control" type="text" id="penerbit" value="{{$dokumen?->penerbit??''}}" name="penerbit" placeholder="Masukkan nama penerbit " />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="date" id="startdate" value="{{$dokumen ? $dokumen->startdate : ''}}" name="startdate" class="form-control" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                  <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
+                  <input type="date" id="enddate" value="{{$dokumen ? $dokumen->enddate : ''}}" name="enddate" class="form-control" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
-                <input class="form-control" type="file" id="unggahfile" multiple="">
+                  <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
+                  <input class="form-control" type="file" name="file_sertif" id="unggahfile" multiple="">
               </div>
               <div class="mb-3 col-md-12">
                 <label for="link" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="link" name="link" placeholder="Masukkan link Sertifikat  " />
+                <input class="form-control" type="text" value="{{$dokumen->link_sertif}}" id="link" name="link_sertif" placeholder="Masukkan link Sertifikat  " />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini...">{{$dokumen?->deskripsi??''}}</textarea>
               </div>
             </div>
             <div class="modal-footer p-0">
