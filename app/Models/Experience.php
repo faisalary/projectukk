@@ -6,14 +6,21 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+class Experience extends Model
 {
     use HasFactory, HasUuids;
-    protected $table = 'skills';
+
+    protected $table = 'experience';
     protected $fillable =[
         'nim',
-        'skills'
+        'posisi',
+        'jenis',
+        'name_institutions',
+        'startdate',
+        'enddate',
+        'deskripsi'
     ];
-    protected $primaryKey = 'id_skills';
+    protected $primaryKey = 'id_experience';
+    protected $keyType = 'string';
     public $timestamps = false;
 }

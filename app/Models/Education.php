@@ -17,14 +17,14 @@ class Education extends Model
         'tingkat',
         'startdate',
         'enddate',
-        'ipk'
+        'nilai'
     ];
     protected $primaryKey = 'id_education';
     protected $keyType = 'string';
     public $timestamps = false;
 
 
-    public function ipk(){
-        return $this->belongsTo(InformasiPribadi::class,'ipk');
+    public function nilai(){
+        return $this->belongsTo(InformasiPribadi::class,'nilai');
     }
 }

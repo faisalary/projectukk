@@ -246,7 +246,7 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Pendidikan</h5>
-              <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPendidikan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalTambahPendidikan"></i>
             </div>
             <div class="card-body pb-0">
               <ul class="timeline mb-0">
@@ -256,14 +256,14 @@
                     <div class="timeline-header">
                       <h6 class="mb-0">{{$pendidikan?->name_intitutions??''}}</h6>
                       <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
+                        {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i> --}}
+                        {{-- <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i> --}}
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
-                      <p class="mb-1">Nilai {{$pendidikan?->ipk??''}}</p>
-                      <p style="font-size: small;">{{$pendidikan?->startdate??''}}-{{$pendidikan?->enddate??''}} </p>
+                      <p class="mb-1">Nilai Akhir : {{$pendidikan?->nilai??''}}</p>
+                      <p style="font-size: small;">{{$pendidikan?->startdate??''}} - {{$pendidikan?->enddate??''}} </p>
                     </div>
                   </div>
                 </li>
@@ -279,17 +279,14 @@
             <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Keahlian</h5>
               <div class="text-end">
-                <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
+                <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
                 <br>
-                <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i>
+                {{-- <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i> --}}
               </div>
             </div>
             <div class="card-body pb-0 pt-0">
               <div>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$skill?->skills??''}}</span>
               </div>
               <div class="border-bottom mt-3"></div>
               <div class="d-flex justify-content-between pt-3 pb-3">
@@ -319,27 +316,6 @@
                           Show more
                         </u>
                       </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-0">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Techno Infinity - Internship</p>
-                    <p style="font-size: small;">Juli 2022 - Present/p>
-                    <div>
-                      <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
-                      <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        Show more
-                      </u>
                     </div>
                   </div>
                 </li>
@@ -667,7 +643,7 @@
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
+                <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="{{$pendidikan?->name_intitutions??''}}" placeholder="Nama Sekolah" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="pendidikan" class="form-label">Jenis Pendidkan<span style="color: red;">*</span></label>
@@ -686,8 +662,8 @@
                 <input type="month" name="enddate" id="month" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
-                <label for="IPK" class="form-label">Nilai Akhir</label>
-                <input class="form-control" type="text" id="ipk" name="ipk" autofocus />
+                <label for="NILAI" class="form-label">Nilai Akhir</label>
+                <input class="form-control" type="text" value="{{$pendidikan?->nilai??''}}" id="nilai" name="nilai" autofocus />
               </div>
             </div>
             <div class="modal-footer p-0">
@@ -699,7 +675,7 @@
     </div>
   </div>
 
-  <!-- Modal Edit Pendidikan -->
+  {{-- <!-- Modal Edit Pendidikan -->
   <div class="modal fade" id="modalEditPendidikan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
@@ -742,7 +718,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <!-- Modal Tambah Keahlian -->
   <div class="modal fade" id="modalTambahKeahlian" tabindex="-1" aria-hidden="true">
@@ -753,11 +729,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body border-top mt-3">
-          <form id="" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/skill/update/'. Auth::user()->nim)}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="TagifyBasic" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="TagifyBasic" class="form-control" name="TagifyBasic" value="" />
+                <input id="TagifyBasic" class="form-control" name="skills" value="{{$skill?->skills??''}}" />
               </div>
             </div>
             <div class="modal-footer p-0">
@@ -770,7 +747,7 @@
   </div>
 
   <!-- Modal Edit Keahlian -->
-  <div class="modal fade" id="modalEditKeahlian" tabindex="-1" aria-hidden="true">
+  {{-- <div class="modal fade" id="modalEditKeahlian" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header d-block">
@@ -792,7 +769,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <!-- Modal Tambah Pengalaman -->
   <div class="modal fade" id="modalTambahPengalaman" tabindex="-1" aria-hidden="true">
@@ -806,7 +783,8 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/'. Auth::user()->nim)}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
@@ -1047,7 +1025,7 @@
   </div>
 
   <!-- Modal Delete Pendidikan-->
-  <div class="modal fade" id="ModalDeletePendidikan" tabindex="-1" aria-hidden="true">
+  {{-- <div class="modal fade" id="ModalDeletePendidikan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -1063,7 +1041,7 @@
 
       </div>
     </div>
-  </div>
+  </div> --}}
 
 </div>
 

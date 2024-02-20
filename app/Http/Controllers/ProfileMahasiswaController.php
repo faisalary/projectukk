@@ -7,6 +7,7 @@ use App\Models\Education;
 use App\Models\InformasiPribadi;
 use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
+use App\Models\Skill;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +18,13 @@ class ProfileMahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id) {   
+    public function index($id) { 
+        $skill = Skill::where('nim', $id)->first();  
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        return view('profile.informasi_pribadi', compact('skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -127,14 +129,13 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-    public function editpedidikan(Request $request, $id) { 
-
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
-        return $mahasiswa;
-        
-    }
+   
 
     public function updatependidikan(Request $request, $id) { 
+        $this->validate($request, [
+            'nilai' => 'required|numeric|between:0,99.99'
+        ]);
+
 
         try{
             $pendidikan = Education::where('nim', $id)->first();
@@ -144,7 +145,7 @@ class ProfileMahasiswaController extends Controller
                 'tingkat' => $request->tingkat,
                 'startdate'=> $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',
-                'ipk' => $request->ipk,
+                'nilai' => $request->nilai,
             ];
 
             if ($pendidikan) {
@@ -152,6 +153,30 @@ class ProfileMahasiswaController extends Controller
             } else {
                 $data2['nim'] = $id;
                 Education::create($data2);
+            }
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+    public function updateskill(Request $request, $id) { 
+
+        try{
+            $skill = Skill::where('nim', $id)->first();
+            
+            $keahlian = [
+                'skills' => $request->skills                
+            ];
+
+            if ($skill) {
+                $skill->update($keahlian);
+            } else {
+                $keahlian['nim'] = $id;
+                Skill::create($keahlian);
             }
         } catch (Exception $e) {
             
