@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Education;
+use App\Models\Experience;
 use Exception;
 use App\Models\Fakultas;
 use App\Models\Industri;
@@ -12,6 +14,8 @@ use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use App\Models\PendaftaranMagang;
+use App\Models\Sertif;
+use App\Models\Skill;
 use Yajra\DataTables\Facades\DataTables;
 
 class InformasiKandidatController extends Controller
@@ -173,11 +177,15 @@ class InformasiKandidatController extends Controller
         $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
         $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
+        $education = Education::where('nim', $pendaftar->nim)->first();
+        $experience = Experience::where('nim', $pendaftar->nim)->first();
+        $skills = Skill::where('nim', $pendaftar->nim)->first();
+        $sertif = Sertif::where('nim', $pendaftar->nim)->first();
         $picture = $prib->profile_picture ? url('assets/images/' . $prib->profile_picture) : url('\assets\images\no-pictures.png');
         $img = $picture . '.png';
 
         // dd($img);
 
-        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img'));
+        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif'));
     }
 }

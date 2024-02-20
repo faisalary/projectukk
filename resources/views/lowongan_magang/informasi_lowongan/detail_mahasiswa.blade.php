@@ -131,7 +131,7 @@
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Jenis Kelamin:</span>
-                            <span>Laki-laki</span>
+                            <span>{{$prib->gender}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Alamat:</span>
@@ -149,32 +149,20 @@
                     <li class="timeline-item timeline-item-transparent">
                         <span class="timeline-point timeline-point-success"></span>
                         <div class="timeline-event">
-                            <h5 class="mb-2">University Of Melbourne</h5>
-                            <p class="mb-2">Magister Management</p>
-                            <p class="mb-2">IPK 3.89/4.00</p>
-                            <small>Juli 2022 - Juli 2024</small>
+                            <h5 class="mb-2">{{$education->name_intitutions}}</h5>
+                            <p class="mb-2">{{$education->tingkat}}</p>
+                            <p class="mb-2">NILAI {{$education->nilai}}</p>
+                            <small>{{ is_string($education->startdate)
+                                ? \Carbon\Carbon::parse($education->startdate)->format('d F Y')  
+                                : $education->startdate?->format('d F Y')  
+                                }} - {{ is_string($education->enddate)
+                                ? \Carbon\Carbon::parse($education->enddate)->format('d F Y')  
+                                : $education->enddate?->format('d F Y')  
+                                }}</small>
                             <div class="border-bottom mt-4"></div>
                         </div>
                     </li>
-                    <li class="timeline-item timeline-item-transparent">
-                        <span class="timeline-point timeline-point-success"></span>
-                        <div class="timeline-event">
-                            <h5 class="mb-2">University Of Melbourne</h5>
-                            <p class="mb-2">Magister Management</p>
-                            <p class="mb-2">IPK 3.89/4.00</p>
-                            <p style="font-size: small;" class="mb-2">Juli 2022 - Juli 2024</p>
-                            <div class="border-bottom mt-4"></div>
-                        </div>
-                    </li>
-                    <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                        <span class="timeline-point timeline-point-success"></span>
-                        <div class="timeline-event">
-                            <h5 class="mb-2">University Of Melbourne</h5>
-                            <p class="mb-2">Magister Management</p>
-                            <p class="mb-2">IPK 3.89/4.00</p>
-                            <small>Juli 2022 - Juli 2024</small>
-                        </div>
-                    </li>
+                    <span class="timeline-point timeline-point-success"></span>
                 </ul>
             </div>
             <hr>
