@@ -15,7 +15,7 @@
 @endsection
 
 @section('main')
-<div class="row">
+<div class="row pe-2 ps-2">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Data Mahasiswa Magang / </span>
             Mahasiswa Magang Mandiri Tahun Ajaran 2023/2024
@@ -40,13 +40,13 @@
                 <ul class="nav nav-pills mb-3 " role="tablist">
                     <li class="nav-item" style="font-size: small;">
                         <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
-                            <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Seleksi Tahap 1
+                            <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
                             <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;"></span>
                         </button>
                     </li>
                     <li class="nav-item" style="font-size: small;">
                         <button type="button" class="nav-link showSingle" target="0" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                            <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Seleksi Tahap 2
+                            <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
                             <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;"></span>
                         </button>
                     </li>
@@ -76,15 +76,17 @@
                     <table class="table table-diterima" id="table-diterima">
                         <thead>
                             <tr>
-                                <th>NOMOR</th>
+                                <th style="min-width: 10px;"></th>
+                                <th style="min-width: 10px;"></th>
+                                <th style="min-width: 50px;">NOMOR</th>
                                 <th style="min-width: 125px;">NAMA/NIM</th>
-                                <th>PROGRAM STUDI</th>
-                                <th>NAMA PERUSAHAAN</th>
-                                <th>POSISI MAGANG</th>
+                                <th style="min-width: 170px;">PROGRAM STUDI</th>
+                                <th style="min-width: 170px;">NAMA PERUSAHAAN</th>
+                                <th style="min-width: 150px;">POSISI MAGANG</th>
                                 <th style="min-width: 100px;">TANGGAL MAGANG</th>
-                                <th>DOKUMEN MAGANG</th>
-                                <th>PEMBIMBING LAPANGAN</th>
-                                <th>PEMBIMBING AKADEMIK</th>
+                                <th style="min-width: 100px;">DOKUMEN</th>
+                                <th style="min-width: 100px;">PEMBIMBING LAPANGAN</th>
+                                <th style="min-width: 100px;">PEMBIMBING AKADEMIK</th>
                             </tr>
                         </thead>
                     </table>
@@ -185,6 +187,8 @@
 <script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var jsonData = [{
+            "id": "",
+            "id": "",
             "nomor": "1",
             "nama/nim": "Jennie Ruby Jane <br> 6701250405",
             "program_studi": "D3 Sistem Informasi",
@@ -196,6 +200,8 @@
             "pembimbing_akademik": "-",
         },
         {
+            "id": "",
+            "id": "",
             "nomor": "2",
             "nama/nim": "Jennie Ruby Jane <br> 6701250405",
             "program_studi": "D3 Sistem Informasi",
@@ -211,7 +217,14 @@
 
     var table = $('#table-diterima').DataTable({
         "data": jsonData,
+        scrollX: true,
         columns: [{
+                data: 'id'
+            },
+            {
+                data: 'id'
+            },
+            {
                 data: "nomor"
             },
             {
@@ -238,7 +251,77 @@
             {
                 data: "pembimbing_akademik"
             }
-        ]
+        ],
+        "columnDefs": [{
+                "width": "10px",
+                "targets": 0
+            },
+            {
+                "width": "10px",
+                "targets": 1
+            },
+            {
+                "width": "125px",
+                "targets": 2
+            },
+            {
+                "width": "170px",
+                "targets": 3
+            },
+            {
+                "width": "170px",
+                "targets": 4
+            },
+            {
+                "width": "150px",
+                "targets": 5
+            },
+            {
+                "width": "100px",
+                "targets": 6
+            },
+            {
+                "width": "10px",
+                "targets": 7
+            },
+            {
+                "width": "100px",
+                "targets": 8
+            },
+            {
+                "width": "100px",
+                "targets": 9,
+            },
+            {
+                "width": "100px",
+                "targets": 10
+            },
+        ],
+        columnDefs: [{
+                // For Responsive
+                className: 'control',
+                orderable: false,
+                searchable: false,
+                responsivePriority: 2,
+                targets: 0,
+                render: function(data, type, full, meta) {
+                    return '';
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: false,
+                responsivePriority: 3,
+                checkboxes: true,
+                render: function() {
+                    return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+                },
+                checkboxes: {
+                    selectAllRender: '<input type="checkbox" class="form-check-input">'
+                }
+            },
+        ],
     });
 
 

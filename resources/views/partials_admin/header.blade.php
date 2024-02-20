@@ -178,7 +178,7 @@
 
                 @can('slidebar.lkm')
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Admin</span>
+                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin LKM</span>
                 </li>
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
@@ -367,7 +367,7 @@
                 <!-- Mitra -->
                 @can('slidebar.mitra')
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Mitra</span>
+                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra Perusahaan</span>
                 </li>
                 <ul class="menu-inner py-2">
                     <!-- Dashboards -->
@@ -448,6 +448,96 @@
 
                 </ul>
                 @endcan
+
+                <!-- Kaprodi -->
+                <!-- <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Kepala Program Studi</span>
+                </li>
+                <ul class="menu-inner py-3">
+                    {{-- Dashboard --}}
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                            <div data-i18n="Dashboards">Dashboards</div>
+                        </a>
+                    </li>
+                    {{-- Informasi Lowongan --}}
+                    <li class="menu-item">
+                        <a href="" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-briefcase"></i>
+                            <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
+                        </a>
+                    </li>
+                    {{-- Data Mahasiswa Magang --}}
+                    <li class="menu-item">
+                        <a href="/magang-fakultas" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/magang-fakultas" class="menu-link">
+                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="/magang-mandiri" class="menu-link">
+                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Kelola Pengguna--}}
+                    <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : '' }}">
+                        <a href="{{ url('kelola-pengguna') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                        </a>
+                    </li>
+                </ul> -->
+
+                <!-- Pembimbing Akademik -->
+                <!-- <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Pembimbing Akademik</span>
+                </li>
+                <ul class="menu-inner py-4">
+                    {{-- Dashboard --}}
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                            <div data-i18n="Dashboards">Dashboards</div>
+                        </a>
+                    </li>
+                    {{-- Kelola Mahasiswa --}}
+                    <li class="menu-item">
+                        <a href="/kelola/mahasiswa" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Kelola Mahasiswa">Kelola Mahasiswa</div>
+                        </a>
+                    </li>
+                </ul> -->
+
+                <!-- Pembimbing Lapangan-->
+                <!-- <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Pembimbing Lapangan</span>
+                </li>
+                <ul class="menu-inner py-6">
+                    {{-- Dashboard --}}
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
+                            <div data-i18n="Dashboards">Dashboards</div>
+                        </a>
+                    </li>
+                    {{-- Kelola Mahasiswa --}}
+                    <li class="menu-item">
+                        <a href="" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                        </a>
+                    </li>
+                </ul> -->
+
             </aside>
 
             <!-- / Menu -->
