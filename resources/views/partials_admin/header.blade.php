@@ -319,6 +319,11 @@
                                     <div data-i18n="Dokumen Persyaratan">Dokumen Persyaratan</div>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="/masters/pembimbing-lapangan-mandiri" class="menu-link">
+                                    <div data-i18n="Master Pembimbing Lapangan">Master Pembimbing Lapangan</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">

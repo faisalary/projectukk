@@ -461,6 +461,10 @@ Route::get('/view/logbook', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
 });
 
+Route::get('/masters/pembimbing-lapangan-mandiri', function () {
+    return view('masters.pembimbing_lapangan_mandiri.index');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
