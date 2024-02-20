@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="modalDitolak">Konfirmasi Penolakan Magang Mandiri</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" action="{{ url('pengajuan/surat/updateDitolak') }}" method="POST"
+            <form class="default-form" action="{{ url('kegiatan-saya/lamaran-saya/updateDitolak') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="nim" value="{{ $nim ?? '' }}">

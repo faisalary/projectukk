@@ -39,33 +39,7 @@ class KonfirmasiMagangController extends Controller
     
     public function store($request)
     {
-        try {
-
-            $file = MhsMandiri::create([
-                'bukti_doc' => $request->bukti_doc->store('post'),
-                'status' => true,
-            ]);
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Updated!',
-                'modal' => '#modalDitolak',
-            ]);
-             
-            if ($request->file('bukti_doc')){
-                $file = $request->file('bukti_doc');
-                $filename = $file->getClientOriginalName();
-                $file->move(public_path('public/post'),$filename);
-                $attachment['bukti_doc'] = $filename;
-            }
-            
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-
-        
+    
     }
 
     /**

@@ -4,7 +4,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <style>
 
     </style>
@@ -37,7 +37,6 @@
 @endsection
 
 @section('main')
-    @include('kegiatan_saya.lamaran_saya.modal')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="col-md-12 col-12 mt-3">
             <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Status Lamaran Magang</h4>
@@ -487,7 +486,7 @@
                 <!-- /Magang Fakultas -->
 
                 <!-- Magang Mandiri -->
-                <div class="tab-pane fade show active" id="navs-pills-justified-magang-fakultas" role="tabpanel">
+                <div class="tab-pane fade show active" id="navs-pills-justified-magang-mandiri" role="tabpanel">
                     <div class="row mt-2" style="padding-left: 12px;">
                         <ul class="nav nav-pills mb-3 " role="tablist">
 
@@ -500,8 +499,8 @@
                             </li>
                             <li class="nav-item" style="font-size: 15px;">
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#navs-pills-terima-magang-mandiri"
-                                    aria-controls="navs-pills-terima-magang-mandiri" aria-selected="false">
+                                    data-bs-target="#navs-pills-justified-terima-tawaran"
+                                    aria-controls="navs-pills-justified-terima-tawaran" aria-selected="false">
                                     <i class="ti ti-clipboard-check pe-1"></i> Terima Tawaran
                                 </button>
                             </li>
@@ -548,7 +547,54 @@
                                             </div>
                                             <div class="text-left mt-3">
                                                 <button type="button" class="btn btn-success waves-effect me-2"
-                                                    data-id="{{ $item->id_pengajuan }}"
+                                                    {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="terima($(this))">Diterima
+                                                </button>
+                                                <button type="button" class="btn btn-danger waves-effect"
+                                                    data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="navs-pills-justified-terima-tawaran" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($mandiri as $item)
+                                    @if ($item->nim == $nim)
+                                        <div class="card-body">
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                Lakukan konfirmasi penerimaan segera!
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="row">
+                                                <div class="ps-4">
+                                                    <h4>{{ $item->posisi_magang }}</h4>
+                                                    <p>{{ $item->nama_industri }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
+                                                            style="font-size: 18px;"></i>
+                                                        {{ $item->alamat_industri }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="border-end pe-2 me-2"><i
+                                                            class="tf-icons ti ti-phone-call pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span><i class="tf-icons ti ti-mail pe-1"
+                                                            style="font-size: 18px;"></i>{{ $item->email }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-left mt-3">
+                                                <button type="button" class="btn btn-success waves-effect me-2"
+                                                    {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}"
                                                     onclick="terima($(this))">Diterima
                                                 </button>
                                                 <button type="button" class="btn btn-danger waves-effect"
@@ -562,12 +608,16 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
+            @include('kegiatan_saya.lamaran_saya.modal')
         @endsection
 
-        @section(' page_script')
+        @section('page_script')
+            <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+            <script src="../../app-assets/js/forms-extras.js"></script>
             <script>
-                
                 function terima(e) {
                     let id = e.attr('data-id');
                     let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
@@ -589,6 +639,8 @@
                     });
                 }
             </script>
-            <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-            <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+            {{-- <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+            <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
+            <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+            <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
         @endsection
