@@ -11,7 +11,7 @@ class MhsMandiri extends Model
     use HasUuids;
 
     protected $table = 'mhs_mandiri';
-    protected $fillable = ['nim', 'startdate', 'enddate', 'bukti_doc', 'status'];
+    protected $fillable = ['id_pengajuan', 'status', 'nip', 'id_pbb'];
     protected $primaryKey = 'id_mhsmandiri';
     protected $keyType = 'string';
     public $timestamps = false;

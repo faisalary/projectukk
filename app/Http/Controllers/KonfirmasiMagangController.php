@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMandiri;
-use App\Models\mhs_mandiri;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
@@ -92,28 +91,56 @@ class KonfirmasiMagangController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
 
             $mandiri->nim = $request->nim;
-            $mandiri->tglpeng = $request->tglpeng;
             $mandiri->nama_industri = $request->nama_industri;
             $mandiri->posisi_magang = $request->posisi_magang;
-            $mandiri->jabatan = $request->jabatan;
-            $mandiri->alamat_industri = $request->alamat_industri;
-            $mandiri->nohp = $request->nohp;
-            $mandiri->email = $request->email;
             $mandiri->startdate = $request->startdate;
             $mandiri->enddate = $request->enddate;
-            $mandiri->alasan = $request->alasan;
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
             $mandiri->save();
 
+            MhsMandiri::create([
+                'id_pengajuan' => $id,
+                'status' => true
+            ]);
+            
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
                 'modal' => '#modalDiterima',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    
+    public function updateDitolak(Request $request, string $id)
+    {
+        try {
+            
+            $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
+            if (!empty($request->bukti_doc)) {
+                $mandiri->bukti_doc = $request->bukti_doc->store('post');
+            }
+            $mandiri->save();
+
+            MhsMandiri::create([
+                'id_pengajuan' => $id,
+                'status' => false
+            ]);
+            
+            return response()->json([
+                'error' => false,
+                'message' => 'Data successfully Updated!',
+                'modal' => '#modalDitolak',
             ]);
         } catch (Exception $e) {
             return response()->json([

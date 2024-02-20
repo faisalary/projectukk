@@ -4,7 +4,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <style>
 
     </style>
@@ -560,64 +560,16 @@
                                 @endforeach
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="terima-magang-mandiri" role="tabpanel">
-                            <div class="card mt-2">
-                                @foreach ($mandiri as $item)
-                                    @if ($item->nim == $nim)
-                                        <div class="card-body">
-                                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                                Lakukan konfirmasi penerimaan segera!
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="row">
-                                                <div class="ps-4">
-                                                    <h4>{{ $item->posisi_magang }}</h4>
-                                                    <p>{{ $item->nama_industri }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
-                                                            style="font-size: 18px;"></i>
-                                                        {{ $item->alamat_industri }}</span>
-                                                </div>
-                                                <div class="col-2">
-                                                    <span class="border-end pe-2 me-2"><i
-                                                            class="tf-icons ti ti-phone-call pe-1"
-                                                            style="font-size: 18px;"></i>{{ $item->nohp }}</span>
-                                                </div>
-                                                <div class="col-2">
-                                                    <span><i class="tf-icons ti ti-mail pe-1"
-                                                            style="font-size: 18px;"></i>{{ $item->email }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="text-left mt-3">
-                                                <button type="button" class="btn btn-success waves-effect me-2"
-                                                    data-id="{{ $item->id_pengajuan }}"
-                                                    onclick="terima($(this))">Diterima
-                                                </button>
-                                                <button type="button" class="btn btn-danger waves-effect"
-                                                    data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
-                                                </button>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                        <!-- /Magang Mandiri -->
                     </div>
                 </div>
             </div>
         @endsection
 
-        @section('page_script')
+        @section(' page_script')
             <script>
+                
                 function terima(e) {
                     let id = e.attr('data-id');
-
                     let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
                     var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
                     $.ajax({
@@ -637,4 +589,6 @@
                     });
                 }
             </script>
+            <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+            <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
         @endsection
