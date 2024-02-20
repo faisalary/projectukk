@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bahasa;
 use App\Models\Education;
+use App\Models\Experience;
 use App\Models\InformasiPribadi;
 use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
@@ -19,12 +20,13 @@ class ProfileMahasiswaController extends Controller
      * Display a listing of the resource.
      */
     public function index($id) { 
+        $pengalaman = Experience::where('nim', $id)->first();
         $skill = Skill::where('nim', $id)->first();  
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        return view('profile.informasi_pribadi', compact('pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -51,7 +53,8 @@ class ProfileMahasiswaController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'tgl_lahir' => 'required|before:today'
+            'tgl_lahir' => 'required|before:today',
+            'ipk' => 'required|numeric|min:0|max:4'
         ]);
         try {
             $informasiprib = InformasiPribadi::where('nim', $id)->first();
@@ -88,13 +91,6 @@ class ProfileMahasiswaController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-
-    public function editinformasi(Request $request, $id) { 
-
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
-        return $mahasiswa;
-        
     }
 
     public function updateinformasitambahan(Request $request, $id) { 
@@ -186,6 +182,71 @@ class ProfileMahasiswaController extends Controller
             ]);
         }
         
+    }
+
+    public function store(Request $request, $id) { 
+        
+        try {
+            $pengalaman = Experience::where('nim', $id)->first();
+            Experience::create([
+                'nim' => $id,
+                'posisi' => $request->posisi,
+                'jenis' => $request->jenis,
+                'name_intitutions' => $request->name_institutions,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'deskripsi' => $request->deskripsi,
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+
+    public function updatepengalaman(Request $request, $id) {
+
+        $this->validate($request,[
+            
+        ]);
+
+        try {
+            $pengalaman = Experience::where('id_experience', $id)->first();
+
+            $pengalaman->update([
+                // 'nim' => $id,
+                'posisi' => $request->posisi,
+                'jenis' => $request->jenis,
+                'name_intitutions' => $request->name_institutions,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'deskripsi' => $request->deskripsi,
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function deletepengalaman(Request $request, $id) { 
+
+        //
+    }
+    
+    public function storedokumen(Request $request, $id) { 
+
+        //
+    }
+    
+    public function updatedokumen(Request $request, $id) { 
+
+        //
     }
     
 

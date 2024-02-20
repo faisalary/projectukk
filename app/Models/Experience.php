@@ -15,7 +15,7 @@ class Experience extends Model
         'nim',
         'posisi',
         'jenis',
-        'name_institutions',
+        'name_intitutions',
         'startdate',
         'enddate',
         'deskripsi'

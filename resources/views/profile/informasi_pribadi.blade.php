@@ -2,8 +2,8 @@
 
 @section('page_style')
 
-<link rel="stylesheet" href="{{ asset('assets/css/yearpicker.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/monthpicker.css') }}">
+<link rel="stylesheet" href="{{ url('assets/css/yearpicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url('assets/css/monthpicker.css') }}">
 <link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
 
 <style>
@@ -300,20 +300,20 @@
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
                     <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
+                      <h6 class="mb-0">{{$pengalaman?->posisi??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">Techno Infinity - Internship</p>
-                      <p style="font-size: small;">Juli 2022 - Present/p>
+                      <p class="mb-1">{{$pengalaman?->name_intitutions??''}} - {{$pengalaman?->jenis??''}}</p>
+                      <p style="font-size: small;">{{$pengalaman?->startdate??''}} - {{$pengalaman?->enddate??''}}
                       <div>
-                        <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
+                        <p class="mb-0">{{$pengalaman?->deskripsi??''}}</p>
+                        {{-- <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          Show more
+                          Show more --}}
                         </u>
                       </div>
                     </div>
@@ -368,35 +368,6 @@
                     </div>
                   </div>
                 </li>
-                <li class="timeline-item timeline-item-transparent border-0">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Coursera</p>
-                    <p style="font-size: small;">Juli 2022 - Present/p>
-                    <div>
-                      <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
-                      <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        Show more
-                      </u>
-                    </div>
-                    <div class="d-flex align-items-start mt-3 mb-3">
-                      <div>
-                        <img src="{{ url("app-assets/img/avatars/2.png")}}">
-                      </div>
-                      <div class="me-2 ms-4">
-                        <h6 class="mt-5">UI/UX Website.pdf</h6>
-                      </div>
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div>
             <a href='/detail-informasi-dokumen'>
@@ -427,7 +398,7 @@
             <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
               @if ($informasiprib?->profile_picture?? '')
                 <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
-                    class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+                    class="img-fluid rounded mb-3 pt-1 mt-4" name="profile_picture" id="imgPreview">
               @else
                   <img src="{{ url("app-assets/img/avatars/15.png")}}" alt="user-avatar" 
                   class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
@@ -783,7 +754,7 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/'. Auth::user()->nim)}}" method="POST">
+          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/store/'. Auth::user()->nim)}}" method="POST">
             @csrf
             <div class="row">
               <div class="mb-3 col-md-6">
@@ -792,23 +763,25 @@
               </div>
               <div class="mb-3 col-md-6">
                 <label for="pekerjaan" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan" class="select2 form-select">
+                <select id="pekerjaan" name="jenis" class="select2 form-select">
                   <option disabled selected>Pilih Jenis Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
+                  <option value="Front End">Front End</option>
+                  <option value="Back End">Back End</option>
+                  <option value="Ui/Ux Designer">Ui/Ux Designer</option>
+                  <option value="System Analyst">System Analyst</option>
                 </select>
               </div>
               <div class="mb-3 col-md-12">
                 <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
+                <input class="form-control" type="text" id="namaperusahaan" name="name_institutions" placeholder="Ex: PT Techno Infinity" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" name="startdate" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" name="enddate" class="form-control" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -838,35 +811,38 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/' . $pengalaman->id_experience)}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
+                <input class="form-control" type="text" id="posisi" name="posisi" value="{{$pengalaman?->posisi??''}}" placeholder="Ex: UI/UX Designer" />
               </div>
               <div class="mb-3 col-md-6">
                 <label for="pekerjaan2" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan2" class="select2 form-select">
+                <select id="pekerjaan2" value="{{$pengalaman?->jenis??''}}" name="jenis" class="select2 form-select">
                   <option disabled selected>Pilih Jenis Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
+                  <option value="Front End">Front End</option>
+                  <option value="Back End">Back End</option>
+                  <option value="Ui/Ux Designer">Ui/Ux Designer</option>
+                  <option value="System Analyst">System Analyst</option>
                 </select>
               </div>
               <div class="mb-3 col-md-12">
                 <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
+                <input class="form-control" type="text" id="namaperusahaan" value="{{$pengalaman?->name_intitutions??''}}" name="name_institutions" placeholder="Ex: PT Techno Infinity" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" value="{{$pengalaman?->startdate??''}}" class="form-control" name="startdate" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
+                <input type="month" id="month" value="{{$pengalaman?->enddate??''}}" class="form-control" name="enddate" placeholder="Month" />
               </div>
               <div class="mb-3 col-md-12">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+                <textarea class="form-control" type="text" value="" id="deskripsi" name="deskripsi" placeholder="Ketik di sini...">{{$pengalaman?->deskripsi??''}}</textarea>
               </div>
             </div>
             <div class="modal-footer p-0">
@@ -892,7 +868,8 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
+          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen/store/' . Auth::user()->nim)}})}}" method="POST">
+            @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
