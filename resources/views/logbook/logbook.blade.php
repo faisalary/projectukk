@@ -61,7 +61,7 @@
     </div>
 
     <div class="mb-4 mt-4" style=" display: flex; justify-content: space-between !important;">
-        <h4>Laporan Bulanan</h4>
+        <h4>Laporan Magang - Periode Januari 2023</h4>
         <select class="select2 form-select" data-placeholder="Silahkan Pilih Bulan">
             <option value="">Silahkan Pilih Bulan</option>
             <option value="1">Januari</option>
