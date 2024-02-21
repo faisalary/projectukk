@@ -527,9 +527,9 @@
                     </li>
                     {{-- Kelola Mahasiswa --}}
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="/kelola/mahasiswa/magang" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            <div data-i18n="Kelola Mahasiswa">Kelola Mahasiswa</div>
                         </a>
                     </li>
                 </ul> -->
