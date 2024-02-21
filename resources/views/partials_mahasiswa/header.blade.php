@@ -132,7 +132,7 @@
 
                   <ul class="menu-sub">
                     <li class="menu-item">
-                      <a href="" class="menu-link">
+                      <a href="/logbook" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
                       </a>
                     </li>

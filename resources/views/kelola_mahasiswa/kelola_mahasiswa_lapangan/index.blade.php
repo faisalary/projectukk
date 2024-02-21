@@ -31,20 +31,19 @@
 <div class="row ps-2 pe-3">
     <div class="card">
         <div class="card-datatable table-responsive">
-            <table class="table" id="table-akademik">
+            <table class="table" id="table-lapangan">
                 <thead>
                     <tr>
                         <th style="min-width: 50px;">NOMOR</th>
                         <th style="min-width:150px;">NAMA</th>
                         <th style="min-width:150px;">PROGRAM STUDI</th>
                         <th style="min-width:150px;">POSISI MAGANG</th>
-                        <th style="min-width:150px;">PERUSAHAAN</th>
                         <th style="min-width:150px;">DURASI MAGANG</th>
                         <th style="min-width:150px;">JENIS MAGANG</th>
-                        <th style="min-width:200px;">BERKAS AKHIR MAGANG</th>
                         <th style="min-width:100px;">NILAI AKHIR</th>
                         <th style="min-width:100px;">INDEKS</th>
-                        <th style="min-width:100px;">AKSI</th>
+                        <th style="min-width:150px;">STATUS MAGANG</th>
+                        <th style="min-width:130px;">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -62,15 +61,17 @@
             <div class="col-12 mb-2">
                 <div class="row">
                     <div class="mb-2">
-                        <label for="nama/nim" class="form-label">Program Studi</label>
-                        <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                            <option value="">Pilih Program Studi</option>
+                        <label for="nama/nim" class="form-label">Posisi Magang</label>
+                        <select class="form-select select2" id="posisi" name="posisi" data-placeholder="Pilih Posisi Magang">
+                            <option value="">Pilih Posisi Magang</option>
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="nama/nim" class="form-label">Jenis Magang</label>
-                        <select class="form-select select2" id="magang" name="prodi" data-placeholder="Pilih Jenis Magang">
-                            <option value="">Pilih Jenis Magang</option>
+                        <label for="nama/nim" class="form-label">Status</label>
+                        <select class="form-select select2" id="status" name="status" data-placeholder="Pilih Status">
+                            <option value="">Pilih Status</option>
+                            <option value="1">Aktif</option>
+                            <option value="2">Non-Aktif</option>
                         </select>
                     </div>
                 </div>
@@ -83,6 +84,58 @@
     </div>
 </div>
 
+<!-- Modal Dipulangkan-->
+<div class="modal fade" id="modalDipulangkan" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title" id="modalDipulangkan">Anda memulangkan arvin bagaskara, Silahkan Memberikan alasan dan bukti !!!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row mb-3">
+                    <div class="col mb-0">
+                        <label for="defaultFormControlInput" class="form-label pb-1">Alasan pemulangan mahasiswa<span class="text-danger">*</span> </label>
+                        <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis komentar disini" aria-describedby="defaultFormControlHelp"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-0">
+                        <label for="formFile" class="form-label">Bukti Memulangkan Mahasiswa<span class="text-danger">*</span></label>
+                        <input class="form-control" type="file" id="formFile">
+                        <p style="font-size: 10px;">Allowed PDF, PNG, JPG, JPEG. Max size 1 GB</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalalert">Kirim Komentar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Alert-->
+<div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-0">
+                <img src="../../app-assets/img/alert.png" alt="">
+                <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin memulangkan mahasiswa?</h5>
+                <p>Pilihan Anda akan secara otomatis memperbarui data dan membatasi akses yang tersedia bagi mahasiswa.</p>
+                <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content:center;">
+                <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
+                <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 @section('page_script')
@@ -94,30 +147,28 @@
             "nama": "Arvin Bagaskara",
             "program_studi": "D3 Sistem Informasi",
             "posisi_magang": "UI/UX Designer",
-            "nama_perusahaan": "Techno Infinity",
             "durasi_magang": "2 Semester",
             "jenis_magang": "Magang Fakultas",
-            "berkas_akhir": "<ul class='list-unstyled'><li><a href='Laporan Akhir Magang.pdf' style='color:#4EA971;'>Laporan Akhir Magang.pdf</a></li> <li><a href='Dokumen IA.pdf' style='color:#4EA971;'>Dokumen IA.pdf</a></li> <li><a href='Logbook.pdf' style='color:#4EA971;'>Logbook.pdf</a></li></ul>",
             "nilai_akhir": "85",
             "indeks": "A",
-            "aksi": "<a href='/kelola/mahasiswa/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/view/logbook' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a>"
+            "status": "<span class='badge bg-label-success'>Aktif</span>",
+            "aksi": "<a href='/kelola/mahasiswa-magang/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/logbook/mahasiswa' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDipulangkan'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
         {
             "nomor": "2",
             "nama": "Arvin Bagaskara",
             "program_studi": "D3 Sistem Informasi",
             "posisi_magang": "UI/UX Designer",
-            "nama_perusahaan": "Techno Infinity",
             "durasi_magang": "2 Semester",
             "jenis_magang": "Magang Fakultas",
-            "berkas_akhir": "<ul class='list-unstyled'><li><a href='Laporan Akhir Magang.pdf' style='color:#4EA971;'>Laporan Akhir Magang.pdf</a></li> <li><a href='' style='color:#4EA971;'>-</a></li> <li><a href='Logbook.pdf' style='color:#4EA971;'>Logbook.pdf</a></li></ul>",
             "nilai_akhir": "85",
             "indeks": "A",
-            "aksi": "<a href='/kelola/mahasiswa/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/view/logbook' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a>"
+            "status": "<span class='badge bg-label-danger'>Non-Aktif</span>",
+            "aksi": "<a href='/kelola/mahasiswa-magang/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/logbook/mahasiswa' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDipulangkan'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
         },
     ];
 
-    var table = $('#table-akademik').DataTable({
+    var table = $('#table-lapangan').DataTable({
         "data": jsonData,
         scrollX: true,
         columns: [{
@@ -133,22 +184,19 @@
                 data: "posisi_magang"
             },
             {
-                data: "nama_perusahaan"
-            },
-            {
                 data: "durasi_magang"
             },
             {
                 data: "jenis_magang"
             },
             {
-                data: "berkas_akhir"
-            },
-            {
                 data: "nilai_akhir"
             },
             {
                 data: "indeks"
+            },
+            {
+                data: "status"
             },
             {
                 data: "aksi"
@@ -180,12 +228,7 @@
                 "targets": 5
             },
             {
-                "width": "150px",
-                "targets": 6
-            },
-            
-            {
-                "width": "200px",
+                "width": "100px",
                 "targets": 6
             },
             {
@@ -193,11 +236,11 @@
                 "targets": 7
             },
             {
-                "width": "100px",
+                "width": "150px",
                 "targets": 8
             },
             {
-                "width": "100px",
+                "width": "130px",
                 "targets": 9
             }
         ],

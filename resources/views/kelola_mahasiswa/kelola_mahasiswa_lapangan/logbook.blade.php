@@ -32,7 +32,7 @@
 @section('main')
 <div class="row">
     <div class="">
-        <a href="/kelola/mahasiswa" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <a href="/kelola/mahasiswa/magang" type="button" class="btn btn-outline-success mb-3 waves-effect">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
@@ -58,9 +58,9 @@
 
         <div class="d-flex mt-4">
             <div style="min-width: 360px;">
-            {{--Jika status ditolak--}}
-            <!-- <div style="max-width: 360px;"> -->
-                
+                {{--Jika status ditolak--}}
+                <!-- <div style="max-width: 360px;"> -->
+
                 <div class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 15px; margin-right: 10px; height: fit-content !important;">
                     <div class="d-flex justify-content-between">
                         <div class="col-7">
@@ -157,8 +157,12 @@
             </div>
 
             <div>
-                <div>
-                    <h5>Logbook Minggu Ke-1 Januari 2023</h5>
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="mb-0 mt-2">Logbook Minggu Ke-1 Januari 2023</h5>
+                    <div>
+                    <button type="submit" class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#modalalert"><i class="ti ti-check ms-0 me-1"></i>Setujui</button>
+                    <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDitolak"><i class="ti ti-x ms-0 me-1"></i>Tolak</button>
+                    </div>
                 </div>
                 <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
                     <div class="d-flex justify-content-between">
@@ -270,6 +274,51 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Alert-->
+        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center pb-0">
+                        <img src="../../app-assets/img/alert.png" alt="">
+                        <h5 class="modal-title" id="modal-title">Apakah logbook mahasiswa sedah sesuai dengan yang dikerjakan?</h5>
+                        <p>Status logbook akan otomatis berubah!</p>
+                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
+                    </div>
+                    <div class="modal-footer" style="display: flex; justify-content:center;">
+                        <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
+                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Ditolak-->
+        <div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom">
+                        <h5 class="modal-title" id="modalDitolak">Anda Menolak Logbook 2 Januari 2023, Silahkan Memberikan Komentar !!!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-3">
+                        <div class="row">
+                            <div class="col mb-0">
+                                <label for="defaultFormControlInput" class="form-label pb-1">Komentar <span class="text-danger">*</span> </label>
+                                <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis komentar disini" aria-describedby="defaultFormControlHelp"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success">Kirim Komentar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection
