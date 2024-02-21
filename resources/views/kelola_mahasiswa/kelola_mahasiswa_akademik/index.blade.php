@@ -41,6 +41,7 @@
                         <th style="min-width:150px;">PERUSAHAAN</th>
                         <th style="min-width:150px;">DURASI MAGANG</th>
                         <th style="min-width:150px;">JENIS MAGANG</th>
+                        <th style="min-width:200px;">BERKAS AKHIR MAGANG</th>
                         <th style="min-width:100px;">NILAI AKHIR</th>
                         <th style="min-width:100px;">INDEKS</th>
                         <th style="min-width:100px;">AKSI</th>
@@ -96,6 +97,7 @@
             "nama_perusahaan": "Techno Infinity",
             "durasi_magang": "2 Semester",
             "jenis_magang": "Magang Fakultas",
+            "berkas_akhir": "<ul class='list-unstyled'><li><a href='Laporan Akhir Magang.pdf' style='color:#4EA971;'>Laporan Akhir Magang.pdf</a></li> <li><a href='Dokumen IA.pdf' style='color:#4EA971;'>Dokumen IA.pdf</a></li> <li><a href='Logbook.pdf' style='color:#4EA971;'>Logbook.pdf</a></li></ul>",
             "nilai_akhir": "85",
             "indeks": "A",
             "aksi": "<a href='/kelola/mahasiswa/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/view/logbook' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a>"
@@ -108,6 +110,7 @@
             "nama_perusahaan": "Techno Infinity",
             "durasi_magang": "2 Semester",
             "jenis_magang": "Magang Fakultas",
+            "berkas_akhir": "<ul class='list-unstyled'><li><a href='Laporan Akhir Magang.pdf' style='color:#4EA971;'>Laporan Akhir Magang.pdf</a></li> <li><a href='' style='color:#4EA971;'>-</a></li> <li><a href='Logbook.pdf' style='color:#4EA971;'>Logbook.pdf</a></li></ul>",
             "nilai_akhir": "85",
             "indeks": "A",
             "aksi": "<a href='/kelola/mahasiswa/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/view/logbook' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a>"
@@ -137,6 +140,9 @@
             },
             {
                 data: "jenis_magang"
+            },
+            {
+                data: "berkas_akhir"
             },
             {
                 data: "nilai_akhir"
@@ -175,6 +181,11 @@
             },
             {
                 "width": "150px",
+                "targets": 6
+            },
+            
+            {
+                "width": "200px",
                 "targets": 6
             },
             {

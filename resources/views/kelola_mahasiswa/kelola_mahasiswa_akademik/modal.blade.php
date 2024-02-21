@@ -42,19 +42,19 @@
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width:200px;">ASPEK PENILAIAN</th>
-                                <th style="min-width:200px;">DESKRIPSI ASPEK PENILAIAN</th>
+                                <th style="min-width:300px;">ASPEK PENILAIAN</th>
+                                <th style="min-width:300px;">DESKRIPSI ASPEK PENILAIAN</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
-                                <th style="min-width:100px;">BOBOT NILAI</th>
+                                <!-- <th style="min-width:100px;">BOBOT NILAI</th> -->
                                 <th style="min-width:150px;">NILAI MAGANG</th>
                             </tr>
                         <tfoot>
                             <tr>
-                                <th class="text-center" colspan="5">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 = 100)</th>
-                                <th class=""><input type="text" id="" class="form-control" placeholder="86" style="max-width: 150px;" disabled /></th>
+                                <th class="text-center" colspan="4">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 = 100)</th>
+                                <th class=""><input type="text" id="" class="form-control" placeholder="85" style="max-width: 150px;" disabled /></th>
                             </tr>
                             <tr>
-                                <th class="text-center" colspan="5">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
+                                <th class="text-center" colspan="4">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
                                 <th class=""><input type="text" id="" class="form-control" placeholder="A" style="max-width: 150px;" disabled /></th>
                             </tr>
                         </tfoot>
@@ -98,16 +98,16 @@
             "aspek_penilain": "Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li><li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li> ",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
             "nilai_max": "0-70",
-            "bobot_nilai": "70%",
-            "nilai_magang": "<input type='text' id='' class='form-control' placeholder='' style='max-width: 150px;'/>"
+            // "bobot_nilai": "70%",
+            "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
         {
             "nomor": "2",
             "aspek_penilain": "Presentasi dan Tanya Jawab <li>Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang</li> <li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
             "nilai_max": "0-30",
-            "bobot_nilai": "30%",
-            "nilai_magang": "<input type='text' id='' class='form-control' placeholder='' style='max-width: 150px;'/>"
+            // "bobot_nilai": "30%",
+            "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
     ];
 
@@ -129,9 +129,9 @@
             {
                 data: "nilai_max"
             },
-            {
-                data: "bobot_nilai"
-            },
+            // {
+            //     data: "bobot_nilai"
+            // },
             {
                 data: "nilai_magang"
             }

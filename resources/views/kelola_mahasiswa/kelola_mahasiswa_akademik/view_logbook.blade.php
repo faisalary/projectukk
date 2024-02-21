@@ -270,51 +270,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Alert-->
-        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center pb-0">
-                        <img src="../../app-assets/img/alert.png" alt="">
-                        <h5 class="modal-title" id="modal-title">Apakah logbook mahasiswa sedah sesuai dengan yang dikerjakan?</h5>
-                        <p>Status logbook akan otomatis berubah!</p>
-                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
-                    </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Ditolak-->
-        <div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom">
-                        <h5 class="modal-title" id="modalDitolak">Anda Menolak Logbook 2 Januari 2023, Silahkan Memberikan Komentar !!!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body pt-3">
-                        <div class="row">
-                            <div class="col mb-0">
-                                <label for="defaultFormControlInput" class="form-label pb-1">Komentar <span class="text-danger">*</span> </label>
-                                <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis komentar disini" aria-describedby="defaultFormControlHelp"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success">Kirim Komentar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 @endsection
