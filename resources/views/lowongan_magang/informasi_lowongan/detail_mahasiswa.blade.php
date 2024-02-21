@@ -1,7 +1,7 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
 <style>
     .tooltip-inner {
         min-width: 100%;
@@ -28,6 +28,9 @@
 @section('main')
 <div class="row">
     <div class="col-md-9 col-12">
+        <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
+            <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
+        </button>
         <h4 class="fw-bold"><span class="text-muted fw-light">Informasi Mitra / Informasi Lowongan / Informasi Kandidat / </span>Detail Mahasiswa </h4>
     </div>
     <div class="card">
@@ -41,7 +44,7 @@
             <div class="mb-3">
                 <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
                     <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-                        <img src="{{$item->industri->image ?? '\assets\images\no-pictures.png'}}" style="border-radius: 0%; width: 90px;" alt="user image" class="d-block ms-0 mt-4  rounded user-profile-img" />
+                        <img src="{{$img ?? '\assets\images\no-pictures.png'}}" style="border-radius: 0%; width: 90px;" alt="user image" class="d-block ms-0 mt-4  rounded user-profile-img" />
                     </div>
                     <div class="flex-grow-1 mt-0 mt-4">
                         <div class="d-flex align-items-end align-items-sm-start ms-3 flex-md-row flex-column gap-4">
@@ -62,25 +65,14 @@
                 </div>
             </div>
             <h4> Mengapa Saya Harus Di Terima?</h4>
-            <p class="cursor-pointer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the 1500s, when an <span id="dots">...</span><span id="more"> unknown printer took a galley of type and scrambled
-                    it to make a type specimen book. It has survived not only five centuries, but also the leap into
-                    electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                    release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                    publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span> <u onclick="myFunction()" id="myBtn" style="color:#4EA971">Show more</u></p>
+            <p class="cursor-pointer text-justify">{{$prib->headliner}}</p>
             <hr>
 
             <h4>Informasi Pribadi</h4>
             <div class="row">
                 <h5 class="mt-3"> Deskripsi Diri</h5>
                 <div>
-                    <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                        it to make a type specimen book. It has survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.</p>
-                    <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        Show more
-                    </u>
+                    <p class="mb-0 text-justify">{{$prib->deskripsi_diri}}</p>
                 </div>
                 <div class="col-4 mt-3">
                     <ul class="list-unstyled">
@@ -106,11 +98,11 @@
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">IPK:</span>
-                            <span>4.0</span>
+                            <span>{{$prib->ipk}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Eprt:</span>
-                            <span>650</span>
+                            <span>{{$prib->eprt}}</span>
                         </li>
                     </ul>
                 </div>
@@ -118,7 +110,7 @@
                     <ul class="list-unstyled">
                         <li class="mb-3">
                             <span class="fw-semibold me-1">TAK:</span>
-                            <span>9999</span>
+                            <span>{{$prib->TAK}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Email:</span>
@@ -130,11 +122,16 @@
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Tanggal Lahir:</span>
-                            <span>01 Januari 2002</span>
+                            <span>
+                                {{ is_string($prib->tgl_lahir)
+                                ? \Carbon\Carbon::parse($prib->tgl_lahir)->format('d F Y')  
+                                : $prib->tgl_lahir?->format('d F Y')  
+                                }}
+                            </span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Jenis Kelamin:</span>
-                            <span>Perempuan</span>
+                            <span>Laki-laki</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Alamat:</span>
@@ -342,7 +339,11 @@
                 }
             });
         });
+
+        document.getElementById("back").addEventListener("click", () => {
+            history.back();
+        });
     </script>
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+    <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js')}}"></script>
     @endsection
