@@ -246,6 +246,11 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $dokumen = Sertifikat::where('nim', $id)->first();
+            $file = $dokumen->file_sertif;
+            // $file = null;
+            if ($request->file('file_sertif')) {
+                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
+            }
 
             Sertifikat::create([
                 'nim' => $id,
@@ -253,7 +258,7 @@ class ProfileMahasiswaController extends Controller
                 'penerbit' => $request->penerbit,
                 'startdate' => $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',
-                'file_sertif' => $request->file_sertif,
+                'file_sertif' => $file,
                 'link_sertif' => $request->link_sertif,
                 'deskripsi' => $request->deskripsi,
             ]);
@@ -276,8 +281,7 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
-
-            $dokumen->update([
+                   $dokumen->update([
                 'nama_sertif' => $request->sertifikat,
                 'penerbit' => $request->penerbit,
                 'startdate' => Carbon::createFromFormat('Y-m-d', $request->startdate),

@@ -335,8 +335,11 @@
         <div class="tab-pane fade show" id="navs-pills-justified-dokumen-pendukung" role="tabpanel">
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
-              <h5 class="text-secondary">Dokumen Pendukung</h5>
-              <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i>
+              <h5 class="text-secondary pt-2 ps-3 pe-3">Dokumen Pendukung</h5>
+              {{-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i> --}}
+              <i class="menu-icon ps-2 pe-2 pb-2">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen">Tambah</button>
+              </i>
             </div>
             <div class="card-body">
               <ul class="timeline mb-0">
@@ -347,7 +350,7 @@
                     <div class="timeline-header">
                       <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                       <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
+                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                       </div>
                     </div>
@@ -363,10 +366,10 @@
                       </div>
                       <div class="d-flex align-items-start mt-3 mb-3">
                         <div>
-                          <img src="{{ url("app-assets/img/avatars/2.png")}}">
+                          <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}">
                         </div>
                         <div class="me-2 ms-4">
-                          <h6 class="mt-5">{{$dok?->file_sertif??''}}</h6>
+                          <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
                         </div>
                       </div>
                     </div>
@@ -494,6 +497,4 @@
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
 <script src="{{ url('urlapp-assets/js/forms-extras.js')}}"></script>
 <script src="{{ url('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
-
-
 @endsection

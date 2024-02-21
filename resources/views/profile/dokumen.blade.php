@@ -81,7 +81,7 @@
                   <img src="{{ url("app-assets/img/avatars/2.png")}}">
                 </div>
                 <div class="me-2 ms-4">
-                  <h6 class="mt-5">{{$dok?->file_sertif??''}}</h6>
+                  <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
                 </div>
               </div>
             </div>
