@@ -14,7 +14,7 @@
             <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
               @if ($informasiprib?->profile_picture?? '')
                 <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
-                    class="img-fluid rounded mb-3 pt-1 mt-4" name="profile_picture" id="imgPreview">
+                    class="img-fluid rounded mb-3 pt-1 mt-4" name="profile_picture" id="imgPreview"  width="150" height="auto">
               @else
                   <img src="{{ url("app-assets/img/avatars/15.png")}}" alt="user-avatar" 
                   class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />

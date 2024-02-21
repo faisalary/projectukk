@@ -58,11 +58,10 @@ class ProfileMahasiswaController extends Controller
     {
         $this->validate($request, [
             'tgl_lahir' => 'required|before:today',
-            'ipk' => 'required|numeric|min:0|max:4'
         ]);
         try {
             $informasiprib = InformasiPribadi::where('nim', $id)->first();
-            $file = $informasiprib->profile_picture;
+            $file = null;
             if ($request->file('profile_picture')) {
                 $file = Storage::put('profile-image' , $request->file('profile_picture'));
             }
@@ -119,6 +118,10 @@ class ProfileMahasiswaController extends Controller
                 $data1['nim'] = $id;
                 InformasiTamabahan::create($data1);
             }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             
@@ -154,6 +157,10 @@ class ProfileMahasiswaController extends Controller
                 $data2['nim'] = $id;
                 Education::create($data2);
             }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
         } catch (Exception $e) {
             
             return response()->json([
@@ -178,6 +185,10 @@ class ProfileMahasiswaController extends Controller
                 $keahlian['nim'] = $id;
                 Skill::create($keahlian);
             }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
         } catch (Exception $e) {
             
             return response()->json([
@@ -200,6 +211,11 @@ class ProfileMahasiswaController extends Controller
                 'startdate' => $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',
                 'deskripsi' => $request->deskripsi,
+            ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Created!',
             ]);
             
         } catch (Exception $e) {
@@ -229,6 +245,11 @@ class ProfileMahasiswaController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
 
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
@@ -246,8 +267,8 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $dokumen = Sertifikat::where('nim', $id)->first();
-            $file = $dokumen->file_sertif;
-            // $file = null;
+            // $file = $dokumen->file_sertif;
+            $file = null; 
             if ($request->file('file_sertif')) {
                 $file = Storage::put('file_sertif' , $request->file('file_sertif'));
             }
@@ -281,7 +302,7 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
-                   $dokumen->update([
+                $dokumen->update([
                 'nama_sertif' => $request->sertifikat,
                 'penerbit' => $request->penerbit,
                 'startdate' => Carbon::createFromFormat('Y-m-d', $request->startdate),
@@ -293,7 +314,7 @@ class ProfileMahasiswaController extends Controller
         
             return response()->json([
                 'error' => false,
-                'message' => 'Dokumen berhasil diperbarui',
+                'message' => 'Data Successfully Updated!',
             ]);
             
         } catch (Exception $e) {
@@ -307,6 +328,23 @@ class ProfileMahasiswaController extends Controller
         $dokumen = Sertifikat::where('nim', $id)->first();
         $dokumen1 = Sertifikat::where('nim', $id)->get();
         return view('profile.dokumen', compact('dokumen1', 'dokumen'));
+    }
+
+    public function deletedok(Request $request, $id) { 
+        try {
+            $sertifikat = Sertifikat::findOrFail($id);
+            $sertifikat->delete();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Sertifikat berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
     
 }

@@ -100,7 +100,7 @@
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
                   <img src="{{ asset('storage/' . $informasiprib?->profile_picture??'') }}" alt="user-avatar"
-                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
@@ -356,7 +356,7 @@
                     </div>
                     <div class="border-bottom mb-3">
                       <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
-                      <p style="font-size: small;">{{$dok?->startdate??''}} - {{$dok?->enddate??''}}
+                      <p style="font-size: small;">{{$dok?->startdate??''}} sampai {{$dok?->enddate??''}}
                       <div>
                         <p class="mb-0">{{$dok?->deskripsi??''}}</p>
                         <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
@@ -366,7 +366,7 @@
                       </div>
                       <div class="d-flex align-items-start mt-3 mb-3">
                         <div>
-                          <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}">
+                          <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}" width="200" height="auto" alt="img">
                         </div>
                         <div class="me-2 ms-4">
                           <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
