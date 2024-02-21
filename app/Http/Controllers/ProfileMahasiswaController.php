@@ -23,7 +23,7 @@ class ProfileMahasiswaController extends Controller
      */
     public function index($id) { 
         $dokumen = Sertifikat::where('nim', $id)->first();
-        $dokumen1 = Sertifikat::where('nim', $id)->get();
+        $dokumen1 = Sertifikat::where('nim', $id)->orderby('id_sertif', 'asc')->get();
         $pengalaman = Experience::where('nim', $id)->first();
         $skill = Skill::where('nim', $id)->first();  
         $pendidikan = Education::where('nim' ,$id)->first();
@@ -270,7 +270,8 @@ class ProfileMahasiswaController extends Controller
 
         $this->validate($request,[
             'file_sertif'  =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
-            'link_sertif' => 'required|url'
+            'link_sertif' => 'required|url',
+            'deskripsi' => 'required|max:255|string'
         ]);
 
         try {
@@ -299,8 +300,9 @@ class ProfileMahasiswaController extends Controller
         }
     }
     public function detail(Request $request, $id) { 
+        $dokumen = Sertifikat::where('nim', $id)->first();
         $dokumen1 = Sertifikat::where('nim', $id)->get();
-        return view('profile.dokumen', compact('dokumen1'));
+        return view('profile.dokumen', compact('dokumen1', 'dokumen'));
     }
     
 }
