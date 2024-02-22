@@ -6,22 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Experience extends Model
+class Sertif extends Model
 {
     use HasUuids;
 
-    protected $table = 'experience';
+    protected $table = 'sertifikat';
     protected $fillable = [
-        'posisi',
+        'nama_sertif',
         'nim',
-        'jenis',
-        'name_intitutions',
+        'penerbit',
         'startdate',
         'enddate',
+        'file_sertif',
+        'link_sertif',
         'deskripsi',
     ];
     public $timestamps = false;
-    protected $primaryKey = 'id_experience';
+    protected $primaryKey = 'id_sertif';
     protected $keyType = 'string';
 
     public function mahasiswa()

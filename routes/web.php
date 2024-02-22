@@ -383,9 +383,9 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-Route::get('/kegiatan_saya/lamaran_saya', function () {
-    return view('kegiatan_saya.lamaran_saya.index');
-});
+// Route::get('/kegiatan_saya/lamaran_saya', function () {
+//     return view('kegiatan_saya.lamaran_saya.index');
+// });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
@@ -403,9 +403,7 @@ Route::get('/daftar_perusahaan', function () {
 Route::get('/lowongan/magang', function () {
     return view('perusahaan.lowongan');
 });
-Route::get('/konfirmasi/magang', function () {
-    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
-});
+
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
 });
@@ -422,6 +420,7 @@ Route::prefix('/pengajuan/surat')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
 });
+
 Route::get('/logbook', function () {
     return view('logbook.logbook', ['active_menu' => 'logbook']);
 });
@@ -469,6 +468,45 @@ Route::get('/nilai/magang', function () {
     return view('kegiatan_saya.nilai_magang.nilai');
 });
 
+Route::get('/kelola/mahasiswa', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.index');
+});
+
+Route::get('/kelola/mahasiswa/input', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.modal');
+});
+
+Route::get('/view/logbook', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
+});
+
+Route::get('/kelola/mahasiswa/magang', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.index');
+});
+
+Route::get('/kelola/mahasiswa-magang/input', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.modal');
+});
+
+Route::get('/logbook/mahasiswa', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
+});
+
+Route::get('/masters/pembimbing-lapangan-mandiri', function () {
+    return view('masters.pembimbing_lapangan_mandiri.index');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
+
+Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
+    Route::get('/', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
+    Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
+    Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
+    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
+    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
+    Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
+    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
+});

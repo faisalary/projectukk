@@ -56,7 +56,7 @@
   <link rel="stylesheet" href="{{url("app-assets/vendor/libs/dropzone/dropzone.css")}}" />
   <!-- Helpers -->
   <script src="{{url("app-assets/vendor/js/helpers.js")}}"></script>
-  
+
 
   @yield('page_style')
   <style>
@@ -101,7 +101,7 @@
           </div>
 
           <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" style="box-shadow: none;">
-            <div class="container-xxl d-flex h-100" style="width: 50rem;">
+            <div class="container-xxl d-flex h-100" style="width: 62rem;">
               <ul class="menu-inner">
 
                 <!-- Perusahaan -->
@@ -118,32 +118,7 @@
                     </li>
                     <li class="menu-item">
                       <a href="/lowongan/magang" class="menu-link">
-                        <div data-i18n="Lowongan Magang">Lowongan Magang</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <!-- Program Magang -->
-                <li class="menu-item">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div data-i18n="Program Magang">Program Magang</div>
-                  </a>
-
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="/magang_fakultas" class="menu-link">
-                        <div data-i18n="Magang Fakultas">Magang Fakultas</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/informasi/magang" class="menu-link">
-                        <div data-i18n="Informasi Magang">Informasi Magang</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/nilai/magang" class="menu-link">
-                        <div data-i18n="Nilai Magang">Nilai Magang</div>
+                        <div data-i18n="Daftar Lowongan Magang">Daftar Lowongan Magang</div>
                       </a>
                     </li>
                   </ul>
@@ -157,13 +132,33 @@
 
                   <ul class="menu-sub">
                     <li class="menu-item">
+                      <a href="/logbook" class="menu-link">
+                        <div data-i18n="Logbook">Logbook</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
                       <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
-                        <div data-i18n="Lamaran Saya">Lamaran Saya</div>
+                        <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
                       </a>
                     </li>
                     <li class="menu-item">
                       <a href="" class="menu-link">
-                        <div data-i18n="Logbook">Logbook</div>
+                        <div data-i18n="Riwayat Penerimaan Magang">Riwayat Penerimaan Magang</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="" class="menu-link">
+                        <div data-i18n="Status Magang Aktif">Status Magang Aktif</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/nilai/magang" class="menu-link">
+                        <div data-i18n="Nilai Magang">Nilai Magang</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/lowongan-pekerjaan-tersimpan" class="menu-link">
+                        <div data-i18n="Lowongan Tersimpan">Lowongan Tersimpan</div>
                       </a>
                     </li>
                   </ul>
@@ -176,28 +171,53 @@
                   </a>
                   <ul class="menu-sub">
                     <li class="menu-item">
-                      <a href="javascript:void(0)" class="menu-link">
-                        <div data-i18n="Persetujuan Dosen Wali">Persetujuan Dosen Wali</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/konfirmasi/magang" class="menu-link">
-                          <div data-i18n="Konfirmasi Status Penerimaan Magang">Konfirmasi Status Penerimaan Magang</div>
-                        </a>
-                      </li>
-                    <li class="menu-item">
                       <a href="/pengajuan/surat" class="menu-link">
-                        <div data-i18n="Pengajuan Surat Pengantar Magang Mandiri">Pengajuan Surat Pengantar Magang Mandiri</div>
+                        <div data-i18n="Pengajuan Surat Pengantar Magang">Pengajuan Surat Pengantar Magang</div>
                       </a>
                     </li>
-                    <li class="menu-item">
-                      <a href="javascript:void(0)" class="menu-link">
-                        <div data-i18n="Input Dokumen Magang Kerja">Input Dokumen Magang Kerja</div>
-                      </a>
-                    </li>
-
                   </ul>
                 </li>
+
+                <!-- Tentang Kami -->
+                <li class="menu-item">
+                  <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <div data-i18n="Tentang Kami">Tentang Kami</div>
+                  </a>
+
+                  <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="/aboutus/talentern" class="menu-link">
+                        <div data-i18n="Talentern">Talentern</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/aboutus/techno" class="menu-link">
+                        <div data-i18n="Techno Infinity">Techno Infinity</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/aboutus/lkmfit" class="menu-link">
+                        <div data-i18n="Layanan Kerjasama dan Magang Fakultas Ilmu Terapan">Layanan Kerjasama dan Magang Fakultas Ilmu Terapan</div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+
+                <!-- Informasi Magang -->
+                <li class="menu-item">
+                  <a href="/informasi/magang" class="menu-link">
+                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="#footer" class="menu-link">
+                    <u><div data-i18n="Kontak Kami">Kontak Kami</div></u>
+                  </a>
+                </li>
+
+
               </ul>
             </div>
           </aside>
@@ -440,12 +460,6 @@
                     <a class="dropdown-item" href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}">
                       <i class="ti ti-user-circle me-2 ti-sm"></i>
                       <span class="align-middle">Profil Saya</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/lowongan-pekerjaan-tersimpan">
-                      <i class="ti ti-briefcase me-2 ti-sm"></i>
-                      <span class="align-middle">Lowongan Tersimpan</span>
                     </a>
                   </li>
                   <li>
