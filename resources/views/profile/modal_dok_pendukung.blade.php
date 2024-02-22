@@ -67,6 +67,7 @@
         <div class="modal-body border-top mt-3">
           <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/update/' . $dokumen?->id_sertif)}}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
@@ -108,24 +109,3 @@
     </div>
   </div>
 
-  <!-- Modal Delete Dokumen-->
-  <div class="modal fade" id="ModalDelete" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Dokumen Pendukung Ini?</h5>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-            <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/delete/' . $dokumen?->id_sertif)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-            </form>
-          <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-        </div>
-      </div>
-    </div>
-  </div>

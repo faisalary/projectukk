@@ -97,6 +97,7 @@
   </div>
 </div>
 @include('profile.modal_dok_pendukung')
+@include('profile.modal_destroy')
 @endsection
 
 @section('page_script')

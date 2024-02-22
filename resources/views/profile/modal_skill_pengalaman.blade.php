@@ -118,7 +118,7 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/' . $pengalaman->id_experience)}}" method="POST">
+          <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/' . $pengalaman?->id_experience??'')}}" method="POST">
             @csrf
             <div class="row">
               <div class="mb-3 col-md-6">

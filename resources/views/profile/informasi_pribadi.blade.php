@@ -342,51 +342,55 @@
               </i>
             </div>
             <div class="card-body">
-              <ul class="timeline mb-0">
-                @foreach($dokumen1 as $dok)
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
-                      </div>
-                    </div>
-                    <div class="border-bottom mb-3">
-                      <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
-                      <p style="font-size: small;">{{$dok?->startdate??''}} sampai {{$dok?->enddate??''}}
-                      <div>
-                        <p class="mb-0">{{$dok?->deskripsi??''}}</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          Show more
-                        </u>
-                      </div>
-                      <div class="d-flex align-items-start mt-3 mb-3">
+              <div>
+                <ul class="timeline mb-0">
+                  @foreach($dokumen1 as $dok)
+                  <li class="timeline-item timeline-item-transparent">
+                    <span class="timeline-point timeline-point-success"></span>
+                    <div class="timeline-event">
+                      <div class="timeline-header">
+                        <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
-                          <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}" width="200" height="auto" alt="img">
+                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
+                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                         </div>
-                        <div class="me-2 ms-4">
-                          <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
+                      </div>
+                      <div class="border-bottom mb-3">
+                        <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
+                        <p style="font-size: small;">{{$dok?->startdate??''}} sampai {{$dok?->enddate??''}}
+                        <div>
+                          <p class="mb-0">{{$dok?->deskripsi??''}}</p>
+                          <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                          <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                            Show more
+                          </u>
+                        </div>
+                        <div class="d-flex align-items-start mt-3 mb-3">
+                          <div>
+                            <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}" width="200" height="auto" alt="img">
+                          </div>
+                          <div class="me-2 ms-4">
+                            <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                @endforeach
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                </li>
-              </ul>
+                  </li>
+                  @endforeach
+                  <li class="timeline-item timeline-item-transparent">
+                    <span class="timeline-point timeline-point-success"></span>
+                  </li>
+                </ul>
+              </div>
+              <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
+                <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
+                  type="button">Selengkapnya</button>
+              </a>
             </div>
-            <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
-              <button class="btn btn-outline-success btn-lg toggle-button ms-5 me-5 mb-5 mt-2" style="width: 824px" type="button">Selengkapnya</button>
-            </a>
           </div>
         </div>
         @include('profile.modal_dok_pendukung')
+        @include('profile.modal_destroy')
         <!-- </Dokumen Pendukung> -->
       </div>
       <!-- </Content> -->
@@ -495,6 +499,6 @@
 </script>
 <script src="{{ url('assets/js/yearpicker.js') }}"></script>
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
-<script src="{{ url('urlapp-assets/js/forms-extras.js')}}"></script>
+<script src="{{ url('app-assets/js/forms-extras.js')}}"></script>
 <script src="{{ url('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 @endsection
