@@ -25,12 +25,14 @@ class ProfileMahasiswaController extends Controller
         $dokumen = Sertifikat::where('nim', $id)->first();
         $dokumen1 = Sertifikat::where('nim', $id)->orderby('id_sertif', 'asc')->get();
         $pengalaman = Experience::where('nim', $id)->first();
+        $pengalaman1 = Experience::where('nim', $id)->get();
         $skill = Skill::where('nim', $id)->first();  
+        $skill1 = Skill::where('nim', $id)->get();  
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        return view('profile.informasi_pribadi', compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -58,6 +60,7 @@ class ProfileMahasiswaController extends Controller
     {
         $this->validate($request, [
             'tgl_lahir' => 'required|before:today',
+            'ipk' => "required|numeric|min:0|max:4"
         ]);
         try {
             $informasiprib = InformasiPribadi::where('nim', $id)->first();
@@ -256,6 +259,13 @@ class ProfileMahasiswaController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function detailpengalaman(Request $request, $id) { 
+
+        $pengalaman = Experience::where('nim', $id)->get();
+        $skill = Skill::where('nim', $id)->get();
+        return view('profile.pengalaman', compact('pengalaman', 'skill'));
     }
 
     public function deletepengalaman(Request $request, $id) { 

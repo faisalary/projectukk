@@ -11,8 +11,8 @@
             @csrf
             <div class="row">
               <div class="mb-3 col-md-12">
-                <label for="TagifyBasic" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="TagifyBasic" class="form-control" name="skills" value="{{$skill?->skills??''}}" />
+                <label for="Basic" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                <input id="Basic" class="form-control" name="skills" value="{{$skill?->skills??''}}" />
               </div>
             </div>
             <div class="modal-footer p-0">

@@ -99,7 +99,7 @@
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
-                  <img src="{{ asset('storage/' . $informasiprib?->profile_picture??'') }}" alt="user-avatar"
+                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'') }}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
@@ -255,11 +255,11 @@
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
                     <div class="timeline-header">
-                      <h6 class="mb-0">{{$pendidikan?->name_intitutions??''}}</h6>
-                      <div>
+                      <h6 class="mt-0">{{$pendidikan?->name_intitutions??''}}</h6>
+                      {{-- <div> --}}
                         {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i> --}}
                         {{-- <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i> --}}
-                      </div>
+                      {{-- </div> --}}
                     </div>
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
@@ -267,6 +267,9 @@
                       <p style="font-size: small;">{{$pendidikan?->startdate??''}} - {{$pendidikan?->enddate??''}} </p>
                     </div>
                   </div>
+                </li>
+                <li class="timeline-item timeline-item-transparent mb-4">
+                  <span class="timeline-point timeline-point-success"></span>
                 </li>
               </ul>
             </div>
@@ -287,9 +290,11 @@
               </div>
             </div>
             <div class="card-body pb-0 pt-0">
+              @foreach ($skill1 as $s)
               <div>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$skill?->skills??''}}</span>
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$s?->skills??''}}</span>
               </div>
+              @endforeach
               <div class="border-bottom mt-3"></div>
               <div class="d-flex justify-content-between pt-3 pb-3">
                 <h5 class="text-secondary">Pengalaman</h5>
@@ -298,21 +303,22 @@
                 </div>
               </div>
               <ul class="timeline mb-0">
-                <li class="timeline-item timeline-item-transparent">
+                @foreach ($pengalaman1 as $pe)
+                <li class="timeline-item timeline-item-transparent ">
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">{{$pengalaman?->posisi??''}}</h6>
+                    <div class="timeline-header mt-5">
+                      <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">{{$pengalaman?->name_intitutions??''}} - {{$pengalaman?->jenis??''}}</p>
-                      <p style="font-size: small;">{{$pengalaman?->startdate??''}} - {{$pengalaman?->enddate??''}}
+                      <p class="mb-1">{{$pe?->name_intitutions??''}} - {{$pe?->jenis??''}}</p>
+                      <p style="font-size: small;">{{$pe?->startdate??''}} - {{$pe?->enddate??''}}
                       <div>
-                        <p class="mb-0">{{$pengalaman?->deskripsi??''}}</p>
+                        <p class="mb-0">{{$pe?->deskripsi??''}}</p>
                         {{-- <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                           Show more --}}
@@ -321,11 +327,15 @@
                     </div>
                   </div>
                 </li>
-              </ul>
+                @endforeach
+                <li class="timeline-item timeline-item-transparent">
+                  <span class="timeline-point timeline-point-success"></span>
+                </li>
+                <a href="{{url("mahasiswa/profile/pengalaman/detail/". Auth::user()->nim)}}">
+                  <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
+                  type="button">Selengkapnya</button></a>
+                </ul>
             </div>
-            <a href='/detail-informasi-pengalaman'>
-              <button class="btn btn-outline-success btn-lg toggle-button ms-5 me-5 mb-5 mt-2" style="width: 824px" type="button">Selengkapnya</button>
-            </a>
           </div>
         </div>
         @include('profile.modal_skill_pengalaman')
@@ -351,6 +361,7 @@
                       <div class="timeline-header">
                         <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
+                          {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="edit('{{ $dokumen }}')" data-bs-target="#modalEditDokumen" ></i> --}}
                           <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
                           <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                         </div>
@@ -413,29 +424,29 @@
         document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
     }
 
-    // function edit(e) {
-    //   let id = e.attr('data-id');
-    //   var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
-    //   let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
+    function edit(e) {
+      let id = e.attr('dokumen');
+      var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
 
-    //   $.ajax({
-    //       type: 'GET',
-    //       url: url,
-    //       success: function (response) {
-    //           $("#modal-button").html("Update Data");
-    //           $('#modalEditInformasi form').attr('action', action);
-    //           $('#nim').val(response.nim);
-    //           $('#ipk').val(response.ipk);
-    //           $('#eprt').val(response.eprt);
-    //           $('#TAK').val(response.TAK);
-    //           $('#tgl_lahir').val(response.tgl_lahir);
-    //           $('#headliner').val(response.headliner);
-    //           $('#deskripsi_diri').val(response.deskripsi_diri);
-    //           $('#profile_picture').val(response.profile_picture);
-    //           $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
-    //       }
-    //   });
-    // }
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+              $("#modal-button").html("Update Data");
+              $('#modalEditInformasi form').attr('action', action);
+              $('#nim').val(response.nim);
+              $('#ipk').val(response.ipk);
+              $('#eprt').val(response.eprt);
+              $('#TAK').val(response.TAK);
+              $('#tgl_lahir').val(response.tgl_lahir);
+              $('#headliner').val(response.headliner);
+              $('#deskripsi_diri').val(response.deskripsi_diri);
+              $('#profile_picture').val(response.profile_picture);
+              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+          }
+      });
+    }
 
     // function editInformasiTambahan(e) {
     //   let id = e.attr('data-id');
