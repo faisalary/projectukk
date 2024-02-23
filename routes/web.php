@@ -478,6 +478,10 @@ Route::get('/masters/pembimbing-lapangan-mandiri', function () {
     return view('masters.pembimbing_lapangan_mandiri.index');
 });
 
+Route::get('/verifikasi/akun', function () {
+    return view('partials_auth.verifikasi_akun');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
