@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($mandiri as $item)
+                @foreach ($file as $item)
                     @if ($item->nim == $nim)
                         <div class="card-body mt-4">
                             @if ($item->statusapprove == 1)
