@@ -430,17 +430,10 @@
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
                     </li>
-                    <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
-                        <a href="/logbook/mahasiswa" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
-                        </a>
-                    </li>
 
                     <!-- Master Data -->
                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
-                        <a href="/master-data-email" class="menu-link">
+                        <a href="/company/master-email" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data Email">Master Data Email</div>
                         </a>
@@ -915,7 +908,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
-                                                    <small class="text-muted">{{ ucwords($user->email) }}</small>
+                                                    <small class="text-muted">{{ ucwords($user->name) }}</small>
                                                 </div>
                                             </div>
                                         </a>
