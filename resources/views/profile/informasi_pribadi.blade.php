@@ -94,7 +94,7 @@
         <div class="card-body pb-0">
           <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this)" data-bs-target="#modalEditInformasi"></i>
+            <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$informasiprib?->id_infoprib??''}}" data-bs-toggle="modal" onclick="edit($(this))" data-bs-target="#modalEditInformasi"></i>
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
@@ -425,17 +425,18 @@
     }
 
     function edit(e) {
-      let id = e.attr('dokumen');
+      let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
+      console.log(url);
 
       $.ajax({
           type: 'GET',
           url: url,
           success: function (response) {
+            console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
-              $('#nim').val(response.nim);
               $('#ipk').val(response.ipk);
               $('#eprt').val(response.eprt);
               $('#TAK').val(response.TAK);
@@ -443,7 +444,11 @@
               $('#headliner').val(response.headliner);
               $('#deskripsi_diri').val(response.deskripsi_diri);
               $('#profile_picture').val(response.profile_picture);
-              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+              $("#gender1").prop("checked", true);
+              // $("#gender2").prop("checked", true);
+              // $('#modalEditInformasi form #gender').val(response.gender);
+              $('.invalid-feedback').removeClass('d-block');
+              $('.form-control').removeClass('is-invalid');
           }
       });
     }

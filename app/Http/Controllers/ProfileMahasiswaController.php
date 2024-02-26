@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InfoPribRequest;
 use App\Models\Bahasa;
 use App\Models\Education;
 use App\Models\Experience;
@@ -13,6 +14,7 @@ use App\Models\Skill;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,9 +48,9 @@ class ProfileMahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $id)
+    public function edit($id)
     {
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        $mahasiswa = InformasiPribadi::where('id_infoprib', $id)->first();
         return $mahasiswa;
         
     }
@@ -56,19 +58,16 @@ class ProfileMahasiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(InfoPribRequest $request, $id)
     {
-        $this->validate($request, [
-            'tgl_lahir' => 'required|before:today',
-            'ipk' => "required|numeric|min:0|max:4"
-        ]);
+        
         try {
-            $informasiprib = InformasiPribadi::where('nim', $id)->first();
+            $informasiprib = InformasiPribadi::where('id_infoprib', $id)->first();
             $file = null;
             if ($request->file('profile_picture')) {
                 $file = Storage::put('profile-image' , $request->file('profile_picture'));
             }
-
+            
             $data = [
                 'ipk' => $request->ipk,
                 'eprt' => $request->eprt,
@@ -79,17 +78,28 @@ class ProfileMahasiswaController extends Controller
                 'profile_picture' => $file,
                 'gender' => $request->gender,
             ];
+            
+            if ($informasiprib) {                
+                $informasiprib->ipk = $request->ipk;    
+                $informasiprib->eprt = $request->eprt;    
+                $informasiprib->TAK = $request->TAK;    
+                $informasiprib->tgl_lahir = $request->tgl_lahir;    
+                $informasiprib->headliner = $request->headliner;    
+                $informasiprib->deskripsi_diri = $request->deskripsi_diri;    
+                $informasiprib->gender = $request->gender;  
+                $informasiprib->profile_picture = $file;  
+                $informasiprib->save();
 
-            if ($informasiprib) {
-                $informasiprib->update($data);
             } else {
                 $data['nim'] = $id;
                 InformasiPribadi::create($data);
             }
+
             
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
+                'url' => Auth::user()->nim
             ]);
         } catch (Exception $e) {
             return response()->json([
