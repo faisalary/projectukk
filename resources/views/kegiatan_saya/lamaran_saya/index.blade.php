@@ -490,7 +490,7 @@
             <!-- Magang Mandiri -->
 
             <div class="tab-content p-0">
-                <div class="tab-pane fade show active" id="navs-pills-justified-magang-mandiri" role="tabpanel">
+                <div class="tab-pane fade" id="navs-pills-justified-magang-mandiri" role="tabpanel">
                     <div class="row mt-2" style="padding-left: 12px;">
                         <ul class="nav nav-pills mb-3 " role="tablist">
 
@@ -516,85 +516,15 @@
                                 </button>
                             </li>
                         </ul>
-                        @foreach ($mandiri as $item)
-                            @if ($item->nim == $nim)
-                                @if ($item->status == 0)
-                                    <div class="tab-pane fade show" id="navs-pills-justified-tolak-tawaran"
-                                        role="tabpanel">
-                                        <div class="card mt-2">
+
+
+                        <div class="tab-pane fade show" id="navs-pills-justified-mandiriseleksi" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($mandiri as $item)
+                                    @if ($item->nim == $nim)
+                                        @if ($item->statusapprove == 1)
                                             <div class="card-body">
-                                                <div class="text-end mt-3"><span
-                                                        class="badge bg-label-danger">Ditolak</span>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="ps-4">
-                                                        <h4>{{ $item->posisi_magang }}</h4>
-                                                        <p>{{ $item->nama_industri }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <span class="border-end pe-2 me-2"><i
-                                                                class="tf-icons ti ti-map-pin"
-                                                                style="font-size: 18px;"></i>
-                                                            {{ $item->alamat_industri }}</span>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <span class="border-end pe-2 me-2"><i
-                                                                class="tf-icons ti ti-phone-call pe-1"
-                                                                style="font-size: 18px;"></i>{{ $item->nohp }}</span>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <span><i class="tf-icons ti ti-mail pe-1"
-                                                                style="font-size: 18px;"></i>{{ $item->email }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                @elseif($item->status == 1)
-                                    <div class="tab-pane fade show" id="navs-pills-justified-terima-tawaran"
-                                        role="tabpanel">
-                                        <div class="card mt-2">
-
-                                            <div class="card-body">
-                                                <div class="text-end mt-3"><span
-                                                        class="badge bg-label-success">Diterima</span>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="ps-4">
-                                                        <h4>{{ $item->posisi_magang }}</h4>
-                                                        <p>{{ $item->nama_industri }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <span class="border-end pe-2 me-2"><i
-                                                                class="tf-icons ti ti-map-pin"
-                                                                style="font-size: 18px;"></i>
-                                                            {{ $item->alamat_industri }}</span>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <span class="border-end pe-2 me-2"><i
-                                                                class="tf-icons ti ti-phone-call pe-1"
-                                                                style="font-size: 18px;"></i>{{ $item->nohp }}</span>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <span><i class="tf-icons ti ti-mail pe-1"
-                                                                style="font-size: 18px;"></i>{{ $item->email }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="tab-pane fade show" id="navs-pills-justified-mandiriseleksi"
-                                        role="tabpanel">
-                                        <div class="card mt-2">
-
-                                            <div class="card-body">
                                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                                     Lakukan konfirmasi penerimaan segera!
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
@@ -633,46 +563,122 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
 
-                                        </div>
-                                    </div>
-                                @endif
-                            @endif
-                        @endforeach
+                        <div class="tab-pane fade" id="navs-pills-justified-terima-tawaran" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($file as $item)
+                                    @if ($item->PengajuanMandiri->nim == $nim)
+                                        @if ($item->status == 1)
+                                            <div class="card-body">
+                                                <div class="text-end mt-3"><span
+                                                        class="badge bg-label-success">Diterima</span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="ps-4">
+                                                        <h4>{{ $item->PengajuanMandiri->posisi_magang }}</h4>
+                                                        <p>{{ $item->PengajuanMandiri->nama_industri }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <span class="border-end pe-2 me-2"><i
+                                                                class="tf-icons ti ti-map-pin"
+                                                                style="font-size: 18px;"></i>
+                                                            {{ $item->PengajuanMandiri->alamat_industri }}</span>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <span class="border-end pe-2 me-2"><i
+                                                                class="tf-icons ti ti-phone-call pe-1"
+                                                                style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->nohp }}</span>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <span><i class="tf-icons ti ti-mail pe-1"
+                                                                style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="navs-pills-justified-tolak-tawaran" role="tabpanel">
+                            <div class="card mt-2">
+                                @foreach ($file as $item)
+                                    @if ($item->PengajuanMandiri->nim == $nim)
+                                        @if ($item->status == 2)
+                                            <div class="card-body">
+                                                <div class="text-end mt-3"><span
+                                                        class="badge bg-label-danger">Ditolak</span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="ps-4">
+                                                        <h4>{{ $item->PengajuanMandiri->posisi_magang }}</h4>
+                                                        <p>{{ $item->PengajuanMandiri->nama_industri }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <span class="border-end pe-2 me-2"><i
+                                                                class="tf-icons ti ti-map-pin"
+                                                                style="font-size: 18px;"></i>
+                                                            {{ $item->PengajuanMandiri->alamat_industri }}</span>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <span class="border-end pe-2 me-2"><i
+                                                                class="tf-icons ti ti-phone-call pe-1"
+                                                                style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->nohp }}</span>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <span><i class="tf-icons ti ti-mail pe-1"
+                                                                style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
-        @include('kegiatan_saya.lamaran_saya.modal')
-    @endsection
+                @include('kegiatan_saya.lamaran_saya.modal')
+            @endsection
 
-    @section('page_script')
-        <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-        <script src="../../app-assets/js/forms-extras.js"></script>
-        <script>
-            function terima(e) {
-                let id = e.attr('data-id');
-                let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
-                var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    success: function(response) {
-                        console.log(response);
-                        $('#modalDiterima form').attr('action', action);
-                        $('#tglpeng_').val(response.tglpeng).trigger('change');
-                        $('#nama_industri').val(response.nama_industri);
-                        $('#posisi_magang').val(response.posisi_magang);
-                        $('#date_').val(response.startdate).trigger('change');
-                        $('#date').val(response.enddate).trigger('change');
+            @section('page_script')
+                <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+                <script src="../../app-assets/js/forms-extras.js"></script>
+                <script>
+                    function terima(e) {
+                        let id = e.attr('data-id');
+                        let action = `{{ url('kegiatan-saya/lamaran-saya/update/') }}/${id}`;
+                        var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
+                        $.ajax({
+                            type: 'GET',
+                            url: url,
+                            success: function(response) {
+                                console.log(response);
+                                $('#modalDiterima form').attr('action', action);
+                                $('#tglpeng_').val(response.tglpeng).trigger('change');
+                                $('#nama_industri').val(response.nama_industri);
+                                $('#posisi_magang').val(response.posisi_magang);
+                                $('#date_').val(response.startdate).trigger('change');
+                                $('#date').val(response.enddate).trigger('change');
 
-                        $('#modalDiterima').modal('show');
+                                $('#modalDiterima').modal('show');
+                            }
+                        });
                     }
-                });
-            }
-        </script>
-        {{-- <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+                </script>
+                {{-- <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
             <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
-        <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-        <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    @endsection
+                <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+                <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+            @endsection
