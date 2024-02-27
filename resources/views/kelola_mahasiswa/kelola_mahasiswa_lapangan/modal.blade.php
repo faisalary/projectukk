@@ -17,7 +17,7 @@
 @section('main')
 <div class="row mb-2">
     <div class="">
-        <a href="/kelola/mahasiswa" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <a href="/kelola/mahasiswa/magang" type="button" class="btn btn-outline-success mb-3 waves-effect">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
@@ -42,8 +42,8 @@
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width:300px;">ASPEK PENILAIAN</th>
-                                <th style="min-width:300px;">DESKRIPSI ASPEK PENILAIAN</th>
+                                <th style="min-width:280px;">ASPEK PENILAIAN</th>
+                                <th style="min-width:320px;">DESKRIPSI ASPEK PENILAIAN</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
                                 <!-- <th style="min-width:100px;">BOBOT NILAI</th> -->
                                 <th style="min-width:150px;">NILAI MAGANG</th>
@@ -92,19 +92,28 @@
 @section('page_script')
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
+
 <script>
     var jsonData = [{
             "nomor": "1",
-            "aspek_penilain": "Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li><li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li> ",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
+            "aspek_penilain": "Komunikasi, Adaptasi, Kerjasama",
+            "deskripsi_aspek_penilain": "Penilaian dalam magang mencakup kemampuan berkomunikasi dengan jelas, beradaptasi dengan perubahan, dan bekerja sama dalam tim untuk mencapai tujuan bersama.",
             "nilai_max": "0-70",
             // "bobot_nilai": "70%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
         {
             "nomor": "2",
-            "aspek_penilain": "Presentasi dan Tanya Jawab <li>Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang</li> <li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
+            "aspek_penilain": "Disiplin dan Tanggung Jawab dalam pengerjaan tugas",
+            "deskripsi_aspek_penilain": "Kemampuan untuk mengikuti aturan dan tenggat waktu dengan konsisten serta menyelesaikan tugas sesuai standar yang ditetapkan.",
+            "nilai_max": "0-30",
+            // "bobot_nilai": "30%",
+            "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
+        },
+        {
+            "nomor": "2",
+            "aspek_penilain": "Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang",
+            "deskripsi_aspek_penilain": "Mahasiswa memiliki kemampuan yang sesuai dengan posisi magang yang ditawarkan, memenuhi persyaratan yang diperlukan untuk berhasil dalam peran tersebut.",
             "nilai_max": "0-30",
             // "bobot_nilai": "30%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
@@ -137,6 +146,8 @@
             }
         ]
     });
+
+    
 </script>
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>

@@ -321,6 +321,11 @@
                                     <div data-i18n="Dokumen Persyaratan">Dokumen Persyaratan</div>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="/masters/pembimbing-lapangan-mandiri" class="menu-link">
+                                    <div data-i18n="Master Pembimbing Lapangan">Master Pembimbing Lapangan</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -531,9 +536,9 @@
                     </li>
                     {{-- Kelola Mahasiswa --}}
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="/kelola/mahasiswa/magang" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
-                            <div data-i18n="Kelola Pengguna">Kelola Pengguna</div>
+                            <div data-i18n="Kelola Mahasiswa">Kelola Mahasiswa</div>
                         </a>
                     </li>
                 </ul> -->

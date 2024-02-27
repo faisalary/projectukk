@@ -453,11 +453,29 @@ Route::get('/nilai/magang', function () {
 Route::get('/kelola/mahasiswa', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.index');
 });
+
 Route::get('/kelola/mahasiswa/input', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.modal');
 });
+
 Route::get('/view/logbook', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
+});
+
+Route::get('/kelola/mahasiswa/magang', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.index');
+});
+
+Route::get('/kelola/mahasiswa-magang/input', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.modal');
+});
+
+Route::get('/logbook/mahasiswa', function () {
+    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
+});
+
+Route::get('/masters/pembimbing-lapangan-mandiri', function () {
+    return view('masters.pembimbing_lapangan_mandiri.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
