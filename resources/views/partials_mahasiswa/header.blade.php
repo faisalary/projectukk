@@ -137,7 +137,7 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                      <a href="/kegiatan-saya/lamaran-saya" class="menu-link">
                         <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
                       </a>
                     </li>
