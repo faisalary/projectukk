@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SeleksiRequest;
+use Exception;
+use Carbon\Carbon;
+use App\Models\Skill;
+use App\Models\Sertif;
+use App\Models\Seleksi;
+use App\Models\Education;
+use App\Models\Mahasiswa;
+use App\Models\MhsMagang;
+use App\Models\Experience;
+use Illuminate\Http\Request;
+use App\Models\StatusSeleksi;
+use Illuminate\Routing\Route;
+use PhpParser\Node\Expr\New_;
 use App\Models\email_template;
 use App\Models\LowonganMagang;
-use App\Models\Mahasiswa;
-use Exception;
-use App\Models\Seleksi;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
-use App\Models\MhsMagang;
-use App\Models\StatusSeleksi;
-use Carbon\Carbon;
-use Illuminate\Routing\Route;
+use App\Models\InformasiTamabahan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use PhpParser\Node\Expr\New_;
+use App\Http\Requests\SeleksiRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class JadwalSeleksiController extends Controller
 {
@@ -124,7 +130,7 @@ class JadwalSeleksiController extends Controller
                 </div>";
             })
             ->addColumn('action', function ($seleksi) {
-                $btn = "<a href='" . url('jadwal-seleksi/lanjutan/detail/{id}') . "' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                $btn = "<a href='detail/{$seleksi->id_status_seleksi}' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
                 return $btn;
             })
             ->rawColumns(['status_seleksi', 'action', 'progress', 'start_date',])
@@ -133,10 +139,23 @@ class JadwalSeleksiController extends Controller
             ->make(true);
     }
 
-    public function detail()
+    public function detail(Request $request, $id)
     {
-        $lowongan = LowonganMagang::all();
-        return view('company.jadwal_seleksi.detail_mahasiswa', compact('lowongan'));
+        $seleksi = StatusSeleksi::where('id_status_seleksi',$id)->first();
+        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $seleksi->id_pendaftaran)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
+        $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
+        $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
+        $infoTambah = InformasiTamabahan::where('nim', $pendaftar->nim)->get();
+        $education = Education::where('nim', $pendaftar->nim)->first();
+        $experience = Experience::where('nim', $pendaftar->nim)->get();
+        $skills = Skill::where('nim', $pendaftar->nim)->get();
+        $sertif = Sertif::where('nim', $pendaftar->nim)->get();
+        $picture = $prib->profile_picture ? url('assets/images/' . $prib->profile_picture) : url('\assets\images\no-pictures.png');
+        $img = $picture . '.png';
+
+        // dd($img);
+
+        return view('company.jadwal_seleksi.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif', 'infoTambah'));
     }
 
     public function edit($id)

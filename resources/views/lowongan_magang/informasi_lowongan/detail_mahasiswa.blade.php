@@ -52,27 +52,28 @@
                                 <h1 class="mb-2">{{$pendaftar->mahasiswa->namamhs}}</h1>
                                 <p class="text" style="font-size: 20px">{{$pendaftar->lowonganMagang->intern_position }}</p>
                             </div>
-                            <div class="ms-auto">
-                                <button class="rounded-circle btn-label-success btn-icon btn-sm waves-effect" style="min-width: 40px; height:40px;">
-                                    <i class="ti ti-message" style="font-size: 25px;"></i>
-                                </button>
-                                <button class="rounded-circle btn-label-success btn-icon btn-sm waves-effect me-2" style="min-width: 40px; height:40px;">
-                                    <i class="ti ti-phone-call" style="font-size: 25px;"></i>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <h4> Mengapa Saya Harus Di Terima?</h4>
-            <p class="cursor-pointer text-justify">{{$prib->headliner}}</p>
+            <p class="mb-0 text-justify">
+                <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($prib->headliner ?? '-', 100) }}</span>
+
+                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$prib->headliner ?? '-'}}">Show More</u>
+            </p>
             <hr>
 
+            <!-- Informasi Pribadi -->
             <h4>Informasi Pribadi</h4>
             <div class="row">
                 <h5 class="mt-3"> Deskripsi Diri</h5>
                 <div>
-                    <p class="mb-0 text-justify">{{$prib->deskripsi_diri}}</p>
+                    <p class="mb-0 text-justify">
+                        <span id="desk" class="deskriipsi_diri">{{ \Illuminate\Support\Str::limit($prib->deskripsi_diri ?? '-', 100) }}</span>
+
+                        <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$prib->deskripsi_diri ?? '-'}}">Show More</u>
+                    </p>
                 </div>
                 <div class="col-4 mt-3">
                     <ul class="list-unstyled">
@@ -98,11 +99,11 @@
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">IPK:</span>
-                            <span>{{$prib->ipk}}</span>
+                            <span>{{$prib->ipk ?? '-'}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Eprt:</span>
-                            <span>{{$prib->eprt}}</span>
+                            <span>{{$prib->eprt ?? '-'}}</span>
                         </li>
                     </ul>
                 </div>
@@ -110,11 +111,11 @@
                     <ul class="list-unstyled">
                         <li class="mb-3">
                             <span class="fw-semibold me-1">TAK:</span>
-                            <span>{{$prib->TAK}}</span>
+                            <span>{{$prib->TAK ?? '-'}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Email:</span>
-                            <span>{{$pendaftar->mahasiswa->emailmhs}}</span>
+                            <a class="cursor-pointer link-primary link-offset-2" href="mailto:{{$pendaftar->mahasiswa->emailmhs}}" target="_blank">{{$pendaftar->mahasiswa->emailmhs}}</a>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">No Telp:</span>
@@ -123,15 +124,15 @@
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Tanggal Lahir:</span>
                             <span>
-                                {{ is_string($prib->tgl_lahir)
-                                ? \Carbon\Carbon::parse($prib->tgl_lahir)->format('d F Y')  
+                                {{ is_string($prib->tgl_lahir ?? '')
+                                ? \Carbon\Carbon::parse($prib->tgl_lahir ?? '')->format('d F Y')  
                                 : $prib->tgl_lahir?->format('d F Y')  
                                 }}
                             </span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Jenis Kelamin:</span>
-                            <span>{{$prib->gender}}</span>
+                            <span>{{$prib->gender ?? '-'}}</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-semibold me-1">Alamat:</span>
@@ -143,144 +144,148 @@
             </div>
             <hr>
 
+            <!-- Pendidikan / Education -->
             <h4>Pendidikan</h4>
-            <div class="card-body pb-0">
+            <div class="card-body">
                 <ul class="timeline ms-1 mb-0 mt-3">
                     <li class="timeline-item timeline-item-transparent">
                         <span class="timeline-point timeline-point-success"></span>
-                        <div class="timeline-event">
-                            <h5 class="mb-2">{{$education->name_intitutions}}</h5>
-                            <p class="mb-2">{{$education->tingkat}}</p>
-                            <p class="mb-2">NILAI {{$education->nilai}}</p>
-                            <small>{{ is_string($education->startdate)
-                                ? \Carbon\Carbon::parse($education->startdate)->format('d F Y')  
+                        <div>
+                            <h5 class="mb-2">{{$education->name_intitutions ?? '-'}}</h5>
+                            <p class="mb-2">{{$education->tingkat ?? '-'}}</p>
+                            <p class="mb-2">Nilai : {{$education->nilai ?? '-'}}</p>
+                            <small>{{ is_string($education->startdate ?? '')
+                                ? \Carbon\Carbon::parse($education->startdate ?? '')->format('d F Y')  
                                 : $education->startdate?->format('d F Y')  
-                                }} - {{ is_string($education->enddate)
-                                ? \Carbon\Carbon::parse($education->enddate)->format('d F Y')  
+                                }} - {{ is_string($education->enddate ?? '')
+                                ? \Carbon\Carbon::parse($education->enddate ?? '')->format('d F Y')  
                                 : $education->enddate?->format('d F Y')  
                                 }}</small>
                             <div class="border-bottom mt-4"></div>
                         </div>
                     </li>
-                    <span class="timeline-point timeline-point-success"></span>
+                    <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-success"></span>
+                    </li>
                 </ul>
             </div>
             <hr>
 
+            <!-- Pengalaman / Experience -->
             <h4>Pengalaman</h4>
-            <div class="card-body pb-0">
+            <div class="card-body ">
                 <ul class="timeline ms-1 mb-0 mt-3">
+                    @foreach($experience as $data)
                     <li class="timeline-item timeline-item-transparent">
                         <span class="timeline-point timeline-point-success"></span>
                         <div class="timeline-event">
-                            <h5 class="mb-2">UI/UX Designer</h5>
-                            <p class="mb-2">Techno Infinty - Intership</p>
-                            <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                            <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                                it to </p>
-                            <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                Show more
-                            </u>
+                            <h5 class="mb-2">{{$data->posisi}}</h5>
+                            <p class="mb-2">{{$data->name_intitutions}} - {{$data->jenis}}</p>
+                            <p style="font-size: small;">{{ is_string($data->startdate)
+                                ? \Carbon\Carbon::parse($data->startdate)->format('d F Y')  
+                                : $data->startdate?->format('d F Y')
+                                }} - {{ is_string($data->enddate)
+                                ? \Carbon\Carbon::parse($data->enddate)->format('d F Y')  
+                                : $data->enddate?->format('d F Y')
+                                }}</p>
+                            <p class="mb-0 text-justify">
+                                <span id="experience" class="pengalaman">{{ \Illuminate\Support\Str::limit($data->deskripsi, 100) }}</span>
+
+                                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$data->deskripsi}}">Show More</u>
+                            </p>
                             <div class="border-bottom mt-4"></div>
                         </div>
                     </li>
+                    @endforeach
                     <li class="timeline-item timeline-item-transparent">
                         <span class="timeline-point timeline-point-success"></span>
-                        <div class="timeline-event">
-                            <h5 class="mb-2">UI/UX Designer</h5>
-                            <p class="mb-2">Techno Infinty - Intership</p>
-                            <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                            <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                                it to </p>
-                            <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                Show more
-                            </u>
-                            <div class="border-bottom mt-4"></div>
-                        </div>
-                    </li>
-                    <li class="timeline-item timeline-item-transparent" style="border-left: 0px solid">
-                        <span class="timeline-point timeline-point-success"></span>
-                        <div class="timeline-event">
-                            <h5 class="mb-2">UI/UX Designer</h5>
-                            <p class="mb-2">Techno Infinty - Intership</p>
-                            <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                            <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                                it to </p>
-                            <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                Show more
-                            </u>
-                        </div>
                     </li>
                 </ul>
             </div>
             <hr>
 
+            <!-- Skill / Keahlian -->
             <h4>Keahlian</h4>
             <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 10px  !important">
-                <span class="badge rounded-pill bg-success bg-glow">Figma </span>
-                <span class="badge rounded-pill bg-success bg-glow">Adobe XD</span>
-                <span class="badge rounded-pill bg-success bg-glow">Figma</span>
-                <span class="badge rounded-pill bg-success bg-glow">Adobe XD</span>
+                @foreach($skills as $item)
+                @if($item->skills == null)
+                <span></span>
+                @else
+                <span class="badge rounded-pill bg-success bg-glow">{{ $item->skills }}</span>
+                @endif
+                @endforeach
             </div>
             <hr>
 
+            <!-- Dokumen Pendukung -->
             <h4>Dokumen Pendukung</h4>
-            <h5 class="mb-2">Desain UI/UX Design</h5>
-            <p class="mb-2">Coursera</p>
-            <p class="mb-2">Juli 2023-Juli 2030</p>
-            <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                it to </p>
-            <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                Show more
-            </u>
+            @foreach($sertif as $doc)
+            <h5 class="mb-2 bold">{{$doc->nama_sertif}}</h5>
+            <p class="mb-2">{{$doc->penerbit}}</p>
+            <p class="mb-2">{{ is_string($doc->startdate)
+                                ? \Carbon\Carbon::parse($doc->startdate)->format('d F Y')  
+                                : $doc->startdate?->format('d F Y')
+                                }} - {{ is_string($doc->enddate)
+                                ? \Carbon\Carbon::parse($doc->enddate)->format('d F Y')  
+                                : $doc->enddate?->format('d F Y')
+                                }}</p>
+            <p class="mb-0 text-justify">
+                <span id="experience" class="pengalaman">{{ \Illuminate\Support\Str::limit($doc->deskripsi, 100) }}</span>
+
+                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$doc->deskripsi}}">Show More</u>
+            </p>
             <br>
-            <u style="color: #0099FF">UI/UX Design.pdf</u>
-            <div class="border-bottom mt-4"></div>
-            <h5 class="mb-2 mt-4">Desain UI/UX Design</h5>
-            <p class="mb-2">Coursera</p>
-            <p class="mb-2">Juli 2023-Juli 2030</p>
-            <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, unknown printer took a galley of type and scrambled
-                it to </p>
-            <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-            <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                Show more
-            </u>
-            <br>
-            <u style="color: #0099FF">UI/UX Design.pdf</u>
+            @if($doc->link_sertif == null)
+            <a class="cursor-pointer link-primary link-offset-2"></a>
+            @else
+            <a class="cursor-pointer link-primary link-offset-2" href="{{$doc->link_sertif}}" target="_blank">Lihat Dokumen</a>
+            @endif
+            @endforeach
+
             <div class="border-bottom mt-4"></div>
 
+            <!-- Informasi Tambahan -->
             <h4 class="mt-3">Informasi Tambahan</h4>
             <div class="row">
+                <div class="col-6">
+                    <ul class="list-unstyled">
+                        @foreach($infoTambah as $item)
+                        @if($item->sosmed == null && $item->url_sosmed == null)
+                        <span class="fw-semibold me-1" style="font-size: 18px"></span>
+                        @else
+                        <li class="mb-3">
+                            <span class="fw-semibold me-1" style="font-size: 18px">{{$item->sosmed}}:</span>
+                            <a class="cursor-pointer link-primary link-offset-2" style="font-size: 18px;" href="{{$item->url_sosmed}}" target="_blank">
+                                {{$item->url_sosmed}}
+                            </a>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
+                </div>
                 <div class="col-4">
                     <ul class="list-unstyled">
                         <li class="mb-3">
-                            <span class="fw-semibold me-1" style="font-size: 18px">Instagram:</span>
-                            <span style="color: #0099FF; font-size: 17px;">jenyrubyjane</span>
-                        </li>
-                        <li class="mb-3">
-                            <span class="fw-semibold me-1" style="font-size: 18px">Linkedin:</span>
-                            <span style="color: #0099FF; font-size: 17px;">jenyrubyjane</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-8">
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
                             <span class="fw-semibold me-1" style="font-size: 18px">Lokasi kerja yang di harapkan:</span>
-                            <span style="font-size: 17px;">Bandung</span>
+                            @foreach($infoTambah as $item)
+                            @if($item->lok_kerja == null)
+                            <span class="fw-semibold me-1" style="font-size: 18px"></span>
+                            @else
+                            <span style="font-size: 17px;">{{$item->lok_kerja}}</span>
+                            @endif
+                            @endforeach
                         </li>
                 </div>
             </div>
             <span class="fw-semibold me-1" style="font-size: 18px">Bahasa</span>
             <div class="d-flex mt-3" style="column-gap: 10px; padding-bottom: 10px  !important">
-                <span class="badge rounded-pill bg-success bg-glow">Mandarin </span>
-                <span class="badge rounded-pill bg-success bg-glow">English</span>
-                <span class="badge rounded-pill bg-success bg-glow">Japanese</span>
-                <span class="badge rounded-pill bg-success bg-glow">Arabic</span>
+                @foreach($infoTambah as $item)
+                @if($item->bahasa == null)
+                <span class="fw-semibold me-1" style="font-size: 18px"></span>
+                @else
+                <span class="badge rounded-pill bg-success bg-glow">{{ $item->bahasa->bahasa}} </span>
+                @endif
+                @endforeach
             </div>
         </div>
 
@@ -288,8 +293,8 @@
     @endsection
 
     @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
+    <script src="{{asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
+    <script src="{{asset('app-assets/js/forms-extras.js')}}"></script>
 
     <script>
         jQuery(function() {
@@ -327,6 +332,29 @@
                 }
             });
         });
+
+        const buttons = document.querySelectorAll('.show-btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', showMore);
+        });
+
+        function showMore() {
+            var content = this.previousElementSibling;
+            var isShowMore = this.innerText === "Show More";
+            var deskripsi = $(this).attr("data-deskripsi");
+
+            var lessContent = deskripsi.substring(0, 100) + "...";
+            // console.log(deskripsi);
+
+            if (isShowMore) {
+                content.innerHTML = deskripsi;
+                this.innerText = "Show Less";
+            } else {
+                content.innerHTML = lessContent;
+                this.innerText = "Show More";
+            }
+        }
 
         document.getElementById("back").addEventListener("click", () => {
             history.back();

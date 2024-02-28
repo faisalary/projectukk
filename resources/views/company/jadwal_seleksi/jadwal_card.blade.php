@@ -4,7 +4,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 90px;" src="{{ $item->industri->image ?? '\assets\images\no-pictures.png' }}" alt="Logo">
+                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 90px;" src="{{ $img ?? '\assets\images\no-pictures.png' }}" alt="Logo">
                     </figure>
                 </div>
                 <div class="col-10 d-flex justify-content-between">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 1</small>
-                            <h5 class="mb-0">{{ $item->namatahap_seleksi == 'tahap1' ?? '0' }}</h5>
+                            <h5 class="mb-0">{{ $item->tahap1 ?? '0'  }}</h5>
                         </div>
                     </div>
                 </div>
@@ -49,9 +49,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 1</small>
-                            @foreach ($seleksi as $data)
-                            <h5 class="mb-0">{{ $data->namatahap_seleksi ?? '0' }}</h5>
-                            @endforeach
+                            <h5 class="mb-0">{{ $item->tahap1 ?? '0'  }}</h5>
                         </div>
                     </div>
                 </div>
@@ -62,7 +60,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 2</small>
-                            <h5 class="mb-0">{{ $item->penawaran ?? '0' }}</h5>
+                            <h5 class="mb-0">{{ $item->tahap2 ?? '0' }}</h5>
                         </div>
                     </div>
                 </div>
@@ -74,9 +72,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 1</small>
-                            @foreach ($seleksi as $data)
-                            <h5 class="mb-0">{{ $data->tahap1 ?? '0' }}</h5>
-                            @endforeach
+                            <h5 class="mb-0">{{ $item->tahap1 ?? '0' }}</h5>
                         </div>
                     </div>
                 </div>
@@ -87,7 +83,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 2</small>
-                            <h5 class="mb-0">{{ $item->penawaran ?? '0' }}</h5>
+                            <h5 class="mb-0">{{ $item->tahap2 ?? '0' }}</h5>
                         </div>
                     </div>
                 </div>
@@ -98,7 +94,7 @@
                         </div>
                         <div class="card-info">
                             <small>Seleksi Tahap 3</small>
-                            <h5 class="mb-0">{{ $item->diterima ?? '0' }}</h5>
+                            <h5 class="mb-0">{{ $item->tahap3 ?? '0' }}</h5>
                         </div>
                     </div>
                 </div>
