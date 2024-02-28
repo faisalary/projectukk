@@ -920,7 +920,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
-                                                    <small class="text-muted">{{ ucwords($user->email) }}</small>
+                                                    <small class="text-muted">{{ ($user->email) }}</small>
                                                 </div>
                                             </div>
                                         </a>

@@ -34,7 +34,8 @@ class ProfileMahasiswaController extends Controller
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        return view('profile.informasi_pribadi', 
+        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**

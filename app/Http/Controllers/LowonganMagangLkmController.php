@@ -10,6 +10,7 @@ use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -75,8 +76,7 @@ class LowonganMagangLkmController extends Controller
 
                 $btn = "<a href='" . url('kelola/lowongan/lkm/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
                  <a href='" . url('kelola/lowongan/lkm/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                 <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-
+                 <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
@@ -90,16 +90,6 @@ class LowonganMagangLkmController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, $id)
-    {
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
-        $jenismagang = JenisMagang::all();
-        $lokasi = Lokasi::all();
-        $prodi = ProgramStudi::all();
-        $fakultas = Fakultas::all();
-        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan', 'seleksi', 'prodi', 'fakultas'));
-    }
 
     public function detail($id)
     {
@@ -170,13 +160,22 @@ class LowonganMagangLkmController extends Controller
         }
     }
 
-
+    public function edit(Request $request, $id)
+    {
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
+        $jenismagang = JenisMagang::all();
+        $lokasi = Lokasi::all();
+        $prodi = ProgramStudi::all();
+        $fakultas = Fakultas::all();
+        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lokasi', 'lowongan', 'seleksi', 'prodi', 'fakultas'));
+    }
+    
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         DB::beginTransaction();
         try {
             $lokasi = Lokasi::where('id_lokasi', $id)->first();
@@ -222,7 +221,7 @@ class LowonganMagangLkmController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'lowongan magang successfully Updated!',
-                'url' => url('/kelola/lowongan')
+                'url' => url('/kelola/lowongan/lkm/')
 
             ]);
         } catch (Exception $e) {
