@@ -2,8 +2,8 @@
 
 @section('page_style')
 
-<link rel="stylesheet" href="{{ asset('assets/css/yearpicker.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/monthpicker.css') }}">
+<link rel="stylesheet" href="{{ url('assets/css/yearpicker.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url('assets/css/monthpicker.css') }}">
 <link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
 
 <style>
@@ -94,13 +94,13 @@
         <div class="card-body pb-0">
           <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" onclick="edit($(this)" data-bs-target="#modalEditInformasi"></i>
+            <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$informasiprib?->id_infoprib??''}}" data-bs-toggle="modal" onclick="edit($(this))" data-bs-target="#modalEditInformasi"></i>
           </div>
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
-                  <img src="{{ asset('storage/' . $informasiprib?->profile_picture??'') }}" alt="user-avatar"
-                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'') }}" alt="user-avatar"
+                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
@@ -173,8 +173,9 @@
           </div>
         </div>
       </div>
-      <!-- /User Profile -->
     </div>
+    @include('profile.modal_informasi_pribadi')
+
     <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
       <!-- User Pills -->
       <ul class="nav nav-pills mb-3 " role="tablist">
@@ -203,7 +204,6 @@
 
       <!-- Content -->
       <div class="tab-content p-0">
-
         <!-- Informasi Tambahan -->
         <div class="tab-pane fade show active" id="navs-pills-justified-informasi-tambahan" role="tabpanel">
           <div class="card mb-4">
@@ -239,6 +239,7 @@
             </div>
           </div>
         </div>
+        @include('profile.modal_informasi_tambahan')
         <!-- /Informasi Tambahan -->
 
         <!-- <pendidikan> -->
@@ -246,7 +247,7 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Pendidikan</h5>
-              <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPendidikan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalTambahPendidikan"></i>
             </div>
             <div class="card-body pb-0">
               <ul class="timeline mb-0">
@@ -254,55 +255,27 @@
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
                     <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
-                      </div>
+                      <h6 class="mt-0">{{$pendidikan?->name_intitutions??''}}</h6>
+                      {{-- <div> --}}
+                        {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i> --}}
+                        {{-- <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i> --}}
+                      {{-- </div> --}}
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">Magister Management</p>
-                      <p class="mb-1">IPK 3.89/4.00 </p>
-                      <p style="font-size: small;">Juli 2022 - Juli 2024</p>
+                      <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
+                      <p class="mb-1">Nilai Akhir : {{$pendidikan?->nilai??''}}</p>
+                      <p style="font-size: small;">{{$pendidikan?->startdate??''}} - {{$pendidikan?->enddate??''}} </p>
                     </div>
                   </div>
                 </li>
-                <li class="timeline-item timeline-item-transparent">
+                <li class="timeline-item timeline-item-transparent mb-4">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
-                      </div>
-                    </div>
-                    <div class="border-bottom mb-3">
-                      <p class="mb-1">Magister Management</p>
-                      <p class="mb-1">IPK 3.89/4.00 </p>
-                      <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                    </div>
-                  </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-0">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">University Of Melbourne</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Magister Management</p>
-                    <p class="mb-1">IPK 3.89/4.00 </p>
-                    <p style="font-size: small;">Juli 2022 - Juli 2024</p>
-                  </div>
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        @include('profile.modal_pendidikan')
         <!-- </pendidikan> -->
 
         <!-- <Keahlian&Pengalaman> -->
@@ -311,18 +284,17 @@
             <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Keahlian</h5>
               <div class="text-end">
-                <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
+                <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
                 <br>
-                <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i>
+                {{-- <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i> --}}
               </div>
             </div>
             <div class="card-body pb-0 pt-0">
+              @foreach ($skill1 as $s)
               <div>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$s?->skills??''}}</span>
               </div>
+              @endforeach
               <div class="border-bottom mt-3"></div>
               <div class="d-flex justify-content-between pt-3 pb-3">
                 <h5 class="text-secondary">Pengalaman</h5>
@@ -331,774 +303,111 @@
                 </div>
               </div>
               <ul class="timeline mb-0">
-                <li class="timeline-item timeline-item-transparent">
+                @foreach ($pengalaman1 as $pe)
+                <li class="timeline-item timeline-item-transparent ">
                   <span class="timeline-point timeline-point-success"></span>
                   <div class="timeline-event">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
+                    <div class="timeline-header mt-5">
+                      <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
                       </div>
                     </div>
                     <div class="border-bottom mb-3">
-                      <p class="mb-1">Techno Infinity - Internship</p>
-                      <p style="font-size: small;">Juli 2022 - Present/p>
+                      <p class="mb-1">{{$pe?->name_intitutions??''}} - {{$pe?->jenis??''}}</p>
+                      <p style="font-size: small;">{{$pe?->startdate??''}} - {{$pe?->enddate??''}}
                       <div>
-                        <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
+                        <p class="mb-0">{{$pe?->deskripsi??''}}</p>
+                        {{-- <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
                         <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          Show more
+                          Show more --}}
                         </u>
                       </div>
                     </div>
                   </div>
                 </li>
-                <li class="timeline-item timeline-item-transparent border-0">
+                @endforeach
+                <li class="timeline-item timeline-item-transparent">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Techno Infinity - Internship</p>
-                    <p style="font-size: small;">Juli 2022 - Present/p>
-                    <div>
-                      <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
-                      <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        Show more
-                      </u>
-                    </div>
-                  </div>
                 </li>
-              </ul>
+                <a href="{{url("mahasiswa/profile/pengalaman/detail/". Auth::user()->nim)}}">
+                  <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
+                  type="button">Selengkapnya</button></a>
+                </ul>
             </div>
-            <a href='/detail-informasi-pengalaman'>
-              <button class="btn btn-outline-success btn-lg toggle-button ms-5 me-5 mb-5 mt-2" style="width: 824px" type="button">Selengkapnya</button>
-            </a>
           </div>
         </div>
+        @include('profile.modal_skill_pengalaman')
         <!-- </Keahlian&Pengalaman> -->
 
         <!-- <Dokumen Pendukung> -->
         <div class="tab-pane fade show" id="navs-pills-justified-dokumen-pendukung" role="tabpanel">
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
-              <h5 class="text-secondary">Dokumen Pendukung</h5>
-              <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i>
+              <h5 class="text-secondary pt-2 ps-3 pe-3">Dokumen Pendukung</h5>
+              {{-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i> --}}
+              <i class="menu-icon ps-2 pe-2 pb-2">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen">Tambah</button>
+              </i>
             </div>
-            <div class="card-body pb-0">
-              <ul class="timeline mb-0">
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
-                      </div>
-                    </div>
-                    <div class="border-bottom mb-3">
-                      <p class="mb-1">Coursera</p>
-                      <p style="font-size: small;">Juli 2022 - Present/p>
-                      <div>
-                        <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                        <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
-                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                          Show more
-                        </u>
-                      </div>
-                      <div class="d-flex align-items-start mt-3 mb-3">
+            <div class="card-body">
+              <div>
+                <ul class="timeline mb-0">
+                  @foreach($dokumen1 as $dok)
+                  <li class="timeline-item timeline-item-transparent">
+                    <span class="timeline-point timeline-point-success"></span>
+                    <div class="timeline-event">
+                      <div class="timeline-header">
+                        <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
-                          <img src="{{ url("app-assets/img/avatars/2.png")}}">
+                          {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="edit('{{ $dokumen }}')" data-bs-target="#modalEditDokumen" ></i> --}}
+                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
+                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                         </div>
-                        <div class="me-2 ms-4">
-                          <h6 class="mt-5">UI/UX Website.pdf</h6>
+                      </div>
+                      <div class="border-bottom mb-3">
+                        <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
+                        <p style="font-size: small;">{{$dok?->startdate??''}} sampai {{$dok?->enddate??''}}
+                        <div>
+                          <p class="mb-0">{{$dok?->deskripsi??''}}</p>
+                          <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                          <u class="show_hide_new cursor-pointer" style="color:#4EA971">
+                            Show more
+                          </u>
+                        </div>
+                        <div class="d-flex align-items-start mt-3 mb-3">
+                          <div>
+                            <img src="{{ url('storage/' .$dok?->file_sertif??'assets/images/no-pictures.png')}}" width="200" height="auto" alt="img">
+                          </div>
+                          <div class="me-2 ms-4">
+                            <h6 class="mt-5"><a href="{{$dok?->link_sertif??''}}" target="_blank">Lihat Dokumen</a></h6>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-0">
-                  <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event pt-0">
-                    <div class="timeline-header">
-                      <h6 class="mb-0">UIUX Designer</h6>
-                      <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
-                      </div>
-                    </div>
-                    <p class="mb-1">Coursera</p>
-                    <p style="font-size: small;">Juli 2022 - Present/p>
-                    <div>
-                      <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                      <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and informasipribal sectors all over the world.</p>
-                      <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                        Show more
-                      </u>
-                    </div>
-                    <div class="d-flex align-items-start mt-3 mb-3">
-                      <div>
-                        <img src="{{ url("app-assets/img/avatars/2.png")}}">
-                      </div>
-                      <div class="me-2 ms-4">
-                        <h6 class="mt-5">UI/UX Website.pdf</h6>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+                  @endforeach
+                  <li class="timeline-item timeline-item-transparent">
+                    <span class="timeline-point timeline-point-success"></span>
+                  </li>
+                </ul>
+              </div>
+              <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
+                <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
+                  type="button">Selengkapnya</button>
+              </a>
             </div>
-            <a href='/detail-informasi-dokumen'>
-              <button class="btn btn-outline-success btn-lg toggle-button ms-5 me-5 mb-5 mt-2" style="width: 824px" type="button">Selengkapnya</button>
-            </a>
           </div>
         </div>
+        @include('profile.modal_dok_pendukung')
+        @include('profile.modal_destroy')
         <!-- </Dokumen Pendukung> -->
       </div>
       <!-- </Content> -->
     </div>
   </div>
-
-
-  <!-- Modal Edit Informasi Pribadi -->
-  <div class="modal fade" id="modalEditInformasi" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Informasi Pribadi</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Account -->
-    
-        <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. Auth::user()->nim)}}" method="POST">
-          @csrf
-        <div class="modal-body">
-            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
-              @if ($informasiprib?->profile_picture?? '')
-                <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
-                    class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
-              @else
-                  <img src="{{ url("app-assets/img/avatars/15.png")}}" alt="user-avatar" 
-                  class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
-              @endif
-              <div class="button-wrapper">
-                <label for="changePicture" class="btn btn-white text-success me-2 mb-3 waves-effect waves-light"
-                  tabindex="0">
-                  <i class="ti ti-upload d-block pe-2"></i>
-                  <span class="d-none d-sm-block">Upload</span>
-                  <input type="file" id="changePicture" name="profile_picture" class="account-file-input" hidden
-                      accept="image/png, image/jpeg">
-                </label>
-                <button type="button" 
-                class="btn btn-label-secondary account-image-reset mb-3" 
-                onclick="removeImage()">
-                  <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                  <span class="d-none d-sm-block">Atur Ulang</span>
-                </button>
-                <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
-              </div>
-            </div>
-            <div class="border-top">
-              <div class="row mt-4">
-                <div class="mb-3 col-md-6">
-                  <label for="NIM" class="form-label">NIM <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nnim" name="nim" value="{{Auth::user()->nim}}" placeholder="" disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="Name" class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nnamalengkap" name="namalengkap" value="{{$mahasiswa->namamhs}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="Universitas" class="form-label">Universitas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nuniversitas" name="universitas" value="{{$mahasiswa->univ->namauniv}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="Fakultas" class="form-label">Fakultas <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nfakultas" name="fakultas" value="{{$mahasiswa->fakultas->namafakultas}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="Prodi" class="form-label">Program Studi <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nprodi" name="prodi" value="{{$mahasiswa->prodi->namaprodi}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="angkatan" class="form-label">Angkatan <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nangkatan" name="prodi" value="{{$mahasiswa->angkatan}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="Email" class="form-label">Email <span style="color: red;">*</span></label>
-                  <input class="form-control" type="email" id="nemail" name="email" value="{{$mahasiswa->emailmhs}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label class="form-label" for="notelp">No. Telp</label>
-                  <input type="text" id="nnotelp" name="notelp" class="form-control" value="{{$mahasiswa->nohpmhs}}" autofocus disabled />
-                </div>
-                <div class="mb-3 col-md-4">
-                  <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nipka" name="ipk" placeholder="4.00" value="{{$informasiprib?->ipk??''}}" autofocus />
-                </div>
-                <div class="mb-3 col-md-4">
-                  <label for="eprt" class="form-label">EPRT<span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="neprt" name="eprt" placeholder="550" value="{{$informasiprib?->eprt??''}}" autofocus />
-                </div>
-                <div class="mb-3 col-md-4">
-                  <label for="TAK" class="form-label">TAK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="nTAK" name="TAK" placeholder="100" value="{{$informasiprib?->TAK??''}}" autofocus />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input name="tgl_lahir" value="{{$informasiprib?->tgl_lahir??''}}" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" id="flatpickr-date" required>
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="gender" class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
-                  <div class="form-check">
-                    <div class="row">
-                      <div class="col-3" >
-                        <input name="gender" class="form-check-input" type="radio" value="Laki-Laki" id="ngender" checked="">
-                        <label class="form-check-label" for="gender"> Laki-Laki </label>
-                      </div>
-                      <div class="col-3 ms-2">
-                        <input name="gender" class="form-check-input" type="radio" value="Perempuan" id="ngender" checked="">
-                        <label class="form-check-label" for="gender"> Perempuan </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="headliner" class="form-label">Headliner</label>
-                  <input class="form-control" value="{{$informasiprib?->headliner??''}}" type="text" id="nheadliner" name="headliner" placeholder="cth. UI/UX Desginer" />
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="alamat" class="form-label">Alamat <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="alamat" name="alamat" value="{{$mahasiswa?->alamatmhs??''}}" placeholder="jln. merdeka" disabled />
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="deskripsi_diri" class="form-label">Deskripsi Diri</label>
-                  <input class="form-control" value="{{$informasiprib?->deskripsi_diri??''}}" type="textarea" id="ndeskripsi_diri" name="deskripsi_diri" placeholder="Deskripsi Diri">
-                </div>
-              </div>
-              <div class="modal-footer p-0">
-                <button id="modal-button"  type="submit" class="btn btn-success m-0">Simpan Data</button>
-              </div>
-            </div>
-          </div>
-        </form>
-        <!-- /Account -->
-      </div>
-    </div>
-  </div>
-  <!-- Modal Edit Informasi Tambahan -->
-  <div class="modal fade" id="modalEditInformasiTambahan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Edit Informasi Tambahan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <hr />
-        </div>
-
-        <div class="modal-body p-0 ms-5 me-5">
-          <form class="default-form" action="{{ url('mahasiswa/profile/informasi/update'. Auth::user()->nim )}}" id="informasitambahan" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="row">
-              <div class="mb-3 col-md-12 p-0 ">
-                <label for="lok_kerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="lok_kerja" name="lok_kerja" value="{{$informasitambahan?->lok_kerja??''}}" placeholder="Lokasi Kerja" />
-              </div>
-              <div class="border mb-3" style="border-radius: 8px;">
-                <div class="form-repeater">
-                  <div data-repeater-list="">
-                    <div data-repeater-item="">
-                      <div class="row mt-2 me-1">
-                        <div class="mb-3 col-md-11">
-                          <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
-                          <select id="bahasa" class="form-select select2">
-                            <option disabled selected value="{{$informasitamabahan->bahasa?->bahasa??''}}">Pilih Jenis Bahasa</option>
-                            <option value="bahasa">Indonesia</option>
-                            <option value="bahasa">Inggris</option>
-                            <option value="bahasa">Korea</option>
-                            <option value="bahasa">Jepang</option>
-                          </select>
-                        </div>
-                        <div class="mb-3 col-md-1 mb-0">
-                          <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
-                            <i class="ti ti-trash fa-lg"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <button type="button" class="btn btn-outline-success waves-effect" data-repeater-create="">
-                      <span class="align-middle">Tambah</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="border " style="border-radius: 8px;">
-                <div class="form-repeater">
-                  <div data-repeater-list="">
-                    <div data-repeater-item="">
-                      <div class="row mt-2 me-1">
-                        <div class="mb-3 col-md-4">
-                          <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
-                          <select id="media" class="form-select select2">
-                            <option disabled selected>Pilih Sosial Media</option>
-                            <option value="media">Instagram</option>
-                            <option value="media">Linkedin</option>
-                            <option value="media">Facebook</option>
-                            <option value="media">Twiteer</option>
-                          </select>
-                        </div>
-                        <div class="mb-3 col-md-7">
-                          <input class="form-control mt-4" type="text" id="sosmed" name="sosmed" value="{{$informasitambahan?->sosmed??''}}" placeholder="URL/Username" />
-                        </div>
-                        <div class="mb-3 col-md-1">
-                          <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
-                            <i class="ti ti-trash fa-lg"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <button type="button" class="btn btn-outline-success waves-effect" data-repeater-create="">
-                      <span class="align-middle">Tambah</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer pt-3 pe-0">
-              <button id="modal-button-infotam"  type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Pendidikan -->
-  <div class="modal fade" id="modalTambahPendidikan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Pendidikan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="form" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="pendidikan" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                <select id="pendidikan" class="select2 form-select">
-                  <option disabled selected>Pilih Tingkat Pendidkan</option>
-                  <option value="pendidikan">D3</option>
-                  <option value="pendidikan">S1</option>
-                </select>
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="IPK" class="form-label">IPK</label>
-                <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" autofocus />
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Edit Pendidikan -->
-  <div class="modal fade" id="modalEditPendidikan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Edit Pendidikan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="form" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="pendidikan1" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                <select id="pendidikan1" class="select2 form-select">
-                  <option disabled selected>Pilih Tingkat Pendidkan</option>
-                  <option value="pendidikan">D3</option>
-                  <option value="pendidikan">S1</option>
-                </select>
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="IPK" class="form-label">IPK</label>
-                <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" autofocus />
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Keahlian -->
-  <div class="modal fade" id="modalTambahKeahlian" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Keahlian</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body border-top mt-3">
-          <form id="" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="TagifyBasic" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="TagifyBasic" class="form-control" name="TagifyBasic" value="" />
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Edit Keahlian -->
-  <div class="modal fade" id="modalEditKeahlian" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Edit Keahlian</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body border-top mt-3">
-          <form id="" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="TagifyBasic1" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                <input id="TagifyBasic1" class="form-control" name="TagifyBasic1" value="" />
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Pengalaman -->
-  <div class="modal fade" id="modalTambahPengalaman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Pengalaman</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Account -->
-        <div class="modal-body border-top mt-3">
-          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
-          </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
-              </div>
-              <div class="mb-3 col-md-6">
-                <label for="pekerjaan" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan" class="select2 form-select">
-                  <option disabled selected>Pilih Jenis Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                </select>
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-
-        </div>
-        <!-- /Account -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Edit Pengalaman -->
-  <div class="modal fade" id="modalEditPengalaman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Edit Pengalaman</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Account -->
-        <div class="modal-body border-top mt-3">
-          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
-          </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
-              </div>
-              <div class="mb-3 col-md-6">
-                <label for="pekerjaan2" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan2" class="select2 form-select">
-                  <option disabled selected>Pilih Jenis Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                  <option value="Pekerjaan">Pekerjaan</option>
-                </select>
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" name="namaperusahaan" placeholder="Ex: PT Techno Infinity" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-
-        </div>
-        <!-- /Account -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Dokumen Pendukung -->
-  <div class="modal fade" id="modalTambahDokumen" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Dokumen Pendukung</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Account -->
-        <div class="modal-body border-top mt-3">
-          <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
-          </div>
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="sertifikat" name="sertifikat" placeholder="Masukkan nama sertifikasi " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="penerbit" class="form-label"> Penerbit Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="penerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
-                <input class="form-control" type="file" id="unggahfile" multiple="">
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="link" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="link" name="link" placeholder="Masukkan link Sertifikat  " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-
-        </div>
-        <!-- /Account -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Edit Dokumen Pendukung -->
-  <div class="modal fade" id="modalEditDokumen" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header d-block">
-          <h5 class="modal-title" id="modal-title">Tambah Dokumen Pendukung</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Account -->
-        <div class="modal-body border-top mt-3">
-          <form id="formAccountSettings" method="POST" onsubmit="return false">
-            <div class="row">
-              <div class="mb-3 col-md-12">
-                <label for="sertifikat" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="sertifikat" name="sertifikat" placeholder="Masukkan nama sertifikasi " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="penerbit" class="form-label"> Penerbit Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="penerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                <input type="month" id="month" class="form-control" placeholder="Month" />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
-                <input class="form-control" type="file" id="unggahfile" multiple="">
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="link" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="link" name="link" placeholder="Masukkan link Sertifikat  " />
-              </div>
-              <div class="mb-3 col-md-12">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-              </div>
-            </div>
-            <div class="modal-footer p-0">
-              <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-            </div>
-          </form>
-
-        </div>
-        <!-- /Account -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Delete Pengalaman -->
-  <div class="modal fade" id="deleteModalPengalaman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pengalaman Ini?</h5>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-          <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-          <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Delete Dokumen-->
-  <div class="modal fade" id="ModalDelete" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Dokumen Pendukung Ini?</h5>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-          <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-          <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Delete Pendidikan-->
-  <div class="modal fade" id="ModalDeletePendidikan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pendidikan Ini?</h5>
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content:center;">
-          <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-          <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
 </div>
-
 @endsection
 
 @section('page_script')
@@ -1119,14 +428,15 @@
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/pribadi/edit/') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/pribadi/update/') }}/${id}`;
+      console.log(url);
 
       $.ajax({
           type: 'GET',
           url: url,
           success: function (response) {
+            console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
-              $('#nim').val(response.nim);
               $('#ipk').val(response.ipk);
               $('#eprt').val(response.eprt);
               $('#TAK').val(response.TAK);
@@ -1134,30 +444,34 @@
               $('#headliner').val(response.headliner);
               $('#deskripsi_diri').val(response.deskripsi_diri);
               $('#profile_picture').val(response.profile_picture);
-              $('input[name="gender"][value="' + response.gender + '"]').prop('checked', true);
+              $("#gender1").prop("checked", true);
+              // $("#gender2").prop("checked", true);
+              // $('#modalEditInformasi form #gender').val(response.gender);
+              $('.invalid-feedback').removeClass('d-block');
+              $('.form-control').removeClass('is-invalid');
           }
       });
     }
 
-    function editInformasiTambahan(e) {
-      let id = e.attr('data-id');
-      var url = `{{ url('mahasiswa/profile/informasi/edit/') }}/${id}`;
-      let action = `{{ url('mahasiswa/profile/informasi/update/') }}/${id}`;
+    // function editInformasiTambahan(e) {
+    //   let id = e.attr('data-id');
+    //   var url = `{{ url('mahasiswa/profile/informasi/edit/') }}/${id}`;
+    //   let action = `{{ url('mahasiswa/profile/informasi/update/') }}/${id}`;
 
-      $.ajax({
-          type: 'GET',
-          url: url,
-          success: function (response) {
-              $("#modal-button-infotam").html("Update Data");
-              $('#modalEditInformasiTambahan form').attr('action', action);
-              $('#lok_kerja').val(response.lok_kerja); 
-              $('#sosmed').val(response.sosmed);
-              $('#bahasa').val(response.id_bahasa);
-              $('#url_sosmed').val(response.url_sosmed);
+    //   $.ajax({
+    //       type: 'GET',
+    //       url: url,
+    //       success: function (response) {
+    //           $("#modal-button-infotam").html("Update Data");
+    //           $('#modalEditInformasiTambahan form').attr('action', action);
+    //           $('#lok_kerja').val(response.lok_kerja); 
+    //           $('#sosmed').val(response.sosmed);
+    //           $('#bahasa').val(response.id_bahasa);
+    //           $('#url_sosmed').val(response.url_sosmed);
             
-          }
-      });
-    }
+    //       }
+    //   });
+    // }
   </script>
   <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
   <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
@@ -1168,9 +482,6 @@
   <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
   <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
   <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
-
-
-
 <script>
   $(document).ready(function() {
     $(".content-new").hide();
@@ -1204,8 +515,6 @@
 </script>
 <script src="{{ url('assets/js/yearpicker.js') }}"></script>
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
-<script src="{{ url('urlapp-assets/js/forms-extras.js')}}"></script>
+<script src="{{ url('app-assets/js/forms-extras.js')}}"></script>
 <script src="{{ url('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
-
-
 @endsection

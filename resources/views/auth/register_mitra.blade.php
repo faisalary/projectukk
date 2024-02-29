@@ -61,30 +61,22 @@
                 </div>
             </div>
         </div>
+        {{-- form-control --}}
+        <div class="form-group">
+            <div class="col">
+                <label for="notelpon" class="col-form-label text-md-end">{{ __('No Hp ') }}</label>
 
-        <div class="row">
-            <div class="col mb-2 form-input">
-                <label for="kategori_industri" class="form-label">{{ __('Kategori Mitra') }}</label>
-                <select class="form-select select2" id="kategori_industri" name="kategori_industri"
-                    data-placeholder="Pilih Kategori Mitra">
-                    <option disabled selected>Pilih Kategori Mitra</option>
-                    <option>Iya</option>
-                    <option>Tidak</option>
-                </select>
+                <div class="md-6">
+                    <input id="notelpon" type="notelpon" class="form-control @error('notelpon') is-invalid @enderror" name="notelpon" value="{{ old('notelpon') }}" required autocomplete="notelpon" placeholder="No. Hp Penanggung Jawab" autofocus>
+
+                    @error('notelpon')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col mb-2 form-input">
-                <label for="statuskerjasama" class="form-label">{{ __('Status Kerja Sama') }}</label>
-                <select class="form-select select2" id="statuskerjasama" name="statuskerjasama"
-                    data-placeholder="statuskerjasama">
-                    <option disabled selected>Status Kerja Sama</option>
-                    <option>Internal</option>
-                    <option>Eksternal</option>
-                </select>
-            </div>
-        </div>
-
         {{-- form-control --}}
         <div class="form-group mt-3">
             <div class="col-sm-12 mt-4">

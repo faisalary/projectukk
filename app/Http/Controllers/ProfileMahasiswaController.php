@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InfoPribRequest;
 use App\Models\Bahasa;
+use App\Models\Education;
+use App\Models\Experience;
 use App\Models\InformasiPribadi;
 use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
+use App\Models\Sertifikat;
+use App\Models\Skill;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,11 +23,19 @@ class ProfileMahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id) {   
+    public function index($id) { 
+        $dokumen = Sertifikat::where('nim', $id)->first();
+        $dokumen1 = Sertifikat::where('nim', $id)->orderby('id_sertif', 'asc')->get();
+        $pengalaman = Experience::where('nim', $id)->first();
+        $pengalaman1 = Experience::where('nim', $id)->get();
+        $skill = Skill::where('nim', $id)->first();  
+        $skill1 = Skill::where('nim', $id)->get();  
+        $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', compact('informasiprib', 'mahasiswa', 'informasitambahan'));
+        return view('profile.informasi_pribadi', 
+        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
     }
 
     /**
@@ -34,9 +49,9 @@ class ProfileMahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $id)
+    public function edit($id)
     {
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
+        $mahasiswa = InformasiPribadi::where('id_infoprib', $id)->first();
         return $mahasiswa;
         
     }
@@ -44,15 +59,16 @@ class ProfileMahasiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(InfoPribRequest $request, $id)
     {
+        
         try {
-            $informasiprib = InformasiPribadi::where('nim', $id)->first();
-            $file = $informasiprib->profile_picture;
+            $informasiprib = InformasiPribadi::where('id_infoprib', $id)->first();
+            $file = null;
             if ($request->file('profile_picture')) {
                 $file = Storage::put('profile-image' , $request->file('profile_picture'));
             }
-
+            
             $data = [
                 'ipk' => $request->ipk,
                 'eprt' => $request->eprt,
@@ -63,17 +79,28 @@ class ProfileMahasiswaController extends Controller
                 'profile_picture' => $file,
                 'gender' => $request->gender,
             ];
+            
+            if ($informasiprib) {                
+                $informasiprib->ipk = $request->ipk;    
+                $informasiprib->eprt = $request->eprt;    
+                $informasiprib->TAK = $request->TAK;    
+                $informasiprib->tgl_lahir = $request->tgl_lahir;    
+                $informasiprib->headliner = $request->headliner;    
+                $informasiprib->deskripsi_diri = $request->deskripsi_diri;    
+                $informasiprib->gender = $request->gender;  
+                $informasiprib->profile_picture = $file;  
+                $informasiprib->save();
 
-            if ($informasiprib) {
-                $informasiprib->update($data);
             } else {
                 $data['nim'] = $id;
                 InformasiPribadi::create($data);
             }
+
             
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
+                'url' => Auth::user()->nim
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -83,31 +110,32 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-    public function editinformasi(Request $request, $id) { 
-
-        $mahasiswa = Mahasiswa::where('nim', $id)->first();
-        return $mahasiswa;
-        
-    }
-
     public function updateinformasitambahan(Request $request, $id) { 
-        $bahasa = Bahasa::all();
-        $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
+
+        $this->validate($request, [
+            'url_sosmed' => 'required|active_url'
+        ]);
         
         try{
             DB::beginTransaction();
-            $data = [
+            $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
+            
+            $data1 = [
                 'lok_kerja' => $request->lok_kerja,
                 'sosmed' => $request->sosmed,
-                'id_bahasa' => $informasitambahan->bahasa->id_bahasa
+                'id_bahasa'=> $request->bahasa,
+                'url_sosmed' => $request->url_sosmed,
             ];
             if ($informasitambahan) {
-                $informasitambahan->update($data);
+                $informasitambahan->update($data1);
             } else {
-                $data['nim'] = $id;
-                InformasiPribadi::create($data);
+                $data1['nim'] = $id;
+                InformasiTamabahan::create($data1);
             }
-
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
         } catch (Exception $e) {
             DB::rollBack();
             
@@ -118,4 +146,226 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
+   
+
+    public function updatependidikan(Request $request, $id) { 
+        $this->validate($request, [
+            'nilai' => 'required|numeric|between:0,99.99'
+        ]);
+
+
+        try{
+            $pendidikan = Education::where('nim', $id)->first();
+            
+            $data2 = [
+                'name_intitutions' => $request->namasekolah,
+                'tingkat' => $request->tingkat,
+                'startdate'=> $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'nilai' => $request->nilai,
+            ];
+
+            if ($pendidikan) {
+                $pendidikan->update($data2);
+            } else {
+                $data2['nim'] = $id;
+                Education::create($data2);
+            }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+    public function updateskill(Request $request, $id) { 
+
+        try{
+            $skill = Skill::where('nim', $id)->first();
+            
+            $keahlian = [
+                'skills' => $request->skills                
+            ];
+
+            if ($skill) {
+                $skill->update($keahlian);
+            } else {
+                $keahlian['nim'] = $id;
+                Skill::create($keahlian);
+            }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+
+    public function store(Request $request, $id) { 
+        
+        try {
+            $pengalaman = Experience::where('nim', $id)->first();
+            Experience::create([
+                'nim' => $id,
+                'posisi' => $request->posisi,
+                'jenis' => $request->jenis,
+                'name_intitutions' => $request->name_institutions,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'deskripsi' => $request->deskripsi,
+            ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Created!',
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+
+    public function updatepengalaman(Request $request, $id) {
+
+        $this->validate($request,[
+            
+        ]);
+
+        try {
+            $pengalaman = Experience::where('id_experience', $id)->first();
+
+            $pengalaman->update([
+                'posisi' => $request->posisi,
+                'jenis' => $request->jenis,
+                'name_intitutions' => $request->name_institutions,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'deskripsi' => $request->deskripsi,
+            ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function detailpengalaman(Request $request, $id) { 
+
+        $pengalaman = Experience::where('nim', $id)->get();
+        $skill = Skill::where('nim', $id)->get();
+        return view('profile.pengalaman', compact('pengalaman', 'skill'));
+    }
+
+    public function deletepengalaman(Request $request, $id) { 
+
+        //
+    }
+    
+    public function storedokumen(Request $request, $id) { 
+
+        try {
+            $dokumen = Sertifikat::where('nim', $id)->first();
+            // $file = $dokumen->file_sertif;
+            $file = null; 
+            if ($request->file('file_sertif')) {
+                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
+            }
+
+            Sertifikat::create([
+                'nim' => $id,
+                'nama_sertif' => $request->sertifikat,
+                'penerbit' => $request->penerbit,
+                'startdate' => $request->startdate . '-01',
+                'enddate' => $request->enddate . '-01',
+                'file_sertif' => $file,
+                'link_sertif' => $request->link_sertif,
+                'deskripsi' => $request->deskripsi,
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    
+    public function updatedokumen(Request $request, $id) { 
+
+        $this->validate($request,[
+            'file_sertif'  =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
+            'link_sertif' => 'required|url',
+            'deskripsi' => 'required|max:255|string'
+        ]);
+
+        try {
+            $dokumen = Sertifikat::where('id_sertif', $id)->first();
+                $dokumen->update([
+                'nama_sertif' => $request->sertifikat,
+                'penerbit' => $request->penerbit,
+                'startdate' => Carbon::createFromFormat('Y-m-d', $request->startdate),
+                'enddate' => Carbon::createFromFormat('Y-m-d', $request->enddate),
+                'file_sertif' => $request->file_sertif,
+                'link_sertif' => $request->link_sertif,
+                'deskripsi' => $request->deskripsi,
+            ]);
+        
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function detail(Request $request, $id) { 
+        $dokumen = Sertifikat::where('nim', $id)->first();
+        $dokumen1 = Sertifikat::where('nim', $id)->get();
+        return view('profile.dokumen', compact('dokumen1', 'dokumen'));
+    }
+
+    public function deletedok(Request $request, $id) { 
+        try {
+            $sertifikat = Sertifikat::findOrFail($id);
+            $sertifikat->delete();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Sertifikat berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    
 }

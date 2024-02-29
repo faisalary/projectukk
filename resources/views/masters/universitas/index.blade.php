@@ -125,7 +125,6 @@
                 $('#jalan').val(response.jalan);
                 $('#kota').val(response.kota);
                 $('#telp').val(response.telp);
-
                 $('#modal-universitas').modal('show');
             }
         });
