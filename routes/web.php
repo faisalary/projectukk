@@ -496,3 +496,13 @@ Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
 });
+
+Route::prefix('/mandiri/approve-mandiri')->group(function () {
+    Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('mandiri.index');
+    Route::post('/show', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('mandiri.show');
+    Route::post('/store', [App\Http\Controllers\ApproveMandiriController::class, 'store'])->name('mandiri.store');
+    Route::get('/detail/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'detail'])->name('mandiri.detail');
+    Route::post('/update/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'update'])->name('mandiri.update');
+    Route::get('/edit/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'edit'])->name('mandiri.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'status'])->name('mandiri.status');
+});
