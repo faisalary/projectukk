@@ -69,9 +69,9 @@ class KonfirmasiMandiriController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id_univ)
+    public function show($mandiri)
     {
-
+        $mandiri = $mandiri->with();
     }
 
     /**
@@ -81,6 +81,7 @@ class KonfirmasiMandiriController extends Controller
     {
         $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
         return $mandiri;
+        
     }
 
     public function detail($id)

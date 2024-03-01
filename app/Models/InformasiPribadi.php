@@ -19,6 +19,7 @@ class InformasiPribadi extends Model
         'headliner',
         'deskripsi_diri',
         'profile_picture',
+        'gender',
 
     ];
     public $timestamps = false;

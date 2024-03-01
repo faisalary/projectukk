@@ -35,8 +35,9 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        $industri = Industri::all();
-        return view('company.lowongan_magang.halaman_lowongan_magang_mitra', compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
+        $industri = Industri::where('id_industri', $id)->first();
+        return view('company.lowongan_magang.halaman_lowongan_magang_mitra', 
+        compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
     }
     
     /**
@@ -58,14 +59,24 @@ class LowonganMagangController extends Controller
      */
     public function store(LowonganMagangRequest $request)
     {
-        dd($request->all());
         DB::beginTransaction();
         try {
             $industri = Industri::where('id_industri',auth()->user()->id_industri)->first();
             $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
-            $lokasi = Lokasi::create([
-                'kota' => $request->lokasi
-            ]);
+            // $lokasi = Lokasi::create([
+            //     'kota' => $request->lokasi
+            // ]);
+
+            $lokasi = Lokasi::where('id_lokasi')->first();
+            if ($lokasi){
+                $lokasi->update([
+                    'kota' => $request->lokasi
+                ]);
+            } else {
+                $lokasi =  Lokasi::create([
+                    'kota' => $request->lokasi
+                ]);
+            }
      
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
@@ -80,7 +91,6 @@ class LowonganMagangController extends Controller
                 'nominal_salary' => $request->nominal,
                 'benefitmagang' => $request->benefit,
                 'id_industri' => $industri->id_industri,
-                'id_lokasi' => $lokasi->kota,
                 'startdate' => $request->tanggal,
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
@@ -88,7 +98,8 @@ class LowonganMagangController extends Controller
                 'id_fakultas' => $request->fakultas,
                 'fakultas' => $request->fakultas,
                 'id_prodi' => $request->prodi,
-                // 'id_industri' => $request->industri
+                'id_lokasi' => $lokasi->id_lokasi,
+                'statusaprove' => 'tertunda'
             ]);
             $i = 0;
             foreach ((array) $request->mulai as $m) {
@@ -107,7 +118,7 @@ class LowonganMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data Created!',
-                'url' => url('/kelola/lowongan')
+                'url' => url('/kelola/lowongan/mitra', Auth::user()->id_industri)
             ]);
         } catch (Exception $e) {
             DB::rollback();
@@ -122,25 +133,19 @@ class LowonganMagangController extends Controller
      * Display the specified resource.
      */
 
-    public function show(Request $request, $id_industri)
+    public function show(Request $request)
     {
-        $lowongan = LowonganMagang::where('id_industri', $id_industri);
-        if ($request->type =="id_industri") {
-            if ($request->jenismagang != null) {
-                $lowongan->where("id_jenismagang", $request->jenismagang, $request->type);
-            } else if ($request->lokasi != null) {
-                $lowongan->where("id_lokasi", $request->lokasi, $request->type);
-            } else if ($request->prodi != null) {
-                $lowongan->where("id_prodi", $request->prodi, $request->type);
-            } else if ($request->fakultas != null) {
-                $lowongan->where("id_fakultas", $request->fakultas, $request->type);
-            } else if($request->type != 'total'){
-                $lowongan->where("statusaprove", $request->type);
-            }
+        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', Auth::user()->id_industri);
+        if ($request->type =="tertunda") {
+            $lowongan =  $lowongan->where('statusaprove', 'tertunda');        
+        } elseif ($request->type == 'diterima'){
+            $lowongan =  $lowongan->where('statusaprove', 'diterima');
+        }elseif ($request->type == 'ditolak'){
+            $lowongan =  $lowongan->where('statusaprove', 'diterima');
         }
-        $lowongan = $lowongan->where('id_industri', $id_industri)->with("jenismagang", "lokasi", "prodi", "fakultas", "industri")
-        ->orderBy('id_jenismagang', 'asc')->get();
-            
+        $lowongan = $lowongan
+        ->orderBy('id_jenismagang', 'asc')
+        ->get();
         return DataTables::of($lowongan)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
@@ -156,15 +161,13 @@ class LowonganMagangController extends Controller
         
                 $btn = "<a href='" . url('kelola/lowongan/mitra/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
                         <a href='" . url('kelola/lowongan/mitra/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                        <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-        
+                        <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
                 return $row->startdate . " <br> " . $row->enddate;
             })
             ->rawColumns(['action', 'status', 'tanggal'])
-        
             ->make(true);
     }
     /**
@@ -241,7 +244,7 @@ class LowonganMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'lowongan magang successfully Updated!',
-                'url' => url('/kelola/lowongan/mitra/{id}')
+                'url' => url('/kelola/lowongan/mitra/', Auth::user()->id_industri)
 
             ]);
         } catch (Exception $e) {

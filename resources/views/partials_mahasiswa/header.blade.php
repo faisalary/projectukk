@@ -132,12 +132,12 @@
 
                   <ul class="menu-sub">
                     <li class="menu-item">
-                      <a href="" class="menu-link">
+                      <a href="/logbook" class="menu-link">
                         <div data-i18n="Logbook">Logbook</div>
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="/kegiatan_saya/lamaran_saya" class="menu-link">
+                      <a href="/kegiatan-saya/lamaran-saya" class="menu-link">
                         <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
                       </a>
                     </li>
@@ -448,7 +448,7 @@
                         </div>
                         <div class="flex-grow-1">
                           <span class="fw-semibold d-block">{{ ucwords($user->username) }}</span>
-                          <small class="text-muted">{{ ucwords($user->name) }}</small>
+                          <small class="text-muted">{{ ucwords($user->email) }}</small>
                         </div>
                       </div>
                     </a>

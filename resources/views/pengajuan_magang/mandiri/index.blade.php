@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($mandiri as $item)
+                @foreach ($file as $item)
                     @if ($item->nim == $nim)
                         <div class="card-body mt-4">
                             @if ($item->statusapprove == 1)
@@ -143,9 +143,10 @@
                                                 style="height:35px;">
                                                 <i class="ti ti-edit mb-1 me-1"></i>
                                                 Perbaiki Pengajuan</button></div>
-                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><a
-                                                data-id="{{ $item->id_pengajuan }}" onclick="detailDitolak($(this))">Lihat
-                                                Detail</a><i class="ti ti-chevron-right mb-1"></i></div>
+                                        <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer"><a
+                                                    data-id="{{ $item->id_pengajuan }}"
+                                                    onclick="detailDitolak($(this))">Lihat
+                                                    Detail</a></u><i class="ti ti-chevron-right mb-1"></i></div>
                                     </div>
                                 </div>
                             @endif
@@ -236,15 +237,16 @@
                 success: function(response) {
                     console.log(response);
                     $('#modalAjukan form').attr('action', action);
-                    $('#nama_industri').val(response.nama_industri);
-                    $('#posisi_magang').val(response.posisi_magang);
-                    $('#jabatan').val(response.jabatan);
-                    $('#nim').val(response.nim);
-                    $('#email').val(response.email);
-                    $('#nohp').val(response.nohp);
-                    $('#date').val(response.startdate + '-' + response.enddate);
-                    $('#alamat_industri').val(response.alamat_industri);
-                    $('#alasan').val(response.alasan);
+                    $('#tglpeng_').val(response.tglpeng).trigger('change');
+                    $('#nama_industri_').val(response.nama_industri);
+                    $('#posisi_magang_').val(response.posisi_magang);
+                    $('#jabatan_').val(response.jabatan);
+                    $('#nim_').val(response.nim);
+                    $('#email_').val(response.email);
+                    $('#nohp_').val(response.nohp);
+                    $('#date_').val(response.startdate + '-' + response.enddate).trigger('change');
+                    $('#alamat_industri_').val(response.alamat_industri);
+                    $('#alasan_').val(response.alasan);
 
                     $('#modalAjukan').modal('show');
                 }
