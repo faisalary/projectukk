@@ -32,9 +32,13 @@ class LowonganMagangRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'posisi.required' => 'Position must be filled',
-            'kuota.required' => 'The kuota must be an integer.',
-            'deskripsi.required' => 'Description must be filled',
+            'posisi.required' => 'Posisi  magang wajib diisi',
+            'kuota.required' => 'Kuota wajib di isi',
+            'deskripsi.required' => 'Deskripsi wajib di isi',
+            'posisi.string' => 'format tidak valid',
+            'kuota.integer' => 'Kuota harus berupa angka',
+            'deskripsi.string' => 'Format deskripsi tidak valid',
+            
         ];
     }
 }

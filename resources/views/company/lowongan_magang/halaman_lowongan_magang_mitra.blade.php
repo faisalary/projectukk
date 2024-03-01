@@ -187,7 +187,6 @@
                                     <th style="min-width:100px;">POSISI</th>
                                     <th style="min-width:100px;">TANGGAL</th>
                                     <th style="min-width:100px;">DURASI MAGANG</th>
-                                   
                                     <th style="min-width:50px;">STATUS</th>
                                   
                                     <th style="min-width:100px;">AKSI</th>
@@ -203,16 +202,21 @@
     <script src="{{url("app-assets/vendor/libs/jquery-repeater/jquery-repeater.js")}}"></script>
     <script src="{{url("app-assets/js/forms-extras.js")}}"></script>
     <script>
-    $('.table').each(function() {
-            let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/mitra/show/{id_industri}') }}?type=" + idElement;
+        let statusTableId = ['total', 'tertunda', 'diterima', 'ditolak'];
+        statusTableId.forEach(function(idElement) {
+            let url = "{{ url('kelola/lowongan/mitra/show') }}";
 
-            $(this).DataTable({
-                ajax: url,
-                serverSide: false,
+            $('#' + idElement).DataTable({
+                ajax: {
+                    url: url,
+                    type: 'POST',
+                    data: {type: idElement},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                },
+                serverSide: true,
                 processing: true,
-                deferRender: true,
-                type: 'GET',
                 destroy: true,
                 columns: [{
                         data: "DT_RowIndex"
@@ -246,11 +250,8 @@
         jQuery(function() {
             jQuery('.showSingle').click(function() {
                 let idElement = $(this).attr('target');
-
                 jQuery('.targetDiv').hide('.cnt');
                 jQuery("#div" + idElement).slideToggle();
-
-                console.log(idElement);
             });
         });
 
@@ -304,7 +305,6 @@
                     $('#akhir[]').val(response.tgl_akhir);
                     $('#prodi').val(response.id_prodi);
                     $('#fakultas').val(response.id_fakultas);
-
                     $('#modalTambahLowongan').modal('show');
                 }
             });
@@ -319,6 +319,7 @@
                 .text() + ', posisilowongan: ' + $('#posisi :selected').text() + ', statuslowongan: ' + $(
                     '#status :selected').text());
             offcanvasFilter.offcanvas('hide');
+            // $('#status').DataTable().ajax.reload();
         });
 
         $('.data-reset').on('click', function() {
