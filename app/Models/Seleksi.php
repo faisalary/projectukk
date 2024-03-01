@@ -23,8 +23,8 @@ class Seleksi extends Model
     protected $primaryKey = 'id_seleksi_lowongan';
     protected $keyType = 'string';
 
-    public function seleksi_status()
+    public function pendaftar()
     {
-        return $this->belongsTo(StatusSeleksi::class, 'id_status_seleksi');
+        return $this->belongsTo(PendaftaranMagang::class, 'id_pendaftaran');
     }
 }

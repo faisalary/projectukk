@@ -130,7 +130,7 @@ class JadwalSeleksiController extends Controller
                 </div>";
             })
             ->addColumn('action', function ($seleksi) {
-                $btn = "<a href='detail/{$seleksi->id_status_seleksi}' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
+                $btn = "<a href='detail/{$seleksi->id_pendaftaran}' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
                 return $btn;
             })
             ->rawColumns(['status_seleksi', 'action', 'progress', 'start_date',])
@@ -141,7 +141,7 @@ class JadwalSeleksiController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $seleksi = StatusSeleksi::where('id_status_seleksi',$id)->first();
+        $seleksi = Seleksi::where('id_pendaftaran',$id)->first();
         $pendaftar = PendaftaranMagang::where('id_pendaftaran', $seleksi->id_pendaftaran)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
         $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
