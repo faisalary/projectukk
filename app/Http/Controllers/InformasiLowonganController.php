@@ -21,6 +21,12 @@ class InformasiLowonganController extends Controller
     {
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
+            $industri = Industri::where('id_industri', $id)->first();
+
+            $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
+            $img = $picture . '.png';
+
+            // dd($img);
 
             $lowongan->transform(function ($item) {
                 $now = Carbon::now();
@@ -48,7 +54,7 @@ class InformasiLowonganController extends Controller
             });
 
 
-            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan'))->render();
+            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan','img'))->render();
         }
 
         $lowongan = LowonganMagang::where('id_industri', $id)->get();

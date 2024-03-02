@@ -6,13 +6,14 @@
 
 @section('page_style')
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+<!-- date picker -->
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
-<style>
+<!-- <style>
     .swal2-icon {
         border-color: transparent !important;
     }
@@ -61,7 +62,7 @@
     .bootstrap-select .dropdown-menu a:not([href]):not(.active):not(:active):not(.selected):hover {
         color: #4EA971 !important;
     }
-</style>
+</style> -->
 @endsection
 
 @section('main')
