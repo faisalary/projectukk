@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LowonganMagang;
-use App\Models\Seleksi;
 use Carbon\Carbon;
+use App\Models\Seleksi;
+use App\Models\Industri;
 use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
 
 class LowonganJadwalController extends Controller
 {
@@ -18,13 +19,10 @@ class LowonganJadwalController extends Controller
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
 
             $seleksi = Seleksi::where('id_seleksi_lowongan', $id)->get();
+            $industri = Industri::where('id_industri', $id)->first();
 
-            // $seleksi = $seleksi->map(function ($item) {
-            //     $item->tahap1 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap1')->count();
-            //     $item->tahap2 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap2')->count();
-            //     $item->tahap3 = $item->namatahap_seleksi->where('namatahap_seleksi', 'tahap3')->count();
-            //     return $item;
-            // });
+            $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
+            $img = $picture . '.png';
 
             $lowongan->transform(function ($item) {
                 $now = Carbon::now();
@@ -44,13 +42,13 @@ class LowonganJadwalController extends Controller
 
                 $item->kandidat = $item->total_pelamar->count();
                 $item->screening = $item->total_pelamar->where('applicant_status', 'screening')->count();
-                $item->penawaran = $item->total_pelamar->where('applicant_status', 'penawaran')->count();
-                $item->diterima = $item->total_pelamar->where('applicant_status', 'diterima')->count();
-                $item->ditolak = $item->total_pelamar->where('applicant_status', 'ditolak')->count();
+                $item->tahap1 = $item->total_pelamar->where('applicant_status', 'tahap1')->count();
+                $item->tahap2 = $item->total_pelamar->where('applicant_status', 'tahap2')->count();
+                $item->tahap3 = $item->total_pelamar->where('applicant_status', 'tahap3')->count();
                 return $item;
             });
 
-            return view('company.jadwal_seleksi.jadwal_card ', compact('lowongan', 'seleksi'))->render();
+            return view('company.jadwal_seleksi.jadwal_card ', compact('lowongan', 'seleksi', 'img'))->render();
         }
         $urlGetCard = url('jadwal-seleksi/lowongan', $id);
         $LMagang = LowonganMagang::where('id_industri', $id)->get();

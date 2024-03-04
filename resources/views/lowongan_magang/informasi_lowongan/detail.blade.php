@@ -158,81 +158,6 @@
             </div>
         </div>
         @endcan
-        @else
-        @can("ubah.lowongan.mitra")
-        @switch($lowongan->tahapan_seleksi)
-        @case(1)
-        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
-
-            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
-                    @csrf
-
-                    <select class="form-select select2" data-placeholder="Ubah Status Kandidat" name="status">
-                        <option value="" disabled selected>Ubah Status Kandidat</option>
-                        @if($statusId == 3)
-                        <option value="penawaran">Penawaran</option>
-                        @endif
-                    </select>
-                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        @break
-        @case(2)
-        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
-
-            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
-                    @csrf
-                    <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" name="status">
-                        <option value="" disabled selected>Ubah Status Kandidat</option>
-                        <!-- @if($statusId === '3')
-                        <option value="tahap2">Seleksi Tahap 2</option>
-                        @elseif($statusId === '4')
-                        <option value="penawaran">Penawaran</option>
-                        @endif -->
-
-                        @switch($statusId)
-                        @case('3')
-                        <option value="tahap2">Seleksi Tahap 2</option>
-                        @break
-                        @case('4')
-                        <option value="penawaran">Penawaran</option>
-                        @break
-                        @endswitch
-                    </select>
-                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        @break
-        @case(3)
-        <div id="div{{$statusId}}" class="col-xl-1 targetDiv" style="display: none;">
-
-            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
-                    @csrf
-                    <select class="select2 form-select" data-placeholder="Ubah Status Kandidat" name="status">
-                        <option value="" disabled selected>Ubah Status Kandidat</option>
-                        @if($statusId == 3)
-                        <option value="tahap2">Seleksi Tahap 2</option>
-                        @elseif($statusId == 4)
-                        <option value="tahap3">Seleksi Tahap 3</option>
-                        @elseif($statusId == 5)
-                        <option value="penawaran">Penawaran</option>
-                        @endif
-                    </select>
-                    <button class="btn btn-success waves-effect waves-light" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        @break
-        @endswitch
-        @endcan
         @endif
         @endforeach
     </div>
@@ -314,7 +239,9 @@
                     <table class="table tab1c" id="{{$tableId}}" style="width: 100%;">
                         <thead>
                             <tr>
+                                @can("only.lkm")
                                 <th style="min-width: auto;">SELECT</th>
+                                @endcan
                                 <th style="min-width: auto;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:150px;">TANGGAL DAFTAR</th>
@@ -436,10 +363,11 @@
                 processing: true,
                 deferRender: true,
                 type: 'GET',
-                columns: [{
+                columns: [
+                    @can("only.lkm") {
                         data: "check"
                     },
-                    {
+                    @endcan {
                         data: "DT_RowIndex",
                         name: 'nomor'
                     },

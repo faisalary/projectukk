@@ -50,8 +50,8 @@ class LowonganMagangController extends Controller
         $lokasi = Lokasi::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
-        $industri = Industri::where('id_industri', $id)->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas','industri'));
+        // $industri = Industri::where('id_industri')->get();
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas'));
     }
 
     /**
