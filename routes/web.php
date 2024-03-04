@@ -482,6 +482,10 @@ Route::get('/verifikasi/akun', function () {
     return view('partials_auth.verifikasi_akun');
 });
 
+Route::get('/konfirmasi/magang', function () {
+    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

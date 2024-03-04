@@ -252,7 +252,7 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="/konfirmasi/magang" class="menu-link">
+                      <a href="" class="menu-link">
                         <div data-i18n="Status Magang Aktif">Status Magang Aktif</div>
                       </a>
                     </li>
