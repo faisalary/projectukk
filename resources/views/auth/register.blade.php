@@ -9,8 +9,9 @@
             <label for="roleregister" class="form-label">Role Registrasi</label>
             <select class="form-select select2" id="roleregister" name="roleregister"
                     data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
+                {{-- <option disabled selected>Pilih Role Anda Terlebih Dahulu</option> --}}
                 <option value="user">Mahasiswa</option>
-                <option value="mitra">Mitra</option>
+                <option value="mitra">Company</option>
             </select>
         </div>
     </div>
@@ -18,7 +19,7 @@
         <div class="col">
             <label for="nim" class="col-form-label text-md-end">{{ __('NIM') }}</label>
             <div class="md-6">
-                <input id="nim" type="nim" class="form-control @error('nim') is-invalid @enderror" name="nim" value="{{ old('nim') }}" required autocomplete="nim" placeholder="Masukkan NIM" autofocus>
+                <input id="nim" type="nim" class="form-control @error('nim') is-invalid @enderror" name="nim" value="{{ old('nim') }}" autocomplete="nim" placeholder="Masukkan NIM" autofocus>
                 @error('nim')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
