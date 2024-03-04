@@ -9,7 +9,6 @@
             <label for="roleregister" class="form-label">Role Registrasi</label>
             <select class="form-select select2" id="roleregister" name="roleregister"
                     data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
-                <option disabled selected>Pilih Role Anda Terlebih Dahulu</option>
                 <option value="user">Mahasiswa</option>
                 <option value="mitra">Mitra</option>
             </select>

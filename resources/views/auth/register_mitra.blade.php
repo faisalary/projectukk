@@ -8,9 +8,8 @@
                 <label for="role" class="form-label">Silahkan Pilih Role Untuk Registrasi</label>
                 <select class="form-select select2" id="roleregister" name="roleregister"
                     data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
-                    <option disabled selected>Pilih Role Anda Terlebih Dahulu</option>
+                    <option value="mitra">Company</option>
                     <option value="user">Mahasiswa</option>
-                    <option value="mitra">Mitra</option>
                 </select>
             </div>
         </div>
