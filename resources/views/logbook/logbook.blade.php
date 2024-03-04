@@ -4,17 +4,27 @@
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
 <style>
-.btn-success {
-    color: #fff;
-    background-color: #4EA971 !important;
-    border-color: #4EA971 !important;
-}
+    .btn-success {
+        color: #fff;
+        background-color: #4EA971 !important;
+        border-color: #4EA971 !important;
+    }
+
+    .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
+        background-color: rgba(115, 103, 240, 0.08) !important;
+        color: #4EA971 !important;
+    }
+
+    .select2-results__option[role="option"][aria-selected="true"] {
+        background-color: #4EA971 !important;
+        color: #fff;
+    }
 </style>
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="col-md-10 col-12 mb-4">
+    <div class="col-md-10 col-12 mt-4 mb-4">
         <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Kegiatan Saya / </span> Logbook Mahasiswa</h4>
     </div>
     <div class="col-12">
@@ -61,7 +71,7 @@
     </div>
 
     <div class="mb-4 mt-4" style=" display: flex; justify-content: space-between !important;">
-        <h4>Laporan Magang - Periode Januari 2023</h4>
+        <h4>Logbook Mahasiswa - Januari 2024</h4>
         <select class="select2 form-select" data-placeholder="Silahkan Pilih Bulan">
             <option value="">Silahkan Pilih Bulan</option>
             <option value="1">Januari</option>
@@ -81,7 +91,7 @@
 
         <div class="mt-3" style="display: flex !important;">
             <div class="text-center" style="margin-top: 120px; margin-bottom: 30px">
-                <a href="/logbook-detail" class="btn btn-success active" role="button" style="margin-bottom: 14px">Lengkapi Logbook Mahasiswa</a>
+                <a href="/logbook-detail" class="btn btn-success" role="button" style="margin-bottom: 14px">Lengkapi Logbook Mahasiswa</a>
                 <p>Laporan mingguan dapat terkirim ketika laporan harian sudah dilengkapi secara keseluruhan</p>
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
