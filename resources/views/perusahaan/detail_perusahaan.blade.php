@@ -31,7 +31,15 @@
 @endsection
 
 @section('main')
-<div class="auto-container m-5">
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <a href="/daftar_perusahaan" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
+    <div class="col-md-10 col-12">
+        <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Daftar Mitra / </span> Detail Mitra </h4>
+    </div>
+
     <div class="card mb-5">
         <div class="card-body">
             <div class="row">
@@ -47,46 +55,21 @@
                     <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan" data-bs-placement="bottom" data-bs-original-title="Bagikan">
                         <i class="ti ti-share me-1"></i>Bagikan
                     </button>
-                    <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter" data-bs-original-title="Laporkan">
-                        <i class="ti ti-flag me-1"></i>Laporkan
-                    </button>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-3">
-                    <div>
-                        <h6 class="mb-0">Lokasi Perusahaan</h6>
-                        <p>Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, Cakung, Jakarta Timur, Jakarta 13910, ID</p>
-                    </div>
-                    <div>
-                        <h6 class="mb-0">Industri</h6>
-                        <p>Fast Moving Consumer Good</p>
-                    </div>
+                <div class="col-4">
+                    <h6 class="mb-0">Alamat Perusahaan</h6>
+                    <p>Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, <br>
+                    Cakung, Jakarta Timur, Jakarta 13910, ID</p>
                 </div>
-                <div class="col-3">
-                    <div>
-                        <h6 class="mb-0">Email</h6>
-                        <p>recruiter@wings.id</p>
-                    </div>
-                    <div style="margin-top: 35px;">
-                        <h6 class="mb-0">Phone</h6>
-                        <p>+6295948438388</p>
-                    </div>
+                <div class="col-4">
+                    <h6 class="mb-0">Email</h6>
+                    <p>wing@gmail.com</p>
                 </div>
-                <div class="col-3">
-                    <div>
-                        <h6 class="mb-0">Sosial Media</h6>
-                        <span class="social-links">
-                            <a href="#" class="ml-0"><i class="fab fa-facebook-f text-secondary" style="margin-right: 10px;"></i></a>
-                            <a href="#"><i class="fab fa-instagram text-secondary" style="margin-right: 10px;"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in text-secondary" style="margin-right: 10px;"></i></a>
-                            <a href="#"><i class="fab fa-twitter text-secondary" style="margin-right: 10px;"></i></a>
-                        </span>
-                    </div>
-                    <div style="margin-top: 35px;">
-                        <h6 class="mb-0">Website</h6>
-                        <p>www.wingsfood.com</p>
-                    </div>
+                <div class="col-4">
+                    <h6 class="mb-0">Phone</h6>
+                    <p>+6295948438388</p>
                 </div>
             </div>
         </div>
