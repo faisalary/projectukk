@@ -69,6 +69,50 @@
         background-color: rgba(115, 103, 240, 0.08) !important;
         color: #4EA971 !important;
     }
+
+    .light-style .select2-container--default .select2-selection--single {
+        height: 48px !important;
+    }
+
+    .light-style .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 2.67rem !important;
+    }
+
+    span.select2-dropdown.select2-dropdown--below {
+        width: 530px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        position: absolute;
+        height: 18px;
+        width: 20px;
+        top: 36% !important;
+        background-repeat: no-repeat;
+        background-size: 20px 18px;
+        margin-left: 307px !important;
+    }
+
+    .input-group:not(.has-validation)> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating),
+    .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
+    .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control,
+    .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top: 0;
+        border-bottom: 0;
+        border-right: 0;
+        border-left: 0;
+    }
+
+    span.select2-selection.select2-selection--single {
+        border-top: 10px !important;
+        border-bottom: 10px !important;
+        border-right: 10px !important;
+    }
+
+    .light-style .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 3.2rem !important;
+    }
 </style>
 @endsection
 
@@ -76,14 +120,14 @@
 
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
     <div class="row mt-5 mb-3" style="margin-left:70px;">
-        <div class="col-5">
-            <div class="input-group input-group-merge">
+        <div class="col-5 mt-3">
+            <div class="input-group input-group-merge border">
                 <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                 <input type="text" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
             </div>
         </div>
-        <div class="col-5">
-            <div class="input-group input-group-merge">
+        <div class="col-5 mt-3">
+            <div class="input-group input-group-merge border">
                 <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-map-pin"></i></span>
                 <select class="select2 form-control" data-placeholder="Pilih lokasi Magang" aria-describedby="basic-addon-search31">
                     <option disabled selected> Lokasi Magang </option>
@@ -95,11 +139,14 @@
                 </select>
             </div>
         </div>
-        <div class="col-2">
-            <button class="btn btn-success" type="submit">Cari sekarang</button>
+        <div class="col-2 mt-3">
+            <button class="btn btn-success" type="button" style="height: 50px;">Cari sekarang
+                <!-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading... -->
+            </button>
         </div>
     </div>
-    <div class="row mt-4 mb-4">
+    <div class="row mt-4 mb-3">
         <div class="col-1 ms-5"></div>
         <div class="col-2">
             <p class="flatpickr-input" id="flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
@@ -108,55 +155,77 @@
             <div class="dropdown cursor-pointer">
                 <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
                     Perusahaan
+                    <!-- <span class="badge badge-center rounded-pill bg-success">3</span> -->
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px" style="margin-top: 0px; margin-right:3px"> PT Techno Infinity
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Telkom Indonesia
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Inovasi Daya Solusi
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> PT Indo Trans Teknologi
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Direktorat PUTI Tel-U
                     </li>
 
-                    <li class="ps-2 pe-3">
+                    <li class="mb-2 ps-2 pe-3">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Fakultas Ilmu Terapan
                     </li>
-
+                    <hr>
+                    <div class=" d-flex justify-content-between ms-2 me-2">
+                        <button class="btn btn-outline-danger" type="submit">Reset</button>
+                        <button class="btn btn-success" type="submit">Terapkan</button>
+                    </div>
                 </ul>
             </div>
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
                 <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Benefit
+                    Uang Saku
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
-                    <li class="ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Berbayar
-                    </li>
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 250px !important;">
+                    <div class="form-check mb-2 ms-2">
+                        <input name="paymentType" class="form-check-input" type="radio" value="tidakBerbayar" id="tidakBerbayarRadio" onclick="myFunction(this)">
+                        <label class="form-check-label" for="tidakBerbayarRadio"> Tidak Berbayar </label>
+                    </div>
 
-                    <li class="ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Tidak Berbayar
-                    </li>
+                    <div class="form-check mb-2 ms-2">
+                        <input name="paymentType" class="form-check-input" type="radio" value="berbayar" id="berbayarRadio" onclick="myFunction(this)">
+                        <label class="form-check-label" for="berbayarRadio"> Berbayar </label>
+                    </div>
+
+                    <div id="myDIV" style="display: none;">
+                        <div class="ms-2 me-3">
+                            <div class="input-group border">
+                                <span class="input-group-text" id="basic-addon11">IDR</span>
+                                <input type="text" class="form-control" placeholder="Masukkan minimal nominal" aria-label="Masukkan minimal nominal" aria-describedby="basic-addon11" style="width: 150px !important;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class=" d-flex justify-content-between ms-2 me-2">
+                        <button class="btn btn-outline-danger" type="submit">Reset</button>
+                        <button class="btn btn-success" type="submit">Terapkan</button>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -164,36 +233,48 @@
             <div class="dropdown cursor-pointer">
                 <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
                     Durasi Magang
+                    <!-- <span class="badge badge-center rounded-pill bg-success">2</span> -->
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
-                    <li class="ps-2 pe-5">
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
+                    <li class="mb-2 ps-2 pe-5">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 1 Semester
                     </li>
 
-                    <li class="ps-2 pe-5">
+                    <li class="mb-2 ps-2 pe-5">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 2 Semester
                     </li>
+                    <hr>
+                    <div class=" d-flex justify-content-between ms-2 me-2">
+                        <button class="btn btn-outline-danger" type="submit">Reset</button>
+                        <button class="btn btn-success" type="submit">Terapkan</button>
+                    </div>
                 </ul>
             </div>
         </div>
         <div class="col-2">
             <div class="dropdown cursor-pointer">
                 <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Tipe Magang
+                    Pelaksanaan
+                    <!-- <span class="badge badge-center rounded-pill bg-success">2</span> -->
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
-                    <li class="ps-2 pe-5">
+                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
+                    <li class="mb-2 ps-2 pe-5">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Onsite
                     </li>
 
-                    <li class="ps-2 pe-5">
+                    <li class="mb-2 ps-2 pe-5">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Hybrid
                     </li>
-                    <li class="ps-2 pe-5">
+                    <li class="mb-2 ps-2 pe-5">
                         <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Online
                     </li>
+                    <hr>
+                    <div class=" d-flex justify-content-between ms-2 me-2">
+                        <button class="btn btn-outline-danger" type="submit">Reset</button>
+                        <button class="btn btn-success" type="submit">Terapkan</button>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -202,21 +283,22 @@
 </div>
 
 {{-- Lowongn tidak ditemukan --}}
-<!-- <div class="col-3 mt-5 text-left">
-    <img class="image" style="border-radius: 0%; margin-left: 400px;" src="{{ asset('front/assets/img/pana.png')}}" alt="admin.upload">
+<!-- <div class="col-3 mt-5">
+    <img class="image" style="border-radius: 0%; margin-left:465px;" src="{{ asset('front/assets/img/nodata.png')}}" alt="admin.upload">
 </div>
 <div class="sec-title mt-5 mb-4 text-center">
     <h4> Maaf, lowongan tidak di temukan</h4>
+    <p> Silakan coba sesuaikan filter atau periksa kembali penulisan Anda</p>
 </div> -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="ms-4">500+ Lowongan Tersedia</h4>
-    <!-- <h4 class="ms-4">500+ Lowongan Magang Fakultas</h4> -->
+    <!-- <h4 class="ms-4">500+ Lowongan Tersedia</h4> -->
+    <h4 class="ms-4">500+ Lowongan Magang Fakultas</h4>
     <div class="row mt-2 ps-4">
         <div class="col-5">
             <div class="row">
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 530px">
+                    <div class="card border" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
@@ -233,7 +315,7 @@
                             </div>
                             <div class="border"></div>
                             <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
-                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Tidak Berbayar</div>
                             <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
                             <div class="row">
                                 <div class="col-6">
@@ -248,7 +330,7 @@
                 </div>
 
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 530px">
+                    <div class="card border" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
@@ -265,7 +347,7 @@
                             </div>
                             <div class="border"></div>
                             <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
-                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Rp 1.000.000 - 5.000.000</div>
                             <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
                             <div class="row">
                                 <div class="col-6">
@@ -280,7 +362,7 @@
                 </div>
 
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 530px">
+                    <div class="card border" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
@@ -297,7 +379,7 @@
                             </div>
                             <div class="border"></div>
                             <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
-                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Tidak Berbayar</div>
                             <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
                             <div class="row">
                                 <div class="col-6">
@@ -312,7 +394,7 @@
                 </div>
 
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 530px">
+                    <div class="card border" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
@@ -329,7 +411,7 @@
                             </div>
                             <div class="border"></div>
                             <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px;margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
-                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px;margin-bottom:5px;"></i>Rp 1.000.000 - 5.000.000</div>
                             <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px;margin-bottom:5px;"></i>2 Semester</div>
                             <div class="row">
                                 <div class="col-6">
@@ -344,7 +426,7 @@
                 </div>
 
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 530px">
+                    <div class="card border" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
@@ -361,7 +443,7 @@
                             </div>
                             <div class="border"></div>
                             <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
-                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Berbayar</div>
+                            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Tidak Berbayar</div>
                             <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>2 Semester</div>
                             <div class="row">
                                 <div class="col-6">
@@ -401,8 +483,8 @@
         </div>
 
         <div class="col-7">
-            
-        {{-- Ada lowongan terpilih--}}
+
+            {{-- Ada lowongan terpilih--}}
             <!-- <div class="row">
                 <div class="col-12 mt-3 mb-2">
                     <div class="card" style="width: 765px; height: auto;">
@@ -620,7 +702,7 @@
             </div> -->
 
             {{-- Belum ada lowongan terpilih--}}
-            <div class="border text-center mt-3">
+            <div class="border text-center mt-3" style="border-radius: 8px;">
                 <figure class="m-5">
                     <img class="image" src="{{ asset('front/assets/img/amico.png')}}" alt="admin.upload">
                 </figure>
@@ -649,17 +731,13 @@
         x.classList.toggle("fa-bookmark");
     }
 
-    $(document).ready(function() {
-        $(".content-new").hide();
-        $(".show_hide_new").on("click", function() {
-            $(this).prev('.content-new').slideToggle(100);
-            console.log($(this).text().trim())
-            if ($(this).text().trim() == "Show more") {
-                $(this).text("Show Less");
-            } else {
-                $(this).text("Show more")
-            }
-        });
-    });
+    function myFunction(radio) {
+        var x = document.getElementById("myDIV");
+        if (radio.value === "berbayar") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 </script>
 @endsection
