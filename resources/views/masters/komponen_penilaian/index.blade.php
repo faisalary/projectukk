@@ -60,6 +60,7 @@
             </div>
         </div>
     </div>
+    
     <div class="tab-content p-0">
         <div class="tab-pane fade show active" id="navs-pills-justified-akademik" role="tabpanel">
             <div class="card">
