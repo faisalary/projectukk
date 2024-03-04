@@ -43,13 +43,14 @@ class RegisterMitraController extends Controller
             'statuskerjasama' => $request->statuskerjasama,
             'penanggung_jawab' => $request->name,
             'status' => true,
+            'notelpon' => $request->notelpon
         ]);
 
 
         $code = Str::random(64);
         $admin = User::create([
             'name' => $request->name,
-            'username' => 'mitra',
+            'username' => $industri->namaindustri,
             'email' => $request->email,
             'password' => Hash::make($industri->penanggung_jawab),
             'remember_token' => $code,

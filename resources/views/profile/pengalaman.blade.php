@@ -39,7 +39,7 @@
             Profil
           </li>
           <li class="breadcrumb-item">
-            <a href="/informasi/pribadi">Informasi Pribadi</a>
+            <a href="{{ url("mahasiswa/profile/pribadi/" . Auth::user()->nim)}}">Informasi Pribadi</a>
           </li>
           <li class="breadcrumb-item active">Pengalaman dan Keahlian</li>
         </ol>
@@ -52,138 +52,49 @@
     <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
       <h5 class="text-secondary">Keahlian</h5>
       <div class="text-end">
-        <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
-        <br>
         <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalEditKeahlian"></i>
       </div>
     </div>
     <div class="card-body pb-0 pt-0">
       <div>
-        <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-        <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
-        <span class="btn rounded-pill btn-success waves-effect waves-light">Figma</span>
-        <span class="btn rounded-pill btn-success waves-effect waves-light">Zeplin</span>
+        @foreach($skill as $s)
+        <span class="btn rounded-pill btn-success waves-effect waves-light">{{$s?->skills??''}}</span>
+        @endforeach
       </div>
       <div class="border-bottom mt-3"></div>
       <div class="d-flex justify-content-between pt-3 pb-3">
         <h5 class="text-secondary">Pengalaman</h5>
         <div class="text-end">
-          <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPengalaman"></i>
         </div>
       </div>
       <ul class="timeline mb-0">
+        @foreach($pengalaman as $pe)
         <li class="timeline-item timeline-item-transparent">
           <span class="timeline-point timeline-point-success"></span>
           <div class="timeline-event">
-            <div class="timeline-header">
-              <h6 class="mb-0">UIUX Designer</h6>
+            <div class="timeline-header mt-5">
+              <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
               <div>
                 <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
                 <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
               </div>
             </div>
             <div class="border-bottom mb-3">
-              <p class="mb-1">Techno Infinity - Internship</p>
-              <p style="font-size: small;">Juli 2022 - Present/p>
+              <p class="mb-1">{{$pe?->name_intitutions??''}} - {{$pe?->jenis??''}}</p>
+              <p style="font-size: small;">{{$pe?->startdate??''}} - {{$pe?->enddate??''}}</p>
               <div>
-                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
+                <p class="mb-0">{{$pe?->deskripsi??''}}</p>
+                {{-- <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                 <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                   See more
-                </u>
+                </u> --}}
               </div>
             </div>
           </div>
         </li>
-        <li class="timeline-item timeline-item-transparent">
+        @endforeach
+        <li class="timeline-item timeline-item-transparent mb-5">
           <span class="timeline-point timeline-point-success"></span>
-          <div class="timeline-event pt-0">
-            <div class="timeline-header">
-              <h6 class="mb-0">UIUX Designer</h6>
-              <div>
-                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-              </div>
-            </div>
-            <div class="border-bottom mb-3">
-              <p class="mb-1">Techno Infinity - Internship</p>
-              <p style="font-size: small;">Juli 2022 - Present/p>
-              <div>
-                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                  See more
-                </u>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item timeline-item-transparent">
-          <span class="timeline-point timeline-point-success"></span>
-          <div class="timeline-event pt-0">
-            <div class="timeline-header">
-              <h6 class="mb-0">UIUX Designer</h6>
-              <div>
-                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-              </div>
-            </div>
-            <div class="border-bottom mb-3">
-              <p class="mb-1">Techno Infinity - Internship</p>
-              <p style="font-size: small;">Juli 2022 - Present/p>
-              <div>
-                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                  See more
-                </u>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item timeline-item-transparent">
-          <span class="timeline-point timeline-point-success"></span>
-          <div class="timeline-event pt-0">
-            <div class="timeline-header">
-              <h6 class="mb-0">UIUX Designer</h6>
-              <div>
-                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-              </div>
-            </div>
-            <div class="border-bottom mb-3">
-              <p class="mb-1">Techno Infinity - Internship</p>
-              <p style="font-size: small;">Juli 2022 - Present/p>
-              <div>
-                <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-                <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-                <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                  See more
-                </u>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item timeline-item-transparent border-0">
-          <span class="timeline-point timeline-point-success"></span>
-          <div class="timeline-event pt-0">
-            <div class="timeline-header">
-              <h6 class="mb-0">UIUX Designer</h6>
-              <div>
-                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
-              </div>
-            </div>
-            <p class="mb-1">Techno Infinity - Internship</p>
-            <p style="font-size: small;">Juli 2022 - Present/p>
-            <div>
-              <p class="mb-0">Lorem ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,</p>
-              <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
-              <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                See more
-              </u>
-            </div>
-          </div>
         </li>
       </ul>
     </div>
