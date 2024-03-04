@@ -173,35 +173,23 @@
                     <h4 class="ms-2 mt-2">Komentar</h4>
                     <p class="ms-2 text-area" contenteditable="true" id="alasans"></p>
                 </div>
-                {{-- <div class="row text-start">
+                <div class="row text-start">
                     <h4 class="ms-2 mt-2">Detail Pengajuan</h4>
                     <div class="col-6">
                         <ul class="list-unstyled ms-2">
                             <li class="mb-1">
                                 <span class="fw-semibold me-1">Tanggal Pengajuan :</span>
                             </li>
-                            <li class="mb-2 pt-1">
-                                <span class="fw-semibold me-1">Disetujui :</span>
-                            </li>
-                            <li class="mb-2 pt-1">
-                                <span class="fw-semibold me-1">Oleh :</span>
-                            </li>
                         </ul>
                     </div>
                     <div class="col-6">
                         <ul class="list-unstyled">
                             <li class="mb-1">
-                                <span>25 Juni 2023</span>
-                            </li>
-                            <li class="mb-2 pt-1">
-                                <span>01 Juli 2023</span>
-                            </li>
-                            <li class="mb-2 pt-1">
-                                <span>Admin 1</span>
+                                <span>$item->tgl_pengajuan</span>
                             </li>
                         </ul>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>

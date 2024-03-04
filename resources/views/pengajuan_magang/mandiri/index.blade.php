@@ -90,7 +90,7 @@
                                         <p>{{ $item->nama_industri }}</p>
                                         <p>{{ $item->alamat_industri }}</p>
                                         <button type="button" class="card-link btn btn-success mb-3"
-                                            href={{ asset('storage/format.xlsx') }}> Unduh Surat Disini
+                                            href={{ $item->dokumen_spm }}> Unduh Surat Disini
                                         </button>
                                     </div>
                                     <div class="col-2">

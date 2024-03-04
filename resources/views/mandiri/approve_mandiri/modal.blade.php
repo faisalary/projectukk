@@ -30,7 +30,7 @@
                 <h5 class="modal-title" id="modalDiterima">Persetujuan pengajuan SPM dan Pengiriman SPM</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" action="{{ url('/mandiri/approve-mandiri') }}" method="POST"
+            <form class="default-form" action="" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
@@ -39,9 +39,9 @@
                     <div class="row">
                         <div class="col mb-0">
                             <label for="formFile" class="form-label">Unggah Surat Pengantar Magang</label>
-                            <input class="form-control @error('bukti_doc') is-invalid @enderror" type="file"
-                                id="bukti_doc" name="bukti_doc" multiple="">
-                            @error('bukti_doc')
+                            <input class="form-control @error('dokumen_spm') is-invalid @enderror" type="file"
+                                id="dokumen_spm" name="dokumen_spm">
+                            @error('dokumen_spm')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
