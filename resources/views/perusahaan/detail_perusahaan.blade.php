@@ -98,7 +98,7 @@
         <div class="card-header p-3" style="background-color: #23314B;">
             <div class="row">
                 <div class="col-6">
-                    <h4 class="mb-0 ps-2" style="color: #FFFFFF;">Lowongan Tersedia di Perusahaan</h4>
+                    <h4 class="mb-0 ps-2 pt-2" style="color: #FFFFFF;">Lowongan Tersedia di Perusahaan</h4>
                 </div>
                 <div class="col-6">
                     <div class="row">
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <button type="button" class="btn btn-success waves-effect waves-light">Cari
+                            <button type="button" class="btn btn-success waves-effect waves-light" style="height: 47px;">Cari
                                 Sekarang</button>
                         </div>
                     </div>
