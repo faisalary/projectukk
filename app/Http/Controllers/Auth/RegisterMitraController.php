@@ -55,12 +55,7 @@ class RegisterMitraController extends Controller
         ]);
         $admin->assignRole('admin');
 
-        return response()->json([
-            'error' => false,
-            'message' => 'Industri successfully Created!',
-            'url' => 'login'
-            
-        ]);
+        return view('auth.message-verify-email');
         
     } catch (Exception $e) {
         return response()->json([

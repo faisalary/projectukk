@@ -60,14 +60,12 @@ class RegisteredUserController extends Controller
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
                 Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
                 $user->save();
-                DB::commit();
 
             return response()->json([
                 'error' => false,
                 'message' => 'Activated successfully!',
             ]);
         } catch (Exception $e) {
-            DB::rollBack();
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),

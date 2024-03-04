@@ -30,7 +30,8 @@ class RegisMahasiswa extends FormRequest
         return[
             'nim.required' => 'NIM harus di isi',
             'nim.unique' => 'nim sudah terdaftar',
-            'nim.numeric' => 'nim harus angka'
+            'nim.numeric' => 'nim harus angka',
+            'nim.unique:mahasiswa' => 'nim tidak ditemukan',
         ];
     }
 }

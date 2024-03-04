@@ -521,3 +521,7 @@ Route::prefix('/mandiri/approve-mandiri')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'edit'])->name('mandiri.edit');
     Route::post('/status/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'status'])->name('mandiri.status');
 });
+
+Route::get('/message', function () {
+    return view('auth.message-verify-email');
+});
