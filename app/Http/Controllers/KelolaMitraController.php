@@ -149,10 +149,9 @@ class KelolaMitraController extends Controller
             }
             $data->statusapprove = 1;
             $data->save();
-        
-            $code = Str::random(64);
             
-            $url = url('/mitra/set-password/' . $code);
+            $user = User::where('email', $data->email)->first();
+            $url = url('/company/set-password/' . $user->remember_token);
             Mail::to($data->email)->send(new VerifyEmail($url));
             DB::commit();
 

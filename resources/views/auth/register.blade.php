@@ -19,7 +19,7 @@
         <div class="col">
             <label for="nim" class="col-form-label text-md-end">{{ __('NIM') }}</label>
             <div class="md-6">
-                <input id="nim" type="nim" class="form-control @error('nim') is-invalid @enderror" name="nim" value="{{ old('nim') }}" autocomplete="nim" placeholder="Masukkan NIM" autofocus>
+                <input id="nim" type="text" class="form-control @error('nim') is-invalid @enderror" name="nim" value="{{ old('nim') }}" autocomplete="nim" placeholder="Masukkan NIM" autofocus>
                 @error('nim')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

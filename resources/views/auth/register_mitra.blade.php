@@ -1,11 +1,11 @@
 @extends('partials_auth.register_mitra')
 @section('conten')
 
-    <form method="POST" action="{{ url('mitra/register') }}">
+    <form method="POST" action="{{ url('company/register') }}">
         @csrf
         <div class="row">
             <div class="col mb-2 form-input">
-                <label for="role" class="form-label">Silahkan Pilih Role Untuk Registrasi</label>
+                <label for="role" class="form-label mt-3">Silahkan Pilih Role Untuk Registrasi</label>
                 <select class="form-select select2" id="roleregister" name="roleregister"
                     data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
                     <option value="mitra">Company</option>
@@ -17,7 +17,7 @@
         {{-- form-control --}}
         <div class="form-group">
             <div class="col">
-                <label for="name" class="col-form-label text-md-end">{{ __('Nama Penanggung Jawab Perusahaan') }}</label>
+                <label for="name" class="form-label mt-3">{{ __('Nama Penanggung Jawab Perusahaan') }}</label>
 
                 <div class="md-6">
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  autocomplete="name" placeholder="Masukkan Nama" autofocus>
@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <div class="col">
-                <label for="namaindustri" class="col-form-label text-md-end">{{ __('Nama Instansi/Perusahaan') }}</label>
+                <label for="namaindustri" class="form-label mt-3">{{ __('Nama Instansi/Perusahaan') }}</label>
                 <div class="md-6">
                     <input id="namaindustri" type="text" class="form-control @error('namaindustri') is-invalid @enderror" name="namaindustri" value="{{ old('namaindustri') }}"  autocomplete="namaindustri" placeholder="Masukkan nama perusahaan/instansi" autofocus>
 
@@ -47,7 +47,7 @@
         {{-- form-control --}}
         <div class="form-group">
             <div class="col">
-                <label for="email" class="col-form-label text-md-end">{{ __('Email Penanggung Jawab') }}</label>
+                <label for="email" class="form-label mt-3">{{ __('Email Penanggung Jawab') }}</label>
 
                 <div class="md-6">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email" placeholder="Enter your Email" autofocus>
@@ -63,7 +63,7 @@
         {{-- form-control --}}
         <div class="form-group">
             <div class="col">
-                <label for="notelpon" class="col-form-label text-md-end">{{ __('No Hp ') }}</label>
+                <label for="notelpon" class="form-label mt-3">{{ __('No Hp ') }}</label>
 
                 <div class="md-6">
                     <input id="notelpon" type="numeric" class="form-control @error('notelpon') is-invalid @enderror" name="notelpon" value="{{ old('notelpon') }}" autocomplete="notelpon" placeholder="No. Hp Penanggung Jawab" autofocus>

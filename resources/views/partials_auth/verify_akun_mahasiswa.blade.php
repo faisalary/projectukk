@@ -151,7 +151,7 @@
                                 <img src="{{ asset('app-assets/img/branding/Talentern.png') }}" style="width:250px">
                             </div>
                         </div>
-                        <form class="default-form" id="updatePasswordForm" action="{{ url('company/set-password') }}" method="POST">
+                        <form class="default-form" id="updatePasswordForm" action="{{ url('mahasiswa/set-password') }}" method="POST">
                             @csrf
                             <input type="hidden" name="token" value="{{$token}}">
                             <div class="text-start ps-5 pe-5">

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisMahasiswa extends FormRequest
+class SetPasswordReq extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,17 @@ class RegisMahasiswa extends FormRequest
     public function rules(): array
     {
         return [
-            'nim' => 'required|numeric|unique:users|exists:mahasiswa,nim'
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
+
     public function messages()
     {
         return[
-            'nim.required' => 'NIM harus di isi',
-            'nim.unique' => 'nim sudah terdaftar',
-            'nim.numeric' => 'nim harus angka',
-            'nim.exists' => 'nim tidak ditemukan, hubungi LKM untuk info lebih lanjut',
+            'password.required' => 'password harus di isi',
+            'password.string' => 'password sudah terdaftar',
+            'password.min:8' => 'password min 8',
+            'password.confirmed' => 'password tidak sesuai',
         ];
     }
 }

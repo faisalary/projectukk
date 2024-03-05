@@ -341,7 +341,7 @@
             @if (!$user)
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-              <a href="{{ route('login')}}">
+              <a href="{{ url('/login')}}">
                 <button class="btn btn-outline-success me-2" type="button">Masuk</button>
               </a>
             </ul>

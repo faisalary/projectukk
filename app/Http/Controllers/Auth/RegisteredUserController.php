@@ -45,7 +45,6 @@ class RegisteredUserController extends Controller
             $code = Str::random(64);
              
             if ($user !== null) 
-            throw new Exception('User not found with the provided NIM.'); 
             
                 $user = User::create([
                         'nim' => $request->nim,
@@ -60,11 +59,8 @@ class RegisteredUserController extends Controller
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
                 Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
                 $user->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Activated successfully!',
-            ]);
+                
+            return view('auth.message-verify-email');
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,

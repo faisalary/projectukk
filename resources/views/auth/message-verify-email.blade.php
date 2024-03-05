@@ -123,22 +123,14 @@
     <script src="{{url("app-assets/js/config.js")}}"></script>
   </head>
   <body>
-    <div class="auto-container" style="background-image: url({{asset('assets/images/background/Bg-Green.svg')}}); background-repeat: no-repeat; background-size: cover;  padding-bottom: 1rem;">
-        <div class="authentication-cover authentication-bg">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-12  p-sm-5 p-4 text-center">
-                    <h3 class="mb-1 fw-bold">Selamat! Pendaftaran akun Anda berhasil! 🎉🥳</h3>
-                    <p class="mb-4" style="font-size: 18px">Silakan tunggu tautan verifikasi di email aktif yang Anda daftarkan saat mendaftar.</p>
-                </div>
-            </div>
+    <div class="authentication-wrapper authentication-cover authentication-bg" style="background-image: url({{asset('assets/images/background/Bg-Green.svg')}}); background-repeat: no-repeat; background-size: cover;  padding-bottom: 1rem;">
+      <div class="authentication-inner text-center">
+        <div class="text-center">
+          <h3 class="mb-1 fw-bold">Selamat! Pendaftaran akun Anda berhasil! 🎉🥳</h3>
+          <p class="mb-4" style="font-size: 18px">Silakan tunggu tautan verifikasi di email aktif yang Anda daftarkan saat mendaftar.</p>
         </div>
-        
-        <div class="auth-cover-bg d-flex justify-content-center align-items-center" style="margin-right: 30px">
-            <img
-            alt="auth-login-cover"
-            class="img-fluid"
-            style="width: 500px; height: 508.214px; flex-shrink: 0;" src="{{ asset('assets/images/amico.svg') }}" alt="Login" />
-        </div>
+        <img alt="auth-login-cover" class="img-fluid" style="width: 500px; height: 508.214px; flex-shrink: 0;" src="{{ asset('assets/images/amico.svg') }}" alt="Login" />
+      </div>
     </div>
 </body>
 </html>
