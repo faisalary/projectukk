@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterCompanyReq;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use App\Models\Industri;
@@ -26,16 +27,10 @@ class RegisterMitraController extends Controller
         return view('auth.register_mitra');
     }
 
-    public function store(Request $request)
+    public function store(RegisterCompanyReq $request)
     {
-        // Validasi data input
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'namaindustri' => 'required|string|max:255',
-            'email' => 'required|email:rfc,dns|unique:users',
-        ]);
+        
         try{
-            DB::beginTransaction();
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
@@ -59,16 +54,10 @@ class RegisterMitraController extends Controller
             'penanggung_jawab' => $industri->id_industri,
         ]);
         $admin->assignRole('admin');
-              
-        DB::commit();
-        return response()->json([
-            'error' => false,
-            'message' => 'Industri successfully Created!',
-            'modal' => '#register-mitra',
-        ]);
+
+        return view('auth.message-verify-email');
         
     } catch (Exception $e) {
-        DB::rollBack();    
         return response()->json([
             'error' => true,
             'message' => $e->getMessage(),

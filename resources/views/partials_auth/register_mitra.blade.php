@@ -188,32 +188,10 @@
         } else if (selectedRole === "mitra") {
           return Mitra;
       }
-      function store(e) {
-            
-            $('#registrasi-mitra').modal('store');
-            var approveUrl = '{{url("/mitra/register")}}/' + e.attr('data-id');
-
-            $('#register-mitra').on('click', function () {
-
-                $.ajax({
-                    url: approveUrl,
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN" : "{{csrf_token()}}"
-                    },
-                    success: function (response) {
-                        if (!response.error) {
-                            alert('berhasil');
-                        } else {
-                            alert('tidak berhasil');
-                        }
-                    }
-                });
-
-                $('#registrasi-mitra').modal('hide');
-            });
-        }
+      
     }
     </script>
-  </body>
+
+</body>
 </html>
+

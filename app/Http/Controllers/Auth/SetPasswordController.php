@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SetPasswordReq;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -11,39 +12,27 @@ use App\Models\User;
 class SetPasswordController extends Controller
 {
     //set password mitra
-    public function index($token)
-    {
-        return view('auth.reset_password_admin', compact('token'));
+    public function index($token) {
+        return view('partials_auth.verifikasi_akun', compact('token'));
     }
-    public function update(Request $request)
-    {
-
-        $request->validate([
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
+    public function update(SetPasswordReq $request) {
         $admin = User::where('remember_token', $request->token)->first();
-
         if (!$admin) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
         }
         $admin->password = bcrypt($request->password);
+        $admin->remember_token=null;
         $admin->save();
         return redirect('/login');
     }
 
     //set password mahasiswa
-    public function setting($token)
-    {
-        return view('auth.reset_password_mahasiswa', compact('token'));
+    public function setting($token) {
+
+        return view('partials_auth.verify_akun_mahasiswa', compact('token'));
     }
 
-    public function updateset(Request $request)
-    {
-        
-        $request->validate([
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+    public function updateset(Request $request) {
 
         $user = User::where('remember_token', $request->token)->first();
         if (!$user) {
