@@ -26,7 +26,7 @@ class KonfirmasiMagangController extends Controller
         $user = auth()->user();
         $mandiri = PengajuanMandiri::where("nim",$user->nim)->get();
         $mahasiswa = Mahasiswa::all();
-        $file = MhsMandiri::all();
+        $file = MhsMandiri::with('PengajuanMandiri')->get();
         
         $nim = Mahasiswa::find($user->nim);
         $nim = $nim->nim;

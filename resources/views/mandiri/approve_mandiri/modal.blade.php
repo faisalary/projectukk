@@ -1,4 +1,3 @@
-
 {{-- Modal Reject --}}
 <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -21,21 +20,43 @@
         </div>
     </div>
 </div>
+
+
+
 <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-center">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDiterima">Persetujuan pengajuan SPM dan Pengiriman SPM</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="default-form" action="" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
+                <div class="modal-body">
 
-                </button>
-            </div>
-            <div class="modal-body text-center" style="display:block;">
-                Konfirmasi Persetujuan Data Mitra
-            </div>
-            <div class="modal-footer" style="display: flex; justify-content:center;">
-                <a class="btn btn-primary text-white" id="approve-confirm-button">Iya, Yakin</a>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            </div>
+                    <div class="row">
+                        <div class="col mb-0">
+                            <label for="formFile" class="form-label">Unggah Surat Pengantar Magang</label>
+                            <input class="form-control @error('dokumen_spm') is-invalid @enderror" type="file"
+                                id="dokumen_spm" name="dokumen_spm">
+                            @error('dokumen_spm')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="card-subtitle text-muted mb-3">Tipe File: PDF. Maximum upload file size :
+                            2 MB.</div>
+                        <small class="text-muted">Note: Ketika mengirim SPM, secara otomatis pengajuan
+                            SPM akan disetujui dan berpindah ke tab disetujui!</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

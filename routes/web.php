@@ -512,12 +512,11 @@ Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
 });
 
-Route::prefix('/mandiri/approve-mandiri')->group(function () {
-    Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('mandiri.index');
-    Route::post('/show', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('mandiri.show');
-    Route::post('/store', [App\Http\Controllers\ApproveMandiriController::class, 'store'])->name('mandiri.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'detail'])->name('mandiri.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'update'])->name('mandiri.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'edit'])->name('mandiri.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'status'])->name('mandiri.status');
+Route::prefix('mandiri')->group(function () {
+    Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+        Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
+        Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
+        Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
+        Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
+    });
 });
