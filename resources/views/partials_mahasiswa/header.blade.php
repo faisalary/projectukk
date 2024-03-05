@@ -74,6 +74,117 @@
     .d-flex i:hover {
       text-decoration: none !important;
     }
+
+    .nav-pills .nav-link.active,
+    .nav-pills .nav-link.active:hover,
+    .nav-pills .nav-link.active:focus {
+      background-color: #4EA971 !important;
+      color: #fff !important;
+    }
+
+    .nav-pills .nav-link:not(.active):hover,
+    .nav-pills .nav-link:not(.active):focus {
+      color: #4EA971 !important;
+    }
+
+    .btn-success {
+      color: #fff;
+      background-color: #4EA971 !important;
+      border-color: #4EA971 !important;
+    }
+
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: -1px;
+      border: 0;
+      width: 220px !important;
+      height: 48px !important;
+    }
+
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: -1px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .input-group:not(.has-validation)> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating),
+    .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
+    .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control,
+    .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top: 0;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    button.btn.dropdown-toggle.bs-placeholder.btn-default {
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top: 0;
+      border-bottom: 0;
+      height: 46px;
+      border-right: 0;
+    }
+
+    button.btn.dropdown-toggle.bs-placeholder.btn-default {
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .filter-option-inner-inner {
+      margin-top: 6px;
+    }
+
+    .light-style .bootstrap-select .dropdown-toggle {
+      border-radius: 0;
+      border: 0;
+    }
+
+    .input-group:focus-within .form-control,
+    .input-group:focus-within .input-group-text {
+      border-color: #fff !important;
+    }
+
+    .bootstrap-select .dropdown-menu a:not([href]):not(.active):not(:active):not(.selected):hover {
+      color: #4EA971 !important;
+    }
+
+    .layout-page {
+      padding-top: 40px !important;
+    }
+
+    .dropdown.bootstrap-select.w-100 {
+      max-width: 145px;
+      max-height: 45px;
+    }
+
+    .bootstrap-select .dropdown-toggle:after {
+      right: 7px !important;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      border-radius: 0.375rem;
+      background-color: #4EA971 !important;
+    }
+
+    .carousel-control-prev-icon {
+      background-image: url("{{ asset('assets/images/background/chevron-left.png') }}") !important;
+    }
+
+    .carousel-control-next-icon {
+      background-image: url("{{ asset('assets/images/background/chevron-right.png') }}") !important;
+    }
+
+    .text-success {
+      --bs-text-opacity: 1;
+      color: #4EA971 !important;
+    }
+
+    .menu-toggle::after {
+      top: 40% !important;
+    }
   </style>
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
@@ -104,24 +215,18 @@
             <div class="container-xxl d-flex h-100" style="width: 62rem;">
               <ul class="menu-inner">
 
+                <!-- Lowongan Magang -->
+                <li class="menu-item">
+                  <a href="/lowongan/magang" class="menu-link">
+                    <div data-i18n="Lowongan Magang">Lowongan Magang</div>
+                  </a>
+                </li>
+
                 <!-- Perusahaan -->
                 <li class="menu-item">
-                  <a href="javascript:void(0)" class="menu-link menu-toggle">
-                    <div data-i18n="Perusahaan">Perusahaan</div>
+                  <a href="/daftar_perusahaan" class="menu-link">
+                    <div data-i18n="Mitra Perusahaan">Mitra Perusahaan</div>
                   </a>
-
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="/daftar_perusahaan" class="menu-link">
-                        <div data-i18n="Daftar Mitra">Daftar Mitra</div>
-                      </a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/lowongan/magang" class="menu-link">
-                        <div data-i18n="Daftar Lowongan Magang">Daftar Lowongan Magang</div>
-                      </a>
-                    </li>
-                  </ul>
                 </li>
 
                 <!-- Kegiatan Saya -->
@@ -133,7 +238,7 @@
                   <ul class="menu-sub">
                     <li class="menu-item">
                       <a href="/logbook" class="menu-link">
-                        <div data-i18n="Logbook">Logbook</div>
+                        <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                       </a>
                     </li>
                     <li class="menu-item">
@@ -175,6 +280,11 @@
                         <div data-i18n="Pengajuan Surat Pengantar Magang">Pengajuan Surat Pengantar Magang</div>
                       </a>
                     </li>
+                    <li class="menu-item">
+                      <a href="/informasi/magang" class="menu-link">
+                        <div data-i18n="Informasi Magang">Informasi Magang</div>
+                      </a>
+                    </li>
                   </ul>
                 </li>
 
@@ -203,17 +313,11 @@
                   </ul>
                 </li>
 
-
-                <!-- Informasi Magang -->
-                <li class="menu-item">
-                  <a href="/informasi/magang" class="menu-link">
-                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
-                  </a>
-                </li>
-
                 <li class="menu-item">
                   <a href="#footer" class="menu-link">
-                    <u><div data-i18n="Kontak Kami">Kontak Kami</div></u>
+                    <u>
+                      <div data-i18n="Kontak Kami">Kontak Kami</div>
+                    </u>
                   </a>
                 </li>
 

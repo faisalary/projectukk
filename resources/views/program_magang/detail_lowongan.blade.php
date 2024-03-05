@@ -26,11 +26,14 @@
 @endsection
 
 @section('main')
-<div class="auto-container ms-5 me-5">
-    <div class="sec-title m-4">
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="/daftar_perusahaan" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
+    <div class="sec-title">
         <h4>Detail Lowongan Pekerjaan</h4>
     </div>
-    <div class="d-flex ms-4 me-4 mb-5">
+    <div class="mb-5">
         <div class="card" style="padding: 50px 30px; width: 100%;">
             <div class="card-body d-flex flex-row justify-content-between" style=" border-bottom: 1px solid #D3D6DB;  !important">
                 <div class="">
@@ -42,63 +45,63 @@
                         </div>
                     </div>
                     <div class="d-flex" style="margin-top: 40px; font-size: 16px; color: #23314B; !important">
-                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
-                            <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-calendar ti-xs me-2"></i>
-                                2023/2024 - Ganjil
-                            </li>
+                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                             <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-users ti-xs me-2"></i>
                                 100 Mahasiswa
                             </li>
-                            <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-building-community  ti-xs me-2"></i>
-                                Fakultas Ilmu Terapan
-                            </li>
-                        </ul>
-                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
-
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-map-pin  ti-xs me-2"></i>
-                                Bandung & Jakarta
-                            </li>
-                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                Berbayar
+                                <i class="ti ti-briefcase ti-xs me-2"></i>
+                                Onsite
                             </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-calendar-time  ti-xs me-2"></i>
                                 2 Semerter
                             </li>
                         </ul>
-                        <ul style="padding: 0 0 0 20px; !important">
+                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px;">
+                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                <i class="ti ti-map-pin  ti-xs me-2"></i>
+                                Bandung & Jakarta
+                            </li>
+                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                <i class="ti ti-currency-dollar  ti-xs me-2"></i>
+                                Rp 1.000.000 - 5.000.000
+                            </li>
+                            <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                <i class="ti ti-building-community  ti-xs me-2"></i>
+                                D3
+                            </li>
+                        </ul>
+                        <ul style="padding: 0 0 0 20px;">
                             <li class="list-group-item d-flex align-items-start fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-school ti-xs me-2"></i>
                                 <div>
                                     Program Studi
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        <li>D3 Rekayasa Perangkat Lunak</li>
-                                        <li>D3 Sistem Informasi</li>
-                                        <li>D3 Teknik Komputer</li>
+                                        <li>Rekayasa Perangkat Lunak</li>
+                                        <li>Manajemen Pemasaran</li>
+                                        <li>Sistem Informasi</li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="w-auto">
+                <div class="w-auto text-end">
                     <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
-                    <div class="text-end mt-4">
+                    <div class="text-end mt-4 me-2">
                         <div class="row">
+                            <div class="col-3"></div>
                             <div class="col-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Laporkan"><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter">
                                     <i class="ti ti-flag"></i>
                                 </button>
                             </div>
-                            <div class="col-3 ms-2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan "><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan">
+                            <div class="col-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan "><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan">
                                     <i class="ti ti-share"></i>
                                 </button>
                             </div>
-                            <div class="col-3 ms-2">
+                            <div class="col-3">
                                 <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
                                     <i class="ti ti-heart"></i>
                                 </button>
@@ -395,7 +398,7 @@
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
                 <h3 style="color: #23314B; padding-left: 20px;"><b>Tentang Perusahaan</b></h3>
 
-                <p style="margin-top: 5px; padding-left: 20px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
+                <p style="margin-top: 5px; padding-left: 20px; font-size: 18px; color: #23314B;">
                     ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
                     driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over
                     the
@@ -405,6 +408,9 @@
                     solutions
                     for future generations
                 </p>
+                <div style="margin-top: 5px; padding-left: 20px; padding-bottom: 30px;">
+                    <a href="/detail_perusahaan" class="btn btn-outline-success btn-label-success mt-2" type="button">LIhat Perusahaan</a>
+                </div>
             </div>
         </div>
     </div>

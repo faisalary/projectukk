@@ -14,11 +14,11 @@
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="/logbook" type="button" class="btn btn-outline-success mb-3 waves-effect">
+    <a href="/logbook" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="col-md-10 col-12">
-        <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Kegiatan Saya / </span> Logbook Mahasiswa</h4>
+        <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Kegiatan Saya / </span> Logbook Mahasiswa - Periode 20-25 Januari 2024</h4>
     </div>
     <div class="col-12">
         <div class="card mb-4 ">
@@ -118,20 +118,14 @@
                     </div>
                 </div>
                 <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <p class="me-2" style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat
-                    nibh
-                    tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit
-                    maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl
-                    laoreet,
-                    in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                    Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In
-                    venenatis
-                    nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra
-                    tellus molestie in....</p>
+                <div class="text-block">
+                    <p class="mb-2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
+                        <span class="ellipsis">...</span>
+                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
+                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
+                    </p>
+                </div>
             </div>
 
             <div class="ps-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
@@ -150,20 +144,14 @@
                     </div>
                 </div>
                 <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <p class="me-2" style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat
-                    nibh
-                    tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit
-                    maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl
-                    laoreet,
-                    in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                    Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In
-                    venenatis
-                    nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra
-                    tellus molestie in....</p>
+                <div class="text-block">
+                    <p class="mb-2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
+                        <span class="ellipsis">...</span>
+                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
+                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
+                    </p>
+                </div>
             </div>
 
             <div class="ps-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
@@ -182,21 +170,14 @@
                     </div>
                 </div>
                 <p style="color:#B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <p class="me-2" style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat
-                    nibh
-                    tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit
-                    maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl
-                    laoreet,
-                    in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                    Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In
-                    venenatis
-                    nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra
-                    tellus molestie in....
-                </p>
+                <div class="text-block">
+                    <p class="mb-2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
+                        <span class="ellipsis">...</span>
+                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
+                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
+                    </p>
+                </div>
             </div>
 
             <div class="ps-4 mb-4 pe-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
@@ -272,13 +253,13 @@
                             <img id="imageTwo" src="../app-assets/img/emot/love.png" data-original-src="../app-assets/img/emot/love.png" data-selected-src="../app-assets/img/emot/love1.png" onclick="changeImage('imageTwo')" style="cursor: pointer;" />
                         </div>
                         <div class="text-center">
-                            <img id="imageThree" src="../app-assets/img/emot/sad.png"  data-original-src="../app-assets/img/emot/sad.png" data-selected-src="../app-assets/img/emot/sad1.png" onclick="changeImage('imageThree')" style="cursor: pointer;" />
+                            <img id="imageThree" src="../app-assets/img/emot/sad.png" data-original-src="../app-assets/img/emot/sad.png" data-selected-src="../app-assets/img/emot/sad1.png" onclick="changeImage('imageThree')" style="cursor: pointer;" />
                         </div>
                         <div class="text-center">
-                            <img id="imageFour" src="../app-assets/img/emot/frustasi.png"  data-original-src="../app-assets/img/emot/frustasi.png" data-selected-src="../app-assets/img/emot/frustasi1.png" onclick="changeImage('imageFour')" style="cursor: pointer;" />
+                            <img id="imageFour" src="../app-assets/img/emot/frustasi.png" data-original-src="../app-assets/img/emot/frustasi.png" data-selected-src="../app-assets/img/emot/frustasi1.png" onclick="changeImage('imageFour')" style="cursor: pointer;" />
                         </div>
                         <div class="text-center">
-                            <img id="imageFive" src="../app-assets/img/emot/datar.png"  data-original-src="../app-assets/img/emot/datar.png" data-selected-src="../app-assets/img/emot/datar1.png" onclick="changeImage('imageFive')" style="cursor: pointer;" />
+                            <img id="imageFive" src="../app-assets/img/emot/datar.png" data-original-src="../app-assets/img/emot/datar.png" data-selected-src="../app-assets/img/emot/datar1.png" onclick="changeImage('imageFive')" style="cursor: pointer;" />
                         </div>
                     </div>
                 </div>
@@ -301,20 +282,35 @@
     function changeImage(imageId) {
         var image = document.getElementById(imageId);
 
-        // Mengembalikan gambar sebelumnya ke keadaan awalnya jika ada
+
         if (lastSelectedImage && lastSelectedImage !== image) {
             lastSelectedImage.src = lastSelectedImage.getAttribute('data-original-src');
         }
 
-        // Mengganti gambar yang sedang dipilih
+
         if (image.getAttribute('src') === image.getAttribute('data-original-src')) {
             image.src = image.getAttribute('data-selected-src');
         } else {
             image.src = image.getAttribute('data-original-src');
         }
 
-        // Menyimpan gambar yang dipilih sebagai gambar terakhir yang dipilih
         lastSelectedImage = image;
     }
+
+    $(document).ready(function() {
+        $(".show_hide_new").on("click", function() {
+            var content = $(this).siblings('.content-new');
+            var ellipsis = $(this).siblings('.ellipsis');
+
+            content.slideToggle(100);
+            ellipsis.toggle(); // Menyembunyikan/menampilkan titik tiga
+
+            if ($(this).text().trim() == "Show More") {
+                $(this).text("Show Less");
+            } else {
+                $(this).text("Show More");
+            }
+        });
+    });
 </script>
 @endsection

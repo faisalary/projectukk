@@ -60,6 +60,7 @@
             </div>
         </div>
     </div>
+    
     <div class="tab-content p-0">
         <div class="tab-pane fade show active" id="navs-pills-justified-akademik" role="tabpanel">
             <div class="card">
@@ -285,7 +286,7 @@
                 }
             ],
             data: dataAkademik,
-            'rowsGroup': [0, 1, 6],
+            'rowsGroup': [0, 1, 4, 6],
         });
 
 
@@ -363,7 +364,7 @@
                 }
             ],
             data: dataLapangan,
-            'rowsGroup': [0, 1, 6],
+            'rowsGroup': [0, 1, 4, 6],
         });
     });
 </script>
