@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Skill;
+use App\Models\Sertif;
 use App\Models\Fakultas;
 use App\Models\Industri;
-use App\Models\InformasiPribadi;
+use App\Models\Education;
 use App\Models\Mahasiswa;
+use App\Models\Experience;
 use App\Models\Universitas;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use App\Models\StatusSeleksi;
 use App\Models\LowonganMagang;
+use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
+use App\Models\InformasiTamabahan;
 use Yajra\DataTables\Facades\DataTables;
 
 class InformasiKandidatController extends Controller
@@ -71,9 +77,6 @@ class InformasiKandidatController extends Controller
 
         return DataTables::of($pendaftar->get())
             ->addColumn('check', function ($row) {
-                // return '<div class="form-check form-check-inline"><input class="form-check-input student" type="checkbox" value="' . $row['id'] . '" name="student[]" /></div>';
-
-                // $box = '<input type="checkbox" value="' . $row['id_pendaftaran'] . '" class="form-check-inline form-check-input pendaftar">';
                 $box = '<div class="form-check form-check-inline"><input class="form-check-input pendaftar" type="checkbox" value="' . $row['id_pendaftaran'] . '" name="pendaftar[]" /></div>';
                 return $box;
             })
@@ -143,6 +146,12 @@ class InformasiKandidatController extends Controller
 
                     $selected->applicant_status = $request->input('status');
                     $selected->save();
+
+                    StatusSeleksi::create([
+                        'id_pendaftaran' => $value,
+                        'status_seleksi' => false,
+                        'progress' => false,
+                    ]);
                 }
             }
 
@@ -173,11 +182,16 @@ class InformasiKandidatController extends Controller
         $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
         $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
-        $picture = $prib->profile_picture ? url('assets/images/' . $prib->profile_picture) : url('\assets\images\no-pictures.png');
+        $infoTambah = InformasiTamabahan::where('nim', $pendaftar->nim)->get();
+        $education = Education::where('nim', $pendaftar->nim)->first();
+        $experience = Experience::where('nim', $pendaftar->nim)->get();
+        $skills = Skill::where('nim', $pendaftar->nim)->get();
+        $sertif = Sertif::where('nim', $pendaftar->nim)->get();
+        $picture = $prib?->profile_picture ? url('assets/images/' . $prib->profile_picture) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
         // dd($img);
 
-        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img'));
+        return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif', 'infoTambah'));
     }
 }

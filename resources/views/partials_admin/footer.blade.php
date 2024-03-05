@@ -7,7 +7,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                Crafted with PASSION by <a href="https://pixinvent.com" target="_blank" class="fw-semibold"
+                Crafted with PASSION by <a href="https://technoinfinity.co.id/" target="_blank" class="fw-semibold"
                     style="color:#4EA971;">Techno Infinity</a>
             </div>
             <!-- <div>
