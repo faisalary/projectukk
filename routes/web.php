@@ -23,7 +23,7 @@ use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
 
 // landingpage
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-// after-login-user
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
 Route::get('/dashboard-admin/{id}', [App\Http\Controllers\DashboardMitraController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
@@ -32,13 +32,13 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::group(['prefix' => 'mitra', 'as' => 'users.'], function () {
+Route::prefix('company')->group(function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
 });
-Route::group(['prefix' => 'mahasiswa', 'as' => 'users.'], function () {
+Route::prefix('mahasiswa')->group(function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'setting'])->name('set.password');
@@ -528,12 +528,15 @@ Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
 });
 
-Route::prefix('/mandiri/approve-mandiri')->group(function () {
-    Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('mandiri.index');
-    Route::post('/show', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('mandiri.show');
-    Route::post('/store', [App\Http\Controllers\ApproveMandiriController::class, 'store'])->name('mandiri.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'detail'])->name('mandiri.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'update'])->name('mandiri.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'edit'])->name('mandiri.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'status'])->name('mandiri.status');
+Route::prefix('mandiri')->group(function () {
+    Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+        Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
+        Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
+        Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
+        Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
+    });
+});
+
+Route::get('/test', function () {
+    return view('auth.message-verify-email');
 });

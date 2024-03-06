@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyReg;
 use App\Mail\RejectionNotification;
 use Illuminate\Http\Request;
 use App\Models\Industri;
@@ -42,12 +43,8 @@ class KelolaMitraController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CompanyReg $request)
     {
-        $this->validate($request, [
-            'namaindustri' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-        ]);
         try{
             DB::beginTransaction();
             $industri = Industri::create([
@@ -152,10 +149,9 @@ class KelolaMitraController extends Controller
             }
             $data->statusapprove = 1;
             $data->save();
-        
-            $code = Str::random(64);
             
-            $url = url('/mitra/set-password/' . $code);
+            $user = User::where('email', $data->email)->first();
+            $url = url('/company/set-password/' . $user->remember_token);
             Mail::to($data->email)->send(new VerifyEmail($url));
             DB::commit();
 
@@ -196,8 +192,6 @@ class KelolaMitraController extends Controller
     {
         
         try {
-            
-            // dd($request->all());
             $industri = Industri::where('id_industri', $id)->first();
             
             $industri->namaindustri = $request->namaindustri;

@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($file as $item)
+                @foreach ($mandiri as $item)
                     @if ($item->nim == $nim)
                         <div class="card-body mt-4">
                             @if ($item->statusapprove == 1)
@@ -89,17 +89,21 @@
                                         <h2>{{ $item->posisi_magang }}</h2>
                                         <p>{{ $item->nama_industri }}</p>
                                         <p>{{ $item->alamat_industri }}</p>
-
+                                        <button type="button" class="card-link btn btn-success mb-3"
+                                            href={{ $item->dokumen_spm }}> Unduh Surat Disini
+                                        </button>
                                     </div>
                                     <div class="col-2">
-
                                         <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
                                         </div>
                                         <div class="text-end mt-3 mb-4" style="color: #0971B7;"><u class="cursor-pointer">
                                                 <a data-id="{{ $item->id_pengajuan }}"
-                                                    onclick="detailDisetujui($(this))">Lihat Detail</a>
+                                                    onclick="detailDisetujui($(this))">Lihat
+                                                    Detail</a>
                                             </u><i class="ti ti-chevron-right mb-1"></i></div>
+
                                     </div>
+
                                 </div>
                             @elseif($item->statusapprove == 0)
                                 <div class="row border-bottom">
