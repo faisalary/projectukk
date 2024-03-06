@@ -497,12 +497,20 @@ Route::get('/masters/pembimbing-lapangan-mandiri', function () {
     return view('masters.pembimbing_lapangan_mandiri.index');
 });
 
+Route::get('/masters/laporan-akhir', function () {
+    return view('masters.berkas_akhir.index');
+});
+
 Route::get('/verifikasi/akun', function () {
     return view('partials_auth.verifikasi_akun');
 });
 
-Route::get('/konfirmasi/magang', function () {
-    return view('kegiatan_saya.konfirmasi.konfirmasi_magang');
+Route::get('/status/magang', function () {
+    return view('kegiatan_saya.status_magang.index');
+});
+
+Route::get('/berkas/akhir', function () {
+    return view('kegiatan_saya.berkas_akhir.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

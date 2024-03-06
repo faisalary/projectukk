@@ -252,13 +252,18 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="" class="menu-link">
+                      <a href="status/magang" class="menu-link">
                         <div data-i18n="Status Magang Aktif">Status Magang Aktif</div>
                       </a>
                     </li>
                     <li class="menu-item">
                       <a href="/nilai/magang" class="menu-link">
                         <div data-i18n="Nilai Magang">Nilai Magang</div>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/berkas/akhir" class="menu-link">
+                        <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                       </a>
                     </li>
                     <li class="menu-item">
