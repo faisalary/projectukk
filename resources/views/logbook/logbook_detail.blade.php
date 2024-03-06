@@ -58,12 +58,7 @@
         <div class="col-3" style="padding-left: 10px; padding-right:10px;">
             <div class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;  height: fit-content !important; background-color:white">
                 <div class="d-flex">
-                    <i class="ti ti-chevron-left"></i>
-                    <p class="fw-bold">Kembali</p>
-                </div>
-                <div class="d-flex" style="color: #FF9F43">
-                    <i class="ti ti-edit"></i>
-                    <p>Belum Disetujui</p>
+                <span class="badge bg-label-warning mb-2">Belum Disetujui</span>
                 </div>
                 <div class="d-flex">
                     <h5>20 - 25 Januari 2023</h5>
