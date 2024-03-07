@@ -89,9 +89,8 @@
                                         <h2>{{ $item->posisi_magang }}</h2>
                                         <p>{{ $item->nama_industri }}</p>
                                         <p>{{ $item->alamat_industri }}</p>
-                                        <button type="button" class="card-link btn btn-success mb-3"
-                                            href={{ $item->dokumen_spm }}> Unduh Surat Disini
-                                        </button>
+                                        <a type="button" class="card-link btn btn-success mb-3"
+                                            href="{{ asset($item->dokumen_spm) }}" download>Unduh Surat Disini</a>
                                     </div>
                                     <div class="col-2">
                                         <div class="text-end mt-3"><span class="badge bg-label-success">Disetujui</span>
