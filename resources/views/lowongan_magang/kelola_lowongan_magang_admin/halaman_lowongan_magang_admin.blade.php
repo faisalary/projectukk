@@ -32,7 +32,7 @@
 @section('main')
     <div class="row">
         <div class="col-md-8 col-12">
-            <h4 class="fw-bold">Kelola admin Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
+            <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
         </div>
         <div class="col-md-3 col-12 mb-3 ps-5 d-flex align-items-center justify-content-between">
             <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">

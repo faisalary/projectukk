@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisMahasiswa;
 use App\Mail\VerifyEmailMhs;
 use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
@@ -36,19 +37,14 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(RegisMahasiswa $request)
     { 
-        try {
-            $this->validate($request, [
-                'nim' => 'required|string|max:255'
-            ]);
-    
+        try {    
             $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
             $user = User::where('nim', $request->nim)->first();
             $code = Str::random(64);
              
             if ($user !== null) 
-            throw new Exception('User not found with the provided NIM.'); 
             
                 $user = User::create([
                         'nim' => $request->nim,
@@ -63,20 +59,9 @@ class RegisteredUserController extends Controller
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
                 Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
                 $user->save();
-                DB::commit();
                 
-                // $informsiPrib = InformasiPribadi::create([
-                //     'nim' => $mahasiswa->nim,
-                //     'tgl_lahir' => $request->11
-                // ]);
-                // $informsiPrib->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Activated successfully!',
-            ]);
+            return view('auth.message-verify-email');
         } catch (Exception $e) {
-            DB::rollBack();
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),

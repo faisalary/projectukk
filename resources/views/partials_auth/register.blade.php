@@ -193,7 +193,7 @@
         if (selectedRole === "user") {
          return Mahasiswa
         } else if (selectedRole === "mitra") {
-          window.location.href = "/mitra/register";
+          window.location.href = "/company/register";
         }
         
       }

@@ -23,7 +23,7 @@ use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
 
 // landingpage
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-// after-login-user
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
 Route::get('/dashboard-admin/{id}', [App\Http\Controllers\DashboardMitraController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');
@@ -32,13 +32,13 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::group(['prefix' => 'mitra', 'as' => 'users.'], function () {
+Route::prefix('company')->group(function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
 });
-Route::group(['prefix' => 'mahasiswa', 'as' => 'users.'], function () {
+Route::prefix('mahasiswa')->group(function () {
     Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register.form');
     Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'setting'])->name('set.password');
@@ -497,6 +497,22 @@ Route::get('/masters/pembimbing-lapangan-mandiri', function () {
     return view('masters.pembimbing_lapangan_mandiri.index');
 });
 
+Route::get('/masters/laporan-akhir', function () {
+    return view('masters.berkas_akhir.index');
+});
+
+Route::get('/verifikasi/akun', function () {
+    return view('partials_auth.verifikasi_akun');
+});
+
+Route::get('/status/magang', function () {
+    return view('kegiatan_saya.status_magang.index');
+});
+
+Route::get('/berkas/akhir', function () {
+    return view('kegiatan_saya.berkas_akhir.index');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
@@ -519,4 +535,8 @@ Route::prefix('mandiri')->group(function () {
         Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
         Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
     });
+});
+
+Route::get('/test', function () {
+    return view('auth.message-verify-email');
 });
