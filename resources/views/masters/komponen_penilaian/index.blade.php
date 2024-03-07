@@ -277,7 +277,7 @@
                 }
             ],
             data: dataAkademik,
-            'rowsGroup': [0, 1, 6],
+            'rowsGroup': [0, 1, 5],
         });
 
 
@@ -348,7 +348,7 @@
                 }
             ],
             data: dataLapangan,
-            'rowsGroup': [0, 1, 6],
+            'rowsGroup': [0, 1, 5],
         });
     });
 </script>
