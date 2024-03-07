@@ -31,12 +31,11 @@ class LowonganMagangLkmController extends Controller
              'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
          ];
          $jenismagang = JenisMagang::all();
-         $lokasi = Lokasi::all();
          $prodi = ProgramStudi::all();
          $fakultas = Fakultas::all();
         
          return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang_admin', 
-         compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas'));
+         compact('lowongan', 'jenismagang', 'prodi', 'fakultas'));
      }
 
      /**

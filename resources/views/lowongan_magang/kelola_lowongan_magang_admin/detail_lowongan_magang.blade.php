@@ -88,30 +88,31 @@
                         <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
                             
                                 <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                    <i class="ti ti-map-pin me-2">
-                                        {{-- {{ $lowongan->lokasi->kota}} --}}
+                                    <i class="ti ti-map-pin me-2">{{ $lowongan->lokasi}}
                                     </i>
                                 </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-currency-dollar me-2">
-                                    {{ $lowongan->nominal_salary }}
+                                    {{ $lowongan->nominal_salary}}
                                 </i>
                             </li>
                         </ul>
                         
                         <ul style="padding: 0 0 0 20px; !important">
-                            @foreach ($prodi as $p)
+                            
                             <li class="list-group-item d-flex align-items-start fw-semibold"
                                 style="margin-top: 15px !important">
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        <li> {{ $p->namaprodi }}</li>
+                                        @foreach ($lowongan as $l)
+                                        <li> {{ $l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                        @break
+                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
-                            @endforeach
                         </ul>
                         
                     </div>

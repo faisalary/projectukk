@@ -32,12 +32,11 @@ class LowonganMagangController extends Controller
             'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
         ];
         $jenismagang = JenisMagang::all();
-        $lokasi = Lokasi::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
         $industri = Industri::where('id_industri', $id)->first();
         return view('company.lowongan_magang.halaman_lowongan_magang_mitra', 
-        compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas','industri'));
+        compact('lowongan', 'jenismagang', 'prodi', 'fakultas','industri'));
     }
     
     /**
@@ -47,11 +46,9 @@ class LowonganMagangController extends Controller
     {
         $seleksi = SeleksiTahap::all();
         $jenismagang = JenisMagang::all();
-        $lokasi = Lokasi::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
-        // $industri = Industri::where('id_industri')->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'lokasi', 'seleksi', 'prodi', 'fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'seleksi', 'prodi', 'fakultas'));
     }
 
     /**
@@ -61,22 +58,7 @@ class LowonganMagangController extends Controller
     {
         DB::beginTransaction();
         try {
-            $industri = Industri::where('id_industri',auth()->user()->id_industri)->first();
-            $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
-            // $lokasi = Lokasi::create([
-            //     'kota' => $request->lokasi
-            // ]);
-
-            $lokasi = Lokasi::where('id_lokasi')->first();
-            if ($lokasi){
-                $lokasi->update([
-                    'kota' => $request->lokasi
-                ]);
-            } else {
-                $lokasi =  Lokasi::create([
-                    'kota' => $request->lokasi
-                ]);
-            }
+            $industri = Industri::where('id_industri', Auth::user()->id_industri)->first();
      
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
@@ -87,7 +69,6 @@ class LowonganMagangController extends Controller
                 'gender' => $request->jenis,
                 'jenjang' => $request->jenjang,
                 'keterampilan' => $request->keterampilan,
-                'paid' => $request->gaji,
                 'nominal_salary' => $request->nominal,
                 'benefitmagang' => $request->benefit,
                 'id_industri' => $industri->id_industri,
@@ -96,9 +77,7 @@ class LowonganMagangController extends Controller
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
                 'id_fakultas' => $request->fakultas,
-                'fakultas' => $request->fakultas,
-                'id_prodi' => $request->prodi,
-                'id_lokasi' => $lokasi->id_lokasi,
+                'lokasi' => $request->lokasi,
                 'statusaprove' => 'tertunda'
             ]);
             $i = 0;
@@ -113,6 +92,7 @@ class LowonganMagangController extends Controller
                 }
                 $i++;
             }
+            // dd($lowongan);
             DB::commit();
 
             return response()->json([
@@ -189,11 +169,11 @@ class LowonganMagangController extends Controller
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
-        $prodi = ProgramStudi::all();
+        // $prodi = ProgramStudi::get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas','fakultas'));
     }
 
     /**
@@ -203,7 +183,6 @@ class LowonganMagangController extends Controller
     {
         DB::beginTransaction();
         try {
-            $lokasi = Lokasi::where('id_lokasi', $id)->first();
             $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
             $lowongan->id_jenismagang = $request->id_jenismagang;
@@ -217,7 +196,7 @@ class LowonganMagangController extends Controller
             $lowongan->paid = $request->gaji;
             $lowongan->nominal_salary = $request->nominal;
             $lowongan->benefitmagang = $request->benefit;
-            $lowongan->id_lokasi = $lokasi->id_lokasi;
+            $lowongan->id_lokasi = $request->lokasi;
             $lowongan->startdate = $request->tanggal;
             $lowongan->enddate = $request->tanggalakhir;
             $lowongan->durasimagang = $request->durasimagang;

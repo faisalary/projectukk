@@ -171,18 +171,18 @@
                                                 <option value="s2">S2</option>
                                             </select>
                                         </div>
-                                        <div class="form-group" style="margin-top: 5px;">
-                                            <label class="form-label" for="fakultas">Fakultas<span
+                                        <div class="col-lg-12 col-sm-6 mt-1 ">
+                                            <label class="form-label" for="fakultas">Pilih Fakultas<span
                                                     class="text-danger">*</span></label>
-                                            <select name="fakultas" id="fakultas" 
-                                                class="select2 form-select"
-                                                data-placeholder="Pilih Fakultas">
+                                            <select name="fakultas" id="fakultas" class="select2 form-select"
+                                                data-placeholder="Fakultas">
+                                                <option value="" disabled selected>Fakultas</option>
                                                 @foreach ($fakultas as $f)
                                                     <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-lg-12 col-sm-6">
+                                        <div class="col-lg-12 col-sm-6 mt-1">
                                             <label for="select2Disabled" class="form-label">Prodi<span
                                                     class="text-danger">*</span></label>
                                             <select name="id_prodi" id="select2Disabled" class="select2 form-select" disabled>
@@ -251,15 +251,10 @@
                                     <textarea class="form-control" rows="2" id="benefit" name="benefit" placeholder="Masukan Benefits"></textarea>
                                 </div>
                                 <div class="col-lg-12 col-sm-6">
-                                    <label for="lokasi" class="form-label">Lokasi Penempatan<span
+                                    <label class="form-label" for="lokasi">Lokasi Penempatan<span
                                             class="text-danger">*</span></label>
-                                    <select name="lokasi" id="lokasi" multiple="multiple"
-                                        class="select2-multiple form-select wizard-required"
-                                        data-placeholder="Masukan Lokasi Pekerjaan">
-                                        @foreach ($lokasi as $l)
-                                            <option value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" name="lokasi" id="lokasi" class="form-control"
+                                        placeholder="Lokasi Penempatan"/>
                                 </div>
                                 <div class="col-lg-12 col-sm-6">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
