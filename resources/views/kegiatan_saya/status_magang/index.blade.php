@@ -106,7 +106,7 @@
         <div class="col-7 border" style="border-radius: 8px; background-color: #fff; width: 63.22222222% !important;">
             <div class=" mt-4 d-flex justify-content-between">
                 <h4 class="mb-0 ps-3">Informasi Penerimaan Magang</h4>
-                <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi"></i>
+                <!-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi"></i> -->
             </div>
 
             <div class="row text-start mt-4">
@@ -214,6 +214,7 @@
         <div class="col-6">
             <div class=" mt-4 d-flex justify-content-between">
                 <h4 class="mb-0 ps-3">Informasi Pembimbing Lapangan</h4>
+                {{--magang mandiri icon + aktif dan status pembimbing aktif-}}
                 <!-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modaltambah"></i> -->
             </div>
 
@@ -267,7 +268,7 @@
     </div> --}}
 
     <!-- Modal -->
-    <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
+    <!-- <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -322,7 +323,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Modal -->
     <div class="modal fade" id="modaltambah" tabindex="-1" aria-hidden="true">
