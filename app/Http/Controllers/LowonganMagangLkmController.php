@@ -6,6 +6,7 @@ use App\Models\Fakultas;
 use App\Models\JenisMagang;
 use App\Models\Lokasi;
 use App\Models\LowonganMagang;
+use App\Models\LowonganProdi;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Exception;
@@ -107,11 +108,12 @@ class LowonganMagangLkmController extends Controller
         try {
             DB::beginTransaction(); 
             $data = LowonganMagang::find($id);
+            $prodi = ProgramStudi::where('id_prodi')->first();
             
             if (!$data) {
                 throw new \Exception('Lowongan tidak ditemukan.');
             }
-
+            
             $data->statusaprove = 'diterima';
 
             $data->save();

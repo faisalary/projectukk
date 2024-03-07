@@ -234,10 +234,28 @@
                     <div class="modal-body text-center" style="display:block;">
                         <h5 class="modal-title">Apakah Anda Yaking Menyetujui Lowongan</h5>
                     </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button class="btn btn-primary text-white" id="approve-confirm-button" onclick='approved($(this))' data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}">
-                        Iya, Yakin</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <div class="modal-body">
+                        {{-- <div class="row col">
+                            <label for="alasan" class="form-label">Masukkan Program Studi relevan*</label>
+                            <textarea class="form-control" id="alasan" placeholder="Alasan Penolakan"></textarea>
+                        </div> --}}
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span
+                                    class="text-danger">*</span></label></label>
+                                <select class="form-select select2" multiple id="prodi" name="prodi[]" 
+                                    data-placeholder="Pilih Prodi">
+                                    @foreach($prodi as $p)
+                                    <option value="{{$p->id_prodi}}">{{$p?->namaprodi??''}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        {{-- <label class="form-label">Note: Ketika anda klik button Approve Lowongan, secara otomatis lowongan akan disetujui dan berpindah ke tab disetujui!</label> --}}
+                    </div>
+                    <div class="modal-footer" style="justify-content:end;">
+                        <button type="button" id="approve-confirm-button" class="btn btn-success" onclick='approved($(this))' data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}">Approve Lowongan</button>
                     </div>
                 </div>
             </div>
