@@ -89,7 +89,7 @@
                             
                                 <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                     <i class="ti ti-map-pin me-2">
-                                        {{ $lowongan->lokasi->kota}}
+                                        {{-- {{ $lowongan->lokasi->kota}} --}}
                                     </i>
                                 </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
