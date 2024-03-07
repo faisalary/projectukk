@@ -120,14 +120,14 @@
                 </div>
                 <div class="row">
                     <div class="mb-3 col-12 mb-0">
-                        <label for="flatpickr-date" class="form-label">Tenggat Pengumpulan Berkas Magang<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="flatpickr-date" readonly="readonly">
+                        <label for="flatpickr-datetime" class="form-label">Tenggat Pengumpulan Berkas Magang<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM" id="flatpickr-datetime" readonly="readonly">
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-12 mb-0">
-                        <label for="flatpickr-date2" class="form-label">Tenggat Penilaian Berkas Magang<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD" id="flatpickr-date2" readonly="readonly">
+                        <label for="flatpickr-datetime2" class="form-label">Tenggat Penilaian Berkas Magang<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM" id="flatpickr-datetime2" readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -186,8 +186,8 @@
             "jenis_magang": "Magang Fakultas",
             "durasi_magang": "1 Semester",
             "berkas_magang": "<ul><li>Laporan akhir</li><li>Logbook mahasiswa</li><li>Dokumen IA</li></ul>",
-            "tenggat_pengumpulan_berkas_magang": "15-07-2024",
-            "tenggat_penilaian_magang": "15-07-2024",
+            "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
+            "tenggat_penilaian_magang": "15-07-2024 23:59",
             "status": "<span class='badge bg-label-success'>Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalTambah' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit'></i></a><a data-bs-toggle='modal' data-bs-target='#modalalertnonaktif' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>",
 
@@ -197,8 +197,8 @@
             "jenis_magang": "Magang Fakultas",
             "durasi_magang": "2 Semester",
             "berkas_magang": "<ul><li>Laporan akhir</li><li>Logbook mahasiswa</li><li>Dokumen IA</li></ul>",
-            "tenggat_pengumpulan_berkas_magang": "15-07-2024",
-            "tenggat_penilaian_magang": "15-07-2024",
+            "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
+            "tenggat_penilaian_magang": "15-07-2024 23:59",
             "status": "<span class='badge bg-label-danger'>Non-Aktif</span>",
             "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalTambah' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit'></i></a><a data-bs-toggle='modal' data-bs-target='#modalalertaktif' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>",
 
@@ -267,13 +267,6 @@
             }
         ],
     });
-
-    // $(".flatpickr-class").flatpickr({
-    //     altInput: true,
-    //     altFormat: 'j F Y',
-    //     dateFormat: 'Y-m-d',
-    //     static: true,
-    // });
 </script>
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
