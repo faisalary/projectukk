@@ -87,7 +87,7 @@
                 </div>
                 <div class="mb-3 col-md-6  form-input">
                   <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input name="tgl_lahir" id="tgl_lahir" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" required>
+                  <input name="tgl_lahir" id="tgl_lahir" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD">
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 col-md-6">

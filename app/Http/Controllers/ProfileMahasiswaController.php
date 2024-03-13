@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InfoPribRequest;
-use App\Models\Bahasa;
+use App\Http\Requests\InformasiKeahlianReq;
+use App\Http\Requests\InformasiPendidikanReq;
+use App\Http\Requests\InformasiPengalamanReq;
+use App\Http\Requests\InformasiTambahanReq;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\InformasiPribadi;
-use App\Models\InformasiTamabahan;
 use App\Models\Mahasiswa;
 use App\Models\Sertifikat;
 use App\Models\Skill;
@@ -28,11 +30,11 @@ class ProfileMahasiswaController extends Controller
         $dokumen1 = Sertifikat::where('nim', $id)->orderby('id_sertif', 'asc')->get();
         $pengalaman = Experience::where('nim', $id)->first();
         $pengalaman1 = Experience::where('nim', $id)->get();
-        $skill = Skill::where('nim', $id)->first();  
-        $skill1 = Skill::where('nim', $id)->get();  
+        $skill = Mahasiswa::where('nim', $id)->first();  
+        $skill1 = Mahasiswa::where('nim', $id)->get();  
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
-        $informasitambahan = InformasiTamabahan::where('nim', $id)->first();
+        $informasitambahan = Mahasiswa::where('nim', $id)->first();
         $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
         return view('profile.informasi_pribadi', 
         compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
@@ -110,28 +112,23 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-    public function updateinformasitambahan(Request $request, $id) { 
+    public function updateinformasitambahan(InformasiTambahanReq $request, $id) { 
 
-        $this->validate($request, [
-            'url_sosmed' => 'required|active_url'
-        ]);
-        
         try{
-            DB::beginTransaction();
-            $informasitambahan = InformasiTamabahan::where('nim', $id)->with('bahasa')->first();
+            $informasitambahan = Mahasiswa::where('nim', $id)->first();
             
             $data1 = [
-                'lok_kerja' => $request->lok_kerja,
+                'lok_magang' => $request->lok_magang,
                 'sosmed' => $request->sosmed,
-                'id_bahasa'=> $request->bahasa,
+                'bahasa'=> $request->bahasa,
                 'url_sosmed' => $request->url_sosmed,
             ];
             if ($informasitambahan) {
                 $informasitambahan->update($data1);
             } else {
-                $data1['nim'] = $id;
-                InformasiTamabahan::create($data1);
+                Mahasiswa::create($data1);
             }
+
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
@@ -148,17 +145,12 @@ class ProfileMahasiswaController extends Controller
 
    
 
-    public function updatependidikan(Request $request, $id) { 
-        $this->validate($request, [
-            'nilai' => 'required|numeric|between:0,99.99'
-        ]);
-
-
-        try{
+    public function updatependidikan(InformasiPendidikanReq $request, $id) { 
+            try{
             $pendidikan = Education::where('nim', $id)->first();
             
             $data2 = [
-                'name_intitutions' => $request->namasekolah,
+                'name_intitutions' => $request->name_intitutions,
                 'tingkat' => $request->tingkat,
                 'startdate'=> $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',
@@ -184,10 +176,10 @@ class ProfileMahasiswaController extends Controller
         }
         
     }
-    public function updateskill(Request $request, $id) { 
+    public function updateskill(InformasiKeahlianReq $request, $id) { 
 
         try{
-            $skill = Skill::where('nim', $id)->first();
+            $skill = Mahasiswa::where('nim', $id)->first();
             
             $keahlian = [
                 'skills' => $request->skills                
@@ -196,8 +188,7 @@ class ProfileMahasiswaController extends Controller
             if ($skill) {
                 $skill->update($keahlian);
             } else {
-                $keahlian['nim'] = $id;
-                Skill::create($keahlian);
+                Mahasiswa::create($keahlian);
             }
             return response()->json([
                 'error' => false,
@@ -213,7 +204,7 @@ class ProfileMahasiswaController extends Controller
         
     }
 
-    public function store(Request $request, $id) { 
+    public function store(InformasiPengalamanReq $request, $id) { 
         
         try {
             $pengalaman = Experience::where('nim', $id)->first();
@@ -241,11 +232,8 @@ class ProfileMahasiswaController extends Controller
         
     }
 
-    public function updatepengalaman(Request $request, $id) {
+    public function updatepengalaman(InformasiPengalamanReq $request, $id) {
 
-        $this->validate($request,[
-            
-        ]);
 
         try {
             $pengalaman = Experience::where('id_experience', $id)->first();

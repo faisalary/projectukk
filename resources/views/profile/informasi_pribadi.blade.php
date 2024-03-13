@@ -209,33 +209,31 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Informasi Tambahan</h5>
-              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this)" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
+              @if(!empty($informasitambahan->lok_magang) || !empty( $informasitambahan->sosmed) || !empty($informasitambahan->bahasa) || !empty($informasitambahan->url_sosmed))
               <div class="row">
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Lokasi Kerja yang diharapkan:</span>
-                    <span>{{$informasitambahan?->lok_kerja??''}}</span>
+                    <span>{{$informasitambahan->lok_magang ?? ''}}</span>
                   </p>
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
-                  </p>
-                  <p class="mb-2 pt-1">
-                    <span class="fw-semibold me-1">Linkedin:</span>
-                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
+                    <span> <a href="#">{{$informasitambahan->sosmed ?? ''}}</a></span>
                   </p>
                 </div>
                 <p class="mb-2 pt-0">
                   <span class="fw-semibold me-1">Bahasa:</span>
                 </p>
                 <p class="mb-4">
-                  <span class="btn rounded-pill btn-success waves-effect waves-light" value="1">{{$informasitambahan->bahasa?->bahasa??''}}</span>
+                  <span class="btn rounded-pill btn-success waves-effect waves-light" value="1">{{$informasitambahan->bahasa ?? ''}}</span>
                 </p>
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -251,15 +249,13 @@
             </div>
             <div class="card-body pb-0">
               <ul class="timeline mb-0">
+                @if(!empty($pendidikan->name_intitutions) || !empty( $pendidikan->tingkat) || !empty($pendidikan->nilai) || !empty($pendidikan->startdate) || !empty($pendidikan->enddate) )
                 <li class="timeline-item timeline-item-transparent">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
+                  <div class="timeline">
+           
                     <div class="timeline-header">
                       <h6 class="mt-0">{{$pendidikan?->name_intitutions??''}}</h6>
-                      {{-- <div> --}}
-                        {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i> --}}
-                        {{-- <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i> --}}
-                      {{-- </div> --}}
                     </div>
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
@@ -268,9 +264,7 @@
                     </div>
                   </div>
                 </li>
-                <li class="timeline-item timeline-item-transparent mb-4">
-                  <span class="timeline-point timeline-point-success"></span>
-                </li>
+                @endif
               </ul>
             </div>
           </div>
@@ -281,7 +275,7 @@
         <!-- <Keahlian&Pengalaman> -->
         <div class="tab-pane fade show" id="navs-pills-justified-keahlian-pengalaman" role="tabpanel">
           <div class="card mb-4">
-            <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
+            <div class="d-flex justify-content-between pt-3 ps-4 pe-3">
               <h5 class="text-secondary">Keahlian</h5>
               <div class="text-end">
                 <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
@@ -290,11 +284,12 @@
               </div>
             </div>
             <div class="card-body pb-0 pt-0">
-              @foreach ($skill1 as $s)
+              
+              @if(!empty($skill->skills))
               <div>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$s?->skills??''}}</span>
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$skill?->skills??''}}</span>
               </div>
-              @endforeach
+              @endif
               <div class="border-bottom mt-3"></div>
               <div class="d-flex justify-content-between pt-3 pb-3">
                 <h5 class="text-secondary">Pengalaman</h5>
@@ -302,18 +297,20 @@
                   <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPengalaman"></i>
                 </div>
               </div>
-              <ul class="timeline mb-0">
+              @if(count($pengalaman1) > 0)
+              <ul class="timeline">
                 @foreach ($pengalaman1 as $pe)
                 <li class="timeline-item timeline-item-transparent ">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
-                    <div class="timeline-header mt-5">
+                  <div class="timeline">
+                    <div class="timeline-header mt-1">
                       <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
                         <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
                       </div>
                     </div>
+                    
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pe?->name_intitutions??''}} - {{$pe?->jenis??''}}</p>
                       <p style="font-size: small;">{{$pe?->startdate??''}} - {{$pe?->enddate??''}}
@@ -328,13 +325,12 @@
                   </div>
                 </li>
                 @endforeach
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                </li>
+                
                 <a href="{{url("mahasiswa/profile/pengalaman/detail/". Auth::user()->nim)}}">
                   <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
                   type="button">Selengkapnya</button></a>
-                </ul>
+              </ul>
+              @endif
             </div>
           </div>
         </div>
@@ -345,7 +341,7 @@
         <div class="tab-pane fade show" id="navs-pills-justified-dokumen-pendukung" role="tabpanel">
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
-              <h5 class="text-secondary pt-2 ps-3 pe-3">Dokumen Pendukung</h5>
+              <h5 class="text-secondary pt-2 ps-2 pe-3">Dokumen Pendukung</h5>
               {{-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i> --}}
               <i class="menu-icon ps-2 pe-2 pb-2">
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen">Tambah</button>
@@ -353,6 +349,7 @@
             </div>
             <div class="card-body">
               <div>
+                @if(count($dokumen1) > 0)
                 <ul class="timeline mb-0">
                   @foreach($dokumen1 as $dok)
                   <li class="timeline-item timeline-item-transparent">
@@ -395,8 +392,9 @@
               </div>
               <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
                 <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
-                  type="button">Selengkapnya</button>
+                type="button">Selengkapnya</button>
               </a>
+              @endif
             </div>
           </div>
         </div>

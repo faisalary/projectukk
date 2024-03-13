@@ -12,15 +12,26 @@ class Mahasiswa extends Model
     use HasFactory, HasUuids;
     protected $table = 'mahasiswa';
     protected $fillable = [
-        'namamhs', 
-        'id_univ', 
+        'nim', 
+        'angkatan', 
         'id_prodi', 
+        'id_univ', 
         'id_fakultas', 
+        'namamhs', 
+        'alamatmhs', 
         'emailmhs', 
         'nohpmhs', 
-        'alamatmhs', 
-        'angkatan', 
-        'nim', 
+        'kelas',
+        'status',
+        'eprt',
+        'ipk',
+        'tak',
+        'sosmed',
+        'url_sosmed',
+        'lok_magang',
+        'skills',
+        'bahasa',
+        'tunggakan_bpp'
     ];
     protected $keyType = 'string';
     protected $primaryKey = 'nim';
