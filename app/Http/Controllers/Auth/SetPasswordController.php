@@ -11,11 +11,12 @@ use App\Models\User;
 
 class SetPasswordController extends Controller
 {
-    //set password mitra
+    //set password company  
     public function index($token) {
         return view('partials_auth.verifikasi_akun', compact('token'));
     }
     public function update(SetPasswordReq $request) {
+        try{
         $admin = User::where('remember_token', $request->token)->first();
         if (!$admin) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
@@ -23,7 +24,18 @@ class SetPasswordController extends Controller
         $admin->password = bcrypt($request->password);
         $admin->remember_token=null;
         $admin->save();
-        return redirect('/login');
+        return response()->json([
+            'error' => false,
+            'message' => 'Berhasil',
+            'url' => '/login'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => true,
+            'message' => $e->getMessage(['token tidak valid']),
+        ]);
+    }
+
     }
 
     //set password mahasiswa
@@ -36,7 +48,7 @@ class SetPasswordController extends Controller
 
         $user = User::where('remember_token', $request->token)->first();
         if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
+            return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid'], 404);
         }
         $user->password = bcrypt($request->password);
         $user->remember_token=null;
