@@ -484,6 +484,7 @@
                 <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
                     @foreach ($mandiri as $item)
                         @if ($item->nim == $nim)
+                        
                             @if ($item->statusapprove == 1)
                                 <div class="card mt-2">
                                     <div class="card-body">
@@ -527,13 +528,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endif
-                    @endforeach
 
-                    @foreach ($file as $item)
-                        @if ($item->PengajuanMandiri->nim == $nim)
-                            @if ($item->status == 1)
+                            @elseif ($item->status_terima == 1)
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <div class="text-end mt-3"><span class="badge bg-label-success">Diterima</span>
@@ -562,13 +558,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endif
-                    @endforeach
 
-                    @foreach ($file as $item)
-                        @if ($item->PengajuanMandiri->nim == $nim)
-                            @if ($item->status == 2)
+                            @elseif ($item->status_terima == 2)
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span>
@@ -597,6 +588,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             @endif
                         @endif
                     @endforeach

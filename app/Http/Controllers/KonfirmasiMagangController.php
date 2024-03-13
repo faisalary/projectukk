@@ -8,6 +8,7 @@ use App\Models\PengajuanMandiri;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
+use App\Models\MhsMagang;
 use App\Models\MhsMandiri;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class KonfirmasiMagangController extends Controller
         $user = auth()->user();
         $mandiri = PengajuanMandiri::where("nim",$user->nim)->get();
         $mahasiswa = Mahasiswa::all();
-        $file = MhsMandiri::with('PengajuanMandiri')->get();
+        $file = MhsMagang::with('PengajuanMandiri')->get();
         
         $nim = Mahasiswa::find($user->nim);
         $nim = $nim->nim;
@@ -76,17 +77,20 @@ class KonfirmasiMagangController extends Controller
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
+            $mandiri->status_terima = 1;
             $mandiri->save();
+            
 
-            MhsMandiri::create([
+            MhsMagang::create([
                 'id_pengajuan' => $id,
-                'status' => true
+                'jenis_magang'=>1,
             ]);
             
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
                 'modal' => '#modalDiterima',
+                'status_terima' => 1
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -108,7 +112,7 @@ class KonfirmasiMagangController extends Controller
 
             MhsMandiri::create([
                 'id_pengajuan' => $id,
-                'status' => false
+                'statusapprove' => 4
             ]);
             
             return response()->json([
