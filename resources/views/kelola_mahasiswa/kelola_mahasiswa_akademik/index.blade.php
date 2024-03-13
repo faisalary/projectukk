@@ -3,6 +3,8 @@
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -88,6 +90,7 @@
 @section('page_script')
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.0/js/dataTables.fixedColumns.js"></script>
 <script>
     var jsonData = [{
             "nomor": "1",
@@ -119,6 +122,7 @@
 
     var table = $('#table-akademik').DataTable({
         "data": jsonData,
+        scrollCollapse: true,
         scrollX: true,
         columns: [{
                 data: "nomor"
@@ -183,7 +187,7 @@
                 "width": "150px",
                 "targets": 6
             },
-            
+
             {
                 "width": "200px",
                 "targets": 6
@@ -201,6 +205,10 @@
                 "targets": 9
             }
         ],
+        fixedColumns: {
+            left: 2,
+            right: 1
+        },
     });
 </script>
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

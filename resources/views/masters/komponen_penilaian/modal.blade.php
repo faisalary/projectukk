@@ -87,6 +87,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <hr />
                             <div data-repeater-list="group-a">
                                 <div data-repeater-item>
                                     <div class="row">
@@ -167,6 +168,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <hr />
                             <div data-repeater-list="group-a">
                                 <div data-repeater-item>
                                     <div class="row">

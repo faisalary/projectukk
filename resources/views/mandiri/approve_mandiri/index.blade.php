@@ -317,6 +317,7 @@
 
             $('#modalapprove').modal('show');
             var approveUrl = '{{ url("mandiri/approve-mandiri/approved") }}/' + e.attr('data-id');
+            $('#modalapprove form').attr('action', approveUrl);
 
             $('#approve-confirm-button').on('click', function() {
 

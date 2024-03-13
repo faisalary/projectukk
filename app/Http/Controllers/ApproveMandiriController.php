@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMandiri;
 use Yajra\DataTables\Facades\DataTables;
+use Exception;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Mahasiswa;
@@ -62,32 +63,70 @@ class ApproveMandiriController extends Controller
     }
 
     
-    public function approved($id)
-    {
-        try {
-            DB::beginTransaction(); 
-            $data = PengajuanMandiri::find($id);
+    // public function approved($id)
+    // {
+    //     try {
+    //         DB::beginTransaction(); 
+    //         $data = PengajuanMandiri::find($id);
             
 
-            if (!$data) {
-                throw new \Exception('Data not found.');
+    //         if (!$data) {
+    //             throw new \Exception('Data not found.');
+    //         }
+    //         $data->statusapprove = 1;
+    //         $data->save();
+
+    //         return response()->json([
+    //             'error' => false,
+    //             'message' => 'Persetujuan berhasil.',
+    //         ]);
+    //         } catch (\Exception $e) {
+    //             DB::rollBack();
+
+    //             return response()->json([
+    //                 'error' => true,
+    //                 'message' => $e->getMessage(),
+    //         ]);
+    //     }
+    // }
+    
+    public function approved(Request $request, $id)
+    {
+        // $request->file('dokumen_spm')->store('post');
+        try {
+
+            if (!empty($request->file('dokumen_spm'))){
+                $file = $request->file('dokumen_spm');
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('public/post'),$filename);
+                $dokumen_spm['dokumen_spm'] = $filename;
+                
+                $spm = PengajuanMandiri::findorfail($id);
+                $spm->dokumen_spm = $filename;
+                $spm->statusapprove = 1;
+                $spm->save();
+                
             }
-            $data->statusapprove = 1;
-            $data->save();
+
+            
 
             return response()->json([
                 'error' => false,
-                'message' => 'Persetujuan berhasil.',
+                'message' => 'Template successfully Created!',
+                
             ]);
-            } catch (\Exception $e) {
-                DB::rollBack();
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
+             
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
             ]);
         }
+
+        
     }
+    
     public function rejected($id, Request $request)
     {
         $data=PengajuanMandiri::find($id);

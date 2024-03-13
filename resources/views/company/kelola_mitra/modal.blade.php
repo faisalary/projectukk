@@ -16,6 +16,7 @@
                             <label for="nama" class="form-label">Nama Perusahaan</label>
                             <input type="text" id="nama" name="namaindustri"class="form-control"
                                 placeholder="Nama Perusahaan" />
+                                <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -23,6 +24,7 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="text" id="email" name="email" class="form-control"
                                 placeholder="Email" />
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">

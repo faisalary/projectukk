@@ -3,6 +3,8 @@
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css" />
+<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -244,6 +246,10 @@
                 "targets": 9
             }
         ],
+        fixedColumns: {
+            left: 2,
+            right: 1
+        },
     });
 </script>
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
