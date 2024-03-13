@@ -42,19 +42,19 @@
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width:300px;">ASPEK PENILAIAN</th>
-                                <th style="min-width:300px;">DESKRIPSI ASPEK PENILAIAN</th>
+                                <th style="min-width:200px;">ASPEK PENILAIAN</th>
+                                <th style="min-width:200px;">DESKRIPSI ASPEK PENILAIAN</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
-                                <!-- <th style="min-width:100px;">BOBOT NILAI</th> -->
+                                <th style="min-width:100px;">BOBOT NILAI</th>
                                 <th style="min-width:150px;">NILAI MAGANG</th>
                             </tr>
                         <tfoot>
                             <tr>
-                                <th class="text-center" colspan="4">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 = 100)</th>
+                                <th class="text-center" colspan="5">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 = 100)</th>
                                 <th class=""><input type="text" id="" class="form-control" placeholder="85" style="max-width: 150px;" disabled /></th>
                             </tr>
                             <tr>
-                                <th class="text-center" colspan="4">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
+                                <th class="text-center" colspan="5">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
                                 <th class=""><input type="text" id="" class="form-control" placeholder="A" style="max-width: 150px;" disabled /></th>
                             </tr>
                         </tfoot>
@@ -92,13 +92,14 @@
 @section('page_script')
 <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
 <script src="../../app-assets/js/forms-extras.js"></script>
+
 <script>
     var jsonData = [{
             "nomor": "1",
             "aspek_penilain": "Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li><li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li> ",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
             "nilai_max": "0-70",
-            // "bobot_nilai": "70%",
+            "bobot_nilai": "40%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
         {
@@ -106,7 +107,7 @@
             "aspek_penilain": "Presentasi dan Tanya Jawab <li>Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang</li> <li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
             "nilai_max": "0-30",
-            // "bobot_nilai": "30%",
+            "bobot_nilai": "40%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
     ];
@@ -129,15 +130,18 @@
             {
                 data: "nilai_max"
             },
-            // {
-            //     data: "bobot_nilai"
-            // },
+            {
+                data: "bobot_nilai"
+            },
             {
                 data: "nilai_magang"
             }
-        ]
+        ],
+        // data: dataLapangan,
+        //     'rowsGroup': [0, 1, 5],
     });
 </script>
+
 <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 <script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>

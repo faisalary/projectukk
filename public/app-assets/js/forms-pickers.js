@@ -10,6 +10,7 @@
   const flatpickrDate = document.querySelector('#flatpickr-date'),
     flatpickrTime = document.querySelector('#flatpickr-time'),
     flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
+    flatpickrDateTimeClass = document.querySelector('#flatpickr-datetime2'),
     flatpickrMulti = document.querySelector('#flatpickr-multi'),
     flatpickrRange = document.querySelector('#flatpickr-range'),
     flatpickrRangeFilter = document.querySelector('#flatpickr-range-filter'),
@@ -20,7 +21,8 @@
   // Date
   if (flatpickrDate) {
     flatpickrDate.flatpickr({
-      monthSelectorType: 'static'
+      monthSelectorType: 'static',
+      static: true,
     });
   }
 
@@ -36,7 +38,17 @@
   if (flatpickrDateTime) {
     flatpickrDateTime.flatpickr({
       enableTime: true,
-      dateFormat: 'Y-m-d H:i'
+      dateFormat: 'Y-m-d H:i',
+      static: true,
+    });
+  }
+
+  // Datetime
+  if (flatpickrDateTimeClass) {
+    flatpickrDateTimeClass.flatpickr({
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i',
+      static: true,
     });
   }
 

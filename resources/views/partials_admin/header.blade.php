@@ -154,7 +154,7 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                             <img src="{{ url('/app-assets/img/Logo.svg') }}">
+                            <img src="{{ url('/app-assets/img/Logo.svg') }}">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">
                             <img src="{{ url('/app-assets/img/Talentern.svg') }}">
@@ -172,10 +172,10 @@
                 <!-- Admin -->
 
                 @can('slidebar.lkm')
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin LKM</span>
-                </li>
                 <ul class="menu-inner py-1">
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin LKM</span>
+                    </li>
                     <!-- Dashboards -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">
@@ -321,6 +321,11 @@
                                     <div data-i18n="Master Pembimbing Lapangan">Master Pembimbing Lapangan</div>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="/masters/laporan-akhir" class="menu-link">
+                                    <div data-i18n="Master Laporan Akhir">Master Laporan Akhir</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -366,10 +371,10 @@
 
                 <!-- Mitra -->
                 @can('slidebar.mitra')
+                <ul class="menu-inner py-2">
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra Perusahaan</span>
                 </li>
-                <ul class="menu-inner py-2">
                     <!-- Dashboards -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">

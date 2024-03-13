@@ -72,7 +72,6 @@
                                 <th style="min-width:150px;">JENIS MAGANG</th>
                                 <th style="min-width:250px;">ASPEK PENILAIAN</th>
                                 <th style="min-width:250px;">DESKRIPSI ASPEK PENILAIAN</th>
-                                <th style="min-width:160px;">DINILAI OLEH</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
                                 <th style="min-width:100px;">BOBOT</th>
                                 <th style="min-width:100px;">STATUS</th>
@@ -94,7 +93,6 @@
                                 <th style="min-width:150px;">JENIS MAGANG</th>
                                 <th style="min-width:250px;">ASPEK PENILAIAN</th>
                                 <th style="min-width:250px;">DESKRIPSI ASPEK PENILAIAN</th>
-                                <th style="min-width:160px;">DINILAI OLEH</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
                                 <th style="min-width:100px;">BOBOT</th>
                                 <th style="min-width:100px;">STATUS</th>
@@ -214,8 +212,8 @@
 <script>
     $(document).ready(function() {
         var dataAkademik = [
-            ['1', 'Magang Fakultas', 'Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li> <li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-70', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Presentasi dan Tanya Jawab <li> Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang </li><li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Akademik', '0-30', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li> <li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', '0-70', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Presentasi dan Tanya Jawab <li> Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang </li><li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', '0-30', '40%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
         ];
 
         var tableAkademik = $('#table-akademik').DataTable({
@@ -233,9 +231,6 @@
                     title: 'DESKRIPSI ASPEK PENILAIAN',
                 },
                 {
-                    title: 'DINILAI OLEH',
-                },
-                {
                     title: 'NILAI MAX',
                 },
                 {
@@ -265,7 +260,7 @@
                     "targets": 3
                 },
                 {
-                    "width": "160px",
+                    "width": "100px",
                     "targets": 4
                 },
                 {
@@ -279,21 +274,17 @@
                 {
                     "width": "100px",
                     "targets": 7
-                },
-                {
-                    "width": "100px",
-                    "targets": 8
                 }
             ],
             data: dataAkademik,
-            'rowsGroup': [0, 1, 4, 6],
+            'rowsGroup': [0, 1, 5],
         });
 
 
         var dataLapangan = [
-            ['1', 'Magang Fakultas', 'Komunikasi, Adaptasi, Kerjasama', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Disiplin dan Tanggung Jawab dalam pengerjaan tugas', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
-            ['1', 'Magang Fakultas', 'Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', 'Pembimbing Lapangan', '0-40', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Komunikasi, Adaptasi, Kerjasama', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Disiplin dan Tanggung Jawab dalam pengerjaan tugas', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', '0-30', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
+            ['1', 'Magang Fakultas', 'Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang', 'Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.', '0-40', '60%', '<span class="badge bg-label-success">Aktif</span>', '<a data-bs-toggle="modal" data-bs-target="#modal-komponen-nilai-edit" class="btn-icon text-warning waves-effect waves-light"><i class="tf-icons ti ti-edit"></i></a><a class="btn-icon text-danger waves-effect waves-light"><i class="tf-icons ti ti-circle-x"></i></a>'],
         ];
 
         var tableLapangan = $('#table-lapangan').DataTable({
@@ -311,9 +302,6 @@
                     title: 'DESKRIPSI ASPEK PENILAIAN',
                 },
                 {
-                    title: 'DINILAI OLEH',
-                },
-                {
                     title: 'NILAI MAX',
                 },
                 {
@@ -343,7 +331,7 @@
                     "targets": 3
                 },
                 {
-                    "width": "160px",
+                    "width": "100px",
                     "targets": 4
                 },
                 {
@@ -357,14 +345,10 @@
                 {
                     "width": "100px",
                     "targets": 7
-                },
-                {
-                    "width": "100px",
-                    "targets": 8
                 }
             ],
             data: dataLapangan,
-            'rowsGroup': [0, 1, 4, 6],
+            'rowsGroup': [0, 1, 5],
         });
     });
 </script>

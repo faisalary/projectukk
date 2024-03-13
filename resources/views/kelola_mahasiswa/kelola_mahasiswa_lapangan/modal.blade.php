@@ -42,19 +42,19 @@
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width:280px;">ASPEK PENILAIAN</th>
-                                <th style="min-width:320px;">DESKRIPSI ASPEK PENILAIAN</th>
+                                <th style="min-width:230px;">ASPEK PENILAIAN</th>
+                                <th style="min-width:230px;">DESKRIPSI ASPEK PENILAIAN</th>
                                 <th style="min-width:100px;">NILAI MAX</th>
-                                <!-- <th style="min-width:100px;">BOBOT NILAI</th> -->
+                                <th style="min-width:100px;">BOBOT NILAI</th>
                                 <th style="min-width:150px;">NILAI MAGANG</th>
                             </tr>
                         <tfoot>
                             <tr>
-                                <th class="text-center" colspan="4">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 = 100)</th>
+                                <th class="text-center" colspan="5">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 + Aspek 3 = 100)</th>
                                 <th class=""><input type="text" id="" class="form-control" placeholder="85" style="max-width: 150px;" disabled /></th>
                             </tr>
                             <tr>
-                                <th class="text-center" colspan="4">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
+                                <th class="text-center" colspan="5">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
                                 <th class=""><input type="text" id="" class="form-control" placeholder="A" style="max-width: 150px;" disabled /></th>
                             </tr>
                         </tfoot>
@@ -99,7 +99,7 @@
             "aspek_penilain": "Komunikasi, Adaptasi, Kerjasama",
             "deskripsi_aspek_penilain": "Penilaian dalam magang mencakup kemampuan berkomunikasi dengan jelas, beradaptasi dengan perubahan, dan bekerja sama dalam tim untuk mencapai tujuan bersama.",
             "nilai_max": "0-70",
-            // "bobot_nilai": "70%",
+            "bobot_nilai": "60%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
         {
@@ -107,15 +107,15 @@
             "aspek_penilain": "Disiplin dan Tanggung Jawab dalam pengerjaan tugas",
             "deskripsi_aspek_penilain": "Kemampuan untuk mengikuti aturan dan tenggat waktu dengan konsisten serta menyelesaikan tugas sesuai standar yang ditetapkan.",
             "nilai_max": "0-30",
-            // "bobot_nilai": "30%",
+            "bobot_nilai": "60%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
         {
-            "nomor": "2",
+            "nomor": "3",
             "aspek_penilain": "Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang",
             "deskripsi_aspek_penilain": "Mahasiswa memiliki kemampuan yang sesuai dengan posisi magang yang ditawarkan, memenuhi persyaratan yang diperlukan untuk berhasil dalam peran tersebut.",
             "nilai_max": "0-30",
-            // "bobot_nilai": "30%",
+            "bobot_nilai": "60%",
             "nilai_magang": "<input type='text' id='' class='form-control' placeholder='Input Disini' style='max-width: 150px;'/>"
         },
     ];
@@ -138,9 +138,9 @@
             {
                 data: "nilai_max"
             },
-            // {
-            //     data: "bobot_nilai"
-            // },
+            {
+                data: "bobot_nilai"
+            },
             {
                 data: "nilai_magang"
             }
