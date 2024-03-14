@@ -22,26 +22,27 @@ class SeleksiRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)){
+        if (isset($this->id)) {
             return [
-                'tahap' => ['required'],
-                'waktu' => ['required'],
+                'tahapan_seleksi' => ['required', Rule::unique('seleksi_lowongan')->ignore($this->id, 'id_seleksi_lowongan')],
+                'mulai' => ['required'],
                 'subjek' => ['required'],
             ];
         }
         return [
-            'tahap' => ['required'],
+            'tahapan_seleksi' => ['required', 'unique:seleksi_lowongan'],
             'mulai' => ['required'],
             'subjek' => ['required'],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
-       return [
-            'tahap.required' => 'Tahap must be filled',
-            'mulai.required' =>'Date must be filled',
-            'subjek.required' => 'Email subject must be filled'
+        return [
+            'tahapan_seleksi.required' => 'Tahap harus diisi!',
+            'tahapan_seleksi.unique' => 'Tahap tersebut sudah ada!',
+            'mulai.required' => 'Date harus diisi!',
+            'subjek.required' => 'Email subject harus diisi!'
         ];
     }
 }

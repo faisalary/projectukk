@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->dropColumn('id_status_seleksi');
                 $table->dropColumn('namatahap_seleksi');
             });
-        } 
+        }
     }
 
     /**
@@ -25,8 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('seleksi_lowongan', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('seleksi_lowongan', 'id_status_seleksi') && Schema::hasColumn('seleksi_lowongan', 'namatahap_seleksi')) {
+            Schema::table('seleksi_lowongan', function (Blueprint $table) {
+                $table->dropForeign('seleksi_lowongan_id_status_seleksi_foreign');
+                $table->dropColumn('id_status_seleksi');
+                $table->dropColumn('namatahap_seleksi');
+            });
+        }
     }
 };
