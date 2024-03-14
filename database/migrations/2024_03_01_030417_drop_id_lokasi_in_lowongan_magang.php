@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         if (Schema::hasColumn('lowongan_magang', 'id_lokasi') && Schema::hasColumn('lowongan_magang', 'paid')) {
-        if (Schema::hasColumn('lowongan_magang', 'id_lokasi') && Schema::hasColumn('lowongan_magang', 'paid')) {
-            Schema::table('lowongan_magang', function (Blueprint $table) {
-                $table->dropForeign('lowongan_magang_id_lokasi_foreign');
-                $table->dropColumn('id_lokasi');
-                $table->dropColumn('paid');
-            });
-        } 
+            if (Schema::hasColumn('lowongan_magang', 'id_lokasi') && Schema::hasColumn('lowongan_magang', 'paid')) {
+                Schema::table('lowongan_magang', function (Blueprint $table) {
+                    $table->dropForeign('lowongan_magang_id_lokasi_foreign');
+                    $table->dropColumn('id_lokasi');
+                    $table->dropColumn('paid');
+                });
+            }
+        }
     }
 
     /**
