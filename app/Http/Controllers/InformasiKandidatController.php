@@ -189,7 +189,7 @@ class InformasiKandidatController extends Controller
         $picture = $prib?->profile_picture ? url('assets/images/' . $prib->profile_picture) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
-        // dd($img);
+        // dd($pendaftar->reason_aplicant);
 
         return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif', 'infoTambah'));
     }

@@ -53,36 +53,37 @@ class JadwalSeleksiController extends Controller
     {
         try {
 
-            $pendaftaran = PendaftaranMagang::where('current_step', $request->tahapan_seleksi)->first();
+            $pendaftaran = PendaftaranMagang::where('current_step', $request->tahapan_seleksi)->get();
+            $pesan = 'Tahap tersebut belum dapat dibuat!';
+            $type = "info";
+            $icon = "info";
+            $title = "Info!";
+
 
             if ($pendaftaran != null) {
+                foreach ($pendaftaran as $key =>  $value) {
 
-                list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
-                $startTimestamp = strtotime(trim($startDateTime));
-                $startDate = date('Y-m-d', $startTimestamp);
-                $startTime = date('H:i', $startTimestamp);
-                $endTimestamp = strtotime(trim($endDateTime));
-                $endDate = date('Y-m-d', $endTimestamp);
-                $endTime = date('H:i', $endTimestamp);
-                $seleksi = Seleksi::create([
-                    'id_pendaftaran' => $pendaftaran->id_pendaftaran,
-                    'start_date' => $startDate . " " . $startTime,
-                    'end_date' => $endDate . " " . $endTime,
-                    'tahapan_seleksi' => $request->tahapan_seleksi,
-                    'id_email_tamplate' => $request->subjek,
-                    'id_lowongan' => $pendaftaran->id_lowongan,
-                ]);
-                $pesan = 'Data berhasil dibuat!';
-                $type = "success";
-                $icon = "success";
-                $title = "Succeed!";
-            } else {
-                $pesan = 'Tahap tersebut belum dapat dibuat!';
-                $type = "info";
-                $icon = "info";
-                $title = "Info!";
+                    list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
+                    $startTimestamp = strtotime(trim($startDateTime));
+                    $startDate = date('Y-m-d', $startTimestamp);
+                    $startTime = date('H:i', $startTimestamp);
+                    $endTimestamp = strtotime(trim($endDateTime));
+                    $endDate = date('Y-m-d', $endTimestamp);
+                    $endTime = date('H:i', $endTimestamp);
+                    $seleksi = Seleksi::create([
+                        'id_pendaftaran' => $value->id_pendaftaran,
+                        'start_date' => $startDate . " " . $startTime,
+                        'end_date' => $endDate . " " . $endTime,
+                        'tahapan_seleksi' => $request->tahapan_seleksi,
+                        'id_email_tamplate' => $request->subjek,
+                        'id_lowongan' => $value->id_lowongan,
+                    ]);
+                    $pesan = 'Data berhasil dibuat!';
+                    $type = "success";
+                    $icon = "success";
+                    $title = "Succeed!";
+                }
             }
-
 
             $email = email_template::where('id_email_template', $request->subjek)->first();
             $user = 'Mita Mutiara';
@@ -166,7 +167,7 @@ class JadwalSeleksiController extends Controller
         $experience = Experience::where('nim', $pendaftar->nim)->get();
         $skills = Skill::where('nim', $pendaftar->nim)->get();
         $sertif = Sertif::where('nim', $pendaftar->nim)->get();
-        $picture = $prib->profile_picture ? url('assets/images/' . $prib->profile_picture) : url('\assets\images\no-pictures.png');
+        $picture = $prib?->profile_picture ? url('assets/images/' . $prib->profile_picture) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
         // dd($img);
@@ -199,10 +200,13 @@ class JadwalSeleksiController extends Controller
                 if ($tahap == $batas_tahap) {
                     $pendaftaran->current_step = "penawaran";
                     $pendaftaran->save();
+                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $batas_tahap;
                 } else if ($request->tahap == 'tahap2') {
                     $pendaftaran->current_step = 'tahap' . $request->value + 2;
+                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $request->value + 1;
                 } else {
                     $pendaftaran->current_step = 'tahap' . $request->value + 1;
+                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $request->value;
                 }
 
                 $pendaftaran->save();
