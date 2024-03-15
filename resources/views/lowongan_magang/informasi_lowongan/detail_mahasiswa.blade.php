@@ -58,9 +58,9 @@
             </div>
             <h4> Mengapa Saya Harus Di Terima?</h4>
             <p class="mb-0 text-justify">
-                <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($prib->headliner ?? '-', 100) }}</span>
+                <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($pendaftar->reason_aplicant ?? '-', 100) }}</span>
 
-                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$prib->headliner ?? '-'}}">Show More</u>
+                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$pendaftar->reason_aplicant ?? '-'}}">Show More</u>
             </p>
             <hr>
 

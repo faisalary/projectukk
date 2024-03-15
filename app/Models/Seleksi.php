@@ -17,8 +17,9 @@ class Seleksi extends Model
         'id_email_tamplate',
         'start_date',
         'end_date',
-        'namatahap_seleksi',
-        'id_status_seleksi'
+        'tahapan_seleksi',
+        'id_lowongan',
+        'id_pendaftaran'
     ];
     protected $primaryKey = 'id_seleksi_lowongan';
     protected $keyType = 'string';

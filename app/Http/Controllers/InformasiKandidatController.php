@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\Skill;
 use App\Models\Sertif;
-use App\Models\Fakultas;
-use App\Models\Industri;
 use App\Models\Education;
-use App\Models\Mahasiswa;
 use App\Models\Experience;
-use App\Models\Universitas;
-use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
-use App\Models\StatusSeleksi;
 use App\Models\LowonganMagang;
 use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
@@ -31,13 +26,13 @@ class InformasiKandidatController extends Controller
         $pelamar = PendaftaranMagang::where('id_lowongan', $id)->get();
         $total = [
             'kandidat' => $pelamar->count(),
-            'screening' => $pelamar->where('applicant_status', 'screening')->count(),
-            'tahap1' => $pelamar->where('applicant_status', 'tahap1')->count(),
-            'tahap2' => $pelamar->where('applicant_status', 'tahap2')->count(),
-            'tahap3' => $pelamar->where('applicant_status', 'tahap3')->count(),
-            'penawaran' => $pelamar->where('applicant_status', 'penawaran')->count(),
-            'diterima' => $pelamar->where('applicant_status', 'diterima')->count(),
-            'ditolak' => $pelamar->where('applicant_status', 'ditolak')->count()
+            'screening' => $pelamar->where('current_step', 'screening')->count(),
+            'tahap1' => $pelamar->where('current_step', 'tahap1')->count(),
+            'tahap2' => $pelamar->where('current_step', 'tahap2')->count(),
+            'tahap3' => $pelamar->where('current_step', 'tahap3')->count(),
+            'penawaran' => $pelamar->where('current_step', 'penawaran')->count(),
+            'diterima' => $pelamar->where('current_step', 'diterima')->count(),
+            'ditolak' => $pelamar->where('current_step', 'ditolak')->count()
         ];
         $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
@@ -72,7 +67,7 @@ class InformasiKandidatController extends Controller
         if ($request->type == "kandidat") {
             $pendaftar = $pendaftar->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
         } else if ($request->type) {
-            $pendaftar = $pendaftar->where('applicant_status', $request->type)->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
+            $pendaftar = $pendaftar->where('current_step', $request->type)->with("mahasiswa", "mahasiswa.prodi", "mahasiswa.fakultas", "mahasiswa.univ");
         }
 
         return DataTables::of($pendaftar->get())
@@ -81,22 +76,26 @@ class InformasiKandidatController extends Controller
                 return $box;
             })
             ->addIndexColumn()
+            ->addColumn('tgl_daftar', function ($row) {
+                $tgl = Carbon::parse($row->tanggaldaftar)->format('d F Y');
+                return $tgl;
+            })
             ->editColumn('status', function ($pendaftar) {
-                if ($pendaftar->applicant_status == "kandidat") {
+                if ($pendaftar->current_step == "kandidat") {
                     return "<span class='badge bg-label-secondary me-1'>Belum Proses</span>";
-                } else if ($pendaftar->applicant_status == "screening") {
+                } else if ($pendaftar->current_step == "screening") {
                     return "<span class='badge bg-label-warning me-1'>Screening</span>";
-                } else if ($pendaftar->applicant_status == "tahap1") {
+                } else if ($pendaftar->current_step == "tahap1") {
                     return "<span class='badge bg-label-primary me-1'>Tahap 1</span>";
-                } else if ($pendaftar->applicant_status == "tahap2") {
+                } else if ($pendaftar->current_step == "tahap2") {
                     return "<span class='badge bg-label-primary me-1'>Tahap 2</span>";
-                } else if ($pendaftar->applicant_status == "tahap3") {
+                } else if ($pendaftar->current_step == "tahap3") {
                     return "<span class='badge bg-label-primary me-1'>Tahap 3</span>";
-                } else if ($pendaftar->applicant_status == "diterima") {
+                } else if ($pendaftar->current_step == "diterima") {
                     return "<span class='badge bg-label-success me-1'>Diterima</span>";
-                } else if ($pendaftar->applicant_status == "ditolak") {
+                } else if ($pendaftar->current_step == "ditolak") {
                     return "<span class='badge bg-label-danger me-1'>Ditolak</span>";
-                } else if ($pendaftar->applicant_status == "penawaran") {
+                } else if ($pendaftar->current_step == "penawaran") {
                     return "<span class='badge bg-label-info me-1'>Penawaran</span>";
                 }
                 return null;
@@ -144,14 +143,14 @@ class InformasiKandidatController extends Controller
 
                     $selected = PendaftaranMagang::where('id_pendaftaran', $value)->first();
 
-                    $selected->applicant_status = $request->input('status');
+                    $selected->current_step = $request->input('status');
                     $selected->save();
 
-                    StatusSeleksi::create([
-                        'id_pendaftaran' => $value,
-                        'status_seleksi' => false,
-                        'progress' => false,
-                    ]);
+                    // StatusSeleksi::create([
+                    //     'id_pendaftaran' => $value,
+                    //     'status_seleksi' => false,
+                    //     'progress' => false,
+                    // ]);
                 }
             }
 
@@ -190,7 +189,7 @@ class InformasiKandidatController extends Controller
         $picture = $prib?->profile_picture ? url('assets/images/' . $prib->profile_picture) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
-        // dd($img);
+        // dd($pendaftar->reason_aplicant);
 
         return view('lowongan_magang.informasi_lowongan.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif', 'infoTambah'));
     }

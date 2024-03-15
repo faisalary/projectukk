@@ -41,10 +41,10 @@ class LowonganJadwalController extends Controller
                 }
 
                 $item->kandidat = $item->total_pelamar->count();
-                $item->screening = $item->total_pelamar->where('applicant_status', 'screening')->count();
-                $item->tahap1 = $item->total_pelamar->where('applicant_status', 'tahap1')->count();
-                $item->tahap2 = $item->total_pelamar->where('applicant_status', 'tahap2')->count();
-                $item->tahap3 = $item->total_pelamar->where('applicant_status', 'tahap3')->count();
+                $item->screening = $item->total_pelamar->where('current_step', 'screening')->count();
+                $item->tahap1 = $item->total_pelamar->where('current_step', 'tahap1')->count();
+                $item->tahap2 = $item->total_pelamar->where('current_step', 'tahap2')->count();
+                $item->tahap3 = $item->total_pelamar->where('current_step', 'tahap3')->count();
                 return $item;
             });
 

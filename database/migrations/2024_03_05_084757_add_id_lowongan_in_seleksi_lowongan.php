@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasColumn('seleksi_lowongan', 'id_pendaftaran')) {
+        if (Schema::hasColumn('seleksi_lowongan', 'id_lowongan')) {
             Schema::table('seleksi_lowongan', function (Blueprint $table) {
-                $table->dropForeign('seleksi_lowongan_id_pendaftaran_foreign');
-                $table->dropColumn('id_pendaftaran');
+                $table->dropForeign('seleksi_lowongan_id_lowongan_foreign');
+                $table->dropColumn('id_lowongan');
             });
         } else {
             Schema::table('seleksi_lowongan', function (Blueprint $table) {
-                $table->uuid('id_pendaftaran')->nullable();
-                $table->foreign('id_pendaftaran')->references('id_pendaftaran')->on('pendaftaran_magang');
+                $table->uuid('id_lowongan')->nullable();
+                $table->foreign('id_lowongan')->references('id_lowongan')->on('lowongan_magang');
             });
         }
     }
@@ -29,10 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasColumn('seleksi_lowongan', 'id_pendaftaran')) {
+        if (Schema::hasColumn('seleksi_lowongan', 'id_lowongan')) {
             Schema::table('seleksi_lowongan', function (Blueprint $table) {
-                $table->dropForeign('seleksi_lowongan_id_pendaftaran_foreign');
-                $table->dropColumn('id_pendaftaran');
+                $table->dropForeign('seleksi_lowongan_id_lowongan_foreign');
+                $table->dropColumn('id_lowongan');
             });
         }
     }
