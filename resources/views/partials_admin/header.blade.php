@@ -212,11 +212,27 @@
                         </ul>
                     </li>
 
-                    <!-- Data Kandidat -->
+                    <!-- Pengajuan SPM -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-files"></i>
+                            <div data-i18n="Pengajuan SPM">Pengajuan SPM</div>
+                        </a>
+                    </li>
+
+                     <!-- Jadwal Seleksi -->
+                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                        <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-clock"></i>
+                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
+                        </a>
+                    </li>
+
+                    <!-- Data Mahasiswa -->
                     <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
-                            <div data-i18n="Data Kandidat">Data Kandidat</div>
+                            <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
@@ -232,12 +248,64 @@
                         </ul>
                     </li>
 
-                    <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
-                        <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
+                    <!-- Berkas Akhir -->
+                    <li class="menu-item">
+                        <a href="" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-folder"></i>
+                            <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Nilai Mahasiswa -->
+                    <li class="menu-item">
+                        <a href="" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-medal"></i>
+                            <div data-i18n="Nilai Mahasiswa">Nilai Mahasiswa</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Logbook Mahasiswa -->
+                    <li class="menu-item">
+                        <a href="" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-book"></i>
+                            <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/logbook-mahasiswa/magang-fakultas" class="menu-link">
+                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="/logbook-mahasiswa/magang-mandiri" class="menu-link">
+                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <!-- Kelola Pengguna -->
@@ -248,6 +316,13 @@
                         </a>
                     </li>
 
+                    <!-- Role -->
+                    <li class="menu-item">
+                        <a href="{{ url('/konfigurasi') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-user"></i>
+                            <div data-i18n="Role">Role</div>
+                        </a>
+                    </li>
 
                     <!-- Master Data -->
                     <li class="menu-item">
@@ -328,12 +403,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item">
-                        <a href="{{ url('/konfigurasi') }}" class="menu-link">
-                            <i class="ti ti-user"></i>
-                            <div data-i18n="Konfigurasi">Konfigurasi</div>
-                        </a>
-                    </li>
+                    
+
                     <!-- Pengaturan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
