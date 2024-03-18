@@ -37,7 +37,7 @@
         </a>
     </div>
     <div class="col-10">
-        <h4 class="fw-bold"><span class="text-muted fw-light"> Logbook Mahasiswa /</span>Detail Logbook Jennie Ruby Jane</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light"> Logbook Mahasiswa / </span>Detail Logbook Jennie Ruby Jane</h4>
     </div>
 </div>
 <div class="col-12">

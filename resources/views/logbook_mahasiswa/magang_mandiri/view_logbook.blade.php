@@ -32,12 +32,12 @@
 @section('main')
 <div class="row">
     <div class="">
-        <a href="/logbook-mahasiswa/magang-fakultas" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <a href="/logbook-mahasiswa/magang-mandiri" type="button" class="btn btn-outline-success mb-3 waves-effect">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
     <div class="col-10">
-        <h4 class="fw-bold"><span class="text-muted fw-light"> Logbook Mahasiswa /</span>Detail Logbook Jennie Ruby Jane</h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light"> Logbook Mahasiswa / </span>Detail Logbook Jennie Ruby Jane</h4>
     </div>
 </div>
 <div class="col-12">
