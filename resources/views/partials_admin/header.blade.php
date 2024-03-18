@@ -193,18 +193,18 @@
                     </li>
 
                     <!-- Lowongan Magang -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola*')) ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'informasi/mitra/' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('informasi*') ? 'active' : '' }}">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'kelola/lowongan/lkm' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('kelola*') ? 'active' : '' }}">
                                 <a href="{{ url('kelola/lowongan/lkm') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
@@ -372,9 +372,9 @@
                 <!-- Mitra -->
                 @can('slidebar.mitra')
                 <ul class="menu-inner py-2">
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra Perusahaan</span>
-                </li>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra Perusahaan</span>
+                    </li>
                     <!-- Dashboards -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link">
