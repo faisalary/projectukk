@@ -537,6 +537,22 @@ Route::get('/view-logbook-mahasiswa/magang-mandiri', function () {
     return view('logbook_mahasiswa.magang_mandiri.view_logbook');
 });
 
+Route::get('/nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.nilai');
+});
+
+Route::get('/nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.nilai');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

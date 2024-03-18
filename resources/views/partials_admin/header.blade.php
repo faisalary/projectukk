@@ -250,7 +250,7 @@
 
                     <!-- Berkas Akhir -->
                     <li class="menu-item">
-                        <a href="" class="menu-link menu-toggle">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-folder"></i>
                             <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                         </a>
@@ -270,18 +270,18 @@
 
                     <!-- Nilai Mahasiswa -->
                     <li class="menu-item">
-                        <a href="" class="menu-link menu-toggle">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-medal"></i>
                             <div data-i18n="Nilai Mahasiswa">Nilai Mahasiswa</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/nilai-mahasiswa/magang-fakultas" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/nilai-mahasiswa/magang-mandiri" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
                             </li>
@@ -290,7 +290,7 @@
 
                     <!-- Logbook Mahasiswa -->
                     <li class="menu-item">
-                        <a href="" class="menu-link menu-toggle">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-book"></i>
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                         </a>
@@ -476,7 +476,7 @@
                     </li>
 
                     <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif">
                             <a href=" /anggota/tim" class="menu-link">
                         <i class="menu-icon tf-icons ti ti-users"></i>
                         <div data-i18n="Anggota Tim">Anggota Tim</div>
