@@ -185,7 +185,7 @@
                     </li>
 
                     <!-- Kelola Mitra -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'company/kelola-mitra' ? 'active' : '' }} @endif">
+                    <li class="menu-item {{ request()->is('company/kelola-mitra*') ? 'active' : '' }}">
                         <a href="/company/kelola-mitra" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Kelola Mitra">Kelola Mitra</div>
@@ -193,7 +193,7 @@
                     </li>
 
                     <!-- Lowongan Magang -->
-                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola/lowongan*')) ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
@@ -204,7 +204,7 @@
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item {{ request()->is('kelola*') ? 'active' : '' }}">
+                            <li class="menu-item {{ request()->is('kelola/lowongan*') ? 'active' : '' }}">
                                 <a href="{{ url('kelola/lowongan/lkm') }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
@@ -233,7 +233,7 @@
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                    <li class="menu-item {{ request()->is('jadwal-seleksi*') ? 'active' : '' }}">
                         <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
@@ -250,85 +250,85 @@
 
 
                     <!-- Master Data -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item {{ request()->is('master*') ? 'active open' : '' }}">
+                        <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data">Master Data</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_universitas' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('master/universitas*') ? 'active' : '' }}">
                                 <a href="{{ route('universitas.index') }}" class="menu-link">
                                     <div data-i18n="Master Universitas">Master Universitas</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_fakultas' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('master/fakultas*') ? 'active' : '' }}">
                                 <a href="{{ route('fakultas.index') }}" class="menu-link">
                                     <div data-i18n="Master Fakultas">Master Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-prodi' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('master/prodi*') ? 'active' : '' }}">
                                 <a href=/master/prodi class="menu-link">
                                     <div data-i18n="Master Prodi">Master Prodi</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master_tahun_akademik' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('master/tahun-akademik*') ? 'active' : '' }}">
                                 <a href="{{ route('thn-akademik.index') }}" class="menu-link">
                                     <div data-i18n="Master Tahun Akademik">Master Tahun Akademik</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-jenis-magang' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('master/jenis-magang*') ? 'active' : '' }}">
                                 <a href=/master/jenis-magang class="menu-link">
                                     <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-mitra' ? 'active' : '' }} @endif>
+                            <!-- <li class="menu-item {{ request()->is('master/universitas*') ? 'active' : '' }}">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
                                     <div data-i18n="Master Industri">Master Industri</div>
                                 </a>
-                            </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_dosen' ? 'active' : '' }} @endif>
+                            </li> -->
+                            <li class="menu-item {{ request()->is('master/dosen*') ? 'active' : '' }}">
                                 <a href="{{ route('dosen.index') }}" class="menu-link">
                                     <div data-i18n="Master Dosen">Master Dosen</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master_mahasiswa' ? 'active' : '' }} @endif>
+                            <li class="menu-item {{ request()->is('master/mahasiswa*') ? 'active' : '' }}">
                                 <a href="{{ route('mahasiswa.index') }}" class="menu-link">
                                     <div data-i18n="Master Mahasiswa">Master Mahasiswa</div>
                                 </a>
                             </li>
-                            <li class="menu-item" @if (!empty($active_menu)) {{ $active_menu == 'master-pegawai-industri' ? 'active' : '' }} @endif>
+                            <li class="menu-item {{ request()->is('master/pegawai-industri*') ? 'active' : '' }}">
                                 <a href="{{ route('pegawaiindustri.index') }}" class="menu-link">
                                     <div data-i18n="Master Pegawai Industri">Master Pegawai Industri</div>
                                 </a>
                             </li>
-                            <li class="menu-item  @if (!empty($active_menu)) {{ $active_menu == 'master_nilai_mutu' ? 'active' : '' }} @endif">
+                            <li class="menu-item  {{ request()->is('master/nilai-mutu*') ? 'active' : '' }}">
                                 <a href="{{ route('nilai-mutu.index') }}" class="menu-link">
                                     <div data-i18n="Master Nilai Mutu">Master Nilai Mutu</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('master/komponen-penilaian*') ? 'active' : '' }}">
                                 <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('master/dokumen-persyaratan*') ? 'active' : '' }}">
                                 <a href="{{ route('doc-syarat.index') }}" class="menu-link">
                                     <div data-i18n="Dokumen Persyaratan">Dokumen Persyaratan</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="/masters/pembimbing-lapangan-mandiri" class="menu-link">
-                                    <div data-i18n="Master Pembimbing Lapangan">Master Pembimbing Lapangan</div>
+                            <li class="menu-item {{ request()->is('master/pembimbing-mandiri*') ? 'active' : '' }}">
+                                <a href="/master/pembimbing-mandiri" class="menu-link">
+                                    <div data-i18n="Master Pembimbing Lapangan Mandiri">Master Pembimbing Lapangan Mandiri</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="/masters/laporan-akhir" class="menu-link">
+                            <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
+                                <a href="/master/laporan-akhir" class="menu-link">
                                     <div data-i18n="Master Laporan Akhir">Master Laporan Akhir</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->is('konfigurasi*') ? 'active' : '' }}">
                         <a href="{{ url('/konfigurasi') }}" class="menu-link">
                             <i class="ti ti-user"></i>
                             <div data-i18n="Konfigurasi">Konfigurasi</div>
@@ -384,19 +384,19 @@
                     </li>
 
                     <!-- Lowongan Magang -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola/lowongan*')) ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                         </a>
 
                         <ul class="menu-sub">
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/informasi/lowongan/' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('informasi*') ? 'active' : '' }}">
                                 <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/kelola/lowongan/mitra' ? 'active' : '' }} @endif">
+                            <li class="menu-item {{ request()->is('kelola/lowongan*') ? 'active' : '' }}">
                                 <a href="{{ url('kelola/lowongan/mitra',  Auth::user()->id_industri)}}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
@@ -405,15 +405,15 @@
                     </li>
 
                     <!-- Anggota Tim -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'anggota/tim' ? 'active' : '' }} @endif"">
-                            <a href=" /anggota/tim" class="menu-link">
-                        <i class="menu-icon tf-icons ti ti-users"></i>
-                        <div data-i18n="Anggota Tim">Anggota Tim</div>
+                    <li class="menu-item {{ request()->is('anggota/tim*') ? 'active' : '' }}">
+                        <a href=" /anggota/tim" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Anggota Tim">Anggota Tim</div>
                         </a>
                     </li>
 
                     <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'jadwal-seleksi' ? 'active' : '' }} @endif">
+                    <li class="menu-item {{ request()->is('jadwal-seleksi*') ? 'active' : '' }}">
                         <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
@@ -421,7 +421,7 @@
                     </li>
 
                     <!-- Profile Perusahaan -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'profile-company' ? 'active' : '' }} @endif">
+                    <li class="menu-item {{ request()->is('company/profile-company*') ? 'active' : '' }}">
                         <a href="/company/profile-company" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-building"></i>
                             <div data-i18n="Profile Perusahaan">Profile Perusahaan</div>
@@ -429,7 +429,7 @@
                     </li>
 
                     <!-- Logbook Mahasiswa -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->is('kelola/mahasiswa*') || request()->is('logbook/mahasiswa*') ? 'active' : '' }}">
                         <a href="/logbook/mahasiswa" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
@@ -437,7 +437,7 @@
                     </li>
 
                     <!-- Master Data -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == 'master-data' ? 'active' : '' }} @endif">
+                    <li class="menu-item {{ request()->is('company/master-email*') ? 'active' : '' }}">
                         <a href="/company/master-email" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-database"></i>
                             <div data-i18n="Master Data Email">Master Data Email</div>
@@ -995,9 +995,6 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                                    </button>
                                 </div>
                                 <div class="modal-body text-center" style="display:block;">
                                     Apakah Anda Ingin Keluar Dari Akun Ini?

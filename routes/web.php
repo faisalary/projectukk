@@ -162,6 +162,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen-penilaian.status');
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
         });
+        Route::get('pembimbing-mandiri', function () {
+            return view('masters.pembimbing_lapangan_mandiri.index');
+        });
+
+        Route::get('laporan-akhir', function () {
+            return view('masters.berkas_akhir.index');
+        });
     });
     Route::prefix('konfigurasi')->middleware('can:slidebar.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
@@ -183,18 +190,18 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\KelolaMitraController::class, 'approved'])->name('kelola_mitra.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\KelolaMitraController::class, 'rejected'])->name('kelola_mitra.rejected');
         });
-        Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
+        Route::prefix('profile-company')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
-        Route::prefix('summary-profile')->middleware('can:only.lkm.mitra')->group(function () {
+        Route::prefix('summary-profile')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
 
-        Route::prefix('master-email')->group(function () {
+        Route::prefix('master-email')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
             Route::post('/store', [App\Http\Controllers\MasterEmailController::class, 'store'])->name('master_email.store');
@@ -489,14 +496,6 @@ Route::get('/kelola/mahasiswa-magang/input', function () {
 
 Route::get('/logbook/mahasiswa', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
-});
-
-Route::get('/masters/pembimbing-lapangan-mandiri', function () {
-    return view('masters.pembimbing_lapangan_mandiri.index');
-});
-
-Route::get('/masters/laporan-akhir', function () {
-    return view('masters.berkas_akhir.index');
 });
 
 Route::get('/verifikasi/akun', function () {
