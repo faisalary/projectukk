@@ -103,16 +103,18 @@ class KonfirmasiMagangController extends Controller
     public function updateDitolak(Request $request, string $id)
     {
         try {
+
             
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
+            $mandiri->status_terima = 2;
             $mandiri->save();
 
-            MhsMandiri::create([
+            MhsMagang::create([
                 'id_pengajuan' => $id,
-                'statusapprove' => 4
+                'jenis_magang'=>1,
             ]);
             
             return response()->json([

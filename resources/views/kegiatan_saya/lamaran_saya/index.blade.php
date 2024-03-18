@@ -485,7 +485,7 @@
                     @foreach ($mandiri as $item)
                         @if ($item->nim == $nim)
                         
-                            @if ($item->statusapprove == 1)
+                            @if ($item->statusapprove == 1 && $item ->status_terima == null)
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -522,9 +522,10 @@
                                                 {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}"
                                                 onclick="terima($(this))">Diterima
                                             </button>
-                                            <button type="button" class="btn btn-danger waves-effect"
-                                                data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
-                                            </button>
+                                            <button type="button" class="btn btn-danger waves-effect me-2"
+                                            {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}"
+                                            onclick="Ditolak($(this))">Ditolak
+                                        </button>
                                         </div>
                                     </div>
                                 </div>
@@ -536,24 +537,24 @@
                                         </div>
                                         <div class="row">
                                             <div class="ps-4">
-                                                <h4>{{ $item->PengajuanMandiri->posisi_magang }}</h4>
-                                                <p>{{ $item->PengajuanMandiri->nama_industri }}</p>
+                                                <h4>{{ $item->posisi_magang }}</h4>
+                                                <p>{{ $item->nama_industri }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
                                                 <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
                                                         style="font-size: 18px;"></i>
-                                                    {{ $item->PengajuanMandiri->alamat_industri }}</span>
+                                                    {{ $item->alamat_industri }}</span>
                                             </div>
                                             <div class="col-2">
                                                 <span class="border-end pe-2 me-2"><i
                                                         class="tf-icons ti ti-phone-call pe-1"
-                                                        style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->nohp }}</span>
+                                                        style="font-size: 18px;"></i>{{ $item->nohp }}</span>
                                             </div>
                                             <div class="col-2">
                                                 <span><i class="tf-icons ti ti-mail pe-1"
-                                                        style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->email }}</span>
+                                                        style="font-size: 18px;"></i>{{ $item->email }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -566,24 +567,24 @@
                                         </div>
                                         <div class="row">
                                             <div class="ps-4">
-                                                <h4>{{ $item->PengajuanMandiri->posisi_magang }}</h4>
-                                                <p>{{ $item->PengajuanMandiri->nama_industri }}</p>
+                                                <h4>{{ $item->posisi_magang }}</h4>
+                                                <p>{{ $item->nama_industri }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
                                                 <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin"
                                                         style="font-size: 18px;"></i>
-                                                    {{ $item->PengajuanMandiri->alamat_industri }}</span>
+                                                    {{ $item->alamat_industri }}</span>
                                             </div>
                                             <div class="col-2">
                                                 <span class="border-end pe-2 me-2"><i
                                                         class="tf-icons ti ti-phone-call pe-1"
-                                                        style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->nohp }}</span>
+                                                        style="font-size: 18px;"></i>{{ $item->nohp }}</span>
                                             </div>
                                             <div class="col-2">
                                                 <span><i class="tf-icons ti ti-mail pe-1"
-                                                        style="font-size: 18px;"></i>{{ $item->PengajuanMandiri->email }}</span>
+                                                        style="font-size: 18px;"></i>{{ $item->email }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -621,6 +622,22 @@
                     $('#date').val(response.enddate).trigger('change');
 
                     $('#modalDiterima').modal('show');
+                }
+            });
+        }
+
+        function Ditolak(e) {
+            let id = e.attr('data-id');
+            let action = `{{ url('kegiatan-saya/lamaran-saya/updateDitolak/') }}/${id}`;
+            var url = `{{ url('kegiatan-saya/lamaran-saya/edit/') }}/${id}`;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    $('#modalDitolak form').attr('action', action);
+
+                    $('#modalDitolak').modal('show');
                 }
             });
         }
