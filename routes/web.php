@@ -328,6 +328,36 @@ Route::middleware('auth')->group(function () {
             Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
         });
     });
+
+    Route::prefix('/kegiatan-saya')->group(function () {
+        Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
+        Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
+        Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
+        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
+        Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
+        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
+    });
+
+    Route::prefix('mandiri')->group(function () {
+        Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
+            Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
+            Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
+        });
+    });
+
+    Route::prefix('/pengajuan/surat')->group(function () {
+        Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('mandiri.index');
+        Route::post('/show', [App\Http\Controllers\KonfirmasiMandiriController::class, 'show'])->name('mandiri.show');
+        Route::post('/store', [App\Http\Controllers\KonfirmasiMandiriController::class, 'store'])->name('mandiri.store');
+        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'detail'])->name('mandiri.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -366,14 +396,6 @@ Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
 });
 
-// Route::get('/profile-company', function () {
-//     return view('company.profile_company', ['active_menu' => 'profile-company']);
-// })->name('profile.company');
-
-// Route::get('/summary-profile', function () {
-//     return view('company.summary_profile');
-// });
-
 
 
 Route::get('/detail/lowongan/magang', function () {
@@ -389,9 +411,6 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-// Route::get('/kegiatan_saya/lamaran_saya', function () {
-//     return view('kegiatan_saya.lamaran_saya.index');
-// });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
@@ -412,19 +431,6 @@ Route::get('/lowongan/magang', function () {
 
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
-});
-
-// Route::get('/pengajuan/surat', function () {
-//     return view('pengajuan_magang.pengajuan_mandiri');
-// });
-Route::prefix('/pengajuan/surat')->group(function () {
-    Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('mandiri.index');
-    Route::post('/show', [App\Http\Controllers\KonfirmasiMandiriController::class, 'show'])->name('mandiri.show');
-    Route::post('/store', [App\Http\Controllers\KonfirmasiMandiriController::class, 'store'])->name('mandiri.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'detail'])->name('mandiri.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
 });
 
 Route::get('/logbook', function () {
@@ -513,26 +519,6 @@ Route::get('/berkas/akhir', function () {
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
-
-Route::prefix('/kegiatan-saya')->group(function () {
-    Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
-    Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
-    Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
-    Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
-    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-});
-
-Route::prefix('mandiri')->group(function () {
-    Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
-        Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
-        Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
-        Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
-    });
-});
 
 Route::get('/test', function () {
     return view('auth.message-verify-email');
