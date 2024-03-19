@@ -344,7 +344,7 @@
               <h5 class="text-secondary pt-2 ps-2 pe-3">Dokumen Pendukung</h5>
               {{-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i> --}}
               <i class="menu-icon ps-2 pe-2 pb-2">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen">Tambah</button>
+                <button class="btn btn-success" data-bs-target="#modalTambahDokumen"   data-bs-toggle="modal">Tambah</button>
               </i>
             </div>
             <div class="card-body">
@@ -358,8 +358,7 @@
                       <div class="timeline-header">
                         <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
-                          {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="edit('{{ $dokumen }}')" data-bs-target="#modalEditDokumen" ></i> --}}
-                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
+                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$dok?->id_sertif??''}}" onclick="editDokumen($(this))" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
                           <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                         </div>
                       </div>
@@ -432,7 +431,7 @@
           type: 'GET',
           url: url,
           success: function (response) {
-            console.log(response);
+            // console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
               $('#ipk').val(response.ipk);
@@ -451,25 +450,28 @@
       });
     }
 
-    // function editInformasiTambahan(e) {
-    //   let id = e.attr('data-id');
-    //   var url = `{{ url('mahasiswa/profile/informasi/edit/') }}/${id}`;
-    //   let action = `{{ url('mahasiswa/profile/informasi/update/') }}/${id}`;
+    function editDokumen(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/dokumen-pendukung/update/') }}/${id}`;
+      console.log(url);
 
-    //   $.ajax({
-    //       type: 'GET',
-    //       url: url,
-    //       success: function (response) {
-    //           $("#modal-button-infotam").html("Update Data");
-    //           $('#modalEditInformasiTambahan form').attr('action', action);
-    //           $('#lok_kerja').val(response.lok_kerja); 
-    //           $('#sosmed').val(response.sosmed);
-    //           $('#bahasa').val(response.id_bahasa);
-    //           $('#url_sosmed').val(response.url_sosmed);
-            
-    //       }
-    //   });
-    // }
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+              $("#modal-button").html("Update Data");
+              $('#modalEditDokumen form').attr('action', action);
+              $('#nama_sertif').val(response.nama_sertif); 
+              $('#nama_sertif').val(response.nama_sertif); 
+              $('#nama_sertif').val(response.nama_sertif); 
+              $('#penerbit').val(response.penerbit);
+              $('#file_sertif').val(test);
+              $('#link_sertiff').val(response.link_sertif);
+              $('#deskripsi').val(response.deskripsi);
+          }
+      });
+    }
   </script>
   <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
   <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>

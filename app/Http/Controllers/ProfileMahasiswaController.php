@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DokumenRequest;
 use App\Http\Requests\InfoPribRequest;
 use App\Http\Requests\InformasiKeahlianReq;
 use App\Http\Requests\InformasiPendidikanReq;
@@ -11,6 +12,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
+use App\Models\Sertif;
 use App\Models\Sertifikat;
 use App\Models\Skill;
 use Exception;
@@ -300,26 +302,22 @@ class ProfileMahasiswaController extends Controller
             ]);
         }
     }
-    
-    public function updatedokumen(Request $request, $id) { 
 
-        $this->validate($request,[
-            'file_sertif'  =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
-            'link_sertif' => 'required|url',
-            'deskripsi' => 'required|max:255|string'
-        ]);
+    public function editdokumen1($id) {
+        $dokumen = Sertifikat::where('id_sertif', $id)->first();
+        return $dokumen;
+    }
 
+    public function updatedokumen(DokumenRequest $request, $id) { 
         try {
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
-                $dokumen->update([
-                'nama_sertif' => $request->sertifikat,
-                'penerbit' => $request->penerbit,
-                'startdate' => Carbon::createFromFormat('Y-m-d', $request->startdate),
-                'enddate' => Carbon::createFromFormat('Y-m-d', $request->enddate),
-                'file_sertif' => $request->file_sertif,
-                'link_sertif' => $request->link_sertif,
-                'deskripsi' => $request->deskripsi,
-            ]);
+            $dokumen->nama_sertif = $request->nama_sertif; 
+            $dokumen->penerbit = $request->penerbit; 
+            $dokumen->file_sertif = $request->unggahfile; 
+            $dokumen->link_sertif = $request->link; 
+            $dokumen->deskripsi = $request->deskripsi;  
+            $dokumen->save();
+            // dd($dokumen);
         
             return response()->json([
                 'error' => false,

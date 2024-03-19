@@ -32,8 +32,8 @@ class UserSeeder extends Seeder
 
         
         $admin = User::firstOrNew([
-            'email' => 'admin@role.test',
-            'username' => 'Admin'
+                'email' => 'admin@role.test',
+                'username' => 'Admin'
         ], [
             'name' => 'Admin Role',
             'password' => bcrypt('12345678'),
