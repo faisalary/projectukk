@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="modalDitolak">Konfirmasi Penolakan Magang Mandiri</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" action="{{ url('kegiatan-saya/lamaran-saya/updateDitolak') }}" method="POST"
+            <form class="default-form" action="" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
@@ -15,7 +15,7 @@
                         <div class="col">
                             <label for="bukti_doc" class="form-label">Bukti Penolakan Magang</label>
                             <input class="form-control @error('bukti_doc') is-invalid @enderror" type="file"
-                                id="bukti_doc" name="bukti_doc" multiple="">
+                                id="bukti_doc" name="bukti_doc">
                             @error('bukti_doc')
                                 <div class="invalid-feedback">
                                     {{ $message }}
