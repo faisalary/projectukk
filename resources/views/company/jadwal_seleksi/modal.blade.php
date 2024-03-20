@@ -85,9 +85,13 @@
                             <label for="seleksi" class="form-label">Subjek Email</label>
                             <select class="form-select select2" id="subjek" name="subjek" data-placeholder="Pilih Subjek Email">
                                 <option disabled selected>Pilih Subjek Email</option>
+                                @if($email->count() === 0)
+                                <option disabled selected class="text-danger mt-1">Buat tamplate email pada Master Data Email terlebih dahulu!</option>
+                                @else
                                 @foreach ($email as $e)
                                 <option value="{{ $e->id_email_template }}">{{ $e->subject_email }}</option>
                                 @endforeach
+                                @endif
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>

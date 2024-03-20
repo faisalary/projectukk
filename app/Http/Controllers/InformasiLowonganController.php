@@ -16,6 +16,7 @@ class InformasiLowonganController extends Controller
      */
     public function index(Request $request, $id)
     {
+        $active_menu = 'informasi_lowongan';
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
             $industri = Industri::where('id_industri', $id)->first();
@@ -51,7 +52,7 @@ class InformasiLowonganController extends Controller
             });
 
 
-            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan', 'img'))->render();
+            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('active_menu', 'lowongan', 'img'))->render();
         }
 
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
@@ -64,7 +65,7 @@ class InformasiLowonganController extends Controller
         $pendaftar_count = $pelamar?->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
         // dd($lowongan_count);
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('active_menu', 'industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
     }
 
     /**

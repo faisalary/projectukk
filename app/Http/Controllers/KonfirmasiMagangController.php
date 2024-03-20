@@ -17,7 +17,6 @@ class KonfirmasiMagangController extends Controller
 {
     public function __construct()
     {
-       
     }
     /**
      * Display a listing of the resource.
@@ -25,22 +24,21 @@ class KonfirmasiMagangController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $mandiri = PengajuanMandiri::where("nim",$user->nim)->get();
+        $mandiri = PengajuanMandiri::where("nim", $user->nim)->get();
         $mahasiswa = Mahasiswa::all();
+        $file = MhsMandiri::with('PengajuanMandiri')->get();
         $file = MhsMagang::with('PengajuanMandiri')->get();
-        
+
         $nim = Mahasiswa::find($user->nim);
-        $nim = $nim->nim;
+        // $nim = $nim->nim;
 
         $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
-        return view('kegiatan_saya.lamaran_saya.index',  compact('mandiri','mahasiswa', 'nim', 'mandiri_nim','file'));
-
+        return view('kegiatan_saya.lamaran_saya.index',  compact('mandiri', 'mahasiswa', 'nim', 'mandiri_nim', 'file'));
     }
-    
+
     public function store($request)
     {
-    
     }
 
     /**
@@ -48,7 +46,6 @@ class KonfirmasiMagangController extends Controller
      */
     public function show()
     {
-
     }
 
     /**
@@ -66,7 +63,7 @@ class KonfirmasiMagangController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            
+
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
 
             $mandiri->nim = $request->nim;
@@ -79,13 +76,12 @@ class KonfirmasiMagangController extends Controller
             }
             $mandiri->status_terima = 1;
             $mandiri->save();
-            
 
-            MhsMagang::create([
+            MhsMandiri::create([
                 'id_pengajuan' => $id,
-                'jenis_magang'=>1,
+                'status' => true
             ]);
-            
+
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
@@ -99,12 +95,11 @@ class KonfirmasiMagangController extends Controller
             ]);
         }
     }
-    
+
     public function updateDitolak(Request $request, string $id)
     {
         try {
 
-            
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
@@ -114,9 +109,9 @@ class KonfirmasiMagangController extends Controller
 
             MhsMagang::create([
                 'id_pengajuan' => $id,
-                'jenis_magang'=>1,
+                'status' => false
             ]);
-            
+
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
@@ -135,7 +130,5 @@ class KonfirmasiMagangController extends Controller
      */
     public function status($id)
     {
-        
     }
-
 }
