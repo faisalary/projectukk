@@ -65,14 +65,14 @@
           <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/store/'. Auth::user()->nim)}}" method="POST">
             @csrf
             <div class="row">
-              <div class="mb-3 col-md-6 form-input">
+              <div class="mb-3 col-md-6 form-input form-input">
                 <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
+                <input class="form-control" type="text" name="posisi" placeholder="Ex: UI/UX Designer" />
               <div class="invalid-feedback"></div>
               </div>
-              <div class="mb-3 col-md-6 form-input">
+              <div class="mb-3 col-md-6 form-input form-input">
                 <label for="pekerjaan" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan" name="jenis" class="select2 form-select">
+                <select name="jenis" class="select2 form-select">
                   <option disabled selected>Pilih Jenis Pekerjaan</option>
                   <option value="Front End">Front End</option>
                   <option value="Back End">Back End</option>
@@ -83,22 +83,22 @@
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" name="name_intitutions" placeholder="Ex: PT Techno Infinity" />
+                <input class="form-control" type="text" name="name_intitutions" placeholder="Ex: PT Techno Infinity" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="month" id="month" name="startdate" class="form-control" placeholder="Month" />
+                <input type="month" name="startdate" class="form-control" placeholder="Month" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="month" id="month" name="enddate" class="form-control" placeholder="Month" />
+                <input type="month" name="enddate" class="form-control" placeholder="Month" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+                <textarea class="form-control" type="text" name="deskripsi" placeholder="Ketik di sini..."></textarea>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -128,13 +128,15 @@
           <form class="default-form" action="{{ url('mahasiswa/profile/pengalaman/update/' . $pengalaman?->id_experience??'')}}" method="POST">
             @csrf
             <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="posisi" name="posisi" value="{{$pengalaman?->posisi??''}}" placeholder="Ex: UI/UX Designer" />
+              <div class="mb-3 col-md-6 form-input">
+                <label for="" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="posisi" name="posisi"  placeholder="Ex: UI/UX Designer" />
+                <div class="invalid-feedback"></div>         
+                
               </div>
-              <div class="mb-3 col-md-6">
-                <label for="pekerjaan2" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                <select id="pekerjaan2" value="{{$pengalaman?->jenis??''}}" name="jenis" class="select2 form-select">
+              <div class="mb-3 col-md-6 form-input">
+                <label for="" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
+                <select id="jenis" name="jenis" class="select2 form-select">
                   <option disabled selected>Pilih Jenis Pekerjaan</option>
                   <option value="Front End">Front End</option>
                   <option value="Back End">Back End</option>
@@ -142,21 +144,25 @@
                   <option value="System Analyst">System Analyst</option>
                 </select>
               </div>
-              <div class="mb-3 col-md-12">
-                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="namaperusahaan" value="{{$pengalaman?->name_intitutions??''}}" name="name_institutions" placeholder="Ex: PT Techno Infinity" />
+              <div class="mb-3 col-md-12 form-input">
+                <label for="" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
+                <input class="form-control" type="text" id="name_institutions"  name="name_institutions" placeholder="Ex: PT Techno Infinity" />
+                <div class="invalid-feedback"></div>             
               </div>
-              <div class="mb-3 col-md-12">
+              <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                <input type="date" id="startdate" value="{{$pengalaman ? $pengalaman->startdate : ''}}" name="startdate" class="form-control" />
+                <input type="date" id="startdate"  name="startdate" class="form-control" />
+                <div class="invalid-feedback"></div>             
               </div>
-              <div class="mb-3 col-md-12">
+              <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                <input type="date" id="startdate" value="{{$pengalaman ? $pengalaman->enddate : ''}}" name="startdate" class="form-control" />
+                <input type="date" id="enddate" name="enddate" class="form-control" />
+                <div class="invalid-feedback"></div>             
               </div>
-              <div class="mb-3 col-md-12">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" value="" id="deskripsi" name="deskripsi" placeholder="Ketik di sini...">{{$pengalaman?->deskripsi??''}}</textarea>
+              <div class="mb-3 col-md-12 form-input">
+                <label for="" class="form-label">Deskripsi</label>
+                <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="modal-footer p-0">

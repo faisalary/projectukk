@@ -285,11 +285,13 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('profile/skill')->group(function (){
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.skill.mahasiswa.index');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editskill'])->name('profile.skill.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updateskill'])->name('profile.skill.mahasiswa.update');
         });
         Route::prefix('profile/pengalaman')->group(function (){
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.pengalaman.mahasiswa.index');
             Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'store'])->name('profile.pengalaman.mahasiswa.store');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editpengalaman'])->name('profile.pengalaman.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatepengalaman'])->name('profile.pengalaman.mahasiswa.update');
             Route::get('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletepengalaman'])->name('profile.pengalaman.mahasiswa.delete');
             Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detailpengalaman'])->name('profile.pengalaman.mahasiswa.delete');
@@ -298,7 +300,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.dokumen.mahasiswa.index');
             Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'storedokumen'])->name('profile.dokumen.mahasiswa.store');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editdokumen1'])->name('profile.dokumen.mahasiswa.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatedokumen'])->name('profile.dokumen.mahasiswa.update');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatedokumen'])->name('profile.dokumen.mahasiswa.update');
             Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detail'])->name('profile.dokumen.mahasiswa.detail');
             Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletedok'])->name('profile.dokumen.mahasiswa.delete');
         });

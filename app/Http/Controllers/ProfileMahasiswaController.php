@@ -178,6 +178,7 @@ class ProfileMahasiswaController extends Controller
         }
         
     }
+
     public function updateskill(InformasiKeahlianReq $request, $id) { 
 
         try{
@@ -234,20 +235,24 @@ class ProfileMahasiswaController extends Controller
         
     }
 
+    public function editpengalaman($id){
+        $pengalaman = Experience::where('id_experience', $id)->first();
+        return $pengalaman;
+    }
+
     public function updatepengalaman(InformasiPengalamanReq $request, $id) {
 
 
         try {
             $pengalaman = Experience::where('id_experience', $id)->first();
 
-            $pengalaman->update([
-                'posisi' => $request->posisi,
-                'jenis' => $request->jenis,
-                'name_intitutions' => $request->name_institutions,
-                'startdate' => $request->startdate . '-01',
-                'enddate' => $request->enddate . '-01',
-                'deskripsi' => $request->deskripsi,
-            ]);
+            $pengalaman->posisi = $request->posisi;
+            $pengalaman->posisi =$request->jenis;
+            $pengalaman->posisi =$request->name_institutions;
+            $pengalaman->posisi =$request->startdate . '-01';
+            $pengalaman->posisi =$request->enddate . '-01';
+            $pengalaman->posisi =$request->deskripsi;
+            $pengalaman->save();
 
             return response()->json([
                 'error' => false,
@@ -278,13 +283,12 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $dokumen = Sertifikat::where('nim', $id)->first();
-            // $file = $dokumen->file_sertif;
             $file = null; 
             if ($request->file('file_sertif')) {
                 $file = Storage::put('file_sertif' , $request->file('file_sertif'));
             }
 
-            Sertifikat::create([
+            $dokumen = Sertifikat::create([
                 'nim' => $id,
                 'nama_sertif' => $request->sertifikat,
                 'penerbit' => $request->penerbit,
@@ -294,11 +298,18 @@ class ProfileMahasiswaController extends Controller
                 'link_sertif' => $request->link_sertif,
                 'deskripsi' => $request->deskripsi,
             ]);
+            $dokumen->save();
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+                'url' => Auth::user()->nim
+            ]);
             
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
+                
             ]);
         }
     }
@@ -311,17 +322,18 @@ class ProfileMahasiswaController extends Controller
     public function updatedokumen(DokumenRequest $request, $id) { 
         try {
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
+
             $dokumen->nama_sertif = $request->nama_sertif; 
             $dokumen->penerbit = $request->penerbit; 
-            $dokumen->file_sertif = $request->unggahfile; 
-            $dokumen->link_sertif = $request->link; 
+            $dokumen->file_sertif = $request->file_sertif; 
+            $dokumen->link_sertif = $request->link_sertif; 
             $dokumen->deskripsi = $request->deskripsi;  
             $dokumen->save();
-            // dd($dokumen);
         
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
+                'url' => Auth::user()->nim
             ]);
             
         } catch (Exception $e) {
@@ -339,8 +351,8 @@ class ProfileMahasiswaController extends Controller
 
     public function deletedok(Request $request, $id) { 
         try {
-            $sertifikat = Sertifikat::findOrFail($id);
-            $sertifikat->delete();
+            Sertifikat::where('id_sertif', $id)
+            ->delete();
 
             return response()->json([
                 'error' => false,

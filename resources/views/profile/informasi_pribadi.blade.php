@@ -306,8 +306,8 @@
                     <div class="timeline-header mt-1">
                       <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$pe?->id_experience??''}}" onclick="editSkill($(this))" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$pe?->id_experience??''}}" onclick="destroy($(this))" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
                       </div>
                     </div>
                     
@@ -359,7 +359,7 @@
                         <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
                           <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$dok?->id_sertif??''}}" onclick="editDokumen($(this))" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
-                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
+                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$dok?->id_sertif??''}}" onclick="destroyDokumen($(this))" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
                         </div>
                       </div>
                       <div class="border-bottom mb-3">
@@ -454,21 +454,61 @@
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/dokumen-pendukung/update/') }}/${id}`;
-      console.log(url);
+      // console.log(url);
+
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          $("#modal-button").html("Update Data");
+          $('#modalEditDokumen form').attr('action', action);
+          $('#nama_sertif').val(response.nama_sertif); 
+          $('#penerbit').val(response.penerbit);
+          $('#file_sertif').val(response.file_sertif);
+          $('#link_sertif').val(response.link_sertif);
+          $('#deskripsi2').val(response.deskripsi);
+          $('#startdate').val(response.startdate);
+          $('#enddate').val(response.enddate);
+        }
+      });
+    }
+
+    function destroyDokumen(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/dokumen-pendukung/') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/dokumen-pendukung/delete/') }}/${id}`;
+      console.log(id);
+
+      $.ajax({
+        url: url,
+        type: "DELETE",
+        cache: false,
+        success:function(response){ 
+          $(`#modal-button`).remove();
+        }
+      });
+    }
+
+
+    function editSkill(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
+      console.log(id);
 
       $.ajax({
           type: 'GET',
           url: url,
           success: function (response) {
-              $("#modal-button").html("Update Data");
-              $('#modalEditDokumen form').attr('action', action);
-              $('#nama_sertif').val(response.nama_sertif); 
-              $('#nama_sertif').val(response.nama_sertif); 
-              $('#nama_sertif').val(response.nama_sertif); 
-              $('#penerbit').val(response.penerbit);
-              $('#file_sertif').val(test);
-              $('#link_sertiff').val(response.link_sertif);
-              $('#deskripsi').val(response.deskripsi);
+            $("#modal-button").html("Update Data");
+            $('#modalEditDokumen form').attr('action', action);
+            $('#posisi').val(response.posisi); 
+            $('#jenis').val(response.jenis);
+            $('#name_institutions').val(response.name_institutions);
+            $('#startdate').val(response.startdate);
+            $('#enddate').val(response.enddate);
+            $('#deskripsi').val(response.deskripsi);
+            console.log(response);
           }
       });
     }
