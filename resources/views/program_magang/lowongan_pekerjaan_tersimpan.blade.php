@@ -258,7 +258,7 @@
                                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-users ti-xs me-2"></i>
-                                            100 Mahasiswa
+                                            5 Kouta Penerimaan
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-briefcase ti-xs me-2"></i>
@@ -301,11 +301,11 @@
                                 <a href="/apply" type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
                             </div>
 
-                            <div class="row mt-3 p-2">
+                            <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Deskripsi Pekerjaan</b>
+                                    Deskripsi Pekerjaan
                                 </h3>
-                                <div class="text-block row">
+                                <div class="text-block row" style="column-gap: 20px; padding-bottom: 25px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker.
@@ -343,11 +343,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Requirement</b>
+                                    Requirement
                                 </h3>
-                                <div class=" text-block row">
+                                <div class=" text-block row" style="column-gap: 20px; padding-bottom: 23px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             At least Bachelor's degree in any field.
@@ -378,11 +379,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Benefit</b>
+                                    Benefit
                                 </h3>
-                                <div class="row">
+                                <div class="row" style="column-gap: 20px; padding-bottom: 30px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Family Care.
@@ -396,9 +398,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Kemampuan</b>
+                                    Kemampuan
                                 </h3>
                                 <div class="row">
                                     <div class="d-flex" style="column-gap: 20px; padding-bottom: 30px !important">
@@ -409,13 +412,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr style="margin-top: -5px;">
-                            <div class="row mt-2 mb-2">
-                                <h4 style="text-align: left !important; font-size:20px;">
-                                    <b>Tentang Perusahaan</b>
-                                </h4>
+
+                            <div class="mt-3">
+                                <h3>Seleksi Tahap 1</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Seleksi Administrasi</div>
+                                <div style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
                             </div>
-                            <div class="row mt-3 mb-2">
+
+                            <div class="mt-3">
+                                <h3>Seleksi Tahap 2</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Wawancara HR</div>
+                                <div style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
+                            </div>
+
+                            <div class="mt-3" style="border-bottom: 1px solid #D3D6DB;">
+                                <h3>Seleksi Tahap 3</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Wawancara User</div>
+                                <div class="mb-4" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <h3>
+                                    Tentang Perusahaan
+                                </h3>
+                            </div>
+                            <div class="row mb-2">
                                 <div class="text-block">
                                     <p class="mb-2">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.

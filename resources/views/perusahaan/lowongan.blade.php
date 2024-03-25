@@ -203,12 +203,12 @@
                 </a>
                 <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 250px !important;">
                     <div class="form-check mb-2 ms-2">
-                        <input name="paymentType" class="form-check-input" type="radio" value="tidakBerbayar" id="tidakBerbayarRadio" onclick="myFunction(this)">
+                        <input name="paymentType" class="form-check-input" type="radio" value="tidakBerbayar" id="tidakBerbayarRadio" onclick="toggleDivVisibility(this)">
                         <label class="form-check-label" for="tidakBerbayarRadio"> Tidak Berbayar </label>
                     </div>
 
                     <div class="form-check mb-2 ms-2">
-                        <input name="paymentType" class="form-check-input" type="radio" value="berbayar" id="berbayarRadio" onclick="myFunction(this)">
+                        <input name="paymentType" class="form-check-input" type="radio" value="berbayar" id="berbayarRadio" onclick="toggleDivVisibility(this)">
                         <label class="form-check-label" for="berbayarRadio"> Berbayar </label>
                     </div>
 
@@ -487,7 +487,7 @@
             {{-- Ada lowongan terpilih--}}
             <!-- <div class="row">
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card" style="width: 765px; height: auto;">
+                    <div class="card border" style="width: 765px; height: auto;">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="d-flex justify-content-between mb-3">
@@ -508,22 +508,22 @@
                                     <h1 class="mb-1" style="  text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">
                                         Human Resources</h1>
                                 </div>
-                                <div class="d-flex ms-2 mt-2" style="font-size: 14px;  !important">
-                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0; !important">
-                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-calendar ti-xs me-2"></i>
-                                            2023/2024 - Ganjil
-                                        </li>
+                                <div class="d-flex ms-2 mt-2" style="font-size: 14px;">
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-users ti-xs me-2"></i>
-                                            100 Mahasiswa
+                                            5 Kouta Penerimaan
                                         </li>
-                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-building-community  ti-xs me-2"></i>
-                                            Fakultas Ilmu Terapan
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-briefcase ti-xs me-2"></i>
+                                            Onsite
+                                        </li>
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar-time  ti-xs me-2"></i>
+                                            2 Semerter
                                         </li>
                                     </ul>
-                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
+                                    <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px;">
 
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-map-pin  ti-xs me-2"></i>
@@ -531,35 +531,35 @@
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                            Berbayar
+                                            Rp 1.000.000 - 5.000.000
                                         </li>
-                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-calendar-time  ti-xs me-2"></i>
-                                            2 Semerter
+                                        <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i class="ti ti-building-community  ti-xs me-2"></i>
+                                            D3
                                         </li>
                                     </ul>
-                                    <ul style="padding: 0 0 0 20px; !important">
+                                    <ul style="padding: 0 0 0 20px;">
                                         <li class="list-group-item d-flex align-items-start fw-semibold" style="margin-top: 15px !important">
                                             <i class="ti ti-school ti-xs me-2"></i>
                                             <div>
                                                 Program Studi
                                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                                    <li>D3 Rekayasa Perangkat Lunak</li>
-                                                    <li>D3 Rekayasa Perangkat Lunak</li>
-                                                    <li>D3 Rekayasa Perangkat Lunak</li>
+                                                    <li>Rekayasa Perangkat Lunak</li>
+                                                    <li>Manajemen Pemasaran</li>
+                                                    <li>Sistem Informasi</li>
                                                 </ul>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <button type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</button>
+                                <a href="/apply" type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
                             </div>
 
-                            <div class="row mt-3 p-2">
+                            <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Deskripsi Pekerjaan</b>
+                                    Deskripsi Pekerjaan
                                 </h3>
-                                <div class="row">
+                                <div class="text-block row" style="column-gap: 20px; padding-bottom: 25px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker.
@@ -580,9 +580,7 @@
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Support Talent Management and Succession Planning function.
                                         </li>
-
-                                        <div class="content-new">
-
+                                        <span class="content-new" style="display: none;">
                                             <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                                 Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc. </li>
 
@@ -594,19 +592,17 @@
 
                                             <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                                 Support other HR Indonesia operations activities. </li>
-                                        </div>
-
-                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                            Show more
-                                        </u>
+                                        </span>
+                                        <span class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</span>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Requirement</b>
+                                    Requirement
                                 </h3>
-                                <div class="row">
+                                <div class=" text-block row" style="column-gap: 20px; padding-bottom: 23px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             At least Bachelor's degree in any field.
@@ -623,7 +619,7 @@
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Good command of spoken and written English.
                                         </li>
-                                        <div class="content-new">
+                                        <span class="content-new" style="display: none;">
                                             <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                                 Strong attention to detail. </li>
 
@@ -632,19 +628,17 @@
 
                                             <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                                 Willing to work in Cikampek area. </li>
-                                        </div>
-
-                                        <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                            Show more
-                                        </u>
+                                        </span>
+                                        <span class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</span>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Benefit</b>
+                                    Benefit
                                 </h3>
-                                <div class="row">
+                                <div class="row" style="column-gap: 20px; padding-bottom: 30px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Family Care.
@@ -658,9 +652,10 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row mt-3 ps-2">
+
+                            <div class="row mt-3 ps-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
-                                    <b>Kemampuan</b>
+                                    Kemampuan
                                 </h3>
                                 <div class="row">
                                     <div class="d-flex" style="column-gap: 20px; padding-bottom: 30px !important">
@@ -671,36 +666,44 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr style="margin-top: -5px;">
-                            <div class="row mt-2 mb-2">
-                                <h4 style="text-align: left !important; font-size:20px;">
-                                    <b>Tentang Perusahaan</b>
-                                </h4>
+
+                            <div class="mt-3">
+                                <h3>Seleksi Tahap 1</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Seleksi Administrasi</div>
+                                <div style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
                             </div>
-                            <div class="row mt-3 mb-2">
-                                <div class="box">
-                                    <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;">Lorem
-                                        ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
-                                        driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.
+
+                            <div class="mt-3">
+                                <h3>Seleksi Tahap 2</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Wawancara HR</div>
+                                <div style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
+                            </div>
+
+                            <div class="mt-3" style="border-bottom: 1px solid #D3D6DB;">
+                                <h3>Seleksi Tahap 3</h3>
+                                <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Wawancara User</div>
+                                <div class="mb-4" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <h3>
+                                    Tentang Perusahaan
+                                </h3>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="text-block">
+                                    <p class="mb-2">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
+                                        <span class="ellipsis">...</span>
+                                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
+                                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
                                     </p>
-
-                                    <div class="content-new">
-                                        <p class="cursor-pointer content" style="text-align: left !important; font-size:17px;"> AFRY as a new common brand of ÅF Pöyry is one of the largest international power sector consulting and engineering
-                                            company with about 17,000 experts working across the world to create sustainable solutions for future generations.</p>
-                                    </div>
-
-                                    <u class="show_hide_new cursor-pointer" style="color:#4EA971">
-                                        Show more
-                                    </u>
-                                    <br>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> -->
-
             {{-- Belum ada lowongan terpilih--}}
             <div class="border text-center mt-3" style="border-radius: 8px;">
                 <figure class="m-5">
@@ -717,6 +720,8 @@
 @endsection
 
 @section('page_script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+
 <script>
     $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
         $(this).closest("li").toggleClass("active", this.checked);
@@ -726,18 +731,19 @@
         e.stopPropagation();
     });
 
-    function myFunction(x) {
-        x.classList.toggle("fa-bookmark-o");
-        x.classList.toggle("fa-bookmark");
-    }
-
-    function myFunction(radio) {
+    function toggleDivVisibility(radio) {
         var x = document.getElementById("myDIV");
         if (radio.value === "berbayar") {
             x.style.display = "block";
         } else {
             x.style.display = "none";
         }
+    }
+
+
+    function myFunction(x) {
+        x.classList.toggle("fa-bookmark-o");
+        x.classList.toggle("fa-bookmark");
     }
 </script>
 @endsection
