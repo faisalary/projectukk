@@ -45,7 +45,7 @@
 <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true" style="display: none">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header d-block border-bottom">
+            <div class="modal-header text-center d-block border-bottom">
                 <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -85,9 +85,13 @@
                             <label for="seleksi" class="form-label">Subjek Email</label>
                             <select class="form-select select2" id="subjek" name="subjek" data-placeholder="Pilih Subjek Email">
                                 <option disabled selected>Pilih Subjek Email</option>
+                                @if($email->count() === 0)
+                                <option disabled selected class="text-danger mt-1">Buat tamplate email pada Master Data Email terlebih dahulu!</option>
+                                @else
                                 @foreach ($email as $e)
                                 <option value="{{ $e->id_email_template }}">{{ $e->subject_email }}</option>
                                 @endforeach
+                                @endif
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>

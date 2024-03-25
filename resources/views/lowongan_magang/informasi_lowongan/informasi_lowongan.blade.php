@@ -101,8 +101,8 @@
                 <!-- card-informasi-lowongan -->
                 <div id="container-card" class="mb-3">
                     @if($lowongan_count == 0)
-                    <img src="\assets\images\no-data.png" alt="no-data" style="display: flex; margin-left: 
-                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 40%;">
+                    <img src="\assets\images\lowongan-empty.svg" alt="no-data" style="display: flex; margin-left: 
+                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 80%;">
                     @endif
                 </div>
 

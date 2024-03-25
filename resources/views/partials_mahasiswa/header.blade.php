@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ url("app-assets")}}" data-template="horizontal-menu-template">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{asset('app-assets')}}" data-template="horizontal-menu-template">
 
 <head>
   <meta charset="utf-8" />
@@ -11,7 +11,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="{{url("app-assets/img/favicon/favicon.ico")}}" />
+  <link rel="icon" type="image/x-icon" href="{{url('app-assets/img/favicon/favicon.ico')}}" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,47 +19,125 @@
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
   <!-- Icons -->
-  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/fontawesome.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/tabler-icons.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/fonts/flag-icons.css")}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/fonts/fontawesome.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/fonts/tabler-icons.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/fonts/flag-icons.css')}}" />
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="{{url('app-assets/vendor/css/rtl/core.css')}}" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/css/rtl/theme-default.css")}}" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="{{url("app-assets/css/demo.css")}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/css/rtl/theme-default.css')}}" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="{{url('app-assets/css/demo.css')}}" />
 
   <!-- Vendors CSS -->
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/node-waves/node-waves.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/typeahead-js/typeahead.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/apex-charts/apex-charts.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/swiper/swiper.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/select2/select2.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-select/bootstrap-select.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/bs-stepper/bs-stepper.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/typeahead-js/typeahead.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/flatpickr/flatpickr.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/pickr/pickr-themes.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/tagify/tagify.css")}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/node-waves/node-waves.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/typeahead-js/typeahead.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/apex-charts/apex-charts.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/swiper/swiper.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/select2/select2.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/bs-stepper/bs-stepper.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/typeahead-js/typeahead.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/pickr/pickr-themes.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/tagify/tagify.css')}}" />
 
 
   <!-- Page CSS -->
-  <link rel="stylesheet" href="{{url("app-assets/vendor/css/pages/cards-advance.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/css/pages/ui-carousel.css")}}" />
-  <link rel="stylesheet" href="{{url("app-assets/vendor/libs/dropzone/dropzone.css")}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/css/pages/cards-advance.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/css/pages/ui-carousel.css')}}" />
+  <link rel="stylesheet" href="{{url('app-assets/vendor/libs/dropzone/dropzone.css')}}" />
   <!-- Helpers -->
-  <script src="{{url("app-assets/vendor/js/helpers.js")}}"></script>
+  <script src="{{url('app-assets/vendor/js/helpers.js')}}"></script>
 
 
   @yield('page_style')
   <style>
+    .bg-menu-theme.menu-vertical .menu-item.active>.menu-link:not(.menu-toggle) {
+      background: #4EA971 !important;
+      box-shadow: none !important;
+      color: #fff !important;
+    }
+
+    .page-item.active .page-link {
+      border-color: #4EA971 !important;
+      background-color: #4EA971 !important;
+      color: #fff;
+    }
+
+    html:not([dir=rtl]) .app-brand-text {
+      margin-left: -2.5rem !important;
+      background-color: white !important;
+    }
+
+    .select2-results__option[role=option][aria-selected=true] {
+      background-color: #4EA971 !important;
+      color: #fff;
+    }
+
+    .form-check-input:checked,
+    .form-check-input[type=checkbox]:indeterminate {
+      background-color: #4EA971;
+      border-color: #4EA971;
+    }
+
+    .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+      background-color: rgba(115, 103, 240, 0.08) !important;
+      color: #4EA971 !important;
+    }
+
+    .nav-pills .nav-link.active,
+    .nav-pills .nav-link.active:hover,
+    .nav-pills .nav-link.active:focus {
+      background-color: #4EA971;
+      color: #fff;
+    }
+
+    .nav-pills .nav-link:not(.active):hover,
+    .nav-pills .nav-link:not(.active):focus {
+      color: #4EA971;
+    }
+
+    .btn-success {
+      background-color: #4EA971;
+      border-color: #4EA971;
+    }
+
+    .form-check-input:checked,
+    .form-check-input[type=checkbox]:indeterminate {
+      background-color: #4EA971;
+      border-color: #4EA971;
+    }
+
+    .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
+      background-color: rgba(115, 103, 240, 0.08) !important;
+      color: #4EA971 !important;
+    }
+
+    .nav-pills .nav-link.active,
+    .nav-pills .nav-link.active:hover,
+    .nav-pills .nav-link.active:focus {
+      background-color: #4EA971;
+      color: #fff;
+    }
+
+    .nav-pills .nav-link:not(.active):hover,
+    .nav-pills .nav-link:not(.active):focus {
+      color: #4EA971;
+    }
+
+    .btn-success {
+      background-color: #4EA971;
+      border-color: #4EA971;
+    }
+
     .dropdown-item:focus,
     .dropdown-item:hover {
       color: #4EA971 !important
@@ -190,7 +268,7 @@
   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
   <script src="{{url('app-assets/vendor/js/template-customizer.js')}}"></script>
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="{{ url("app-assets/js/config.js")}}"></script>
+  <script src="{{ url('app-assets/js/config.js')}}"></script>
 </head>
 
 <body>
@@ -242,7 +320,7 @@
                       </a>
                     </li>
                     <li class="menu-item">
-                      <a href="/kegiatan-saya/lamaran-saya" class="menu-link">
+                      <a href="{{ url('kegiatan-saya/lamaran-saya') }}" class="menu-link">
                         <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
                       </a>
                     </li>
@@ -371,7 +449,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="{{url("app-assets/img/avatars/1.png")}}" alt class="h-auto rounded-circle" />
+                              <img src="{{url('app-assets/img/avatars/1.png')}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -407,7 +485,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="{{url("app-assets/img/avatars/2.png")}}" alt class="h-auto rounded-circle" />
+                              <img src="{{url('app-assets/img/avatars/2.png')}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -443,7 +521,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="{{url("app-assets/img/avatars/9.png")}}" alt class="h-auto rounded-circle" />
+                              <img src="{{url('app-assets/img/avatars/9.png')}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -479,7 +557,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="{{url("app-assets/img/avatars/5.png")}}" alt class="h-auto rounded-circle" />
+                              <img src="{{url('app-assets/img/avatars/5.png')}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -497,7 +575,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar">
-                              <img src="{{url("app-assets/img/avatars/6.png")}}" alt class="h-auto rounded-circle" />
+                              <img src="{{url('app-assets/img/avatars/6.png')}}" alt class="h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -612,9 +690,6 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                  </button>
                 </div>
                 <div class="modal-body text-center" style="display:block;">
                   Apakah Anda Ingin Keluar Dari Akun Ini?

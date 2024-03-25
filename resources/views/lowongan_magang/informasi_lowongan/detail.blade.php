@@ -5,6 +5,9 @@
 
 @section('page_style')
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
 <style>
     .tooltip-inner {
         min-width: 100%;
@@ -245,13 +248,13 @@
                         <thead>
                             <tr>
                                 @can('only.lkm')
-                                <th style="min-width: auto;">SELECT</th>
+                                <th style="min-width: 35px;">SELECT</th>
                                 @endcan
-                                <th style="min-width: auto;">NOMOR</th>
+                                <th style="min-width: 35px;">NOMOR</th>
                                 <th style="min-width:100px;">NAMA</th>
                                 <th style="min-width:150px;">TANGGAL DAFTAR</th>
                                 <th style="min-width:100px;">NO TELEPON </th>
-                                <th style="min-width:150px;">EMAIL</th>
+                                <th style="min-width:200px;">EMAIL</th>
                                 <th style="min-width:150px;">PROGRAM STUDI</th>
                                 <th style="min-width:100px;">FAKULTAS</th>
                                 <th style="min-width:150px;">UNIVERSITAS</th>
@@ -272,85 +275,6 @@
     <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
     <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
     <script>
-        // var jsonData = [{
-        //         "nomor": "1",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-secondary me-1'>Belum Proses</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "2",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-warning me-1'>Screening</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "3",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-success me-1'>Diterima</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "4",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-danger me-1'>Ditolak</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "5",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-info me-1'>Penawaran</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "6",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-primary me-1'>Seleksi Tahap 1</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     },
-        //     {
-        //         "nomor": "7",
-        //         "nama": "Andika Alatas 6701228083",
-        //         "no": "+6281298076589",
-        //         "email": "dikta@gmail.com",
-        //         "prodi": "D3 Sistem Informasi",
-        //         "fakultas": "Ilmu Terapan",
-        //         "universitas": "Telkom Bandung",
-        //         "status": "<span class='badge bg-label-dark me-1'>Seleksi Tahap 2</span>",
-        //         "aksi": "<a data-bs-toggle='offcanvas' data-bs-target='#modalslide' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i><a onclick = active($(this))  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-trash'></i></a>"
-        //     }
-        // ];
-
         $('.table').each(function() {
             let idElement = $(this).attr('id');
             let idLowongan = `{{ $pendaftar->id_lowongan ?? 0 }}`;
@@ -369,8 +293,6 @@
                     ).attr("content"),
                 },
                 scrollX: true,
-                serverSide: false,
-                processing: true,
                 type: 'GET',
                 columns: [
                     @can('only.lkm') {
@@ -424,9 +346,12 @@
                     {
                         data: "action"
                     }
-                ]
+                ],
+                fixedColumns: {
+                    left: 3,
+                    right: 2
+                },
             });
-
         });
 
         $(document).ready(function() {
@@ -477,4 +402,8 @@
 
     <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+    <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
     @endsection
