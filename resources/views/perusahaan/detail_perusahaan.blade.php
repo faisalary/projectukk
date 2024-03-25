@@ -33,7 +33,7 @@
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <a href="/daftar_perusahaan" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <a id="back" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="col-md-10 col-12">
@@ -61,7 +61,7 @@
                 <div class="col-4">
                     <h6 class="mb-0">Alamat Perusahaan</h6>
                     <p>Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, <br>
-                    Cakung, Jakarta Timur, Jakarta 13910, ID</p>
+                        Cakung, Jakarta Timur, Jakarta 13910, ID</p>
                 </div>
                 <div class="col-4">
                     <h6 class="mb-0">Email</h6>
@@ -359,5 +359,9 @@
     function changeColor(button) {
         button.classList.toggle('highlight');
     }
+
+    document.getElementById("back").addEventListener("click", () => {
+        history.back();
+    });
 </script>
 @endsection

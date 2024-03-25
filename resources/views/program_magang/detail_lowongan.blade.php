@@ -27,7 +27,7 @@
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="/daftar_perusahaan" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <a id="back" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="sec-title">
@@ -35,16 +35,16 @@
     </div>
     <div class="mb-5">
         <div class="card" style="padding: 50px 30px; width: 100%;">
-            <div class="card-body d-flex flex-row justify-content-between" style=" border-bottom: 1px solid #D3D6DB;  !important">
+            <div class="card-body d-flex flex-row justify-content-between" style=" border-bottom: 1px solid #D3D6DB  !important">
                 <div class="">
                     <div class="d-flex items-center justify-content-start">
-                        <img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="" style="width: 150px; height: 90px; !important">
+                        <img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="" style="width: 150px; height: 90px !important">
                         <div class="ms-5">
                             <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">Human Resources</p>
                             <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
                         </div>
                     </div>
-                    <div class="d-flex" style="margin-top: 40px; font-size: 16px; color: #23314B; !important">
+                    <div class="d-flex" style="margin-top: 40px; font-size: 16px; color: #23314B !important">
                         <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                             <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-users ti-xs me-2"></i>
@@ -423,5 +423,9 @@
     function changeColor(button) {
         button.classList.toggle('highlight');
     }
+
+    document.getElementById("back").addEventListener("click", () => {
+        history.back();
+    });
 </script>
 @endsection

@@ -193,12 +193,14 @@ class JadwalSeleksiController extends Controller
 
         if ($request->type == 'status_seleksi') {
             if ($request->value == 0) {
+                $pendaftaran->current_step = "ditolak";
                 $pendaftaran->status_seleksi = 0;
             } else {
                 $pendaftaran->status_seleksi = null;
 
                 if ($tahap == $batas_tahap) {
                     $pendaftaran->current_step = "penawaran";
+                    $pendaftaran->konfirmasi_status = 3;
                     $pendaftaran->save();
                     $seleksilowongan->tahapan_seleksi = 'tahap ' . $batas_tahap;
                 } else if ($request->tahap == 'tahap2') {
@@ -214,24 +216,5 @@ class JadwalSeleksiController extends Controller
             }
         }
         $pendaftaran->save();
-
-        // if ($request->type == 'progress') {
-        //     $status->progress = $request->value;
-        // } else {
-        //     $status->status_seleksi = 0;
-        //     $status->progress = 0;
-        //     if ($tahap == $batas_tahap) {
-        //         $pendaftaran->current_step = "penawaran";
-        //         $pendaftaran->save();
-        //         $seleksilowongan->pendaftar->current_step = "penawaran";
-        //     } else if ($request->tahap == 'tahap2') {
-        //         $seleksilowongan->pendaftar->current_step = 'tahap' . $request->value + 2;
-        //     } else {
-        //         $seleksilowongan->pendaftar->current_step = 'tahap' . $request->value + 1;
-        //     }
-
-        //     $seleksilowongan->save();
-        // }
-        // $status->save();
     }
 }
