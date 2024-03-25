@@ -1,6 +1,4 @@
-
-  
-  <!-- Modal Tambah Dokumen Pendukung -->
+ <!-- Modal Tambah Dokumen Pendukung -->
   <div class="modal fade" id="modalTambahDokumen" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
@@ -17,7 +15,7 @@
             <div class="row">
               <div class="mb-3 col-md-12 form-input">
                 <label for="sertifikat" class="form-label">Nama Sertifikasi<span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="file_sertif" name="file_sertif" placeholder="Masukkan nama sertifikasi " />
+                <input class="form-control" type="text" id="nama_sertif" name="nama_sertif" placeholder="Masukkan nama sertifikasi " />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">

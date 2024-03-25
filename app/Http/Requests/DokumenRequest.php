@@ -26,6 +26,8 @@ class DokumenRequest extends FormRequest
             'penerbit' => 'required|max:255|min:3',
             'file_sertif' =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
             'link_sertif' => 'required|url',
+            'startdate' => 'required',
+            'enddate' => 'required',
             'deskripsi' => 'required|max:255|string'
         ];
     }
@@ -36,7 +38,6 @@ class DokumenRequest extends FormRequest
             'nama_sertif.required' => 'nama tidak boleh kosong',
             'nama_sertif.max' => 'nama terlalu panjang',
             'nama_sertid.min' => 'nama terlalu pendek',
-
             'penerbit.required' => 'penerbit tidak boleh kosong',
 
             

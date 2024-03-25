@@ -279,7 +279,7 @@ class ProfileMahasiswaController extends Controller
         //
     }
     
-    public function storedokumen(Request $request, $id) { 
+    public function storedokumen(DokumenRequest $request, $id) { 
 
         try {
             $dokumen = Sertifikat::where('nim', $id)->first();
@@ -290,7 +290,7 @@ class ProfileMahasiswaController extends Controller
 
             $dokumen = Sertifikat::create([
                 'nim' => $id,
-                'nama_sertif' => $request->sertifikat,
+                'nama_sertif' => $request->nama_sertif,
                 'penerbit' => $request->penerbit,
                 'startdate' => $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',

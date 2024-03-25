@@ -99,6 +99,7 @@
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
+              {{-- asset('storage/file.txt'); --}}
                   <img src="{{ url('storage/' .$informasiprib?->profile_picture??'') }}" alt="user-avatar"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
