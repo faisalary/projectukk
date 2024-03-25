@@ -3,7 +3,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-2">
-                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 90px;" src="{{$img ?? '\assets\images\no-pictures.png'}}" alt="Logo">
+                <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 60%;" src="{{$img ?? '\assets\images\no-pictures.png'}}" alt="Logo">
                 </figure>
             </div>
             <div class="col-10 d-flex justify-content-between">
@@ -93,9 +93,11 @@
                 </div>
                 <div class="col-6 text-end">
                     @can( "button.tnglbts.mitra" )
+                    @if($item->status == 'Aktif')
                     <button class="btn btn-outline-success my-2 waves-effect" type="button" onclick=confirm($(this)) id="datepicker" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi" data-id="{{$item->id_lowongan}}">
                         <i class="ti bi-pencil-square text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
                     </button>
+                    @endif
                     @endcan
 
                     <a href="/informasi/kandidat/{{$item->id_lowongan}}"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti bi-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
@@ -110,7 +112,7 @@
 <div class="modal fade" id="modalKonfirmasi" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header text-center d-block">
                 <h5 class="modal-title" id="modalCenterTitle">Masukkan Tanggal Batas Konfirmasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -118,9 +120,9 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col mb-3 form-input">
+                        <div class="col mb-0 form-input">
                             <label for="flatpickr-date" class="form-label">Tanggal Konfirmasi<span style="color: red;">*</span></label>
-                            <input type="datetime" name="date" data-date-format="d M Y" class="form-control flatpickr-input active" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
+                            <input type="datetime" name="date" data-date-format="d M Y" class="form-control flatpickr-input" placeholder="DD-MM-YYYY" id="flatpickr-date" readonly="readonly">
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

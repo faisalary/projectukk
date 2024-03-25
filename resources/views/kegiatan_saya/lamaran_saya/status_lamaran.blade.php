@@ -1,6 +1,7 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 <style>
     .col-1-5 {
         flex: 0 0 12.5%;
@@ -39,126 +40,311 @@
     .breadcrumb-item a {
         color: #4b465c !important;
     }
+
+    /* coba */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: pop;
+        src: url(./Fonts/Poppins-Medium.ttf);
+    }
+
+    .main {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: pop;
+        flex-direction: column;
+    }
+
+    .head {
+        text-align: center;
+    }
+
+    .head_1 {
+        font-size: 30px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .head_1 span {
+        color: #ff4732;
+    }
+
+    .head_2 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-top: 3px;
+    }
+
+    ul {
+        display: flex;
+        margin-top: 80px;
+    }
+
+    ul li {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    ul li .icon {
+        font-size: 35px;
+        color: #ff4732;
+        margin: 0 60px;
+    }
+
+    ul li .text {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ff4732;
+    }
+
+    /* Progress Div Css  */
+
+    ul li .progress {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(68, 68, 68, 0.781);
+        margin: 14px 0;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .progress::after {
+        content: " ";
+        position: absolute;
+        width: 125px;
+        height: 5px;
+        background-color: rgba(68, 68, 68, 0.781);
+        right: 30px;
+    }
+
+    .one::after {
+        width: 0;
+        height: 0;
+    }
+
+    ul li .progress .uil {
+        display: none;
+    }
+
+    ul li .progress p {
+        font-size: 13px;
+    }
+
+    /* Active Css  */
+
+    ul li .active {
+        background-color: #24B364;
+        display: grid;
+        place-items: center;
+    }
+
+    li .active::after {
+        background-color: #ff4732;
+    }
+
+    ul li .active p {
+        display: none;
+    }
+
+    ul li .active .uil {
+        font-size: 20px;
+        display: flex;
+    }
+
+    /* Responsive Css  */
+
+    @media (max-width: 980px) {
+        ul {
+            flex-direction: column;
+        }
+
+        ul li {
+            flex-direction: row;
+        }
+
+        ul li .progress {
+            margin: 0 30px;
+        }
+
+        .progress::after {
+            width: 5px;
+            height: 55px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .one::after {
+            height: 0;
+        }
+
+        ul li .icon {
+            margin: 15px 0;
+        }
+    }
+
+    @media (max-width:600px) {
+        .head .head_1 {
+            font-size: 24px;
+        }
+
+        .head .head_2 {
+            font-size: 16px;
+        }
+    }
 </style>
 @endsection
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <!-- <div class="sec-title mt-4 mb-4">
-        <h4>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb breadcrumb-style1">
-                    <li class="breadcrumb-item">
-                        Kegiatan Saya
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="/informasi/pribadi">Lamaran Anda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Pengalaman dan Keahlian</li>
-                </ol>
-            </nav>
-        </h4>
-    </div> -->
-
-    <div class="col-md-12 col-12 mt-3">
-        <h4>Lamaran Saya</h4>
+    <div class="col-md-9 col-12">
+        <button class="btn btn-outline-success mt-4 mb-3 waves-effect" type="button" id="back">
+            <i class="ti ti-arrow-left me-2 text-success"> Kembali </i>
+        </button>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya / Status Lamaran Magang / </span>Detail Status lamaran Magang </h4>
     </div>
 
     <div class="bs-stepper wizard-icons wizard-icons-example mt-4">
         <div class="bs-stepper-header">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
                     1
                 </button>
-                <p>Belum di Proses</p>
+                <p>Screening</p>
             </div>
-            <hr style="width: 10%; height:60px; border-color: #4EA971; border-width: 3px;">
+            <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
                 <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
                     2
                 </button>
-                <p>Screening</p>
+                <p>Seleksi</p>
             </div>
-            <hr style="width: 10%; height:60px; border-color: #D3D6DB; border-width: 3px;">
+            <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
                 <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
                     3
                 </button>
-                <p>Seleksi</p>
+                <p>Penawaran</p>
             </div>
-            <hr style="width: 10%; height:60px; border-color: #D3D6DB; border-width: 3px;">
+            <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
                 <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
                     4
-                </button>
-                <p>Penawaran</p>
-            </div>
-            <hr style="width: 10%; height:60px; border-color: #D3D6DB; border-width: 3px;">
-            <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
-                    5
                 </button>
                 <p>Diterima/Ditolak</p>
             </div>
         </div>
     </div>
 
+    <!-- <ul>
+        <li>
+            <i class="icon uil uil-capture"></i>
+            <div class="progress one">
+                <p>1</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Add To Cart</p>
+        </li>
+        <li>
+            <i class="icon uil uil-clipboard-notes"></i>
+            <div class="progress two">
+                <p>2</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Fill Details</p>
+        </li>
+        <li>
+            <i class="icon uil uil-credit-card"></i>
+            <div class="progress three">
+                <p>3</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Make Payment</p>
+        </li>
+        <li>
+            <i class="icon uil uil-exchange"></i>
+            <div class="progress four">
+                <p>4</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Order in Progress</p>
+        </li>
+        <li>
+            <i class="icon uil uil-map-marker"></i>
+            <div class="progress five">
+                <p>5</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Order Arrived</p>
+        </li>
+    </ul> -->
+
+
     <div class="card mb-5">
         <div class="card-body">
             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                 <div class="col-3 text-start">
-                    <figure class="image ms-3"><img style="width:170px; height:100px;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                    <figure class="image mx-1" style="border-radius: 0%;"><img style="border-radius: 0%; width: 70%; height:auto;" src="{{$img ?? '\assets\images\no-pictures.png'}}" alt="Logo">
                     </figure>
                 </div>
                 <div class="col-3 ms-sm-0 text-start" style="margin-left:-100px;">
-                    <h3>Back End Developer</h3>
-                    <p style="font-size:15px;">PT Wings Surya</p>
+                    <h3>{{$pendaftar->lowonganMagang->intern_position}}</h3>
+                    <p style="font-size:15px;">{{$pendaftar->lowonganMagang->industri->namaindustri}}</p>
                 </div>
                 <div class="col-6 ms-sm-0 text-end" style="margin-left:100px;">
-                    <div class="waktu"> Lamaran terkirim pada 15 juni 2023 <i class="ti ti-clock"></i></div>
-                    <button type="button" class="btn btn-sm btn-secondary waves-effect mt-3" style="height:35px; font-size:16px;" disabled>Lowongan Sudah di tutup</button>
-                    <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:30px; font-size:16px;">Belum Proses</span></div>
+                    <div class="waktu"> Lamaran terkirim pada {{($pendaftar->tanggaldaftar?->format('d F Y'))}}</div>
+                    @if($now->lessThan($pendaftar->lowonganMagang->date_confirm_closing))
+                    <div><span class="badge bg-label-success me-1 text-end mt-3" style="height:35px; font-size:16px;">Lowongan Masih bisa diambil</span></div>
+                    @else
+                    <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:35px; font-size:16px;">Lowongan Sudah di tutup</span></div>
+                    @endif
+                    <div><span class="badge bg-label-{{$color}} me-1 text-end mt-3" style="height:30px; font-size:16px;">{{$step}}</span></div>
                 </div>
             </div>
-            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>Jakarta Selatan, Indonesia</div>
+            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->lokasi}}</div>
+            @if(empty($pendaftar->lowonganMagang->nominal_salary))
+            <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Tidak Berbayar</div>
+            @else
             <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Berbayar</div>
-            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>2 Semester</div>
-            <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px; margin-bottom:5px;"></i>5 Kuota Penerimaan</div>
+            @endif
+            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->durasimagang}}</div>
+            <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->kuota}} Kuota Penerimaan</div>
             <div><a href="/detail/lowongan/magang"><button type="button" class="btn btn-sm btn-outline-dark waves-effect mt-3" style="width: 200px; height:auto"> <i class="ti ti-eye" style="margin-right: 10px; margin-bottom:5px;"></i>Lihat Detail Pekerjaan</button>
                 </a></div>
             <div class="border mt-3"></div>
             <div class="tex-start mt-3">
                 <h4>Mengapa Saya Harus Diterima?</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper, fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus. Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+                <p>{{$pendaftar->reason_aplicant}}</p>
             </div>
             <div class="border mt-3"></div>
             <div class="row mt-3">
-                <div class="col-4">
-                    <h6>Resume</h6>
-                    <a href="#">
-                        <div class="map-pin mt-3 mb-3"><i class="ti ti-file-symlink" style="margin-bottom:5px;"></i><u>0d39331a44a645897d14703d4c0ffa12.pdf</u>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-1">
-                    <div class="divider divider-vertical"></div>
-                </div>
-                <div class="col-3 text-start">
-                    <h6 style="margin-left: -50px">Surat lamaran kerja</h6>
-                    <a href="#">
-                        <div class="map-pin mt-3 mb-3"><i class="ti ti-file-symlink" style="margin-left: -55px; margin-bottom:5px;"></i><u>0d39331a44a645897d14703d4c0ffa12.pdf</u>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-1">
-                    <div class="divider divider-vertical"></div>
-                </div>
-                <div class="col-3 text-start">
+                <div class="col-3 text-start mx-5">
                     <h6 style="margin-left: -50px">Portofolio</h6>
-                    <a href="#">
-                        <div class="map-pin mt-3 mb-3"><i class="ti ti-file-symlink" style="margin-left: -55px; margin-bottom:5px;"></i><u>0d39331a44a645897d14703d4c0ffa12.pdf</u>
+                    @if(empty($pendaftar->portofolio))
+                    <div class="map-pin mt-3 mb-3" style="margin-left: -50px">Tidak mengunggah portofolio</div>
+                    @else
+                    <a href="{{ url('kegiatan-saya/porto', $pendaftar->portofolio)}}" target="_blank">
+                        <div class="map-pin mt-3 mb-3"><i class="ti ti-file-symlink" style="margin-left: -55px; margin-bottom:5px;"></i><u>{{$pendaftar->portofolio}}.pdf</u>
                         </div>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -169,5 +355,54 @@
 @endsection
 
 @section('page_script')
+<script>
+    document.getElementById("back").addEventListener("click", () => {
+        history.back();
+    });
 
+    // coba
+
+    const one = document.querySelector(".one");
+    const two = document.querySelector(".two");
+    const three = document.querySelector(".three");
+    const four = document.querySelector(".four");
+    const five = document.querySelector(".five");
+
+    one.onclick = function() {
+        one.classList.add("active");
+        two.classList.remove("active");
+        three.classList.remove("active");
+        four.classList.remove("active");
+        five.classList.remove("active");
+    }
+
+    two.onclick = function() {
+        one.classList.add("active");
+        two.classList.add("active");
+        three.classList.remove("active");
+        four.classList.remove("active");
+        five.classList.remove("active");
+    }
+    three.onclick = function() {
+        one.classList.add("active");
+        two.classList.add("active");
+        three.classList.add("active");
+        four.classList.remove("active");
+        five.classList.remove("active");
+    }
+    four.onclick = function() {
+        one.classList.add("active");
+        two.classList.add("active");
+        three.classList.add("active");
+        four.classList.add("active");
+        five.classList.remove("active");
+    }
+    five.onclick = function() {
+        one.classList.add("active");
+        two.classList.add("active");
+        three.classList.add("active");
+        four.classList.add("active");
+        five.classList.add("active");
+    }
+</script>
 @endsection

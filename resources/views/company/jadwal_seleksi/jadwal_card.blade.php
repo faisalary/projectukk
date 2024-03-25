@@ -4,7 +4,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 90px;" src="{{ $img ?? '\assets\images\no-pictures.png' }}" alt="Logo">
+                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width: 60%;" src="{{ $img ?? '\assets\images\no-pictures.png' }}" alt="Logo">
                     </figure>
                 </div>
                 <div class="col-10 d-flex justify-content-between">

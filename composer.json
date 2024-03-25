@@ -11,6 +11,7 @@
         "php": "^8.1",
         "cviebrock/eloquent-sluggable": "^10.0",
         "doctrine/dbal": "^3.7",
+        "dompdf/dompdf": "^2.0",
         "froiden/envato": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.20",
