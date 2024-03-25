@@ -88,6 +88,18 @@
         </div>
     </div>
     <div class="nav-align-top">
+        @can('only.mitra')
+        <div class=" text-end">
+            <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-3">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
+                    <div class="d-flex align-items-center">
+                        <i class="tf-icons ti ti-plus me-2"></i>
+                        <span class="mt-1">Buat Jadwal Seleksi Lanjutan</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        @endcan
         <div class="row">
             <div class="col-6">
                 <ul class="nav nav-pills mb-3 " role="tablist">
@@ -133,16 +145,6 @@
                     @endif
                 </ul>
             </div>
-            <div class="col-6 text-end">
-                <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-3">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
-                        <div class="d-flex align-items-center">
-                            <i class="tf-icons ti ti-plus me-2"></i>
-                            <span class="mt-1">Buat Jadwal Seleksi Lanjutan</span>
-                        </div>
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -158,7 +160,6 @@
                             <th style="max-width:90px;">NOMOR</th>
                             <th style="min-width:110px;">NAMA</th>
                             <th style="min-width:120px;">TANGGAL PELAKSANAAN</th>
-                            <th style="min-width: 100px;">PROGRESS</th>
                             <th style="min-width:100px;">STATUS</th>
                             <th style="min-width:100px;">AKSI</th>
                         </tr>
@@ -179,10 +180,15 @@
 
 <script>
     $("#modalTambahJadwal").on("hide.bs.modal", function() {
-        $(".modal-title").html("Tambah Jadwal Seleksi Lanjutan");
-        $("#modal-button").html("Save Data");
         $('#modalTambahJadwal form')[0].reset();
-        $('#modalTambahJadwal form #nama').val('').trigger('change');
+        $('#modalTambahJadwal form #tahapan_seleksi').val('').trigger('change');
+        $('#modalTambahJadwal form #subjek').val('').trigger('change');
+        $('#modalTambahJadwal form #flatpickr-range').flatpickr({
+            dateFormat: "d M Y",
+            // disableMobile: "true",
+            mode: "range",
+            defaultDate: 'null'
+        });
         $('#modalTambahJadwal form').attr('action', "{{ url('jadwal-seleksi/lanjutan/store') }}");
         $('.invalid-feedback').removeClass('d-block');
         $('.form-control').removeClass('is-invalid');
@@ -192,7 +198,7 @@
         let idElement = $(this).attr('id');
         let idLowongan = '{{ $pendaftaran->id_lowongan ?? 0 }}';
         // console.log(idElement);
-        let url = "{{ url('jadwal-seleksi/lanjutan/show/${idLowongan}') }}?type=" + idElement;
+        let url = `{{ url('jadwal-seleksi/lanjutan/show/') }}/${idLowongan}?type=` + idElement;
         if ($(this).attr('id') == null) return;
 
         $(this).DataTable({
@@ -208,10 +214,10 @@
                     data: null,
                     name: "tahap",
                     render: function(data, type, row) {
-                        if (data.seleksi_status) {
-                            return data.seleksi_status.pendaftaran.mahasiswa.namamhs + '<br>' +
+                        if (data) {
+                            return data.pendaftar.mahasiswa.namamhs + '<br>' +
                                 (
-                                    data.seleksi_status.pendaftaran.mahasiswa.nim);
+                                    data.pendaftar.mahasiswa.nim);
                         }
                         return '-';
                     }
@@ -221,10 +227,8 @@
                     name: "mulai"
                 },
                 {
-                    data: "progress",
-                },
-                {
                     data: "status_seleksi",
+                    name: "seleksi"
                 },
                 {
                     data: "action"

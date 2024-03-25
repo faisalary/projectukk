@@ -31,7 +31,7 @@
         <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
             <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
         </button>
-                <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / Posisi {{$lowongan?->intern_position ?? '-'}} / </span>Detail Mahasiswa </h4>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Jadwal Seleksi / Posisi {{$lowongan?->intern_position ?? '-'}} / </span>Detail Mahasiswa </h4>
     </div>
     <div class="card">
         <div class="card-body mt-3 flex-grow-0 pt-0 h-100">
@@ -58,9 +58,9 @@
             </div>
             <h4> Mengapa Saya Harus Di Terima?</h4>
             <p class="mb-0 text-justify">
-                <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($prib->headliner ?? '-', 100) }}</span>
+                <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($pendaftar->reason_aplicant ?? '-', 100) }}</span>
 
-                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$prib->headliner ?? '-'}}">Show More</u>
+                <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$pendaftar->reason_aplicant ?? '-'}}">Show More</u>
             </p>
             <hr>
 

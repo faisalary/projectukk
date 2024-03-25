@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('lokasi');
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            $table->text('deskripsi')->nullable()->change();
+        });
     }
 
     /**
@@ -19,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lokasi');
+        Schema::table('lowongan_magang', function (Blueprint $table) {
+            $table->text('deskripsi')->nullable()->change();
+        });
     }
 };

@@ -1,95 +1,89 @@
 @extends('partials_admin.template')
 
 @section('meta_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
-    <style>
-        .swal2-icon {
-            border-color: transparent !important;
-        }
+<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
+<style>
+    .swal2-icon {
+        border-color: transparent !important;
+    }
 
-        .swal2-title {
-            font-size: 20px !important;
-            text-align: center !important;
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-        }
+    .swal2-title {
+        font-size: 20px !important;
+        text-align: center !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
 
-        .swal2-modal.swal2-popup .swal2-title {
-            max-width: 100% !important;
-        }
+    .swal2-modal.swal2-popup .swal2-title {
+        max-width: 100% !important;
+    }
 
-        .swal2-html-container {
-            font-size: 16px !important;
-        }
+    .swal2-html-container {
+        font-size: 16px !important;
+    }
 
-        .swal2-deny {
-            display: none !important;
-        }
+    .swal2-deny {
+        display: none !important;
+    }
 
 
-        .dropdown-item.active,
-        .dropdown-item:active {
-            color: #FFF;
-            background-color: #4EA971 !important
-        }
-    </style>
+    .dropdown-item.active,
+    .dropdown-item:active {
+        color: #FFF;
+        background-color: #4EA971 !important
+    }
+</style>
 
 
 @section('main')
-    <div class="row">
-        <div class="col-md-10 col-12">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Mahasiswa</h4>
+<div class="row">
+    <div class="col-md-10 col-12">
+        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Mahasiswa</h4>
+    </div>
+    <div class="col-md-2 col-12 text-end">
+        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"> <i class="tf-icons ti ti-filter"></i></button>
+    </div>
+    <div class="col-md-12 d-flex justify-content-between mt-2">
+        <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
+        <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="false">
+                Tambah Mahasiswa
+            </button>
+            <ul class="dropdown-menu" style="">
+                <li><a class="dropdown-item btn text-success ti ti-upload d-block pe-15" data-bs-toggle="modal" data-bs-target="#modal-import">Import</a></li>
+                <li><a class="dropdown-item btn text-success" data-bs-toggle="modal" data-bs-target="#modal-mahasiswa">Tambah Mahasiswa</a></li>
         </div>
-        <div class="col-md-2 col-12 text-end">
-            <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas"
-                data-bs-target="#modalSlide"> <i class="tf-icons ti ti-filter"></i></button>
-        </div>
-        <div class="col-md-12 d-flex justify-content-between mt-2">
-            <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
-                    data-bs-toggle="tooltip" data-bs-placement="right"
-                    data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
-            <div class="btn-group">
-                <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Tambah Mahasiswa
-                </button>
-                <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item btn text-success ti ti-upload d-block pe-15" data-bs-toggle="modal"
-                            data-bs-target="#modal-import">Import</a></li>
-                    <li><a class="dropdown-item btn text-success" data-bs-toggle="modal"
-                            data-bs-target="#modal-mahasiswa">Tambah Mahasiswa</a></li>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-datatable table-responsive">
+                <table class="table" id="table-master-mahasiswa">
+                    <thead>
+                        <tr>
+                            <th>NOMOR</th>
+                            <th style="min-width:150px;">UNIVERSITAS</th>
+                            <th>NIM</th>
+                            <th>ANGKATAN</th>
+                            <th>NAMA MAHASISWA</th>
+                            <th>NOMOR TELEPON</th>
+                            <th>EMAIL</th>
+                            <th>ALAMAT</th>
+                            <th>STATUS</th>
+                            <th style="min-width:100px;">AKSI</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
-    <div class="row mt-2">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="table-master-mahasiswa">
-                        <thead>
-                            <tr>
-                                <th>NOMOR</th>
-                                <th style="min-width:150px;">UNIVERSITAS</th>
-                                <th>NIM</th>
-                                <th>ANGKATAN</th>
-                                <th>NAMA MAHASISWA</th>
-                                <th>NOMOR TELEPON</th>
-                                <th>EMAIL</th>
-                                <th>ALAMAT</th>
-                                <th>STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 @endsection
 <!-- Modal -->
 
@@ -110,7 +104,7 @@
 
     $("#modal-import").on("hide.bs.modal", function() {
 
-         $("#buttonImport").html("Save Data");
+        $("#buttonImport").html("Save Data");
     });
 
     function edit(e) {
@@ -266,6 +260,7 @@
             },
             serverSide: false,
             processing: true,
+            scrollX: true,
             // deferRender: true,
             destroy: true,
             columns: [{

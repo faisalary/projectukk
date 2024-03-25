@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\Lokasi;
 use App\Models\Industri;
-use App\Models\JenisMagang;
 use Illuminate\Http\Request;
-use App\Models\TahunAkademik;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
@@ -19,6 +16,7 @@ class InformasiLowonganController extends Controller
      */
     public function index(Request $request, $id)
     {
+        $active_menu = 'informasi_lowongan';
         if ($request->ajax() && $request->component == "card") {
             $lowongan = LowonganMagang::where('id_industri', $id)->get();
             $industri = Industri::where('id_industri', $id)->first();
@@ -45,16 +43,16 @@ class InformasiLowonganController extends Controller
                 }
 
                 $item->kandidat = $item->total_pelamar->count();
-                $item->screening = $item->total_pelamar->where('applicant_status', 'screening')->count();
-                $item->penawaran = $item->total_pelamar->where('applicant_status', 'penawaran')->count();
-                $item->diterima = $item->total_pelamar->where('applicant_status', 'diterima')->count();
-                $item->ditolak = $item->total_pelamar->where('applicant_status', 'ditolak')->count();
+                $item->screening = $item->total_pelamar->where('current_step', 'screening')->count();
+                $item->penawaran = $item->total_pelamar->where('current_step', 'penawaran')->count();
+                $item->diterima = $item->total_pelamar->where('current_step', 'diterima')->count();
+                $item->ditolak = $item->total_pelamar->where('current_step', 'ditolak')->count();
 
                 return $item;
             });
 
 
-            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan','img'))->render();
+            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('active_menu', 'lowongan', 'img'))->render();
         }
 
         $lowongan = LowonganMagang::where('id_industri', $id)->get();
@@ -67,7 +65,7 @@ class InformasiLowonganController extends Controller
         $pendaftar_count = $pelamar?->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
         // dd($lowongan_count);
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
+        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('active_menu', 'industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
     }
 
     /**

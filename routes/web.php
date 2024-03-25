@@ -162,6 +162,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/status/{id}', [App\Http\Controllers\KomponenPenilaianController::class, 'status'])->name('komponen-penilaian.status');
             Route::get('/list-fakultas/{id_univ}', [App\Http\Controllers\KomponenPenilaianController::class, 'list_fakultas'])->name('komponen-penilaian.list_fakultas');
         });
+        Route::get('pembimbing-mandiri', function () {
+            return view('masters.pembimbing_lapangan_mandiri.index');
+        });
+
+        Route::get('laporan-akhir', function () {
+            return view('masters.berkas_akhir.index');
+        });
     });
     Route::prefix('konfigurasi')->middleware('can:slidebar.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
@@ -183,18 +190,18 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\KelolaMitraController::class, 'approved'])->name('kelola_mitra.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\KelolaMitraController::class, 'rejected'])->name('kelola_mitra.rejected');
         });
-        Route::prefix('profile-company')->middleware('can:only.lkm.mitra')->group(function () {
+        Route::prefix('profile-company')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\ProfileCompanyController::class, 'index'])->name('profile_company.index');
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
-        Route::prefix('summary-profile')->middleware('can:only.lkm.mitra')->group(function () {
+        Route::prefix('summary-profile')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
             Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
             Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
         });
 
-        Route::prefix('master-email')->group(function () {
+        Route::prefix('master-email')->middleware('can:only.mitra')->group(function () {
             Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
             Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
             Route::post('/store', [App\Http\Controllers\MasterEmailController::class, 'store'])->name('master_email.store');
@@ -260,28 +267,26 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'approved'])->name('lowongan-magang.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'rejected'])->name('lowongan-magang.rejected');
         });
-
     });
 
-    Route::prefix('mahasiswa')->group(function (){
-        Route::prefix('profile/pribadi')->group(function (){
+    Route::prefix('mahasiswa')->group(function () {
+        Route::prefix('profile/pribadi')->group(function () {
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.mahasiswa.index');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'edit'])->name('profile.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'update'])->name('profile.mahasiswa.update');
-        
         });
-        Route::prefix('profile/update')->group(function (){
-            Route::get('/update', [App\Http\Controllers\ProfileMahasiswaController::class,'update'])->name('profile.mahasiswa.update');
+        Route::prefix('profile/update')->group(function () {
+            Route::get('/update', [App\Http\Controllers\ProfileMahasiswaController::class, 'update'])->name('profile.mahasiswa.update');
         });
-        
-        Route::prefix('profile/informasi-tambahan')->group(function (){
-            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.infromasi.mahasiswa.index');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updateinformasitambahan'])->name('profile.infromasi.mahasiswa.update');
+
+        Route::prefix('profile/informasi-tambahan')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.infromasi.mahasiswa.index');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updateinformasitambahan'])->name('profile.infromasi.mahasiswa.update');
             // Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editinformasi'])->name('profile.infromasi.mahasiswa.edit');
         });
-        Route::prefix('profile/pendidikan')->group(function (){
-            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.pendidikan.mahasiswa.index');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatependidikan'])->name('profile.pendidikan.mahasiswa.update');
+        Route::prefix('profile/pendidikan')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.pendidikan.mahasiswa.index');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updatependidikan'])->name('profile.pendidikan.mahasiswa.update');
         });
         Route::prefix('profile/skill')->group(function (){
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.skill.mahasiswa.index');
@@ -324,6 +329,36 @@ Route::middleware('auth')->group(function () {
             Route::get('/kirim-email', [MailController::class, 'index'])->name('seleksi.email');
         });
     });
+
+    Route::prefix('/kegiatan-saya')->group(function () {
+        Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
+        Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
+        Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
+        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
+        Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
+        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
+    });
+
+    Route::prefix('mandiri')->group(function () {
+        Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
+            Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
+            Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
+            Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
+            Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
+        });
+    });
+
+    Route::prefix('/pengajuan/surat')->group(function () {
+        Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('mandiri.index');
+        Route::post('/show', [App\Http\Controllers\KonfirmasiMandiriController::class, 'show'])->name('mandiri.show');
+        Route::post('/store', [App\Http\Controllers\KonfirmasiMandiriController::class, 'store'])->name('mandiri.store');
+        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'detail'])->name('mandiri.detail');
+        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
+        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -362,14 +397,6 @@ Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
 });
 
-// Route::get('/profile-company', function () {
-//     return view('company.profile_company', ['active_menu' => 'profile-company']);
-// })->name('profile.company');
-
-// Route::get('/summary-profile', function () {
-//     return view('company.summary_profile');
-// });
-
 
 
 Route::get('/detail/lowongan/magang', function () {
@@ -385,9 +412,6 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/konfigurasi', function () {
     return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
-// Route::get('/kegiatan_saya/lamaran_saya', function () {
-//     return view('kegiatan_saya.lamaran_saya.index');
-// });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
@@ -408,19 +432,6 @@ Route::get('/lowongan/magang', function () {
 
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
-});
-
-// Route::get('/pengajuan/surat', function () {
-//     return view('pengajuan_magang.pengajuan_mandiri');
-// });
-Route::prefix('/pengajuan/surat')->group(function () {
-    Route::get('/', [App\Http\Controllers\KonfirmasiMandiriController::class, 'index'])->name('mandiri.index');
-    Route::post('/show', [App\Http\Controllers\KonfirmasiMandiriController::class, 'show'])->name('mandiri.show');
-    Route::post('/store', [App\Http\Controllers\KonfirmasiMandiriController::class, 'store'])->name('mandiri.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'detail'])->name('mandiri.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
-    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
 });
 
 Route::get('/logbook', function () {
@@ -494,14 +505,6 @@ Route::get('/logbook/mahasiswa', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
 });
 
-Route::get('/masters/pembimbing-lapangan-mandiri', function () {
-    return view('masters.pembimbing_lapangan_mandiri.index');
-});
-
-Route::get('/masters/laporan-akhir', function () {
-    return view('masters.berkas_akhir.index');
-});
-
 Route::get('/verifikasi/akun', function () {
     return view('partials_auth.verifikasi_akun');
 });
@@ -517,26 +520,6 @@ Route::get('/berkas/akhir', function () {
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');
-
-Route::prefix('/kegiatan-saya/lamaran-saya')->group(function () {
-    Route::get('/', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
-    Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
-    Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
-    Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
-    Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
-    Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
-    Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
-    Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-});
-
-Route::prefix('mandiri')->group(function () {
-    Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
-        Route::get('/show/{statusapprove}', [App\Http\Controllers\ApproveMandiriController::class, 'show'])->name('approve_mandiri.show');
-        Route::post('/approved/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'approved'])->name('approve_mandiri.approved');
-        Route::post('/rejected/{id}', [App\Http\Controllers\ApproveMandiriController::class, 'rejected'])->name('approve_mandiri.rejected');
-    });
-});
 
 Route::get('/test', function () {
     return view('auth.message-verify-email');
