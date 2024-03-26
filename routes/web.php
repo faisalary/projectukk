@@ -521,6 +521,46 @@ Route::get('/berkas/akhir', function () {
     return view('kegiatan_saya.berkas_akhir.index');
 });
 
+Route::get('/logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.index');
+});
+
+Route::get('/detail-logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.detail_logbook');
+});
+
+Route::get('/view-logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.view_logbook');
+});
+
+Route::get('/logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.index');
+});
+
+Route::get('/detail-logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.detail_logbook');
+});
+
+Route::get('/view-logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.view_logbook');
+});
+
+Route::get('/nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.nilai');
+});
+
+Route::get('/nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.nilai');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

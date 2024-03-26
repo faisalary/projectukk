@@ -1,7 +1,7 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" /> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   .hidden {
@@ -426,7 +426,7 @@
 @endsection
 
 @section('page_script')
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 <script>
   $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
     $(this).closest("li").toggleClass("active", this.checked);

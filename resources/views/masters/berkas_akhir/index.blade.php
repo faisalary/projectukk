@@ -112,8 +112,7 @@
                         <div class="select2-success">
                             <select id="select2Success" class="select2 form-select" multiple>
                                 <option value="1">Laporan Akhir</option>
-                                <option value="2">Logbook Mahasiswa</option>
-                                <option value="3">Dokumen IA</option>
+                                <option value="2">Dokumen IA</option>
                             </select>
                         </div>
                     </div>
@@ -146,7 +145,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="../../app-app-assets/img/alert.png" alt="">
+                <img src="../../app-assets/img/alert.png" alt="">
                 <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin menonaktifkan data?</h5>
                 <p>Data yang dipilih akan non-aktif!</p>
             </div>
@@ -165,7 +164,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="../../app-app-assets/img/alert.png" alt="">
+                <img src="../../app-assets/img/alert.png" alt="">
                 <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin mengaktifkan data?</h5>
                 <p>Data yang dipilih akan aktif!</p>
             </div>
@@ -185,7 +184,7 @@
             "nomor": "1",
             "jenis_magang": "Magang Fakultas",
             "durasi_magang": "1 Semester",
-            "berkas_magang": "<ul><li>Laporan akhir</li><li>Logbook mahasiswa</li><li>Dokumen IA</li></ul>",
+            "berkas_magang": "<ul><li>Laporan akhir</li><li>Dokumen IA</li></ul>",
             "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
             "tenggat_penilaian_magang": "15-07-2024 23:59",
             "status": "<span class='badge bg-label-success'>Aktif</span>",
@@ -196,7 +195,7 @@
             "nomor": "2",
             "jenis_magang": "Magang Fakultas",
             "durasi_magang": "2 Semester",
-            "berkas_magang": "<ul><li>Laporan akhir</li><li>Logbook mahasiswa</li><li>Dokumen IA</li></ul>",
+            "berkas_magang": "<ul><li>Laporan akhir</li><li>Dokumen IA</li></ul>",
             "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
             "tenggat_penilaian_magang": "15-07-2024 23:59",
             "status": "<span class='badge bg-label-danger'>Non-Aktif</span>",
