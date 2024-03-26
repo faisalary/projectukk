@@ -1,8 +1,8 @@
 @extends('partials_admin.template')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css')}}" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -57,7 +57,7 @@
             <div class="col-md-4 col-12 ">
                 <div class="text-secondary mt-3 mb-3 ">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Prodi:D3 Sistem Informasi" id="tooltip-filter"></i></div>
             </div>
-            <div class="col-md-8 d-flex justify-content-end align-items-center mt-2 mb-3 cnt">
+            <!-- <div class="col-md-8 d-flex justify-content-end align-items-center mt-2 mb-3 cnt">
                 <div id="div1" class="targetDiv">
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambah">
                         <div class="d-flex align-items-center">
@@ -65,7 +65,7 @@
                         </div>
                     </button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -380,8 +380,8 @@
     });
 </script>
 
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
-<script src="../../app-assets/js/forms-tagify.js"></script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+<script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
 @endsection

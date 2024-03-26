@@ -363,6 +363,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
     });
+
+    Route::prefix('/data-mahasiswa-magang')->group(function () {
+        Route::prefix('magang-fakultas')->group(function () {
+            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexFakultas'])->name('data-fakultas.index');
+        });
+        Route::prefix('/magang-mandiri')->group(function () {
+            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexMandiri'])->name('data-mandiri.index');
+        });
+    });
 });
 
 Route::get('/pengaturan', function () {
@@ -450,12 +459,7 @@ Route::get('/cv', function () {
     return view('mahasiswa.cv', ['active_menu' => 'CV Mahasiswa']);
 });
 
-Route::get('magang-fakultas', function () {
-    return view('admin_kandidat.magang_fakultas');
-});
-Route::get('/magang-mandiri', function () {
-    return view('admin_kandidat.magang_mandiri');
-});
+
 
 Route::get('/logbook/mahasiswa', function () {
     return view('company.logbook_mahasiswa.logbook');
