@@ -80,7 +80,7 @@ class KonfirmasiMagangController extends Controller
                         $pendaftar->current_step = 'ditolak';
                     } elseif ($pendaftar->where('konfirmasi_status', 2)) {
                         $pendaftar->current_step = 'ditolak';
-                    } elseif (!($pendaftar->where('current_step', 'diterima'))) {
+                    } elseif (empty($pendaftar->bukti_doc)) {
                         $pendaftar->konfirmasi_status = 2;
                         $pendaftar->current_step = 'ditolak';
                     }
@@ -114,6 +114,14 @@ class KonfirmasiMagangController extends Controller
                     $pendaftar->color = 'info';
                 }
                 // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
+
+                if ($pendaftar->current_step == "screening") {
+                    $pendaftar->screening = 'success';
+                } elseif ($pendaftar->current_step == "tahap1" || $pendaftar->current_step == "tahap2" || $pendaftar->current_step == "tahap3") {
+                    $pendaftar->tahap = 'success';
+                } elseif ($pendaftar->current_step == "penawaran" || $pendaftar->konfirmasi_status == 3) {
+                } elseif ($pendaftar->current_step == "screening") {
+                }
 
                 return $pendaftar;
             });
@@ -266,19 +274,22 @@ class KonfirmasiMagangController extends Controller
 
     public function porto($file)
     {
-        $path = file_get_contents(storage_path($file));
+        $path = storage_path($file);
+        // $pdf = PDF::loadFile(storage_path('file.pdf'));
 
         // Convert to PDF
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($path);
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml($path);
 
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+        // $dompdf->setPaper('A4', 'portrait');
+        // $dompdf->render();
 
         // Output file
-        return $dompdf->stream($file, [
-            'Attachment' => true
-        ]);
+        // return $dompdf->stream($file, [
+        //     'Attachment' => true
+        // ]);
+
+        return response()->file($path);
     }
 
     public function detail($id)
@@ -402,7 +413,7 @@ class KonfirmasiMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data berhasil dibuat!',
-                'modal' => '#modalMulai',
+                'url' => url('kegiatan-saya/lamaran-saya'),
             ]);
         } catch (Exception $e) {
             return response()->json([
