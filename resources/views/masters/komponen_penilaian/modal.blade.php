@@ -1,4 +1,3 @@
-
 <!-- modal tambah -->
 <div class="modal fade" id="modal-komponen-nilai" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:1000px;">
@@ -13,7 +12,7 @@
                     <div class="card-body">
                         <form class="form-repeater">
                             <div class="row">
-                                <div class="mb-3 col-12 mb-0">
+                                <div class="mb-3 col-12 ol-lg-6 col-xl-3 col-12 mb-0">
                                     <label for="jenis" class="form-label">Jenis Magang<span
                                             style="color: red;">*</span></label>
                                     <select name="jenismagang" id="jenismagang" class="form-select select2"
@@ -23,7 +22,14 @@
                                         <option value="2">Magang Mandiri</option>
                                     </select>
                                 </div>
+                                <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                    <label class="form-label" for="form-repeater-1-1">Bobot Penilaian<span
+                                            style="color: red;">*</span></label>
+                                    <input type="text" id="form-repeater-1-1" class="form-control"
+                                        placeholder="30%" />
+                                </div>
                             </div>
+
                             <hr />
                             <div data-repeater-list="group-a">
                                 <div data-repeater-item>
@@ -44,8 +50,12 @@
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Dinilai Oleh</label>
-                                            <input type="text" id="form-repeater-1-1" class="form-control"
-                                                placeholder="Pembimbing Akademik" />
+                                            <select name="scored_by" id="scored_by" class="form-select select2"
+                                                data-placeholder="Dinilai Oleh">
+                                                <option value="">Dinilai Oleh</option>
+                                                <option value="1">Pembimbing Akademik</option>
+                                                <option value="2">Pembimbing Lapangan</option>
+                                            </select>
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Nilai Minimal<span
@@ -58,12 +68,6 @@
                                                     style="color: red;">*</span></label>
                                             <input type="text" id="form-repeater-1-1" class="form-control"
                                                 placeholder="30" />
-                                        </div>
-                                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Bobot Penilaian<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="form-repeater-1-1" class="form-control"
-                                                placeholder="30%" />
                                         </div>
                                         <div class="mb-3 col-lg-12 col-xl-1 col-12 mb-0 p-0">
                                             <button class="btn btn-label-danger mt-4" data-repeater-delete>
