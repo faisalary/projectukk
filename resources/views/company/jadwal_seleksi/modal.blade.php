@@ -45,7 +45,7 @@
 <div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true" style="display: none">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header d-block border-bottom">
+            <div class="modal-header text-center d-block border-bottom">
                 <h5 class="modal-title" id="modal-title">Tambah Jadwal Seleksi Lanjutan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

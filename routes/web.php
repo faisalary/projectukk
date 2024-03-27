@@ -334,9 +334,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
         Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
         Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
+        Route::get('/porto/{file}', [App\Http\Controllers\KonfirmasiMagangController::class, 'porto'])->name('lamaran_saya.porto');
         Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
+        Route::post('/mulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'mulai'])->name('mulai.update');
         Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
         Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
+        Route::get('/editMulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'editMulai'])->name('mulai.edit');
+        Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
+        Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
     });
 
@@ -514,6 +519,46 @@ Route::get('/status/magang', function () {
 
 Route::get('/berkas/akhir', function () {
     return view('kegiatan_saya.berkas_akhir.index');
+});
+
+Route::get('/logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.index');
+});
+
+Route::get('/detail-logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.detail_logbook');
+});
+
+Route::get('/view-logbook-mahasiswa/magang-fakultas', function () {
+    return view('logbook_mahasiswa.magang_fakultas.view_logbook');
+});
+
+Route::get('/logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.index');
+});
+
+Route::get('/detail-logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.detail_logbook');
+});
+
+Route::get('/view-logbook-mahasiswa/magang-mandiri', function () {
+    return view('logbook_mahasiswa.magang_mandiri.view_logbook');
+});
+
+Route::get('/nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-fakultas', function () {
+    return view('nilai_mahasiswa.magang_fakultas.nilai');
+});
+
+Route::get('/nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.index');
+});
+
+Route::get('/detail-nilai-mahasiswa/magang-mandiri', function () {
+    return view('nilai_mahasiswa.magang_mandiri.nilai');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
