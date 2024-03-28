@@ -10,34 +10,36 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-repeater">
+                        <form class="form-repeater default-form" method="POST"
+                            action="{{ route('komponen-penilaian.store') }}">>
+                            @csrf
                             <div class="row">
                                 <div class="mb-3 col-12 ol-lg-6 col-xl-3 col-12 mb-0">
                                     <label for="jenis" class="form-label">Jenis Magang<span
                                             style="color: red;">*</span></label>
-                                    <select name="jenismagang" id="jenismagang" class="form-select select2"
+                                    <select name="id_jenismagang" class="form-select select2"
                                         data-placeholder="Jenis Magang">
                                         <option value="">Jenis Magang</option>
-                                        <option value="1">Magang Fakultas</option>
-                                        <option value="2">Magang Mandiri</option>
+                                        @foreach ($id_jenismagang as $u)
+                                            <option value="{{ $u->id_jenismagang }}">{{ $u->namajenis }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                     <label class="form-label" for="form-repeater-1-1">Bobot Penilaian<span
                                             style="color: red;">*</span></label>
-                                    <input type="text" id="form-repeater-1-1" class="form-control"
-                                        placeholder="30%" />
+                                    <input type="text" name="bobot" class="form-control" placeholder="30%" />
                                 </div>
                             </div>
 
                             <hr />
-                            <div data-repeater-list="group-a">
+                            <div data-repeater-list="komponen">
                                 <div data-repeater-item>
                                     <div class="row">
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Aspek Penilaian<span
                                                     style="color: red;">*</span></label>
-                                            <textarea id="form-repeater-1-1" class="form-control"
+                                            <textarea name="aspek_penilaian" class="form-control"
                                                 placeholder="Buku Laporan Akhir 
 - Penulisan dan Tata Bahasa
 - Latar Belakang dan Tujuan"></textarea>
@@ -45,12 +47,12 @@
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Deskripsi Aspek
                                                 Penilaian<span style="color: red;">*</span></label>
-                                            <textarea id="form-repeater-1-1" class="form-control"
+                                            <textarea name="deskripsi_penilaian" class="form-control"
                                                 placeholder="Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif."></textarea>
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Dinilai Oleh</label>
-                                            <select name="scored_by" id="scored_by" class="form-select select2"
+                                            <select name="scored_by" class="form-select"
                                                 data-placeholder="Dinilai Oleh">
                                                 <option value="">Dinilai Oleh</option>
                                                 <option value="1">Pembimbing Akademik</option>
@@ -58,19 +60,14 @@
                                             </select>
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Nilai Minimal<span
-                                                    style="color: red;">*</span></label>
-                                            <input type="text" id="form-repeater-1-1" class="form-control"
-                                                placeholder="0" />
-                                        </div>
-                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Nilai Maksimal<span
                                                     style="color: red;">*</span></label>
-                                            <input type="text" id="form-repeater-1-1" class="form-control"
+                                            <input type="text" name="nilai_max" class="form-control"
                                                 placeholder="30" />
                                         </div>
                                         <div class="mb-3 col-lg-12 col-xl-1 col-12 mb-0 p-0">
-                                            <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                            <button type="button" class="btn btn-label-danger mt-4"
+                                                data-repeater-delete>
                                                 <i class="ti ti-trash"></i>
 
                                             </button>
@@ -80,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="mb-0">
-                                <button class="btn btn-outline-success" data-repeater-create>
+                                <button class="btn btn-outline-success" type="button" data-repeater-create>
                                     <i class="ti ti-plus me-1"></i>
                                     <span class="align-middle">Data</span>
                                 </button>
@@ -129,7 +126,7 @@
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Aspek Penilaian<span
                                                     style="color: red;">*</span></label>
-                                            <textarea id="form-repeater-1-1" class="form-control"
+                                            <textarea class="form-control"
                                                 placeholder="Buku Laporan Akhir 
 - Penulisan dan Tata Bahasa
 - Latar Belakang dan Tujuan"></textarea>
@@ -137,7 +134,7 @@
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Deskripsi Aspek
                                                 Penilaian<span style="color: red;">*</span></label>
-                                            <textarea id="form-repeater-1-1" class="form-control"
+                                            <textarea class="form-control"
                                                 placeholder="Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif."></textarea>
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
