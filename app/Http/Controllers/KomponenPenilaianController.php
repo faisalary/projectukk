@@ -35,7 +35,7 @@ class KomponenPenilaianController extends Controller
                     'namakomponen' => $d['namakomponen'],
                     'tipe' => '1',
                     'bobot' => str_replace('%', '', $d['bobot']),
-                    'scoredby' => $d['scoredby'],
+                    'scored_by' => $d['scored_by'],
                     'status' => true,
 
                 ]);
