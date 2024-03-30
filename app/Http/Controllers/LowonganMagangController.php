@@ -38,13 +38,16 @@ class LowonganMagangController extends Controller
             'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
         ];
         $jenismagang = JenisMagang::all();
+        // $lokasi = Lokasi::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
         $industri = Industri::where('id_industri', $id)->first();
-        return view('company.lowongan_magang.halaman_lowongan_magang_mitra', 
-        compact('lowongan', 'jenismagang', 'prodi', 'fakultas','industri'));
+        return view(
+            'company.lowongan_magang.halaman_lowongan_magang_mitra',
+            compact('lowongan', 'jenismagang', 'prodi', 'fakultas', 'industri')
+        );
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -52,8 +55,10 @@ class LowonganMagangController extends Controller
     {
         $seleksi = SeleksiTahap::all();
         $jenismagang = JenisMagang::all();
+        // $lokasi = Lokasi::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
+        // $industri = Industri::where('id_industri')->get();
         return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'seleksi', 'prodi', 'fakultas'));
     }
 
@@ -64,8 +69,23 @@ class LowonganMagangController extends Controller
     {
         DB::beginTransaction();
         try {
-            $industri = Industri::where('id_industri', Auth::user()->id_industri)->first();
-     
+            $industri = Industri::where('id_industri', auth()->user()->id_industri)->first();
+            $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
+            // $lokasi = Lokasi::create([
+            //     'kota' => $request->lokasi
+            // ]);
+
+            $lokasi = Lokasi::where('id_lokasi')->first();
+            if ($lokasi) {
+                $lokasi->update([
+                    'kota' => $request->lokasi
+                ]);
+            } else {
+                $lokasi =  Lokasi::create([
+                    'kota' => $request->lokasi
+                ]);
+            }
+
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
                 'intern_position' => $request->posisi,
@@ -122,16 +142,16 @@ class LowonganMagangController extends Controller
     public function show(Request $request)
     {
         $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', Auth::user()->id_industri);
-        if ($request->type =="tertunda") {
-            $lowongan =  $lowongan->where('statusaprove', 'tertunda');        
-        } elseif ($request->type == 'diterima'){
+        if ($request->type == "tertunda") {
+            $lowongan =  $lowongan->where('statusaprove', 'tertunda');
+        } elseif ($request->type == 'diterima') {
             $lowongan =  $lowongan->where('statusaprove', 'diterima');
-        }elseif ($request->type == 'ditolak'){
+        } elseif ($request->type == 'ditolak') {
             $lowongan =  $lowongan->where('statusaprove', 'diterima');
         }
         $lowongan = $lowongan
-        ->orderBy('id_jenismagang', 'asc')
-        ->get();
+            ->orderBy('id_jenismagang', 'asc')
+            ->get();
         return DataTables::of($lowongan)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
@@ -144,7 +164,7 @@ class LowonganMagangController extends Controller
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
-        
+
                 $btn = "<a href='" . url('kelola/lowongan/mitra/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
                         <a href='" . url('kelola/lowongan/mitra/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
                         <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";

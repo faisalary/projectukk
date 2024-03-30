@@ -22,6 +22,10 @@ class PendaftaranMagang extends Model
     public $timestamps = false;
     protected $primaryKey = 'id_pendaftaran';
     protected $keyType = 'string';
+    protected $casts = [
+        'tanggaldaftar' => 'datetime',
+        'approvetime' => 'datetime'
+    ];
 
     public function lowonganMagang()
     {
