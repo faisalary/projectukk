@@ -308,7 +308,7 @@
                       <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
                         <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$pe?->id_experience??''}}" onclick="editSkill($(this))" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$pe?->id_experience??''}}" onclick="destroy($(this))" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$pe?->id_experience??''}}" onclick="destroyPengalaman($(this))"></i>
                       </div>
                     </div>
                     
@@ -360,7 +360,7 @@
                         <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
                           <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$dok?->id_sertif??''}}" onclick="editDokumen($(this))" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
-                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$dok?->id_sertif??''}}" onclick="destroyDokumen($(this))" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
+                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$dok?->id_sertif??''}}" onclick="destroyDokumen($(this))" data-bs-toggle="modal" data-bs-target=""></i>
                         </div>
                       </div>
                       <div class="border-bottom mb-3">
@@ -476,18 +476,94 @@
 
     function destroyDokumen(e) {
       let id = e.attr('data-id');
-      var url = `{{ url('mahasiswa/profile/dokumen-pendukung/') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/dokumen-pendukung/delete/') }}/${id}`;
       console.log(id);
 
-      $.ajax({
-        url: url,
-        type: "DELETE",
-        cache: false,
-        success:function(response){ 
-          $(`#modal-button`).remove();
-        }
-      });
+      Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "ingin menghapus data ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, HAPUS!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: action,
+              type: "DELETE",
+              cache: false,
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
+              success:function(response){ 
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                location.reload();
+              },
+              error: function(error) {
+                    console.log("Error: ", error);
+                    let errorMessage = error.responseJSON ? error.responseJSON.message : 'Terjadi kesalahan saat menghapus data!';
+                    Swal.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage,
+                    });
+                }
+            });
+          }
+        });
+    }
+
+    function destroyPengalaman(e) {
+      let id = e.attr('data-id');
+      let action = `{{ url('mahasiswa/profile/pengalaman/delete/') }}/${id}`;
+      console.log(id);
+
+      Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "ingin menghapus data ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, HAPUS!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: action,
+              type: "DELETE",
+              cache: false,
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
+              success:function(response){ 
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                location.reload();
+              },
+              error: function(error) {
+                    console.log("Error: ", error);
+                    let errorMessage = error.responseJSON ? error.responseJSON.message : 'Terjadi kesalahan saat menghapus data!';
+                    Swal.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage,
+                    });
+                }
+            });
+          }
+        });
     }
 
 

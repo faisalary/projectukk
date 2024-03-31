@@ -62,7 +62,7 @@
                           </select>
                         </div>
                         <div class="mb-3 col-md-7">
-                          <input class="form-control mt-4" type="text" id="urlsosmed" name="url_sosmed" value="{{$informasitambahan?->url_sosmed??''}}" placeholder="URL/Username" />
+                          <input class="form-control mt-4" type="text" id="urlsosmed" name="url_sosmed" placeholder="URL/Username" />
                         </div>
                         <div class="mb-3 col-md-1">
                           <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">

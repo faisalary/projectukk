@@ -298,7 +298,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'store'])->name('profile.pengalaman.mahasiswa.store');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editpengalaman'])->name('profile.pengalaman.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatepengalaman'])->name('profile.pengalaman.mahasiswa.update');
-            Route::get('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletepengalaman'])->name('profile.pengalaman.mahasiswa.delete');
+            Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletepengalaman'])->name('profile.pengalaman.mahasiswa.delete');
             Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detailpengalaman'])->name('profile.pengalaman.mahasiswa.delete');
         });
         Route::prefix('profile/dokumen-pendukung')->group(function (){

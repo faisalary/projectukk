@@ -211,11 +211,11 @@ class ProfileMahasiswaController extends Controller
         
         try {
             $pengalaman = Experience::where('nim', $id)->first();
-            Experience::create([
+            $pengalaman = Experience::create([
                 'nim' => $id,
                 'posisi' => $request->posisi,
                 'jenis' => $request->jenis,
-                'name_intitutions' => $request->name_institutions,
+                'name_intitutions' => $request->name_intitutions,
                 'startdate' => $request->startdate . '-01',
                 'enddate' => $request->enddate . '-01',
                 'deskripsi' => $request->deskripsi,
@@ -276,7 +276,19 @@ class ProfileMahasiswaController extends Controller
 
     public function deletepengalaman(Request $request, $id) { 
 
-        //
+        try {
+            Experience::where('id_experience', $id)->delete();
+    
+            return response()->json([
+                'error' => false,
+                'message' => 'Pengalaman berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
     
     public function storedokumen(DokumenRequest $request, $id) { 
@@ -351,9 +363,8 @@ class ProfileMahasiswaController extends Controller
 
     public function deletedok(Request $request, $id) { 
         try {
-            Sertifikat::where('id_sertif', $id)
-            ->delete();
-
+            Sertifikat::where('id_sertif', $id)->delete();
+    
             return response()->json([
                 'error' => false,
                 'message' => 'Sertifikat berhasil dihapus',
@@ -364,6 +375,5 @@ class ProfileMahasiswaController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-    
+    }      
 }
