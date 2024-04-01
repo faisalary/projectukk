@@ -99,8 +99,7 @@
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
-              {{-- asset('storage/file.txt'); --}}
-                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'') }}" alt="user-avatar"
+                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
@@ -213,28 +212,34 @@
               <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
-              @if(!empty($informasitambahan->lok_magang) || !empty( $informasitambahan->sosmed) || !empty($informasitambahan->bahasa) || !empty($informasitambahan->url_sosmed))
-              <div class="row">
+              <div class="row mb-2">
                 <div class="col-6">
                   <p class="mb-2 pt-1">
+                    @if(!empty($informasitambahan->lok_magang))
                     <span class="fw-semibold me-1">Lokasi Kerja yang diharapkan:</span>
                     <span>{{$informasitambahan->lok_magang ?? ''}}</span>
+                    @endif
                   </p>
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
+                    @if(!empty( $informasitambahan->sosmed))
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#">{{$informasitambahan->sosmed ?? ''}}</a></span>
+                    <span> <a href="#">{{$informasitambahan->url_sosmed ?? ''}}</a></span>
+                    @endif
                   </p>
                 </div>
-                <p class="mb-2 pt-0">
-                  <span class="fw-semibold me-1">Bahasa:</span>
-                </p>
-                <p class="mb-4">
-                  <span class="btn rounded-pill btn-success waves-effect waves-light" value="1">{{$informasitambahan->bahasa ?? ''}}</span>
-                </p>
               </div>
-              @endif
+              {{-- @if(!empty($bahasamahasiswa->bahasa)) --}}
+              <p class="mb-2 pt-0">
+                <span class="fw-semibold me-1">Bahasa:</span>
+              </p>
+              <p class="mb-4">
+                @foreach($bahasamahasiswa->bahasamhs as $bb)
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$bb?->bahasa?? 'Indonesia'}}</span>
+                @endforeach
+              </p>
+              {{-- @endif   --}}
             </div>
           </div>
         </div>
@@ -484,8 +489,6 @@
             text: "ingin menghapus data ini!",
             icon: 'warning',
             showCancelButton: true,
-            cancelButtonText: 'TIDAK',
-            confirmButtonText: 'YA, HAPUS!'
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
@@ -501,7 +504,7 @@
                     icon: 'success',
                     title: `${response.message}`,
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 6000
                 });
                 location.reload();
               },
@@ -530,8 +533,6 @@
             text: "ingin menghapus data ini!",
             icon: 'warning',
             showCancelButton: true,
-            cancelButtonText: 'TIDAK',
-            confirmButtonText: 'YA, HAPUS!'
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
@@ -547,7 +548,7 @@
                     icon: 'success',
                     title: `${response.message}`,
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 6000
                 });
                 location.reload();
               },
@@ -565,8 +566,6 @@
           }
         });
     }
-
-
     function editSkill(e) {
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;

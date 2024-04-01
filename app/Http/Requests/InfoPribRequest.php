@@ -29,7 +29,7 @@ class InfoPribRequest extends FormRequest
                 'gender' => 'required',
                 'headliner' => 'required',
                 'headliner' => 'required',
-                'profile_picture' => 'required|extensions:jpg,png,jpeg|max:10000'
+                'profile_picture' => 'extensions:jpg,png,jpeg|max:10000'
         ];
     }
 

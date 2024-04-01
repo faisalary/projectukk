@@ -12,6 +12,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
+use App\Models\BahasaMahasiswa;
 use App\Models\Sertif;
 use App\Models\Sertifikat;
 use App\Models\Skill;
@@ -37,9 +38,10 @@ class ProfileMahasiswaController extends Controller
         $pendidikan = Education::where('nim' ,$id)->first();
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = Mahasiswa::where('nim', $id)->first();
-        $mahasiswa = Mahasiswa::where('nim', $id)->with('informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
+        $bahasamahasiswa = Mahasiswa::find($id);
+        $mahasiswa = Mahasiswa::where('nim', $id)->with('bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
         return view('profile.informasi_pribadi', 
-        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan'));
+        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
     }
 
     /**
@@ -70,13 +72,12 @@ class ProfileMahasiswaController extends Controller
             $informasiprib = InformasiPribadi::where('id_infoprib', $id)->first();
             $file = null;
             if ($request->file('profile_picture')) {
-                $file = Storage::put('profile-image' , $request->file('profile_picture'));
+                $file = Storage::put('profile-picture' , $request->file('profile_picture'));
             }
-            
             $data = [
                 'ipk' => $request->ipk,
                 'eprt' => $request->eprt,
-                'TAK' => $request->TAK,
+                'tak' => $request->tak,
                 'tgl_lahir' => $request->tgl_lahir,
                 'headliner' => $request->headliner,
                 'deskripsi_diri' => $request->deskripsi_diri,
@@ -98,6 +99,7 @@ class ProfileMahasiswaController extends Controller
             } else {
                 $data['nim'] = $id;
                 InformasiPribadi::create($data);
+                dd($data);
             }
 
             
@@ -114,21 +116,31 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-    public function updateinformasitambahan(InformasiTambahanReq $request, $id) { 
+    public function updateinformasitambahan(Request $request, $id) { 
 
         try{
+            $bahasamahasiswa = BahasaMahasiswa::where('nim', $id)->first();
             $informasitambahan = Mahasiswa::where('nim', $id)->first();
-            
-            $data1 = [
-                'lok_magang' => $request->lok_magang,
-                'sosmed' => $request->sosmed,
-                'bahasa'=> $request->bahasa,
-                'url_sosmed' => $request->url_sosmed,
-            ];
-            if ($informasitambahan) {
-                $informasitambahan->update($data1);
+            // $data1 = [
+            //     'lok_magang' => $request->lok_magang,
+            //     'sosmed' => $request->sosmed,
+            //     'url_sosmed' => $request->url_sosmed,
+            // ];
+            if ($informasitambahan && $bahasamahasiswa) {
+                // $informasitambahan->update($data1);
+                $bahasamahasiswa->update();
             } else {
-                Mahasiswa::create($data1);
+                Mahasiswa::create([
+                    'lok_magang' => $request->lok_magang,
+                    'sosmed' => $request->sosmed,
+                    'url_sosmed' => $request->url_sosmed,
+                ]);
+                foreach ($request->tambahan as $t) {
+                    BahasaMahasiswa::create([
+                        'nim' => $id,
+                        'bahasa' => $t['bahasa'],
+                    ]);
+                }
             }
 
             return response()->json([

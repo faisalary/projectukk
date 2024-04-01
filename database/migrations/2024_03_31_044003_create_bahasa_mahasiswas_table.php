@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bahasa_has_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('bahasa_mahasiswas', function (Blueprint $table) {
+            $table->string('nim', 255); 
+            $table->string('bahasa'); 
+            $table->foreign('nim')->references('nim')->on('mahasiswa');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bahasa_has_profiles');
+        Schema::dropIfExists('bahasa_mahasiswas');
     }
 };

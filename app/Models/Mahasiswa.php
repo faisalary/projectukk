@@ -57,4 +57,8 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(InformasiTamabahan::class, "id_infotab");
     }
+    public function bahasamhs()
+    {
+        return $this->hasMany(BahasaMahasiswa::class, 'nim');
+    }
 }
