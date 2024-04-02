@@ -40,7 +40,7 @@
                                             <label class="form-label" for="form-repeater-1-1">Aspek Penilaian<span
                                                     style="color: red;">*</span></label>
                                             <textarea name="aspek_penilaian" class="form-control"
-                                                placeholder="Buku Laporan Akhir 
+                                                placeholder="Buku Laporan Akhir
 - Penulisan dan Tata Bahasa
 - Latar Belakang dan Tujuan"></textarea>
                                         </div>
@@ -61,7 +61,7 @@
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <label class="form-label" for="form-repeater-1-1">Nilai Maksimal<span
-                                                    style="color: red;">*</span></label>
+                                                style="color: red;">*</span></label>
                                             <input type="text" name="nilai_max" class="form-control"
                                                 placeholder="30" />
                                         </div>
@@ -69,7 +69,6 @@
                                             <button type="button" class="btn btn-label-danger mt-4"
                                                 data-repeater-delete>
                                                 <i class="ti ti-trash"></i>
-
                                             </button>
                                         </div>
                                     </div>

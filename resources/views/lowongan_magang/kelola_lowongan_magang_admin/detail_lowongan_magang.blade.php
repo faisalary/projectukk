@@ -88,30 +88,31 @@
                         <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
                             
                                 <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                    <i class="ti ti-map-pin me-2">
-                                        {{ $lowongan->lokasi->kota}}
+                                    <i class="ti ti-map-pin me-2">{{ $lowongan->lokasi}}
                                     </i>
                                 </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-currency-dollar me-2">
-                                    {{ $lowongan->nominal_salary }}
+                                    {{ $lowongan->nominal_salary}}
                                 </i>
                             </li>
                         </ul>
                         
                         <ul style="padding: 0 0 0 20px; !important">
-                            @foreach ($prodi as $p)
+                            
                             <li class="list-group-item d-flex align-items-start fw-semibold"
                                 style="margin-top: 15px !important">
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        <li> {{ $p->namaprodi }}</li>
+                                        @foreach ($lowongan  as $l)
+                                        <li> {{ $l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                        @break
+                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
-                            @endforeach
                         </ul>
                         
                     </div>
@@ -233,10 +234,23 @@
                     <div class="modal-body text-center" style="display:block;">
                         <h5 class="modal-title">Apakah Anda Yaking Menyetujui Lowongan</h5>
                     </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button class="btn btn-primary text-white" id="approve-confirm-button" onclick='approved($(this))' data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}">
-                        Iya, Yakin</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span
+                                    class="text-danger">*</span></label></label>
+                                <select class="form-select select2" multiple id="prodi" name="prodi[]" 
+                                    data-placeholder="Pilih Prodi">
+                                    @foreach($prodi as $p)
+                                    <option value="{{$p->id_prodi}}">{{$p?->namaprodi??''}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="justify-content:end;">
+                        <button type="button" id="approve-confirm-button" class="btn btn-success" onclick='approved($(this))' data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->status}}">Approve Lowongan</button>
                     </div>
                 </div>
             </div>

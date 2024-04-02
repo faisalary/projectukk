@@ -208,7 +208,7 @@
                 Konfirmasi Persetujuan Data Mitra
             </div>
             <div class="modal-footer" style="display: flex; justify-content:center;">
-                <a class="btn btn-primary text-white" id="approve-confirm-button">Iya, Yakin</a>
+                <button type="button" id="approve-confirm-button" class="btn btn-success">Iya, Yakin</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
             </div>
         </div>

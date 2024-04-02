@@ -99,7 +99,7 @@
           <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
-                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'') }}" alt="user-avatar"
+                  <img src="{{ url('storage/' .$informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image"
                       class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
@@ -209,33 +209,37 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Informasi Tambahan</h5>
-              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this)" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
-              <div class="row">
+              <div class="row mb-2">
                 <div class="col-6">
                   <p class="mb-2 pt-1">
+                    @if(!empty($informasitambahan->lok_magang))
                     <span class="fw-semibold me-1">Lokasi Kerja yang diharapkan:</span>
-                    <span>{{$informasitambahan?->lok_kerja??''}}</span>
+                    <span>{{$informasitambahan->lok_magang ?? ''}}</span>
+                    @endif
                   </p>
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
+                    @if(!empty( $informasitambahan->sosmed))
                     <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
-                  </p>
-                  <p class="mb-2 pt-1">
-                    <span class="fw-semibold me-1">Linkedin:</span>
-                    <span> <a href="#">{{$informasitambahan?->sosmed??''}}</a></span>
+                    <span> <a href="#">{{$informasitambahan->url_sosmed ?? ''}}</a></span>
+                    @endif
                   </p>
                 </div>
-                <p class="mb-2 pt-0">
-                  <span class="fw-semibold me-1">Bahasa:</span>
-                </p>
-                <p class="mb-4">
-                  <span class="btn rounded-pill btn-success waves-effect waves-light" value="1">{{$informasitambahan->bahasa?->bahasa??''}}</span>
-                </p>
               </div>
+              {{-- @if(!empty($bahasamahasiswa->bahasa)) --}}
+              <p class="mb-2 pt-0">
+                <span class="fw-semibold me-1">Bahasa:</span>
+              </p>
+              <p class="mb-4">
+                @foreach($bahasamahasiswa->bahasamhs as $bb)
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$bb?->bahasa?? 'Indonesia'}}</span>
+                @endforeach
+              </p>
+              {{-- @endif   --}}
             </div>
           </div>
         </div>
@@ -251,15 +255,13 @@
             </div>
             <div class="card-body pb-0">
               <ul class="timeline mb-0">
+                @if(!empty($pendidikan->name_intitutions) || !empty( $pendidikan->tingkat) || !empty($pendidikan->nilai) || !empty($pendidikan->startdate) || !empty($pendidikan->enddate) )
                 <li class="timeline-item timeline-item-transparent">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
+                  <div class="timeline">
+           
                     <div class="timeline-header">
                       <h6 class="mt-0">{{$pendidikan?->name_intitutions??''}}</h6>
-                      {{-- <div> --}}
-                        {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPendidikan"></i> --}}
-                        {{-- <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDeletePendidikan"></i> --}}
-                      {{-- </div> --}}
                     </div>
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pendidikan?->tingkat??''}}</p>
@@ -268,9 +270,7 @@
                     </div>
                   </div>
                 </li>
-                <li class="timeline-item timeline-item-transparent mb-4">
-                  <span class="timeline-point timeline-point-success"></span>
-                </li>
+                @endif
               </ul>
             </div>
           </div>
@@ -281,7 +281,7 @@
         <!-- <Keahlian&Pengalaman> -->
         <div class="tab-pane fade show" id="navs-pills-justified-keahlian-pengalaman" role="tabpanel">
           <div class="card mb-4">
-            <div class="d-flex justify-content-between pt-3 ps-3 pe-3">
+            <div class="d-flex justify-content-between pt-3 ps-4 pe-3">
               <h5 class="text-secondary">Keahlian</h5>
               <div class="text-end">
                 <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
@@ -290,11 +290,12 @@
               </div>
             </div>
             <div class="card-body pb-0 pt-0">
-              @foreach ($skill1 as $s)
+              
+              @if(!empty($skill->skills))
               <div>
-                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$s?->skills??''}}</span>
+                <span class="btn rounded-pill btn-success waves-effect waves-light">{{$skill?->skills??''}}</span>
               </div>
-              @endforeach
+              @endif
               <div class="border-bottom mt-3"></div>
               <div class="d-flex justify-content-between pt-3 pb-3">
                 <h5 class="text-secondary">Pengalaman</h5>
@@ -302,18 +303,20 @@
                   <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahPengalaman"></i>
                 </div>
               </div>
-              <ul class="timeline mb-0">
+              @if(count($pengalaman1) > 0)
+              <ul class="timeline">
                 @foreach ($pengalaman1 as $pe)
                 <li class="timeline-item timeline-item-transparent ">
                   <span class="timeline-point timeline-point-success"></span>
-                  <div class="timeline-event">
-                    <div class="timeline-header mt-5">
+                  <div class="timeline">
+                    <div class="timeline-header mt-1">
                       <h6 class="mb-0">{{$pe?->posisi??''}}</h6>
                       <div>
-                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
-                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModalPengalaman"></i>
+                        <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$pe?->id_experience??''}}" onclick="editSkill($(this))" data-bs-toggle="modal" data-bs-target="#modalEditPengalaman"></i>
+                        <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$pe?->id_experience??''}}" onclick="destroyPengalaman($(this))"></i>
                       </div>
                     </div>
+                    
                     <div class="border-bottom mb-3">
                       <p class="mb-1">{{$pe?->name_intitutions??''}} - {{$pe?->jenis??''}}</p>
                       <p style="font-size: small;">{{$pe?->startdate??''}} - {{$pe?->enddate??''}}
@@ -328,13 +331,12 @@
                   </div>
                 </li>
                 @endforeach
-                <li class="timeline-item timeline-item-transparent">
-                  <span class="timeline-point timeline-point-success"></span>
-                </li>
+                
                 <a href="{{url("mahasiswa/profile/pengalaman/detail/". Auth::user()->nim)}}">
                   <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
                   type="button">Selengkapnya</button></a>
-                </ul>
+              </ul>
+              @endif
             </div>
           </div>
         </div>
@@ -345,14 +347,15 @@
         <div class="tab-pane fade show" id="navs-pills-justified-dokumen-pendukung" role="tabpanel">
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
-              <h5 class="text-secondary pt-2 ps-3 pe-3">Dokumen Pendukung</h5>
+              <h5 class="text-secondary pt-2 ps-2 pe-3">Dokumen Pendukung</h5>
               {{-- <i class="menu-icon tf-icons ti ti-plus text-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen"></i> --}}
               <i class="menu-icon ps-2 pe-2 pb-2">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahDokumen">Tambah</button>
+                <button class="btn btn-success" data-bs-target="#modalTambahDokumen"   data-bs-toggle="modal">Tambah</button>
               </i>
             </div>
             <div class="card-body">
               <div>
+                @if(count($dokumen1) > 0)
                 <ul class="timeline mb-0">
                   @foreach($dokumen1 as $dok)
                   <li class="timeline-item timeline-item-transparent">
@@ -361,9 +364,8 @@
                       <div class="timeline-header">
                         <h6 class="mb-0">Judul : {{$dok?->nama_sertif??''}}</h6>
                         <div>
-                          {{-- <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="edit('{{ $dokumen }}')" data-bs-target="#modalEditDokumen" ></i> --}}
-                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
-                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-bs-toggle="modal" data-bs-target="#ModalDelete"></i>
+                          <i class="menu-icon tf-icons ti ti-edit text-warning" data-id="{{$dok?->id_sertif??''}}" onclick="editDokumen($(this))" data-bs-toggle="modal" data-bs-target="#modalEditDokumen" ></i>
+                          <i class="menu-icon tf-icons ti ti-trash text-danger" data-id="{{$dok?->id_sertif??''}}" onclick="destroyDokumen($(this))" data-bs-toggle="modal" data-bs-target=""></i>
                         </div>
                       </div>
                       <div class="border-bottom mb-3">
@@ -395,8 +397,9 @@
               </div>
               <a href="{{url("mahasiswa/profile/dokumen-pendukung/detail/". Auth::user()->nim)}}">
                 <button class="btn btn-outline-success btn-lg col-md-12 toggle-button ms-1 me-7 mb-2 mt-5" 
-                  type="button">Selengkapnya</button>
+                type="button">Selengkapnya</button>
               </a>
+              @endif
             </div>
           </div>
         </div>
@@ -434,7 +437,7 @@
           type: 'GET',
           url: url,
           success: function (response) {
-            console.log(response);
+            // console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
               $('#ipk').val(response.ipk);
@@ -453,25 +456,138 @@
       });
     }
 
-    // function editInformasiTambahan(e) {
-    //   let id = e.attr('data-id');
-    //   var url = `{{ url('mahasiswa/profile/informasi/edit/') }}/${id}`;
-    //   let action = `{{ url('mahasiswa/profile/informasi/update/') }}/${id}`;
+    function editDokumen(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/dokumen-pendukung/update/') }}/${id}`;
+      // console.log(url);
 
-    //   $.ajax({
-    //       type: 'GET',
-    //       url: url,
-    //       success: function (response) {
-    //           $("#modal-button-infotam").html("Update Data");
-    //           $('#modalEditInformasiTambahan form').attr('action', action);
-    //           $('#lok_kerja').val(response.lok_kerja); 
-    //           $('#sosmed').val(response.sosmed);
-    //           $('#bahasa').val(response.id_bahasa);
-    //           $('#url_sosmed').val(response.url_sosmed);
-            
-    //       }
-    //   });
-    // }
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (response) {
+          $("#modal-button").html("Update Data");
+          $('#modalEditDokumen form').attr('action', action);
+          $('#nama_sertif').val(response.nama_sertif); 
+          $('#penerbit').val(response.penerbit);
+          $('#file_sertif').val(response.file_sertif);
+          $('#link_sertif').val(response.link_sertif);
+          $('#deskripsi2').val(response.deskripsi);
+          $('#startdate').val(response.startdate);
+          $('#enddate').val(response.enddate);
+        }
+      });
+    }
+
+    function destroyDokumen(e) {
+      let id = e.attr('data-id');
+      let action = `{{ url('mahasiswa/profile/dokumen-pendukung/delete/') }}/${id}`;
+      console.log(id);
+
+      Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "ingin menghapus data ini!",
+            icon: 'warning',
+            showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: action,
+              type: "DELETE",
+              cache: false,
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
+              success:function(response){ 
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 6000
+                });
+                location.reload();
+              },
+              error: function(error) {
+                    console.log("Error: ", error);
+                    let errorMessage = error.responseJSON ? error.responseJSON.message : 'Terjadi kesalahan saat menghapus data!';
+                    Swal.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage,
+                    });
+                }
+            });
+          }
+        });
+    }
+
+    function destroyPengalaman(e) {
+      let id = e.attr('data-id');
+      let action = `{{ url('mahasiswa/profile/pengalaman/delete/') }}/${id}`;
+      console.log(id);
+
+      Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "ingin menghapus data ini!",
+            icon: 'warning',
+            showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: action,
+              type: "DELETE",
+              cache: false,
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
+              success:function(response){ 
+                Swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 6000
+                });
+                location.reload();
+              },
+              error: function(error) {
+                    console.log("Error: ", error);
+                    let errorMessage = error.responseJSON ? error.responseJSON.message : 'Terjadi kesalahan saat menghapus data!';
+                    Swal.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage,
+                    });
+                }
+            });
+          }
+        });
+    }
+    function editSkill(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
+      console.log(id);
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+            $("#modal-button").html("Update Data");
+            $('#modalEditDokumen form').attr('action', action);
+            $('#posisi').val(response.posisi); 
+            $('#jenis').val(response.jenis);
+            $('#name_institutions').val(response.name_institutions);
+            $('#startdate').val(response.startdate);
+            $('#enddate').val(response.enddate);
+            $('#deskripsi').val(response.deskripsi);
+            console.log(response);
+          }
+      });
+    }
   </script>
   <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
   <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>

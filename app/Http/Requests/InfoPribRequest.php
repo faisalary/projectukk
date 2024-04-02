@@ -28,7 +28,8 @@ class InfoPribRequest extends FormRequest
                 'eprt' => "required|numeric|max:677",
                 'gender' => 'required',
                 'headliner' => 'required',
-                'headliner' => 'required'
+                'headliner' => 'required',
+                'profile_picture' => 'extensions:jpg,png,jpeg|max:10000'
         ];
     }
 
@@ -36,7 +37,6 @@ class InfoPribRequest extends FormRequest
     {
         return [
             'tgl_lahir.required' => 'Tanggal lahir wajib di isi',
-
             'ipk.required' => 'IPK wajib di isi',
             'ipk.regex' => 'isi IPK dengan benar',
             'ipk.max' => 'isi IPK dengan benar',
@@ -52,6 +52,10 @@ class InfoPribRequest extends FormRequest
             'eprt.required' => 'EPRT wajib di isi',
             'eprt.numeric' => 'EPRT harus berupa angka',
             'eprt.max' => 'isi EPRT dengan benar',
+
+            'profile_picture.required' => 'isi foto profile',
+            'profile_picture.extensions' => 'harus berupa png, jpeg, dan jpg',
+            'profile_picture.max' => 'maksimum ukuran file adalah 10000kb'
         ];
     }
 }
