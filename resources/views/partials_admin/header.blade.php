@@ -396,7 +396,7 @@
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
-                                <a href="/master/laporan-akhir" class="menu-link">
+                                <a href="{{ route('laporan-akhir.index') }}" class="menu-link">
                                     <div data-i18n="Master Laporan Akhir">Master Laporan Akhir</div>
                                 </a>
                             </li>

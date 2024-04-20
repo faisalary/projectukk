@@ -27,7 +27,7 @@ class JadwalSeleksiController extends Controller
 {
     public function index(Request $request, $id)
     {
-        $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
+        $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang')->first();
         $mahasiswa = Mahasiswa::all();
         $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
         // dd($lowongan);
@@ -159,7 +159,7 @@ class JadwalSeleksiController extends Controller
     public function detail(Request $request, $id)
     {
         $seleksi = Seleksi::where('id_pendaftaran', $id)->first();
-        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $seleksi->id_pendaftaran)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
+        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $seleksi->id_pendaftaran)->with('lowongan_magang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
         $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
         $infoTambah = InformasiTamabahan::where('nim', $pendaftar->nim)->get();

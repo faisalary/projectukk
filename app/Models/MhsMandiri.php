@@ -19,5 +19,13 @@ class MhsMandiri extends Model
     public function PengajuanMandiri()
     {
         return $this->belongsTo(PengajuanMandiri::class, 'id_pengajuan');
-    }   
+    }
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'nip');
+    }
+    public function pbb()
+    {
+        return $this->belongsTo(PembimbingMandiri::class, 'id_pbb');
+    }
 }
