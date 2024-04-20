@@ -6,6 +6,7 @@ use App\Models\Fakultas;
 use App\Models\JenisMagang;
 use App\Models\Lokasi;
 use App\Models\LowonganMagang;
+use App\Models\LowonganProdi;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Exception;
@@ -16,6 +17,10 @@ use Yajra\DataTables\Facades\DataTables;
 
 class LowonganMagangLkmController extends Controller
 {
+    public function __construct(){
+
+    $this->middleware(['role:superadmin']);
+}
      /**
      * Display a listing of the resource.
      */
@@ -31,12 +36,11 @@ class LowonganMagangLkmController extends Controller
              'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
          ];
          $jenismagang = JenisMagang::all();
-         $lokasi = Lokasi::all();
          $prodi = ProgramStudi::all();
          $fakultas = Fakultas::all();
         
          return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang_admin', 
-         compact('lowongan', 'jenismagang', 'lokasi', 'prodi', 'fakultas'));
+         compact('lowongan', 'jenismagang', 'prodi', 'fakultas'));
      }
 
      /**
@@ -97,22 +101,30 @@ class LowonganMagangLkmController extends Controller
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
+        // $prodilowongan = LowonganProdi::first();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
         return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
     }
 
-    public function approved($id)
+    public function approved(Request $request, $id)
     {
         try {
-            DB::beginTransaction(); 
             $data = LowonganMagang::find($id);
-            
+            $prodi = ProgramStudi::all();
+            // dd($prodi);
+            // $datahasprodi = LowonganProdi::create([
+            //     'id_prodi' =>  $request->prodi[
+            //         ''
+            //     ],
+            //     'id_lowongan' => $data->id_lowongan
+            // ]);
+                                
             if (!$data) {
                 throw new \Exception('Lowongan tidak ditemukan.');
             }
-
+            
             $data->statusaprove = 'diterima';
 
             $data->save();

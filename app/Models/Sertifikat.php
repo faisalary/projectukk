@@ -12,6 +12,7 @@ class Sertifikat extends Model
 
     protected $table = 'sertifikat';
     protected $fillable =[
+        'id_sertif',
         'nim',
         'nama_sertif',
         'penerbit',

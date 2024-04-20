@@ -5,16 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisMahasiswa;
 use App\Mail\VerifyEmailMhs;
-use App\Models\InformasiPribadi;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
 class RegisteredUserController extends Controller
 {
@@ -22,13 +19,9 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function __construct() {
-        //
-    }
 
-    public function index(): View
+    public function index()
     {
-        $mahasiswa = Mahasiswa::all();
         return view('auth.register');
     }
 
@@ -44,7 +37,7 @@ class RegisteredUserController extends Controller
             $user = User::where('nim', $request->nim)->first();
             $code = Str::random(64);
              
-            if ($user !== null) 
+            if ($user == null) 
             
                 $user = User::create([
                         'nim' => $request->nim,
@@ -54,12 +47,10 @@ class RegisteredUserController extends Controller
                         'password' => Hash::make($request->nim),
                         'remember_token' => $code,
                         'isAdmin' => 2
-                    ]);
-                $user->syncRoles('user');   
+                    ]);  
+                $user->assignRole('user');
                 $verifymhs = url('/mahasiswa/set-password/' . $code);
-                Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));
-                $user->save();
-                
+                Mail::to($user->email)->send(new VerifyEmailMhs($verifymhs));              
             return view('auth.message-verify-email');
         } catch (Exception $e) {
             return response()->json([

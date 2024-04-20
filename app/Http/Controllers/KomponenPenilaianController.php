@@ -7,6 +7,7 @@ use App\Http\Requests\KomponenNilaiRequest;
 use App\Models\JenisMagang;
 use Exception;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
 
 class KomponenPenilaianController extends Controller
 {
@@ -25,17 +26,17 @@ class KomponenPenilaianController extends Controller
         //
     }
 
-    public function store(KomponenNilaiRequest $request)
+    public function store(Request $request)
     {
-        // dd($request);
         try {
-            foreach ($request->halo1 as $d) {
+            foreach ($request->komponen as $d) {
                 KomponenNilai::create([
-                    'id_jenismagang' => $request->jenismagang,
-                    'namakomponen' => $d['namakomponen'],
-                    'tipe' => '1',
-                    'bobot' => str_replace('%', '', $d['bobot']),
-                    'scoredby' => $d['scoredby'],
+                    'id_jenismagang' => $request->id_jenismagang,
+                    'bobot' => $request->bobot,
+                    'aspek_penilaian' =>$d['aspek_penilaian'],
+                    'deskripsi_penilaian' => $d['deskripsi_penilaian'],
+                    'scored_by' => $d['scored_by'],
+                    'nilai_max' => $d['nilai_max'],
                     'status' => true,
 
                 ]);
