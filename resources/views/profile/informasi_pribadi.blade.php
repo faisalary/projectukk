@@ -100,10 +100,10 @@
             <div class="d-flex align-items-center flex-column">
               @if ($informasiprib?->profile_picture??'')
                   <img src="{{ url('storage/' .$informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image"
-                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" style="max-height: 140px; max-width: 180px;" alt="img" >
+                      class="img-fluid rounded mb-3 pt-1 mt-4" style="max-height: 140px; max-width: 180px;" alt="img" >
               @else
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
-                      class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview">
+                      class="img-fluid rounded mb-3 pt-1 mt-4">
               @endif
               
               <div class="user-info text-center">
@@ -372,11 +372,11 @@
                         <p class="mb-1">Penerbit : {{$dok?->penerbit??''}}</p>
                         <p style="font-size: small;">{{$dok?->startdate??''}} sampai {{$dok?->enddate??''}}
                         <div>
-                          <p class="mb-0">{{$dok?->deskripsi??''}}</p>
+                          {{-- <p class="mb-0">{{$dok?->deskripsi??''}}</p>
                           <p class="content-new mb-0">driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world.</p>
                           <u class="show_hide_new cursor-pointer" style="color:#4EA971">
                             Show more
-                          </u>
+                          </u> --}}
                         </div>
                         <div class="d-flex align-items-start mt-3 mb-3">
                           <div>
@@ -415,10 +415,12 @@
 
 @section('page_script')
   <script>
+    // let changePicture = $('#changePicture');
     changePicture.onchange = evt => {
       const [file] = changePicture.files
       if (file) {
           imgPreview.src = URL.createObjectURL(file)
+          console.log(imgPreview.src);
       } else {
           imgPreview.src = "{{ Url("app-assets/img/avatars/14.png")}}"
       }
@@ -504,7 +506,6 @@
                     icon: 'success',
                     title: `${response.message}`,
                     showConfirmButton: false,
-                    timer: 6000
                 });
                 location.reload();
               },
@@ -548,7 +549,7 @@
                     icon: 'success',
                     title: `${response.message}`,
                     showConfirmButton: false,
-                    timer: 6000
+                    timer: 000
                 });
                 location.reload();
               },
@@ -589,15 +590,6 @@
       });
     }
   </script>
-  <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-  <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-  <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
-  <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-  <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-  <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-  <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-  <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
-  <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
 <script>
   $(document).ready(function() {
     $(".content-new").hide();
@@ -611,14 +603,14 @@
       }
     });
   });
-
+  
   $(document).ready(function() {
     $(".yearpicker").yearpicker({
       startYear: new Date().getFullYear() - 10,
       endYear: new Date().getFullYear() + 10,
     });
   });
-
+  
   $('#month').flatpickr({
     altInput: true,
     altFormat: 'F Y',
@@ -629,6 +621,15 @@
     ]
   });
 </script>
+<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ url('app-assets/js/app-stepper.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+<script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
 <script src="{{ url('assets/js/yearpicker.js') }}"></script>
 <script src="{{ url('assets/js/monthpicker.js') }}"></script>
 <script src="{{ url('app-assets/js/forms-extras.js')}}"></script>

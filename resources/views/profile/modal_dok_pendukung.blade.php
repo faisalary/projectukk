@@ -10,7 +10,7 @@
         <div class="modal-body border-top mt-3">
           <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
           </div>
-          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/store/' . Auth::user()->nim)}}" method="POST">
+          <form class="default-form" action="{{ url('mahasiswa/profile/dokumen-pendukung/store/' . Auth::user()->nim)}}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="row">
               <div class="mb-3 col-md-12 form-input">
