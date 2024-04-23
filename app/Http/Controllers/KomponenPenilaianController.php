@@ -60,13 +60,11 @@ class KomponenPenilaianController extends Controller
      * Display the specified resource.
      */
 
-    public function show()
+    public function show($scored_by)
     {
-        $penilaian = KomponenNilai::with("jenismagang")->orderby('id_jenismagang', 'asc')->get();
-        // $prev = null;
-        // $no = 0;
-        // dd($penilaian);
+        $penilaian = KomponenNilai::with("jenismagang")->where("scored_by",$scored_by)->orderBy('id_jenismagang', "asc")->get();
         return DataTables::of($penilaian)
+            ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
@@ -78,7 +76,7 @@ class KomponenPenilaianController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_jenismagang}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                $btn = "<a data-bs-toggle='modal-komponen-nilai' data-id='{$row->id_jenismagang}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
                 <a data-status='{$row->status}' data-url='komponen-penilaian/status' data-id='{$row->id_kompnilai}'  class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
 
                 return $btn;
@@ -130,9 +128,11 @@ class KomponenPenilaianController extends Controller
 
             $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
 
-            $penilaian->namakomponen = $request->halo1[0]->namakomponen;
-            $penilaian->bobot = str_replace('%', '', $request->halo1[0]->bobot);
-            $penilaian->scoredby = $request->halo1[0]->scoredby;
+            $penilaian->id_jenismagang = $request->id_jenismagang;
+            $penilaian->bobot = $request->bobot;
+            $penilaian->aspek_penilaian = $request->aspek_penilaian;
+            $penilaian->scored_by = $request->scored_by;
+            $penilaian->nilai_max = $request->nilai_max;
             $penilaian->save();
 
             return response()->json([
