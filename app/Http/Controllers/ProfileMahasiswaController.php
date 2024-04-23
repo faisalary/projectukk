@@ -16,6 +16,7 @@ use App\Models\BahasaMahasiswa;
 use App\Models\Sertif;
 use App\Models\Sertifikat;
 use App\Models\Skill;
+use App\Models\SosmedTambahan;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
@@ -116,29 +117,28 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-    public function updateinformasitambahan(Request $request, $id) { 
+    public function updateinformasitambahan(InformasiTambahanReq $request, $id) { 
 
         try{
             $bahasamahasiswa = BahasaMahasiswa::where('nim', $id)->first();
             $informasitambahan = Mahasiswa::where('nim', $id)->first();
-            // $data1 = [
-            //     'lok_magang' => $request->lok_magang,
-            //     'sosmed' => $request->sosmed,
-            //     'url_sosmed' => $request->url_sosmed,
-            // ];
             if ($informasitambahan && $bahasamahasiswa) {
-                // $informasitambahan->update($data1);
                 $bahasamahasiswa->update();
             } else {
                 Mahasiswa::create([
                     'lok_magang' => $request->lok_magang,
-                    'sosmed' => $request->sosmed,
-                    'url_sosmed' => $request->url_sosmed,
                 ]);
                 foreach ($request->tambahan as $t) {
                     BahasaMahasiswa::create([
                         'nim' => $id,
                         'bahasa' => $t['bahasa'],
+                    ]);
+                }
+                foreach ($request -> sosmed as $s) {
+                    SosmedTambahan::create([
+                        'nim' => $id,
+                        'namaSosmed' => $s['sosmed'],
+                        'urlSosmed' => $s['url_sosmed']
                     ]);
                 }
             }
