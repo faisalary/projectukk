@@ -531,7 +531,7 @@
           success: function (response) {
             $("#modal-button").html("Update Data");
             $('#modalEditPengalaman form').attr('action', action);
-            $('#editname_institutions').val(response.name_intitutions);
+            $('#name_intitutions').val(response.name_intitutions);
             $('#posisi').val(response.posisi); 
             $('#editjenis').val(response.jenis).trigger('change');
             if(response && response.startdate) {

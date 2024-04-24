@@ -146,7 +146,7 @@
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="editname_institutions" name="name_institutions" placeholder="Ex: PT Techno Infinity" />
+                <input class="form-control" type="text" id="name_intitutions" name="name_intitutions" placeholder="Ex: PT Techno Infinity" />
                 <div class="invalid-feedback"></div>             
               </div>
               <div class="mb-3 col-md-12 form-input">

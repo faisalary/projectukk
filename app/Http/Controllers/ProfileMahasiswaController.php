@@ -266,11 +266,11 @@ class ProfileMahasiswaController extends Controller
         try {
             $pengalaman = Experience::where('id_experience', $id)->first();
             $pengalaman->posisi = $request->posisi;
-            $pengalaman->jenis =$request->jenis;
-            $pengalaman->name_institutions =$request->name_institutions;
-            $pengalaman->startdate =$request->startdate . '-01';
-            $pengalaman->enddate =$request->enddate . '-01';
-            $pengalaman->deskripsi =$request->deskripsi;
+            $pengalaman->jenis = $request->jenis;
+            $pengalaman->name_intitutions = $request->name_intitutions;
+            $pengalaman->startdate = $request->startdate . '-01';
+            $pengalaman->enddate = $request->enddate . '-01';
+            $pengalaman->deskripsi = $request->deskripsi;
             $pengalaman->save();
 
             return response()->json([
@@ -282,7 +282,7 @@ class ProfileMahasiswaController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage(),
-            ], 422);
+            ]);
         }
     }
 
