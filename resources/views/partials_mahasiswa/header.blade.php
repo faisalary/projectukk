@@ -296,7 +296,7 @@
 
                 <!-- Lowongan Magang -->
                 <li class="menu-item">
-                  <a href="/lowongan/magang" class="menu-link">
+                  <a href="/apply-lowongan" class="menu-link">
                     <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                   </a>
                 </li>

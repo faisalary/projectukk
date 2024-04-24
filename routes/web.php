@@ -364,6 +364,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
     });
+
+    
+    Route::prefix('/apply-lowongan')->group(function () {
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('fakultas.index');
+    });
+
 });
 
 Route::get('/pengaturan', function () {

@@ -237,12 +237,11 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span
-                                    class="text-danger">*</span></label></label>
-                                <select class="form-select select2" multiple id="prodi" name="prodi[]" 
-                                    data-placeholder="Pilih Prodi">
+                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span class="text-danger">*</span></label>
+                                {{-- <select class="form-select select2" multiple id="prodi" name="prodi" data-placeholder="Pilih Prodi"> --}}
+                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
                                     @foreach($prodi as $p)
-                                    <option value="{{$p->id_prodi}}">{{$p?->namaprodi??''}}</option>
+                                    <option value="{{$p->id_prodi}}">{{$p->namaprodi ?? ''}}</option>
                                     @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
