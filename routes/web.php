@@ -267,6 +267,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'approved'])->name('lowongan-magang.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'rejected'])->name('lowongan-magang.rejected');
         });
+        
     });
 
     Route::prefix('mahasiswa')->group(function () {
@@ -487,11 +488,16 @@ Route::get('/nilai/magang', function () {
 });
 
 Route::get('/kelola/mahasiswa', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.index');
+    return view('kelola_mahasiswa.index');
 });
 
-Route::get('/kelola/mahasiswa/input', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_akademik.modal');
+Route::prefix('/input/nilai/akademik')->group(function () {
+    Route::get('/', [App\Http\Controllers\InputNilaiAkademikController::class, 'index'])->name('kelola_mahasiswa_akademik.index');
+    Route::get('/show', [App\Http\Controllers\InputNilaiAkademikController::class, 'show'])->name('kelola_mahasiswa_akademik.show');
+    Route::post('/store', [App\Http\Controllers\InputNilaiAkademikController::class, 'store'])->name('kelola_mahasiswa_akademik.store');
+    Route::post('/update{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'update'])->name('kelola_mahasiswa_akademik.update');
+    Route::get('/edit{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'edit'])->name('kelola_mahasiswa_akademik.edit');
+    Route::post('/status/{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'status'])->name('kelola_mahasiswa_akademik.status');
 });
 
 Route::get('/view/logbook', function () {
