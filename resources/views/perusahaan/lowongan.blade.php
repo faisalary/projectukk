@@ -297,7 +297,7 @@
     $jumlahDiterima = $lowongan->where('statusaprove', 'diterima')->count();
     @endphp
     <h4 class="ms-4">{{ $jumlahDiterima }} Lowongan Magang Fakultas</h4>
-    
+
     <div class="row mt-2 ps-4">
         <div class="col-5">
             <div class="row">
@@ -309,7 +309,16 @@
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
                                     <figure class="image" style="border-radius: 0%;">
-                                        <img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                                        {{-- <img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"> --}}
+                                        @if ($l->industri->image)
+                                        <img src="{{ asset('storage/' . $l->industri->image) }}" alt="user-avatar"
+                                            class="" height="125" width="125"
+                                            id="imgPreview">
+                                        @else
+                                            <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                                                class="" height="125" width="125"
+                                                id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
+                                        @endif
                                     </figure>
                                 </div>
                                 <div class="col-6 ms-3">
