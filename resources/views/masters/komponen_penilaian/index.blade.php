@@ -96,13 +96,13 @@
                             <thead>
                                 <tr>
                                     <th>NOMOR</th>
-                                    <th style="min-width:150px;">JENIS MAGANG</th>
-                                    <th style="min-width:250px;">BOBOT</th>
-                                    <th style="min-width:250px;">ASPEK PENILAIAN</th>
-                                    <th style="min-width:100px;">DESKRIPSI ASPEK PENILAIAN</th>
-                                    <th style="min-width:100px;">NILAI MAX</th>
-                                    <th style="min-width:100px;">STATUS</th>
-                                    <th style="min-width:100px;">AKSI</th>
+                                    <th>JENIS MAGANG</th>
+                                    <th>BOBOT</th>
+                                    <th>ASPEK PENILAIAN</th>
+                                    <th>DESKRIPSI ASPEK PENILAIAN</th>
+                                    <th>NILAI MAX</th>
+                                    <th>STATUS</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                         </table>
