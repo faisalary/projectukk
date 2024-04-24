@@ -122,19 +122,26 @@ class ProfileMahasiswaController extends Controller
         try{
             $bahasamahasiswa = BahasaMahasiswa::where('nim', $id)->first();
             $informasitambahan = Mahasiswa::where('nim', $id)->first();
-            if ($informasitambahan && $bahasamahasiswa) {
-                $bahasamahasiswa->update();
-            } else {
-                Mahasiswa::create([
+            $sosialmedia = SosmedTambahan::where('nim', $id)->first();
+
+            if ($informasitambahan) { 
+                $informasitambahan->update([
+                    'nim' => $id,
                     'lok_magang' => $request->lok_magang,
                 ]);
-                foreach ($request->tambahan as $t) {
-                    BahasaMahasiswa::create([
-                        'nim' => $id,
-                        'bahasa' => $t['bahasa'],
-                    ]);
-                }
-                foreach ($request -> sosmed as $s) {
+            }
+            
+            foreach ($request->tambahan as $t) {
+                BahasaMahasiswa::create([
+                    'nim' => $id,
+                    'bahasa' => $t['bahasa'],
+                ]);
+            }
+            
+            if ($sosialmedia){
+                $sosialmedia->update();
+            } else {
+                foreach ($request->sosialmedia as $s) {
                     SosmedTambahan::create([
                         'nim' => $id,
                         'namaSosmed' => $s['sosmed'],
@@ -345,11 +352,13 @@ class ProfileMahasiswaController extends Controller
 
     public function updatedokumen(DokumenRequest $request, $id) { 
         try {
+            
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
-
             $dokumen->nama_sertif = $request->nama_sertif; 
-            $dokumen->penerbit = $request->penerbit; 
-            $dokumen->file_sertif = $request->file_sertif; 
+            $dokumen->penerbit = $request->penerbit;
+            if ($request->file_sertif){
+                $dokumen->file_sertif = $request->file_sertif;
+            }
             $dokumen->link_sertif = $request->link_sertif; 
             $dokumen->deskripsi = $request->deskripsi;  
             $dokumen->save();
@@ -359,7 +368,7 @@ class ProfileMahasiswaController extends Controller
                 'message' => 'Data Successfully Updated!',
                 'url' => Auth::user()->nim
             ]);
-            
+                
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,

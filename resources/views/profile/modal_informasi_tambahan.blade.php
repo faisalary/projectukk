@@ -24,7 +24,7 @@
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-11 form-input">
                           <label class="form-label" for="form-repeater-1-1">Bahasa <span style="color: red;">*</span></label>
-                          <select id="bahasaedit" name="bahasa" class="form-select">
+                          <select id="bahasaedit" name="bahasa[]" class="form-select">
                             <option disabled selected >Pilih Jenis Bahasa</option>
                             <option value="Indonesia">Indonesia</option>
                             <option value="Inggris">Inggris</option>
@@ -48,13 +48,13 @@
                   </div>
                 </div>
               </div>
-              <div class="border " style="border-radius: 8px;">
+              <div class="border" style="border-radius: 8px;">
                 <div class="form-repeater">
-                  <div data-repeater-list="sosmed">
+                  <div data-repeater-list="sosialmedia">
                     <div data-repeater-item="">
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-4 form-input">
-                          <label for="sosial" class="form-label">Sosial Media <span style="color: red;">*</span></label>
+                          <label for="form-repeater-1-1" class="form-label">Sosial Media <span style="color: red;">*</span></label>
                           <select id="sosmed1" name="sosmed" class="form-select">
                             <option disabled selected>Pilih Sosial Media</option>
                             <option value="Instagram">Instagram</option>

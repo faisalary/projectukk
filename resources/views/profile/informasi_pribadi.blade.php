@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="col-2 text-end ps-0">
-        <button class="btn btn-secondary buttons-collection  btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
+        <button class="btn btn-secondary buttons-collection  btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Unduh Profile</span></span></button>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Informasi Tambahan</h5>
-              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-id="{{$informasitambahan?->nim??''}}" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
               <div class="row mb-2">
@@ -415,7 +415,6 @@
 
 @section('page_script')
   <script>
-    // let changePicture = $('#changePicture');
     changePicture.onchange = evt => {
       const [file] = changePicture.files
       if (file) {
@@ -468,15 +467,19 @@
         type: 'GET',
         url: url,
         success: function (response) {
+          console.log(response);
           $("#modal-button").html("Update Data");
           $('#modalEditDokumen form').attr('action', action);
-          $('#nama_sertif').val(response.nama_sertif); 
-          $('#penerbit').val(response.penerbit);
-          $('#file_sertif').val(response.file_sertif);
-          $('#link_sertif').val(response.link_sertif);
-          $('#deskripsi2').val(response.deskripsi);
-          $('#startdate').val(response.startdate);
+          $('#editnama_sertif').val(response.nama_sertif); 
+          $('#editpenerbit').val( response.penerbit);
+          $('#editlink_sertif').val(response.link_sertif);
+          $('#editdeskripsi').val(response.deskripsi);
+          $('#startdate11').val(response.deskripsi);
+        // let startdate = new Date(response.startdate);
+        // let format = startdate.getFullYear() + '-' + startdate.getMonth() + 1;
+        //  $('#startdate11').val(format);
           $('#enddate').val(response.enddate);
+          $('#editfile_sertif').val(data.file_sertif);
         }
       });
     }

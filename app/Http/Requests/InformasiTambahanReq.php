@@ -23,9 +23,9 @@ class InformasiTambahanReq extends FormRequest
     {
         return [
             'lok_magang' => 'required|max:255|string',
-            'namaSosmed' => 'required|max:255',
             'bahasa' => 'required|max:100',
-            'urlSosmed' => 'required|url'
+            // 'namaSosmed' => 'required|max:255',
+            // 'urlSosmed' => 'required|url'
         ];
     }
 
@@ -34,10 +34,10 @@ class InformasiTambahanReq extends FormRequest
         return[
             'lok_magang.required' => 'Lokasi Magang wajib di isi',
             'lok_magang.string' => 'lokasi magang berupa huruf',
-            'namaSosmed.required' => 'Pilih Sosmed',
             'bahasa.required' => 'Bahasa Wajib di isi',
-            'urlSosmed.required'=> 'url wajib di isi',
-            'urlSosmed.url'=> 'url tidak valid'
+            // 'namaSosmed.required' => 'Pilih Sosmed',
+            // 'urlSosmed.required'=> 'url wajib di isi',
+            // 'urlSosmed.url'=> 'url tidak valid'
         ];
     }
 }
