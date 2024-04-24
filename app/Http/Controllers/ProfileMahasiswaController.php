@@ -41,9 +41,11 @@ class ProfileMahasiswaController extends Controller
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = Mahasiswa::where('nim', $id)->first();
         $bahasamahasiswa = Mahasiswa::find($id);
-        $mahasiswa = Mahasiswa::where('nim', $id)->with('bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
+        $sosmed = Mahasiswa::find($id);
+        // dd($sosmed);
+        $mahasiswa = Mahasiswa::where('nim', $id)->with('sosmedmhs','bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
         return view('profile.informasi_pribadi', 
-        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
+        compact('sosmed', 'skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
     }
 
     /**
@@ -101,7 +103,6 @@ class ProfileMahasiswaController extends Controller
             } else {
                 $data['nim'] = $id;
                 InformasiPribadi::create($data);
-                dd($data);
             }
 
             
@@ -132,16 +133,18 @@ class ProfileMahasiswaController extends Controller
                 ]);
             }
             
-            foreach ($request->tambahan as $t) {
-                BahasaMahasiswa::create([
-                    'nim' => $id,
-                    'bahasa' => $t['bahasa'],
-                ]);
+            if ($bahasamahasiswa){
+                $bahasamahasiswa->update();
+            } else {
+                foreach ($request->tambahan as $t) {
+                    BahasaMahasiswa::create([
+                        'nim' => $id,
+                        'bahasa' => $t['bahasa'],
+                    ]);
+                }
             }
             
             if ($sosialmedia){
-                $sosialmedia->update();
-            } else {
                 foreach ($request->sosialmedia as $s) {
                     SosmedTambahan::create([
                         'nim' => $id,
@@ -149,8 +152,9 @@ class ProfileMahasiswaController extends Controller
                         'urlSosmed' => $s['url_sosmed']
                     ]);
                 }
-            }
-
+            } else{
+                $sosialmedia->update();
+            }            
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',

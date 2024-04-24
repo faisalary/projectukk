@@ -223,10 +223,12 @@
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
-                    @if(!empty( $informasitambahan->sosmed))
-                    <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#">{{$informasitambahan->url_sosmed ?? ''}}</a></span>
-                    @endif
+                    {{-- @if(!empty( $informasitambahan->sosmed)) --}}
+                    @foreach($sosmed->sosmedmhs as $s)
+                    <span class="fw-semibold me-1">{{$s?->namaSosmed ?? ''}}</span>
+                    <span> <a href="{{$s?->urlSosmed ?? ''}}" target="_blank">Lihat Profile</a></span>
+                    {{-- @endif --}}
+                    @endforeach
                   </p>
                 </div>
               </div>
@@ -482,7 +484,6 @@
           }
       });
     }
-
     function editDokumen(e) {
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;

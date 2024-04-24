@@ -61,4 +61,8 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(BahasaMahasiswa::class, 'nim');
     }
+    public function sosmedmhs()
+    {
+        return $this->hasMany(SosmedTambahan::class, 'nim');
+    }
 }

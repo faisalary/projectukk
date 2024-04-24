@@ -14,33 +14,57 @@
             <div class="row">
               <div class="mb-3 col-md-12 p-0 form-input">
                 <label for="lok_kerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="lok_magang" name="lok_magang" placeholder="Lokasi Kerja" />
+                <input class="form-control" type="text" id="lok_magang" name="lok_magang" value="{{$informasitambahan?->lok_magang??''}}" placeholder="Lokasi Kerja" />
               <div class="invalid-feedback"></div>
               </div>
               <div class="border mb-3" style="border-radius: 8px;">
                 <div class="form-repeater">
-                  <div data-repeater-list="bahasa">
-                    <div data-repeater-item="">
+                  <div data-repeater-list="tambahan">
+                    @if(!empty($bahasamahasiswa->bahasamhs) || $bahasamahasiswa->bahasamhs !== null)
+                    @foreach ($bahasamahasiswa->bahasamhs as $ba)
+                    <div data-repeater-item="bahasa-{{$ba->id}}">
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-11 form-input">
-                          <label class="form-label" for="form-repeater-1-1">Bahasa <span style="color: red;">*</span></label>
-                          <select id="bahasaedit" name="bahasa[]" class="form-select">
-                            <option disabled selected >Pilih Jenis Bahasa</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Inggris">Inggris</option>
-                            <option value="Korea">Korea</option>
-                            <option value="Jepang">Jepang</option>
+                          <label class="form-label" for="bahasaedit-{{$ba->id}}">Bahasa <span style="color: red;">*</span></label>
+                          <select id="bahasaedit-{{$ba->id}}" name="bahasa[]" class="form-select">
+                            <option disabled selected>Pilih Jenis Bahasa</option>
+                            <option value="Indonesia" @if($ba->bahasa == 'Indonesia') selected @endif>Indonesia</option>
+                            <option value="Inggris" @if($ba->bahasa == 'Inggris') selected @endif>Inggris</option>
+                            <option value="Korea" @if($ba->bahasa == 'Korea') selected @endif>Korea</option>
+                            <option value="Jepang" @if($ba->bahasa == 'Jepang') selected @endif>Jepang</option>
                           </select>
                           <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-1 mb-0">
                           <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete>
-                            <i class="ti ti-trash fa-lg"></i>
+                          <i class="ti ti-trash fa-lg"></i>
                           </button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    @endforeach
+                    @endif
+                    <div data-repeater-item="">
+                      <div class="row mt-2 me-1">
+                        <div class="mb-3 col-md-11 form-input">
+                          <label class="form-label" for="bahasaedit">Bahasa <span style="color: red;">*</span></label>
+                          <select id="bahasaedit" name="bahasa" class="form-select">
+                              <option disabled selected>Pilih Jenis Bahasa</option>
+                              <option value="Indonesia">Indonesia</option>
+                              <option value="Inggris">Inggris</option>
+                              <option value="Korea">Korea</option>
+                              <option value="Jepang">Jepang</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                          </div>
+                          <div class="mb-3 col-md-1 mb-0">
+                            <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete>
+                              <i class="ti ti-trash fa-lg"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   <div class="mb-3">
                     <button type="button" class="btn btn-outline-success waves-effect" data-repeater-create>
                       <span class="align-middle">Tambah</span>
@@ -51,6 +75,34 @@
               <div class="border" style="border-radius: 8px;">
                 <div class="form-repeater">
                   <div data-repeater-list="sosialmedia">
+                    @if(!empty($sosmed->sosmedmhs) || $sosmed->sosmedmhs !== null)
+                    @foreach($sosmed->sosmedmhs as $s)
+                    <div data-repeater-item="bahasa-{{$s->id}}">
+                      <div class="row mt-2 me-1">
+                        <div class="mb-3 col-md-4 form-input">
+                          <label for="form-repeater-1-1" class="form-label">Sosial Media <span style="color: red;">*</span></label>
+                          <select id="sosmed1" name="sosmed[]" class="form-select">
+                            <option disabled selected>Pilih Sosial Media</option>
+                            <option value="Instagram"  @if($s->namaSosmed == 'Instagram') selected @endif>Instagram</option>
+                            <option value="Linkedin"  @if($s->namaSosmed == 'Linkedin') selected @endif>Linkedin</option>
+                            <option value="Facebook"  @if($s->namaSosmed == 'Facebook') selected @endif>Facebook</option>
+                            <option value="Twiteer"  @if($s->namaSosmed == 'Twiteer') selected @endif>Twiteer</option>
+                          </select>
+                          <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-7 form-input">
+                          <input class="form-control mt-4" type="text" id="urlsosmed" value="{{$s?->urlSosmed??''}}" name="url_sosmed" placeholder="URL/Username"/>
+                          <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-1">
+                          <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
+                            <i class="ti ti-trash fa-lg"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    @endforeach
+                    @endif
                     <div data-repeater-item="">
                       <div class="row mt-2 me-1">
                         <div class="mb-3 col-md-4 form-input">
@@ -60,7 +112,7 @@
                             <option value="Instagram">Instagram</option>
                             <option value="Linkedin">Linkedin</option>
                             <option value="Facebook">Facebook</option>
-                            <option value="Facebook">Twiteer</option>
+                            <option value="Twiteer">Twiteer</option>
                           </select>
                           <div class="invalid-feedback"></div>
                         </div>
