@@ -18,8 +18,8 @@ return new class extends Migration
             });
         } else {
             Schema::table('laporan_akhir', function (Blueprint $table) {
-                $table->string('durasi_magang')->nullable();
-                $table->array('berkas_magang')->nullable();
+                $table->string('durasi_magang', 100);
+                $table->json('berkas_magang')->nullable();
             });
         }
     }
@@ -29,8 +29,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('laporan_akhir', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('laporan_akhir', 'durasi_magang') && Schema::hasColumn('laporan_akhir', 'berkas_magang')) {
+            Schema::table('laporan_akhir', function (Blueprint $table) {
+                $table->dropColumn('durasi_magang');
+                $table->dropColumn('berkas_magang');
+            });
+        }
     }
 };
