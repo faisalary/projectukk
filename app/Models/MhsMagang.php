@@ -35,23 +35,23 @@ class MhsMagang extends Model
         'enddate_magang' => 'datetime'
     ];
 
-    public function PengajuanMandiri()
+    public function pengajuan_mandiri()
     {
         return $this->belongsTo(PengajuanMandiri::class, 'id_pengajuan');
     }
-    public function Pendaftaran()
+    public function pendaftaran()
     {
         return $this->belongsTo(PendaftaranMagang::class, 'id_pendaftaran');
     }
-    public function Dosen()
+    public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'nip');
     }
-    public function Pbb()
+    public function pbb()
     {
         return $this->belongsTo(PembimbingMandiri::class, 'id_pbb');
     }
-    public function PegIndustri()
+    public function peg_industri()
     {
         return $this->belongsTo(PegawaiIndustri::class, 'id_peg_industri');
     }

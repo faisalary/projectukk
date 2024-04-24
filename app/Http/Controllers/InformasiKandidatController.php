@@ -22,7 +22,7 @@ class InformasiKandidatController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowonganMagang')->first();
+        $pendaftar = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang')->first();
         $pelamar = PendaftaranMagang::where('id_lowongan', $id)->get();
         $total = [
             'kandidat' => $pelamar->count(),
@@ -178,7 +178,7 @@ class InformasiKandidatController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
+        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowongan_magang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
         $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
         $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
         $infoTambah = InformasiTamabahan::where('nim', $pendaftar->nim)->get();

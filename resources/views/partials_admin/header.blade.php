@@ -220,28 +220,20 @@
                         </a>
                     </li>
 
-                     <!-- Jadwal Seleksi -->
-                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
-                        <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
-                        </a>
-                    </li>
-
                     <!-- Data Mahasiswa -->
-                    <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ request()->is('data-mahasiswa-magang*') ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-fakultas') }}" class="menu-link">
+                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-fakultas*') ? 'active' : '' }}">
+                                <a href="{{ route('data-fakultas.index') }}" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-mandiri') }}" class="menu-link">
+                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-mandiri*') ? 'active' : '' }}">
+                                <a href="{{ route('data-mandiri.index') }}" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
                             </li>
@@ -404,7 +396,7 @@
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
-                                <a href="/master/laporan-akhir" class="menu-link">
+                                <a href="{{ route('laporan-akhir.index') }}" class="menu-link">
                                     <div data-i18n="Master Laporan Akhir">Master Laporan Akhir</div>
                                 </a>
                             </li>

@@ -11,7 +11,7 @@ use App\Models\MhsMagang;
 use App\Models\MhsMandiri;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\LowonganMagang;
+use App\Models\lowongan_magang;
 use App\Models\PengajuanMandiri;
 use App\Models\PendaftaranMagang;
 use App\Http\Controllers\Controller;
@@ -28,8 +28,8 @@ class KonfirmasiMagangController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($nim);
         $nim = Auth::user()->nim;
+        // return $nim;
 
         if ($request->ajax() && $request->type == "navs-pills-justified-magang-fakultas") {
 
@@ -61,9 +61,9 @@ class KonfirmasiMagangController extends Controller
                 $pendaftar->where('nim', $nim);
             }
 
-            $pendaftar = $pendaftar->with('lowonganMagang')->orderBy('tanggaldaftar', "asc")->get();
+            $pendaftar = $pendaftar->with('lowongan_magang')->orderBy('tanggaldaftar', "asc")->get();
 
-            // $pendaftar = PendaftaranMagang::where('nim', $nim)->with('lowonganMagang')->get();
+            // $pendaftar = PendaftaranMagang::where('nim', $nim)->with('lowongan_magang')->get();
             $card_count = $pendaftar->count() ?? 0;
             $now = Carbon::now();
 
@@ -74,20 +74,20 @@ class KonfirmasiMagangController extends Controller
             $pendaftar->transform(function ($pendaftar) {
                 $now = Carbon::now();
 
-                if ($now->greaterThan($pendaftar->lowonganMagang->date_confirm_closing)) {
+                if ($now->greaterThan($pendaftar->lowongan_magang->date_confirm_closing)) {
                     if ($pendaftar->where('konfirmasi_status', 3)) {
                         $pendaftar->konfirmasi_status = 2;
                         $pendaftar->current_step = 'ditolak';
                     } elseif ($pendaftar->where('konfirmasi_status', 2)) {
                         $pendaftar->current_step = 'ditolak';
-                    } elseif (!($pendaftar->where('current_step', 'diterima'))) {
+                    } elseif (empty($pendaftar->bukti_doc)) {
                         $pendaftar->konfirmasi_status = 2;
                         $pendaftar->current_step = 'ditolak';
                     }
                 }
                 $pendaftar->save();
 
-                $industri = Industri::where('id_industri', $pendaftar->lowonganMagang->id_industri)->first();
+                $industri = Industri::where('id_industri', $pendaftar->lowongan_magang->id_industri)->first();
                 $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
                 $pendaftar->img = $picture . '.png';
 
@@ -115,8 +115,22 @@ class KonfirmasiMagangController extends Controller
                 }
                 // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
 
+                if ($pendaftar->current_step == "screening") {
+                    $pendaftar->screening = 'success';
+                } elseif ($pendaftar->current_step == "tahap1" || $pendaftar->current_step == "tahap2" || $pendaftar->current_step == "tahap3") {
+                    $pendaftar->tahap = 'success';
+                } elseif ($pendaftar->current_step == "penawaran" || $pendaftar->konfirmasi_status == 3) {
+                } elseif ($pendaftar->current_step == "screening") {
+                }
+
                 return $pendaftar;
             });
+
+            if ($request->type == 'get-data-proses') {
+                $view = view('kegiatan_saya.lamaran_saya.proses', compact('pendaftar'))->render();
+                // dd($view);
+                return $view;
+            }
 
             if ($card_count == 0) {
                 $nothing = '<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
@@ -125,6 +139,7 @@ class KonfirmasiMagangController extends Controller
                 </div>';
                 return $nothing;
             } else {
+                // return view 
                 return view('kegiatan_saya.lamaran_saya.fakultas_card', compact('pendaftar', 'card_count', 'penawaran', 'diterima', 'ditolak', 'now'))->render();
             }
         } elseif ($request->ajax() && $request->type == "navs-pills-justified-magang-mandiri") {
@@ -266,19 +281,9 @@ class KonfirmasiMagangController extends Controller
 
     public function porto($file)
     {
-        $path = file_get_contents(storage_path($file));
+        $path = storage_path($file);
 
-        // Convert to PDF
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($path);
-
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        // Output file
-        return $dompdf->stream($file, [
-            'Attachment' => true
-        ]);
+        return response()->file($path);
     }
 
     public function detail($id)
@@ -286,10 +291,10 @@ class KonfirmasiMagangController extends Controller
         $nim = Auth::user()->nim;
         $now = Carbon::now();
 
-        $pelamar = PendaftaranMagang::where('nim', $nim)->with('lowonganMagang')->get();
+        $pelamar = PendaftaranMagang::where('nim', $nim)->with('lowongan_magang')->get();
         $pendaftar = $pelamar->where('id_lowongan', $id)->first();
 
-        $industri = Industri::where('id_industri', $pendaftar->lowonganMagang->id_industri)->first();
+        $industri = Industri::where('id_industri', $pendaftar->lowongan_magang->id_industri)->first();
         $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
@@ -384,7 +389,7 @@ class KonfirmasiMagangController extends Controller
     {
         try {
 
-            $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang')->first();
+            $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowongan_magang')->first();
 
             if (!empty($request->bukti_doc)) {
                 $pendaftar->bukti_doc = $request->bukti_doc->store('post');
@@ -402,7 +407,7 @@ class KonfirmasiMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data berhasil dibuat!',
-                'modal' => '#modalMulai',
+                'url' => url('kegiatan-saya/lamaran-saya'),
             ]);
         } catch (Exception $e) {
             return response()->json([

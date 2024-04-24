@@ -30,79 +30,22 @@
                 <div class="row">
                     <div class="col-8"></div>
                     <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                        <form class="filter-form d-flex" method=" POST" action="{{ route('lamaran_saya.index') }}">
-                            @csrf
-                            <select class="form-select select2" data-placeholder="Pilih Status Lowongan" name="filter">
-                                <option value="" disabled selected>Pilih Status Lowongan</option>
-                                <option value="all">Semua</option>
-                                <option value="screening">Screening</option>
-                                <option value="tahap1">Tahap 1</option>
-                                <option value="tahap2">Tahap 2</option>
-                                <option value="tahap3">Tahap 3</option>
-                                <option value="penawaran">Penawaran</option>
-                                <option value="diterima">Diterima</option>
-                                <option value="ditolak">Ditolak</option>
-                            </select>
-                            <button class="btn btn-success waves-effect waves-light mx-2" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                            </button>
-                        </form>
+                        <select class="select2" id="filter-status-lowongan" data-placeholder="Pilih Status Lowongan">
+                            <option value="" disabled selected>Pilih Status Lowongan</option>
+                            <option value="all">Semua</option>
+                            <option value="screening">Screening</option>
+                            <option value="tahap1">Tahap 1</option>
+                            <option value="tahap2">Tahap 2</option>
+                            <option value="tahap3">Tahap 3</option>
+                            <option value="penawaran">Penawaran</option>
+                            <option value="diterima">Diterima</option>
+                            <option value="ditolak">Ditolak</option>
+                        </select>
+                        <!-- <button class="btn btn-success waves-effect waves-light mx-2" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
+                        </button> -->
                     </div>
                 </div>
-                @if($pendaftar->count() == 0)
-                <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
-                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
-                <div class="sec-title mt-5 mb-4 text-center">
-                    <h4>Anda belum memiliki Lowongan Magang pada tahap Penawaran</h4>
-                </div>
-                @else
-                @foreach($pendaftar as $item)
-                <div class="card mt-2">
-                    <div class="card-body">
-                        <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan)}}" style="color:#4B4B4B">
-                            <div class="row mb-2">
-                                <div class="col-2">
-                                    <figure class="image mx-1" style="border-radius: 0%;"><img style="border-radius: 0%; width: 120px;" src="{{$item->img ?? '\assets\images\no-pictures.png'}}" alt="Logo">
-                                    </figure>
-                                </div>
-                                <div class="col-10 d-flex justify-content-between">
-                                    <div>
-                                        <h5>{{$item->lowonganMagang->intern_position}}</h5>
-                                        <p>{{$item->lowonganMagang->industri->namaindustri}}</p>
-                                    </div>
-                                    <div>
-                                        <span class="badge bg-label-{{$item->color}} me-1 text-end">{{$item->step}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-left mb-2">
-                                <p>{{$item->lowonganMagang->deskripsi}}</p>
-                            </div>
-                        </a>
-                        <hr />
-                        <div class="row mt-2">
-                            <div class="col-12 d-flex justify-content-between">
-                                <div class="col-6">
-                                    <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                                        {{$item->lowonganMagang->lokasi}}</span>
-                                    @if(empty($item->lowonganMagang->nominal_salary))
-                                    <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak Berbayar</span>
-                                    @else
-                                    <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
-                                    @endif
-                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->durasimagang}}</span>
-                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->kuota}}
-                                        Kuota Penerimaan</span>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-end" style="font-size: medium; color : #4EA971">
-                                        Lamaran terkirim pada {{($item->tanggaldaftar?->format('d F Y'))}}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-                @endif
+                <div id="container-proses-seleksi" class="row"></div>
             </div>
 
             <!-- Penawaran -->
@@ -118,7 +61,7 @@
                 <div class="card mt-2">
                     <div class="card-body">
                         <div class="alert alert-danger alert-dismissible" role="alert">
-                            Lakukan konfirmasi penerimaan sebelum tanggal {{($item->lowonganMagang->date_confirm_closing?->format('d F Y'))}}!
+                            Lakukan konfirmasi penerimaan sebelum tanggal {{($item->lowongan_magang->date_confirm_closing?->format('d F Y'))}}!
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan)}}" style="color:#4B4B4B">
@@ -129,8 +72,8 @@
                                 </div>
                                 <div class="col-10 d-flex justify-content-between">
                                     <div>
-                                        <h5>{{$item->lowonganMagang->intern_position}}</h5>
-                                        <p>{{$item->lowonganMagang->industri->namaindustri}}</p>
+                                        <h5>{{$item->lowongan_magang->intern_position}}</h5>
+                                        <p>{{$item->lowongan_magang->industri->namaindustri}}</p>
                                     </div>
                                     <div>
                                         <span class="badge bg-label-{{$item->color}} me-1 text-end">{{$item->step}}</span>
@@ -138,13 +81,13 @@
                                 </div>
                             </div>
                             <div class="text-left mb-2">
-                                <p>{{$item->lowonganMagang->deskripsi}}</p>
+                                <p>{{$item->lowongan_magang->deskripsi}}</p>
                             </div>
                         </a>
                         <div class="text-left">
-                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowonganMagang->id_lowongan}}" onclick="ambil($(this))" class="btn btn-success waves-effect me-2" data-bs-toggle="modal">Ambil Tawaran
+                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowongan_magang->id_lowongan}}" onclick="ambil($(this))" class="btn btn-success waves-effect me-2" data-bs-toggle="modal">Ambil Tawaran
                             </button>
-                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowonganMagang->id_lowongan}}" onclick="tolak($(this))" class="btn btn-danger waves-effect" data-bs-toggle="modal">Tolak Tawaran
+                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowongan_magang->id_lowongan}}" onclick="tolak($(this))" class="btn btn-danger waves-effect" data-bs-toggle="modal">Tolak Tawaran
                             </button>
                         </div>
                         <hr />
@@ -152,14 +95,14 @@
                             <div class="col-12 d-flex justify-content-between">
                                 <div class="col-6">
                                     <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                                        {{$item->lowonganMagang->lokasi}}</span>
-                                    @if(empty($item->lowonganMagang->nominal_salary))
+                                        {{$item->lowongan_magang->lokasi}}</span>
+                                    @if(empty($item->lowongan_magang->nominal_salary))
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak Berbayar</span>
                                     @else
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
                                     @endif
-                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->durasimagang}}</span>
-                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->kuota}}
+                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->durasimagang}}</span>
+                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->kuota}}
                                         Kuota Penerimaan</span>
                                 </div>
                                 <div class="col-6">
@@ -194,7 +137,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <div class="alert alert-warning alert-dismissible" role="alert">
-                            Anda akan dinyatakan mengundurkan diri jika melebihi batas konfirmasi penerimaan tanggal {{($item->lowonganMagang->date_confirm_closing?->format('d F Y'))}}!
+                            Anda akan dinyatakan mengundurkan diri jika melebihi batas konfirmasi penerimaan tanggal {{($item->lowongan_magang->date_confirm_closing?->format('d F Y'))}}!
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan)}}" style="color:#4B4B4B">
@@ -205,8 +148,8 @@
                                 </div>
                                 <div class="col-10 d-flex justify-content-between">
                                     <div>
-                                        <h5>{{$item->lowonganMagang->intern_position}}</h5>
-                                        <p>{{$item->lowonganMagang->industri->namaindustri}}</p>
+                                        <h5>{{$item->lowongan_magang->intern_position}}</h5>
+                                        <p>{{$item->lowongan_magang->industri->namaindustri}}</p>
                                     </div>
                                     <div>
                                         <span class="badge bg-label-{{$item->color}} me-1 text-end">{{$item->step}}</span>
@@ -214,17 +157,17 @@
                                 </div>
                             </div>
                             <div class="text-left mb-2">
-                                <p>{{$item->lowonganMagang->deskripsi}}</p>
+                                <p>{{$item->lowongan_magang->deskripsi}}</p>
                             </div>
                         </a>
                         <div class="text-left">
                             @if($item->current_step == 'diterima')
-                            <button type="button" class="btn btn-success waves-effect me-2" disabled data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{$item->lowonganMagang->intern_position}}" data-industri="{{$item->lowonganMagang->industri->namaindustri}}" onclick="mulai($(this))">Mulai Magang
+                            <button type="button" class="btn btn-success waves-effect me-2" disabled data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{$item->lowongan_magang->intern_position}}" data-industri="{{$item->lowongan_magang->industri->namaindustri}}" onclick="mulai($(this))">Mulai Magang
                             </button>
                             @else
-                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowonganMagang->id_lowongan}}" onclick="tolak($(this))" class="btn btn-danger waves-effect" data-bs-toggle="modal">Mengundurkan Diri
+                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowongan_magang->id_lowongan}}" onclick="tolak($(this))" class="btn btn-danger waves-effect" data-bs-toggle="modal">Mengundurkan Diri
                             </button>
-                            <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{$item->lowonganMagang->intern_position}}" data-industri="{{$item->lowonganMagang->industri->namaindustri}}" onclick="mulai($(this))">Mulai Magang
+                            <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{$item->lowongan_magang->intern_position}}" data-industri="{{$item->lowongan_magang->industri->namaindustri}}" onclick="mulai($(this))">Mulai Magang
                             </button>
                             @endif
                         </div>
@@ -233,14 +176,14 @@
                             <div class="col-12 d-flex justify-content-between">
                                 <div class="col-6">
                                     <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                                        {{$item->lowonganMagang->lokasi}}</span>
-                                    @if(empty($item->lowonganMagang->nominal_salary))
+                                        {{$item->lowongan_magang->lokasi}}</span>
+                                    @if(empty($item->lowongan_magang->nominal_salary))
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak Berbayar</span>
                                     @else
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
                                     @endif
-                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->durasimagang}}</span>
-                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->kuota}}
+                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->durasimagang}}</span>
+                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->kuota}}
                                         Kuota Penerimaan</span>
                                 </div>
                                 <div class="col-6">
@@ -268,7 +211,7 @@
                 <div class="card mt-2">
                     <div class="card-body">
                         <div class="alert alert-danger alert-dismissible" role="alert">
-                            Anda dapat mengambil tawaran kembali sebelum batas konfirmasi penerimaan tanggal {{($item->lowonganMagang->date_confirm_closing?->format('d F Y'))}}!
+                            Anda dapat mengambil tawaran kembali sebelum batas konfirmasi penerimaan tanggal {{($item->lowongan_magang->date_confirm_closing?->format('d F Y'))}}!
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan)}}" style="color:#4B4B4B">
@@ -279,8 +222,8 @@
                                 </div>
                                 <div class="col-10 d-flex justify-content-between">
                                     <div>
-                                        <h5>{{$item->lowonganMagang->intern_position}}</h5>
-                                        <p>{{$item->lowonganMagang->industri->namaindustri}}</p>
+                                        <h5>{{$item->lowongan_magang->intern_position}}</h5>
+                                        <p>{{$item->lowongan_magang->industri->namaindustri}}</p>
                                     </div>
                                     <div>
                                         <span class="badge bg-label-{{$item->color}} me-1 text-end">{{$item->step}}</span>
@@ -288,12 +231,12 @@
                                 </div>
                             </div>
                             <div class="text-left mb-2">
-                                <p>{{$item->lowonganMagang->deskripsi}}</p>
+                                <p>{{$item->lowongan_magang->deskripsi}}</p>
                             </div>
                         </a>
-                        @if($now->lessThan($item->lowonganMagang->date_confirm_closing))
+                        @if($now->lessThan($item->lowongan_magang->date_confirm_closing))
                         <div class="text-left">
-                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowonganMagang->id_lowongan}}" onclick="ambil($(this))" class="btn btn-success waves-effect me-2" data-bs-toggle="modal">Ambil Tawaran
+                            <button type="button" data-id="{{$item->nim}}" data-lowongan="{{$item->lowongan_magang->id_lowongan}}" onclick="ambil($(this))" class="btn btn-success waves-effect me-2" data-bs-toggle="modal">Ambil Tawaran
                             </button>
                         </div>
                         @endif
@@ -302,14 +245,14 @@
                             <div class="col-12 d-flex justify-content-between">
                                 <div class="col-6">
                                     <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                                        {{$item->lowonganMagang->lokasi}}</span>
-                                    @if(empty($item->lowonganMagang->nominal_salary))
+                                        {{$item->lowongan_magang->lokasi}}</span>
+                                    @if(empty($item->lowongan_magang->nominal_salary))
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak Berbayar</span>
                                     @else
                                     <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
                                     @endif
-                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->durasimagang}}</span>
-                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowonganMagang->kuota}}
+                                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->durasimagang}}</span>
+                                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i> {{$item->lowongan_magang->kuota}}
                                         Kuota Penerimaan</span>
                                 </div>
                                 <div class="col-6">

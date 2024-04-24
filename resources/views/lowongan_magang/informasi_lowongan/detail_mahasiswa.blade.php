@@ -50,7 +50,7 @@
                         <div class="d-flex align-items-end align-items-sm-start ms-3 flex-md-row flex-column gap-4">
                             <div class="me-2 ms-1">
                                 <h1 class="mb-2">{{$pendaftar->mahasiswa->namamhs}}</h1>
-                                <p class="text" style="font-size: 20px">{{$pendaftar->lowonganMagang->intern_position }}</p>
+                                <p class="text" style="font-size: 20px">{{$pendaftar->lowongan_magang->intern_position }}</p>
                             </div>
                         </div>
                     </div>

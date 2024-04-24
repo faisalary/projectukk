@@ -166,10 +166,16 @@ Route::middleware('auth')->group(function () {
             return view('masters.pembimbing_lapangan_mandiri.index');
         });
 
-        Route::get('laporan-akhir', function () {
-            return view('masters.berkas_akhir.index');
+        Route::prefix('laporan-akhir')->group(function () {
+            Route::get('/', [App\Http\Controllers\LaporanAkhirController::class, 'index'])->name('laporan-akhir.index');
+            Route::get('/show', [App\Http\Controllers\LaporanAkhirController::class, 'show'])->name('laporan-akhir.show');
+            Route::post('/store', [App\Http\Controllers\LaporanAkhirController::class, 'store'])->name('laporan-akhir.store');
+            Route::post('/update/{id}', [App\Http\Controllers\LaporanAkhirController::class, 'update'])->name('laporan-akhir.update');
+            Route::get('/edit/{id}', [App\Http\Controllers\LaporanAkhirController::class, 'edit'])->name('laporan-akhir.edit');
+            Route::post('status/{id}', [App\Http\Controllers\LaporanAkhirController::class, 'status'])->name('laporan-akhir.status');
         });
     });
+
     Route::prefix('konfigurasi')->middleware('can:slidebar.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
         Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
@@ -288,26 +294,26 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.pendidikan.mahasiswa.index');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updatependidikan'])->name('profile.pendidikan.mahasiswa.update');
         });
-        Route::prefix('profile/skill')->group(function (){
-            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.skill.mahasiswa.index');
-            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editskill'])->name('profile.skill.mahasiswa.edit');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updateskill'])->name('profile.skill.mahasiswa.update');
+        Route::prefix('profile/skill')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.skill.mahasiswa.index');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'editskill'])->name('profile.skill.mahasiswa.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updateskill'])->name('profile.skill.mahasiswa.update');
         });
-        Route::prefix('profile/pengalaman')->group(function (){
-            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.pengalaman.mahasiswa.index');
-            Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'store'])->name('profile.pengalaman.mahasiswa.store');
-            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editpengalaman'])->name('profile.pengalaman.mahasiswa.edit');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatepengalaman'])->name('profile.pengalaman.mahasiswa.update');
-            Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletepengalaman'])->name('profile.pengalaman.mahasiswa.delete');
-            Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detailpengalaman'])->name('profile.pengalaman.mahasiswa.delete');
+        Route::prefix('profile/pengalaman')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.pengalaman.mahasiswa.index');
+            Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'store'])->name('profile.pengalaman.mahasiswa.store');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'editpengalaman'])->name('profile.pengalaman.mahasiswa.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updatepengalaman'])->name('profile.pengalaman.mahasiswa.update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'deletepengalaman'])->name('profile.pengalaman.mahasiswa.delete');
+            Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'detailpengalaman'])->name('profile.pengalaman.mahasiswa.delete');
         });
-        Route::prefix('profile/dokumen-pendukung')->group(function (){
-            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'index'])->name('profile.dokumen.mahasiswa.index');
-            Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'storedokumen'])->name('profile.dokumen.mahasiswa.store');
-            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'editdokumen1'])->name('profile.dokumen.mahasiswa.edit');
-            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'updatedokumen'])->name('profile.dokumen.mahasiswa.update');
-            Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'detail'])->name('profile.dokumen.mahasiswa.detail');
-            Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class,'deletedok'])->name('profile.dokumen.mahasiswa.delete');
+        Route::prefix('profile/dokumen-pendukung')->group(function () {
+            Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.dokumen.mahasiswa.index');
+            Route::post('/store/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'storedokumen'])->name('profile.dokumen.mahasiswa.store');
+            Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'editdokumen1'])->name('profile.dokumen.mahasiswa.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'updatedokumen'])->name('profile.dokumen.mahasiswa.update');
+            Route::get('/detail/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'detail'])->name('profile.dokumen.mahasiswa.detail');
+            Route::delete('/delete/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'deletedok'])->name('profile.dokumen.mahasiswa.delete');
         });
     });
 
@@ -363,6 +369,23 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
         Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
+    });
+
+    Route::prefix('/data-mahasiswa-magang')->group(function () {
+        Route::prefix('magang-fakultas')->group(function () {
+            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexFakultas'])->name('data-fakultas.index');
+            Route::get('/show', [App\Http\Controllers\DataMahasiswaMagangController::class, 'showFakultas'])->name('data-fakultas.show');
+            Route::post('/store', [App\Http\Controllers\DataMahasiswaMagangController::class, 'store'])->name('data-fakultas.store');
+            Route::post('/update{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'update'])->name('data-fakultas.update');
+            Route::get('/edit{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'edit'])->name('data-fakultas.edit');
+            Route::post('/status/{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'status'])->name('data-fakultas.status');
+            Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-fakultas.doc');
+        });
+        Route::prefix('/magang-mandiri')->group(function () {
+            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexMandiri'])->name('data-mandiri.index');
+            Route::get('/show', [App\Http\Controllers\DataMahasiswaMagangController::class, 'showMandiri'])->name('data-mandiri.show');
+            Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-mandiri.doc');
+        });
     });
 });
 
@@ -451,12 +474,7 @@ Route::get('/cv', function () {
     return view('mahasiswa.cv', ['active_menu' => 'CV Mahasiswa']);
 });
 
-Route::get('magang-fakultas', function () {
-    return view('admin_kandidat.magang_fakultas');
-});
-Route::get('/magang-mandiri', function () {
-    return view('admin_kandidat.magang_mandiri');
-});
+
 
 Route::get('/logbook/mahasiswa', function () {
     return view('company.logbook_mahasiswa.logbook');
