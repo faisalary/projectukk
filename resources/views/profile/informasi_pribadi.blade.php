@@ -427,6 +427,35 @@
     function removeImage() {
         document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
     }
+    $(document).ready(function() {
+       $(".content-new").hide();
+       $(".show_hide_new").on("click", function() {
+         var content = $(this).prev('.content-new');
+         content.slideToggle(100);
+         if ($(this).text().trim() == "Show more") {
+           $(this).text("Show less");
+         } else {
+           $(this).text("Show more");
+         }
+       });
+     });
+   
+     $(document).ready(function() {
+       $(".yearpicker").yearpicker({
+         startYear: new Date().getFullYear() - 10,
+         endYear: new Date().getFullYear() + 10,
+       });
+     });
+   
+     $('#month').flatpickr({
+       altInput: true,
+       altFormat: 'F Y',
+       plugins: [
+         new monthSelectPlugin({
+           dateFormat: "Y-m",
+         })
+       ]
+     });
 
     function edit(e) {
       let id = e.attr('data-id');
@@ -438,7 +467,6 @@
           type: 'GET',
           url: url,
           success: function (response) {
-            // console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
               $('#ipk').val(response.ipk);
@@ -449,8 +477,6 @@
               $('#deskripsi_diri').val(response.deskripsi_diri);
               $('#profile_picture').val(response.profile_picture);
               $("#gender1").prop("checked", true);
-              // $("#gender2").prop("checked", true);
-              // $('#modalEditInformasi form #gender').val(response.gender);
               $('.invalid-feedback').removeClass('d-block');
               $('.form-control').removeClass('is-invalid');
           }
@@ -461,25 +487,34 @@
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/dokumen-pendukung/update/') }}/${id}`;
-      // console.log(url);
 
       $.ajax({
         type: 'GET',
         url: url,
         success: function (response) {
-          console.log(response);
           $("#modal-button").html("Update Data");
           $('#modalEditDokumen form').attr('action', action);
           $('#editnama_sertif').val(response.nama_sertif); 
           $('#editpenerbit').val( response.penerbit);
           $('#editlink_sertif').val(response.link_sertif);
           $('#editdeskripsi').val(response.deskripsi);
-          $('#startdate11').val(response.deskripsi);
-        // let startdate = new Date(response.startdate);
-        // let format = startdate.getFullYear() + '-' + startdate.getMonth() + 1;
-        //  $('#startdate11').val(format);
-          $('#enddate').val(response.enddate);
-          $('#editfile_sertif').val(data.file_sertif);
+          if(response && response.startdate) {
+            let startdate = new Date(response.startdate);
+            let year = startdate.getFullYear();
+            let month = ('0' + (startdate.getMonth() + 1)).slice(-2);  
+            let format = year + '-' + month;
+            $('#startdateEdit').val(format);
+          }
+          if(response && response.enddate) {
+            let enddate = new Date(response.enddate);
+            let year = enddate.getFullYear();
+            let month = ('0' + (enddate.getMonth() + 1)).slice(-2);  
+            let format = year + '-' + month;
+            $('#enddateEdit').val(format);
+          }
+          // $('#editfile_sertif').val(response.file_sertif);
+          $('.invalid-feedback').removeClass('d-block');
+          $('.form-control').removeClass('is-invalid');
         }
       });
     }
@@ -593,37 +628,8 @@
       });
     }
   </script>
-<script>
-  $(document).ready(function() {
-    $(".content-new").hide();
-    $(".show_hide_new").on("click", function() {
-      var content = $(this).prev('.content-new');
-      content.slideToggle(100);
-      if ($(this).text().trim() == "Show more") {
-        $(this).text("Show less");
-      } else {
-        $(this).text("Show more");
-      }
-    });
-  });
-  
-  $(document).ready(function() {
-    $(".yearpicker").yearpicker({
-      startYear: new Date().getFullYear() - 10,
-      endYear: new Date().getFullYear() + 10,
-    });
-  });
-  
-  $('#month').flatpickr({
-    altInput: true,
-    altFormat: 'F Y',
-    plugins: [
-      new monthSelectPlugin({
-        dateFormat: "Y-m",
-      })
-    ]
-  });
-</script>
+
+
 <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>

@@ -85,14 +85,14 @@
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="text" id="startdate11" name="startdate" class="form-control" />
+                <input type="month" id="startdateEdit" name="startdate" class="form-control" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                   <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                  <input type="month" id="enddate" name="enddate" class="form-control" />
+                  <input type="month" id="enddateEdit" name="enddate" class="form-control" />
                 <div class="invalid-feedback"></div>
-                </div>
+              </div>
               <div class="mb-3 col-md-12 form-input">
                   <label for="" class="form-label">Upload File<span style="color: red;">*</span></label>
                   <input class="form-control" type="file" name="file_sertif" id="editfile_sertif">

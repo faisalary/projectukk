@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileMahasiswaController extends Controller
 {
@@ -264,7 +265,6 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $pengalaman = Experience::where('id_experience', $id)->first();
-
             $pengalaman->posisi = $request->posisi;
             $pengalaman->posisi =$request->jenis;
             $pengalaman->posisi =$request->name_institutions;
@@ -350,15 +350,48 @@ class ProfileMahasiswaController extends Controller
         return $dokumen;
     }
 
-    public function updatedokumen(DokumenRequest $request, $id) { 
+    public function updatedokumen(Request $request, $id) { 
         try {
             
+            if ($request->file('file_sertif')) {
+                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
+            }
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
+            $message =  [
+                'nama_sertif.required' => 'nama tidak boleh kosong',
+                'nama_sertif.max' => 'nama terlalu panjang',
+                'nama_sertid.min' => 'nama terlalu pendek',
+                'penerbit.required' => 'penerbit tidak boleh kosong',
+            ];
+            $validate=[
+                
+                    'nama_sertif' => 'required|max:255|min:3',
+                    'penerbit' => 'required|max:255|min:3',
+                    'file_sertif' =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
+                    'link_sertif' => 'required|url',
+                    'startdate' => 'required',
+                    'enddate' => 'required',
+                    'deskripsi' => 'required|max:255|string'
+                
+            ];
+            if ($dokumen->file_sertif !== null){
+                unset($validate['file_sertif']);
+            }
+            $valid = Validator::make($request->toArray(), $validate, $message);
+            if($valid->fails()){
+                return response([
+                    'errors' => $valid->errors(),
+                    'error' => true,
+                ], 422);
+            }
+ 
             $dokumen->nama_sertif = $request->nama_sertif; 
             $dokumen->penerbit = $request->penerbit;
             if ($request->file_sertif){
-                $dokumen->file_sertif = $request->file_sertif;
+                $dokumen->file_sertif = $file;
             }
+            $dokumen->startdate = $request->startdate. '-01' ; 
+            $dokumen->enddate = $request->enddate . '-01'; 
             $dokumen->link_sertif = $request->link_sertif; 
             $dokumen->deskripsi = $request->deskripsi;  
             $dokumen->save();
