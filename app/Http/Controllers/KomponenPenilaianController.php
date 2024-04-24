@@ -40,13 +40,21 @@ class KomponenPenilaianController extends Controller
                     'status' => true,
 
                 ]);
+                
+                
+            if( $d['scored_by'] == 1){
+                $table = '#table-akademik';
+            } else{
+                $table = '#table-lapangan';   
             }
+            }
+        
 
             return response()->json([
                 'error' => false,
                 'message' => 'Komponen Nilai successfully Add!',
                 'modal' => '#modal-komponen-nilai',
-                'table' => '#table-master-komponen'
+                'table' => $table
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -60,13 +68,11 @@ class KomponenPenilaianController extends Controller
      * Display the specified resource.
      */
 
-    public function show()
+    public function show($scored_by)
     {
-        $penilaian = KomponenNilai::with("jenismagang")->orderby('id_jenismagang', 'asc')->get();
-        // $prev = null;
-        // $no = 0;
-        // dd($penilaian);
+        $penilaian = KomponenNilai::with("jenismagang")->where("scored_by",$scored_by)->orderBy('id_jenismagang', "asc")->get();
         return DataTables::of($penilaian)
+            ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
@@ -78,7 +84,7 @@ class KomponenPenilaianController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_jenismagang}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
+                $btn = "<a data-bs-toggle='modal-komponen-nilai' data-id='{$row->id_kompnilai}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
                 <a data-status='{$row->status}' data-url='komponen-penilaian/status' data-id='{$row->id_kompnilai}'  class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
 
                 return $btn;
@@ -98,11 +104,16 @@ class KomponenPenilaianController extends Controller
             $nilai->status = ($nilai->status) ? false : true;
             $nilai->save();
 
+            if($nilai->scored_by == 1){
+                $table = '#table-akademik';
+            } else{
+                $table = '#table-lapangan';   
+            }
+
             return response()->json([
                 'error' => false,
                 'message' => 'Status successfully Updated!',
-                'modal' => '#modal-komponen-nilai',
-                'table' => '#table-master-komponen'
+                'table' => $table
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -116,30 +127,41 @@ class KomponenPenilaianController extends Controller
      */
     public function edit(string $id)
     {
-        $penilaian = KomponenNilai::where('id_jenismagang', $id)->first();
+        $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
         return $penilaian;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(KomponenNilai $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
             // $validated = $request->validated();
 
-            $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
+            foreach ($request->komponen as $d) {
+                KomponenNilai::where('id_kompnilai',$id)->first()->update([
+                    'id_jenismagang' => $request->id_jenismagang,
+                    'bobot' => $request->bobot,
+                    'aspek_penilaian' =>$d['aspek_penilaian'],
+                    'deskripsi_penilaian' => $d['deskripsi_penilaian'],
+                    'scored_by' => $d['scored_by'],
+                    'nilai_max' => $d['nilai_max'],
 
-            $penilaian->namakomponen = $request->halo1[0]->namakomponen;
-            $penilaian->bobot = str_replace('%', '', $request->halo1[0]->bobot);
-            $penilaian->scoredby = $request->halo1[0]->scoredby;
-            $penilaian->save();
-
+                ]);
+            }
+            
+            $cek_scored = KomponenNilai::where('id_kompnilai',$id)->first()->scored_by;
+            if($cek_scored == 1){
+                $table = '#table-akademik';
+            } else{
+                $table = '#table-lapangan';   
+            }
             return response()->json([
                 'error' => false,
                 'message' => 'Komponen Nilai successfully Updated!',
                 'modal' => '#modal-komponen-nilai',
-                'table' => '#table-master-komponen'
+                'table' => $table
             ]);
         } catch (Exception $e) {
             return response()->json([
