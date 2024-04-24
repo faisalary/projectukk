@@ -519,6 +519,43 @@
       });
     }
 
+    function editSkill(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
+      console.log(id);
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+            $("#modal-button").html("Update Data");
+            $('#modalEditPengalaman form').attr('action', action);
+            $('#editname_institutions').val(response.name_intitutions);
+            $('#posisi').val(response.posisi); 
+            $('#editjenis').val(response.jenis).trigger('change');
+            if(response && response.startdate) {
+              let startdate = new Date(response.startdate);
+              let year = startdate.getFullYear();
+              let month = ('0' + (startdate.getMonth() + 1)).slice(-2);  // Tambah '0' di depan jika bulan kurang dari 10
+              let day = ('0' + startdate.getDate()).slice(-2);  // Tambah '0' di depan jika hari kurang dari 10
+              let format = year + '-' + month + '-' + day;
+              $('#editstartdate').val(format);
+            }
+            if(response && response.enddate) {
+              let enddate = new Date(response.enddate);
+              let year = enddate.getFullYear();
+              let month = ('0' + (enddate.getMonth() + 1)).slice(-2);  // Tambah '0' di depan jika bulan kurang dari 10
+              let day = ('0' + enddate.getDate()).slice(-2);  // Tambah '0' di depan jika hari kurang dari 10
+              let format = year + '-' + month + '-' + day;
+              $('#editenddate').val(format);
+            }
+            $('#deskripsi').val(response.deskripsi);
+            console.log(response);
+          }
+      });
+    }
+
     function destroyDokumen(e) {
       let id = e.attr('data-id');
       let action = `{{ url('mahasiswa/profile/dokumen-pendukung/delete/') }}/${id}`;
@@ -605,28 +642,7 @@
           }
         });
     }
-    function editSkill(e) {
-      let id = e.attr('data-id');
-      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
-      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
-      console.log(id);
-
-      $.ajax({
-          type: 'GET',
-          url: url,
-          success: function (response) {
-            $("#modal-button").html("Update Data");
-            $('#modalEditDokumen form').attr('action', action);
-            $('#posisi').val(response.posisi); 
-            $('#jenis').val(response.jenis);
-            $('#name_institutions').val(response.name_institutions);
-            $('#startdate').val(response.startdate);
-            $('#enddate').val(response.enddate);
-            $('#deskripsi').val(response.deskripsi);
-            console.log(response);
-          }
-      });
-    }
+    
   </script>
 
 
