@@ -75,37 +75,38 @@
             <div class="row">
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label"> Nama Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" name="nama_sertif" id="nama_sertif" name="" placeholder="Masukkan nama sertifikasi" />
+                <input class="form-control" type="text" name="nama_sertif" id="editnama_sertif" name="" placeholder="Masukkan nama sertifikasi" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label"> Penerbit Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="penerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
+                <input class="form-control" type="text" id="editpenerbit" name="penerbit" placeholder="Masukkan nama penerbit " />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                <input type="month" id="startdate" name="startdate" class="form-control" />
+                <input type="month" id="startdateEdit" name="startdate" class="form-control" />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                   <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                  <input type="month" id="enddate" name="enddate" class="form-control" />
+                  <input type="month" id="enddateEdit" name="enddate" class="form-control" />
                 <div class="invalid-feedback"></div>
-                </div>
+              </div>
               <div class="mb-3 col-md-12 form-input">
                   <label for="" class="form-label">Upload File<span style="color: red;">*</span></label>
-                  <input class="form-control" type="file" name="file_sertif" id="file_sertif">
+                  <input class="form-control" type="file" name="file_sertif" id="editfile_sertif">
+                  {{-- <small>current file : <a class="currfile" href=""></span></small> --}}
                 <div class="invalid-feedback"></div>
                 </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" id="link_sertif" name="link_sertif" placeholder="Masukkan link Sertifikat  " />
+                <input class="form-control" type="text" id="editlink_sertif" name="link_sertif" placeholder="Masukkan link Sertifikat " />
                 <div class="invalid-feedback"></div>
               </div>
               <div class="mb-3 col-md-12 form-input">
                 <label for="" class="form-label">Deskripsi</label>
-                <textarea class="form-control" type="text" name="deskripsi" id="deskripsi2" placeholder="Ketik di sini..."></textarea>
+                <textarea class="form-control" type="text" name="deskripsi" id="editdeskripsi" placeholder="Ketik di sini..."></textarea>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

@@ -387,6 +387,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-mandiri.doc');
         });
     });
+
+    Route::prefix('/apply-lowongan')->group(function () {
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('fakultas.index');
+    });
+
 });
 
 Route::get('/pengaturan', function () {

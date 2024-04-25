@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileMahasiswaController extends Controller
 {
@@ -40,9 +41,10 @@ class ProfileMahasiswaController extends Controller
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $informasitambahan = Mahasiswa::where('nim', $id)->first();
         $bahasamahasiswa = Mahasiswa::find($id);
-        $mahasiswa = Mahasiswa::where('nim', $id)->with('bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
+        $sosmed = Mahasiswa::find($id);
+        $mahasiswa = Mahasiswa::where('nim', $id)->with('sosmedmhs','bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
         return view('profile.informasi_pribadi', 
-        compact('skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
+        compact('sosmed', 'skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
     }
 
     /**
@@ -100,7 +102,6 @@ class ProfileMahasiswaController extends Controller
             } else {
                 $data['nim'] = $id;
                 InformasiPribadi::create($data);
-                dd($data);
             }
 
             
@@ -122,27 +123,37 @@ class ProfileMahasiswaController extends Controller
         try{
             $bahasamahasiswa = BahasaMahasiswa::where('nim', $id)->first();
             $informasitambahan = Mahasiswa::where('nim', $id)->first();
-            if ($informasitambahan && $bahasamahasiswa) {
-                $bahasamahasiswa->update();
-            } else {
-                Mahasiswa::create([
+            $sosialmedia = SosmedTambahan::where('nim', $id)->first();
+
+            if ($informasitambahan) { 
+                $informasitambahan->update([
+                    'nim' => $id,
                     'lok_magang' => $request->lok_magang,
                 ]);
+            }
+            
+            if ($bahasamahasiswa){
+                $bahasamahasiswa->update();
+            } else {
                 foreach ($request->tambahan as $t) {
                     BahasaMahasiswa::create([
                         'nim' => $id,
                         'bahasa' => $t['bahasa'],
                     ]);
                 }
-                foreach ($request -> sosmed as $s) {
+            }
+            
+            if ($sosialmedia){
+                foreach ($request->sosialmedia as $s) {
                     SosmedTambahan::create([
                         'nim' => $id,
                         'namaSosmed' => $s['sosmed'],
                         'urlSosmed' => $s['url_sosmed']
                     ]);
                 }
-            }
-
+            } else{
+                $sosialmedia->update();
+            }            
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
@@ -257,13 +268,12 @@ class ProfileMahasiswaController extends Controller
 
         try {
             $pengalaman = Experience::where('id_experience', $id)->first();
-
             $pengalaman->posisi = $request->posisi;
-            $pengalaman->posisi =$request->jenis;
-            $pengalaman->posisi =$request->name_institutions;
-            $pengalaman->posisi =$request->startdate . '-01';
-            $pengalaman->posisi =$request->enddate . '-01';
-            $pengalaman->posisi =$request->deskripsi;
+            $pengalaman->jenis = $request->jenis;
+            $pengalaman->name_intitutions = $request->name_intitutions;
+            $pengalaman->startdate = $request->startdate . '-01';
+            $pengalaman->enddate = $request->enddate . '-01';
+            $pengalaman->deskripsi = $request->deskripsi;
             $pengalaman->save();
 
             return response()->json([
@@ -343,13 +353,48 @@ class ProfileMahasiswaController extends Controller
         return $dokumen;
     }
 
-    public function updatedokumen(DokumenRequest $request, $id) { 
+    public function updatedokumen(Request $request, $id) { 
         try {
+            
+            if ($request->file('file_sertif')) {
+                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
+            }
             $dokumen = Sertifikat::where('id_sertif', $id)->first();
-
+            $message =  [
+                'nama_sertif.required' => 'nama tidak boleh kosong',
+                'nama_sertif.max' => 'nama terlalu panjang',
+                'nama_sertid.min' => 'nama terlalu pendek',
+                'penerbit.required' => 'penerbit tidak boleh kosong',
+            ];
+            $validate=[
+                
+                    'nama_sertif' => 'required|max:255|min:3',
+                    'penerbit' => 'required|max:255|min:3',
+                    'file_sertif' =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
+                    'link_sertif' => 'required|url',
+                    'startdate' => 'required',
+                    'enddate' => 'required',
+                    'deskripsi' => 'required|max:255|string'
+                
+            ];
+            if ($dokumen->file_sertif !== null){
+                unset($validate['file_sertif']);
+            }
+            $valid = Validator::make($request->toArray(), $validate, $message);
+            if($valid->fails()){
+                return response([
+                    'errors' => $valid->errors(),
+                    'error' => true,
+                ], 422);
+            }
+ 
             $dokumen->nama_sertif = $request->nama_sertif; 
-            $dokumen->penerbit = $request->penerbit; 
-            $dokumen->file_sertif = $request->file_sertif; 
+            $dokumen->penerbit = $request->penerbit;
+            if ($request->file_sertif){
+                $dokumen->file_sertif = $file;
+            }
+            $dokumen->startdate = $request->startdate. '-01' ; 
+            $dokumen->enddate = $request->enddate . '-01'; 
             $dokumen->link_sertif = $request->link_sertif; 
             $dokumen->deskripsi = $request->deskripsi;  
             $dokumen->save();
@@ -359,7 +404,7 @@ class ProfileMahasiswaController extends Controller
                 'message' => 'Data Successfully Updated!',
                 'url' => Auth::user()->nim
             ]);
-            
+                
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,

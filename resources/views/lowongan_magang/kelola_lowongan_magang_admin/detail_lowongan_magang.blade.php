@@ -36,12 +36,21 @@
                         <div class="col-8">
                             <div class="d-flex items-center justify-content-start">
                                 {{-- <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="" --}}
-                                <img src="{{ asset('storage/posts/'.$lowongan->industri?->image??'') }}" alt=""
-                                    style="width: 150px; height: 90px; !important">
+                                {{-- <img src="{{ asset('storage/posts/'.$lowongan->industri?->image??'') }}" alt=""
+                                    style="width: 150px; height: 90px; !important"> --}}
+                                    @if ($lowongan->industri->image)
+                                    <img src="{{ asset('storage/' . $lowongan->industri->image) }}" alt="user-avatar"
+                                        class="" height="125" width="125"
+                                        id="imgPreview">
+                                    @else
+                                        <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                                            class="" height="125" width="125"
+                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
+                                    @endif
                                 <div class="ms-5">
                                     <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">{{$lowongan->industri?->namaindustri??''}}
                                     </p>
-                                    <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
+                                    <p class="mt-n3" style="font-size: 18px; color: #4B465C">{{$lowongan->intern_position}}</p>
                                 </div>
                             </div>
                         </div>
@@ -55,10 +64,10 @@
                                             Pengajuan</b>
                                     </p>
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Pengajuan : <span class="fw-semibold">25/08/2020</span>
+                                        Pengajuan : <span class="fw-semibold">{{$lowongan->created_at}}</span>
                                     </p>
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Disetujui : <span class="fw-semibold">29/08/2020</span>
+                                        Disetujui : <span class="fw-semibold">{{$lowongan->startdate}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -223,6 +232,16 @@
             </button>
         </div>
         @endcan
+        @if (!empty($lowongan->alasantolak))
+        
+        <div style="width: 20%">
+            <button type="button" class="btn btn-label-danger w-100 mt-3"
+            style="font-size: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <a style="color:#23314B">{{ $lowongan->alasantolak }}
+                </a>
+            </button>
+        </div>
+        @endif
         </div>
         {{-- modal approve  --}}
         <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
@@ -237,13 +256,12 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span
-                                    class="text-danger">*</span></label></label>
-                                <select class="form-select select2" multiple id="prodi" name="prodi[]" 
-                                    data-placeholder="Pilih Prodi">
-                                    @foreach($prodi as $p)
-                                    <option value="{{$p->id_prodi}}">{{$p?->namaprodi??''}}</option>
-                                    @endforeach
+                                <label for="kategori" class="form-label">Masukkan Program Studi relevan<span class="text-danger">*</span></label>
+                                {{-- <select class="form-select select2" multiple id="prodi" name="prodi" data-placeholder="Pilih Prodi"> --}}
+                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
+                                    {{-- @foreach($prodi as $p)
+                                    <option value="{{$p->id_prodi}}">{{$p->namaprodi ?? ''}}</option>
+                                    @endforeach --}}
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
