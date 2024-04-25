@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-dompdf": "^2.1",
         "cviebrock/eloquent-sluggable": "^10.0",
         "doctrine/dbal": "^3.7",
         "dompdf/dompdf": "^2.0",
