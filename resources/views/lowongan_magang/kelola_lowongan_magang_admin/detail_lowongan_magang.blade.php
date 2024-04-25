@@ -50,7 +50,7 @@
                                 <div class="ms-5">
                                     <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">{{$lowongan->industri?->namaindustri??''}}
                                     </p>
-                                    <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
+                                    <p class="mt-n3" style="font-size: 18px; color: #4B465C">{{$lowongan->intern_position}}</p>
                                 </div>
                             </div>
                         </div>
@@ -232,6 +232,16 @@
             </button>
         </div>
         @endcan
+        @if (!empty($lowongan->alasantolak))
+        
+        <div style="width: 20%">
+            <button type="button" class="btn btn-label-danger w-100 mt-3"
+            style="font-size: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <a style="color:#23314B">{{ $lowongan->alasantolak }}
+                </a>
+            </button>
+        </div>
+        @endif
         </div>
         {{-- modal approve  --}}
         <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
@@ -249,9 +259,9 @@
                                 <label for="kategori" class="form-label">Masukkan Program Studi relevan<span class="text-danger">*</span></label>
                                 {{-- <select class="form-select select2" multiple id="prodi" name="prodi" data-placeholder="Pilih Prodi"> --}}
                                 <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
-                                    @foreach($prodi as $p)
+                                    {{-- @foreach($prodi as $p)
                                     <option value="{{$p->id_prodi}}">{{$p->namaprodi ?? ''}}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
