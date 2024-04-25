@@ -127,7 +127,7 @@ class KonfirmasiMagangController extends Controller
             } else {
                 return view('kegiatan_saya.lamaran_saya.fakultas_card', compact('pendaftar', 'card_count', 'penawaran', 'diterima', 'ditolak', 'now'))->render();
             }
-        } elseif ($request->ajax() && $request->type == "navs-pills-justified-magang-mandiri") {
+        } else if ($request->ajax() && $request->type == "navs-pills-justified-magang-mandiri") {
             $mandiri = PengajuanMandiri::where("nim", $nim)->get();
             $mahasiswa = Mahasiswa::all();
             $file = MhsMandiri::with('PengajuanMandiri')->get();
@@ -135,7 +135,6 @@ class KonfirmasiMagangController extends Controller
 
             $nim = Mahasiswa::find($nim);
             // $nim = $nim->nim;
-
             $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
             $card_count = $mandiri->count() ?? 0;
@@ -226,6 +225,7 @@ class KonfirmasiMagangController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+        
     }
 
     public function updateDitolak(Request $request, string $id)
@@ -248,6 +248,7 @@ class KonfirmasiMagangController extends Controller
                 'error' => false,
                 'message' => 'Data successfully Updated!',
                 'modal' => '#modalDitolak',
+                
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -255,6 +256,7 @@ class KonfirmasiMagangController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+        
     }
 
     /**
