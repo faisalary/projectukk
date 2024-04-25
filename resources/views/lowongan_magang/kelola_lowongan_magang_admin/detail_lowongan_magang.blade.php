@@ -66,9 +66,11 @@
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
                                         Pengajuan : <span class="fw-semibold">{{$lowongan->created_at}}</span>
                                     </p>
+                                    @if (Auth::user()->hasRole('superadmin'))
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Disetujui : <span class="fw-semibold">{{$lowongan->startdate}}</span>
+                                        Disetujui : <span class="fw-semibold">{{$prodilo?->created_at??'belum disetujui'}}</span>
                                     </p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -114,12 +116,13 @@
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
+                                    @if (Auth::user()->hasRole('superadmin'))
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        @foreach ($lowongan  as $l)
-                                        <li> {{ $l->prodi?->namaprodi??'tidak ada prodi' }}</li>
-                                        @break
+                                        @foreach ($prodilowongan  as $l)
+                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
                                         @endforeach
                                     </ul>
+                                    @endif
                                 </div>
                             </li>
                         </ul>
@@ -243,6 +246,9 @@
         </div>
         @endif
         </div>
+
+        @if (Auth::user()->hasRole('superadmin'))
+            
         {{-- modal approve  --}}
         <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -257,11 +263,10 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="kategori" class="form-label">Masukkan Program Studi relevan<span class="text-danger">*</span></label>
-                                {{-- <select class="form-select select2" multiple id="prodi" name="prodi" data-placeholder="Pilih Prodi"> --}}
-                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
-                                    {{-- @foreach($prodi as $p)
+                                <select class="form-select select2" multiple id="prodi" name="prodi[]" data-placeholder="Pilih Prodi">
+                                    @foreach($prodi as $p)
                                     <option value="{{$p->id_prodi}}">{{$p->namaprodi ?? ''}}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -292,12 +297,13 @@
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                             <button type="button" onclick='rejected($(this))' id="rejected-confirm-button" data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->statusapprove}}"
                                 class="btn btn-success">Kirim</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        @endif
 @endsection
 
 @section('page_script')
@@ -320,11 +326,14 @@
 
 
         function approved(e) {
-            var approveUrl = '{{url("kelola/lowongan/lkm/approved")}}/' + $('#approve-confirm-button').attr('data-id');
-
+            var prodiData = $('#prodi').val();
+            var approveUrl = '{{url("kelola/lowongan/lkm/approved")}}/' + $('#approve-confirm-button').attr('data-id');           
             $.ajax({
                 url: approveUrl,
                 type: "POST",
+                data: {
+                prodi: prodiData 
+                },
                 headers: {
                     "X-CSRF-TOKEN": "{{csrf_token()}}"
                 },

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('id_prodi')->nullable();
             $table->foreign('id_lowongan')->references('id_lowongan')->on('lowongan_magang');
             $table->foreign('id_prodi')->references('id_prodi')->on('program_studi');
-           
         });
     }
 

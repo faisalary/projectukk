@@ -71,10 +71,6 @@ class LowonganMagangController extends Controller
         try {
             $industri = Industri::where('id_industri', auth()->user()->id_industri)->first();
             $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
-            // $lokasi = Lokasi::create([
-            //     'kota' => $request->lokasi
-            // ]);
-
             $lokasi = Lokasi::where('id_lokasi')->first();
             if ($lokasi) {
                 $lokasi->update([

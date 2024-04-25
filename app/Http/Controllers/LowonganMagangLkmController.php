@@ -101,31 +101,35 @@ class LowonganMagangLkmController extends Controller
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
+        $prodilo = LowonganProdi::with('prodi')->first();
+        $prodilowongan = LowonganProdi::with('prodi')->get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact( 'prodilo', 'prodilowongan','lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
     }
 
     public function approved(Request $request, $id)
     {
+        DB::beginTransaction();
         try {
             $data = LowonganMagang::find($id);
-            $prodiId = ProgramStudi::where('id_prodi')->first();
-            $data::update([
-                'id_prodi' => $prodiId->id_prodi,
-            ]);
+            $prodilowongan = LowonganProdi::first();
+            $prodiId = [
+                'id_lowongan',
+                'id_prodi'
+            ];
+            if ($prodilowongan) {
 
-            // if (!$request->has('prodi') || $request->input('prodi') === null) {
-            //     throw new \Exception('Prodi data tidak ditemukan.');
-            // }
-            DB::beginTransaction();
-            // foreach ($request['prodi'] as $prodiId ) {
-            //     LowonganProdi::create([
-            //         'id_prodi' => $prodiId->id_prodi,
-            //         'id_lowongan' => $data->id_lowongan
-            //     ]);
-            // }
+                $prodilowongan->update($prodiId);
+            }else{
+                foreach ($request->prodi as $key => $value) {
+                    LowonganProdi::create([
+                        'id_lowongan' => $data->id_lowongan,
+                        'id_prodi' => $value,
+                    ]);
+                }
+            }
                                 
             if (!$data) {
                 throw new \Exception('Lowongan tidak ditemukan.');
@@ -145,7 +149,7 @@ class LowonganMagangLkmController extends Controller
 
             return response()->json([
                 'error' => true,
-                'message' => $e->getMessage(),
+                'message' => $e->getMessage()
             ]);
         }
     }
