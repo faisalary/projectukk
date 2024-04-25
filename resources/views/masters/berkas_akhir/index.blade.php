@@ -1,13 +1,47 @@
 @extends('partials_admin.template')
+@section('meta_header')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/flatpickr/flatpickr.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/pickr/pickr-themes.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
+<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 <style>
+    .bootstrap-tagsinput {
+        margin: 0;
+        width: 100%;
+        padding: 0.5rem 0.75rem 0;
+        font-size: 1rem;
+        line-height: 1.25;
+        transition: border-color 0.15s ease-in-out;
+
+        &.has-focus {
+            background-color: #fff;
+            border-color: #5cb3fd;
+        }
+
+        .label-info {
+            display: inline-block;
+            background-color: #24B364;
+            padding: 0 .4em .15em;
+            border-radius: .25rem;
+            margin-bottom: 0.4em;
+        }
+
+        input {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    .bootstrap-tagsinput .tag [data-role="remove"]:after {
+        content: '\00d7';
+    }
+
     .swal2-icon {
         border-color: transparent !important;
     }
@@ -42,20 +76,30 @@
 @section('main')
 <div class="row">
     <div class="col-md-6 col-12">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Laporan Akhir Tahun Ajaran 2023/2024</h4>
-    </div>
-    <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Laporan Akhir </button>
+        <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Laporan Akhir</h4>
     </div>
 </div>
 
-<div class="col-2 mb-3">
-    <select class="select2 form-select" data-placeholder="Filter Status">
+<div class=" row">
+    <!-- <select class="select2 form-select" data-placeholder="Filter Status">
         <option value="0">2023/2024 Ganjil</option>
         <option value="1">2024/2025 Genap</option>
         <option value="2">2025/2026 Ganjil</option>
         <option value="3">2026/2027 Genap</option>
-    </select>
+    </select> -->
+    <!-- <div class="col-md-6 col-12 text-end">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Laporan Akhir </button>
+    </div> -->
+    <div class=" text-end">
+        <div class="col-md-12 d-flex justify-content-end align-items-center mt-2 mb-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                <div class="d-flex align-items-center">
+                    <i class="tf-icons ti ti-plus me-2"></i>
+                    <span class="mt-1">Tambah Laporan Akhir</span>
+                </div>
+            </button>
+        </div>
+    </div>
 </div>
 
 <div class="card">
@@ -77,67 +121,9 @@
     </div>
 </div>
 
-<!-- modal tambah-->
-<div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalTolak">Tambah Master Laporan Akhir Magang Tahun 2023/2024</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="mb-3 col-12 mb-0">
-                        <label for="jenis" class="form-label">Jenis Magang<span style="color: red;">*</span></label>
-                        <select name="jenismagang" id="jenismagang" class="form-select select2" data-placeholder="Jenis Magang">
-                            <option value="">Jenis Magang</option>
-                            <option value="1">Magang Fakultas</option>
-                            <option value="2">Magang Mandiri</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-12 mb-0">
-                        <label for="durasi" class="form-label">Durasi Magang<span style="color: red;">*</span></label>
-                        <select name="durasimagang" id="durasimagang" class="form-select select2" data-placeholder="Durasi Magang">
-                            <option value="">Durasi Magang</option>
-                            <option value="1">1 Semester</option>
-                            <option value="2">2 Semester</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-12 mb-0">
-                        <label for="select2Success" class="form-label"> Berkas Magang<span style="color: red;">*</span></label>
-                        <div class="select2-success">
-                            <select id="select2Success" class="select2 form-select" multiple>
-                                <option value="1">Laporan Akhir</option>
-                                <option value="2">Dokumen IA</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-12 mb-0">
-                        <label for="flatpickr-datetime" class="form-label">Tenggat Pengumpulan Berkas Magang<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM" id="flatpickr-datetime" readonly="readonly">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-12 mb-0">
-                        <label for="flatpickr-datetime2" class="form-label">Tenggat Penilaian Berkas Magang<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control flatpickr-input" placeholder="YYYY-MM-DD HH:MM" id="flatpickr-datetime2" readonly="readonly">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('masters.berkas_akhir.modal')
 
-<!-- Modal Alert-->
+<!-- Modal Alert
 <div class="modal fade" id="modalalertnonaktif" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -145,7 +131,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="../../app-assets/img/alert.png" alt="">
+                <img src="app-assets/img/alert.png" alt="">
                 <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin menonaktifkan data?</h5>
                 <p>Data yang dipilih akan non-aktif!</p>
             </div>
@@ -164,7 +150,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="../../app-assets/img/alert.png" alt="">
+                <img src="app-assets/img/alert.png" alt="">
                 <h5 class="modal-title" id="modal-title">Apakah anda yakin ingin mengaktifkan data?</h5>
                 <p>Data yang dipilih akan aktif!</p>
             </div>
@@ -174,44 +160,21 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 @endsection
 
 @section('page_script')
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "jenis_magang": "Magang Fakultas",
-            "durasi_magang": "1 Semester",
-            "berkas_magang": "<ul><li>Laporan akhir</li><li>Dokumen IA</li></ul>",
-            "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
-            "tenggat_penilaian_magang": "15-07-2024 23:59",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalTambah' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit'></i></a><a data-bs-toggle='modal' data-bs-target='#modalalertnonaktif' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>",
-
-        },
-        {
-            "nomor": "2",
-            "jenis_magang": "Magang Fakultas",
-            "durasi_magang": "2 Semester",
-            "berkas_magang": "<ul><li>Laporan akhir</li><li>Dokumen IA</li></ul>",
-            "tenggat_pengumpulan_berkas_magang": "15-07-2024 23:59",
-            "tenggat_penilaian_magang": "15-07-2024 23:59",
-            "status": "<span class='badge bg-label-danger'>Non-Aktif</span>",
-            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalTambah' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit'></i></a><a data-bs-toggle='modal' data-bs-target='#modalalertaktif' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-circle-check'></i></a>",
-
-        },
-    ];
-
-    var table = $('#table-laporan-akhir').DataTable({
-        "data": jsonData,
+    $('#table-laporan-akhir').DataTable({
+        ajax: '{{ route("laporan-akhir.show")}}',
         scrollX: true,
+        type: 'GET',
         columns: [{
-                data: "nomor"
+                data: "DT_RowIndex"
             },
             {
-                data: "jenis_magang"
+                data: "jenis_magang.namajenis"
             },
             {
                 data: "durasi_magang"
@@ -220,16 +183,16 @@
                 data: "berkas_magang"
             },
             {
-                data: "tenggat_pengumpulan_berkas_magang"
+                data: "tgl_pengumpulan"
             },
             {
-                data: "tenggat_penilaian_magang"
+                data: "tgl_penilaian"
             },
             {
                 data: "status"
             },
             {
-                data: "aksi"
+                data: "action"
             }
         ],
         "columnDefs": [{
@@ -266,13 +229,81 @@
             }
         ],
     });
+
+    function edit(e) {
+        let id = e.attr('data-id');
+
+        let action = `{{ url('master/laporan-akhir/update/') }}/${id}`;
+        var url = `{{ url('master/laporan-akhir/edit/') }}/${id}`;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+                console.log(response.file);
+                $("#modal-title").html("Edit Master Laporan Akhir Magang");
+                $("#modal-button").html("Update Data")
+                $('#modalTambah form').attr('action', action);
+                $('#jenismagang').val(response.laporan.id_jenismagang).trigger('change');
+                $('#durasimagang').val(response.laporan.durasi_magang).trigger('change');
+                response.file.forEach(function(item) {
+                    $('#modalTambah form #berkas_magang').append(`<option selected value="
+                                    ${item} ">${item}</option>`);
+
+                });
+                $('#flatpickr-datetime').val(moment(response.laporan.deadline_pengumpulan).format('DD MMMM YYYY HH:mm')).trigger('change');
+                $('#flatpickr-datetime2').val(moment(response.laporan.deadline_penilaian).format('DD MMMM YYYY HH:mm')).trigger('change');
+
+                $('#modalTambah').modal('show');
+                // console.log(response.berkas_magang);
+            }
+        });
+    }
+
+    $("#modalTambah").on("hide.bs.modal", function() {
+
+        $("#modal-title").html("Tambah Master Laporan Akhir Magang");
+        $("#modal-button").html("Simpan")
+        $('#modalTambah form')[0].reset();
+        $('#modalTambah form #jenismagang').val('').trigger('change');
+        $('#modalTambah form #durasimagang').val('').trigger('change');
+        $('#modalTambah form #berkas_magang').val('').trigger("change");
+        $('#modalTambah form #flatpickr-datetime').val('').trigger('change');
+        $('#modalTambah form #flatpickr-datetime2').val('').trigger('change');
+        $('#modalTambah form').attr('action', "{{ url('master/laporan-akhir/store') }}");
+        $('.invalid-feedback').removeClass('d-block');
+        $('.form-control').removeClass('is-invalid');
+
+        $(".flatpickr-input").flatpickr({
+            enableTime: true,
+            dateFormat: 'd F Y H:i',
+            minDate: "today",
+            defaultDate: null,
+        });
+    });
+
+
+
+    // Tag input multiple
+
+    $(document).ready(function() {
+
+
+
+        $('#berkas_magang').select2({
+            tags: true,
+            dropdownParent: $("#modalTambah .modal-body"),
+        });
+
+    });
 </script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-<script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script>
-<script src="../../app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-<script src="../../app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-<script src="../../app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-<script src="../../app-assets/vendor/libs/pickr/pickr.js"></script>
-<script src="../../app-assets/js/forms-pickers.js"></script>
+<script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+<script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
 @endsection

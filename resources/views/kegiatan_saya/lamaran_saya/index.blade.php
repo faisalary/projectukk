@@ -102,7 +102,7 @@
                     $("#container-card").html(res);
                 }
             }
-        })
+        });
 
         jQuery('.nav-link').click(function() {
             let idElement = $(this).attr('aria-controls');
@@ -120,65 +120,19 @@
         });
     });
 
-    function filter(content, button) {
-        $("input").blur();
-        let action = $(content).attr("action");
-        var select2 = document.querySelector('select[name="filter"]');
-        var status = select2.value;
-        console.log(status);
-        if (status == "") {
-            Swal.fire({
-                icon: "warning",
-                title: "INFO",
-                text: "Pilih status lowongan!",
-                customClass: {
-                    confirmButton: "btn btn-success",
-                },
-            });
-        } else {
-            let item = {
-                status: status,
-            };
-            jQuery
-                .ajax({
-                    url: action,
-                    type: "GET",
-                    headers: {
-                        "X-CSRF-TOKEN": $(
-                            'meta[name="csrf-token"]',
-                        ).attr("content"),
-                    },
-                    data: item,
-                    success: function(response) {
-                        if (response.error) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong!",
-                                customClass: {
-                                    confirmButton: "btn btn-success",
-                                },
-                                buttonsStyling: false,
-                            });
-                        } else {
-                            location.reload();
-                        }
-                    },
-                })
-                .always(function() {
-                    button.prop("disabled", false);
-                    button.html(
-                        '<i class="tf-icons ti ti-checks"> Terapkan</i>',
-                    );
-                });
-        }
+    function loadData() {
+        $.ajax({
+            url: `{{ $urlGetCard }}?type=get-data-proses`,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                $('#container-proses-seleksi').html(response);
+            },
+        });
     }
 
-    $(document).on("submit", ".filter-form", function(event) {
-        event.preventDefault();
-        var button = $(this).find(":submit");
-
-        filter(this, button);
+    $(document).on('change', '#filter-status-lowongan', function() {
+        loadData();
     });
 
     // Fakultas

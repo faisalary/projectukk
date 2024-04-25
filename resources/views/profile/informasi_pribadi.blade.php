@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="col-2 text-end ps-0">
-        <button class="btn btn-secondary buttons-collection  btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
+        <button class="btn btn-secondary buttons-collection  btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Unduh Profile</span></span></button>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
           <div class="card mb-4">
             <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
               <h5 class="text-secondary">Informasi Tambahan</h5>
-              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
+              <i class="menu-icon tf-icons ti ti-edit text-warning" onclick="editInformasiTambahan($(this))" data-id="{{$informasitambahan?->nim??''}}" data-bs-toggle="modal" data-bs-target="#modalEditInformasiTambahan"></i>
             </div>
             <div class="card-body pb-0">
               <div class="row mb-2">
@@ -223,10 +223,12 @@
                 </div>
                 <div class="col-6">
                   <p class="mb-2 pt-1">
-                    @if(!empty( $informasitambahan->sosmed))
-                    <span class="fw-semibold me-1">Instagram:</span>
-                    <span> <a href="#">{{$informasitambahan->url_sosmed ?? ''}}</a></span>
-                    @endif
+                    {{-- @if(!empty( $informasitambahan->sosmed)) --}}
+                    @foreach($sosmed->sosmedmhs as $s)
+                    <span class="fw-semibold me-1">{{$s?->namaSosmed ?? ''}}</span>
+                    <span> <a href="{{$s?->urlSosmed ?? ''}}" target="_blank">Lihat Profile</a></span>
+                    {{-- @endif --}}
+                    @endforeach
                   </p>
                 </div>
               </div>
@@ -415,7 +417,6 @@
 
 @section('page_script')
   <script>
-    // let changePicture = $('#changePicture');
     changePicture.onchange = evt => {
       const [file] = changePicture.files
       if (file) {
@@ -428,6 +429,35 @@
     function removeImage() {
         document.getElementById('imgPreview').src = "{{ asset('storage/' . $informasiprib?->profile_picture??'') }}";
     }
+    $(document).ready(function() {
+       $(".content-new").hide();
+       $(".show_hide_new").on("click", function() {
+         var content = $(this).prev('.content-new');
+         content.slideToggle(100);
+         if ($(this).text().trim() == "Show more") {
+           $(this).text("Show less");
+         } else {
+           $(this).text("Show more");
+         }
+       });
+     });
+   
+     $(document).ready(function() {
+       $(".yearpicker").yearpicker({
+         startYear: new Date().getFullYear() - 10,
+         endYear: new Date().getFullYear() + 10,
+       });
+     });
+   
+     $('#month').flatpickr({
+       altInput: true,
+       altFormat: 'F Y',
+       plugins: [
+         new monthSelectPlugin({
+           dateFormat: "Y-m",
+         })
+       ]
+     });
 
     function edit(e) {
       let id = e.attr('data-id');
@@ -439,7 +469,6 @@
           type: 'GET',
           url: url,
           success: function (response) {
-            // console.log(response);
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
               $('#ipk').val(response.ipk);
@@ -450,19 +479,15 @@
               $('#deskripsi_diri').val(response.deskripsi_diri);
               $('#profile_picture').val(response.profile_picture);
               $("#gender1").prop("checked", true);
-              // $("#gender2").prop("checked", true);
-              // $('#modalEditInformasi form #gender').val(response.gender);
               $('.invalid-feedback').removeClass('d-block');
               $('.form-control').removeClass('is-invalid');
           }
       });
     }
-
     function editDokumen(e) {
       let id = e.attr('data-id');
       var url = `{{ url('mahasiswa/profile/dokumen-pendukung/edit') }}/${id}`;
       let action = `{{ url('mahasiswa/profile/dokumen-pendukung/update/') }}/${id}`;
-      // console.log(url);
 
       $.ajax({
         type: 'GET',
@@ -470,14 +495,65 @@
         success: function (response) {
           $("#modal-button").html("Update Data");
           $('#modalEditDokumen form').attr('action', action);
-          $('#nama_sertif').val(response.nama_sertif); 
-          $('#penerbit').val(response.penerbit);
-          $('#file_sertif').val(response.file_sertif);
-          $('#link_sertif').val(response.link_sertif);
-          $('#deskripsi2').val(response.deskripsi);
-          $('#startdate').val(response.startdate);
-          $('#enddate').val(response.enddate);
+          $('#editnama_sertif').val(response.nama_sertif); 
+          $('#editpenerbit').val( response.penerbit);
+          $('#editlink_sertif').val(response.link_sertif);
+          $('#editdeskripsi').val(response.deskripsi);
+          if(response && response.startdate) {
+            let startdate = new Date(response.startdate);
+            let year = startdate.getFullYear();
+            let month = ('0' + (startdate.getMonth() + 1)).slice(-2);  
+            let format = year + '-' + month;
+            $('#startdateEdit').val(format);
+          }
+          if(response && response.enddate) {
+            let enddate = new Date(response.enddate);
+            let year = enddate.getFullYear();
+            let month = ('0' + (enddate.getMonth() + 1)).slice(-2);  
+            let format = year + '-' + month;
+            $('#enddateEdit').val(format);
+          }
+          // $('#editfile_sertif').val(response.file_sertif);
+          $('.invalid-feedback').removeClass('d-block');
+          $('.form-control').removeClass('is-invalid');
         }
+      });
+    }
+
+    function editSkill(e) {
+      let id = e.attr('data-id');
+      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
+      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
+      console.log(id);
+
+      $.ajax({
+          type: 'GET',
+          url: url,
+          success: function (response) {
+            $("#modal-button").html("Update Data");
+            $('#modalEditPengalaman form').attr('action', action);
+            $('#name_intitutions').val(response.name_intitutions);
+            $('#posisi').val(response.posisi); 
+            $('#editjenis').val(response.jenis).trigger('change');
+            if(response && response.startdate) {
+              let startdate = new Date(response.startdate);
+              let year = startdate.getFullYear();
+              let month = ('0' + (startdate.getMonth() + 1)).slice(-2);  // Tambah '0' di depan jika bulan kurang dari 10
+              let day = ('0' + startdate.getDate()).slice(-2);  // Tambah '0' di depan jika hari kurang dari 10
+              let format = year + '-' + month + '-' + day;
+              $('#editstartdate').val(format);
+            }
+            if(response && response.enddate) {
+              let enddate = new Date(response.enddate);
+              let year = enddate.getFullYear();
+              let month = ('0' + (enddate.getMonth() + 1)).slice(-2);  // Tambah '0' di depan jika bulan kurang dari 10
+              let day = ('0' + enddate.getDate()).slice(-2);  // Tambah '0' di depan jika hari kurang dari 10
+              let format = year + '-' + month + '-' + day;
+              $('#editenddate').val(format);
+            }
+            $('#deskripsi').val(response.deskripsi);
+            console.log(response);
+          }
       });
     }
 
@@ -567,60 +643,10 @@
           }
         });
     }
-    function editSkill(e) {
-      let id = e.attr('data-id');
-      var url = `{{ url('mahasiswa/profile/pengalaman/edit') }}/${id}`;
-      let action = `{{ url('mahasiswa/profile/pengalaman/update/') }}/${id}`;
-      console.log(id);
-
-      $.ajax({
-          type: 'GET',
-          url: url,
-          success: function (response) {
-            $("#modal-button").html("Update Data");
-            $('#modalEditDokumen form').attr('action', action);
-            $('#posisi').val(response.posisi); 
-            $('#jenis').val(response.jenis);
-            $('#name_institutions').val(response.name_institutions);
-            $('#startdate').val(response.startdate);
-            $('#enddate').val(response.enddate);
-            $('#deskripsi').val(response.deskripsi);
-            console.log(response);
-          }
-      });
-    }
+    
   </script>
-<script>
-  $(document).ready(function() {
-    $(".content-new").hide();
-    $(".show_hide_new").on("click", function() {
-      var content = $(this).prev('.content-new');
-      content.slideToggle(100);
-      if ($(this).text().trim() == "Show more") {
-        $(this).text("Show less");
-      } else {
-        $(this).text("Show more");
-      }
-    });
-  });
-  
-  $(document).ready(function() {
-    $(".yearpicker").yearpicker({
-      startYear: new Date().getFullYear() - 10,
-      endYear: new Date().getFullYear() + 10,
-    });
-  });
-  
-  $('#month').flatpickr({
-    altInput: true,
-    altFormat: 'F Y',
-    plugins: [
-      new monthSelectPlugin({
-        dateFormat: "Y-m",
-      })
-    ]
-  });
-</script>
+
+
 <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 <script src="{{ url('app-assets/js/app-stepper.js') }}"></script>

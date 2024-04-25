@@ -101,7 +101,6 @@ class LowonganMagangLkmController extends Controller
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
-        // $prodilowongan = LowonganProdi::first();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
@@ -112,14 +111,21 @@ class LowonganMagangLkmController extends Controller
     {
         try {
             $data = LowonganMagang::find($id);
-            $prodi = ProgramStudi::all();
-            // dd($prodi);
-            // $datahasprodi = LowonganProdi::create([
-            //     'id_prodi' =>  $request->prodi[
-            //         ''
-            //     ],
-            //     'id_lowongan' => $data->id_lowongan
-            // ]);
+            $prodiId = ProgramStudi::where('id_prodi')->first();
+            $data::update([
+                'id_prodi' => $prodiId->id_prodi,
+            ]);
+
+            // if (!$request->has('prodi') || $request->input('prodi') === null) {
+            //     throw new \Exception('Prodi data tidak ditemukan.');
+            // }
+            DB::beginTransaction();
+            // foreach ($request['prodi'] as $prodiId ) {
+            //     LowonganProdi::create([
+            //         'id_prodi' => $prodiId->id_prodi,
+            //         'id_lowongan' => $data->id_lowongan
+            //     ]);
+            // }
                                 
             if (!$data) {
                 throw new \Exception('Lowongan tidak ditemukan.');
