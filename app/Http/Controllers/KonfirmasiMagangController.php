@@ -212,7 +212,9 @@ class KonfirmasiMagangController extends Controller
 
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
 
-            $mandiri->nim = $request->nim;
+            // dd($mandiri);
+
+            $mandiri->nim = $mandiri->nim;
             $mandiri->nama_industri = $request->nama_industri;
             $mandiri->posisi_magang = $request->posisi_magang;
             $mandiri->startdate = $request->startdate;
@@ -223,16 +225,17 @@ class KonfirmasiMagangController extends Controller
             $mandiri->status_terima = 1;
             $mandiri->save();
 
-            MhsMandiri::create([
+            MhsMagang::create([
                 'id_pengajuan' => $id,
-                'status' => true
+                'jenis_magang'=>1,
             ]);
 
             return response()->json([
                 'error' => false,
                 'message' => 'Data successfully Updated!',
                 'modal' => '#modalDiterima',
-                'status_terima' => 1
+                'status_terima' => 1,
+                'ta'
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -256,7 +259,7 @@ class KonfirmasiMagangController extends Controller
 
             MhsMagang::create([
                 'id_pengajuan' => $id,
-                'status' => false
+                'jenis_magang'=>2,
             ]);
 
             return response()->json([
