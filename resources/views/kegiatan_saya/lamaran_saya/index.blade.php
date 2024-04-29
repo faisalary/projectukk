@@ -350,16 +350,16 @@
         //     $("#tabs").tabs();
         // });
         
-        $(document).ready(function() {
-            $("ul.nav-pills > li > a").on("shown.bs.tab", function(e) {
-                var id = $(e.target).attr("href").substr(1);
-                window.location.hash = id;
-            });
+        // $(document).ready(function() {
+        //     $("ul.nav-pills > li > a").on("shown.bs.tab", function(e) {
+        //         var id = $(e.target).attr("href").substr(1);
+        //         window.location.hash = id;
+        //     });
 
-            var hash = window.location.hash;
-            console.log(hash);
-            $('#mandiritab a[href="' + hash + '"]').tab('show');
-        });
+        //     var hash = window.location.hash;
+        //     console.log(hash);
+        //     $('#mandiritab a[href="' + hash + '"]').tab('show');
+        // });
     </script>
     <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
