@@ -97,4 +97,8 @@ class LowonganMagang extends Model
     {
         return $this->belongsTo(Universitas::class, 'id_univ');
     }
+    public function seleksi()
+    {
+        return $this->hasMany(SeleksiTahap::class, 'id_lowongan');
+    }
 }

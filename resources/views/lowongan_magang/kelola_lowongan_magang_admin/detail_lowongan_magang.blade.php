@@ -35,9 +35,6 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="d-flex items-center justify-content-start">
-                                {{-- <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="" --}}
-                                {{-- <img src="{{ asset('storage/posts/'.$lowongan->industri?->image??'') }}" alt=""
-                                    style="width: 150px; height: 90px; !important"> --}}
                                     @if ($lowongan->industri->image)
                                     <img src="{{ asset('storage/' . $lowongan->industri->image) }}" alt="user-avatar"
                                         class="" height="125" width="125"
@@ -66,11 +63,10 @@
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
                                         Pengajuan : <span class="fw-semibold">{{$lowongan->created_at}}</span>
                                     </p>
-                                    @if (Auth::user()->hasRole('superadmin'))
+                                    
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
                                         Disetujui : <span class="fw-semibold">{{$prodilo?->created_at??'belum disetujui'}}</span>
                                     </p>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -116,13 +112,12 @@
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
-                                    @if (Auth::user()->hasRole('superadmin'))
+                                   
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
                                         @foreach ($prodilowongan  as $l)
                                         <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
                                         @endforeach
                                     </ul>
-                                    @endif
                                 </div>
                             </li>
                         </ul>

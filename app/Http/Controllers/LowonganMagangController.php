@@ -14,6 +14,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
 use App\Models\Fakultas;
 use App\Models\Industri;
+use App\Models\LowonganProdi;
 use App\Models\ProgramStudi;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,16 +72,16 @@ class LowonganMagangController extends Controller
         try {
             $industri = Industri::where('id_industri', auth()->user()->id_industri)->first();
             $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
-            $lokasi = Lokasi::where('id_lokasi')->first();
-            if ($lokasi) {
-                $lokasi->update([
-                    'kota' => $request->lokasi
-                ]);
-            } else {
-                $lokasi =  Lokasi::create([
-                    'kota' => $request->lokasi
-                ]);
-            }
+            // $lokasi = Lokasi::where('id_lokasi')->first();
+            // if ($lokasi) {
+            //     $lokasi->update([
+            //         'kota' => $request->lokasi
+            //     ]);
+            // } else {
+            //     $lokasi =  Lokasi::create([
+            //         'kota' => $request->lokasi
+            //     ]);
+            // }
 
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
@@ -99,7 +100,7 @@ class LowonganMagangController extends Controller
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
                 'id_fakultas' => $request->fakultas,
-                'lokasi' => $request->lokasi,
+                // 'lokasi' => $request->lokasi,
                 'statusaprove' => 'tertunda'
             ]);
             $i = 0;
@@ -143,7 +144,7 @@ class LowonganMagangController extends Controller
         } elseif ($request->type == 'diterima') {
             $lowongan =  $lowongan->where('statusaprove', 'diterima');
         } elseif ($request->type == 'ditolak') {
-            $lowongan =  $lowongan->where('statusaprove', 'diterima');
+            $lowongan =  $lowongan->where('statusaprove', 'ditolak');
         }
         $lowongan = $lowongan
             ->orderBy('id_jenismagang', 'asc')
@@ -191,11 +192,13 @@ class LowonganMagangController extends Controller
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
         $fakultas = Fakultas::all();
-        // $prodi = ProgramStudi::get();
+        $prodi = ProgramStudi::all();
+        $prodilo = LowonganProdi::with('prodi')->first();
+        $prodilowongan = LowonganProdi::with('prodi')->get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('lowongan', 'seleksi', 'fakultas','fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('prodilowongan', 'prodilo', 'prodi', 'lowongan', 'seleksi', 'fakultas','fakultas'));
     }
 
     /**

@@ -389,7 +389,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/apply-lowongan')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('fakultas.index');
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('lowongan.index');
+        Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('lowongan.detail.index');
+        Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('lowongan.detail.index');
     });
 
 });
