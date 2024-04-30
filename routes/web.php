@@ -389,17 +389,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/apply-lowongan')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('fakultas.index');
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('applyfakultas.index');
     });
 
+    Route::prefix('/apply')->group(function () {
+        Route::get('/', [App\Http\Controllers\DetailLowonganController::class, 'index'])->name('detail-lowongan.index');
+    });
 });
 
 Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
-});
-
-Route::get('/apply', function () {
-    return view('apply.apply');
 });
 
 Route::get('/magang_fakultas', function () {
