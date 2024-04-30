@@ -50,56 +50,64 @@
             <h4>Informasi Data Diri</h4>
             <div class="row">
                 <div class="col-2">
-                    <img class="img-fluid rounded" src="../../app-assets/img/avatars/15.png" height="100" width="100" alt="User avatar" />
-                    <a href="pratinjau/diri" class="btn btn-outline-secondary btn-label-secondary mt-3" type="button"><i class="ti ti-eye me-1"></i> Pratinjau</a>
+                    @if ($mahasiswaprodi->informasiprib?->profile_picture??'')
+                        <img src="{{ url('storage/' .$mahasiswaprodi->informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image"
+                            class="img-fluid rounded mb-3 pt-1 mt-4" style="max-height: 140px; max-width: 180px;" alt="img" >
+                    @else
+                        <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
+                            class="img-fluid rounded mb-3 pt-1 mt-4">
+                    @endif 
                 </div>
                 <div class="col-7">
                     <div class="row">
                         <div class="col-3">
                             <div>
                                 <h6 class="mb-0">Nama Lengkap</h6>
-                                <p>Violet Mendoza</p>
+                                <p>{{$mahasiswa->namamhs}}</p>
                             </div>
                             <div>
                                 <h6 class="mb-0">NIM</h6>
-                                <p>6705513025</p>
+                                <p>{{$mahasiswa->nim}}</p>
                             </div>
                         </div>
                         <div class="col-3">
                             <div>
                                 <h6 class="mb-0">ALamat Email</h6>
-                                <p>jennieruby123@gmail.com</p>
+                                <p>{{$mahasiswa->emailmhs}}</p>
                             </div>
                             <div>
                                 <h6 class="mb-0">No.Telp</h6>
-                                <p>87654321234</p>
+                                <p>{{$mahasiswa->nohpmhs}}</p>
                             </div>
                         </div>
                         <div class="col-3">
                             <div>
                                 <h6 class="mb-0">Program Studi</h6>
-                                <p>D3 Sistem Informasi</p>
+                                <p>{{$mahasiswaprodi->prodi->namaprodi}}</p>
                             </div>
                             <div>
                                 <h6 class="mb-0">Fakultas</h6>
-                                <p>Fakultas Ilmu Terapan</p>
+                                <p>{{$mahasiswaprodi->fakultas->namafakultas}}</p>
                             </div>
                         </div>
                         <div class="col-3">
                             <h6 class="mb-0">Universitas</h6>
-                            <p>Telkom University</p>
+                            <p>{{$mahasiswaprodi->univ->namauniv}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="d-flex justify-content-between">
                         <h6 class="text-start">Kelengkapan Profil</h6>
-                        <h6 class="text-end">68%</h6>
+                        <h6 class="text-end">{{ $persentase }}%</h6>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar w-{{ $persentase }}" role="progressbar" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <a href="/informasi/pribadi" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
+                    {{-- <div class="progress">
+                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div> --}}
+                    <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
                 </div>
             </div>
         </div>

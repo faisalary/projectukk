@@ -298,13 +298,11 @@
                 @foreach($lowongan2 as $l)
                 @if($l->statusaprove == 'diterima')
                 <div class="col-12 mt-3 mb-2">
-                    {{-- <div class="card border" data-id="{{$lowongan->id_lowongan}}" onclick="detail($(this))" style="width: 530px"> --}}
-                    <div class="card border stretched-link" href="#" data-id="{{$l->id_lowongan}}" onclick="detail($(this))" style="width: 530px">
+                    <div class="card border stretched-link" data-id="{{$l->id_lowongan}}" onclick="detail($(this))" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
                                     <figure class="image" style="border-radius: 0%;">
-                                        {{-- <img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"> --}}
                                         @if ($l->industri->image)
                                         <img src="{{ asset('storage/' . $l->industri->image) }}" alt="user-avatar"
                                             width="125" style="width:125px;"
@@ -359,70 +357,7 @@
                 @endforeach
             </div>
 
-<script>
-    function detail(e) {
-    let id = e.attr('data-id');
-    var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
-    console.log(id);
-        
-    $.ajax({
-        type: 'GET',
-        url: url,
-        success: function(response) {
-            $('#namaindustri').text(response.industri.namaindustri);
-            $('#intern_position').text(response.intern_position);
-            $('#kuota').text(response.kuota);
-            $('#pelaksanaan').text(response.pelaksanaan);
-            $('#durasimagang').text(response.durasimagang);
-            $('#lokasi').text(response.lokasi);
-            $('#nominal_salary').text(response.nominal_salary);
-            $('#deskripsi').text(response.deskripsi);
-            $('#jenjang').text(response.jenjang);
-            var dateString = response.enddate;
-            var date = new Date(dateString);
-            var tahun = date.getFullYear();
-            var bulan = date.getMonth() + 1;
-            var tanggal = ('0' + date.getDate()).slice(-2);
-            var namaBulan = {
-                1: 'Januari',
-                2: 'Februari',
-                3: 'Maret',
-                4: 'April',
-                5: 'Mei',
-                6: 'Juni',
-                7: 'Juli',
-                8: 'Agustus',
-                9: 'September',
-                10: 'Oktober',
-                11: 'November',
-                12: 'Desember'
-            };
-            var namaBulanIndonesia = namaBulan[bulan];
-            var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
-
-            $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
-            $('#requirements').text(response.requirements);
-            $('#benefitmagang').text(response.benefitmagang);
-            $('#keterampilan').text(response.keterampilan);
-            $('#deskripsiperusahaan').text(response.industri.description);
-
-            $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
-                                            style="max-width:120px; max-height: 125px"
-                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
-
-            $('#lowongan-terpilih').show();
-            $('#tidak-ada-lowongan').hide();
             
-            console.log(response);
-            
-        }   
-        
-    });
-    }
-
-
-</script>
-
             <div class="row mt-3 mb-2">
                 <nav aria-label="Page navigation">
                     <ul class="pagination" style="margin-left: 130px; color:black">
@@ -452,6 +387,7 @@
             <div class="row">
                 <div class="col-12 mt-3 mb-2 " style="display:none" id="lowongan-terpilih">
                     <div class="card border" style="width: 765px; height: auto;">
+                
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="d-flex justify-content-between mb-3">
@@ -513,9 +449,19 @@
                                         </li>
                                     </ul>
                                 </div>
-                                {{-- <a {{ url('lamar/'. $lowogan->id_lowongan) }}type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a> --}}
+                                <a href="{{url('apply-lowongan/lamar/'. $lowongan->id_lowongan)}}"  class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
+                                {{-- @foreach ($lowongan2 as $lo) --}}
+                                    {{-- <a href="#" data-id="{{$lowongan->id_lowongan}}" onclick="lihatdetail($(this))" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a> --}}
+                                {{-- @endforeach --}}
                             </div>
-
+{{-- <script>
+    function lihatdetail(e) {
+        let id = e.attr('data-id');
+        var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
+        window.location.href = url;
+        console.log(id);       
+    }
+</script> --}}
                             <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
                                     Deskripsi Pekerjaan
@@ -538,29 +484,6 @@
                                         <li id="requirements" class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             
                                         </li>
-                                        {{-- <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            At least 3 years of experience in HR / HRBP.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Has strong numerical capability and excel expertise.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Has experience using Workday will be an advantage.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Good command of spoken and written English.
-                                        </li> --}}
-                                        <span class="content-new" style="display: none;">
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Strong attention to detail. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Self-motivated and able to work without supervision. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Willing to work in Cikampek area. </li>
-                                        </span>
-                                        <span class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</span>
                                     </ul>
                                 </div>
                             </div>
@@ -663,6 +586,67 @@
 @section('page_script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 
+<script>
+    function detail(e) {
+    let id = e.attr('data-id');
+    var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
+    console.log(id);
+        
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function(response) {
+            $('#namaindustri').text(response.industri.namaindustri);
+            $('#intern_position').text(response.intern_position);
+            $('#kuota').text(response.kuota);
+            $('#pelaksanaan').text(response.pelaksanaan);
+            $('#durasimagang').text(response.durasimagang);
+            $('#lokasi').text(response.lokasi);
+            $('#nominal_salary').text(response.nominal_salary);
+            $('#deskripsi').text(response.deskripsi);
+            $('#jenjang').text(response.jenjang);
+            var dateString = response.enddate;
+            var date = new Date(dateString);
+            var tahun = date.getFullYear();
+            var bulan = date.getMonth() + 1;
+            var tanggal = ('0' + date.getDate()).slice(-2);
+            var namaBulan = {
+                1: 'Januari',
+                2: 'Februari',
+                3: 'Maret',
+                4: 'April',
+                5: 'Mei',
+                6: 'Juni',
+                7: 'Juli',
+                8: 'Agustus',
+                9: 'September',
+                10: 'Oktober',
+                11: 'November',
+                12: 'Desember'
+            };
+            var namaBulanIndonesia = namaBulan[bulan];
+            var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
+
+            $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
+            $('#requirements').text(response.requirements);
+            $('#benefitmagang').text(response.benefitmagang);
+            $('#keterampilan').text(response.keterampilan);
+            $('#deskripsiperusahaan').text(response.industri.description);
+
+            $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
+                                            style="max-width:120px; max-height: 125px"
+                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
+
+            $('#lowongan-terpilih').show();
+            $('#tidak-ada-lowongan').hide();
+                    
+        }   
+        
+    });
+    }
+
+
+</script>
 <script>
     $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
         $(this).closest("li").toggleClass("active", this.checked);
