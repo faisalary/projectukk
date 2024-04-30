@@ -224,28 +224,28 @@
     <div class="bs-stepper wizard-icons wizard-icons-example mt-4">
         <div class="bs-stepper-header">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color1}} waves-effect waves-light mb-3">
                     1
                 </button>
                 <p>Screening</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color2}} waves-effect waves-light mb-3">
                     2
                 </button>
                 <p>Seleksi</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color3}} waves-effect waves-light mb-3">
                     3
                 </button>
                 <p>Penawaran</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color4}} waves-effect waves-light mb-3">
                     4
                 </button>
                 <p>Diterima/Ditolak</p>

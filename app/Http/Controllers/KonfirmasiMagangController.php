@@ -302,28 +302,39 @@ class KonfirmasiMagangController extends Controller
         $industri = Industri::where('id_industri', $pendaftar->lowongan_magang->id_industri)->first();
         $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
         $img = $picture . '.png';
+        $color1 = 'secondary';
+        $color2 = 'secondary';
+        $color3 = 'secondary';
+        $color4 = 'secondary';
 
         if ($pendaftar->current_step == "screening") {
             $step = 'Screening';
             $color = 'warning';
+            $color1 = 'success';
         } elseif ($pendaftar->current_step == "tahap1") {
             $step = 'Tahap 1';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->current_step == "tahap2") {
             $step = 'Tahap 2';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->current_step == "tahap3") {
             $step = 'Tahap 3';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 1) {
             $step = 'Diterima';
             $color = 'success';
+            $color4 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 2) {
             $step = 'Ditolak';
             $color = 'danger';
+            $color4 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 3) {
             $step = 'Penawaran';
             $color = 'info';
+            $color3 = 'success';
         }
         // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
 
@@ -334,7 +345,7 @@ class KonfirmasiMagangController extends Controller
         //     return $item;
         // });
 
-        return view('kegiatan_saya.lamaran_saya.status_lamaran', compact('pendaftar', 'img', 'step', 'color', 'now'));
+        return view('kegiatan_saya.lamaran_saya.status_lamaran', compact('pendaftar', 'img', 'step', 'color', 'now', 'color1', 'color2', 'color3', 'color4'));
     }
 
     public function ambil(Request $request, $nim)
