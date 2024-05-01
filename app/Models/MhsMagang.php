@@ -35,7 +35,7 @@ class MhsMagang extends Model
         'enddate_magang' => 'datetime'
     ];
 
-    public function pengajuan_mandiri()
+    public function PengajuanMandiri()
     {
         return $this->belongsTo(PengajuanMandiri::class, 'id_pengajuan');
     }

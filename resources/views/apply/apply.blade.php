@@ -119,10 +119,10 @@
                 <h4>Portofolio</h4>
                 <div class="mt-3">
                     <label for="formFile" class="form-label text-secondary">Unggah Portofolio</label>
-                    <input class="form-control" type="file" id="formFile" disabled>
+                    <input class="form-control" type="file" id="formFile">
                     <p class="mt-1" style="font-size: 14px;">Allowed PDF and Docs. Max size of 10 GB</p>
                 </div>
-                <button type="button" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
+                <button type="button" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
             </div>
         </div>
     </div>

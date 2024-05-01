@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('berkas_file')->nullable();
             $table->string('berkas_magang', 255)->nullable();
             $table->string('status_berkas', 255)->nullable();
-            $table->dateTime('tgl_upload')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('tgl_upload')->nullable()->default(now());
             $table->foreign('id_lap_akhir')->references('id_lap_akhir')->on('laporan_akhir');
             $table->foreign('id_mhsmagang')->references('id_mhsmagang')->on('mhs_magang');
         });
