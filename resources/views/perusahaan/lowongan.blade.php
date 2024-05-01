@@ -441,27 +441,17 @@
                                             <div>
                                                 Program Studi
                                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                                    @foreach ($prodilowongan  as $l)
+                                                    {{-- @foreach ($prodilowongan  as $l) 
                                                         <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
-                                                    @endforeach
+                                                    @endforeach --}}
+                                                        <li id="prodilowongan"></li>
                                                 </ul>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <a href="{{url('apply-lowongan/lamar/'. $lowongan->id_lowongan)}}"  class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
-                                {{-- @foreach ($lowongan2 as $lo) --}}
-                                    {{-- <a href="#" data-id="{{$lowongan->id_lowongan}}" onclick="lihatdetail($(this))" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a> --}}
-                                {{-- @endforeach --}}
                             </div>
-{{-- <script>
-    function lihatdetail(e) {
-        let id = e.attr('data-id');
-        var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
-        window.location.href = url;
-        console.log(id);       
-    }
-</script> --}}
                             <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
                                     Deskripsi Pekerjaan
@@ -605,6 +595,7 @@
             $('#nominal_salary').text(response.nominal_salary);
             $('#deskripsi').text(response.deskripsi);
             $('#jenjang').text(response.jenjang);
+            $('#prodilowongan').text(response.prodilowongan);
             var dateString = response.enddate;
             var date = new Date(dateString);
             var tahun = date.getFullYear();

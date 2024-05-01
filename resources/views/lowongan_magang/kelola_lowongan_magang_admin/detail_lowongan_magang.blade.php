@@ -69,7 +69,7 @@
                                     </p>
                                     
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Disetujui : <span class="fw-semibold">{{$prodilo?->created_at??'belum disetujui'}}</span>
+                                        Disetujui : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                    
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
                                         @foreach ($prodilowongan  as $l)
-                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                            <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -250,7 +250,7 @@
                     </p>
                     <div class="border"></div>
                     <p class="fw-normal mt-2" style="font-size: 13px;!important">
-                        Timestamp : <span class="fw-semibold">{{$prodilo?->created_at??'belum disetujui'}}</span>
+                        Timestamp : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
                     </p>
                     <div class="map-pin mt-3 mb-3">
                     </div>

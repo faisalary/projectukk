@@ -28,9 +28,10 @@ class ApplyLowonganFakultasController extends Controller
     {
         $prodilo = LowonganProdi::with('prodi')->first();
         $prodilowongan = LowonganProdi::with('prodi')->get();
-        $lowonganshow2 = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas','seleksi')->first();
+        $lowonganshow2 = LowonganMagang::where('id_lowongan', $id)->with('prodilowongan', 'industri', 'fakultas','seleksi')->first();
         return $lowonganshow2;
     }
+
     public function lamar(Request $request, $id) {
         $profilemhs = InformasiPribadi::where('nim', $id)->first();
         $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ', 'informasiprib')->first();

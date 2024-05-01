@@ -181,7 +181,7 @@ class LowonganMagangController extends Controller
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
         $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::with('prodi')->get();
+        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }

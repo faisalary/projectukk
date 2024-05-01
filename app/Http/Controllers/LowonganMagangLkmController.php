@@ -103,7 +103,7 @@ class LowonganMagangLkmController extends Controller
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
         $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::with('prodi')->get();
+        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
@@ -114,15 +114,16 @@ class LowonganMagangLkmController extends Controller
     {
         DB::beginTransaction();
         try {
+            // $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
             $data = LowonganMagang::find($id);
-            $prodilowongan = LowonganProdi::first();
+            $prodilowongan = LowonganProdi::where('id_lowongan', $data->id_lowongan)->first();
             $prodiId = [
                 'id_lowongan',
                 'id_prodi'
             ];
             if ($prodilowongan) {
-
-                $prodilowongan->update($prodiId);
+                $prodilowongan->update($request->all());
+                // dd($prodilowongan);
             }else{
                 foreach ($request->prodi as $key => $value) {
                     LowonganProdi::create([
@@ -137,13 +138,14 @@ class LowonganMagangLkmController extends Controller
             }
             
             $data->statusaprove = 'diterima';
-
+            $data->date_confirm_closing = date('Y-m-d');
             $data->save();
             DB::commit();
 
             return response()->json([
                 'error' => false,
                 'message' => 'Persetujuan berhasil.',
+                'url' => 'kelola/lowongan/lkm/detail/'. $id
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -165,6 +167,7 @@ class LowonganMagangLkmController extends Controller
 
                 $data->alasantolak = $request->alasan;
                 $data->statusaprove = 'ditolak';
+                $data->date_confirm_closing = date('Y-m-d');
 
                 $data->save();
                 DB::commit();

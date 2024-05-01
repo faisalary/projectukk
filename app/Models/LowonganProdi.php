@@ -13,6 +13,7 @@ class LowonganProdi extends Model
         'id_lowongan',
         'id_prodi',
     ];
+    
 
     public function lowongan(){
         return $this->belongsTo(LowonganMagang::class,"id_lowongan");
