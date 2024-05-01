@@ -44,7 +44,10 @@
                         <li class="breadcrumb-item">
                             <a href="" class="text-secondary">Kelola Magang</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit Lowongan Magang</li>
+                        <li class="breadcrumb-item">
+                            <a href="" class="text-secondary">Edit Lowongan Magang</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{$lowongan->intern_position}}</li>
                     </ol>
                 </h4>
             </nav>
@@ -93,7 +96,6 @@
                         <form class="default-form" id="wizard-validation-form" onSubmit="return false" method="POST"
                             action="{{ url('kelola/lowongan/mitra/update') }}/{{ $lowongan->id_lowongan }}">
                             @csrf
-                            @method('PUT')
                             <!-- Account Details -->
                             <div id="account-details-validation" class="content">
                                 <div class="content-header mb-3">
@@ -261,20 +263,20 @@
                                         <div class="col mt-2">
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                    type="radio" value="0"
-                                                    {{ $lowongan->pelaksanaan == '0' ? ' checked="checked"' : '' }} />
+                                                    type="radio" value="Online"
+                                                    {{ $lowongan->pelaksanaan == 'Online' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Online</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input"
-                                                    type="radio" value="1"
-                                                    {{ $lowongan->pelaksanaan == '1' ? ' checked="checked"' : '' }} />
+                                                    type="radio" value="Onsite"
+                                                    {{ $lowongan->pelaksanaan == 'Onsite' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Onsite</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input name="pelaksanaan" id="pelaksanaan" class="form-check-input "
-                                                    type="radio" value="2"
-                                                    {{ $lowongan->pelaksanaan == '2' ? ' checked="checked"' : '' }} />
+                                                    type="radio" value="Hybird"
+                                                    {{ $lowongan->pelaksanaan == 'Hybird' ? ' checked="checked"' : '' }} />
                                                 <label class="form-check-label" for="pelaksanaan">Hybird</label>
                                             </div>
                                         </div>
@@ -316,10 +318,7 @@
                                             class="select2-multiple form-select wizard-required"
                                             data-placeholder="Masukan Lokasi Pekerjaan">
                                             <option value="" disabled>Select</option>
-                                            @foreach ($lokasi as $l)
-                                                <option @if ($l->id_lokasi == $lowongan->id_lokasi) selected @endif
-                                                    value="{{ $l->id_lokasi }}">{{ $l->kota }}</option>
-                                            @endforeach
+                                            <option value="{{$lowongan->lokasi}}" selected>{{$lowongan->lokasi}}</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">

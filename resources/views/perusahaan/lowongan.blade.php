@@ -305,7 +305,7 @@
                                     <figure class="image" style="border-radius: 0%;">
                                         @if ($l->industri->image)
                                         <img src="{{ asset('storage/' . $l->industri->image) }}" alt="user-avatar"
-                                            width="125" style="width:125px;"
+                                        style="max-width:80px; max-height: 80px"
                                             id="imgPreview">
                                         @else
                                             <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
