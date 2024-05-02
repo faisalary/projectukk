@@ -59,7 +59,7 @@ class KonfirmasiMagangController extends Controller
         });
 
         if ($request->ajax()) {
-            $pendaftar = $pendaftar->whereIn('current_step', ['screening', 'tahap1', 'tahap2', 'tahap3']);
+            $pendaftar = $pendaftar->whereIn('current_step', ['screening', 'tahap1', 'tahap2', 'tahap3', 'penawaran']);
             if ($request->filter && $request->filter != null && $request->filter != '' && $request->filter != 'all') {
                 $pendaftar = $pendaftar->where('current_step', $request->filter);
             }
