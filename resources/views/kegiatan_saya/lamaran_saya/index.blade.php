@@ -111,7 +111,7 @@
             <!-- Magang Mandiri -->
             <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
                 @foreach ($mandiri as $item)
-                @if ($item->nim == $nim->nim)
+                @if ($item->nim == $nim)
                 @if ($item->statusapprove == 1 && $item->status_terima == null)
                 <div class="card mt-2">
                     <div class="card-body">
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="text-left mt-3">
-                            <button type="button" class="btn btn-success waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
+                            <button type="button" class="btn btn-success waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}}    data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
                             </button>
                             <button type="button" class="btn btn-danger waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}" onclick="Ditolak($(this))">Ditolak
                             </button>
@@ -419,12 +419,14 @@
 
     // Mandiri
     function terima(e) {
+        // let nim = e.attr('data-nim');
         let id = e.attr('data-id');
         let action = `{{ url('kegiatan-saya/update/') }}/${id}`;
         var url = `{{ url('kegiatan-saya/edit/') }}/${id}`;
         $.ajax({
             type: 'GET',
             url: url,
+            // data:[nim=nim],
             success: function(response) {
                 console.log(response);
                 $('#modalDiterima form').attr('action', action);

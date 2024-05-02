@@ -41,7 +41,7 @@
             </div>
             <form class="default-form" action="{{ url('kegiatan-saya/lamaran-saya/update/') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
+                <input type="text" name="nim" value="{{ $nim ?? '' }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
