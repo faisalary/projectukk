@@ -1,6 +1,8 @@
 @extends('partials_mahasiswa.template')
 
 @section('page_style')
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+
 <style>
     .hidden {
         display: none;
@@ -32,9 +34,12 @@
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="{{url("apply-lowongan")}}" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <!-- <a href="{{url('apply-lowongan')}}" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
-    </a>
+    </a> -->
+    <button class="btn btn-outline-success mt-4 mb-3 waves-effect" type="button" id="back">
+        <i class="ti ti-arrow-left me-2 text-success"> Kembali </i>
+    </button>
     <div class="sec-title">
         <h4>Daftar Untuk UI/UX Designer</h4>
     </div>
@@ -51,12 +56,10 @@
             <div class="row">
                 <div class="col-2">
                     @if ($mahasiswaprodi->informasiprib?->profile_picture??'')
-                        <img src="{{ url('storage/' .$mahasiswaprodi->informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image"
-                            class="img-fluid rounded mb-3 pt-1 mt-4" style="max-height: 140px; max-width: 180px;" alt="img" >
+                    <img src="{{ url('storage/' .$mahasiswaprodi->informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image" class="img-fluid rounded mb-3 pt-1 mt-4" style="max-height: 140px; max-width: 180px;" alt="img">
                     @else
-                        <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar"
-                            class="img-fluid rounded mb-3 pt-1 mt-4">
-                    @endif 
+                    <img src="{{ url('app-assets/img/avatars/14.png')}}" alt="user-avatar" class="img-fluid rounded mb-3 pt-1 mt-4">
+                    @endif
                 </div>
                 <div class="col-7">
                     <div class="row">
@@ -113,13 +116,23 @@
     <div class="card mt-5">
         <div class="card-body">
             <div>
-                <h4>Portofolio</h4>
-                <div class="mt-3">
-                    <label for="formFile" class="form-label text-secondary">Unggah Portofolio</label>
-                    <input class="form-control" type="file" id="formFile">
-                    <p class="mt-1" style="font-size: 14px;">Allowed PDF and Docs. Max size of 10 GB</p>
-                </div>
-                <button type="button" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
+                <form class="default-form" action="{{ url('apply-lowongan/apply') }}/{{$lowongandetail->id_lowongan}}" method="POST">
+                    @csrf
+
+                    <h4>Portofolio</h4>
+                    <div class="mt-3">
+                        <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
+                        @if($magang != null || $persentase < 100) <input class="form-control" type="file" id="formFile" name="porto" disabled>
+                            @else
+                            <input class="form-control" type="file" id="formFile" name="porto">
+                            @endif
+                            <p class="mt-1" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 10 MB</p>
+                    </div>
+                    @if($magang != null || $persentase < 100) <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
+                        @else
+                        <button type="submit" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
+                        @endif
+                </form>
             </div>
         </div>
     </div>
@@ -261,5 +274,12 @@
     function changeColor(button) {
         button.classList.toggle('highlight');
     }
+
+    //  Button Back
+    document.getElementById("back").addEventListener("click", () => {
+        history.back();
+    });
 </script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection
