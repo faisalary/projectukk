@@ -292,27 +292,20 @@
 </div> -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    {{-- <h4 class="ms-4">{{ $lowongan->count() }} Lowongan Magang Fakultas</h4> --}}
-    @php
-    $jumlahDiterima = $lowongan->where('statusaprove', 'diterima')->count();
-    @endphp
-    <h4 class="ms-4">{{ $jumlahDiterima }} Lowongan Magang Fakultas</h4>
-
-    <div class="row mt-2 ps-4">
+      <div class="row mt-2 ps-4">
         <div class="col-5">
             <div class="row">
-                @foreach($lowongan as $l)
+                @foreach($lowongan2 as $l)
                 @if($l->statusaprove == 'diterima')
                 <div class="col-12 mt-3 mb-2">
-                    <div class="card border" style="width: 530px">
+                    <div class="card border stretched-link" data-id="{{$l->id_lowongan}}" onclick="detail($(this))" style="width: 530px">
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="col-3 text-left">
                                     <figure class="image" style="border-radius: 0%;">
-                                        {{-- <img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"> --}}
                                         @if ($l->industri->image)
                                         <img src="{{ asset('storage/' . $l->industri->image) }}" alt="user-avatar"
-                                            class="" height="125" width="125"
+                                        style="max-width:80px; max-height: 80px"
                                             id="imgPreview">
                                         @else
                                             <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
@@ -364,6 +357,7 @@
                 @endforeach
             </div>
 
+            
             <div class="row mt-3 mb-2">
                 <nav aria-label="Page navigation">
                     <ul class="pagination" style="margin-left: 130px; color:black">
@@ -388,20 +382,18 @@
             </div>
         </div>
 
-        <div class="col-7">
-
+        <div class="col-7 " > 
             {{-- Ada lowongan terpilih--}}
-            <!-- <div class="row">
-                <div class="col-12 mt-3 mb-2">
+            <div class="row">
+                <div class="col-12 mt-3 mb-2 " style="display:none" id="lowongan-terpilih">
                     <div class="card border" style="width: 765px; height: auto;">
+                
                         <div class="card-body">
                             <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <figure class="image" style="border-radius: 0%; margin-left: 10px;"><img style="width:180px;" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                    </figure>
+                                    <div id="image"></div>   
                                     <div style="margin-left: 250px;">
-                                        <small class="text-muted" style="font-size: 18px;">Batas Melamar 13 Juli
-                                            2023</small><br>
+                                        <small class="text-muted" style="font-size: 18px;" id="batas_melamar">batas lamaran</small><br>
                                         <div class="row mt-2">
                                             <a href="/detail/lowongan/magang"><button type="button" class="btn btn-sm btn-outline-dark waves-effect" style="width: 200px; margin-left:15px;">Buka dihalaman baru</button>
                                             </a><br>
@@ -409,39 +401,38 @@
                                     </div>
                                 </div>
                                 <div class="row mt-2 mb-2 ms-1 p-0">
-                                    <h4 style=" margin-bottom: 0px; ">PT
-                                        Wings Surya</h4>
-                                    <h1 class="mb-1" style="  text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">
-                                        Human Resources</h1>
+                                    <h4 style=" margin-bottom: 0px;" id="namaindustri"></h4>
+                                    <h1 class="mb-1" id="intern_position" style="text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word;">
+                                    </h1>
                                 </div>
                                 <div class="d-flex ms-2 mt-2" style="font-size: 14px;">
                                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-users ti-xs me-2"></i>
-                                            5 Kouta Penerimaan
+                                            <i id="kuota" class="ti ti-users ti-xs me-2"></i>
+                                            Kuota Penerimaan
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-briefcase ti-xs me-2"></i>
+                                            <i id="pelaksanaan" class="ti ti-briefcase ti-xs me-2"></i>
                                             Onsite
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-calendar-time  ti-xs me-2"></i>
-                                            2 Semerter
+                                            <i id="durasimagang" class="ti ti-calendar-time  ti-xs me-2"></i>
+                                            
                                         </li>
                                     </ul>
                                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px;">
 
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-map-pin  ti-xs me-2"></i>
-                                            Bandung & Jakarta
+                                            <i id="lokasi" class="ti ti-map-pin  ti-xs me-2"></i>
+                                            
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                            Rp 1.000.000 - 5.000.000
+                                            <i id="nominal_salary" class="ti ti-currency-dollar  ti-xs me-2"></i>
+                                           
                                         </li>
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i class="ti ti-building-community  ti-xs me-2"></i>
-                                            D3
+                                            <i id="jenjang" class="ti ti-building-community  ti-xs me-2"></i>
+                                           
                                         </li>
                                     </ul>
                                     <ul style="padding: 0 0 0 20px;">
@@ -450,56 +441,26 @@
                                             <div>
                                                 Program Studi
                                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                                    <li>Rekayasa Perangkat Lunak</li>
-                                                    <li>Manajemen Pemasaran</li>
-                                                    <li>Sistem Informasi</li>
+                                                    {{-- @foreach ($prodilowongan  as $l) 
+                                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                                    @endforeach --}}
+                                                        <li id="prodilowongan"></li>
                                                 </ul>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="/apply" type="submit" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
+                                <a href="{{url('apply-lowongan/lamar/'. $lowongan->id_lowongan)}}"  class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
                             </div>
-
                             <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
                                     Deskripsi Pekerjaan
                                 </h3>
                                 <div class="text-block row" style="column-gap: 20px; padding-bottom: 25px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker.
+                                        <li id="deskripsi" class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            
                                         </li>
-
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Lead HR Internal Communication and Employer Branding.
-                                        </li>
-
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Manage On-Boarding program for new hire.
-                                        </li>
-
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Support employee Performance Evaluation process.
-                                        </li>
-
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Support Talent Management and Succession Planning function.
-                                        </li>
-                                        <span class="content-new" style="display: none;">
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Lead Employee Engagement activities and events. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Liaise with relevant parties to ensure HR function executed smoothly. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Support other HR Indonesia operations activities. </li>
-                                        </span>
-                                        <span class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</span>
                                     </ul>
                                 </div>
                             </div>
@@ -510,32 +471,9 @@
                                 </h3>
                                 <div class=" text-block row" style="column-gap: 20px; padding-bottom: 23px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            At least Bachelor's degree in any field.
+                                        <li id="requirements" class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            
                                         </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            At least 3 years of experience in HR / HRBP.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Has strong numerical capability and excel expertise.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Has experience using Workday will be an advantage.
-                                        </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Good command of spoken and written English.
-                                        </li>
-                                        <span class="content-new" style="display: none;">
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Strong attention to detail. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Self-motivated and able to work without supervision. </li>
-
-                                            <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                                Willing to work in Cikampek area. </li>
-                                        </span>
-                                        <span class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</span>
                                     </ul>
                                 </div>
                             </div>
@@ -546,15 +484,15 @@
                                 </h3>
                                 <div class="row" style="column-gap: 20px; padding-bottom: 30px !important">
                                     <ul style="margin-left: 20px; margin-bottom:0;">
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
-                                            Family Care.
+                                        <li id="benefitmagang" class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                            
                                         </li>
-                                        <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
+                                        {{-- <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Parking Access.
                                         </li>
                                         <li class="cursor-pointer content" style="text-align: left !important; font-size:17px; margin-bottom: 0px;">
                                             Reward Compensation.
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -565,15 +503,28 @@
                                 </h3>
                                 <div class="row">
                                     <div class="d-flex" style="column-gap: 20px; padding-bottom: 30px !important">
-                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
-                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft Office</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" id="keterampilan" style="font-size: 15px;"></span>
+                                        {{-- <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft Office</span>
                                         <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Google Suite</span>
-                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling Tools</span>
+                                        <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling Tools</span> --}}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mt-3">
+                            {{-- @foreach ($seleksi as $s)
+                                <li class="timeline-item timeline-item-transparent">
+                                    <span class="timeline-point timeline-point-success"></span>
+                                    <div class="timeline-event">
+                                        <h5 class="mb-0">Seleksi Tahap {{ $loop->iteration }}</h5>
+                                        <div class="d-flex align-items-center" style="margin-top: 15px !important">
+                                            <i class="ti ti-calendar-event me-2"></i>
+                                            <p class="mb-0" id="tgltahap1" name="tgltahap1">
+                                                {{ $s->tgl_mulai }}-{{ $s->tgl_akhir }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach --}}
+                            {{-- <div class="mt-3">
                                 <h3>Seleksi Tahap 1</h3>
                                 <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Seleksi Administrasi</div>
                                 <div style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
@@ -589,7 +540,7 @@
                                 <h3>Seleksi Tahap 3</h3>
                                 <div class="mb-3" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Wawancara User</div>
                                 <div class="mb-4" style="font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: x-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
-                            </div>
+                            </div> --}}
 
                             <div class="row mt-3">
                                 <h3>
@@ -598,20 +549,17 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="text-block">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                                        <span class="ellipsis">...</span>
-                                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
-                                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
+                                    <p id="deskripsiperusahaan" class="mb-2">
+                                       
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div> 
             {{-- Belum ada lowongan terpilih--}}
-            <div class="border text-center mt-3" style="border-radius: 8px;">
+            <div class="border text-center mt-3" style="border-radius: 8px;" id="tidak-ada-lowongan">
                 <figure class="m-5">
                     <img class="image" src="{{ asset('front/assets/img/amico.png')}}" alt="admin.upload">
                 </figure>
@@ -628,6 +576,68 @@
 @section('page_script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 
+<script>
+    function detail(e) {
+    let id = e.attr('data-id');
+    var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
+    console.log(id);
+        
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function(response) {
+            $('#namaindustri').text(response.industri.namaindustri);
+            $('#intern_position').text(response.intern_position);
+            $('#kuota').text(response.kuota);
+            $('#pelaksanaan').text(response.pelaksanaan);
+            $('#durasimagang').text(response.durasimagang);
+            $('#lokasi').text(response.lokasi);
+            $('#nominal_salary').text(response.nominal_salary);
+            $('#deskripsi').text(response.deskripsi);
+            $('#jenjang').text(response.jenjang);
+            $('#prodilowongan').text(response.prodilowongan);
+            var dateString = response.enddate;
+            var date = new Date(dateString);
+            var tahun = date.getFullYear();
+            var bulan = date.getMonth() + 1;
+            var tanggal = ('0' + date.getDate()).slice(-2);
+            var namaBulan = {
+                1: 'Januari',
+                2: 'Februari',
+                3: 'Maret',
+                4: 'April',
+                5: 'Mei',
+                6: 'Juni',
+                7: 'Juli',
+                8: 'Agustus',
+                9: 'September',
+                10: 'Oktober',
+                11: 'November',
+                12: 'Desember'
+            };
+            var namaBulanIndonesia = namaBulan[bulan];
+            var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
+
+            $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
+            $('#requirements').text(response.requirements);
+            $('#benefitmagang').text(response.benefitmagang);
+            $('#keterampilan').text(response.keterampilan);
+            $('#deskripsiperusahaan').text(response.industri.description);
+
+            $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
+                                            style="max-width:120px; max-height: 125px"
+                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
+
+            $('#lowongan-terpilih').show();
+            $('#tidak-ada-lowongan').hide();
+                    
+        }   
+        
+    });
+    }
+
+
+</script>
 <script>
     $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
         $(this).closest("li").toggleClass("active", this.checked);

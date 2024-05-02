@@ -263,6 +263,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [App\Http\Controllers\LowonganMagangController::class, 'store'])->name('lowongan-magang.store');
             Route::get('/detail/{id}', [App\Http\Controllers\LowonganMagangController::class, 'detail'])->name('lowongan-magang.detail');
             Route::get('/edit/{id}', [App\Http\Controllers\LowonganMagangController::class, 'edit'])->name('lowongan-magang.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\LowonganMagangController::class, 'update'])->name('lowongan-magang.edit');
         });
         Route::prefix('lowongan/lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\LowonganMagangLkmController::class, 'index'])->name('lowongan-magang.index.lkm');
@@ -390,7 +391,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/apply-lowongan')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('applyfakultas.index');
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('lowongan.index');
+        Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('lowongan.detail.index');
+        Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('detail.lamar');
+        Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index');
     });
 
     Route::prefix('/apply')->group(function () {
