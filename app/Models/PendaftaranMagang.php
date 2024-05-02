@@ -14,9 +14,16 @@ class PendaftaranMagang extends Model
     protected $fillable = [
         'tanggaldaftar',
         'nim',
-        'applicant_status',
+        'current_step',
         'approval',
-        'status',
+        'status_seleksi',
+        'approvetime',
+        'id_lowongan',
+        'approved_by',
+        'konfirmasi_status',
+        'bukti_doc',
+        'portofolio',
+        'reason_aplicant',
 
     ];
     public $timestamps = false;
