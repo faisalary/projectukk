@@ -274,7 +274,6 @@ Route::middleware('auth')->group(function () {
             Route::post('/approved/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'approved'])->name('lowongan-magang.approved');
             Route::post('/rejected/{id}', [App\Http\Controllers\LowonganMagangLkmController::class, 'rejected'])->name('lowongan-magang.rejected');
         });
-        
     });
 
     Route::prefix('mahasiswa')->group(function () {
@@ -391,15 +390,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/apply-lowongan')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('lowongan.index');
+        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('lowongan.user.index');
         Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('lowongan.detail.index');
         Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('detail.lamar');
         Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index');
+        Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('apply.store');
     });
 
-    Route::prefix('/apply')->group(function () {
-        Route::get('/', [App\Http\Controllers\DetailLowonganController::class, 'index'])->name('detail-lowongan.index');
-    });
+    // Route::prefix('/apply')->group(function () {
+    //     Route::get('/', [App\Http\Controllers\DetailLowonganController::class, 'index'])->name('detail-lowongan.index');
+    // });
 });
 
 Route::get('/pengaturan', function () {
