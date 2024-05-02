@@ -40,6 +40,7 @@ class ApplyLowonganFakultasController extends Controller
         $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas','seleksi', 'mahasiswa')->first();
         return view('apply.apply', compact('persentase', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'profilemhs'));   
     }
+    
     public function persentase($id) {
         $totalData = 17;
         $informasipribadi = InformasiPribadi::where('id_infoprib', true)->count();

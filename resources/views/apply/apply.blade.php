@@ -36,7 +36,7 @@
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="sec-title">
-        <h4>Daftar Untuk UI/UX Designer</h4>
+        <h4>{{$lowongandetail->intern_position}}</h4>
     </div>
 
     <div class="alert alert-warning alert-dismissible" role="alert">
@@ -129,39 +129,9 @@
             <div style="border-bottom: 1px solid #D3D6DB;">
                 <h3>Deskipsi pekerjaan</h3>
                 <ul>
-                    <li>Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker
-                    </li>
                     <li>
-                        Lead HR Internal Communication and Employer Branding
+                        {{$lowongandetail->deskripsi}}
                     </li>
-                    <li>
-                        Manage On-Boarding program for new hire.
-                    </li>
-                    <li>
-                        Manage People Development process from training need analysis into post-training
-                        effectiveness
-                        evaluation including ROI.
-                    </li>
-                    <li>
-                        Support employee Performance Evaluation process.
-
-                    </li>
-                    <li>
-                        Support Talent Management and Succession Planning function.
-                    </li>
-                    <li>
-                        Manage HR Digital function (Workday) in the country by ensuring data accuracy and updates.
-                    </li>
-                    <li>
-                        Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc.
-                    </li>
-                    <li>
-                        Lead Employee Engagement activities and events.
-                    </li>
-                    <li>
-                        Liaise with relevant parties to ensure HR function executed smoothly.
-                    </li>
-                    <li>Support other HR Indonesia operations activities.</li>
                 </ul>
             </div>
 
@@ -169,43 +139,9 @@
                 <h3>Requirements</h3>
                 <ul>
                     <li>
-                        At least Bachelor's degree in any field
-
+                        {{$lowongandetail->requirements}}
                     </li>
-                    <li>
-                        At least 3 years of experience in HR / HRBP
-
-                    </li>
-                    <li>
-                        Has strong numerical capability and excel expertise
-
-                    </li>
-                    <li>
-                        Has experience using Workday will be an advantage
-
-                    </li>
-                    <li>
-                        Good command of spoken and written English.
-
-
-                    </li>
-                    <li>
-                        Experience within a rapidly changing organization in Multinational Company preferably within
-                        a
-                        Manufacturing environment.
-                    </li>
-                    <li>
-                        Strong attention to detail
-
-                    </li>
-                    <li>
-                        Self-motivated and able to work without supervision
-
-                    </li>
-                    <li>
-                        Willing to work in Cikampek area.
-
-                    </li>
+                  
                 </ul>
             </div>
 
@@ -213,13 +149,7 @@
                 <h3>Benefit</h3>
                 <ul>
                     <li>
-                        Family Care
-                    </li>
-                    <li>
-                        Parking Access
-                    </li>
-                    <li>
-                        Reward Compensation
+                        {{$lowongandetail->benefitmagang}}
                     </li>
 
                 </ul>
@@ -228,24 +158,27 @@
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
                 <h3>Kemampuan</h3>
                 <div class="d-flex" style="column-gap: 10px;  padding-bottom: 30px !important">
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft
-                        Office</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Google Suite</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling
-                        Tools</span>
+                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">{{$lowongandetail->keterampilan}}</span>
                 </div>
             </div>
 
             <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
                 <h3>Tentang Perusahaan</h3>
                 <div class="d-flex justify-content-start">
-                    <figure class="image" style="border-radius: 0%; "><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
+                    <figure class="image" style="border-radius: 0%;">
+                        @if ($lowongandetail->industri->image)
+                        <img src="{{ asset('storage/' . $lowongandetail->industri->image) }}" alt="user-avatar"
+                        style="max-width:80px; max-height: 80px"
+                            id="imgPreview">
+                        @else
+                            <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
+                                class="" height="125" width="125"
+                                id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
+                        @endif
                     </figure>
-                    <h5 class="ms-4 mt-4">PT Wings Surya</h5>
+                    <h5 class="ms-4 mt-4">{{$lowongandetail->industri->namaindustri}}</h5>
                 </div>
-                <p>ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company, driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over the world. AFRY as a new common brand of ÅF Pöyry is one of the largest international power sector consulting and engineering company with about 17,000 experts working across the world to create sustainable solutions for future generations</p>
-
+                <p>{{$lowongandetail->industri->description}}</p>
                 <div class="mb-3">
                     <a href="/detail_perusahaan" class="btn btn-outline-success btn-label-success mt-2" type="button">LIhat Perusahaan</a>
                 </div>
