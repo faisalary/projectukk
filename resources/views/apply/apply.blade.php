@@ -122,16 +122,16 @@
                     <h4>Portofolio</h4>
                     <div class="mt-3">
                         <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
-                        @if($magang != null) <input class="form-control" type="file" id="formFile" name="porto" disabled>
-                        @else
-                        <input class="form-control" type="file" id="formFile" name="porto">
-                        @endif
-                        <p class="mt-1" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 10 MB</p>
+                        @if($magang != null || $persentase < 100) <input class="form-control" type="file" id="formFile" name="porto" disabled>
+                            @else
+                            <input class="form-control" type="file" id="formFile" name="porto">
+                            @endif
+                            <p class="mt-1" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 10 MB</p>
                     </div>
-                    @if($magang != null) <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
-                    @else
-                    <button type="submit" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
-                    @endif
+                    @if($magang != null || $persentase < 100) <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
+                        @else
+                        <button type="submit" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
+                        @endif
                 </form>
             </div>
         </div>
