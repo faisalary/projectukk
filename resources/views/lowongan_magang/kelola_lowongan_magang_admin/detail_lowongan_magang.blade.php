@@ -24,7 +24,7 @@
         <div class="">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /
                 </span>
-                Detail Lowongan UI/UX Designer
+                {{$lowongan->intern_position}}
             </h4>
         </div>
     </div>
@@ -35,12 +35,9 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="d-flex items-center justify-content-start">
-                                {{-- <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="" --}}
-                                {{-- <img src="{{ asset('storage/posts/'.$lowongan->industri?->image??'') }}" alt=""
-                                    style="width: 150px; height: 90px; !important"> --}}
                                     @if ($lowongan->industri->image)
                                     <img src="{{ asset('storage/' . $lowongan->industri->image) }}" alt="user-avatar"
-                                        class="" height="125" width="125"
+                                        style="max-width:170px; max-height: 140px"
                                         id="imgPreview">
                                     @else
                                         <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
@@ -58,7 +55,11 @@
                             <div class="col-2 d-flex items-center justify-content-start">
                                 <div class="w-auto">
                                     <div class='text-center'>
-                                        <div class='badge bg-label-success' style="width: 180px">{{$lowongan->status}}</div>
+                                        @if($lowongan->statusaprove == 'ditolak') 
+                                            <div class='badge bg-label-danger' style="width: 180px">{{$lowongan->statusaprove}}</div>
+                                        @else
+                                            <div class='badge bg-label-success' style="width: 180px">{{$lowongan->statusaprove}}</div>
+                                        @endif
                                     </div>
                                     <p class="mt-2" style="font-size: 22px; color: #4B465C !important"><b>Detail
                                             Pengajuan</b>
@@ -66,8 +67,9 @@
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
                                         Pengajuan : <span class="fw-semibold">{{$lowongan->created_at}}</span>
                                     </p>
+                                    
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Disetujui : <span class="fw-semibold">{{$lowongan->startdate}}</span>
+                                        Disetujui : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -114,10 +116,10 @@
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
+                                   
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        @foreach ($lowongan  as $l)
-                                        <li> {{ $l->prodi?->namaprodi??'tidak ada prodi' }}</li>
-                                        @break
+                                        @foreach ($prodilowongan  as $l)
+                                            <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -220,29 +222,46 @@
             </div>
         </div>
         @can('btn.edit.lowongan')
-        <div style="width: 20%">
-            <button type="button" class="btn btn-label-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalapprove" style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                <i class="ti ti-file-check text-success" style="margin-right: 15px"></i>
-                <a>Setujui</a>
-            </button>
-            <button type="button" class="btn btn-label-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalreject"
-                style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                <i class="ti ti-file-x text-danger" style="margin-right: 15px"></i>
-                <a>Tolak</a>
-            </button>
-        </div>
+            @if($lowongan->statusaprove == 'tertunda')
+                <div style="width: 20%">
+                    <button type="button" class="btn btn-label-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalapprove" style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+                        <i class="ti ti-file-check text-success" style="margin-right: 15px"></i>
+                        <a>Setujui</a>
+                    </button>
+                    <button type="button" class="btn btn-label-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalreject"
+                        style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+                        <i class="ti ti-file-x text-danger" style="margin-right: 15px"></i>
+                        <a>Tolak</a>
+                    </button>
+                </div>
+            @endif
         @endcan
         @if (!empty($lowongan->alasantolak))
-        
-        <div style="width: 20%">
-            <button type="button" class="btn btn-label-danger w-100 mt-3"
-            style="font-size: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <a style="color:#23314B">{{ $lowongan->alasantolak }}
-                </a>
-            </button>
+        <div style="max-width: 20%; min-width: 5%" >
+            <div class="card border stretched-link" style="width: auto">
+                <div class="card-body">
+                    <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                        <p class="mt-2" style="font-size: 22px; color: #4B465C !important">
+                            <b>Komentar</b>
+                        </p>
+                    </div>
+                    <p>
+                        {{ $lowongan->alasantolak }}
+                    </p>
+                    <div class="border"></div>
+                    <p class="fw-normal mt-2" style="font-size: 13px;!important">
+                        Timestamp : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
+                    </p>
+                    <div class="map-pin mt-3 mb-3">
+                    </div>
+                </div>
+            </div>
         </div>
         @endif
         </div>
+
+        
+        @if (Auth::user()->hasRole('superadmin'))     
         {{-- modal approve  --}}
         <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -257,11 +276,10 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="kategori" class="form-label">Masukkan Program Studi relevan<span class="text-danger">*</span></label>
-                                {{-- <select class="form-select select2" multiple id="prodi" name="prodi" data-placeholder="Pilih Prodi"> --}}
-                                <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
-                                    {{-- @foreach($prodi as $p)
+                                <select class="form-select select2" multiple id="prodi" name="prodi[]" data-placeholder="Pilih Prodi">
+                                    @foreach($prodi as $p)
                                     <option value="{{$p->id_prodi}}">{{$p->namaprodi ?? ''}}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -292,12 +310,13 @@
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                             <button type="button" onclick='rejected($(this))' id="rejected-confirm-button" data-id="{{$lowongan->id_lowongan}}" data-status="{{$lowongan->statusapprove}}"
                                 class="btn btn-success">Kirim</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        @endif
 @endsection
 
 @section('page_script')
@@ -320,11 +339,14 @@
 
 
         function approved(e) {
-            var approveUrl = '{{url("kelola/lowongan/lkm/approved")}}/' + $('#approve-confirm-button').attr('data-id');
-
+            var prodiData = $('#prodi').val();
+            var approveUrl = '{{url("kelola/lowongan/lkm/approved")}}/' + $('#approve-confirm-button').attr('data-id');           
             $.ajax({
                 url: approveUrl,
                 type: "POST",
+                data: {
+                prodi: prodiData 
+                },
                 headers: {
                     "X-CSRF-TOKEN": "{{csrf_token()}}"
                 },

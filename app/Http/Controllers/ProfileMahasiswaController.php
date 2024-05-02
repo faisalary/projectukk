@@ -143,7 +143,7 @@ class ProfileMahasiswaController extends Controller
                 }
             }
             
-            if ($sosialmedia){
+            // if ($sosialmedia){
                 foreach ($request->sosialmedia as $s) {
                     SosmedTambahan::create([
                         'nim' => $id,
@@ -151,9 +151,9 @@ class ProfileMahasiswaController extends Controller
                         'urlSosmed' => $s['url_sosmed']
                     ]);
                 }
-            } else{
-                $sosialmedia->update();
-            }            
+            // } else{
+            //     $sosialmedia->update();
+            // }            
             return response()->json([
                 'error' => false,
                 'message' => 'Data Successfully Updated!',
