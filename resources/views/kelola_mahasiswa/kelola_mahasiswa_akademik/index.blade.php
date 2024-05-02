@@ -130,13 +130,22 @@
                     }
                 },
                 {
-                    data: null,
+                    data: ,
                     render: function(data, type, row) {
-                        return "<input type='number' class='form-control' min='0' max='" + row.nilai_max + "' placeholder='Input Disini' style='max-width: 150px;' />";
+                        return "<input type='number' class='form-control' min='0' max='" + row.nilai_max +
+                            "' placeholder='Input Disini' style='max-width: 150px;' />";
                     }
                 }
             ],
 
+        });
+
+        $('#table-input').on('keyup', 'input', function() {
+            var val = parseInt($(this).val());
+            var max = parseInt($(this).attr('max'));
+
+            val = isNaN(val) ? 0 : Math.max(Math.min(val, max), 0);
+            $(this).val(val);
         });
     </script>
 
