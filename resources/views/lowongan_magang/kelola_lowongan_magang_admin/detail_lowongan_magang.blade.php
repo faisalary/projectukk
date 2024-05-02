@@ -24,7 +24,7 @@
         <div class="">
             <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /
                 </span>
-                Detail Lowongan UI/UX Designer
+                {{$lowongan->intern_position}}
             </h4>
         </div>
     </div>
@@ -37,7 +37,7 @@
                             <div class="d-flex items-center justify-content-start">
                                     @if ($lowongan->industri->image)
                                     <img src="{{ asset('storage/' . $lowongan->industri->image) }}" alt="user-avatar"
-                                        class="" height="125" width="125"
+                                        style="max-width:170px; max-height: 140px"
                                         id="imgPreview">
                                     @else
                                         <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
@@ -55,7 +55,11 @@
                             <div class="col-2 d-flex items-center justify-content-start">
                                 <div class="w-auto">
                                     <div class='text-center'>
-                                        <div class='badge bg-label-success' style="width: 180px">{{$lowongan->status}}</div>
+                                        @if($lowongan->statusaprove == 'ditolak') 
+                                            <div class='badge bg-label-danger' style="width: 180px">{{$lowongan->statusaprove}}</div>
+                                        @else
+                                            <div class='badge bg-label-success' style="width: 180px">{{$lowongan->statusaprove}}</div>
+                                        @endif
                                     </div>
                                     <p class="mt-2" style="font-size: 22px; color: #4B465C !important"><b>Detail
                                             Pengajuan</b>
@@ -65,7 +69,7 @@
                                     </p>
                                     
                                     <p class="fw-normal" style="font-size: 13px; margin-top: -8px; !important">
-                                        Disetujui : <span class="fw-semibold">{{$prodilo?->created_at??'belum disetujui'}}</span>
+                                        Disetujui : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -115,7 +119,7 @@
                                    
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
                                         @foreach ($prodilowongan  as $l)
-                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                            <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -218,32 +222,46 @@
             </div>
         </div>
         @can('btn.edit.lowongan')
-        <div style="width: 20%">
-            <button type="button" class="btn btn-label-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalapprove" style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                <i class="ti ti-file-check text-success" style="margin-right: 15px"></i>
-                <a>Setujui</a>
-            </button>
-            <button type="button" class="btn btn-label-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalreject"
-                style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
-                <i class="ti ti-file-x text-danger" style="margin-right: 15px"></i>
-                <a>Tolak</a>
-            </button>
-        </div>
+            @if($lowongan->statusaprove == 'tertunda')
+                <div style="width: 20%">
+                    <button type="button" class="btn btn-label-success w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalapprove" style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+                        <i class="ti ti-file-check text-success" style="margin-right: 15px"></i>
+                        <a>Setujui</a>
+                    </button>
+                    <button type="button" class="btn btn-label-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#modalreject"
+                        style="font-size: 15px; box-shadow: 0 2px 4px rgba(75, 70, 92, 0.1);">
+                        <i class="ti ti-file-x text-danger" style="margin-right: 15px"></i>
+                        <a>Tolak</a>
+                    </button>
+                </div>
+            @endif
         @endcan
         @if (!empty($lowongan->alasantolak))
-        
-        <div style="width: 20%">
-            <button type="button" class="btn btn-label-danger w-100 mt-3"
-            style="font-size: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <a style="color:#23314B">{{ $lowongan->alasantolak }}
-                </a>
-            </button>
+        <div style="max-width: 20%; min-width: 5%" >
+            <div class="card border stretched-link" style="width: auto">
+                <div class="card-body">
+                    <div class="row card-header" style="background-color: #FFFFFF; padding:0px;">
+                        <p class="mt-2" style="font-size: 22px; color: #4B465C !important">
+                            <b>Komentar</b>
+                        </p>
+                    </div>
+                    <p>
+                        {{ $lowongan->alasantolak }}
+                    </p>
+                    <div class="border"></div>
+                    <p class="fw-normal mt-2" style="font-size: 13px;!important">
+                        Timestamp : <span class="fw-semibold">{{$lowongan?->date_confirm_closing??'belum disetujui'}}</span>
+                    </p>
+                    <div class="map-pin mt-3 mb-3">
+                    </div>
+                </div>
+            </div>
         </div>
         @endif
         </div>
 
-        @if (Auth::user()->hasRole('superadmin'))
-            
+        
+        @if (Auth::user()->hasRole('superadmin'))     
         {{-- modal approve  --}}
         <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
