@@ -247,7 +247,7 @@
                         <div class="col mb-3">
                             <label for="namaposisi" class="form-label">No.Telp Perusahaan</label>
                             <input type="text" id="nohp_" name="nohp" class="form-control"
-                                placeholder="083xxxxxxx" />
+                                placeholder="083xxxxxxx" onkeypress="return hanyaAngka(event)"/>
                         </div>
                     </div>
                     <div class="row">

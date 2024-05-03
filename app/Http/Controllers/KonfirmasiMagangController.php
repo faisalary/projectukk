@@ -75,12 +75,12 @@ class KonfirmasiMagangController extends Controller
         $file = MhsMandiri::with('PengajuanMandiri')->get();
         $file = MhsMagang::with('PengajuanMandiri')->get();
 
-        // $nim = Mahasiswa::find($nim);
+        $nim1 = Mahasiswa::find($nim);
         // $nim = $nim->nim;
         $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
 
-        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'pendaftar', 'mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim'));
+        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'pendaftar', 'mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim', 'nim1'));
     }
 
     private static function makeStyleStatus($pendaftar)
@@ -137,24 +137,19 @@ class KonfirmasiMagangController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-
+            
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
-
+// dd($mandiri);
             $mandiri->nim = $request->nim;
             $mandiri->nama_industri = $request->nama_industri;
             $mandiri->posisi_magang = $request->posisi_magang;
-            $mandiri->startdate = $request->startdate;
-            $mandiri->enddate = $request->enddate;
+            $mandiri->startdate = Carbon::parse($request->startdate)->format('Y-m-d');
+            $mandiri->enddate = Carbon::parse($request->enddate)->format('Y-m-d');
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
             $mandiri->status_terima = 1;
             $mandiri->save();
-
-            MhsMandiri::create([
-                'id_pengajuan' => $id,
-                'status' => true
-            ]);
 
             return response()->json([
                 'error' => false,

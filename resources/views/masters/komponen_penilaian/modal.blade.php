@@ -75,7 +75,12 @@
                                     <hr />
                                 </div>
                             </div>
-
+                            <div class="mb-0">
+                                <button class="btn btn-outline-success" type="button" data-repeater-create>
+                                    <i class="ti ti-plus me-1"></i>
+                                    <span class="align-middle">Data</span>
+                                </button>
+                            </div>
                             <div class="modal-footer">
                                 <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
                             </div>
