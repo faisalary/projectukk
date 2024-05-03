@@ -107,7 +107,7 @@
                     <div class="progress">
                         <div class="progress-bar w-{{ $persentase }}" role="progressbar" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                        <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
+                    <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
                 </div>
             </div>
         </div>
