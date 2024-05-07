@@ -27,7 +27,7 @@
 
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a id="back" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <a id="back" type="button" class="btn btn-outline-success text-success mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="sec-title">

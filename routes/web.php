@@ -561,6 +561,10 @@ Route::get('/detail-nilai-mahasiswa/magang-mandiri', function () {
     return view('nilai_mahasiswa.magang_mandiri.nilai');
 });
 
+Route::get('/dashboard/admin', function () {
+    return view('dashboard.admin.index');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

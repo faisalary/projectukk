@@ -33,7 +33,7 @@
 @section('main')
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <a id="back" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <a id="back" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect text-success">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="col-md-10 col-12">
@@ -41,7 +41,7 @@
     </div>
 
     <div class="card mb-5">
-        <div class="card-body">
+        <div class="card-body"> 
             <div class="row">
                 <div class="col-2 text-left">
                     <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width:200px;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
