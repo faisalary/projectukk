@@ -426,10 +426,14 @@
                                             <i id="lokasi" class="ti ti-map-pin  ti-xs me-2"></i>
                                             
                                         </li>
+                                        @if($lowongan->nominal_salary !==null)
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="nominal_salary" class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                           
+                                        @else
+                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                            <i id="nominal_salary" class="ti ti-currency-dollar  ti-xs me-2">tidak ada bayaran</i>
                                         </li>
+                                        @endif
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="jenjang" class="ti ti-building-community  ti-xs me-2"></i>
                                            
@@ -441,16 +445,17 @@
                                             <div>
                                                 Program Studi
                                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                                    {{-- @foreach ($prodilowongan  as $l) 
-                                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                                    {{-- @foreach ($lowongan2->prodilowongan  as $lowongan) 
+                                                    <li>{{ $lowongan->id_prodi->namaprodi }}</li>
                                                     @endforeach --}}
-                                                        <li id="prodilowongan"></li>
                                                 </ul>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="{{url('apply-lowongan/lamar/'. $lowongan->id_lowongan)}}"  class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
+                                {{-- <a href="{{url('apply-lowongan/lamar/'. $lowongan->id_lowongan)}}"  class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a> --}}
+                                <a href="#" id="btn-detail" class="btn btn-success ms-4" style="height:50px; width:695px; border-radius:8px;">Lamar Lowongan</a>
+                                
                             </div>
                             <div class="row mt-3 p-2" style="border-bottom: 1px solid #D3D6DB;">
                                 <h3>
@@ -578,63 +583,82 @@
 
 <script>
     function detail(e) {
-    let id = e.attr('data-id');
-    var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
-    console.log(id);
-        
-    $.ajax({
-        type: 'GET',
-        url: url,
-        success: function(response) {
-            $('#namaindustri').text(response.industri.namaindustri);
-            $('#intern_position').text(response.intern_position);
-            $('#kuota').text(response.kuota);
-            $('#pelaksanaan').text(response.pelaksanaan);
-            $('#durasimagang').text(response.durasimagang);
-            $('#lokasi').text(response.lokasi);
-            $('#nominal_salary').text(response.nominal_salary);
-            $('#deskripsi').text(response.deskripsi);
-            $('#jenjang').text(response.jenjang);
-            $('#prodilowongan').text(response.prodilowongan);
-            var dateString = response.enddate;
-            var date = new Date(dateString);
-            var tahun = date.getFullYear();
-            var bulan = date.getMonth() + 1;
-            var tanggal = ('0' + date.getDate()).slice(-2);
-            var namaBulan = {
-                1: 'Januari',
-                2: 'Februari',
-                3: 'Maret',
-                4: 'April',
-                5: 'Mei',
-                6: 'Juni',
-                7: 'Juli',
-                8: 'Agustus',
-                9: 'September',
-                10: 'Oktober',
-                11: 'November',
-                12: 'Desember'
-            };
-            var namaBulanIndonesia = namaBulan[bulan];
-            var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
+        let id = e.attr('data-id');
+        var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
+        console.log(id);
+            
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response) {
+                $('#namaindustri').text(response.industri.namaindustri);
+                $('#intern_position').text(response.intern_position);
+                $('#kuota').text(response.kuota);
+                $('#pelaksanaan').text(response.pelaksanaan);
+                $('#durasimagang').text(response.durasimagang);
+                $('#lokasi').text(response.lokasi);
+                $('#nominal_salary').text(response.nominal_salary);
+                $('#deskripsi').text(response.deskripsi);
+                $('#jenjang').text(response.jenjang);
+                $('#prodilowongan').text(response.prodilowongan);
+                $('#btn-detail').click(function(e){
+                    e.preventDefault(); 
+                    var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(response) {
+                            window.location.href = url 
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                });
+                var dateString = response.enddate;
+                var date = new Date(dateString);
+                var tahun = date.getFullYear();
+                var bulan = date.getMonth() + 1;
+                var tanggal = ('0' + date.getDate()).slice(-2);
+                var namaBulan = {
+                    1: 'Januari',
+                    2: 'Februari',
+                    3: 'Maret',
+                    4: 'April',
+                    5: 'Mei',
+                    6: 'Juni',
+                    7: 'Juli',
+                    8: 'Agustus',
+                    9: 'September',
+                    10: 'Oktober',
+                    11: 'November',
+                    12: 'Desember'
+                };
+                var namaBulanIndonesia = namaBulan[bulan];
+                var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
 
-            $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
-            $('#requirements').text(response.requirements);
-            $('#benefitmagang').text(response.benefitmagang);
-            $('#keterampilan').text(response.keterampilan);
-            $('#deskripsiperusahaan').text(response.industri.description);
+                $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
+                $('#requirements').text(response.requirements);
+                $('#benefitmagang').text(response.benefitmagang);
+                $('#keterampilan').text(response.keterampilan);
+                $('#deskripsiperusahaan').text(response.industri.description);
 
-            $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
-                                            style="max-width:120px; max-height: 125px"
-                                            id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
+                $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
+                                                style="max-width:120px; max-height: 125px"
+                                                id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
 
-            $('#lowongan-terpilih').show();
-            $('#tidak-ada-lowongan').hide();
-                    
-        }   
-        
-    });
+                $('#lowongan-terpilih').show();
+                $('#tidak-ada-lowongan').hide();
+                        
+            }   
+            
+        });
     }
+    // function detailLanjut(e) {
+    //     let id = e.attr('data-id');
+    //     var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
+    //     console.log(id);
+    // }
 
 
 </script>

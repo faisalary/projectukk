@@ -212,6 +212,7 @@ class LowonganMagangController extends Controller
             $lowongan->enddate = $request->tanggalakhir;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan;
+            $lowongan->statusaprove = 'tertunda';
             $lowongan->id_fakultas = $request->fakultas;
             if ($lowongan->save()) {
                 $seleksi = SeleksiTahap::where('id_lowongan', $id)->delete();
