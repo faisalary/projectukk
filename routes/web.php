@@ -565,6 +565,10 @@ Route::get('/dashboard/admin', function () {
     return view('dashboard.admin.index');
 });
 
+Route::get('/dashboard/company', function () {
+    return view('dashboard.company.index');
+});
+
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
 Route::post('submit-contact', [ContactController::class, 'store'])->name('submit-contact');

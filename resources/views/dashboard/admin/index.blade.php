@@ -19,6 +19,19 @@
 @endsection
 
 @section('main')
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+        <h4 class="fw-bold text-sm">Dashboard Periode 2021/2022 Ganjil</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+        <select class="select2 form-select" data-placeholder="Filter Status">
+            <option value="0" selected>2021/2022 Ganjil</option>
+            <option value="1">2021/2022 Genap</option>
+            <option value="2">2022/2023 Ganjil</option>
+            <option value="3">2022/2023 Genap</option>
+        </select>
+    </div>
+</div>
 
 <!-- Statistics -->
 <div class="col-12 mb-4">
