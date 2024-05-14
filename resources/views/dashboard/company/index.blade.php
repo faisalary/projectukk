@@ -284,49 +284,49 @@
                                 <h5>Tahap 1 UI/UX Designer</h5>
                             </div>
                             <div style="overflow-y: scroll; min-height: 41rem; max-height: 41rem; direction:rtl;">
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
+                                    <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
+                                        <h5 class="mb-2">Alfian Mohammad Rizki</h5>
+                                        <p>UI/UX DESIGNER</p>
+                                    </div>
+                                </div>
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
                                     </div>
                                 </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
-                                    <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
-                                        <h5 class="mb-2">Alfian Mohammad Rizki</h5>
-                                        <span>UI/UX DESIGNER</span>
-                                    </div>
-                                </div>
-                                <div class="my-3 mx-2" style="background-color: rgba(223, 255, 236, .7) ;">
+                                <div class="my-3 mx-2 text-start" style="background-color: rgba(223, 255, 236, .7) ;">
                                     <div class="py-2 px-3" style="border-left: 10px solid #4EA971;">
                                         <h5 class="mb-2">Alfian Mohammad Rizki</h5>
                                         <span>UI/UX DESIGNER</span>
@@ -377,7 +377,6 @@
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 <script src="../../app-assets/js/app-calendar-events.js"></script>
 <script src="../../app-assets/js/app-calendar.js"></script>
-<!-- <script src="../../app-assets/vendor/libs/flatpickr/flatpickr.js"></script> -->
 <script src="../../app-assets/vendor/libs/fullcalendar/fullcalendar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
 <script>
