@@ -76,7 +76,7 @@
                                 <tr>
                                     <th>NOMOR</th>
                                     <th>JENIS MAGANG</th>
-                                    <th>BOBOT</th>
+                                    {{-- <th>BOBOT</th> --}}
                                     <th>ASPEK PENILAIAN</th>
                                     <th>DESKRIPSI ASPEK PENILAIAN</th>
                                     <th>NILAI MAX</th>
@@ -97,7 +97,7 @@
                                 <tr>
                                     <th>NOMOR</th>
                                     <th>JENIS MAGANG</th>
-                                    <th>BOBOT</th>
+                                    {{-- <th>BOBOT</th> --}}
                                     <th>ASPEK PENILAIAN</th>
                                     <th>DESKRIPSI ASPEK PENILAIAN</th>
                                     <th>NILAI MAX</th>
@@ -136,10 +136,10 @@
                     data: 'jenismagang.namajenis',
                     name: 'namajenis'
                 },
-                {
-                    data: 'bobot',
-                    name: 'bobot'
-                },
+                // {
+                //     data: 'bobot',
+                //     name: 'bobot'
+                // },
                 {
                     data: 'aspek_penilaian',
                     name: 'aspek_penilaian'
@@ -177,10 +177,10 @@
                     data: 'jenismagang.namajenis',
                     name: 'namajenis'
                 },
-                {
-                    data: 'bobot',
-                    name: 'bobot'
-                },
+                // {
+                //     data: 'bobot',
+                //     name: 'bobot'
+                // },
                 {
                     data: 'aspek_penilaian',
                     name: 'aspek_penilaian'
@@ -218,7 +218,7 @@
                     $("#modal-button").html("Update Data")
                     $('#modal-komponen-nilai form').attr('action', action);
                     $('#id_jenismagang').val(response.id_jenismagang).trigger('change');
-                    $('#bobot').val(response.bobot);
+                    // $('#bobot').val(response.bobot);
                     $('#aspek_penilaian').val(response.aspek_penilaian);
                     $('#deskripsi_penilaian').val(response.deskripsi_penilaian);
                     $('#scored_by').val(response.scored_by).trigger('change');
