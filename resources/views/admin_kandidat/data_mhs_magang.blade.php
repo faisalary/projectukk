@@ -185,7 +185,7 @@
 <script>
     $('#diterima').each(function() {
         let idElement = $(this).attr('id');
-        let url = `{{ url('/data-mahasiswa-magang/magang-fakultas/show/') }}?type=` + idElement;
+        let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
         // console.log('idelement: ' + idElement);
 
         $(this).DataTable({
@@ -292,7 +292,7 @@
 
     $('#ditolak').each(function() {
         let idElement = $(this).attr('id');
-        let url = `{{ url('/data-mahasiswa-magang/magang-fakultas/show/') }}?type=` + idElement;
+        let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
 
         $(this).DataTable({
 

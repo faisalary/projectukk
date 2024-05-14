@@ -373,20 +373,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/data-mahasiswa-magang')->group(function () {
-        Route::prefix('magang-fakultas')->group(function () {
-            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexFakultas'])->name('data-fakultas.index');
-            Route::get('/show', [App\Http\Controllers\DataMahasiswaMagangController::class, 'showFakultas'])->name('data-fakultas.show');
-            Route::post('/store', [App\Http\Controllers\DataMahasiswaMagangController::class, 'store'])->name('data-fakultas.store');
-            Route::post('/update{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'update'])->name('data-fakultas.update');
-            Route::get('/edit{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'edit'])->name('data-fakultas.edit');
-            Route::post('/status/{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'status'])->name('data-fakultas.status');
-            Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-fakultas.doc');
-        });
-        Route::prefix('/magang-mandiri')->group(function () {
-            Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'indexMandiri'])->name('data-mandiri.index');
-            Route::get('/show', [App\Http\Controllers\DataMahasiswaMagangController::class, 'showMandiri'])->name('data-mandiri.show');
-            Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-mandiri.doc');
-        });
+        Route::get('/', [App\Http\Controllers\DataMahasiswaMagangController::class, 'index'])->name('data-magang.index');
+        Route::get('/show', [App\Http\Controllers\DataMahasiswaMagangController::class, 'show'])->name('data-magang.show');
+        Route::post('/store', [App\Http\Controllers\DataMahasiswaMagangController::class, 'store'])->name('data-magang.store');
+        Route::post('/update{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'update'])->name('data-magang.update');
+        Route::get('/edit{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'edit'])->name('data-magang.edit');
+        Route::post('/status/{id}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'status'])->name('data-magang.status');
+        Route::get('/doc/{file}', [App\Http\Controllers\DataMahasiswaMagangController::class, 'doc'])->name('data-magang.doc');
     });
 
     Route::prefix('/apply-lowongan')->group(function () {
