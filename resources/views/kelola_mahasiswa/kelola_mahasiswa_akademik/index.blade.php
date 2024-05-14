@@ -41,22 +41,22 @@
                         <table class="table" id="table-input">
                             <thead>
                                 <tr>
-                                    <th>NOMOR</th>
+                                    <th style="min-width:50px;">NOMOR</th>
                                     <th style="min-width:200px;">ASPEK PENILAIAN</th>
                                     <th style="min-width:200px;">DESKRIPSI ASPEK PENILAIAN</th>
                                     <th style="min-width:100px;">NILAI MAX</th>
-                                    <th style="min-width:100px;">BOBOT NILAI</th>
+
                                     <th style="min-width:150px;">NILAI MAGANG</th>
                                 </tr>
                             <tfoot>
                                 <tr>
-                                    <th class="text-center" colspan="5">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 =
+                                    <th class="text-center" colspan="4">TOTAL NILAI AKHIR MAGANG (Aspek 1 + Aspek 2 =
                                         100)</th>
                                     <th class=""><input type="text" id="" class="form-control"
                                             placeholder="85" style="max-width: 150px;" disabled /></th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center" colspan="5">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
+                                    <th class="text-center" colspan="4">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
                                     <th class=""><input type="text" id="" class="form-control"
                                             placeholder="A" style="max-width: 150px;" disabled /></th>
                                 </tr>
@@ -123,16 +123,10 @@
                     }
                 },
                 {
-                    data: 'bobot',
-                    name: 'bobot',
+                    data: null,
                     render: function(data, type, row) {
-                        return row.bobot + '%';
-                    }
-                },
-                {
-                    data: ,
-                    render: function(data, type, row) {
-                        return "<input type='number' class='form-control' min='0' max='" + row.nilai_max +
+                        return "<input type='number' class='form-control nilai-magang' min='0' max='" + row
+                            .nilai_max +
                             "' placeholder='Input Disini' style='max-width: 150px;' />";
                     }
                 }
