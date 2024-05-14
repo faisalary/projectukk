@@ -16,16 +16,11 @@ class DataMahasiswaMagangController extends Controller
      * Display a listing of the resource.
      */
     // indeks Mahasiswa Fakultas
-    public function indexFakultas()
+    public function index()
     {
-        return view('admin_kandidat.magang_fakultas');
+        return view('admin_kandidat.data_mhs_magang');
     }
 
-    // indeks Mahasiswa Mandiri
-    public function indexMandiri()
-    {
-        return view('admin_kandidat.magang_mandiri');
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +41,7 @@ class DataMahasiswaMagangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showFakultas(Request $request)
+    public function show(Request $request)
     {
 
         $mhs_magang = MhsMagang::orderBy('id_pendaftaran', 'asc');
@@ -81,38 +76,38 @@ class DataMahasiswaMagangController extends Controller
             ->make(true);
     }
 
-    public function showMandiri(Request $request)
-    {
+    // public function showMandiri(Request $request)
+    // {
 
-        $mhs_mandiri = MhsMandiri::orderBy('id_pengajuan', 'asc');
-        $pelamar = PengajuanMandiri::orderBy('id_pengajuan', 'asc');
+    //     $mhs_mandiri = MhsMandiri::orderBy('id_pengajuan', 'asc');
+    //     $pelamar = PengajuanMandiri::orderBy('id_pengajuan', 'asc');
 
-        if ($request->type) {
-            $mhs_mandiri = $pelamar->where('status_terima', $request->type)
-                ->with(
-                    'mahasiswa_mandiri',
-                    'mahasiswa_mandiri.pbb',
-                    'mahasiswa_mandiri.dosen',
-                    'mahasiswa',
-                    'mahasiswa.prodi'
-                );
-        }
+    //     if ($request->type) {
+    //         $mhs_mandiri = $pelamar->where('status_terima', $request->type)
+    //             ->with(
+    //                 'mahasiswa_mandiri',
+    //                 'mahasiswa_mandiri.pbb',
+    //                 'mahasiswa_mandiri.dosen',
+    //                 'mahasiswa',
+    //                 'mahasiswa.prodi'
+    //             );
+    //     }
 
 
-        return DataTables::of($mhs_mandiri->get())
-            ->addIndexColumn()
-            ->addColumn('tgl_magang', function ($item) {
-                $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . Carbon::parse($item->startdate)->format('d F Y') . '</span><br> <span class="text-muted">Tanggal Berakhir</span><br> <span>' . Carbon::parse($item->enddate)->format('d F Y') . '</span>';
-                return $time;
-            })
-            ->addColumn('doc_terima', function ($item) {
-                $doc = "<a class='text-success' href='magang-mandiri/doc/{$item->bukti_doc}' target='_blank'>Bukti Penerimaan.pdf</a>";
-                return $doc;
-            })
-            ->rawColumns(['tgl_magang', 'doc_terima'])
+    //     return DataTables::of($mhs_mandiri->get())
+    //         ->addIndexColumn()
+    //         ->addColumn('tgl_magang', function ($item) {
+    //             $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . Carbon::parse($item->startdate)->format('d F Y') . '</span><br> <span class="text-muted">Tanggal Berakhir</span><br> <span>' . Carbon::parse($item->enddate)->format('d F Y') . '</span>';
+    //             return $time;
+    //         })
+    //         ->addColumn('doc_terima', function ($item) {
+    //             $doc = "<a class='text-success' href='magang-mandiri/doc/{$item->bukti_doc}' target='_blank'>Bukti Penerimaan.pdf</a>";
+    //             return $doc;
+    //         })
+    //         ->rawColumns(['tgl_magang', 'doc_terima'])
 
-            ->make(true);
-    }
+    //         ->make(true);
+    // }
 
     /**
      * Show the form for editing the specified resource.
