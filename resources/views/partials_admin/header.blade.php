@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{asset('app-assets')}}" data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('app-assets') }}" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('app-assets/img/favicon/favicon.ico')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('app-assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,17 +48,17 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{asset('/app-assets/vendor/css/pages/cards-advance.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/app-assets/vendor/css/pages/cards-advance.css') }}" />
     <!-- Helpers -->
-    <script src="{{asset('app-assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{ asset('app-assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="{{asset('app-assets/vendor/js/template-customizer.js')}}"></script>
+    <script src="{{ asset('app-assets/vendor/js/template-customizer.js') }}"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('app-assets/vendor/js/template-customizer.js')}}"></script>
+    <script src="{{ asset('app-assets/vendor/js/template-customizer.js') }}"></script>
 
-    <script src="{{ asset('app-assets/js/config.js')}}"></script>
+    <script src="{{ asset('app-assets/js/config.js') }}"></script>
 
     <style>
         .bg-menu-theme.menu-vertical .menu-item.active>.menu-link:not(.menu-toggle) {
@@ -174,7 +174,8 @@
                 @can('slidebar.lkm')
                 <ul class="menu-inner py-1">
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin LKM</span>
+                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin
+                            LKM</span>
                     </li>
                     <!-- Dashboards -->
                     <li class="menu-item {{ request()->is('dashboard/admin*') ? 'active' : '' }}">
@@ -193,7 +194,7 @@
                     </li>
 
                     <!-- Lowongan Magang -->
-                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola/lowongan*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ request()->is('informasi*') || request()->is('kelola/lowongan*') ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
@@ -213,15 +214,15 @@
                     </li>
 
                     <!-- Pengajuan SPM -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item" {{ request()->is('mandiri/approve-mandiri') ? 'active' : '' }}">
+                        <a href="{{ route('approve_mandiri.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-files"></i>
                             <div data-i18n="Pengajuan SPM">Pengajuan SPM</div>
                         </a>
                     </li>
 
-                     <!-- Jadwal Seleksi -->
-                     <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
+                    <!-- Jadwal Seleksi -->
+                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
                         <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
@@ -229,19 +230,19 @@
                     </li>
 
                     <!-- Data Mahasiswa -->
-                    <li class="menu-item {{ (request()->is('magang-fakultas*') || request()->is('magang-mandiri*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ request()->is('data-mahasiswa-magang*') ? 'active open' : '' }}">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('magang-fakultas*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-fakultas') }}" class="menu-link">
+                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-fakultas*') ? 'active' : '' }}">
+                                <a href="{{ route('data-fakultas.index') }}" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item {{ request()->is('magang-mandiri*') ? 'active' : '' }}">
-                                <a href="{{ url('magang-mandiri') }}" class="menu-link">
+                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-mandiri*') ? 'active' : '' }}">
+                                <a href="{{ route('data-mandiri.index') }}" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
                             </li>
@@ -364,10 +365,10 @@
                                 </a>
                             </li>
                             <!-- <li class="menu-item {{ request()->is('master/universitas*') ? 'active' : '' }}">
-                                <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Master Industri">Master Industri</div>
-                                </a>
-                            </li> -->
+                                                    <a href="{{ route('mitra.index') }}" class="menu-link">
+                                                        <div data-i18n="Master Industri">Master Industri</div>
+                                                    </a>
+                                                </li> -->
                             <li class="menu-item {{ request()->is('master/dosen*') ? 'active' : '' }}">
                                 <a href="{{ route('dosen.index') }}" class="menu-link">
                                     <div data-i18n="Master Dosen">Master Dosen</div>
@@ -389,7 +390,7 @@
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('master/komponen-penilaian*') ? 'active' : '' }}">
-                                <a href="{{route('komponen-penilaian.index')}}" class="menu-link">
+                                <a href="{{ route('komponen-penilaian.index') }}" class="menu-link">
                                     <div data-i18n="Master Komponen Nilai">Master Komponen Nilai</div>
                                 </a>
                             </li>
@@ -400,7 +401,8 @@
                             </li>
                             <li class="menu-item {{ request()->is('master/pembimbing-mandiri*') ? 'active' : '' }}">
                                 <a href="/master/pembimbing-mandiri" class="menu-link">
-                                    <div data-i18n="Master Pembimbing Lapangan Mandiri">Master Pembimbing Lapangan Mandiri</div>
+                                    <div data-i18n="Master Pembimbing Lapangan Mandiri">Master Pembimbing Lapangan
+                                        Mandiri</div>
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
@@ -449,7 +451,8 @@
                 @can('slidebar.mitra')
                 <ul class="menu-inner py-2">
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra Perusahaan</span>
+                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Mitra
+                            Perusahaan</span>
                     </li>
                     <!-- Dashboards -->
                     <li class="menu-item {{ request()->is('dashboard/company*') ? 'active' : '' }}">
@@ -460,7 +463,7 @@
                     </li>
 
                     <!-- Lowongan Magang -->
-                    <li class="menu-item {{ (request()->is('informasi*') || request()->is('kelola/lowongan*')) ? 'active open' : '' }}">
+                    <li class="menu-item {{ request()->is('informasi*') || request()->is('kelola/lowongan*') ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-briefcase"></i>
                             <div data-i18n="Lowongan Magang">Lowongan Magang</div>
@@ -468,12 +471,12 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('informasi*') ? 'active' : '' }}">
-                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
+                                <a href="{{ url('informasi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
                                     <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('kelola/lowongan*') ? 'active' : '' }}">
-                                <a href="{{ url('kelola/lowongan/mitra',  Auth::user()->id_industri)}}" class="menu-link">
+                                <a href="{{ url('kelola/lowongan/mitra', Auth::user()->id_industri) }}" class="menu-link">
                                     <div data-i18n="Kelola Lowongan">Kelola Lowongan</div>
                                 </a>
                             </li>
@@ -490,7 +493,7 @@
 
                     <!-- Jadwal Seleksi -->
                     <li class="menu-item {{ request()->is('jadwal-seleksi*') ? 'active' : '' }}">
-                        <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri)}}" class="menu-link">
+                        <a href="{{ url('jadwal-seleksi/lowongan', Auth::user()->id_industri) }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clock"></i>
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
@@ -561,7 +564,7 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- Kelola Pengguna--}}
+                    {{-- Kelola Pengguna --}}
                     <li class="menu-item {{ request()->is('kelola-pengguna*') ? 'active' : '' }}">
                         <a href="{{ url('kelola-pengguna') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users"></i>
@@ -785,7 +788,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="{{ url("app-assets/img/avatars/1.png")}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ url('app-assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -821,7 +824,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="{{ url("app-assets/img/avatars/2.png")}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ url('app-assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -857,7 +860,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="{{ url("app-assets/img/avatars/9.png")}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ url('app-assets/img/avatars/9.png') }}" alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -896,7 +899,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="{{ url("app-assets/img/avatars/5.png")}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ url('app-assets/img/avatars/5.png') }}" alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -914,7 +917,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="{{ url("app-assets/img/avatars/6.png")}}" alt class="h-auto rounded-circle" />
+                                                            <img src="{{ url('app-assets/img/avatars/6.png') }}" alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -967,10 +970,10 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
 
-                                        @if($user->roles[0]->name == 'superadmin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                        @if ($user->roles[0]->name == 'superadmin')
+                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
                                         @elseif($user->roles[0]->name == 'admin')
-                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                         @endif
                                     </div>
                                 </a>
@@ -980,10 +983,10 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        @if($user->roles[0]->name == 'superadmin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\super-admin.png'}}" alt class="h-auto rounded-circle" />
+                                                        @if ($user->roles[0]->name == 'superadmin')
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
                                                         @elseif($user->roles[0]->name == 'admin')
-                                                        <img src="{{Auth::user()->profile_image_url ?? '\assets\images\company.png'}}" alt class="h-auto rounded-circle" />
+                                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\company.png' }}" alt class="h-auto rounded-circle" />
                                                         @endif
                                                     </div>
                                                 </div>

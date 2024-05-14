@@ -106,6 +106,7 @@
         const { url, id } = args;
         const context = $(content).attr("context");
         let action = url + "/" + id;
+        console.log(url, id);
 
         Swal.fire({
             title: "Are you sure?",

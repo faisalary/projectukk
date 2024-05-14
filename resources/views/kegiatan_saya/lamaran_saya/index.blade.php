@@ -65,11 +65,145 @@
         </ul>
         <!-- Isi Tab Bar -->
         <div class="tab-content p-0">
-
-            <div id="container-card" class="mb-3">
+            <!-- Magang Fakultas -->
+            <div class="tab-pane fade show active" id="navs-pills-justified-magang-fakultas" role="tabpanel">
+                <div class="row mt-2" style="padding-left: 12px;">
+                    <ul class="nav nav-pills mb-3 " role="tablist">
+                        @foreach (['proses_seleksi', 'penawaran', 'diterima', 'ditolak'] as $key => $item)
+                        <li class="nav-item" style="font-size: 15px;">
+                            <button type="button" class="nav-link {{ $key == 0 ? 'active' : '' }}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-controls="navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-selected="false">
+                                <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }}
+                            </button>
+                        </li>
+                        @endforeach
+                    </ul>
+                    <div class="tab-content p-0">
+                        <!-- Proses Seleksi -->
+                        <div class="tab-pane fade show active" id="navs-pills-justified-proses-seleksi" role="tabpanel">
+                            <div class="d-flex justify-content-end">
+                                <select class="select2" id="filter-status-lowongan" data-placeholder="Pilih Status Lowongan">
+                                    <option value="" disabled selected>Pilih Status Lowongan</option>
+                                    <option value="screening">Screening</option>
+                                    <option value="tahap1">Tahap 1</option>
+                                    <option value="tahap2">Tahap 2</option>
+                                    <option value="tahap3">Tahap 3</option>
+                                    <option value="3">Penawaran</option>
+                                    <option value="1">Diterima</option>
+                                    <option value="2">Ditolak</option>
+                                </select>
+                            </div>
+                            <div id="container-proses-seleksi"></div>
+                        </div>
+                        <div class="tab-pane fade" id="navs-pills-justified-penawaran" role="tabpanel">
+                            @include('kegiatan_saya.lamaran_saya.components.penawaran')
+                        </div>
+                        <div class="tab-pane fade" id="navs-pills-justified-diterima" role="tabpanel">
+                            @include('kegiatan_saya.lamaran_saya.components.diterima')
+                        </div>
+                        <div class="tab-pane fade" id="navs-pills-justified-ditolak" role="tabpanel">
+                            @include('kegiatan_saya.lamaran_saya.components.ditolak')
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+            <!-- Magang Mandiri -->
+            <div class="tab-pane fade show" id="navs-pills-justified-magang-mandiri" role="tabpanel">
+                @foreach ($mandiri as $item)
+                @if ($item->nim == $nim)
+                @if ($item->statusapprove == 1 && $item->status_terima == null)
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            Lakukan konfirmasi penerimaan segera!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="text-end mt-3"><span class="badge bg-label-secondary">Penawaran</span>
+                        </div>
+                        <div class="row">
+                            <div class="ps-4">
+                                <h4>{{ $item->posisi_magang }}</h4>
+                                <p>{{ $item->nama_industri }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin" style="font-size: 18px;"></i>
+                                    {{ $item->alamat_industri }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1" style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span><i class="tf-icons ti ti-mail pe-1" style="font-size: 18px;"></i>{{ $item->email }}</span>
+                            </div>
+                        </div>
+                        <div class="text-left mt-3">
+                            <button type="button" class="btn btn-success waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}}    data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
+                            </button>
+                            <button type="button" class="btn btn-danger waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}" onclick="Ditolak($(this))">Ditolak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @elseif ($item->status_terima == 1)
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="text-end mt-3"><span class="badge bg-label-success">Diterima</span>
+                        </div>
+                        <div class="row">
+                            <div class="ps-4">
+                                <h4>{{ $item->posisi_magang }}</h4>
+                                <p>{{ $item->nama_industri }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin" style="font-size: 18px;"></i>
+                                    {{ $item->alamat_industri }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1" style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span><i class="tf-icons ti ti-mail pe-1" style="font-size: 18px;"></i>{{ $item->email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @elseif ($item->status_terima == 2)
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span>
+                        </div>
+                        <div class="row">
+                            <div class="ps-4">
+                                <h4>{{ $item->posisi_magang }}</h4>
+                                <p>{{ $item->nama_industri }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-map-pin" style="font-size: 18px;"></i>
+                                    {{ $item->alamat_industri }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span class="border-end pe-2 me-2"><i class="tf-icons ti ti-phone-call pe-1" style="font-size: 18px;"></i>{{ $item->nohp }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span><i class="tf-icons ti ti-mail pe-1" style="font-size: 18px;"></i>{{ $item->email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @endif
+                @endforeach
+            </div>
+            <!-- /Magang Mandiri -->
+
         </div>
-        <!-- =Isi Tab Bar= -->
     </div>
 </div>
 @include('kegiatan_saya.lamaran_saya.modal')
@@ -78,6 +212,22 @@
 @section('page_script')
 <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
 <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+<script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
+<!-- Vendors JS -->
+<script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
+
+<!-- Page JS -->
+<script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
+
+
 <script>
     $(".flatpickr-date").flatpickr({
         altInput: true,
@@ -87,98 +237,26 @@
     });
 
     $(document).ready(function() {
-        let idElement = "navs-pills-justified-magang-fakultas";
-        // var select2 = document.querySelector('select[name="filter"]');
-        // var status = select2.value;
-        // let item = {
-        //     status: status,
-        // };
-
-        $.ajax({
-            url: `{{$urlGetCard}}?type=` + idElement,
-            type: "get",
-            success: function(res) {
-                if (res != "") {
-                    $("#container-card").html(res);
-                }
-            }
-        })
-
-        jQuery('.nav-link').click(function() {
-            let idElement = $(this).attr('aria-controls');
-
-            $.ajax({
-                url: `{{$urlGetCard}}?type=` + idElement,
-                type: "get",
-                success: function(res) {
-                    if (res != "") {
-                        $("#container-card").html(res);
-                    }
-                }
-            })
-
-        });
+        loadData();
     });
 
-    function filter(content, button) {
-        $("input").blur();
-        let action = $(content).attr("action");
-        var select2 = document.querySelector('select[name="filter"]');
-        var status = select2.value;
-        console.log(status);
-        if (status == "") {
-            Swal.fire({
-                icon: "warning",
-                title: "INFO",
-                text: "Pilih status lowongan!",
-                customClass: {
-                    confirmButton: "btn btn-success",
-                },
-            });
-        } else {
-            let item = {
-                status: status,
-            };
-            jQuery
-                .ajax({
-                    url: action,
-                    type: "GET",
-                    headers: {
-                        "X-CSRF-TOKEN": $(
-                            'meta[name="csrf-token"]',
-                        ).attr("content"),
-                    },
-                    data: item,
-                    success: function(response) {
-                        if (response.error) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong!",
-                                customClass: {
-                                    confirmButton: "btn btn-success",
-                                },
-                                buttonsStyling: false,
-                            });
-                        } else {
-                            location.reload();
-                        }
-                    },
-                })
-                .always(function() {
-                    button.prop("disabled", false);
-                    button.html(
-                        '<i class="tf-icons ti ti-checks"> Terapkan</i>',
-                    );
-                });
+    function loadData(filter = null) {
+        let urlGetCard = `{{ $urlGetCard }}`;
+        if (filter != null) {
+            urlGetCard = urlGetCard + `?filter=${filter}`
         }
+
+        $.ajax({
+            url: urlGetCard,
+            type: "GET",
+            success: function(response) {
+                $('#container-proses-seleksi').html(response);
+            },
+        });
     }
 
-    $(document).on("submit", ".filter-form", function(event) {
-        event.preventDefault();
-        var button = $(this).find(":submit");
-
-        filter(this, button);
+    $('#filter-status-lowongan').on('change', function() {
+        loadData($(this).val());
     });
 
     // Fakultas
@@ -186,7 +264,7 @@
         var nim = e.attr('data-id');
         var lowongan = e.attr('data-lowongan');
         var url = `{{ url('kegiatan-saya/ambil') }}/${nim}`;
-        var count = `{{$diterima->count()}}`;
+        var count = `1`;
 
         if (count == 1) {
             Swal.fire({
@@ -341,12 +419,14 @@
 
     // Mandiri
     function terima(e) {
+        // let nim = e.attr('data-nim');
         let id = e.attr('data-id');
         let action = `{{ url('kegiatan-saya/update/') }}/${id}`;
         var url = `{{ url('kegiatan-saya/edit/') }}/${id}`;
         $.ajax({
             type: 'GET',
             url: url,
+            // data:[nim=nim],
             success: function(response) {
                 console.log(response);
                 $('#modalDiterima form').attr('action', action);
@@ -377,18 +457,4 @@
         });
     }
 </script>
-<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
-<script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
-<!-- Vendors JS -->
-<script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-<script src="{{ asset('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
-
-<!-- Page JS -->
-<script src="{{ asset('app-assets/js/forms-pickers.js') }}"></script>
 @endsection

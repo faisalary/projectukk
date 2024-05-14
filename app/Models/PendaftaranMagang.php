@@ -14,9 +14,16 @@ class PendaftaranMagang extends Model
     protected $fillable = [
         'tanggaldaftar',
         'nim',
-        'applicant_status',
+        'current_step',
         'approval',
-        'status',
+        'status_seleksi',
+        'approvetime',
+        'id_lowongan',
+        'approved_by',
+        'konfirmasi_status',
+        'bukti_doc',
+        'portofolio',
+        'reason_aplicant',
 
     ];
     public $timestamps = false;
@@ -27,7 +34,7 @@ class PendaftaranMagang extends Model
         'approvetime' => 'datetime'
     ];
 
-    public function lowonganMagang()
+    public function lowongan_magang()
     {
         return $this->belongsTo(LowonganMagang::class, 'id_lowongan');
     }
@@ -38,5 +45,9 @@ class PendaftaranMagang extends Model
     public function tahun_akademik()
     {
         return $this->belongsTo(TahunAkademik::class, 'id_year_akademik');
+    }
+    public function mahasiswa_magang()
+    {
+        return $this->hasOne(MhsMagang::class, 'id_pendaftaran');
     }
 }

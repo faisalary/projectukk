@@ -5,6 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Talentern</title>
 
@@ -295,7 +296,7 @@
 
                 <!-- Lowongan Magang -->
                 <li class="menu-item">
-                  <a href="/lowongan/magang" class="menu-link">
+                  <a href="/apply-lowongan" class="menu-link">
                     <div data-i18n="Lowongan Magang">Lowongan Magang</div>
                   </a>
                 </li>

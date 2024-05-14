@@ -14,7 +14,6 @@ class LowonganMagang extends Model
     protected $guarded = [];
     protected $primaryKey = 'id_lowongan';
     protected $fillable = [
-        'id_lowongan', 
         'created_by', 
         'id_jenismagang', 
         'created_at',
@@ -22,7 +21,6 @@ class LowonganMagang extends Model
         'durasimagang',
         'deskripsi',
         'requirements',
-        'id_lokasi',
         'kuota',
         'benefitmagang',
         'startdate',
@@ -30,7 +28,6 @@ class LowonganMagang extends Model
         'tahapan_seleksi',
         'date_confirm_closing',
         'applicant_status',
-        'paid',
         'pelaksanaan',
         'jenjang',
         'keterampilan',
@@ -41,9 +38,10 @@ class LowonganMagang extends Model
         'status',
         'prodi',
         'id_prodi',
-        'fakultas',
+        'id_fakultas',
         'alasantolak',
-        'statusaprove'
+        'statusaprove',
+        'lokasi'
     ];
     protected $keyType = 'string';
     protected $casts = [
@@ -98,5 +96,13 @@ class LowonganMagang extends Model
     public function univ()
     {
         return $this->belongsTo(Universitas::class, 'id_univ');
+    }
+    public function seleksi()
+    {
+        return $this->hasMany(SeleksiTahap::class, 'id_lowongan');
+    }
+    public function prodilowongan()
+    {
+        return $this->hasMany(LowonganProdi::class, 'id_lowongan');
     }
 }

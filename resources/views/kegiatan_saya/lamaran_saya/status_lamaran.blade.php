@@ -224,78 +224,34 @@
     <div class="bs-stepper wizard-icons wizard-icons-example mt-4">
         <div class="bs-stepper-header">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color1}} waves-effect waves-light mb-3">
                     1
                 </button>
                 <p>Screening</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color2}} waves-effect waves-light mb-3">
                     2
                 </button>
                 <p>Seleksi</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color3}} waves-effect waves-light mb-3">
                     3
                 </button>
                 <p>Penawaran</p>
             </div>
             <hr style="width: 15%; height:60px;" class="border-secondary border-2">
             <div class="step d-flex flex-column align-items-center">
-                <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light mb-3">
+                <button type="button" class="btn rounded-pill btn-icon btn-{{$color4}} waves-effect waves-light mb-3">
                     4
                 </button>
                 <p>Diterima/Ditolak</p>
             </div>
         </div>
     </div>
-
-    <!-- <ul>
-        <li>
-            <i class="icon uil uil-capture"></i>
-            <div class="progress one">
-                <p>1</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Add To Cart</p>
-        </li>
-        <li>
-            <i class="icon uil uil-clipboard-notes"></i>
-            <div class="progress two">
-                <p>2</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Fill Details</p>
-        </li>
-        <li>
-            <i class="icon uil uil-credit-card"></i>
-            <div class="progress three">
-                <p>3</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Make Payment</p>
-        </li>
-        <li>
-            <i class="icon uil uil-exchange"></i>
-            <div class="progress four">
-                <p>4</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Order in Progress</p>
-        </li>
-        <li>
-            <i class="icon uil uil-map-marker"></i>
-            <div class="progress five">
-                <p>5</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Order Arrived</p>
-        </li>
-    </ul> -->
-
 
     <div class="card mb-5">
         <div class="card-body">
@@ -305,12 +261,12 @@
                     </figure>
                 </div>
                 <div class="col-3 ms-sm-0 text-start" style="margin-left:-100px;">
-                    <h3>{{$pendaftar->lowonganMagang->intern_position}}</h3>
-                    <p style="font-size:15px;">{{$pendaftar->lowonganMagang->industri->namaindustri}}</p>
+                    <h3>{{$pendaftar->lowongan_magang->intern_position}}</h3>
+                    <p style="font-size:15px;">{{$pendaftar->lowongan_magang->industri->namaindustri}}</p>
                 </div>
                 <div class="col-6 ms-sm-0 text-end" style="margin-left:100px;">
                     <div class="waktu"> Lamaran terkirim pada {{($pendaftar->tanggaldaftar?->format('d F Y'))}}</div>
-                    @if($now->lessThan($pendaftar->lowonganMagang->date_confirm_closing))
+                    @if($now->lessThan($pendaftar->lowongan_magang->date_confirm_closing))
                     <div><span class="badge bg-label-success me-1 text-end mt-3" style="height:35px; font-size:16px;">Lowongan Masih bisa diambil</span></div>
                     @else
                     <div><span class="badge bg-label-secondary me-1 text-end mt-3" style="height:35px; font-size:16px;">Lowongan Sudah di tutup</span></div>
@@ -318,14 +274,14 @@
                     <div><span class="badge bg-label-{{$color}} me-1 text-end mt-3" style="height:30px; font-size:16px;">{{$step}}</span></div>
                 </div>
             </div>
-            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->lokasi}}</div>
-            @if(empty($pendaftar->lowonganMagang->nominal_salary))
+            <div class="map-pin mt-3 mb-3"><i class="ti ti-map-pin" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowongan_magang->lokasi}}</div>
+            @if(empty($pendaftar->lowongan_magang->nominal_salary))
             <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Tidak Berbayar</div>
             @else
             <div class="currency-dollar mb-3" style="margin-left: -1px; margin-right: 10px"><i class="ti ti-currency-dollar" style="margin-right: 10px; margin-bottom:5px;"></i>Berbayar</div>
             @endif
-            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->durasimagang}}</div>
-            <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowonganMagang->kuota}} Kuota Penerimaan</div>
+            <div class="briefcase mb-3" style="margin-left: 1px;"><i class="ti ti-calendar-time" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowongan_magang->durasimagang}}</div>
+            <div class="location" style="margin-left: 2px;"><i class="ti ti-users" style="margin-right: 10px; margin-bottom:5px;"></i>{{$pendaftar->lowongan_magang->kuota}} Kuota Penerimaan</div>
             <div><a href="/detail/lowongan/magang"><button type="button" class="btn btn-sm btn-outline-dark waves-effect mt-3" style="width: 200px; height:auto"> <i class="ti ti-eye" style="margin-right: 10px; margin-bottom:5px;"></i>Lihat Detail Pekerjaan</button>
                 </a></div>
             <div class="border mt-3"></div>
@@ -341,7 +297,7 @@
                     <div class="map-pin mt-3 mb-3" style="margin-left: -50px">Tidak mengunggah portofolio</div>
                     @else
                     <a href="{{ url('kegiatan-saya/porto', $pendaftar->portofolio)}}" target="_blank">
-                        <div class="map-pin mt-3 mb-3"><i class="ti ti-file-symlink" style="margin-left: -55px; margin-bottom:5px;"></i><u>{{$pendaftar->portofolio}}.pdf</u>
+                        <div class="map-pin mt-3 mb-3 text-success"><i class="ti ti-file-symlink" style="margin-left: -55px; margin-bottom:5px;"></i><u>{{$pendaftar->portofolio}}.pdf</u>
                         </div>
                     </a>
                     @endif
@@ -359,50 +315,5 @@
     document.getElementById("back").addEventListener("click", () => {
         history.back();
     });
-
-    // coba
-
-    const one = document.querySelector(".one");
-    const two = document.querySelector(".two");
-    const three = document.querySelector(".three");
-    const four = document.querySelector(".four");
-    const five = document.querySelector(".five");
-
-    one.onclick = function() {
-        one.classList.add("active");
-        two.classList.remove("active");
-        three.classList.remove("active");
-        four.classList.remove("active");
-        five.classList.remove("active");
-    }
-
-    two.onclick = function() {
-        one.classList.add("active");
-        two.classList.add("active");
-        three.classList.remove("active");
-        four.classList.remove("active");
-        five.classList.remove("active");
-    }
-    three.onclick = function() {
-        one.classList.add("active");
-        two.classList.add("active");
-        three.classList.add("active");
-        four.classList.remove("active");
-        five.classList.remove("active");
-    }
-    four.onclick = function() {
-        one.classList.add("active");
-        two.classList.add("active");
-        three.classList.add("active");
-        four.classList.add("active");
-        five.classList.remove("active");
-    }
-    five.onclick = function() {
-        one.classList.add("active");
-        two.classList.add("active");
-        three.classList.add("active");
-        four.classList.add("active");
-        five.classList.add("active");
-    }
 </script>
 @endsection

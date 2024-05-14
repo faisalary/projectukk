@@ -11,7 +11,7 @@
         <form class="default-form" action="{{ url('mahasiswa/profile/pribadi/update/'. Auth::user()->nim)}}" method="POST">
           @csrf
         <div class="modal-body">
-            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
+            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4 ">
               @if ($informasiprib?->profile_picture?? '')
                 <img src="{{ asset('storage/' . $informasiprib?->profile_picture?? '') }}" alt="user-avatar"
                     class="img-fluid rounded mb-3 pt-1 mt-4" name="profile_picture" id="imgPreview"  width="150" height="auto">
@@ -19,7 +19,7 @@
                   <img src="{{ url("app-assets/img/avatars/14.png")}}" alt="user-avatar" 
                   class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
               @endif
-              <div class="button-wrapper">
+              <div class="button-wrapper form-input">
                 <label for="changePicture" class="btn btn-white text-success me-2 mb-3 waves-effect waves-light"
                   tabindex="0">
                   <i class="ti ti-upload d-block pe-2"></i>
@@ -27,6 +27,7 @@
                   <input type="file" id="changePicture" name="profile_picture" class="account-file-input" hidden
                       accept="image/png, image/jpeg">
                 </label>
+                <div class="invalid-feedback"></div>
                 <button type="button" 
                 class="btn btn-label-secondary account-image-reset mb-3" 
                 onclick="removeImage()">
@@ -87,7 +88,7 @@
                 </div>
                 <div class="mb-3 col-md-6  form-input">
                   <label for="tgl_lahir" class="form-label">Tanggal Lahir <span style="color: red;">*</span></label> 
-                  <input name="tgl_lahir" id="tgl_lahir" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD" required>
+                  <input name="tgl_lahir" id="tgl_lahir" type="text" class="form-control flatpickr-input active" placeholder="YYYY-MM-DD">
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 col-md-6">

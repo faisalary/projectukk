@@ -11,7 +11,28 @@ class Mahasiswa extends Model
 
     use HasFactory, HasUuids;
     protected $table = 'mahasiswa';
-    protected $fillable = ['namamhs', 'id_univ', 'id_prodi', 'id_fakultas', 'emailmhs', 'nohpmhs', 'alamatmhs', 'angkatan', 'nim'];
+    protected $fillable = [
+        'nim', 
+        'angkatan', 
+        'id_prodi', 
+        'id_univ', 
+        'id_fakultas', 
+        'namamhs', 
+        'alamatmhs', 
+        'emailmhs', 
+        'nohpmhs', 
+        'kelas',
+        'status',
+        'eprt',
+        'ipk',
+        'tak',
+        'sosmed',
+        'url_sosmed',
+        'lok_magang',
+        'skills',
+        'bahasa',
+        'tunggakan_bpp'
+    ];
     protected $keyType = 'string';
     protected $primaryKey = 'nim';
     public $timestamps = false;
@@ -35,5 +56,13 @@ class Mahasiswa extends Model
     public function informasitambahan()
     {
         return $this->belongsTo(InformasiTamabahan::class, "id_infotab");
+    }
+    public function bahasamhs()
+    {
+        return $this->hasMany(BahasaMahasiswa::class, 'nim');
+    }
+    public function sosmedmhs()
+    {
+        return $this->hasMany(SosmedTambahan::class, 'nim');
     }
 }

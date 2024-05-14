@@ -11,7 +11,7 @@ use App\Models\MhsMagang;
 use App\Models\MhsMandiri;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\LowonganMagang;
+use App\Models\lowongan_magang;
 use App\Models\PengajuanMandiri;
 use App\Models\PendaftaranMagang;
 use App\Http\Controllers\Controller;
@@ -28,145 +28,87 @@ class KonfirmasiMagangController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($nim);
         $nim = Auth::user()->nim;
 
-        if ($request->ajax() && $request->type == "navs-pills-justified-magang-fakultas") {
+        $pendaftar = PendaftaranMagang::with('lowongan_magang')->orderBy('tanggaldaftar', "asc")->get();
 
-            $pendaftar = PendaftaranMagang::query();
-            if ($request->status == "all") {
-                $pendaftar->where('nim', $nim);
-            } else if ($request->status == "screening") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('current_step', 'screening');
-            } else if ($request->status == "tahap1") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('current_step', 'tahap1');
-            } else if ($request->status == "tahap2") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('current_step', 'tahap2');
-            } else if ($request->status == "tahap3") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('current_step', 'tahap3');
-            } else if ($request->status == "diterima") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('konfirmasi_status', 1);
-            } else if ($request->status == "ditolak") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('konfirmasi_status', 2);
-            } else if ($request->status == "penawaran") {
-                $pendaftar->where('nim', $nim)->get();
-                $pendaftar->where('konfirmasi_status', 3);
-            } else {
-                $pendaftar->where('nim', $nim);
-            }
-
-            $pendaftar = $pendaftar->with('lowonganMagang')->orderBy('tanggaldaftar', "asc")->get();
-
-            // $pendaftar = PendaftaranMagang::where('nim', $nim)->with('lowonganMagang')->get();
-            $card_count = $pendaftar->count() ?? 0;
+        $pendaftar->transform(function ($pendaftar) {
+            // ----------------------------------------------------------------------------
             $now = Carbon::now();
+            // if ($now->greaterThan($pendaftar->lowongan_magang->date_confirm_closing)) {
+            //     if ($pendaftar->where('konfirmasi_status', 3)) {
+            //         $pendaftar->konfirmasi_status = 2;
+            //         $pendaftar->current_step = 'ditolak';
+            //     } elseif ($pendaftar->where('konfirmasi_status', 2)) {
+            //         $pendaftar->current_step = 'ditolak';
+            //     } elseif (empty($pendaftar->bukti_doc)) {
+            //         $pendaftar->konfirmasi_status = 2;
+            //         $pendaftar->current_step = 'ditolak';
+            //     }
+            // }
+            // $pendaftar->save();
 
-            $penawaran =  $pendaftar->where('konfirmasi_status', 3);
-            $diterima =  $pendaftar->where('konfirmasi_status', 1);
-            $ditolak =  $pendaftar->where('konfirmasi_status', 2);
+            // ----------------------------------------------------------------------------
 
-            $pendaftar->transform(function ($pendaftar) {
-                $now = Carbon::now();
+            $industri = Industri::where('id_industri', $pendaftar->lowongan_magang->id_industri)->first();
+            $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
+            $pendaftar->img = $picture . '.png';
 
-                if ($now->greaterThan($pendaftar->lowonganMagang->date_confirm_closing)) {
-                    if ($pendaftar->where('konfirmasi_status', 3)) {
-                        $pendaftar->konfirmasi_status = 2;
-                        $pendaftar->current_step = 'ditolak';
-                    } elseif ($pendaftar->where('konfirmasi_status', 2)) {
-                        $pendaftar->current_step = 'ditolak';
-                    } elseif (!($pendaftar->where('current_step', 'diterima'))) {
-                        $pendaftar->konfirmasi_status = 2;
-                        $pendaftar->current_step = 'ditolak';
-                    }
-                }
-                $pendaftar->save();
+            // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
+            return self::makeStyleStatus($pendaftar);
+        });
 
-                $industri = Industri::where('id_industri', $pendaftar->lowonganMagang->id_industri)->first();
-                $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
-                $pendaftar->img = $picture . '.png';
-
-                if ($pendaftar->current_step == "screening") {
-                    $pendaftar->step = 'Screening';
-                    $pendaftar->color = 'warning';
-                } elseif ($pendaftar->current_step == "tahap1") {
-                    $pendaftar->step = 'Tahap 1';
-                    $pendaftar->color = 'primary';
-                } elseif ($pendaftar->current_step == "tahap2") {
-                    $pendaftar->step = 'Tahap 2';
-                    $pendaftar->color = 'primary';
-                } elseif ($pendaftar->current_step == "tahap3") {
-                    $pendaftar->step = 'Tahap 3';
-                    $pendaftar->color = 'primary';
-                } elseif ($pendaftar->konfirmasi_status == 1) {
-                    $pendaftar->step = 'Diterima';
-                    $pendaftar->color = 'success';
-                } elseif ($pendaftar->konfirmasi_status == 2) {
-                    $pendaftar->step = 'Ditolak';
-                    $pendaftar->color = 'danger';
-                } elseif ($pendaftar->konfirmasi_status == 3) {
-                    $pendaftar->step = 'Penawaran';
-                    $pendaftar->color = 'info';
-                }
-                // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
-
-                return $pendaftar;
-            });
-
-            if ($card_count == 0) {
-                $nothing = '<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
-                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 35%;"><div class="sec-title mt-5 mb-4 text-center">
-                    <h4>Anda belum mengirim Lamaran Magang</h4>
-                </div>';
-                return $nothing;
-            } else {
-                return view('kegiatan_saya.lamaran_saya.fakultas_card', compact('pendaftar', 'card_count', 'penawaran', 'diterima', 'ditolak', 'now'))->render();
+        if ($request->ajax()) {
+            $pendaftar = $pendaftar->whereIn('current_step', ['screening', 'tahap1', 'tahap2', 'tahap3', 'penawaran']);
+            if ($request->filter && $request->filter != null && $request->filter != '' && $request->filter != 'all') {
+                $pendaftar = $pendaftar->where('current_step', $request->filter);
             }
-        } elseif ($request->ajax() && $request->type == "navs-pills-justified-magang-mandiri") {
-            $mandiri = PengajuanMandiri::where("nim", $nim)->get();
-            $mahasiswa = Mahasiswa::all();
-            $file = MhsMandiri::with('PengajuanMandiri')->get();
-            $file = MhsMagang::with('PengajuanMandiri')->get();
 
-            $nim = Mahasiswa::find($nim);
-            // $nim = $nim->nim;
-
-            $mandiri_nim = $mandiri->pluck('nim')->toArray();
-
-            $card_count = $mandiri->count() ?? 0;
-
-            if ($card_count == 0) {
-                $nothing = '<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
-                    auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 35%;"><div class="sec-title mt-5 mb-4 text-center">
-                    <h4>Anda belum mengajukan Surat Pengantar Magang</h4>
-                </div>';
-                return $nothing;
-            } else {
-                return view('kegiatan_saya.lamaran_saya.mandiri_card', compact('mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim'))->render();
-            }
+            return view('kegiatan_saya/lamaran_saya/components/proses_seleksi', compact('pendaftar'))->render();
         }
-
-        // $mandiri = PengajuanMandiri::where("nim", $user->nim)->get();
-        // $mahasiswa = Mahasiswa::all();
-        // $file = MhsMandiri::with('PengajuanMandiri')->get();
-        // $file = MhsMagang::with('PengajuanMandiri')->get();
-
-        // $nim = Mahasiswa::find($user->nim);
-        // // $nim = $nim->nim;
-
-        // $mandiri_nim = $mandiri->pluck('nim')->toArray();
-
-        $pendaftar = PendaftaranMagang::where('nim', $nim)->get();
-        $diterima =  $pendaftar->where('konfirmasi_status', 1);
 
         $urlGetCard = url('kegiatan-saya/lamaran-saya');
 
-        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'diterima'));
+        // Mandiri
+        $mandiri = PengajuanMandiri::where("nim", $nim)->get();
+        $mahasiswa = Mahasiswa::all();
+        $file = MhsMandiri::with('PengajuanMandiri')->get();
+        $file = MhsMagang::with('PengajuanMandiri')->get();
+
+        $nim1 = Mahasiswa::find($nim);
+        // $nim = $nim->nim;
+        $mandiri_nim = $mandiri->pluck('nim')->toArray();
+
+
+        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'pendaftar', 'mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim', 'nim1'));
+    }
+
+    private static function makeStyleStatus($pendaftar)
+    {
+        if ($pendaftar->current_step == "screening") {
+            $pendaftar->step = 'Screening';
+            $pendaftar->color = 'warning';
+        } elseif ($pendaftar->current_step == "tahap1") {
+            $pendaftar->step = 'Tahap 1';
+            $pendaftar->color = 'primary';
+        } elseif ($pendaftar->current_step == "tahap2") {
+            $pendaftar->step = 'Tahap 2';
+            $pendaftar->color = 'primary';
+        } elseif ($pendaftar->current_step == "tahap3") {
+            $pendaftar->step = 'Tahap 3';
+            $pendaftar->color = 'primary';
+        } elseif ($pendaftar->konfirmasi_status == 1) {
+            $pendaftar->step = 'Diterima';
+            $pendaftar->color = 'success';
+        } elseif ($pendaftar->konfirmasi_status == 2) {
+            $pendaftar->step = 'Ditolak';
+            $pendaftar->color = 'danger';
+        } elseif ($pendaftar->konfirmasi_status == 3) {
+            $pendaftar->step = 'Penawaran';
+            $pendaftar->color = 'info';
+        }
+
+        return $pendaftar;
     }
 
     public function store($request)
@@ -195,24 +137,19 @@ class KonfirmasiMagangController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-
+            
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
-
+// dd($mandiri);
             $mandiri->nim = $request->nim;
             $mandiri->nama_industri = $request->nama_industri;
             $mandiri->posisi_magang = $request->posisi_magang;
-            $mandiri->startdate = $request->startdate;
-            $mandiri->enddate = $request->enddate;
+            $mandiri->startdate = Carbon::parse($request->startdate)->format('Y-m-d');
+            $mandiri->enddate = Carbon::parse($request->enddate)->format('Y-m-d');
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
             $mandiri->status_terima = 1;
             $mandiri->save();
-
-            MhsMandiri::create([
-                'id_pengajuan' => $id,
-                'status' => true
-            ]);
 
             return response()->json([
                 'error' => false,
@@ -266,19 +203,9 @@ class KonfirmasiMagangController extends Controller
 
     public function porto($file)
     {
-        $path = file_get_contents(storage_path($file));
+        $path = storage_path($file);
 
-        // Convert to PDF
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($path);
-
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        // Output file
-        return $dompdf->stream($file, [
-            'Attachment' => true
-        ]);
+        return response()->file($path);
     }
 
     public function detail($id)
@@ -286,10 +213,10 @@ class KonfirmasiMagangController extends Controller
         $nim = Auth::user()->nim;
         $now = Carbon::now();
 
-        $pelamar = PendaftaranMagang::where('nim', $nim)->with('lowonganMagang')->get();
+        $pelamar = PendaftaranMagang::where('nim', $nim)->with('lowongan_magang')->get();
         $pendaftar = $pelamar->where('id_lowongan', $id)->first();
 
-        $industri = Industri::where('id_industri', $pendaftar->lowonganMagang->id_industri)->first();
+        $industri = Industri::where('id_industri', $pendaftar->lowongan_magang->id_industri)->first();
         $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
@@ -384,7 +311,7 @@ class KonfirmasiMagangController extends Controller
     {
         try {
 
-            $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowonganMagang')->first();
+            $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->with('lowongan_magang')->first();
 
             if (!empty($request->bukti_doc)) {
                 $pendaftar->bukti_doc = $request->bukti_doc->store('post');
@@ -402,7 +329,7 @@ class KonfirmasiMagangController extends Controller
             return response()->json([
                 'error' => false,
                 'message' => 'Data berhasil dibuat!',
-                'modal' => '#modalMulai',
+                'url' => url('kegiatan-saya/lamaran-saya'),
             ]);
         } catch (Exception $e) {
             return response()->json([

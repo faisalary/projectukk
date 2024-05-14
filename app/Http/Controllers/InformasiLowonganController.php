@@ -60,7 +60,7 @@ class InformasiLowonganController extends Controller
 
         $industri = Industri::where('id_industri', $id)->with('total_lowongan')->first();
         $pelamar =
-            PendaftaranMagang::where('id_lowongan', $magang->id_lowongan ?? "")->with('lowonganMagang')->first();
+            PendaftaranMagang::where('id_lowongan', $magang->id_lowongan ?? "")->with('lowongan_magang')->first();
         $lowongan_count = $lowongan->count();
         $pendaftar_count = $pelamar?->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
