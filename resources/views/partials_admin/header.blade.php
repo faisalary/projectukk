@@ -178,8 +178,8 @@
                             LKM</span>
                     </li>
                     <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item {{ request()->is('dashboard/admin*') ? 'active' : '' }}">
+                        <a href="/dashboard/admin" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
                             <div data-i18n="Dashboards">Dashboards</div>
                         </a>
