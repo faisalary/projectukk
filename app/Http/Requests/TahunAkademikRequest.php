@@ -24,8 +24,12 @@ class TahunAkademikRequest extends FormRequest
     {
 
         return [
-            'tahun' => ['required', 'numeric', 'digits:4'],
-            'semester' => ['required', 'string', 'max:255']
+        'tahun' => 'required|string|max:255',
+        'semester' => 'required|string|max:255',
+        'startdate_daftar' => 'required|date_format:Y-m-d',
+        'enddate_daftar' => 'required|date_format:Y-m-d',
+        'startdate_pengumpulan_berkas' => 'required|date_format:Y-m-d',
+        'enddate_pengumpulan_berkas' => 'required|date_format:Y-m-d',
         ];
     }
 

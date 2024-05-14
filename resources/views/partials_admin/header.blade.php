@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
-
+    <link rel="stylesheet" href="{{url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('/app-assets/vendor/css/pages/cards-advance.css') }}" />
     <!-- Helpers -->
