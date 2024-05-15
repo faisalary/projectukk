@@ -38,8 +38,10 @@
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Jenis Magang</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-jenismagang">Tambah Jenis
-            Magang</button>
+        <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-jenismagang">Tambah Jenis
+            Magang</button> -->
+        <a href="/tambah/jenis-magang" class="btn btn-success">Tambah Jenis
+            Magang</a>
     </div>
 </div>
 
@@ -54,8 +56,7 @@
                             <th>JENIS MAGANG</th>
                             <th>DURASI MAGANG</th>
                             <th>DOKUMEN UPLOAD</th>
-                            <th>REVIEW</th>
-                            <th>TIPE</th>
+                            <th>BERKAS AKHIR</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -66,9 +67,6 @@
     </div>
 </div>
 
-<!-- Modal -->
-
-@include('masters.jenis_magang.modal')
 @endsection
 
 @section('page_script')
@@ -92,11 +90,14 @@
             {
                 data: "is_document_upload"
             },
+            // {
+            //     data: "is_review_process"
+            // },
+            // {
+            //     data: "type"
+            // },
             {
-                data: "is_review_process"
-            },
-            {
-                data: "type"
+                data: null
             },
             {
                 data: "status"

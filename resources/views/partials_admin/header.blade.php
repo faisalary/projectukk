@@ -221,32 +221,12 @@
                         </a>
                     </li>
 
-                    <!-- Jadwal Seleksi -->
-                    <li class="menu-item @if (!empty($active_menu)) {{ $active_menu == '/seleksi/lanjutan' ? 'active' : '' }} @endif">
-                        <a href="{{ route('mitrajadwal.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-clock"></i>
-                            <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
-                        </a>
-                    </li>
-
                     <!-- Data Mahasiswa -->
-                    <li class="menu-item {{ request()->is('data-mahasiswa-magang*') ? 'active open' : '' }}">
-                        <a href="" class="menu-link menu-toggle">
+                    <li class="menu-item {{ request()->is('data-mahasiswa-magang*') ? 'active' : '' }}">
+                        <a href="{{ route('data-magang.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-fakultas*') ? 'active' : '' }}">
-                                <a href="{{ route('data-fakultas.index') }}" class="menu-link">
-                                    <div data-i18n="Magang Fakultas">Magang Fakultas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('data-mahasiswa-magang/magang-mandiri*') ? 'active' : '' }}">
-                                <a href="{{ route('data-mandiri.index') }}" class="menu-link">
-                                    <div data-i18n="Magang Mandiri">Magang Mandiri</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     <!-- Jadwal Seleksi -->
@@ -256,6 +236,7 @@
                             <div data-i18n="Jadwal Seleksi">Jadwal Seleksi</div>
                         </a>
                     </li>
+
                     <!-- Berkas Akhir -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -455,8 +436,8 @@
                             Perusahaan</span>
                     </li>
                     <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item {{ request()->is('dashboard/company*') ? 'active' : '' }}">
+                        <a href="/dashboard/company" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
                             <div data-i18n="Dashboards">Dashboards</div>
                         </a>

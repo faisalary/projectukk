@@ -94,7 +94,7 @@
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
                     <div class="d-flex align-items-center">
                         <i class="tf-icons ti ti-plus me-2"></i>
-                        <span class="mt-1">Buat Jadwal Seleksi Lanjutan</span>
+                        <span class="mt-1">Buat Jadwal Seleksi</span>
                     </div>
                 </button>
             </div>

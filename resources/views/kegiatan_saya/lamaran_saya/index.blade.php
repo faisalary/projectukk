@@ -83,13 +83,11 @@
                             <div class="d-flex justify-content-end">
                                 <select class="select2" id="filter-status-lowongan" data-placeholder="Pilih Status Lowongan">
                                     <option value="" disabled selected>Pilih Status Lowongan</option>
+                                    <option value="all">All</option>
                                     <option value="screening">Screening</option>
                                     <option value="tahap1">Tahap 1</option>
                                     <option value="tahap2">Tahap 2</option>
                                     <option value="tahap3">Tahap 3</option>
-                                    <option value="3">Penawaran</option>
-                                    <option value="1">Diterima</option>
-                                    <option value="2">Ditolak</option>
                                 </select>
                             </div>
                             <div id="container-proses-seleksi"></div>
@@ -140,7 +138,7 @@
                             </div>
                         </div>
                         <div class="text-left mt-3">
-                            <button type="button" class="btn btn-success waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}}    data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
+                            <button type="button" class="btn btn-success waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}" onclick="terima($(this))">Diterima
                             </button>
                             <button type="button" class="btn btn-danger waves-effect me-2" {{-- data-bs-toggle="modal" data-bs-target="#modalDiterima" --}} data-id="{{ $item->id_pengajuan }}" onclick="Ditolak($(this))">Ditolak
                             </button>
