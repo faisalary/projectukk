@@ -27,7 +27,6 @@ class InputNilaiAkademikController extends Controller
             foreach ($request->komponen as $d) {
                 MhsMagang::create([
                     'id_jenismagang' => $request->id_jenismagang,
-                    'bobot' => $request->bobot,
                     'aspek_penilaian' =>$d['aspek_penilaian'],
                     'deskripsi_penilaian' => $d['deskripsi_penilaian'],
                     'scored_by' => $d['scored_by'],
