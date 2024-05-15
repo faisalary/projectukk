@@ -76,7 +76,7 @@
             dateFormat: 'Y-m-d'
         });
 
-        
+
         $('#table-master-tahun-akademik').DataTable({
             ajax: '{{ route('thn-akademik.show') }}',
             serverSide: false,
@@ -99,14 +99,40 @@
                     data: null,
                     name: 'combined_column',
                     render: function(data, type, row) {
-                        return data.startdate_daftar + '-' + data.enddate_daftar;
+                        var startdate = new Date(data.startdate_daftar);
+                        var enddate = new Date(data.enddate_daftar);
+
+                        var formatDate = function(date) {
+                            var day = date.getDate();
+                            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+                                "Sep", "Oct", "Nov", "Dec"
+                            ];
+                            var month = monthNames[date.getMonth()];
+                            var year = date.getFullYear();
+                            return (day < 10 ? '0' : '') + day + ' ' + month + ' ' + year;
+                        };
+
+                        return formatDate(startdate) + '  -  ' + formatDate(enddate);
                     }
                 },
                 {
                     data: null,
                     name: 'combined_column',
                     render: function(data, type, row) {
-                        return data.startdate_pengumpulan_berkas + '-' + data.enddate_pengumpulan_berkas;
+                        var startdate = new Date(data.startdate_pengumpulan_berkas);
+                        var enddate = new Date(data.enddate_pengumpulan_berkas);
+
+                        var formatDate = function(date) {
+                            var day = date.getDate();
+                            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+                                "Sep", "Oct", "Nov", "Dec"
+                            ];
+                            var month = monthNames[date.getMonth()];
+                            var year = date.getFullYear();
+                            return (day < 10 ? '0' : '') + day + ' ' + month + ' ' + year;
+                        };
+
+                        return formatDate(startdate) + ' - ' + formatDate(enddate);
                     }
                 },
                 {
@@ -119,6 +145,7 @@
                 }
             ]
         });
+
 
         function edit(e) {
             let id = e.attr('data-id');
@@ -134,6 +161,12 @@
                     $('#modal-thn-akademik form').attr('action', action);
                     $('#tahun').val(response.tahun);
                     $('#semester').val(response.semester).trigger('change');
+                    $('#startdate_daftar').val(response.startdate_daftar).trigger('change');
+                    $('#enddate_daftar').val(response.enddate_daftar).trigger('change');
+                    $('#startdate_pengumpulan_berkas').val(response.startdate_pengumpulan_berkas).trigger(
+                        'change');
+                    $('#enddate_pengumpulan_berkas').val(response.enddate_pengumpulan_berkas).trigger('change');
+
 
                     $('#modal-thn-akademik').modal('show');
                 }
@@ -150,8 +183,6 @@
             $('.invalid-feedback').removeClass('d-block');
             $('.form-control').removeClass('is-invalid');
         });
-
-    
     </script>
 
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>

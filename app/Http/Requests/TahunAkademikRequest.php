@@ -26,10 +26,10 @@ class TahunAkademikRequest extends FormRequest
         return [
         'tahun' => 'required|string|max:255',
         'semester' => 'required|string|max:255',
-        'startdate_daftar' => 'required|date_format:Y-m-d',
-        'enddate_daftar' => 'required|date_format:Y-m-d',
-        'startdate_pengumpulan_berkas' => 'required|date_format:Y-m-d',
-        'enddate_pengumpulan_berkas' => 'required|date_format:Y-m-d',
+        'startdate_daftar' => 'required',
+        'enddate_daftar' => 'required',
+        'startdate_pengumpulan_berkas' => 'required',
+        'enddate_pengumpulan_berkas' => 'required',
         ];
     }
 
@@ -38,7 +38,11 @@ class TahunAkademikRequest extends FormRequest
         return [
             'tahun.required' => 'Academic year must be filled',
             'tahun.numeric' => 'Academic year must be number',
-            'semester.required' => 'Semester must be filled'
+            'semester.required' => 'Semester must be filled',
+            'startdate_daftar.required' => 'Tanggal Mulai Pendaftaran Magang must be filled',
+            'enddate_daftar.required' => 'Tanggal Akhir Pendaftaran Magang must be filled',
+            'startdate_pengumpulan_berkas.required' => 'Tanggal Mulai Pengumpulan Berkas must be filled',
+            'enddate_pengumpulan_berkas.required' => 'Tanggal Akhir Pengumpulan Berkas must be filled',
         ];
     }
 }
