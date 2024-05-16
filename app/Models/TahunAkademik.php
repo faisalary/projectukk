@@ -11,7 +11,7 @@ class TahunAkademik extends Model
     use HasUuids;
 
     protected $table = 'tahun_akademik';
-    protected $fillable = ['semester', 'tahun'];
+    protected $fillable = ['semester', 'tahun','startdate_daftar','enddate_daftar','startdate_pengumpulan_berkas','enddate_pengumpulan_berkas'];
     protected $primaryKey = 'id_year_akademik';
     protected $keyType = 'string';
     public $timestamps = false;

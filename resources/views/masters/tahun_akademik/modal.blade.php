@@ -13,18 +13,56 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="tahun" class="form-label">Tahun Ajaran</label>
-                            <input type="text" id="tahun" class="form-control" name="tahun" placeholder="Masukkan Tahun Ajaran">
+                            <input type="text" id="tahun" class="form-control" name="tahun"
+                                placeholder="Masukkan Tahun Ajaran">
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="mb-2 form-input">
                         <label for="semester" class="form-label">Semester</label>
-                        <select class="form-select select2" id="semester" name="semester" data-placeholder="Pilih Semester">
+                        <select class="form-select select2" id="semester" name="semester"
+                            data-placeholder="Pilih Semester">
                             <option value="" disabled selected>Pilih Semester</option>
                             <option value="Ganjil">Ganjil</option>
                             <option value="Genap">Genap</option>
                         </select>
                         <div class="invalid-feedback"></div>
+                    </div>
+                    <!-- Bagian Tanggal Pendaftaran -->
+                    <div class="row g-2 mb-3">
+                        <div class="col mb-0">
+                            <label for="startdate_daftar" class="form-label">Tanggal Mulai Pendaftaran Magang<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date" id="startdate_daftar"
+                                name="startdate_daftar" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                        <div class="mt-5"
+                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                        </div>
+                        <div class="col mb-0">
+                            <label for="enddate_daftar" class="form-label">Tanggal Akhir Pendaftaran Magang<span
+                                    style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date" id="enddate_daftar"
+                                name="enddate_daftar" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                    </div>
+                    <!-- Bagian Tanggal Pengumpulan Berkas -->
+                    <div class="row g-2 mb-3">
+                        <div class="col mb-0">
+                            <label for="startdate_pengumpulan_berkas" class="form-label">Tanggal Mulai Pengumpulan
+                                Berkas<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date" id="startdate_pengumpulan_berkas"
+                                name="startdate_pengumpulan_berkas" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                        <div class="mt-5"
+                            style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px">
+                        </div>
+                        <div class="col mb-0">
+                            <label for="enddate_pengumpulan_berkas" class="form-label">Tanggal Akhir Pengumpulan
+                                Berkas<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date" id="enddate_pengumpulan_berkas"
+                                name="enddate_pengumpulan_berkas" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

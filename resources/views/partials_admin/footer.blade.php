@@ -7,7 +7,8 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                Crafted with PASSION by <a href="https://technoinfinity.co.id/" target="_blank" class="fw-semibold" style="color:#4EA971;">Techno Infinity</a>
+                Crafted with PASSION by <a href="https://technoinfinity.co.id/" target="_blank" class="fw-semibold"
+                    style="color:#4EA971;">Techno Infinity</a>
             </div>
             <!-- <div>
         <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank">License</a>
@@ -63,6 +64,7 @@
 <script src="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+<script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('app-assets/js/main.js') }}"></script>
