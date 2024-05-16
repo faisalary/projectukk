@@ -25,11 +25,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                {{-- <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                     <label class="form-label" for="form-repeater-1-1">Bobot Penilaian<span
                                             style="color: red;">*</span></label>
                                     <input type="text" name="bobot" id="bobot" class="form-control" placeholder="30%" />
-                                </div>
+                                </div> --}}
                             </div>
 
                             <hr />
@@ -75,7 +75,12 @@
                                     <hr />
                                 </div>
                             </div>
-
+                            <div class="mb-0">
+                                <button class="btn btn-outline-success" type="button" data-repeater-create>
+                                    <i class="ti ti-plus me-1"></i>
+                                    <span class="align-middle">Data</span>
+                                </button>
+                            </div>
                             <div class="modal-footer">
                                 <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
                             </div>

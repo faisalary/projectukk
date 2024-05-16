@@ -59,9 +59,11 @@ class KonfirmasiMagangController extends Controller
         });
 
         if ($request->ajax()) {
-            $pendaftar = $pendaftar->whereIn('current_step', ['screening', 'tahap1', 'tahap2', 'tahap3']);
+            $pendaftar = $pendaftar->whereIn('current_step', ['screening', 'tahap1', 'tahap2', 'tahap3', 'penawaran', 'diterima', 'ditolak']);
             if ($request->filter && $request->filter != null && $request->filter != '' && $request->filter != 'all') {
                 $pendaftar = $pendaftar->where('current_step', $request->filter);
+            } elseif ($request->filter == 'all') {
+                $pendaftar = $pendaftar;
             }
 
             return view('kegiatan_saya/lamaran_saya/components/proses_seleksi', compact('pendaftar'))->render();
@@ -75,12 +77,12 @@ class KonfirmasiMagangController extends Controller
         $file = MhsMandiri::with('PengajuanMandiri')->get();
         $file = MhsMagang::with('PengajuanMandiri')->get();
 
-        // $nim = Mahasiswa::find($nim);
+        $nim1 = Mahasiswa::find($nim);
         // $nim = $nim->nim;
         $mandiri_nim = $mandiri->pluck('nim')->toArray();
 
 
-        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'pendaftar', 'mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim'));
+        return view('kegiatan_saya.lamaran_saya.index',  compact('urlGetCard', 'pendaftar', 'mandiri', 'mahasiswa', 'file', 'nim', 'mandiri_nim', 'nim1'));
     }
 
     private static function makeStyleStatus($pendaftar)
@@ -139,22 +141,17 @@ class KonfirmasiMagangController extends Controller
         try {
 
             $mandiri = PengajuanMandiri::where('id_pengajuan', $id)->first();
-
+            // dd($mandiri);
             $mandiri->nim = $request->nim;
             $mandiri->nama_industri = $request->nama_industri;
             $mandiri->posisi_magang = $request->posisi_magang;
-            $mandiri->startdate = $request->startdate;
-            $mandiri->enddate = $request->enddate;
+            $mandiri->startdate = Carbon::parse($request->startdate)->format('Y-m-d');
+            $mandiri->enddate = Carbon::parse($request->enddate)->format('Y-m-d');
             if (!empty($request->bukti_doc)) {
                 $mandiri->bukti_doc = $request->bukti_doc->store('post');
             }
             $mandiri->status_terima = 1;
             $mandiri->save();
-
-            MhsMandiri::create([
-                'id_pengajuan' => $id,
-                'status' => true
-            ]);
 
             return response()->json([
                 'error' => false,
@@ -225,27 +222,39 @@ class KonfirmasiMagangController extends Controller
         $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
         $img = $picture . '.png';
 
+        $color1 = 'secondary';
+        $color2 = 'secondary';
+        $color3 = 'secondary';
+        $color4 = 'secondary';
+
         if ($pendaftar->current_step == "screening") {
             $step = 'Screening';
             $color = 'warning';
+            $color1 = 'success';
         } elseif ($pendaftar->current_step == "tahap1") {
             $step = 'Tahap 1';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->current_step == "tahap2") {
             $step = 'Tahap 2';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->current_step == "tahap3") {
             $step = 'Tahap 3';
             $color = 'primary';
+            $color2 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 1) {
             $step = 'Diterima';
             $color = 'success';
+            $color4 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 2) {
             $step = 'Ditolak';
             $color = 'danger';
+            $color4 = 'success';
         } elseif ($pendaftar->konfirmasi_status == 3) {
             $step = 'Penawaran';
             $color = 'info';
+            $color3 = 'success';
         }
         // note: 1 = diterima, 2 = ditolak, 3 = penawaran.
 
@@ -256,7 +265,7 @@ class KonfirmasiMagangController extends Controller
         //     return $item;
         // });
 
-        return view('kegiatan_saya.lamaran_saya.status_lamaran', compact('pendaftar', 'img', 'step', 'color', 'now'));
+        return view('kegiatan_saya.lamaran_saya.status_lamaran', compact('pendaftar', 'img', 'step', 'color', 'now', 'color1', 'color2', 'color3', 'color4'));
     }
 
     public function ambil(Request $request, $nim)

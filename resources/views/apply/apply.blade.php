@@ -107,7 +107,7 @@
                     <div class="progress">
                         <div class="progress-bar w-{{ $persentase }}" role="progressbar" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                        <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
+                    <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
                 </div>
             </div>
         </div>
@@ -122,13 +122,13 @@
                     <h4>Portofolio</h4>
                     <div class="mt-3">
                         <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
-                        @if($magang != null || $persentase < 100) <input class="form-control" type="file" id="formFile" name="porto" disabled>
+                        @if($magang != null || $persentase < 70) <input class="form-control" type="file" id="formFile" name="porto" disabled>
                             @else
                             <input class="form-control" type="file" id="formFile" name="porto">
                             @endif
                             <p class="mt-1" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 10 MB</p>
                     </div>
-                    @if($magang != null || $persentase < 100) <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
+                    @if($magang != null || $persentase < 70) <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
                         @else
                         <button type="submit" class="btn btn-success waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
                         @endif
