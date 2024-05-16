@@ -13,10 +13,10 @@ return new class extends Migration
     {
        
             Schema::table('pengajuan_mandiri', function (Blueprint $table) {
-                $table->dateTime('tglpeng', 255)->change();
-                $table->boolean('statusapprove', 255)->nullable()->change();
+                $table->dateTime('tgl_pengajuan', 255)->change();
+                $table->boolean('status_approve', 255)->nullable()->change();
                 $table->boolean('status_terima')->nullable()->change();
-                $table->string('jabatan', 255)->change();
+                $table->string('letter_to', 255)->change();
                 $table->string('dokumen_spm', 255)->nullable()->change();
             });
     }
@@ -27,10 +27,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pengajuan_mandiri', function (Blueprint $table) {
-            $table->dateTime('tglpeng', 255)->change();
-            $table->boolean('statusapprove', 255)->nullable()->change();
+            $table->dateTime('tgl_pengajuan', 255)->change();
+            $table->boolean('status_approve', 255)->nullable()->change();
             $table->boolean('status_terima')->nullable()->change();
-            $table->string('jabatan', 255)->change();
+            $table->string('letter_to', 255)->change();
             $table->string('dokumen_spm', 255)->nullable()->change();
         });
     }

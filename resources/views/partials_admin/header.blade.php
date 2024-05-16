@@ -213,11 +213,11 @@
                         </ul>
                     </li>
 
-                    <!-- Pengajuan SPM -->
+                    <!-- Pengajuan Magang -->
                     <li class="menu-item" {{ request()->is('mandiri/approve-mandiri') ? 'active' : '' }}">
                         <a href="{{ route('approve_mandiri.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-files"></i>
-                            <div data-i18n="Pengajuan SPM">Pengajuan SPM</div>
+                            <div data-i18n="Pengajuan Magang">Pengajuan Magang</div>
                         </a>
                     </li>
 

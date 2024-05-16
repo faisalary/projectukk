@@ -1,8 +1,8 @@
 @extends('partials_mahasiswa.template')
 
-@section('meta_header')
+<!-- @section('meta_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@endsection -->
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -37,8 +37,8 @@
             <h4 class="fw-bold"><span class="text-muted fw-light">Layanan LKM /</span> Pengajuan Surat Pengantar Magang</h4>
         </div>
 
-        {{-- Belum melakukan konfirmasi lowongan magang --}}
-        @if (!in_array($nim, $mandiri_nim))
+        <!-- {{-- Belum melakukan konfirmasi lowongan magang --}}
+        @if (!in_array($nim, $mandiri_nim)) -->
             <div id="container-card" class="mb-3">
                 <div class="col-3 mt-3 ">
                     <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;"
@@ -48,7 +48,7 @@
                     <h4>Anda belum mengajukan Surat Pengantar Magang</h4>
                 </div>
             </div>
-        @else
+        <!-- @else
             {{-- Sudah melakukan konfirmasi lowongan magang --}}
             <div class="card mb-4" style="background-color: #f8f7fa;">
                 <div class="card-header p-3" style="background-color: #23314B;">
@@ -160,7 +160,7 @@
         @endif
 
 
-        @include('pengajuan_magang.mandiri.modal')
+        @include('pengajuan_magang.mandiri.modal') -->
 
         <div class="text-center">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAjukan">
@@ -176,7 +176,7 @@
     <script src="../../app-assets/js/forms-extras.js"></script>
     <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script>
+    <!-- <script>
         $("#modalAjukan").on("hide.bs.modal", function() {
 
             $('#modalAjukan form')[0].reset();
@@ -270,5 +270,5 @@
             }
             return true;
         }
-    </script>
+    </script> -->
 @endsection
