@@ -445,9 +445,10 @@
                                             <div>
                                                 Program Studi
                                                 <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                                    {{-- @foreach ($lowongan2->prodilowongan  as $lowongan) 
-                                                    <li>{{ $lowongan->id_prodi->namaprodi }}</li>
-                                                    @endforeach --}}
+                                                    {{-- @foreach ($lowongan2->prodilowongan  as $lowongan)  --}}
+                                                    {{-- <li>{{ $lowongan->id_prodi->namaprodi }}</li> --}}
+                                                    {{-- @endforeach --}}
+                                                    {{-- <li id="prodi-lowongan"></li> --}}
                                                 </ul>
                                             </div>
                                         </li>
@@ -599,8 +600,7 @@
                 $('#lokasi').text(response.lokasi);
                 $('#nominal_salary').text(response.nominal_salary);
                 $('#deskripsi').text(response.deskripsi);
-                $('#jenjang').text(response.jenjang);
-                $('#prodilowongan').text(response.prodilowongan);
+                $('#jenjang').text(response.jenjang);   
                 $('#btn-detail').click(function(e){
                     e.preventDefault(); 
                     var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
@@ -641,7 +641,9 @@
                 $('#requirements').text(response.requirements);
                 $('#benefitmagang').text(response.benefitmagang);
                 $('#keterampilan').text(response.keterampilan);
+                $('#keterampilan').text(response.keterampilan);
                 $('#deskripsiperusahaan').text(response.industri.description);
+                // $('#prodi-lowongan').text(response.prodilowongan.namaprodi);
 
                 $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
                                                 style="max-width:120px; max-height: 125px"
@@ -654,12 +656,6 @@
             
         });
     }
-    // function detailLanjut(e) {
-    //     let id = e.attr('data-id');
-    //     var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
-    //     console.log(id);
-    // }
-
 
 </script>
 <script>
