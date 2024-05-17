@@ -23,17 +23,23 @@ class ApplyLowonganFakultasController extends Controller
     {
         $prodilo = LowonganProdi::with('prodi')->first();
         $prodilowongan = LowonganProdi::with('prodi')->get();
+        // return $prodilowongan;
         $lowongan = LowonganMagang::with('industri', 'fakultas')->first();
         $lowongan2 = LowonganMagang::with('industri')->get();
+
         return view('perusahaan.lowongan', compact('prodilo', 'prodilowongan', 'lowongan2', 'lowongan'));
     }
 
     public function show($id)
     {
         $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::with('prodi')->get();
+        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
         $lowonganshow2 = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi')->first();
-        return $lowonganshow2;
+        $data = [
+            'prodilowongan' => $prodilowongan,
+            'lowonganshow2' => $lowonganshow2
+        ];
+        return $data;
     }
 
     // Detail Lowongan 
@@ -83,11 +89,39 @@ class ApplyLowonganFakultasController extends Controller
     // Persentase profile
     public function persentase($id)
     {
-        $totalData = 17;
-        $informasipribadi = InformasiPribadi::where('id_infoprib', true)->count();
-        $Infomasitambahan = Mahasiswa::where('nim', true)->count();
-        if ($informasipribadi + $Infomasitambahan != 0) {
-            $persentase = ($totalData / ($informasipribadi + $Infomasitambahan)) * 100;
+        $totalData = 20;
+        $mahasiswa = Mahasiswa::find($id);
+
+        if ($mahasiswa) {
+            $filledColumns = 0;
+            $columns = [
+                'nim', 
+                'angkatan', 
+                'id_prodi', 
+                'id_univ', 
+                'id_fakultas', 
+                'namamhs', 
+                'alamatmhs', 
+                'emailmhs', 
+                'nohpmhs', 
+                'kelas',
+                'status',
+                'eprt',
+                'ipk',
+                'tak',
+                'sosmed',
+                'url_sosmed',
+                'lok_magang',
+                'skills',
+                'bahasa',
+                'tunggakan_bpp'
+            ];
+            foreach ($columns as $column) {
+                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
+                    $filledColumns++;
+                }
+            }
+            $persentase = ($filledColumns / $totalData) * 100;
         } else {
             $persentase = 0;
         }
