@@ -98,13 +98,13 @@
                         </ul>
                         <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
                             
-                                <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                    <i class="ti ti-map-pin me-2">{{ $lowongan->lokasi}}
-                                    </i>
-                                </li>
+                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
+                                <i class="ti ti-map-pin me-2">{{ $lowongan->lokasi}}
+                                </i>
+                            </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-currency-dollar me-2">
-                                    {{ $lowongan->nominal_salary}}
+                                    {{ $lowongan?->nominal_salary??'Tidak Berbayar' }}
                                 </i>
                             </li>
                         </ul>
