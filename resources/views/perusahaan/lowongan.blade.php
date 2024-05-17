@@ -586,6 +586,7 @@
             type: 'GET',
             url: url,
             success: function(response) {
+                // console.log(response);        
                 $('#namaindustri').text(response.industri.namaindustri);
                 $('#intern_position').text(response.intern_position);
                 $('#kuota').text(response.kuota);
@@ -650,7 +651,6 @@
 
                 $('#lowongan-terpilih').show();
                 $('#tidak-ada-lowongan').hide();
-                        
             }   
             
         });

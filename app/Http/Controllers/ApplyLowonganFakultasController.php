@@ -83,14 +83,43 @@ class ApplyLowonganFakultasController extends Controller
     // Persentase profile
     public function persentase($id)
     {
-        $totalData = 5;
-        $Infomasitambahan = Mahasiswa::whereNotNull('nim')->count();
-        if ($Infomasitambahan != 0) {
-            $persentase = ($totalData / $Infomasitambahan) * 100;
+        $totalData = 20;
+        $mahasiswa = Mahasiswa::find($id);
+
+        if ($mahasiswa) {
+            $filledColumns = 0;
+            $columns = [
+                'nim', 
+                'angkatan', 
+                'id_prodi', 
+                'id_univ', 
+                'id_fakultas', 
+                'namamhs', 
+                'alamatmhs', 
+                'emailmhs', 
+                'nohpmhs', 
+                'kelas',
+                'status',
+                'eprt',
+                'ipk',
+                'tak',
+                'sosmed',
+                'url_sosmed',
+                'lok_magang',
+                'skills',
+                'bahasa',
+                'tunggakan_bpp'
+            ];
+            foreach ($columns as $column) {
+                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
+                    $filledColumns++;
+                }
+            }
+            $persentase = ($filledColumns / $totalData) * 100;
         } else {
-            
             $persentase = 0;
         }
+
         return $persentase;
     }
 }
