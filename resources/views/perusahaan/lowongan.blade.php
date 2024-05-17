@@ -442,7 +442,11 @@
                                                     {{-- @foreach ($lowongan2->prodilowongan  as $lowongan)  --}}
                                                     {{-- <li>{{ $lowongan->id_prodi->namaprodi }}</li> --}}
                                                     {{-- @endforeach --}}
-                                                    {{-- <li id="prodi-lowongan"></li> --}}
+                                                        <li id="prodi-lowongan"></li>
+
+                                                    {{-- @foreach ($prodilowongan  as $l)
+                                                        <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>
+                                                    @endforeach --}}
                                                 </ul>
                                             </div>
                                         </li>
@@ -580,34 +584,38 @@
     function detail(e) {
         let id = e.attr('data-id');
         var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
-        console.log(id);
-            
+
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
-                // console.log(response);        
-                $('#namaindustri').text(response.industri.namaindustri);
-                $('#intern_position').text(response.intern_position);
-                $('#kuota').text(response.kuota);
-                $('#pelaksanaan').text(response.pelaksanaan);
-                $('#durasimagang').text(response.durasimagang);
-                $('#lokasi').text(response.lokasi);
-                if(response.nominal_salary !== null) {
-                    $('#nominal_salary').text(response.nominal_salary);
+                var response2 = response.prodilowongan;
+                var response1 = response.lowonganshow2;
+                $('#namaindustri').text(response1.industri.namaindustri);
+                $('#intern_position').text(response1.intern_position);
+                $('#kuota').text(response1.kuota);
+                $('#pelaksanaan').text(response1.pelaksanaan);
+                $('#durasimagang').text(response1.durasimagang);
+                $('#lokasi').text(response1.lokasi);
+                if(response1.nominal_salary !== null) {
+                    $('#nominal_salary').text(response1.nominal_salary);
                     $('#nominal_salary').show(); 
                 } else {
                     $('#nominal_salary').hide(); 
                 }
-                $('#deskripsi').text(response.deskripsi);
-                $('#jenjang').text(response.jenjang);   
+
+                response2.forEach(function(lowongan){
+                    $('#prodi-lowongan').text(lowongan.prodi.namaprodi);
+                });
+                $('#deskripsi').text(response1.deskripsi);
+                $('#jenjang').text(response1.jenjang);   
                 $('#btn-detail').click(function(e){
                     e.preventDefault(); 
                     var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
                     $.ajax({
                         url: url,
                         type: 'GET',
-                        success: function(response) {
+                        success: function(response1) {
                             window.location.href = url 
                         },
                         error: function(xhr, status, error) {
@@ -615,7 +623,7 @@
                         }
                     });
                 });
-                var dateString = response.enddate;
+                var dateString = response1.enddate;
                 var date = new Date(dateString);
                 var tahun = date.getFullYear();
                 var bulan = date.getMonth() + 1;
@@ -638,14 +646,14 @@
                 var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
 
                 $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
-                $('#requirements').text(response.requirements);
-                $('#benefitmagang').text(response.benefitmagang);
-                $('#keterampilan').text(response.keterampilan);
-                $('#keterampilan').text(response.keterampilan);
-                $('#deskripsiperusahaan').text(response.industri.description);
-                // $('#prodi-lowongan').text(response.prodilowongan.namaprodi);
+                $('#requirements').text(response1.requirements);
+                $('#benefitmagang').text(response1.benefitmagang);
+                $('#keterampilan').text(response1.keterampilan);
+                $('#keterampilan').text(response1.keterampilan);
+                $('#deskripsiperusahaan').text(response1.industri.description);
+                // $('#prodi-lowongan').text(response1.prodilowongan.namaprodi);
 
-                $('#image').html(`<img src="{{ asset('storage/${response.industri.image}') }}" alt="user-avatar"
+                $('#image').html(`<img src="{{ asset('storage/${response1.industri.image}') }}" alt="user-avatar"
                                                 style="max-width:120px; max-height: 125px"
                                                 id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
 
