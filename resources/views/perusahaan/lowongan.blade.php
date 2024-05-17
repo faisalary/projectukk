@@ -426,17 +426,11 @@
                                             <i id="lokasi" class="ti ti-map-pin  ti-xs me-2"></i>
                                             
                                         </li>
-                                        @if($lowongan->nominal_salary !==null)
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="nominal_salary" class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                        @else
-                                        <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i id="nominal_salary" class="ti ti-currency-dollar  ti-xs me-2">tidak ada bayaran</i>
-                                        </li>
-                                        @endif
+
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="jenjang" class="ti ti-building-community  ti-xs me-2"></i>
-                                           
                                         </li>
                                     </ul>
                                     <ul style="padding: 0 0 0 20px;">
@@ -598,7 +592,12 @@
                 $('#pelaksanaan').text(response.pelaksanaan);
                 $('#durasimagang').text(response.durasimagang);
                 $('#lokasi').text(response.lokasi);
-                $('#nominal_salary').text(response.nominal_salary);
+                if(response.nominal_salary !== null) {
+                    $('#nominal_salary').text(response.nominal_salary);
+                    $('#nominal_salary').show(); 
+                } else {
+                    $('#nominal_salary').hide(); 
+                }
                 $('#deskripsi').text(response.deskripsi);
                 $('#jenjang').text(response.jenjang);   
                 $('#btn-detail').click(function(e){
