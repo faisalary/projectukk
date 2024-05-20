@@ -42,10 +42,56 @@ class ProfileMahasiswaController extends Controller
         $informasitambahan = Mahasiswa::where('nim', $id)->first();
         $bahasamahasiswa = Mahasiswa::find($id);
         $sosmed = Mahasiswa::find($id);
+         // Menghitung persentase kelengkapan profil
+        $persentase = $this->persentase($id);
         $mahasiswa = Mahasiswa::where('nim', $id)->with('sosmedmhs','bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
         return view('profile.informasi_pribadi', 
-        compact('sosmed', 'skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
+        compact('persentase', 'sosmed', 'skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function persentase($id)
+    {
+        $totalData = 20;
+        $mahasiswa = Mahasiswa::find($id);
+
+        if ($mahasiswa) {
+            $filledColumns = 0;
+            $columns = [
+                'nim', 
+                'angkatan', 
+                'id_prodi', 
+                'id_univ', 
+                'id_fakultas', 
+                'namamhs', 
+                'alamatmhs', 
+                'emailmhs', 
+                'nohpmhs', 
+                'kelas',
+                'status',
+                'eprt',
+                'ipk',
+                'tak',
+                'sosmed',
+                'url_sosmed',
+                'lok_magang',
+                'skills',
+                'bahasa',
+                'tunggakan_bpp'
+            ];
+            foreach ($columns as $column) {
+                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
+                    $filledColumns++;
+                }
+            }
+            $persentase = ($filledColumns / $totalData) * 100;
+        } else {
+            $persentase = 0;
+        }
+
+        return $persentase;
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -432,5 +478,7 @@ class ProfileMahasiswaController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }      
+    }   
+    
+    
 }
