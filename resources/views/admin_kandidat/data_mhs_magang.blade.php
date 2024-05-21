@@ -54,18 +54,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-12 ">
-                <div class="text-secondary mt-3 mb-3 ">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Prodi:D3 Sistem Informasi" id="tooltip-filter"></i></div>
+            <div class="col-md-12 d-flex justify-content-between mt-2">
+                <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Prodi:-, Jenis Magang:-" id="tooltip-filter"></i></p>
             </div>
-            <!-- <div class="col-md-8 d-flex justify-content-end align-items-center mt-2 mb-3 cnt">
-                <div id="div1" class="targetDiv">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                        <div class="d-flex align-items-center">
-                            <span class="mt-1">Assign Dosen Pembimbing Akademik</span>
-                        </div>
-                    </button>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -79,12 +70,15 @@
                                 <th style="min-width: 50px;">NOMOR</th>
                                 <th style="min-width: 150px;">NAMA/NIM</th>
                                 <th style="min-width: 200px;">PROGRAM STUDI</th>
+                                <th style="min-width: 200px;">JENIS MAGANG</th>
                                 <th style="min-width: 200px;">NAMA PERUSAHAAN</th>
                                 <th style="min-width: 150px;">POSISI MAGANG</th>
                                 <th style="min-width: 200px;">TANGGAL MAGANG</th>
                                 <th style="min-width: 170px;">DOKUMEN</th>
                                 <th style="min-width: 200px;">PEMBIMBING LAPANGAN</th>
                                 <th style="min-width: 200px;">PEMBIMBING AKADEMIK</th>
+                                <th style="min-width: 170px;">NILAI AKHIR</th>
+                                <th style="min-width: 170px;">INDEKS NILAI</th>
                             </tr>
                         </thead>
                     </table>
@@ -101,6 +95,7 @@
                                 <th style="min-width: 50px;">NOMOR</th>
                                 <th style="min-width: 150px;">NAMA/NIM</th>
                                 <th style="min-width: 200px;">PROGRAM STUDI</th>
+                                <th style="min-width: 200px;">JENIS MAGANG</th>
                                 <th style="min-width: 200px;">NAMA PERUSAHAAN</th>
                                 <th style="min-width: 150px;">POSISI MAGANG</th>
                             </tr>
@@ -112,29 +107,9 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Filter Berdasarkan</h5>
-    </div>
-    <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-        <form class="add-new-user pt-0" id="filter">
-            <div class="col-12 mb-2">
-                <div class="row">
-                    <div class="mb-2">
-                        <label for="nama/nim" class="form-label">Program Studi</label>
-                        <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                            <option value="">Pilih Program Studi</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-3 text-end">
-                <button type="reset" class="btn btn-label-danger data-reset">Reset</button>
-                <button type="submit" class="btn btn-success">Terapkan</button>
-            </div>
-        </form>
-    </div>
-</div>
+<!-- FILTER -->
+@include('admin_kandidat.filter_mhs_magang')
+<!-- //FILTER -->
 
 <!-- <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -183,172 +158,270 @@
 <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js')}}"></script>
 <script src="{{ asset('app-assets/js/forms-extras.js')}}"></script>
 <script>
-    $('#diterima').each(function() {
-        let idElement = $(this).attr('id');
-        let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
-        // console.log('idelement: ' + idElement);
+    $(document).ready(function() {
+        $('.table').each(function() {
+            let idElement = $(this).attr('id');
 
-        $(this).DataTable({
-
-            ajax: url,
-            scrollX: true,
-            type: 'GET',
-            columns: [{
-                    data: "DT_RowIndex"
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
-                    }
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
-                    },
-                    name: 'prodi'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.industri.namaindustri;
-                    },
-                    name: 'nama_perusahaan'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.intern_position;
-                    },
-                    name: 'posisi_magang'
-                },
-                {
-                    data: 'tgl_magang',
-                    name: "tanggal_magang"
-                },
-                {
-                    data: 'doc_terima',
-                    name: 'doc_magang'
-                },
-                {
-                    data: null,
-                    name: 'pbb_lapangan',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.id_peg_industri) {
-                            return data.mahasiswa_magang.peg_industri.namapeg;
-                        }
-                        return '-';
-                    },
-                },
-                {
-                    data: null,
-                    name: 'pbb_akademik',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.nip) {
-                            return data.mahasiswa_magang.dosen.namadosen + '<br>' + (data.mahasiswa_magang.dosen.nip);
-                        }
-                        return '-';
-                    },
-                }
-            ],
-            "columnDefs": [{
-                    "width": "10px",
-                    "targets": 0
-                },
-                {
-                    "width": "170px",
-                    "targets": 1
-                },
-                {
-                    "width": "150px",
-                    "targets": 2
-                },
-                {
-                    "width": "170px",
-                    "targets": 3
-                },
-                {
-                    "width": "170px",
-                    "targets": 4
-                },
-                {
-                    "width": "200px",
-                    "targets": 5
-                },
-                {
-                    "width": "150px",
-                    "targets": 6
-                },
-                {
-                    "width": "200px",
-                    "targets": 7
-                },
-                {
-                    "width": "200px",
-                    "targets": 8
-                }
-            ],
+            TableMhsMagang(idElement, null);
         });
     });
 
-    $('#ditolak').each(function() {
-        let idElement = $(this).attr('id');
-        let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
+    function TableMhsMagang(idElement, content) {
 
-        $(this).DataTable({
+        if (idElement == 'diterima') {
+            $('#diterima').each(function() {
+                let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
+                // console.log(content);
 
-            ajax: url,
-            type: 'GET',
-            columns: [{
-                    data: "DT_RowIndex"
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
-                    }
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
+                $(this).DataTable({
+
+                    ajax: {
+                        url: url,
+                        data: content,
+                        type: 'GET'
                     },
-                    name: 'prodi'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.industri.namaindustri;
+                    scrollX: true,
+                    processing: true,
+                    destroy: true,
+                    columns: [{
+                            data: "DT_RowIndex"
+                        },
+                        {
+                            data: null,
+                            name: 'combined_column',
+                            render: function(data, type, row) {
+                                return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
+                            }
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.mahasiswa.prodi.namaprodi;
+                            },
+                            name: 'prodi'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.lowongan_magang.jenis_magang.namajenis;
+                            },
+                            name: 'jenis_magang'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.lowongan_magang.industri.namaindustri;
+                            },
+                            name: 'nama_perusahaan'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.lowongan_magang.intern_position;
+                            },
+                            name: 'posisi_magang'
+                        },
+                        {
+                            data: 'tgl_magang',
+                            name: "tanggal_magang"
+                        },
+                        {
+                            data: 'doc_terima',
+                            name: 'doc_magang'
+                        },
+                        {
+                            data: null,
+                            name: 'pbb_lapangan',
+                            render: function(data, type, row) {
+                                if (data.mahasiswa_magang.id_peg_industri) {
+                                    return data.mahasiswa_magang.peg_industri.namapeg;
+                                }
+                                return '-';
+                            },
+                        },
+                        {
+                            data: null,
+                            name: 'pbb_akademik',
+                            render: function(data, type, row) {
+                                if (data.mahasiswa_magang.nip) {
+                                    return data.mahasiswa_magang.dosen.namadosen + '<br>' + (data.mahasiswa_magang.dosen.nip);
+                                }
+                                return '-';
+                            },
+                        },
+                        {
+                            data: null,
+                            name: 'nilai_akhir',
+                            render: function(data, type, row) {
+                                if (data.mahasiswa_magang.nilai_akhir_magang) {
+                                    return data.mahasiswa_magang.nilai_akhir_magang;
+                                }
+                                return '-';
+                            },
+                        },
+                        {
+                            data: null,
+                            name: 'indeks_nilai',
+                            render: function(data, type, row) {
+                                if (data.mahasiswa_magang.indeks_nilai_akhir) {
+                                    return data.mahasiswa_magang.indeks_nilai_akhir;
+                                }
+                                return '-';
+                            },
+                        }
+                    ],
+                    "columnDefs": [{
+                            "width": "10px",
+                            "targets": 0
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 1
+                        },
+                        {
+                            "width": "150px",
+                            "targets": 2
+                        },
+                        {
+                            "width": "150px",
+                            "targets": 3
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 4
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 5
+                        },
+                        {
+                            "width": "200px",
+                            "targets": 6
+                        },
+                        {
+                            "width": "150px",
+                            "targets": 7
+                        },
+                        {
+                            "width": "200px",
+                            "targets": 8
+                        },
+                        {
+                            "width": "200px",
+                            "targets": 9
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 10
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 11
+                        }
+                    ],
+                });
+            });
+        } else {
+
+
+            $('#ditolak').each(function() {
+                let url = `{{ url('/data-mahasiswa-magang/show/') }}?type=` + idElement;
+
+                $(this).DataTable({
+
+                    ajax: {
+                        url: url,
+                        data: content,
+                        type: 'GET'
                     },
-                    name: 'nama_perusahaan'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.intern_position;
-                    },
-                    name: 'posisi_magang'
-                }
-            ],
-            "columnDefs": [{
-                    "width": "10px",
-                    "targets": 0
-                },
-                {
-                    "width": "170px",
-                    "targets": 1
-                },
-                {
-                    "width": "200px",
-                    "targets": 2
-                },
-                {
-                    "width": "200px",
-                    "targets": 3
-                },
-                {
-                    "width": "170px",
-                    "targets": 4
-                }
-            ],
+                    scrollX: true,
+                    processing: true,
+                    destroy: true,
+                    columns: [{
+                            data: "DT_RowIndex"
+                        },
+                        {
+                            data: null,
+                            name: 'combined_column',
+                            render: function(data, type, row) {
+                                return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
+                            }
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.mahasiswa.prodi.namaprodi;
+                            },
+                            name: 'prodi'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.mahasiswa.prodi.namaprodi;
+                            },
+                            name: 'jenis_magang'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.lowongan_magang.industri.namaindustri;
+                            },
+                            name: 'nama_perusahaan'
+                        },
+                        {
+                            data: function(data, type, row) {
+                                return data.lowongan_magang.intern_position;
+                            },
+                            name: 'posisi_magang'
+                        }
+                    ],
+                    "columnDefs": [{
+                            "width": "10px",
+                            "targets": 0
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 1
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 2
+                        },
+                        {
+                            "width": "200px",
+                            "targets": 3
+                        },
+                        {
+                            "width": "200px",
+                            "targets": 4
+                        },
+                        {
+                            "width": "170px",
+                            "targets": 5
+                        }
+                    ],
+                });
+            });
+        }
+    };
+
+    $('.filter-reset').on('click', function() {
+        $('#jenis').val(null).trigger('change');
+        $('#prodi').val(null).trigger('change');
+    });
+
+    $(document).on('submit', '#filter', function(e) {
+        const offcanvasFilter = $('#modalSlide');
+        e.preventDefault();
+        let prodi = $("#prodi option:selected").val();
+        let jenis = $("#jenis option:selected").val();
+
+        let data = {
+            'prodi': prodi,
+            'jenis': jenis
+        };
+
+        $('.table').each(function() {
+            let idElement = $(this).attr('id');
+
+            TableMhsMagang(idElement, data);
         });
+
+        $('#tooltip-filter').attr('data-bs-original-title', 'Prodi: ' + $('#prodi :selected').text() + ', Jenis Magang: ' + $('#jenis :selected').text());
+        offcanvasFilter.offcanvas('hide');
     });
 
     jQuery(function() {
