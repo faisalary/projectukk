@@ -159,9 +159,7 @@
         <div>
             <h4 class="fw-bold mb-4"><span class="text-muted fw-light">Layanan LKM /</span> Riwayat Pengajuan Magang</h4>
         </div>
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAjukan">
-            Pengajuan Magang Baru
-        </button>
+        <a href="/pengajuan/magang" class="btn btn-success">Pengajuan Magang Baru</a>
     </div>
     <div class="card">
         <div class="card-datatable table-responsive">
