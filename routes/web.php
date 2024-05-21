@@ -279,6 +279,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('mahasiswa')->group(function () {
         Route::prefix('profile/pribadi')->group(function () {
             Route::get('/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'index'])->name('profile.mahasiswa.index');
+            Route::get('/persentase/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'persentase'])->name('persentase.index');
             Route::get('/edit/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'edit'])->name('profile.mahasiswa.edit');
             Route::post('/update/{id}', [App\Http\Controllers\ProfileMahasiswaController::class, 'update'])->name('profile.mahasiswa.update');
         });
@@ -589,6 +590,14 @@ Route::get('/detail-nilai-mahasiswa/magang-mandiri', function () {
 
 Route::get('/dashboard/admin', function () {
     return view('dashboard.admin.index');
+});
+
+Route::get('/dashboard/company', function () {
+    return view('dashboard.company.index');
+});
+
+Route::get('/tambah/jenis-magang', function () {
+    return view('masters.jenis_magang.modal');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

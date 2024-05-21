@@ -103,7 +103,13 @@ class LowonganMagang extends Model
     }
     public function prodilowongan()
     {
-        return $this->hasMany(LowonganProdi::class, 'id_lowongan');
+        return $this->hasManyThrough(
+            ProgramStudi::class, 
+            LowonganProdi::class,
+            'lowongan_prodi_id',
+            'id_lowongan',
+            'id_prodi'
+        );
     }
     public function jenis_magang()
     {

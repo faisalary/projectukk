@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\Universitas;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
@@ -36,10 +37,14 @@ class TahunAkademikController extends Controller
     {
 
         try {
-
+            
             $tahun = TahunAkademik::create([
                 'tahun' => $request->tahun,
                 'semester' => $request->semester,
+                'startdate_daftar' => $request->startdate_daftar,
+                'enddate_daftar' => $request->enddate_daftar,
+                'startdate_pengumpulan_berkas' => $request->startdate_pengumpulan_berkas,
+                'enddate_pengumpulan_berkas' => $request->enddate_pengumpulan_berkas,
                 'status' => true,
             ]);
 
@@ -108,6 +113,10 @@ class TahunAkademikController extends Controller
 
             $tahun->tahun = $request->tahun;
             $tahun->semester = $request->semester;
+            $tahun->startdate_daftar = Carbon::parse($request->startdate_daftar)->format('Y-m-d');
+            $tahun->enddate_daftar = Carbon::parse($request->enddate_daftar)->format('Y-m-d');
+            $tahun->startdate_pengumpulan_berkas = Carbon::parse($request->startdate_pengumpulan_berkas)->format('Y-m-d');
+            $tahun->enddate_pengumpulan_berkas = Carbon::parse($request->enddate_pengumpulan_berkas)->format('Y-m-d');
             $tahun->save();
 
             return response()->json([

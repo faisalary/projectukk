@@ -76,7 +76,7 @@
       <div class="col-4 ps-5 pe-0">
         <div class="d-flex justify-content-between">
           <h6 class="text-start">Kelengkapan Profil</h6>
-          <h6 class="text-end">68%</h6>
+          <h6 class="text-end">{{ $persentase }}%</h6>
         </div>
         <div class="progress">
           <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>

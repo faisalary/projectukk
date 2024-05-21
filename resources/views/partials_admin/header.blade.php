@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
-
+    <link rel="stylesheet" href="{{url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('/app-assets/vendor/css/pages/cards-advance.css') }}" />
     <!-- Helpers -->
@@ -436,8 +436,8 @@
                             Perusahaan</span>
                     </li>
                     <!-- Dashboards -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link">
+                    <li class="menu-item {{ request()->is('dashboard/company*') ? 'active' : '' }}">
+                        <a href="/dashboard/company" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-device-desktop-analytics"></i>
                             <div data-i18n="Dashboards">Dashboards</div>
                         </a>
