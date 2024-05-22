@@ -72,7 +72,11 @@
                         @foreach (['proses_seleksi', 'penawaran', 'diterima', 'ditolak'] as $key => $item)
                         <li class="nav-item" style="font-size: 15px;">
                             <button type="button" class="nav-link {{ $key == 0 ? 'active' : '' }}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-controls="navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-selected="false">
+                                @if($item != 'diterima' && $item != 'ditolak')
                                 <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }}
+                                @else
+                                <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }} Tawaran
+                                @endif
                             </button>
                         </li>
                         @endforeach
