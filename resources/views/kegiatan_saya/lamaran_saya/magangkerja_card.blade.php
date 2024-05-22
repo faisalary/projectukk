@@ -26,7 +26,7 @@
             <div class="text-left mt-3">
                 <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima
                 </button>
-                <button type="button" class="btn btn-danger waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDiterima">Ditolak
+                <button type="button" class="btn btn-danger waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
                 </button>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <div class="text-left mt-3">
                 <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDiterima">Diterima
                 </button>
-                <button type="button" class="btn btn-danger waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDiterima">Ditolak
+                <button type="button" class="btn btn-danger waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalDitolak">Ditolak
                 </button>
             </div>
         </div>

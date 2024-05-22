@@ -41,6 +41,9 @@
     span.select2-selection.select2-selection--single {
         width: 200px;
     }
+    .light-style .select2-container--default .select2-selection {
+    width: 100% !important;
+}
 </style>
 @endsection
 

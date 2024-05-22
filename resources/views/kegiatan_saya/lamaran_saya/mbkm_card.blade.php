@@ -28,7 +28,7 @@
             "perusahaan": "PT. Teknologi Nirmala Olah Daya Informasi",
             "posisi": "System Analyst",
             "status": "<span class='badge bg-label-warning'>Belum Diterima</span>",
-            "aksi": "<a href='' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalDitolak' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDiterima' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
 
         },
         {
@@ -37,7 +37,7 @@
             "perusahaan": "PT. Teknologi Nirmala Olah Daya Informasi",
             "posisi": "Quality Assurance",
             "status": "<span class='badge bg-label-warning'>Belum Diterima</span>",
-            "aksi": "<a href='' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalDitolak' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDiterima' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
         },
         {
             "nomor": "3",
@@ -45,7 +45,7 @@
             "perusahaan": "PT. Teknologi Nirmala Olah Daya Informasi",
             "posisi": "Business Development",
             "status": "<span class='badge bg-label-warning'>Belum Diterima</span>",
-            "aksi": "<a href='' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalDitolak' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDiterima' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
         },
         {
             "nomor": "4",
@@ -53,7 +53,7 @@
             "perusahaan": "PT. Teknologi Nirmala Olah Daya Informasi",
             "posisi": "Marketing Communication",
             "status": "<span class='badge bg-label-warning'>Belum Diterima</span>",
-            "aksi": "<a href='' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalDitolak' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDiterima' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
         },
         {
             "nomor": "5",
@@ -61,7 +61,7 @@
             "perusahaan": "PT. Teknologi Nirmala Olah Daya Informasi",
             "posisi": "Frontend Developer",
             "status": "<span class='badge bg-label-warning'>Belum Diterima</span>",
-            "aksi": "<a href='' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
+            "aksi": "<a data-bs-toggle='modal' data-bs-target='#modalDitolak' class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-file-x'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDiterima' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-check'></i></a>",
         },
     ];
 

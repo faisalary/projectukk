@@ -1,5 +1,5 @@
 <!-- Modal Ditolak-->
-<div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,7 +28,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <!-- Modal Diterima-->
@@ -44,13 +44,19 @@
                 <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col mb-3">
+                        <div class="col-12 mb-3">
+                            <label for="jenis" class="form-label">Jenis Magang</label>
+                            <select class="form-select select2" id="jenis" name="namajenis" data-placeholder="Pilih Jenis Magang">
+                                <option value="">Pilih Jenis Magang</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-3">
                             <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
                             <input type="text" name="nama_industri" id="nama_industri" class="form-control" placeholder="Masukkan Nama Perusahaan" />
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
+
+                        <div class="col-12 mb-3">
                             <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
                             <input type="text" name="posisi_magang" id="posisi_magang" class="form-control" placeholder="Masukkan Nama Posisi Magang" />
                         </div>
@@ -100,13 +106,19 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col mb-3">
+                        <div class="col-12 mb-3">
+                            <label for="jenis" class="form-label">Jenis Magang</label>
+                            <select class="form-select select2" id="jenis" name="namajenis" data-placeholder="Pilih Jenis Magang">
+                                <option value="">Pilih Jenis Magang</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-3">
                             <label for="namaperusahaan" class="form-label">Nama Perusahaan</label>
                             <input type="text" disabled name="nama_industri" id="nama_industri" class="form-control" placeholder="Masukkan Nama Perusahaan" />
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
+
+                        <div class="co-12 mb-3">
                             <label for="namaposisi" class="form-label">Nama Posisi Magang</label>
                             <input type="text" disabled name="posisi_magang" id="posisi_magang" class="form-control" placeholder="Masukkan Nama Posisi Magang" />
                         </div>
@@ -137,6 +149,28 @@
                     <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- modal alert -->
+<div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="text-center">
+                    <img src="{{ asset('app-assets/img/alert.png')}}" alt="">
+                    <h5>Apakah anda yakin ingin menolak tawaran magang?</h5>
+                    <p>Anda tidak akan dapat melakukan konfirmasi magang jika memilih "Ya,Yakin"</p>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                        Ya, Yakin
+                    </button>
+                    <button type="button" class="btn btn-danger">Batal</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
