@@ -331,7 +331,6 @@
 
     var table = $('#table-fakultas').DataTable({
         "data": jsonData,
-        scrollX: true,
         columns: [{
                 data: "nomor"
             },

@@ -62,6 +62,21 @@
                     Magang Mandiri
                 </button>
             </li>
+            <li class="nav-item" style="font-size: 15px;">
+                <button type="button" target="2" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-magang-mbkm" aria-controls="navs-pills-justified-magang-mbkm" aria-selected="false">
+                    Magang MBKM
+                </button>
+            </li>
+            <li class="nav-item" style="font-size: 15px;">
+                <button type="button" target="2" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-magang-kerja" aria-controls="navs-pills-justified-magang-kerja" aria-selected="false">
+                    Magang Kerja
+                </button>
+            </li>
+            <li class="nav-item" style="font-size: 15px;">
+                <button type="button" target="2" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-magang-startup" aria-controls="navs-pills-justified-magang-startup" aria-selected="false">
+                    Magang StartUp
+                </button>
+            </li>
         </ul>
         <!-- Isi Tab Bar -->
         <div class="tab-content p-0">
@@ -72,7 +87,11 @@
                         @foreach (['proses_seleksi', 'penawaran', 'diterima', 'ditolak'] as $key => $item)
                         <li class="nav-item" style="font-size: 15px;">
                             <button type="button" class="nav-link {{ $key == 0 ? 'active' : '' }}" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-controls="navs-pills-justified-{{ str_replace('_', '-', $item) }}" aria-selected="false">
+                            @if($item != 'diterima' && $item != 'ditolak')
                                 <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }}
+                                @else
+                                <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }} Tawaran
+                                @endif
                             </button>
                         </li>
                         @endforeach
@@ -200,6 +219,18 @@
                 @endforeach
             </div>
             <!-- /Magang Mandiri -->
+
+            <!-- Magang mbkm-->
+            @include('kegiatan_saya.lamaran_saya.mbkm_card')
+            <!-- Magang mbkm-->
+
+            <!-- Magang kerja-->
+            @include('kegiatan_saya.lamaran_saya.magangkerja_card')
+            <!-- Magang kerja-->
+
+            <!-- Magang StartUp-->
+            @include('kegiatan_saya.lamaran_saya.magangstartup_card')
+            <!-- Magang StartUp-->
 
         </div>
     </div>
