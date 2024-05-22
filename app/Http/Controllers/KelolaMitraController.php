@@ -50,6 +50,8 @@ class KelolaMitraController extends Controller
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
+            'notelpon' => $request->notelpon,
+            'alamatindustri'=> $request->alamatindustri,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
             'image' => $request->image->store('post'),
