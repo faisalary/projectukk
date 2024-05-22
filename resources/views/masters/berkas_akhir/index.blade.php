@@ -169,6 +169,7 @@
     $('#table-laporan-akhir').DataTable({
         ajax: '{{ route("laporan-akhir.show")}}',
         scrollX: true,
+        processing: true,
         type: 'GET',
         columns: [{
                 data: "DT_RowIndex"
