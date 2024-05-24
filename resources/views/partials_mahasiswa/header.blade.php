@@ -361,7 +361,7 @@
                   <ul class="menu-sub">
                     <li class="menu-item">
                       <a href="/pengajuan/surat" class="menu-link">
-                        <div data-i18n="Pengajuan Surat Pengantar Magang">Pengajuan Surat Pengantar Magang</div>
+                        <div data-i18n="Pengajuan Magang">Pengajuan Magang</div>
                       </a>
                     </li>
                     <li class="menu-item">

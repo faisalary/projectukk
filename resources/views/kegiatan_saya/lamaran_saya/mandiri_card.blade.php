@@ -3,7 +3,7 @@
     @foreach ($mandiri as $item)
         @if ($item->nim == $nim->nim)
             @if ($item->statusapprove == 1 && $item->status_terima == null)
-                <div class="card mt-2">
+                <div class="card mt-3">
                     <div class="card-body">
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             Lakukan konfirmasi penerimaan segera!
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             @elseif ($item->status_terima == 1)
-                <div class="card mt-2">
+                <div class="card mt-3">
                     <div class="card-body">
                         <div class="text-end mt-3"><span class="badge bg-label-success">Diterima</span>
                         </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             @elseif ($item->status_terima == 2)
-                <div class="card mt-2">
+                <div class="card mt-3">
                     <div class="card-body">
                         <div class="text-end mt-3"><span class="badge bg-label-danger">Ditolak</span>
                         </div>

@@ -507,6 +507,10 @@ Route::get('/nilai/magang', function () {
     return view('kegiatan_saya.nilai_magang.nilai');
 });
 
+Route::get('/pengajuan/magang', function () {
+    return view('pengajuan_magang.mandiri.tambah');
+});
+
 Route::get('/kelola/mahasiswa', function () {
     return view('kelola_mahasiswa.index');
 });
@@ -599,6 +603,7 @@ Route::get('/dashboard/company', function () {
 Route::get('/tambah/jenis-magang', function () {
     return view('masters.jenis_magang.modal');
 });
+
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 
