@@ -49,7 +49,9 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="nim" class="form-label">NIM</label>
-                            <input class="form-control" id="nim" name="nim" placeholder="NIP" />
+                            <input input type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                class="form-control" id="nim" name="nim" placeholder="NIP" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -72,7 +74,9 @@
                     <div class="row">
                         <div class="col mb-2 form-input">
                             <label for="nohpmhs" class="form-label">No Telepon</label>
-                            <input type="text" id="nohpmhs" name="nohpmhs" class="form-control"
+                            <input input type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                type="text" id="nohpmhs" name="nohpmhs" class="form-control"
                                 placeholder="No Telepon" />
                             <div class="invalid-feedback"></div>
                         </div>

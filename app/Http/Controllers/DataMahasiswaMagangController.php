@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisMagang;
 use Carbon\Carbon;
 use App\Models\MhsMagang;
 use App\Models\MhsMandiri;
 use App\Models\PendaftaranMagang;
 use App\Models\PengajuanMandiri;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,7 +20,10 @@ class DataMahasiswaMagangController extends Controller
     // indeks Mahasiswa Fakultas
     public function index()
     {
-        return view('admin_kandidat.data_mhs_magang');
+        $jenis = JenisMagang::all();
+        $prodi = ProgramStudi::all();
+
+        return view('admin_kandidat.data_mhs_magang', compact('jenis', 'prodi'));
     }
 
 
@@ -49,6 +54,8 @@ class DataMahasiswaMagangController extends Controller
 
         if ($request->type) {
             $mhs_magang = $pelamar->where('current_step', $request->type)
+                ->join('mahasiswa', 'pendaftaran_magang.nim', '=', 'mahasiswa.nim')
+                ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
                 ->with(
                     'mahasiswa_magang',
                     'mahasiswa_magang.peg_industri',
@@ -56,8 +63,17 @@ class DataMahasiswaMagangController extends Controller
                     'mahasiswa',
                     'mahasiswa.prodi',
                     'lowongan_magang',
-                    'lowongan_magang.industri'
+                    'lowongan_magang.industri',
+                    'lowongan_magang.jenis_magang'
                 );
+
+            if ($request->prodi != null) {
+                $mhs_magang = $mhs_magang->where('mahasiswa.id_prodi', $request->prodi);
+            }
+
+            if ($request->jenis != null) {
+                $mhs_magang = $mhs_magang->where('lowongan_magang.id_jenismagang', $request->jenis);
+            }
         }
 
 

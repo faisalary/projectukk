@@ -14,8 +14,8 @@ class LowonganMagang extends Model
     protected $guarded = [];
     protected $primaryKey = 'id_lowongan';
     protected $fillable = [
-        'created_by', 
-        'id_jenismagang', 
+        'created_by',
+        'id_jenismagang',
         'created_at',
         'intern_position',
         'durasimagang',
@@ -110,5 +110,9 @@ class LowonganMagang extends Model
             'id_lowongan',
             'id_prodi'
         );
+    }
+    public function jenis_magang()
+    {
+        return $this->belongsTo(JenisMagang::class, 'id_jenismagang');
     }
 }
