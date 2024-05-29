@@ -604,6 +604,14 @@ Route::get('/tambah/jenis-magang', function () {
     return view('masters.jenis_magang.modal');
 });
 
+Route::get('/berkas-akhir-magang/fakultas', function () {
+    return view('berkas_akhir_magang.magang_fakultas.index');
+});
+
+Route::get('/laporan-magang-mahasiswa/fakultas', function () {
+    return view('berkas_akhir_magang.magang_fakultas.laporan_magang');
+});
+
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 

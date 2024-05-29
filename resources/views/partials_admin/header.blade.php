@@ -245,7 +245,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/berkas-akhir-magang/fakultas" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
