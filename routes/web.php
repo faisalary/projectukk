@@ -612,6 +612,14 @@ Route::get('/laporan-magang-mahasiswa/fakultas', function () {
     return view('berkas_akhir_magang.magang_fakultas.laporan_magang');
 });
 
+Route::get('/berkas-akhir-magang/mandiri', function () {
+    return view('berkas_akhir_magang.magang_mandiri.index');
+});
+
+Route::get('/laporan-magang-mahasiswa/mandiri', function () {
+    return view('berkas_akhir_magang.magang_mandiri.laporan_magang');
+});
+
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 

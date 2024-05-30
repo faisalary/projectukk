@@ -244,13 +244,13 @@
                             <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('berkas-akhir-magang/fakultas*') ? 'active' : '' }}">
                                 <a href="/berkas-akhir-magang/fakultas" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
+                            <li class="menu-item {{ request()->is('berkas-akhir-magang/mandiri*') ? 'active' : '' }}">
+                                <a href="/berkas-akhir-magang/mandiri" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
                             </li>

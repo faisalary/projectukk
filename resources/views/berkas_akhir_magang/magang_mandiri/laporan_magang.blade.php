@@ -7,7 +7,7 @@
 @endsection
 
 @section('main')
-<a href="/berkas-akhir-magang/fakultas" type="button" class="btn btn-outline-success mb-3 waves-effect">
+<a href="/berkas-akhir-magang/mandiri" type="button" class="btn btn-outline-success mb-3 waves-effect">
     <span class="ti ti-arrow-left me-2"></span>Kembali
 </a>
 <div class="row ">
