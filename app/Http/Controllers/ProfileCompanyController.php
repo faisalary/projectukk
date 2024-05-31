@@ -19,7 +19,7 @@ class ProfileCompanyController extends Controller
             'industri' => Industri::find($user->id_industri)
             
         ];
-        return view('company.profile_company',$data);
+        return view('company.summary_profile.index',$data);
     }
 
     /**
@@ -76,26 +76,43 @@ class ProfileCompanyController extends Controller
 
      public function update(Request $request, $id)
      {
-         try {
-             $industri = Industri::where('id_industri', $id)->first();
- 
-             $industri->namaindustri = $request->namaindustri;
-             $industri->email = $request->email;
-             $industri->kategori_industri = $request->kategori_industri;
-             $industri->statuskerjasama = $request->statuskerjasama;
-             $industri->save();
- 
-             return response()->json([
-                 'error' => false,
-                 'message' => 'Mitra successfully Updated!',
-                 'modal' => '#modal-mitraa'
-             ]);
-         } catch (Exception $e) {
-             return response()->json([
-                 'error' => true,
-                 'message' => $e->getMessage(),
-             ]);
-         }
+        try {
+            $industri = Industri::where('id_industri', $id)->first();
+            
+            $industri->namaindustri = $request->namaindustri;
+            $industri->email = $request->email;
+            if($request->alamatindustri){
+                $industri->alamatindustri = $request->alamatindustri;               
+            }
+            if($request->description){
+                $industri->description = $request->description;
+            }
+            if($request->notelpon){
+               $industri->notelpon = $request->notelpon;
+           }
+           if($request->kategori_industri){
+               $industri->kategori_industri = $request->kategori_industri;
+           }
+           if($request->statuskerjasama){
+            $industri->statuskerjasama = $request->statuskerjasama;
+           }
+
+            if (!empty($request->image)) {
+                $industri->image = $request->image->store('post');
+            }
+            
+            $industri->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
      }
     
 

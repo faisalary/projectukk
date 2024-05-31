@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="{{ url("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
+    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <style>
 
     </style>
@@ -29,7 +29,7 @@
                         aria-selected="true">
                         <i class="tf-icons ti ti-users ti-xs me-1"></i> Created
                         {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">3</span> --}}
-                    {{--</button>
+                {{-- </button>
                 </li> --}}
                 <li class="nav-item">
                     <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
@@ -68,7 +68,7 @@
                                     <th>NOMOR TELEPON</th>
                                     <th>PENANGGUNG JAWAB</th>
                                     {{-- <th>DESKRIPSI PERUSAHAAN</th> --}}
-                                    {{--<th>KATEGORI MITRA</th>
+                {{-- <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
                                     <th>AKSI</th>
                                     
@@ -289,7 +289,7 @@
                 {
                     data: 'editrejected',
                     name: 'editrejected'
-                },   
+                },
             ]
         });
 
@@ -306,6 +306,8 @@
                     $('#modalTambahMitra form').attr('action', action);
                     $('#nama').val(response.namaindustri);
                     $('#email').val(response.email);
+                    $('#notelpon').val(response.notelpon);
+                    $('#alamatindustri').val(response.alamatindustri);
                     $('#kategori').val(response.kategori_industri).trigger('change');
                     $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
                     $('#modalTambahMitra').modal('show');
@@ -326,19 +328,19 @@
         });
 
         function approved(e) {
-            
-            $('#modalapprove').modal('show');
-            var approveUrl = '{{url("company/kelola-mitra/approved")}}/' + e.attr('data-id');
 
-            $('#approve-confirm-button').on('click', function () {
+            $('#modalapprove').modal('show');
+            var approveUrl = '{{ url('company/kelola-mitra/approved') }}/' + e.attr('data-id');
+
+            $('#approve-confirm-button').on('click', function() {
 
                 $.ajax({
                     url: approveUrl,
                     type: "POST",
                     headers: {
-                        "X-CSRF-TOKEN" : "{{csrf_token()}}"
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (!response.error) {
                             alert('berhasil');
                         } else {
@@ -350,29 +352,32 @@
                 $('#modalapprove').modal('hide');
             });
         }
-        
+
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url("company/kelola-mitra/rejected") }}/' + e.attr('data-id');
+            var rejectedUrl = '{{ url('company/kelola-mitra/rejected') }}/' + e.attr('data-id');
 
-            $('#rejected-confirm-button').on('click', function () {
+            $('#rejected-confirm-button').on('click', function() {
                 var alasan = $('#alasan').val();
 
                 $.ajax({
                     url: rejectedUrl,
                     type: "POST",
-                    data: { alasan: alasan, _token: '{{ csrf_token() }}' },
+                    data: {
+                        alasan: alasan,
+                        _token: '{{ csrf_token() }}'
+                    },
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (!response.error) {
                             alert('berhasil');
                         } else {
                             alert('tidak berhasil');
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
