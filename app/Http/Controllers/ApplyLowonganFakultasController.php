@@ -106,7 +106,6 @@ class ApplyLowonganFakultasController extends Controller
                 'alamatmhs', 
                 'emailmhs', 
                 'nohpmhs', 
-                'kelas',
                 'status',
                 'eprt',
                 'ipk',
@@ -117,9 +116,6 @@ class ApplyLowonganFakultasController extends Controller
             ];
 
             $infropribcolumns = [
-                'ipk',
-                'eprt',
-                'TAK',
                 'tgl_lahir',
                 'headliner',
                 'deskripsi_diri',

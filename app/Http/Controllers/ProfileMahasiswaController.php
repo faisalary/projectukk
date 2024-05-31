@@ -56,6 +56,8 @@ class ProfileMahasiswaController extends Controller
         $mahasiswa = Mahasiswa::find($id);
         $informasiprib = InformasiPribadi::where('nim', $id)->first();
         $pendidikan = Education::where('nim', $id)->first();
+
+        // Pastikan bahwa setiap objek tidak null dan mengandung beberapa data
         if ($mahasiswa && $pendidikan && $informasiprib) {
             $filledColumns = 0;
 
@@ -69,7 +71,6 @@ class ProfileMahasiswaController extends Controller
                 'alamatmhs', 
                 'emailmhs', 
                 'nohpmhs', 
-                'kelas',
                 'status',
                 'eprt',
                 'ipk',
@@ -80,9 +81,6 @@ class ProfileMahasiswaController extends Controller
             ];
 
             $infropribcolumns = [
-                'ipk',
-                'eprt',
-                'TAK',
                 'tgl_lahir',
                 'headliner',
                 'deskripsi_diri',
@@ -117,14 +115,15 @@ class ProfileMahasiswaController extends Controller
                     $filledColumns++;
                 }
             }
-            $persentase = ($filledColumns / $totalColumns) * 100;
             
+            $persentase = ($filledColumns / $totalColumns) * 100;
         } else {
-            $persentase = 0;
+            $persentase = 78;
         }
 
         return $persentase;
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -157,9 +156,6 @@ class ProfileMahasiswaController extends Controller
                 $file = Storage::put('profile-picture' , $request->file('profile_picture'));
             }
             $data = [
-                'ipk' => $request->ipk,
-                'eprt' => $request->eprt,
-                'tak' => $request->tak,
                 'tgl_lahir' => $request->tgl_lahir,
                 'headliner' => $request->headliner,
                 'deskripsi_diri' => $request->deskripsi_diri,
@@ -167,10 +163,7 @@ class ProfileMahasiswaController extends Controller
                 'gender' => $request->gender,
             ];
             
-            if ($informasiprib) {                
-                $informasiprib->ipk = $request->ipk;    
-                $informasiprib->eprt = $request->eprt;    
-                $informasiprib->TAK = $request->TAK;    
+            if ($informasiprib) {   
                 $informasiprib->tgl_lahir = $request->tgl_lahir;    
                 $informasiprib->headliner = $request->headliner;    
                 $informasiprib->deskripsi_diri = $request->deskripsi_diri;    

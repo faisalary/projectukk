@@ -139,15 +139,15 @@
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">IPK:</span>
-                <span>{{$informasiprib?->ipk??''}}</span>
+                <span>{{$mahasiswa?->ipk??''}}</span>
               </li>
               <li class="mb-2 pt-1">
-                <span class="fw-semibold me-1">Eprt:</span>
-                <span>{{$informasiprib?->eprt?? '' }}</span>
+                <span class="fw-semibold me-1">EPRT:</span>
+                <span>{{$mahasiswa?->eprt?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">TAK:</span>
-                <span>{{$informasiprib?->TAK?? '' }}</span>
+                <span>{{$mahasiswa?->tak?? '' }}</span>
               </li>
               <li class="mb-2 pt-1">
                 <span class="fw-semibold me-1">Email:</span>
@@ -471,9 +471,6 @@
           success: function (response) {
               $("#modal-button").html("Update Data");
               $('#modalEditInformasi form').attr('action', action);
-              $('#ipk').val(response.ipk);
-              $('#eprt').val(response.eprt);
-              $('#TAK').val(response.TAK);
               $('#tgl_lahir').val(response.tgl_lahir);
               $('#headliner').val(response.headliner);
               $('#deskripsi_diri').val(response.deskripsi_diri);
