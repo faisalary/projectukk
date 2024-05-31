@@ -76,10 +76,10 @@
       <div class="col-4 ps-5 pe-0">
         <div class="d-flex justify-content-between">
           <h6 class="text-start">Kelengkapan Profil</h6>
-          <h6 class="text-end">{{ $persentase }}%</h6>
+          <h6 class="text-end">{{ number_format($persentase, 2) }}%</h6>
         </div>
         <div class="progress">
-          <div class="progress-bar w-75" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="progress-bar" role="progressbar" style="width: {{ $persentase }}%;" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
       <div class="col-2 text-end ps-0">

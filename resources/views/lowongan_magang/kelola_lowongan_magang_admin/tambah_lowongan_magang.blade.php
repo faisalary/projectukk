@@ -128,15 +128,15 @@
                                     kelamin<span class="text-danger">*</span></label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input name="jenis" id="jenis" class="form-check-input" type="radio" value="0" />
+                                        <input name="jenis" id="jenis" class="form-check-input" type="radio" value="Laki-Laki" />
                                         <label class="form-check-label" for="jenis">Laki-Laki</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="jenis" id="jenis" class="form-check-input" type="radio" value="1" />
+                                        <input name="jenis" id="jenis" class="form-check-input" type="radio" value="Perempuan" />
                                         <label class="form-check-label" for="jenis">Perempuan</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="jenis" id="jenis" class="form-check-input " type="radio" value="2" />
+                                        <input name="jenis" id="jenis" class="form-check-input " type="radio" value="Laki-Laki & Perempuan" />
                                         <label class="form-check-label" for="jenis">Laki-Laki &
                                             Perempuan</label>
                                     </div>
@@ -150,9 +150,9 @@
                                     <div class="form-group" style="margin-top: 5px;">
                                         <label for="jenjang" class="form-label">Jenjang<span class="text-danger">*</span></label>
                                         <select name="jenjang" id="jenjang" multiple="multiple" class="select2-multiple form-select" data-placeholder="Pilih Jenjang">
-                                            <option value="d3">D3</option>
-                                            <option value="s1">S1</option>
-                                            <option value="s2">S2</option>
+                                            <option value="D3">D3</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
                                         </select>
                                     </div>
                                     <div class="form-group" style="margin-top: 5px;">
@@ -184,15 +184,15 @@
                                 <label for="pelaksanaan" class="form-label">Pelaksanaan Magang<span class="text-danger">*</span></label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input" type="radio" value="0" />
+                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input" type="radio" value="Online" />
                                         <label class="form-check-label" for="pelaksanaan">Online</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input" type="radio" value="1" />
+                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input" type="radio" value="Onsite" />
                                         <label class="form-check-label" for="pelaksanaan">Onsite</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input " type="radio" value="2" />
+                                        <input name="pelaksanaan" id="pelaksanaan" class="form-check-input " type="radio" value="Hybird" />
                                         <label class="form-check-label" for="pelaksanaan">Hybird</label>
                                     </div>
                                 </div>

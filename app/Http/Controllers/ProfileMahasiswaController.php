@@ -53,12 +53,13 @@ class ProfileMahasiswaController extends Controller
      */
     public function persentase($id)
     {
-        $totalData = 20;
         $mahasiswa = Mahasiswa::find($id);
-
-        if ($mahasiswa) {
+        $informasiprib = InformasiPribadi::where('nim', $id)->first();
+        $pendidikan = Education::where('nim', $id)->first();
+        if ($mahasiswa && $pendidikan && $informasiprib) {
             $filledColumns = 0;
-            $columns = [
+
+            $mahasiswaColumns = [
                 'nim', 
                 'angkatan', 
                 'id_prodi', 
@@ -73,25 +74,57 @@ class ProfileMahasiswaController extends Controller
                 'eprt',
                 'ipk',
                 'tak',
-                'sosmed',
-                'url_sosmed',
                 'lok_magang',
                 'skills',
-                'bahasa',
                 'tunggakan_bpp'
             ];
-            foreach ($columns as $column) {
+
+            $infropribcolumns = [
+                'ipk',
+                'eprt',
+                'TAK',
+                'tgl_lahir',
+                'headliner',
+                'deskripsi_diri',
+                'profile_picture',
+                'gender',
+            ];
+            
+            $pendidikanColumns = [
+                'name_intitutions',
+                'tingkat',
+                'nilai',
+                'startdate',
+                'enddate',
+            ];
+
+            $totalColumns = count($mahasiswaColumns) + count($pendidikanColumns) + count($infropribcolumns);
+
+            foreach ($mahasiswaColumns as $column) {
                 if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
                     $filledColumns++;
                 }
             }
-            $persentase = ($filledColumns / $totalData) * 100;
+
+            foreach ($infropribcolumns as $column) {
+                if (!is_null($informasiprib->$column) && $informasiprib->$column !== '') {
+                    $filledColumns++;
+                }
+            }
+
+            foreach ($pendidikanColumns as $column) {
+                if (!is_null($pendidikan->$column) && $pendidikan->$column !== '') {
+                    $filledColumns++;
+                }
+            }
+            $persentase = ($filledColumns / $totalColumns) * 100;
+            
         } else {
             $persentase = 0;
         }
 
         return $persentase;
-    }   
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -479,6 +512,4 @@ class ProfileMahasiswaController extends Controller
             ]);
         }
     }   
-    
-    
 }
