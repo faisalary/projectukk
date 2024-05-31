@@ -84,6 +84,7 @@ class LowonganMagangController extends Controller
                 'benefitmagang' => $request->benefit,
                 'id_industri' => $industri->id_industri,
                 'startdate' => $request->tanggal,
+                'pelaksanaan' => $request->pelaksanaan,
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
@@ -208,6 +209,7 @@ class LowonganMagangController extends Controller
             $lowongan->nominal_salary = $request->nominal;
             $lowongan->benefitmagang = $request->benefit;
             $lowongan->lokasi = $request->lokasi;
+            $lowongan->pelaksanaan = $request->pelaksanaan;
             $lowongan->startdate = $request->tanggal;
             $lowongan->enddate = $request->tanggalakhir;
             $lowongan->durasimagang = $request->durasimagang;

@@ -73,17 +73,17 @@
                 </div>
                 <div class="mb-3 col-md-4 form-input">
                   <label for="ipk" class="form-label">IPK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" 2="{{$informasiprib?->ipk??''}}" autofocus />
+                  <input class="form-control" type="text" id="ipk" name="ipk" placeholder="4.00" value="{{$mahasiswa?->ipk??''}}" autofocus disabled />
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 col-md-4 form-input">
                   <label for="eprt" class="form-label">EPRT<span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" 2="{{$informasiprib?->eprt??''}}" autofocus />
+                  <input class="form-control" type="text" id="eprt" name="eprt" placeholder="550" value="{{$mahasiswa?->eprt??''}}" autofocus disabled />
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 col-md-4 form-input">
                   <label for="TAK" class="form-label">TAK <span style="color: red;">*</span></label>
-                  <input class="form-control" type="text" id="TAK" name="TAK" placeholder="100" 2="{{$informasiprib?->TAK??''}}" autofocus />
+                  <input class="form-control" type="text" id="TAK" name="TAK" placeholder="100" value="{{$mahasiswa?->tak??''}}" autofocus disabled />
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 col-md-6  form-input">
