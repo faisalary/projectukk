@@ -341,7 +341,7 @@
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('master/jenis-magang*') ? 'active' : '' }}">
-                                <a href=/master/jenis-magang class="menu-link">
+                                <a href="{{ route('jenismagang.index') }}" class="menu-link">
                                     <div data-i18n="Master Jenis Magang">Master Jenis Magang</div>
                                 </a>
                             </li>
@@ -386,11 +386,11 @@
                                         Mandiri</div>
                                 </a>
                             </li>
-                            <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
+                            <!-- <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
                                 <a href="/master/laporan-akhir" class="menu-link">
                                     <div data-i18n="Master Laporan Akhir">Master Laporan Akhir</div>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <!-- Pengaturan -->

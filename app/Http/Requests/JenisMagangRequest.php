@@ -22,32 +22,28 @@ class JenisMagangRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)){
+        if (isset($this->id)) {
+            return [
+                'jenis' => ['required', 'string', 'max:255'],
+                'durasimagang' => ['required'],
+                'tahunakademik' => ['required'],
+            ];
+        }
         return [
-            'jenis' => ['required','string','max:255'],
-            'durasi' => ['required',''],
-            'dokumen' => ['required'],
-            'review' => ['required'],
-            'type' => ['required'],
+            'jenis' => ['required', 'string', 'max:255'],
+            'durasimagang' => ['required'],
+            'tahunakademik' => ['required'],
         ];
     }
-    return [
-        'jenis' => ['required','string','max:255'],
-        'durasi' => ['required',''],
-        'dokumen' => ['required'],
-        'review' => ['required'],
-        'type' => ['required'],
-    ];
-    }
 
-    public function messages()
+    public function messages(): array
     {
-       return [
-            'jenis.required' => 'The Type of Internship must be filled',
-            'durasi.required' =>'The Duration of Intership must be filled',
-            'dokumen.required' =>'Document must be filled',
-            'review.required' => 'Review must be filled',
-            'type.required' => 'Type must be filled'
+        return [
+            'jenis.required' => 'Jenis Magang harus diisi!',
+            'jenis.string' => 'Jenis Magang harus huruf!',
+            'durasimagang.required' => 'Durasi Magang harus diisi!',
+            'tahunakademik.required' => 'Tahun Akademik harus diisi!',
+
         ];
     }
 }
