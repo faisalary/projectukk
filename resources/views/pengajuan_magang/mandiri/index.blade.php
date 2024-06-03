@@ -1,54 +1,49 @@
 @extends('partials_mahasiswa.template')
 
-@section('meta_header')
+<!-- @section('meta_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@endsection -->
+
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <style>
+<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<style>
+    .hidden {
+        display: none;
+    }
 
-    </style>
-@endsection
+    .page-item>.page-link.active {
+        border-color: #4EA971 !important;
+        background-color: #4EA971 !important;
+        color: #fff;
+    }
 
-@section('page_style')
-    <style>
-        .hidden {
-            display: none;
-        }
-
-        .page-item>.page-link.active {
-            border-color: #4EA971 !important;
-            background-color: #4EA971 !important;
-            color: #fff;
-        }
-
-        .btn-success {
-            color: #fff;
-            background-color: #4EA971 !important;
-            border-color: #4EA971 !important;
-        }
-    </style>
+    .btn-success {
+        color: #fff;
+        background-color: #4EA971 !important;
+        border-color: #4EA971 !important;
+    }
+</style>
 @endsection
 
 @section('main')
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="col-md-12 col-12 mt-3">
-            <h4 class="fw-bold"><span class="text-muted fw-light">Layanan LKM /</span> Pengajuan Surat Pengantar Magang</h4>
-        </div>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="col-md-12 col-12 mt-3">
+        <h4 class="fw-bold mb-4"><span class="text-muted fw-light">Layanan LKM /</span> Pengajuan Magang</h4>
+    </div>
 
-        {{-- Belum melakukan konfirmasi lowongan magang --}}
-        @if (!in_array($nim, $mandiri_nim))
-            <div id="container-card" class="mb-3">
-                <div class="col-3 mt-3 ">
-                    <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;"
-                        src="{{ asset('front/assets/img/pengantar_magang.png') }}" alt="admin.upload">
-                </div>
-                <div class="sec-title mt-5 mb-4 text-center">
-                    <h4>Anda belum mengajukan Surat Pengantar Magang</h4>
-                </div>
-            </div>
-        @else
+    {{-- Belum melakukan konfirmasi lowongan magang --}}
+    @if (!in_array($nim, $mandiri_nim))
+    <div id="container-card">
+        <div class="tetx-center">
+            <img class="image" style="border-radius: 0%; margin-left: 400px; width:430px;" src="{{ asset('front/assets/img/pengantar_magang2.png') }}" alt="admin.upload">
+        </div>
+        <div class="sec-title mt-5 mb-4 text-center">
+            <h4>Anda Belum Melakukan Pengajuan Magang</h4>
+        </div>
+    </div>
+
+    <!-- @else
             {{-- Sudah melakukan konfirmasi lowongan magang --}}
             <div class="card mb-4" style="background-color: #f8f7fa;">
                 <div class="card-header p-3" style="background-color: #23314B;">
@@ -157,26 +152,52 @@
                     @endif
                 @endforeach
             </div>
-        @endif
+        @endif -->
 
-
-        @include('pengajuan_magang.mandiri.modal')
-
-        <div class="text-center">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAjukan">
-                Ajukan Surat
-            </button>
+    {{-- Sudah melakukan konfirmasi lowongan magang --}}
+    <!-- <div class="d-flex align-items-center justify-content-between my-3">
+        <div>
+            <h4 class="fw-bold mb-4"><span class="text-muted fw-light">Layanan LKM /</span> Riwayat Pengajuan Magang</h4>
         </div>
-
+        <a href="/pengajuan/magang" class="btn btn-success">Pengajuan Magang Baru</a>
     </div>
+    <div class="card">
+        <div class="card-datatable table-responsive">
+            <table class="table table-fakultas" id="table-fakultas">
+                <thead>
+                    <tr>
+                        <th style="min-width: 50px;">NOMOR</th>
+                        <th style="min-width: 125px;">JENIS MAGANG</th>
+                        <th style="min-width: 170px;">PERUSAHAAN DAN POSISI</th>
+                        <th style="min-width: 150px;">TANGGAL MULAI - TANGGAL AKHIR</th>
+                        <th style="min-width: 100px;">STATUS PENGAJUAN</th>
+                        <th style="min-width: 100px;">DOKUMEN</th>
+                </thead>
+            </table>
+        </div>
+    </div> -->
+
+
+    <!-- @include('pengajuan_magang.mandiri.modal') -->
+
+    <div class="text-center">
+        <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAjukan">
+            Ajukan Sekarang
+        </button> -->
+        <a href="/pengajuan/magang" class="btn btn-success">Ajukan Sekarang</a>
+    </div>
+
+
+
+</div>
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script>
+<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+<script src="../../app-assets/js/forms-extras.js"></script>
+<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+<!-- <script>
         $("#modalAjukan").on("hide.bs.modal", function() {
 
             $('#modalAjukan form')[0].reset();
@@ -270,5 +291,90 @@
             }
             return true;
         }
-    </script>
+</script> -->
+
+<script>
+    var jsonData = [{
+            "nomor": "1",
+            "jenis": "Magang MSIB",
+            "perusahaan": "Techno Infinity <br> UI/UX",
+            "tanggal": "Tanggal Mulai - Tanggal Akhir <br> 20 Juli 2023 - 20 Juli 2023",
+            "status": "<span class='badge bg-label-success'>Disetujui</span>",
+            "dokumen": "<a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a><a href='' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+
+        },
+        {
+            "nomor": "2",
+            "jenis": "Magang Kerja",
+            "perusahaan": "Techno Infinity <br> UI/UX",
+            "tanggal": "Tanggal Mulai - Tanggal Akhir <br> 20 Juli 2023 - 20 Juli 2023",
+            "status": "<span class='badge bg-label-danger'>Ditolak</span>",
+            "dokumen": "",
+        },
+        {
+            "nomor": "3",
+            "jenis": "Magang Start-Up",
+            "perusahaan": "Techno Infinity <br> UI/UX",
+            "tanggal": "Tanggal Mulai - Tanggal Akhir <br> 20 Juli 2023 - 20 Juli 2023",
+            "status": "<span class='badge bg-label-warning'>Menunggu Persetujuan</span>",
+            "dokumen": "",
+        },
+        {
+            "nomor": "4",
+            "jenis": "Magang Mandiri",
+            "perusahaan": "Techno Infinity <br> UI/UX",
+            "tanggal": "anggal Mulai - Tanggal Akhir <br> 20 Juli 2023 - 20 Juli 2023",
+            "status": "<span class='badge bg-label-success'>Disetujui</span>",
+            "dokumen": "<a class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+        },
+    ];
+
+    var table = $('#table-fakultas').DataTable({
+        "data": jsonData,
+        columns: [{
+                data: "nomor"
+            },
+            {
+                data: "jenis"
+            },
+            {
+                data: "perusahaan"
+            },
+            {
+                data: "tanggal"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "dokumen"
+            }
+        ],
+        "columnDefs": [{
+                "width": "50px",
+                "targets": 0
+            },
+            {
+                "width": "125px",
+                "targets": 1
+            },
+            {
+                "width": "170px",
+                "targets": 2
+            },
+            {
+                "width": "150px",
+                "targets": 3
+            },
+            {
+                "width": "100px",
+                "targets": 4
+            },
+            {
+                "width": "100px",
+                "targets": 5
+            }
+        ],
+    });
+</script>
 @endsection

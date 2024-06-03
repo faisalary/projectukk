@@ -16,7 +16,6 @@ class SetPasswordController extends Controller
         return view('partials_auth.verifikasi_akun', compact('token'));
     }
     public function update(SetPasswordReq $request) {
-        try{
         $admin = User::where('remember_token', $request->token)->first();
         if (!$admin) {
             return redirect()->back()->withInput()->withErrors(['token' => 'Token tidak valid']);
@@ -24,18 +23,7 @@ class SetPasswordController extends Controller
         $admin->password = bcrypt($request->password);
         $admin->remember_token=null;
         $admin->save();
-        return response()->json([
-            'error' => false,
-            'message' => 'Berhasil',
-            'url' => '/login'
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => true,
-            'message' => $e->getMessage(['token tidak valid']),
-        ]);
-    }
-
+        return redirect('/login');
     }
 
     //set password mahasiswa

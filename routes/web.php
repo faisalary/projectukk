@@ -508,6 +508,10 @@ Route::get('/nilai/magang', function () {
     return view('kegiatan_saya.nilai_magang.nilai');
 });
 
+Route::get('/pengajuan/magang', function () {
+    return view('pengajuan_magang.mandiri.tambah');
+});
+
 Route::get('/kelola/mahasiswa', function () {
     return view('kelola_mahasiswa.index');
 });

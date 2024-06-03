@@ -99,12 +99,12 @@
                         <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px; !important">
                             
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-map-pin me-2">{{ $lowongan->lokasi}}
+                                <i class="ti ti-map-pin me-2"> {{$lowongan->lokasi}}
                                 </i>
                             </li>
                             <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                 <i class="ti ti-currency-dollar me-2">
-                                    {{ $lowongan?->nominal_salary??'Tidak Berbayar' }}
+                                    {{$lowongan?->nominal_salary??'Tidak Berbayar' }}
                                 </i>
                             </li>
                         </ul>
@@ -116,7 +116,6 @@
                                 <i class="ti ti-school me-2"></i>
                                 <div>
                                     <p>Program Studi</p>
-                                   
                                     <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
                                         @foreach ($prodilowongan  as $l)
                                             <li> {{$l->prodi?->namaprodi??'tidak ada prodi' }}</li>

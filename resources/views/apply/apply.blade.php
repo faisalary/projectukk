@@ -102,12 +102,14 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-between">
                         <h6 class="text-start">Kelengkapan Profil</h6>
-                        <h6 class="text-end">{{ $persentase }}%</h6>
+                        <h6 class="text-end">{{ number_format($persentase, 2) }}%</h6>
                     </div>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ $persentase }}%" role="progressbar" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    @if($persentase !== 100)
                     <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
+                    @endif
                 </div>
             </div>
         </div>

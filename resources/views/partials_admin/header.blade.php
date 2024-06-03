@@ -213,11 +213,11 @@
                         </ul>
                     </li>
 
-                    <!-- Pengajuan SPM -->
+                    <!-- Pengajuan Magang -->
                     <li class="menu-item" {{ request()->is('mandiri/approve-mandiri') ? 'active' : '' }}">
                         <a href="{{ route('approve_mandiri.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-files"></i>
-                            <div data-i18n="Pengajuan SPM">Pengajuan SPM</div>
+                            <div data-i18n="Pengajuan Magang">Pengajuan Magang</div>
                         </a>
                     </li>
 
@@ -244,13 +244,13 @@
                             <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
+                            <li class="menu-item {{ request()->is('berkas-akhir-magang/fakultas*') ? 'active' : '' }}">
+                                <a href="/berkas-akhir-magang/fakultas" class="menu-link">
                                     <div data-i18n="Magang Fakultas">Magang Fakultas</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
+                            <li class="menu-item {{ request()->is('berkas-akhir-magang/mandiri*') ? 'active' : '' }}">
+                                <a href="/berkas-akhir-magang/mandiri" class="menu-link">
                                     <div data-i18n="Magang Mandiri">Magang Mandiri</div>
                                 </a>
                             </li>

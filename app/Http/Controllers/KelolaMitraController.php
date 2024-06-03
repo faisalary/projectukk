@@ -50,6 +50,8 @@ class KelolaMitraController extends Controller
             $industri = Industri::create([
             'namaindustri' => $request->namaindustri,
             'email' => $request->email,
+            'notelpon' => $request->notelpon,
+            'alamatindustri'=> $request->alamatindustri,
             'kategori_industri' => $request->kategori_industri,
             'statuskerjasama' => $request->statuskerjasama,
             'image' => $request->image->store('post'),
@@ -196,11 +198,22 @@ class KelolaMitraController extends Controller
             
             $industri->namaindustri = $request->namaindustri;
             $industri->email = $request->email;
-            $industri->kategori_industri = $request->kategori_industri;
+            if($request->alamatindustri){
+                $industri->alamatindustri = $request->alamatindustri;               
+            }
+            if($request->description){
+                $industri->description = $request->description;
+            }
+            if($request->notelpon){
+               $industri->notelpon = $request->notelpon;
+           }
+           if($request->kategori_industri){
+               $industri->kategori_industri = $request->kategori_industri;
+           }
+           if($request->statuskerjasama){
             $industri->statuskerjasama = $request->statuskerjasama;
-            $industri->alamatindustri = $request->alamatindustri;
-            $industri->description = $request->description;
-            $industri->notelpon = $request->notelpon;
+           }
+
             if (!empty($request->image)) {
                 $industri->image = $request->image->store('post');
             }

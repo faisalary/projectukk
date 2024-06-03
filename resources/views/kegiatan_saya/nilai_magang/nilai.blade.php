@@ -63,14 +63,13 @@
                                     <tr>
                                         <th>NOMOR</th>
                                         <th>ASPEK PENILAIAN</th>
-                                        <th style="min-width:500px;">DESKRIPSI ASPEK PENILAIAN</th>
-                                        <th>NILAI MAX</th>
+                                        <th style="min-width:600px;">DESKRIPSI ASPEK PENILAIAN</th>
                                         <th>Nilai</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-center" colspan="4">Total Nilai</th>
+                                        <th class="text-center" colspan="3">Total Nilai</th>
                                         <th>50</th>
                                     </tr>
                                 </tfoot>
@@ -89,15 +88,14 @@
                                 <thead>
                                     <tr>
                                         <th>NOMOR</th>
-                                        <th style="min-width:300px;">ASPEK PENILAIAN</th>
+                                        <th style="min-width:400px;">ASPEK PENILAIAN</th>
                                         <th style="min-width:300px;">DESKRIPSI ASPEK PENILAIAN</th>
-                                        <th style="min-width:100px;">NILAI MAX</th>
                                         <th>Nilai</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-center" colspan="4">Nilai Akhir</th>
+                                        <th class="text-center" colspan="3">Nilai Akhir</th>
                                         <th>50</th>
                                     </tr>
                                 </tfoot>
@@ -108,7 +106,7 @@
             </div>
 
             <div class="tab-pane fade show" id="navs-pills-justified-nilai" role="tabpanel">
-            <div class="card">
+                <div class="card">
                     <div class="card-body">
                         <div class="card-datatable table-responsive pb-0">
                             <table class="table border rounded mb-0" id="table-nilai-akhir">
@@ -122,6 +120,11 @@
                                     </tr>
                                 </thead>
                                 <tfoot>
+                                    <!-- Terjadi jika ada pengurangan nilai olek admin lkm -->
+                                    <!-- <tr>
+                                        <th class="text-center" colspan="4">PENGURANGAN NILAI OLEH ADMIN LKM</th>
+                                        <th>10</th>
+                                    </tr> -->
                                     <tr>
                                         <th class="text-center" colspan="4">Nilai Akhir</th>
                                         <th>50</th>
@@ -135,6 +138,13 @@
                         </div>
                     </div>
                 </div>
+                <!-- Terjadi jika ada pengurangan nilai olek admin lkm -->
+                <!-- <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="text-danger">Komentar Pengurangan Nilai : </h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. </p>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -147,21 +157,18 @@
             "nomor": "1",
             "aspek_penilain": "Komunikasi, Adaptasi, Kerjasama",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai_max": "30",
             "nilai": "70"
         },
         {
             "nomor": "2",
             "aspek_penilain": "Disiplin dan Tanggung Jawab dalam pengerjaan tugas",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai_max": "30",
             "nilai": "30"
         },
         {
             "nomor": "3",
             "aspek_penilain": "Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai_max": "40",
             "nilai": "30"
         },
     ];
@@ -181,9 +188,6 @@
                 data: "deskripsi_aspek_penilain"
             },
             {
-                data: "nilai_max"
-            },
-            {
                 data: "nilai"
             }
         ],
@@ -193,14 +197,12 @@
             "nomor": "1",
             "aspek_penilain": "Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li><li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li> ",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai_max": "70",
             "nilai": "70"
         },
         {
             "nomor": "2",
             "aspek_penilain": "Presentasi dan Tanya Jawab <li>Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang</li> <li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>",
             "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai_max": "30",
             "nilai": "30"
         },
     ];
@@ -218,9 +220,6 @@
             },
             {
                 data: "deskripsi_aspek_penilain"
-            },
-            {
-                data: "nilai_max"
             },
             {
                 data: "nilai"

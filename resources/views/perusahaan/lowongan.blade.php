@@ -408,12 +408,10 @@
                                 <div class="d-flex ms-2 mt-2" style="font-size: 14px;">
                                     <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
                                         <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                            <i id="kuota" class="ti ti-users ti-xs me-2"></i>
-                                            Kuota Penerimaan
+                                            <i id="kuota" class="ti ti-users ti-xs me-2"></i> 
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="pelaksanaan" class="ti ti-briefcase ti-xs me-2"></i>
-                                            Onsite
                                         </li>
                                         <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
                                             <i id="durasimagang" class="ti ti-calendar-time  ti-xs me-2"></i>
@@ -593,10 +591,10 @@
                 var response1 = response.lowonganshow2;
                 $('#namaindustri').text(response1.industri.namaindustri);
                 $('#intern_position').text(response1.intern_position);
-                $('#kuota').text(response1.kuota);
-                $('#pelaksanaan').text(response1.pelaksanaan);
-                $('#durasimagang').text(response1.durasimagang);
-                $('#lokasi').text(response1.lokasi);
+                $('#kuota').text(' ' + response1.kuota);
+                $('#pelaksanaan').text(' ' + response1.pelaksanaan);
+                $('#durasimagang').text(' ' + response1.durasimagang);
+                $('#lokasi').text(' '+response1.lokasi);
                 if(response1.nominal_salary !== null) {
                     $('#nominal_salary').text(response1.nominal_salary);
                     $('#nominal_salary').show(); 
@@ -605,10 +603,10 @@
                 }
 
                 response2.forEach(function(lowongan){
-                    $('#prodi-lowongan').text(lowongan.prodi.namaprodi);
+                    $('#prodi-lowongan').text(' ' + lowongan.prodi.namaprodi);
                 });
                 $('#deskripsi').text(response1.deskripsi);
-                $('#jenjang').text(response1.jenjang);   
+                $('#jenjang').text(' ' + response1.jenjang);   
                 $('#btn-detail').click(function(e){
                     e.preventDefault(); 
                     var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
