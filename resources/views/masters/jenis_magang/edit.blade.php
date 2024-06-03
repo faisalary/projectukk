@@ -24,7 +24,7 @@
 <div class="row ">
     <div class="mb-2">
         <h4 class="fw-bold text-sm modal-title"><span class="text-muted fw-light text-xs">Master Data/ </span>
-            Tambah Jenis Magang
+            Edit Jenis Magang
         </h4>
     </div>
 </div>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="bs-stepper-content">
-                <form class="default-form form-repeater" id="wizard-validation-form" onSubmit="return false" method="POST" action="{{ url('master/jenis-magang/store') }}">
+                <form class="default-form form-repeater" id="wizard-validation-form" onSubmit="return false" method="POST" action="{{ url('master/jenis-magang/update') }}/{{ $jenismagang->id_jenismagang }}">
                     @csrf
                     <!-- Jenis Magang -->
                     <div id="jenis-magang" class="content">
@@ -66,24 +66,29 @@
                         <div class="row g-3">
                             <div class="col-lg-6 col-sm-6 form-input">
                                 <label class="form-label" for="jenis">Jenis Magang<span class="text-danger">*</span></label>
-                                <input type="text" name="jenis" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" id="jenis" class="form-control" placeholder="Masukan Jenis Magang" require />
+                                <input type="text" name="jenis" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" id="jenis" class="form-control" value="{{ $jenismagang->namajenis }}" placeholder="Masukan Jenis Magang" require>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-lg-6 col-sm-6 form-input">
                                 <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
-                                <select name="durasimagang" id="durasimagang" class="select2-multiple form-select wizard-required" data-placeholder="Pilih Durasi Magang">
+                                <select name="durasimagang" id="durasimagang" class="select2 form-select wizard-required" data-placeholder="Pilih Durasi Magang">
                                     <option value="">Pilih Durasi Magang</option>
-                                    <option value="1 Semester">1 Semester</option>
-                                    <option value="2 Semester">2 Semester</option>
+                                    <option value="1 Semester" {{ $jenismagang->durasimagang == '1 Semester' ? 'selected' : '' }}>
+                                        1 Semester
+                                    </option>
+
+                                    <option value="2 Semester" {{ $jenismagang->durasimagang == '2 Semester' ? 'selected' : '' }}>
+                                        2 Semester
+                                    </option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-lg-12 col-sm-6 form-input">
                                 <label for="tahunakademik" class="form-label">Tahun Akademik<span class="text-danger">*</span></label>
-                                <select name="tahunakademik" id="tahunakademik" class="select2-multiple form-select wizard-required" data-placeholder="Pilih Tahun Akademik">
+                                <select name="tahunakademik" id="tahunakademik" class="select2 form-select wizard-required" data-placeholder="Pilih Tahun Akademik">
                                     <option value="">Pilih Tahun Akademik</option>
                                     @foreach($tahun as $item)
-                                    <option value="{{$item->id_year_akademik}}">{{$item->tahun}} {{$item->semester}}</option>
+                                    <option value="{{$item->id_year_akademik}}" {{ $jenismagang->id_year_akademik? 'selected' : '' }}>{{$item->tahun}} {{$item->semester}}</option>
                                     @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
@@ -108,22 +113,25 @@
                         </div>
                         <div class="row g-3">
                             <div data-repeater-list="berkas">
+                                @foreach($berkas as $item)
                                 <div data-repeater-item>
                                     <div class="row">
+                                        <input type="hidden" name="id_berkas" value="{{ $item->id_berkas_magang }}"></input>
+                                        <input type="hidden" name="template" value="{{ $item->id_berkas_magang }}"></input>
                                         <div class="col-lg-8 col-sm-6 form-input">
                                             <label class="form-label" for="namaberkas">Berkas Magang<span class="text-danger">*</span></label>
-                                            <input type="text" name="namaberkas" id="namaberkas" class="form-control" placeholder="Masukan Nama Berkas" />
+                                            <input type="text" name="namaberkas" id="namaberkas" class="form-control" placeholder="Masukan Nama Berkas" value="{{ $item->nama_berkas }}" />
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="col-lg-4 col-sm-6 form-input">
                                             <label for="status" class="form-label">Status Upload<span class="text-danger">*</span></label>
                                             <div class="col mt-2">
                                                 <div class="form-check form-check-inline">
-                                                    <input name="statusupload" id="statusupload" class="form-check-input" type="radio" value="1" />
+                                                    <input name="statusupload" id="statusupload" class="form-check-input" type="radio" value="1" {{ $item->status_upload == '1' ? 'checked' : '' }} />
                                                     <label class="form-check-label" for="statusupload">Wajib Upload</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input name="statusupload" id="statusupload" class="form-check-input" type="radio" value="0" />
+                                                    <input name="statusupload" id="statusupload" class="form-check-input" type="radio" value="0" {{ $item->status_upload == '0' ? 'checked' : '' }} />
                                                     <label class="form-check-label" for="statusupload">Tidak Wajib Upload</label>
                                                 </div>
                                             </div>
@@ -143,6 +151,7 @@
                                     <p class="border-bottom mt-1 pb-1" style="font-size: smaller;">Tipe File: .PDF Maximum upload file size : 2 MB.</p>
 
                                 </div>
+                                @endforeach
                             </div>
                             <div class="mb-0">
                                 <button type="button" class="btn btn-outline-success" data-repeater-create>

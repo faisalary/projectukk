@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('jenis-magang')->group(function () {
             Route::get('/', [App\Http\Controllers\JenisMagangController::class, 'index'])->name('jenismagang.index');
+            Route::get('/create', [App\Http\Controllers\JenisMagangController::class, 'create'])->name('jenismagang.create');
             Route::get('/show', [App\Http\Controllers\JenisMagangController::class, 'show'])->name('jenismagang.show');
             Route::post('/store', [App\Http\Controllers\JenisMagangController::class, 'store'])->name('jenismagang.store');
             Route::post('/update/{id}', [App\Http\Controllers\JenisMagangController::class, 'update'])->name('jenismagang.update');
@@ -599,27 +600,6 @@ Route::get('/dashboard/admin', function () {
 Route::get('/dashboard/company', function () {
     return view('dashboard.company.index');
 });
-
-Route::get('/tambah/jenis-magang', function () {
-    return view('masters.jenis_magang.modal');
-});
-
-Route::get('/berkas-akhir-magang/fakultas', function () {
-    return view('berkas_akhir_magang.magang_fakultas.index');
-});
-
-Route::get('/laporan-magang-mahasiswa/fakultas', function () {
-    return view('berkas_akhir_magang.magang_fakultas.laporan_magang');
-});
-
-Route::get('/berkas-akhir-magang/mandiri', function () {
-    return view('berkas_akhir_magang.magang_mandiri.index');
-});
-
-Route::get('/laporan-magang-mahasiswa/mandiri', function () {
-    return view('berkas_akhir_magang.magang_mandiri.laporan_magang');
-});
-
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
 

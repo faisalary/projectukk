@@ -11,9 +11,13 @@ class JenisMagang extends Model
     use HasUuids;
 
     protected $table = 'jenis_magang';
-    protected $fillable = ['namajenis', 'durasimagang', 'is_review_process', 'is_document_upload', 'type', 'status'];
+    protected $fillable = ['namajenis', 'durasimagang', 'id_year_akademik', 'status'];
     protected $primaryKey = 'id_jenismagang';
     protected $keyType = 'string';
-    public $timestamps= false;
-    
+    public $timestamps = false;
+
+    public function berkas_magang()
+    {
+        return $this->hasMany(BerkasMagang::class, 'id_jenismagang');
+    }
 }
