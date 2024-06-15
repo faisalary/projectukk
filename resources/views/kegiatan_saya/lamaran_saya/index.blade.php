@@ -92,9 +92,6 @@
                                 @else
                                 <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }} Tawaran
                                 @endif
-                                @else
-                                <i class="ti ti-presentation-analytics pe-1"></i> {{ implode(' ', array_map('ucfirst', explode('_', $item))) }} Tawaran
-                                @endif
                             </button>
                         </li>
                         @endforeach

@@ -46,8 +46,6 @@ Route::prefix('mahasiswa')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-Auth::routes();
 //profile user
 
 

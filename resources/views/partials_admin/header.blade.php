@@ -88,7 +88,8 @@
             background-color: #4EA971;
             border-color: #4EA971;
         }
-
+        
+        .app-brand-text,
         .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
             background-color: rgba(115, 103, 240, 0.08) !important;
             color: #4EA971 !important;
@@ -171,7 +172,7 @@
 
                 <!-- Admin -->
 
-                @can('slidebar.lkm')
+                
                 <ul class="menu-inner py-1">
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin
