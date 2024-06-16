@@ -229,3 +229,15 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
 .text-primary {
     color: var(--bs-primary) !important;
 }
+
+.btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: var(--bs-primary) !important;
+    background-color: #f4f3fe !important;
+    border-color: var(--bs-primary) !important;
+}

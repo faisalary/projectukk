@@ -70,7 +70,7 @@
 
 
     @yield('page_style')
-    
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
     {{-- <script src="{{ url('app-assets/vendor/js/template-customizer.js') }}"></script> --}}
@@ -215,8 +215,8 @@
                                                     style="color: white; margin-right: 20px;"></i></a>
                                         </div>
                                     </div>
-                                    <div class="border mt-2 mb-2"
-                                        style="width: 1494px; margin-left: -89px; border-width: 3px;"></div>
+                                    {{-- <div class="border mt-2 mb-2" style="width: 1494px; margin-left: -89px; border-width: 3px;"></div> --}}
+                                    <hr>
 
                                     <div class="copyright-text text-left mt-3" style="color: white">©
                                         {{ \Carbon\Carbon::today()->year }}
