@@ -48,7 +48,6 @@ Route::prefix('mahasiswa')->group(function () {
 require __DIR__ . '/auth.php';
 //profile user
 
-
 Route::middleware('auth')->group(function () {
     //untuk lkm
     Route::prefix('master')->middleware('can:only.lkm')->group(function () {

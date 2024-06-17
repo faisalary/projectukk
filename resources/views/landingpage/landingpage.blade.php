@@ -811,12 +811,10 @@
                                 Sodales mauris quam faucibus scelerisque risus malesuada nulla. Cursus enim
                                 quis elementum feugiat ut. Phasellus a viverra facilisis eu purus. Et risus
                                 magna dis nisl nulla sed diam.</p>
-                            <button type="button" class="btn btn-success mb-5">Cari Lowongan
-                                Sekarang</button>
-                            <div class="big-column">
-                                <div class="footer-column about-widget">
-                                </div>
-                            </div>
+                            <button type="button" class="btn btn-primary mb-5">Cari Lowongan Sekarang</button>
+                            {{-- <div class="big-column">
+                                <div class="footer-column about-widget"></div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

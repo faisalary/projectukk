@@ -71,6 +71,43 @@
 
     @yield('page_style')
 
+    <style>
+        /* Button used to open the chat form - fixed at the bottom of the page */
+        .open-button {
+            background-color: #FFFFFF;
+            color: #418D5E;
+            padding: 0px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            width: 160px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The popup chat - hidden by default */
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            overflow-y: auto;
+            max-height: 500px;
+
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+            max-width: 300px;
+            padding: 10px;
+            background-color: white;
+        }
+    </style>
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
     {{-- <script src="{{ url('app-assets/vendor/js/template-customizer.js') }}"></script> --}}
@@ -97,60 +134,23 @@
 
                     <!-- <div class="container-xxl flex-grow-1 container-p-y"> -->
 
-                    <!-- Modal Delete-->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    @if (auth()->check())
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                </div>
-                                <div class="modal-body text-center" style="display:block;">
+                                <div class="modal-body text-center">
                                     Apakah Anda Ingin Keluar Dari Akun Ini?
                                 </div>
                                 <div class="modal-footer" style="display: flex; justify-content:center;">
-                                    <a href="{{ route('logout') }}"><button type="button" class="btn btn-success"
-                                            data-dismiss="modal">Iya</button></a>
-                                    <button type="button" class="btn btn-danger"
-                                        data-bs-dismiss="modal">Tidak</button>
+                                    <a href="{{ route('logout') }}">
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">Iya</button></a>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endif
                     <!-- Footer -->
-
-                    <style>
-                        /* Button used to open the chat form - fixed at the bottom of the page */
-                        .open-button {
-                            background-color: #FFFFFF;
-                            color: #418D5E;
-                            padding: 0px;
-                            border-radius: 20px;
-                            border: none;
-                            cursor: pointer;
-                            width: 160px;
-                            height: 40px;
-                        }
-
-                        /* The popup chat - hidden by default */
-                        .chat-popup {
-                            display: none;
-                            position: fixed;
-                            bottom: 0;
-                            right: 15px;
-                            border: 3px solid #f1f1f1;
-                            z-index: 9;
-                            overflow-y: auto;
-                            max-height: 500px;
-
-                        }
-
-                        /* Add styles to the form container */
-                        .form-container {
-                            max-width: 300px;
-                            padding: 10px;
-                            background-color: white;
-                        }
-                    </style>
 
                     <footer class="content-footer footer bg-footer-theme" style="background-color:#1A3826 !important"
                         id="footer">
@@ -194,16 +194,15 @@
                                                 <p class="text-secondary"> Layanan Kerjasama dan Magang Fakultas Ilmu
                                                     Terapan</p>
                                             </a>
-                                            <button class="open-button" onclick="openForm()">
-                                                <div class="tf-icons ti ti-help" style="font-size: medium;"> Butuh
-                                                    Bantuan ?
+                                            <button type="button" class="btn rounded-pill btn-outline-primary" onclick="openForm();" style="background-color: white;">
+                                                <span class="ti-xs ti ti-help me-1"></span>Butuh Bantuan ?
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 ps-5">
-                                    <div class="copyright-text text-left mt-2" style="color: white"><a>Social Media :
-                                        </a>
+                                <div class="col-12 px-5">
+                                    <div class="copyright-text text-left mt-2" style="color: white">
+                                        <span>Social Media :</span>
                                         <div class="social-links mt-2">
                                             <a href="#" class="ml-0"><i class="fab fa-facebook-f"
                                                     style="color: white; margin-right: 20px;"></i></a>
@@ -215,8 +214,7 @@
                                                     style="color: white; margin-right: 20px;"></i></a>
                                         </div>
                                     </div>
-                                    {{-- <div class="border mt-2 mb-2" style="width: 1494px; margin-left: -89px; border-width: 3px;"></div> --}}
-                                    <hr>
+                                    <hr style="border-color: rgb(255, 255, 255);">
 
                                     <div class="copyright-text text-left mt-3" style="color: white">©
                                         {{ \Carbon\Carbon::today()->year }}
