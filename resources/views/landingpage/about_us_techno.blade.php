@@ -1,4 +1,4 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
     <link rel="stylesheet" href="../../app-assets/vendor/libs/leaflet/leaflet.css" />
@@ -16,7 +16,7 @@
     </style>
 @endsection
 
-@section('main')
+@section('content')
     <div class="container-xxl flex-grow-1 container-p-y m-5">
         <div class="row ms-5 me-5">
             <div class="col-6">

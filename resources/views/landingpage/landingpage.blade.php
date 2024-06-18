@@ -1,4 +1,4 @@
-@extends('partials.landing_page')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">

@@ -41,7 +41,8 @@ class LowonganMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        $industri = Industri::where('id_industri', $id)->first();
+        // $industri = Industri::where('id_industri', $id)->first();
+        $industri = Industri::first();
         return view(
             'company.lowongan_magang.halaman_lowongan_magang_mitra',
             compact('lowongan', 'jenismagang', 'prodi', 'fakultas', 'industri')

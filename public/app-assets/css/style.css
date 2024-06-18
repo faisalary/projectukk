@@ -37,6 +37,157 @@ border-radius: 5px;
     border-color: #348051 !important;
 }
 
+.btn-check:focus+.btn-primary,
+.btn-primary:focus,
+.btn-primary.focus {
+	color: #fff;
+	background: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+	box-shadow: none;
+}
+
+.btn-check:checked+.btn-primary,
+.btn-check:active+.btn-primary,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.show.dropdown-toggle,
+.show>.btn-primary.dropdown-toggle {
+	color: #fff !important;
+	background-color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+	color: #fff !important;
+	background-color: #008cff !important;
+	border-color: #008cff !important;
+	box-shadow: none !important;
+}
+
+.btn-group .btn-primary,
+.input-group .btn-primary {
+	border-right: 1px solid var(--bs-primary);
+	border-left: 1px solid var(--bs-primary);
+}
+
+.btn-label-primary {
+	color: var(--bs-primary);
+	border-color: transparent;
+	background: #e9e7fd;
+}
+
+.btn-label-primary.waves-effect .waves-ripple {
+	background: radial-gradient(rgba(115, 103, 240, 0.2) 0, rgba(115, 103, 240, 0.3) 40%, rgba(115, 103, 240, 0.4) 50%, rgba(115, 103, 240, 0.5) 60%, rgba(255, 255, 255, 0) 70%);
+}
+
+.btn-label-primary:hover {
+	border-color: transparent !important;
+	background: #dddbfb !important;
+	color: var(--bs-primary) !important;
+}
+
+.btn-label-primary:focus,
+.btn-label-primary.focus {
+	color: var(--bs-primary);
+	background: #dddbfb;
+	box-shadow: none !important;
+}
+
+.btn-label-primary:active,
+.btn-label-primary.active,
+.btn-label-primary.show.dropdown-toggle,
+.show>.btn-label-primary.dropdown-toggle {
+	color: var(--bs-primary) !important;
+	background-color: #dddbfb !important;
+	border-color: transparent !important;
+}
+
+.btn-label-primary:active:focus,
+.btn-label-primary.active:focus,
+.btn-label-primary.show.dropdown-toggle:focus,
+.show>.btn-label-primary.dropdown-toggle:focus {
+	box-shadow: none;
+}
+
+.btn-label-primary.disabled,
+.btn-label-primary:disabled {
+	color: var(--bs-primary) !important;
+	border-color: transparent !important;
+	background: #eae8fd !important;
+	box-shadow: none;
+}
+
+.btn-group .btn-label-primary,
+.input-group .btn-label-primary {
+	border-right: 1px solid #dddbfb;
+	border-left: 1px solid #dddbfb;
+}
+
+.btn-outline-primary {
+	color: var(--bs-primary);
+	border-color: var(--bs-primary);
+	background: transparent;
+}
+
+.btn-outline-primary.waves-effect .waves-ripple {
+	/* background: radial-gradient(rgba(115, 103, 240, 0.2) 0, rgba(115, 103, 240, 0.3) 40%, rgba(115, 103, 240, 0.4) 50%, rgba(115, 103, 240, 0.5) 60%, rgba(255, 255, 255, 0) 70%); */
+	background: var(--bs-primary);
+}
+
+.btn-outline-primary:hover {
+	color: var(--bs-primary) !important;
+	background-color: #eef4ff !important;
+	border-color: var(--bs-primary) !important;
+}
+
+.btn-check:focus+.btn-outline-primary,
+.btn-outline-primary:focus {
+	color: var(--bs-primary);
+	background-color: #eef4ff;
+	border-color: var(--bs-primary);
+	box-shadow: none;
+}
+
+.btn-check:checked+.btn-outline-primary,
+.btn-check:active+.btn-outline-primary,
+.btn-outline-primary:active,
+.btn-outline-primary.active,
+.btn-outline-primary.dropdown-toggle.show {
+	color: var(--bs-primary) !important;
+	background-color: #e9e7fd !important;
+	border-color: var(--bs-primary) !important;
+}
+
+.btn-check:checked+.btn-outline-primary:focus,
+.btn-check:active+.btn-outline-primary:focus,
+.btn-outline-primary:active:focus,
+.btn-outline-primary.active:focus,
+.btn-outline-primary.dropdown-toggle.show:focus {
+	box-shadow: none;
+}
+
+.btn-outline-primary.disabled,
+.btn-outline-primary:disabled {
+	color: var(--bs-primary) !important;
+	background-color: transparent !important;
+}
+
+.btn-outline-primary .badge {
+	background: var(--bs-primary);
+	border-color: var(--bs-primary);
+	color: #fff;
+}
+
+.btn-outline-primary:hover .badge,
+.btn-outline-primary:focus:hover .badge,
+.btn-outline-primary:active .badge,
+.btn-outline-primary.active .badge,
+.show>.btn-outline-primary.dropdown-toggle .badge {
+	background: var(--bs-primary);
+	border-color: var(--bs-primary);
+}
+
 .form-check-input:checked, .form-check-input[type=checkbox]:indeterminate {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);

@@ -1,36 +1,24 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('meta_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
-    <style>
-
-    </style>
 @endsection
 
-@section('main')
+@section('content')
     <div class="row">
         <div class="col-md-6 col-12">
             <h4 class="fw-bold"><span class="text-muted fw-light">Mitra /</span> Kelola Mitra</h4>
         </div>
         <div class="col-md-6 col-12 text-end">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">Tambah Mitra</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">Tambah Mitra</button>
         </div>
     </div>
     <div class="col-xl-12">
         <div class="nav-align-top">
             <ul class="nav nav-pills mb-3 " role="tablist">
-                {{-- <li class="nav-item">
-                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                        data-bs-target="#navs-pills-justified-users" aria-controls="navs-pills-justified-users"
-                        aria-selected="true">
-                        <i class="tf-icons ti ti-users ti-xs me-1"></i> Created
-                        {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">3</span> --}}
-                {{-- </button>
-                </li> --}}
                 <li class="nav-item">
                     <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending"
@@ -57,30 +45,10 @@
                 </li>
             </ul>
             <div class="tab-content">
-                {{-- <div class="tab-pane fade show active" id="navs-pills-justified-users" role="tabpanel">
+                @foreach (['pending', 'verified', 'rejected'] as $key => $item)
+                <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">
                     <div class="card-datatable table-responsive">
-                        <table class="table" id="table-kelola-mitra1">
-                            <thead>
-                                <tr>
-                                    <th>NOMOR</th>
-                                    <th style="min-width: 100px;">NAMA</th>
-                                    <th>EMAIL</th>
-                                    <th>NOMOR TELEPON</th>
-                                    <th>PENANGGUNG JAWAB</th>
-                                    {{-- <th>DESKRIPSI PERUSAHAAN</th> --}}
-                {{-- <th>KATEGORI MITRA</th>
-                                    <th>STATUS KERJASAMA</th>
-                                    <th>AKSI</th>
-                                    
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-
-                </div> --}}
-                <div class="tab-pane fade show active" id="navs-pills-justified-pending" role="tabpanel">
-                    <div class="card-datatable table-responsive">
-                        <table class="table" id="table-kelola-mitra2">
+                        <table class="table" id="{{ $item }}">
                             <thead>
                                 <tr>
                                     <th>NOMOR</th>
@@ -90,55 +58,13 @@
                                     <th>PENANGGUNG JAWAB</th>
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
-                                    <th style="min-width: 100px;">AKSI</th>
+                                    <th style="text-align:center;">AKSI</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
-
-                <div class="tab-pane fade" id="navs-pills-justified-verified" role="tabpanel">
-                    <div class="card-datatable table-responsive">
-                        <table class="table" id="table-kelola-mitra3">
-                            <thead>
-                                <tr>
-                                    <th>NOMOR</th>
-                                    <th style="min-width: 100px;">NAMA</th>
-                                    <th>EMAIL</th>
-                                    <th style="min-width: 120px;">NOMOR TELEPON</th>
-                                    <th>PENANGGUNG JAWAB</th>
-                                    <th style="min-width: 100px;">KATEGORI MITRA</th>
-                                    <th>STATUS KERJASAMA</th>
-                                    <th>ALAMAT</th>
-                                    <th>DESKRIPSI PERUSAHAAN</th>
-                                    <th>AKSI</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="navs-pills-justified-rejected" role="tabpanel">
-                    <p>
-                    <div class="card-datatable table-responsive">
-                        <table class="table" id="table-kelola-mitra4">
-                            <thead>
-                                <tr>
-                                    <th>NOMOR</th>
-                                    <th style="min-width: 100px;">NAMA</th>
-                                    <th>EMAIL</th>
-                                    <th style="min-width: 120px;">NOMOR TELEPON</th>
-                                    <th>ALAMAT</th>
-                                    <th style="min-width: 100px;">KATEGORI MITRA</th>
-                                    <th>STATUS KERJASAMA</th>
-                                    <th>DESKRIPSI PERUSAHAAN</th>
-                                    <th>AKSI</th>
-                                    {{-- <th>STATUS</th> --}}
-
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         @include('company.kelola_mitra.modal')
@@ -146,164 +72,75 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
-        var table = $('#table-kelola-mitra2').DataTable({
-            ajax: "{{ url('company/kelola-mitra/show/0') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
-
-                {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'notelpon',
-                    name: 'notelpon'
-                },
-                {
-                    data: 'penanggung_jawab',
-                    name: 'penanggung_jawab'
-                },
-                {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
-                },
-                {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
-                },
-                {
-                    data: 'aksi',
-                    name: 'aksi'
-                }
-            ]
+        $(document).ready(function () {
+            loadData();
         });
-    </script>
 
-    <script>
-        var table = $('#table-kelola-mitra3').DataTable({
-            ajax: "{{ url('company/kelola-mitra/show/1') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
+        function afterAction(response) {
+            $('#modalTambahMitra').modal('hide');
+            $('#datatables-kelas').DataTable().ajax.reload();
+        }
 
-                {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'notelpon',
-                    name: 'notelpon'
-                },
-                {
-                    data: 'penanggung_jawab',
-                    name: 'penanggung_jawab'
-                },
-                {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
-                },
-                {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
-                },
-                {
-                    data: 'alamatindustri',
-                    name: 'alamatindustri'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
-                    data: 'editverified',
-                    name: 'editverified'
-                }
-            ]
-        });
-    </script>
+        function loadData() {
+            $('.table').each(function () {
+                $(this).DataTable({
+                    ajax: "{{ route('kelola_mitra.show') }}?status=" + $(this).attr('id'),
+                    scrollX: true,
+                    autoWidth: false,
+                    scrollCollapse: true,
+                    destroy: true,
+                    columns: [{
+                            data: 'DT_RowIndex'
+                        },
 
-    <script>
-        var table = $('#table-kelola-mitra4').DataTable({
-            ajax: "{{ url('company/kelola-mitra/show/2') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
-
-                {
-                    data: 'namaindustri',
-                    name: 'namaindustri'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'notelpon',
-                    name: 'notelpon'
-                },
-                {
-                    data: 'alamatindustri',
-                    name: 'alamatindustri'
-                },
-                {
-                    data: 'kategori_industri',
-                    name: 'kategori_industri'
-                },
-                {
-                    data: 'statuskerjasama',
-                    name: 'statuskerjasama'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
-                    data: 'editrejected',
-                    name: 'editrejected'
-                },
-            ]
-        });
+                        {
+                            data: 'namaindustri',
+                            name: 'namaindustri'
+                        },
+                        {
+                            data: 'email',
+                            name: 'email'
+                        },
+                        {
+                            data: 'notelpon',
+                            name: 'notelpon'
+                        },
+                        {
+                            data: 'penanggung_jawab',
+                            name: 'penanggung_jawab'
+                        },
+                        {
+                            data: 'kategori_industri',
+                            name: 'kategori_industri'
+                        },
+                        {
+                            data: 'statuskerjasama',
+                            name: 'statuskerjasama'
+                        },
+                        {
+                            data: 'aksi',
+                            name: 'aksi'
+                        }
+                    ]
+                });
+            });
+        }
 
         function edit(e) {
             let id = e.attr('data-id');
-            let action = `{{ url('company/kelola-mitra/update/') }}/${id}`;
-            var url = `{{ url('company/kelola-mitra/edit/') }}/${id}`;
+            let action = `{{ route('kelola_mitra.update', ['id' => ':id']) }}`.replace(':id', id);
+            var url = `{{ route('kelola_mitra.edit', ['id' => ':id']) }}`.replace(':id', id);
+            let modal = $('#modalTambahMitra');
+
+            modal.find('.modal-title').html("Edit Mitra");
+            modal.find('#simpanButton').html("Update Data");
+            simpanButton.find('form').attr('action', action);
+
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    $("#modal-title").html("Edit Mitra");
-                    $("#simpanButton").html("Update Data");
-                    $('#modalTambahMitra form').attr('action', action);
                     $('#nama').val(response.namaindustri);
                     $('#email').val(response.email);
                     $('#notelpon').val(response.notelpon);
@@ -315,22 +152,15 @@
             });
         }
 
-        $("#modalTambahMitra").on("hide.bs.modal", function() {
-
-            $("#modal-title").html("Tambah Mitra");
-            $("#simpanButton").html("Save Data")
-            $('#modalTambahMitra form')[0].reset();
-            $('#modalTambahMitra form #kategori').val('').trigger('change');
-            $('#modalTambahMitra form #statuskerjasama').val('').trigger('change');
-            $('#modalTambahMitra form').attr('action', "{{ route('kelola_mitra.store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
+        $(".modal").on("hide.bs.modal", function() {
+            let dataLabel = $(this).find('.modal-title').attr('data-label');
+            $(this).find('.modal-title').html(dataLabel);
         });
 
         function approved(e) {
 
             $('#modalapprove').modal('show');
-            var approveUrl = '{{ url('company/kelola-mitra/approved') }}/' + e.attr('data-id');
+            var approveUrl = `{{ route('kelola_mitra.approved', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
 
             $('#approve-confirm-button').on('click', function() {
 
@@ -355,7 +185,7 @@
 
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url('company/kelola-mitra/rejected') }}/' + e.attr('data-id');
+            var rejectedUrl = `{{ route('kelola_mitra.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
 
             $('#rejected-confirm-button').on('click', function() {
                 var alasan = $('#alasan').val();
