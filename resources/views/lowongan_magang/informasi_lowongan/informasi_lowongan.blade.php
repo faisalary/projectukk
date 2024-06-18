@@ -1,7 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 <!-- Vendors CSS -->
 
 <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
@@ -31,17 +30,19 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
 
 
     <div class="col-md-9 col-12">
         <!-- superAdmin -->
-        @can( "only.lkm" )
-        <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
-            <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
-        </button>
-        @endcan
+        @if (isset($urlBack))
+        <a href="{{ $urlBack }}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i>
+            <span>Kembali</span>
+        </a>
+        @endif
+
         <!-- Company -->
         @can('title.info.lowongan.mitra')
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - {{$industri->namaindustri}}</h4>
@@ -131,11 +132,9 @@
     @endsection
 
     @section('page_script')
-
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
-        $(function() {
+
+        $(document).ready(function () {
             $("#flatpickr-date").datepicker({
                 format: 'dd-mm-yyyy'
             });
@@ -148,17 +147,12 @@
                 url: "{{$urlGetCard}}?component=card",
                 type: "get",
                 success: function(res) {
-                    // $("#container-card").html(res);
                     if (res != "") {
                         $("#container-card").html(res);
                     }
                 }
             })
         }
-
-        document.getElementById("back").addEventListener("click", () => {
-            history.back();
-        });
     </script>
     <!-- Vendors JS -->
     <script src="{{ asset('app-assets/vendor/libs/moment/moment.js') }}"></script>

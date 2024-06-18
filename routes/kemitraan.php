@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
+use App\Http\Controllers\InformasiMitraController;
 use App\Http\Controllers\LowonganMagangController;
-use App\Http\Controllers\LowonganMagangLkmController;
 use App\Http\Controllers\ProfileCompanyController;
+use App\Http\Controllers\InformasiLowonganController;
+use App\Http\Controllers\LowonganMagangLkmController;
 
 Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraController::class)->group(function () {
     Route::get('/', 'index');
@@ -29,6 +31,24 @@ Route::prefix('lowongan-magang')->group(function () {
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->controller(LowonganMagangLkmController::class)->group(function () {
         Route::get('/', 'index');
+        Route::get('/show', 'show')->name('.show');
+        Route::get('/detail/{id}', 'detail')->name('.detail');
+        Route::get('/edit/{id}', 'edit')->name('.edit');
+        Route::put('/update/{id}', 'update')->name('.update');
+        Route::post('/approved/{id}', 'approved')->name('.approved');
+        Route::post('/rejected/{id}', 'rejected')->name('.rejected');
+    });
+});
+
+Route::prefix('lowongan')->name('lowongan')->group(function () {
+    Route::prefix('informasi-lowongan')->name('.informasi')->controller(InformasiMitraController::class)->group(function () {
+        Route::get('/', 'index')->name('.index');
+        Route::get('show', 'show')->name('.show');
+        Route::get('detail/{id}', 'detail')->name('.detail');
+    });
+
+    Route::prefix('kelola-lowongan')->name('.kelola')->controller(LowonganMagangLkmController::class)->group(function () {
+        Route::get('/', 'index')->name('.index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');

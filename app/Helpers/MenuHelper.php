@@ -83,13 +83,13 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Informasi Lowongan',
-                        'route' => 'informasi_lowongan',
-                        'permission' => 'informasi_lowongan.view'
+                        'route' => 'lowongan.informasi.index',
+                        'permission' => 'informasi_lowongan_lkm.view'
                     ],
                     [
                         'name' => 'Kelola Lowongan',
-                        'route' => 'kelola_lowongan',
-                        'permission' => 'kelola_lowongan.view'
+                        'route' => 'lowongan.kelola.index',
+                        'permission' => 'kelola_lowongan_lkm.view'
                     ],
                 ]
             ],
