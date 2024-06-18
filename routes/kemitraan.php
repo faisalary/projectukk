@@ -58,14 +58,14 @@ Route::prefix('company')->group(function () {
         
     Route::prefix('profile-company')->controller(ProfileCompanyController::class)->group(function () {
         Route::get('/', 'index')->name('profile_company.index');
-        Route::put('/{id}', 'update')->name('kelola_mitra.update');
-        Route::get('/edit/{id}', 'edit')->name('kelola_mitra.edit');
+        Route::put('/{id}', 'update');
+        Route::get('/edit/{id}', 'edit');
     });
 
     Route::prefix('summary-profile')->controller()->group(function () {
         Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
-        Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update'])->name('kelola_mitra.update');
-        Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit'])->name('kelola_mitra.edit');
+        Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update']);
+        Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit']);
     });
 
     Route::prefix('master-email')->controller()->group(function () {

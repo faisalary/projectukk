@@ -130,12 +130,12 @@
         function edit(e) {
             let id = e.attr('data-id');
             let action = `{{ route('kelola_mitra.update', ['id' => ':id']) }}`.replace(':id', id);
-            var url = `{{ route('kelola_mitra.edit', ['id' => ':id']) }}`.replace(':id', id);
+            let url = `{{ route('kelola_mitra.edit', ['id' => ':id']) }}`.replace(':id', id);
             let modal = $('#modalTambahMitra');
 
             modal.find('.modal-title').html("Edit Mitra");
-            modal.find('#simpanButton').html("Update Data");
-            simpanButton.find('form').attr('action', action);
+            modal.find('form').attr('action', action);
+            modal.modal('show');
 
             $.ajax({
                 type: 'GET',
@@ -143,11 +143,12 @@
                 success: function(response) {
                     $('#nama').val(response.namaindustri);
                     $('#email').val(response.email);
-                    $('#notelpon').val(response.notelpon);
-                    $('#alamatindustri').val(response.alamatindustri);
+                    $('#contact_person').val(response.notelpon);
+                    $('#penanggung_jawab').val(response.penanggung_jawab);
+                    $('#alamat').val(response.alamatindustri);
+                    $('#deskripsi').val(response.description);
                     $('#kategori').val(response.kategori_industri).trigger('change');
                     $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
-                    $('#modalTambahMitra').modal('show');
                 }
             });
         }
@@ -158,61 +159,74 @@
         });
 
         function approved(e) {
-
             $('#modalapprove').modal('show');
-            var approveUrl = `{{ route('kelola_mitra.approved', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
 
-            $('#approve-confirm-button').on('click', function() {
-
+            sweetAlertConfirm({
+                title: 'Konfirmasi Persetujuan Data Mitra',
+                text: 'Apakah anda yakin untuk menyetujui data mitra?',
+                icon: 'warning',
+                confirmButtonText: 'Ya, Yakin',
+                cancelButtonText: 'Batal',
+            }, function () {
                 $.ajax({
-                    url: approveUrl,
+                    url: `{{ route('kelola_mitra.approved', ['id' => ':id']) }}`.replace(':id', e.attr('data-id')),
                     type: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     success: function(response) {
                         if (!response.error) {
-                            alert('berhasil');
+                            showSweetAlert({
+                                title: 'Berhasil!',
+                                text: response.message,
+                                icon: 'success'
+                            });
                         } else {
-                            alert('tidak berhasil');
+                            showSweetAlert({
+                                title: 'Gagal!',
+                                text: response.message,
+                                icon: 'error'
+                            });
                         }
                     }
                 });
 
-                $('#modalapprove').modal('hide');
+                $('#modalapprove').modal('hide'); 
             });
         }
 
         function rejected(e) {
             $('#modalreject').modal('show');
-            var rejectedUrl = `{{ route('kelola_mitra.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
-
             $('#rejected-confirm-button').on('click', function() {
+                btnBlock($(this));
+
                 var alasan = $('#alasan').val();
 
                 $.ajax({
-                    url: rejectedUrl,
+                    url: `{{ route('kelola_mitra.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id')),
                     type: "POST",
                     data: {
                         alasan: alasan,
                         _token: '{{ csrf_token() }}'
                     },
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
                     success: function(response) {
+                        btnBlock($(this), false);
                         if (!response.error) {
-                            alert('berhasil');
+                            showSweetAlert({
+                                title: 'Berhasil!',
+                                text: response.message,
+                                icon: 'success'
+                            });
                         } else {
-                            alert('tidak berhasil');
+                            showSweetAlert({
+                                title: 'Gagal!',
+                                text: response.message,
+                                icon: 'error'
+                            });
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
+                        $('#modalreject').modal('hide');
                     }
                 });
-
-                $('#modalreject').modal('hide');
             });
         }
     </script>

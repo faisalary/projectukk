@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" id="simpanButton">Simpan</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </form>
         </div>
@@ -72,36 +72,20 @@
 <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modalreject">Alasan Penolakan</h5>
+            <div class="modal-header text-center">
+                <h4 class="modal-title mx-auto" id="modalreject">Alasan Penolakan</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body py-2">
                 <div class="row">
                     <div class="col mb-2">
                         <label for="alasan" class="form-label">Alasan Penolakan</label>
-                        <textarea class="form-control" id="alasan" placeholder="Alasan Penolakan"></textarea>
+                        <textarea class="form-control" id="alasan" rows="4" placeholder="Alasan Penolakan"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="rejected-confirm-button" class="btn btn-success">Simpan</button>
-                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-center">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button>
-            </div>
-            <div class="modal-body text-center" style="display:block;">
-                Konfirmasi Persetujuan Data Mitra
-            </div>
-            <div class="modal-footer" style="display: flex; justify-content:center;">
-                <button type="button" id="approve-confirm-button" class="btn btn-success">Iya, Yakin</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+            <div class="modal-footer">
+                <button type="button" id="rejected-confirm-button" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>

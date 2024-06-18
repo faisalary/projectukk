@@ -35,7 +35,7 @@ class KelolaMitraController extends Controller
     public function store(CompanyReg $request)
     {
         try{
-            DB::beginTransaction();
+            DB::beginTransaction();   
             $industri = Industri::create([
                 'namaindustri' => $request->namaindustri,
                 'email' => $request->email,
@@ -103,11 +103,8 @@ class KelolaMitraController extends Controller
         try {
             DB::beginTransaction(); 
             $data = Industri::find($id);
-            
+            if (!$data) throw new \Exception('Industri data not found.');
 
-            if (!$data) {
-                throw new \Exception('Industri data not found.');
-            }
             $data->statusapprove = 1;
             $data->save();
             
@@ -116,17 +113,10 @@ class KelolaMitraController extends Controller
             Mail::to($data->email)->send(new VerifyEmail($url));
             DB::commit();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Persetujuan berhasil.',
-            ]);
-            } catch (\Exception $e) {
-                DB::rollBack();
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
-            ]);
+            return Response::success(null, 'Persetujuan berhasil.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
         }
     }
     public function rejected($id, Request $request)
@@ -146,52 +136,27 @@ class KelolaMitraController extends Controller
         return $industri;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    public function update(CompanyReg $request, $id)
     {
-        
         try {
-            $industri = Industri::where('id_industri', $id)->first();
-            
+            $industri = Industri::where('id_industri', $id)->first();       
             $industri->namaindustri = $request->namaindustri;
             $industri->email = $request->email;
-            if($request->alamatindustri){
-                $industri->alamatindustri = $request->alamatindustri;               
-            }
-            if($request->description){
-                $industri->description = $request->description;
-            }
-            if($request->notelpon){
-               $industri->notelpon = $request->notelpon;
-           }
-           if($request->kategori_industri){
-               $industri->kategori_industri = $request->kategori_industri;
-           }
-           if($request->statuskerjasama){
+            $industri->notelpon = $request->contact_person;
+            $industri->penanggung_jawab = $request->penanggung_jawab;
+            $industri->alamatindustri = $request->alamat;
+            $industri->description = $request->deskripsi;
+            $industri->kategori_industri = $request->kategori_industri;
             $industri->statuskerjasama = $request->statuskerjasama;
-           }
-
-            if (!empty($request->image)) {
-                $industri->image = $request->image->store('post');
-            }
-            
             $industri->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
+            return Response::success(null, 'Data Successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
-    public function status(string $id)
+    public function status($id)
     {
         try {
             $industri = Industri::where('id_industri', $id)->first();

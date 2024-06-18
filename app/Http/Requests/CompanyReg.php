@@ -21,7 +21,7 @@ class CompanyReg extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $validate = [
             'namaindustri' => 'required|string|min:5|max:255',
             'email' => 'required|email|unique:users',
             'contact_person' => 'required',
@@ -31,6 +31,12 @@ class CompanyReg extends FormRequest
             'kategori_industri' => 'required|in:Internal,Eksternal',
             'statuskerjasama' => 'required|in:Ya,Tidak,Internal Telyu',
         ];
+
+        if ($this->id) {
+            $validate['email'] = 'required|email|unique:users,id_industri,' . $this->id . ',id';
+        }
+
+        return $validate;
     }
     public function messages()
     {

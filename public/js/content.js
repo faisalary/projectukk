@@ -95,12 +95,13 @@ function pageBlock(bool = true) {
 }
 
 function sweetAlertConfirm(config, callback) {
-    let title, text, icon, confirmButtonText;
+    let title, text, icon, confirmButtonText, cancelButtonText;
 
     title = config.title ?? 'Are you sure?';
     text = config.text ?? "You won't be able to revert this!";
     icon = config.icon ?? 'warning';
     confirmButtonText = config.confirmButtonText ?? 'Yes, I do!';
+    cancelButtonText = config.cancelButtonText ?? 'No, cancel!';
 
     return Swal.fire({
         html: '<h3>' + title + '</h3><p>' + text + '</p>',
@@ -159,7 +160,7 @@ function store_data(content, button) {
         cache: false,
         success: function (response) {
             btnBlock(button, false);
-            if (response.error) {
+            if (!response.error) {
                 showSweetAlert({
                     title: 'Berhasil!',
                     text: response.message,
