@@ -392,3 +392,13 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
     background-color: #f4f3fe !important;
     border-color: var(--bs-primary) !important;
 }
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: var(--bs-primary) !important;
+}
+
+.bg-label-primary {
+    background-color: #e2ffed !important;
+    color: var(--bs-primary) !important;
+  }

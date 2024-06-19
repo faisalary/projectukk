@@ -7,6 +7,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\KelolaPenggunaController;
@@ -50,8 +51,6 @@ Route::prefix('mahasiswa')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
-    //untuk lkm
-
     require __DIR__ . '/master_data.php';
     require __DIR__ . '/kemitraan.php';
     require __DIR__ . '/mahasiswa.php';
@@ -60,17 +59,17 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.admin.index');
     })->name('dashboard_admin');
     
-    Route::prefix('kelola-pengguna')->controller(KelolaPenggunaController::class)->group(function () {
-        Route::get('/', 'index')->name('kelola-pengguna.index');
+    Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
+        Route::get('/', 'index');
     });
 
-    Route::prefix('konfigurasi')->group(function () {
-        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
-        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
-        Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
-        Route::post('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
-        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
-        Route::post('/status/{id}', [App\Http\Controllers\KonfigurasiController::class, 'status'])->name('konfigurasi.status');
+    Route::prefix('roles')->name('roles')->controller(KonfigurasiController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'show')->name('.show');
+        Route::post('store', 'store')->name('.store');
+        Route::post('update/{id}', 'update')->name('.update');
+        Route::get('edit/{id}', 'edit')->name('.edit');
+        Route::post('status/{id}', 'status')->name('.status');
     });
     
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
@@ -266,9 +265,6 @@ Route::get('/anggota/tim', function () {
 
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');
-});
-Route::get('/konfigurasi', function () {
-    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
 });
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {

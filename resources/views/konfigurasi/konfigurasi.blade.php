@@ -1,30 +1,15 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-    .tooltip-inner {
-        max-width: 900px;
-        /* If max-width does not work, try using width instead */
-        width: 900px;
-    }
-
-    .bg-success {
-        --bs-bg-opacity: 1;
-        background-color: #4EA971 !important;
-    }
-</style>
 @endsection
 
-@section('main')
-@can('slidebar.lkm')
+@section('content')
 <div class="row mb-3">
     <div class="col-md-6 col-12">
         <h4 class="fw-bold text-sm">Roles</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-konfigurasi">Tambah Role</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-konfigurasi">Tambah Role</button>
     </div>
 </div>
 <div class="card">
@@ -35,8 +20,7 @@
                     <tr>
                         <th>NOMOR</th>
                         <th>NAMA ROLE</th>
-                        <th>STATUS</th>
-                        <th>AKSI</th>
+                        <th style="text-align: center;">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -44,17 +28,12 @@
     </div>
 </div>
 @include('konfigurasi.modal')
-
-
 @endsection
 
 @section('page_script')
-
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var table = $('#table-konfig-role').DataTable({
-        ajax: '{{route("konfigurasi.show")}}',
+        ajax: '{{ route("roles.show") }}',
         processing: true,
         serverSide: false,
         deferrender: true,
@@ -69,49 +48,64 @@
                 name: 'name'
             },
             {
-                data: 'status',
-                name: 'status'
-            },
-            {
                 data: 'action',
                 name: 'action'
             }
         ]
     });
 
-    // Kelola Lowongan
-    const selectAllKelola = document.querySelector('#selectAll'),
-        checkboxListKelola = document.querySelectorAll('.kelola');
-
-    selectAllKelola.addEventListener('change', t => {
-        checkboxListKelola.forEach(e => {
-            e.checked = t.target.checked;
+    $('.all_checked').on('click', function() {
+        const allCheckedCheckbox = $(this);
+        $('.checkbox').each(function() {
+            $(this).prop('checked', allCheckedCheckbox.prop('checked'));
         });
     });
 
-    // Informasi Lowongan
-    const selectAllInformasi = document.querySelector('#selectAll_informasi'),
-        checkboxListInformasi = document.querySelectorAll('.informasi');
+    function afterAction(response) {
+        $('#modal-konfigurasi').modal('hide');
+        $('#table-konfig-role').DataTable().ajax.reload();
+    }
 
-    selectAllInformasi.addEventListener('change', t => {
-        checkboxListInformasi.forEach(e => {
-            e.checked = t.target.checked;
+    function edit(e) {
+        let dataId = e.attr('data-id');
+        let modal = $('#modal-konfigurasi');
+        modal.find('.modal-title').html('Edit Role');
+        modal.find('form').attr('action', '{{ route("roles.update", ":id") }}'.replace(':id', dataId));
+        modal.modal('show');
+
+        $.ajax({
+            url: '{{ route("roles.edit", ["id" => ":id"]) }}'.replace(':id', dataId),
+            type: 'GET',
+            success:function (response) {
+                let { role, permissions } = response.data;
+                $('#name').val(role);
+                permissions.forEach(data => {
+                    const checkbox_ = $('.checkbox').filter((index, e) => e.value == data);
+                    if (checkbox_.length > 0) {
+                        checkbox_.prop('checked', true);
+                    }
+                });
+
+                checkCheckboxCheckAll();
+            }
         });
+    }
+
+    $('.checkbox').on('click', function() {
+        checkCheckboxCheckAll();
     });
 
-    // Jadwal Seleksi
-    const selectAllSeleksi = document.querySelector('#selectAll_seleksi'),
-        checkboxListSeleksi = document.querySelectorAll('.seleksi');
+    function checkCheckboxCheckAll() {
+        if ($('.checkbox').filter(':checked').length == $('.checkbox').length) {
+            $('.all_checked').prop('checked', true);
+        } else {
+            $('.all_checked').prop('checked', false);
+        }
+    }
 
-    selectAllSeleksi.addEventListener('change', t => {
-        checkboxListSeleksi.forEach(e => {
-            e.checked = t.target.checked;
-        });
+    $('#modal-konfigurasi').on('hidden.bs.modal', function () {
+        $(this).find('.modal-title').html('Tambah Role');
+        $(this).find('form').attr('action', '{{ route("roles.store") }}'); 
     });
 </script>
-
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-
-@endcan
 @endsection

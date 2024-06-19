@@ -161,15 +161,15 @@ class MenuHelper
             ],
             [
                 'name' => 'Kelola Pengguna',
-                'route' => 'kelola-pengguna.index',
+                'route' => 'kelola_pengguna',
                 'icon' => 'ti-users',
                 'permission' => 'kelola_pengguna.view'
             ],
             [
                 'name' => 'Role',
-                'route' => 'kelola-pengguna.index',
+                'route' => 'roles',
                 'icon' => 'ti-user   ',
-                'permission' => 'kelola_pengguna.view'
+                'permission' => 'roles.view'
             ],
         ];
     }

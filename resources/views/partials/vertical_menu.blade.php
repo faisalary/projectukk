@@ -170,9 +170,9 @@
 <script src="{{ url('js/content.js') }}"></script>
 
 <!-- Page JS -->
-<script src="{{ asset('app-assets/js/dashboards-analytics.js') }}"></script>
-<script src="{{ asset('app-assets/js/form-wizard-numbered.js') }}"></script>
-<script src="{{ asset('app-assets/js/form-wizard-validation.js') }}"></script>
+{{-- <script src="{{ asset('app-assets/js/dashboards-analytics.js') }}"></script> --}}
+{{-- <script src="{{ asset('app-assets/js/form-wizard-numbered.js') }}"></script> --}}
+{{-- <script src="{{ asset('app-assets/js/form-wizard-validation.js') }}"></script> --}}
 
 @yield('page_script')
 </body>

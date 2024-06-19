@@ -13,87 +13,28 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = [
-            [
-                //lkm
-                'name' => 'superadmin',
-                'guard_name' => 'web',
-                'permissions' => [
-                    'only.lkm.mitra',
-                    'only.lkm',
-                    'slidebar.lkm',
-                    'create.mahasiswa',
-                    'create.industri',
-                    'view.industri',
-                    'edit.industri',
-                    'status.industri',
-                    'view.fakultas',
-                    'edit.fakultas',
-                    'status.fakultas',
-                    'create.fakultas',
-                    'table.informasi.admin',
-                    'edit.status.candidate',
-                    'chekbox.tabel',
-                    'information.title',
-                    'edit.actions',
-                    'agree.and.reject.buttons',
-                    'approval.page',
-                    'can.view.data.table',
-                    'title.info.lowongan.admin',
-                    'ubah.lowongan.admin',
-                    'btn.edit.lowongan',
-                    'status.lowongan.lkm',
-                    'btn.pilih.prodi',
-                    'btn.back.lkm',
-                    'role-list',
-                    'role-create',
-                    'role-edit',
-                    'role-delete'
-                ]
-            ],
-            [
-                //mitra
-                'name' => 'admin',
-                'guard_name' => 'web',
-                'permissions' => [
-                    'only.lkm.mitra',
-                    'only.mitra',
-                    'slidebar.mitra',
-                    'information.vacancies',
-                    'confirmation.limit',
-                    'edit.status.candidate',
-                    'chekbox.tabel',
-                    'information.title',
-                    'tab.title',
-                    'agree.and.reject.buttons',
-                    'approval.page',
-                    'button.submit.improvement',
-                    'create.data',
-                    'edit.data.table',
-                    'delete.data.table',
-                    'button.tnglbts.mitra',
-                    'title.info.lowongan.mitra',
-                    'ubah.lowongan.mitra',
-                    'btn.back.mitra',
-                ]
-            ],
-            [
-                //mahasiswa
-                'name' => 'user',
-                'guard_name' => 'web'
-            ],
+        $administrator = Role::where('name', 'Administrator')->first();
+        $permission = [
+            'dashboard.dashboard_admin',
+            'kelola_mitra.view',
+            'informasi_lowongan_lkm.view',
+            'kelola_lowongan_lkm.view',
+            'pengajuan_magang.view',
+            'data_magang.view',
+            'jadwal_seleksi_lkm.view',
+            'berkas_magang_fakultas.view',
+            'berkas_magang_mandiri.view',
+            'nilai_mahasiswa_magang_fakultas.view',
+            'nilai_mahasiswa_magang_mandiri.view',
+            'logbook_magang_fakultas.view',
+            'logbook_magang_mandiri.view',
+            'kelola_pengguna.view',
+            'roles.view',
         ];
 
-        foreach ($role as $key => $value) {
-            $role = Role::findOrCreate($value['name'], $value['guard_name']);
-
-            if (isset($value['permissions'])) {
-                foreach ($value['permissions'] as $k => $v) {
-                    
-                    $permission = Permission::findOrCreate($v);
-                    $role->givePermissionTo($permission);
-                }
-            }
+        foreach ($permission as $key => $value) {
+            $permission = Permission::findOrCreate($value);
+            $administrator->givePermissionTo($permission);
         }
     }
 }
