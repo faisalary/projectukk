@@ -95,13 +95,13 @@ class MenuHelper
             ],
             [
                 'name' => 'Pengajuan Magang',
-                'route' => 'pengajuan_magang.index',
+                'route' => 'pengajuan_magang',
                 'icon' => 'ti-files',
                 'permission' => 'pengajuan_magang.view'
             ],
             [
                 'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang.index',
+                'route' => 'data_magang',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_magang.view'
             ],

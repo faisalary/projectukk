@@ -1,9 +1,5 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
 @endsection
 
@@ -69,7 +65,7 @@
                     id="navs-pills-justified-{{ $status }}" role="tabpanel">
                     <div class="card">
                         <div class="card-datatable table-responsive">
-                            <table class="table table-{{ $status }}" id="{{ $status }}">
+                            <table class="table" id="{{ $status }}">
                                 <thead>
                                     <tr>
                                         <th style="min-width: 50px;">NOMOR</th>
@@ -101,205 +97,205 @@
 @endsection
 
 @section('page_script')
-    <script>
-        $(document).ready(function() {
-            $('.table').each(function() {
-                let idElement = $(this).attr('id');
-                TableMhsMagang(idElement, null);
-            });
-        });
+<script>
+    $(document).ready(function() {
+        loadData();
+    });
 
-        function TableMhsMagang(idElement, content) {
+    $('.filter-reset').on('click', function() {
+        $('#jenis').val(null).trigger('change');
+        $('#prodi').val(null).trigger('change');
+    });
 
+    $(document).on('submit', '#filter', function(e) {
+        const offcanvasFilter = $('#modalSlide');
+        e.preventDefault();
+        let prodi = $("#prodi option:selected").val();
+        let jenis = $("#jenis option:selected").val();
+
+        let data = {
+            'prodi': prodi,
+            'jenis': jenis
+        };
+
+        $('#tooltip-filter').attr('data-bs-original-title', 'Prodi: ' + $('#prodi :selected').text() + ', Jenis Magang: ' + $('#jenis :selected').text());
+        offcanvasFilter.offcanvas('hide');
+    });
+
+    $('#filter-title').on('change', function() {
+        let id_year_akademik = $(this).val();
+        let tahun_ajaran = $('#filter-title option:selected').text();
+        let tahun = tahun_ajaran.split(' - ')[0];
+        let semester = tahun_ajaran.split(' - ')[1];
+        $('#tahun-ajaran-title').text(tahun);
+        $('#semester-title').text(semester);
+
+        let data = {
+            'id_year_akademik': id_year_akademik
+        };
+
+        // filter belum tau berdasarkan apa
+        // $('.table').each(function() {
+        //     let idElement = $(this).attr('id');
+        //     TableMhsMagang(idElement, data);
+        // });
+    });
+
+    function loadData() {
+        $('.table').each(function () {
+
+            let url = `{{ route('data_magang.show') }}?type=` + $(this).attr('id');
+            let idElement = $(this).attr('id');
+
+            let dataColumn = [{
+                        data: "DT_RowIndex"
+                    },
+                    {
+                        data: null,
+                        name: 'combined_column',
+                        render: function(data, type, row) {
+                            return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
+                        }
+                    },
+                    {
+                        data: function(data, type, row) {
+                            return data.mahasiswa.prodi.namaprodi;
+                        },
+                        name: 'prodi'
+                    },
+                    {
+                        data: function(data, type, row) {
+                            return data.lowongan_magang.jenis_magang.namajenis;
+                        },
+                        name: 'jenis_magang'
+                    },
+                    {
+                        data: function(data, type, row) {
+                            return data.lowongan_magang.industri.namaindustri;
+                        },
+                        name: 'nama_perusahaan'
+                    },
+                    {
+                        data: function(data, type, row) {
+                            return data.lowongan_magang.intern_position;
+                        },
+                        name: 'posisi_magang'
+                    }];
             let columnDefs = [{
-                    "width": "10px",
-                    "targets": 0
-                },
-                {
-                    "width": "170px",
-                    "targets": 1
-                },
-                {
-                    "width": "150px",
-                    "targets": 2
-                },
-                {
-                    "width": "150px",
-                    "targets": 3
-                },
-                {
-                    "width": "170px",
-                    "targets": 4
-                },
-                {
-                    "width": "170px",
-                    "targets": 5
-                },
-            ];
-
-            let columns = [{
-                    data: "DT_RowIndex"
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
-                    }
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
+                        "width": "10px",
+                        "targets": 0
                     },
-                    name: 'prodi'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.jenis_magang.namajenis;
+                    {
+                        "width": "170px",
+                        "targets": 1
                     },
-                    name: 'jenis_magang'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.industri.namaindustri;
+                    {
+                        "width": "150px",
+                        "targets": 2
                     },
-                    name: 'nama_perusahaan'
-                },
-                {
-                    data: function(data, type, row) {
-                        return data.lowongan_magang.intern_position;
+                    {
+                        "width": "150px",
+                        "targets": 3
                     },
-                    name: 'posisi_magang'
-                },
-            ]
-
+                    {
+                        "width": "170px",
+                        "targets": 4
+                    },
+                    {
+                        "width": "170px",
+                        "targets": 5
+                    }];
             if (idElement == 'diterima') {
-                columnDefs.push({
-                    "width": "200px",
-                    "targets": 6
-                }, {
-                    "width": "150px",
-                    "targets": 7
-                }, {
-                    "width": "200px",
-                    "targets": 8
-                }, {
-                    "width": "200px",
-                    "targets": 9
-                }, {
-                    "width": "170px",
-                    "targets": 10
-                }, {
-                    "width": "170px",
-                    "targets": 11
-                });
+                dataColumn.push(
+                    {data: 'tgl_magang', name: "tanggal_magang"},
+                    {data: 'doc_terima', name: 'doc_magang'},
+                    {
+                        data: null,
+                        name: 'pbb_lapangan',
+                        render: function(data, type, row) {
+                            if (data.mahasiswa_magang.id_peg_industri) {
+                                return data.mahasiswa_magang.peg_industri.namapeg;
+                            }
+                            return '-';
+                        },
+                    },
+                    {
+                        data: null,
+                        name: 'pbb_akademik',
+                        render: function(data, type, row) {
+                            if (data.mahasiswa_magang.nip) {
+                                return data.mahasiswa_magang.dosen.namadosen + '<br>' + (data.mahasiswa_magang.dosen.nip);
+                            }
+                            return '-';
+                        },
+                    },
+                    {
+                        data: null,
+                        name: 'nilai_akhir',
+                        render: function(data, type, row) {
+                            if (data.mahasiswa_magang.nilai_akhir_magang) {
+                                return data.mahasiswa_magang.nilai_akhir_magang;
+                            }
+                            return '-';
+                        },
+                    },
+                    {
+                        data: null,
+                        name: 'indeks_nilai',
+                        render: function(data, type, row) {
+                            if (data.mahasiswa_magang.indeks_nilai_akhir) {
+                                return data.mahasiswa_magang.indeks_nilai_akhir;
+                            }
+                            return '-';
+                        },
+                    }
+                );
 
-                columns.push({
-                    data: 'tgl_magang',
-                    name: "tanggal_magang"
-                }, {
-                    data: 'doc_terima',
-                    name: 'doc_magang'
-                }, {
-                    data: null,
-                    name: 'pbb_lapangan',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.id_peg_industri) {
-                            return data.mahasiswa_magang.peg_industri.namapeg;
-                        }
-                        return '-';
+                columnDefs.push(
+                    {
+                        "width": "200px",
+                        "targets": 6
                     },
-                }, {
-                    data: null,
-                    name: 'pbb_akademik',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.nip) {
-                            return data.mahasiswa_magang.dosen.namadosen + '<br>' + (data.mahasiswa_magang.dosen
-                                .nip);
-                        }
-                        return '-';
+                    {
+                        "width": "150px",
+                        "targets": 7
                     },
-                }, {
-                    data: null,
-                    name: 'nilai_akhir',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.nilai_akhir_magang) {
-                            return data.mahasiswa_magang.nilai_akhir_magang;
-                        }
-                        return '-';
+                    {
+                        "width": "200px",
+                        "targets": 8
                     },
-                }, {
-                    data: null,
-                    name: 'indeks_nilai',
-                    render: function(data, type, row) {
-                        if (data.mahasiswa_magang.indeks_nilai_akhir) {
-                            return data.mahasiswa_magang.indeks_nilai_akhir;
-                        }
-                        return '-';
+                    {
+                        "width": "200px",
+                        "targets": 9
                     },
-                })
+                    {
+                        "width": "170px",
+                        "targets": 10
+                    },
+                    {
+                        "width": "170px",
+                        "targets": 11
+                    }
+                );
             }
 
-            let url = `{{ route('data_magang.show') }}?type=` + idElement;
-            $('#' + idElement).DataTable({
+            $(this).DataTable({
                 ajax: {
                     url: url,
-                    data: content,
                     type: 'GET'
                 },
                 scrollX: true,
                 processing: true,
                 destroy: true,
-                columns: columns,
-                "columnDefs": columnDefs,
-            });
-
-        };
-
-        $('.filter-reset').on('click', function() {
-            $('#jenis').val(null).trigger('change');
-            $('#prodi').val(null).trigger('change');
+                columns: dataColumn,
+                columnDefs: columnDefs,
+                });
         });
+    }
+</script>
 
-        $(document).on('submit', '#filter', function(e) {
-            const offcanvasFilter = $('#modalSlide');
-            e.preventDefault();
-            let prodi = $("#prodi option:selected").val();
-            let jenis = $("#jenis option:selected").val();
-
-            let data = {
-                'prodi': prodi,
-                'jenis': jenis
-            };
-
-            $('.table').each(function() {
-                let idElement = $(this).attr('id');
-
-                TableMhsMagang(idElement, data);
-            });
-
-            $('#tooltip-filter').attr('data-bs-original-title', 'Prodi: ' + $('#prodi :selected').text() +
-                ', Jenis Magang: ' + $('#jenis :selected').text());
-            offcanvasFilter.offcanvas('hide');
-        });
-        
-        $('#filter-title').on('change', function() {
-            let id_year_akademik = $(this).val();
-            let tahun_ajaran = $('#filter-title option:selected').text();
-            let tahun = tahun_ajaran.split(' - ')[0];
-            let semester = tahun_ajaran.split(' - ')[1];
-            $('#tahun-ajaran-title').text(tahun);
-            $('#semester-title').text(semester);
-
-            let data = {
-                'id_year_akademik': id_year_akademik
-            };
-
-            // filter belum tau berdasarkan apa
-            // $('.table').each(function() {
-            //     let idElement = $(this).attr('id');
-            //     TableMhsMagang(idElement, data);
-            // });
-        });
-    </script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+<script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
 @endsection

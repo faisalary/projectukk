@@ -40,26 +40,26 @@ class ApproveMandiriController extends Controller
     //     ->make(true);
     // }
 
-    public function show($statusapprove)
+    public function show(Request $request)
     {
-        // $mandiri = PengajuanMandiri::where("statusapprove",$statusapprove)->orderBy("nama_industri")->get();
-        // $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
-        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->where("statusapprove",$statusapprove)->orderBy('id_pengajuan', "asc")->get();
-        
+        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi");
+        if ($request->status == 'tertunda') $mandiri = $mandiri->where('status_approve', '0');
+        elseif ($request->status == 'disetujui') $mandiri = $mandiri->where('status_approve', '1');
+        elseif ($request->status == 'ditolak') $mandiri = $mandiri->where('status_approve', '2');
 
-    return DataTables::of($mandiri)
-        ->addIndexColumn()
-        ->addColumn('aksi', function ($id) {
-            $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusapprove='{$id->statusapprove}'>
-                    <i class='btn-icon ti ti-file-check text-success'></i>
-                    </a>
-                    <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusrejected='{$id->rejected}'>
-                    <i class='btn-icon ti ti-file-x text-danger'></i>
-                    </a>";
-            return $btn;
-        })
-        ->rawColumns(['aksi'])
-        ->make(true);
+        return DataTables::of($mandiri->orderBy('id_pengajuan', "asc")->get())
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($id) {
+                $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusapprove=''>
+                        <i class='btn-icon ti ti-file-check text-success'></i>
+                        </a>
+                        <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusrejected=''>
+                        <i class='btn-icon ti ti-file-x text-danger'></i>
+                        </a>";
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     
