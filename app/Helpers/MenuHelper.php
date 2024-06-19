@@ -149,12 +149,12 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'logbook-magang-fakultas.index',
+                        'route' => 'logbook_magang.fakultas',
                         'permission' => 'logbook_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'logbook-magang-mandiri.index',
+                        'route' => 'logbook_magang.mandiri',
                         'permission' => 'logbook_magang_mandiri.view'
                     ],
                 ]

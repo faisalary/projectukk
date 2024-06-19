@@ -1,8 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -14,7 +12,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row pe-2 ps-2">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Logbook Mahasiswa / </span>
@@ -100,8 +98,6 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var jsonData = [{
             "nomor": "1",
@@ -112,7 +108,7 @@
             "nilai_pbb_lapangan": "98",
             "nilai_pbb_akademik": "96",
             "nilai_akhir": "97",
-            "aksi": "<a href='/view-logbook-mahasiswa/magang-mandiri' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+            "aksi": "<a href='{{ route('logbook_magang.mandiri.view') }}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
         },
         {
             "nomor": "2",
@@ -123,7 +119,7 @@
             "nilai_pbb_lapangan": "98",
             "nilai_pbb_akademik": "96",
             "nilai_akhir": "97",
-            "aksi": "<a href='/view-logbook-mahasiswa/magang-mandiri' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+            "aksi": "<a href='{{ route('logbook_magang.mandiri.view') }}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
         },
     ];
 
