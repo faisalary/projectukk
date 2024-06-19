@@ -106,12 +106,6 @@ class MenuHelper
                 'permission' => 'data_magang.view'
             ],
             [
-                'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang.index',
-                'icon' => 'ti-file-analytics',
-                'permission' => 'data_magang.view'
-            ],
-            [
                 'name' => 'Jadwal Seleksi',
                 'route' => 'mitrajadwal.index',
                 'icon' => 'ti-clock',
