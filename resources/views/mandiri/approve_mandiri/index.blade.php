@@ -1,11 +1,6 @@
-@extends('partials_admin.template')
-
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
     .tooltip-inner {
         width: 450px !important;
@@ -14,7 +9,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div>
@@ -34,17 +29,17 @@
     <div class="nav-align-top">
         <ul class="nav nav-pills mb-3" role="tablist">
             <li class="nav-item">
-                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending" aria-selected="true">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="true">
                     <i class="tf-icons ti ti-clock ti-xs me-1"></i> Tertunda
                 </button>
             </li>
             <li class="nav-item">
-                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-verified" aria-controls="navs-pills-justified-verified" aria-selected="false">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-disetujui" aria-controls="navs-pills-justified-disetujui" aria-selected="false">
                     <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Disetujui
                 </button>
             </li>
             <li class="nav-item">
-                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-rejected" aria-controls="navs-pills-justified-rejected" aria-selected="false">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false">
                     <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Ditolak
                 </button>
             </li>
@@ -57,9 +52,10 @@
             </div>
         </div>
         <div class="tab-content p-0">
-            <div class="tab-pane fade show active" id="navs-pills-justified-pending" role="tabpanel">
+            @foreach (['tertunda', 'disetujui', 'ditolak'] as $key => $item)
+            <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">
                 <div class="card-datatable table-responsive">
-                    <table class="table" id="table-approve1">
+                    <table class="table" id="{{ $item }}">
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
@@ -78,98 +74,21 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane fade" id="navs-pills-justified-verified" role="tabpanel">
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="table-approve2">
-                        <thead>
-                            <tr>
-                                <th>NOMOR</th>
-                                <th style="min-width: 140px;">DATA MAHASISWA</th>
-                                <th style="min-width: 140px;">PROGRAM STUDI</th>
-                                <th style="min-width: 140px;">JENIS MAGANG</th>
-                                <th style="min-width: 170px;">PERUSAHAAN + POSISI</th>
-                                <th>TANGGAL MAGANG</th>
-                                <th style="min-width: 120px;">JABATAN YANG DITUJU</th>
-                                <th>KONTAK PERUSAHAAN</th>
-                                <th>ALAMAT PERUSAHAAN</th>
-                                <th>DOKUMEN PENGAJUAN</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="navs-pills-justified-rejected" role="tabpanel">
-                <p>
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="table-approve3">
-                        <thead>
-                            <tr>
-                                <th>NOMOR</th>
-                                <th style="min-width: 140px;">DATA MAHASISWA</th>
-                                <th style="min-width: 140px;">PROGRAM STUDI</th>
-                                <th style="min-width: 140px;">JENIS MAGANG</th>
-                                <th style="min-width: 170px;">PERUSAHAAN + POSISI</th>
-                                <th>TANGGAL MAGANG</th>
-                                <th style="min-width: 120px;">JABATAN YANG DITUJU</th>
-                                <th>KONTAK PERUSAHAAN</th>
-                                <th>ALAMAT PERUSAHAAN</th>
-                                <th>DOKUMEN PENGAJUAN</th>
-                                <th>ALASAN PENOLAKAN</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     @include('mandiri.approve_mandiri.modal')
 </div>
 
 <!-- filter -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Filter Berdasarkan</h5>
-    </div>
-    <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-        <form class="add-new-user pt-0" id="filter">
-            <div class="col-12 mb-2">
-                <div class="row">
-                    <div class="mb-2">
-                        <label for="prodi" class="form-label">Program Studi</label>
-                        <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Program Studi">
-                            <option value="">Pilih Program Studi</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-2">
-                        <label for="prodi" class="form-label">Jenis Magang</label>
-                        <select class="form-select select2" id="jenis" name="prodi" data-placeholder="Pilih Jenis Magang">
-                            <option value="">Pilih Jenis Magang</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-3 text-end">
-                <button type="reset" class="btn btn-label-danger data-reset">Reset</button>
-                <button type="submit" class="btn btn-success">Terapkan</button>
-            </div>
-        </form>
-    </div>
-</div>
 
+@endsection
 
-
-    @endsection
-
-    @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script>
-        var table = $('#table-approve1').DataTable({
-            ajax: "{{ url('mandiri/approve-mandiri/show/0') }}",
+@section('page_script')
+<script>
+    $('.table').each(function () {
+        $(this).DataTable({
+            ajax: "{{ route('pengajuan_magang.show') }}?status=" + $(this).attr('id'),
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -236,169 +155,33 @@
 
             ]
         });
-    </script>
+    });
 
-    <script>
-        var table = $('#table-approve2').DataTable({
-            ajax: "{{ url('mandiri/approve-mandiri/show/1') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            scrollX: true,
-            columns: [{
-                    data: 'DT_RowIndex'
+    function approved(e) {
+
+        $('#modalapprove').modal('show');
+        var approveUrl = '{{ url("mandiri/approve-mandiri/approved") }}/' + e.attr('data-id');
+        $('#modalapprove form').attr('action', approveUrl);
+
+        $('#approve-confirm-button').on('click', function() {
+
+            $.ajax({
+                url: approveUrl,
+                type: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + data.mahasiswa.nim;
+                success: function(response) {
+                    if (!response.error) {
+                        alert('berhasil');
+                    } else {
+                        alert('tidak berhasil');
                     }
-                },
-                {
-                    data: null,
-                    name: 'combined_column1',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
-                    }
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null,
-                    name: 'tanggal_magang',
-                    render: function(data, type, row) {
-                        var startDate = new Date(data.startdate);
-                        var endDate = new Date(data.enddate);
-                        var formattedStartDate = startDate.toISOString().split('T')[0];
-                        var formattedEndDate = endDate.toISOString().split('T')[0];
-                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
-                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
-                    }
-                },
-                {
-                    data: 'jabatan',
-                    name: 'jabatan'
-                },
-                {
-                    data: null,
-                    name: 'kontak_perusahaan',
-                    render: function(data, type, row) {
-                        return data.email + '<br>' + data.nohp;
-                    }
-                },
-                {
-                    data: 'alamat_industri',
-                    name: 'alamat_industri'
-                },
-                {
-                    data: null
                 }
-            ]
-        });
-    </script>
-
-    <script>
-        var table = $('#table-approve3').DataTable({
-            ajax: "{{ url('mandiri/approve-mandiri/show/2') }}",
-            serverSide: false,
-            processing: true,
-            deferRender: true,
-            type: 'GET',
-            destroy: true,
-            scrollX: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + data.mahasiswa.nim;
-                    }
-                },
-                {
-                    data: null,
-                    name: 'combined_column1',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
-                    }
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null,
-                    name: 'tanggal_magang',
-                    render: function(data, type, row) {
-                        var startDate = new Date(data.startdate);
-                        var endDate = new Date(data.enddate);
-                        var formattedStartDate = startDate.toISOString().split('T')[0];
-                        var formattedEndDate = endDate.toISOString().split('T')[0];
-                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
-                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
-                    }
-                },
-                {
-                    data: 'jabatan',
-                    name: 'jabatan'
-                },
-                {
-                    data: null,
-                    name: 'kontak_perusahaan',
-                    render: function(data, type, row) {
-                        return data.email + '<br>' + data.nohp;
-                    }
-                },
-                {
-                    data: 'alamat_industri',
-                    name: 'alamat_industri'
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null
-                }
-            ]
-        });
-
-
-
-        function approved(e) {
-
-            $('#modalapprove').modal('show');
-            var approveUrl = '{{ url("mandiri/approve-mandiri/approved") }}/' + e.attr('data-id');
-            $('#modalapprove form').attr('action', approveUrl);
-
-            $('#approve-confirm-button').on('click', function() {
-
-                $.ajax({
-                    url: approveUrl,
-                    type: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (!response.error) {
-                            alert('berhasil');
-                        } else {
-                            alert('tidak berhasil');
-                        }
-                    }
-                });
-
-                $('#modalapprove').modal('hide');
             });
+
+            $('#modalapprove').modal('hide');
+        });
         }
 
         function rejected(e) {
@@ -433,5 +216,5 @@
                 $('#modalreject').modal('hide');
             });
         }
-    </script>
-    @endsection
+</script>
+@endsection

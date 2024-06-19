@@ -7,11 +7,11 @@ use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagangController;
 use App\Http\Controllers\LogBookMahasiswaController;
 
-Route::prefix('pengajuan-magang')->controller(ApproveMandiriController::class)->group(function () {
-    Route::get('/', 'index')->name('pengajuan_magang.index');
-    Route::get('/show/{statusapprove}', 'show')->name('pengajuan_magang.show');
-    Route::post('/approved/{id}', 'approved')->name('pengajuan_magang.approved');
-    Route::post('/rejected/{id}', 'rejected')->name('pengajuan_magang.rejected');
+Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('show', 'show')->name('.show');
+    Route::post('/approved/{id}', 'approved')->name('.approved');
+    Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
 Route::prefix('mahasiswa-magang')->controller(DataMahasiswaMagangController::class)->group(function () {

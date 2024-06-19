@@ -95,7 +95,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Pengajuan Magang',
-                'route' => 'pengajuan_magang.index',
+                'route' => 'pengajuan_magang',
                 'icon' => 'ti-files',
                 'permission' => 'pengajuan_magang.view'
             ],
