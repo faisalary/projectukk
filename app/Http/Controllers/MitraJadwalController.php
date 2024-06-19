@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seleksi;
+use App\Models\Industri;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
-use App\Models\Industri;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Models\PendaftaranMagang;
 
@@ -12,11 +14,9 @@ class MitraJadwalController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:only.lkm,', ['only' => ['index']]);
+        // $this->middleware('permission:only.lkm,', ['only' => ['index']]);
     }
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $mitra = LowonganMagang::all();
@@ -24,28 +24,8 @@ class MitraJadwalController extends Controller
         return view('company.jadwal_seleksi.mitra_seleksi', compact('mitra'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show()
     {
-
         $mitra = Industri::with('total_lowongan')->get();
 
         return DataTables::of($mitra)
@@ -60,17 +40,12 @@ class MitraJadwalController extends Controller
                 }
             })
             ->addColumn('action', function ($row) {
-
-                $btn = "<a href='lowongan/$row->id_industri' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></a>";
-
-                return $btn;
+                return "<a href='" .route('jadwal_seleksi.detail', ['id' => $row->id_industri]). "' class='btn-icon text-success'><i class='tf-icons ti ti-file-invoice'></a>";
             })
             ->editColumn('total_lowongan', function ($row) {
                 return $row->total_lowongan->count();
             })
             ->editColumn('total_pelamar', function ($row) {
-                // return $pelamar->total_pelamar;
-                // pendaftara left join lowongan magang where id
                 return PendaftaranMagang::leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
                     ->where('id_industri', $row->id_industri)
                     ->count();
@@ -81,27 +56,50 @@ class MitraJadwalController extends Controller
             ->make(true);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    public function detail(Request $request,$id) {
+        if ($request->ajax() && $request->component == "card") {
+            $lowongan = LowonganMagang::where('id_industri', $id)->get();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            $seleksi = Seleksi::where('id_seleksi_lowongan', $id)->get();
+            $industri = Industri::where('id_industri', $id)->first();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures';
+            $img = $picture . '.png';
+
+            $lowongan->transform(function ($item) {
+                $now = Carbon::now();
+                if ($now->lessThan($item->enddate) && $now->greaterThan($item->startdate)) {
+                    $item->status = true;
+                } elseif ($now->greaterThan($item->enddate)) {
+                    $item->status = false;
+                }
+
+                if ($item->status == 'true') {
+                    $item->status = 'Aktif';
+                    $item->color = 'success';
+                } else {
+                    $item->status = 'Non-aktif';
+                    $item->color = 'danger';
+                }
+
+                $item->kandidat = $item->total_pelamar->count();
+                $item->screening = $item->total_pelamar->where('current_step', 'screening')->count();
+                $item->tahap1 = $item->total_pelamar->where('current_step', 'tahap1')->count();
+                $item->tahap2 = $item->total_pelamar->where('current_step', 'tahap2')->count();
+                $item->tahap3 = $item->total_pelamar->where('current_step', 'tahap3')->count();
+                return $item;
+            });
+
+            return view('company.jadwal_seleksi.jadwal_card ', compact('lowongan', 'seleksi', 'img'))->render();
+        }
+        $urlGetCard = url('jadwal-seleksi/lowongan', $id);
+        $LMagang = LowonganMagang::where('id_industri', $id)->get();
+        $lowongan_count = $LMagang->count();
+
+        $lowongan = LowonganMagang::where('id_industri', $id)->first();
+        $seleksi = Seleksi::all();
+        $urlBack = route('jadwal_seleksi');
+
+        return view('company.jadwal_seleksi.jadwal', compact('seleksi', 'lowongan', 'urlGetCard', 'lowongan_count'));
     }
 }

@@ -56,6 +56,8 @@ class LowonganJadwalController extends Controller
 
         $lowongan = LowonganMagang::where('id_industri', $id)->first();
         $seleksi = Seleksi::all();
+        $urlBack = route('');
+
         return view('company.jadwal_seleksi.jadwal', compact('seleksi', 'lowongan', 'urlGetCard', 'lowongan_count'));
     }
 

@@ -1,7 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 <style>
     .swal2-icon {
         border-color: transparent !important;
@@ -28,15 +27,14 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-9 col-12">
-        <!-- back only superadmin -->
-        @can( "only.lkm" )
-        <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
-            <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
-        </button>
-        @endcan
+        @if (isset($urlBack))
+        <a href="{{ $urlBack }}" class="btn btn-outline-primary my-2 p-3 mb-4">
+            <i class="bi bi-arrow-left" style="font-size: medium;"> Kembali </i>
+        </a>
+        @endif
         <div class="col-md-9 col-12">
             <h4 class="fw-bold">Jadwal Seleksi</h4>
         </div>

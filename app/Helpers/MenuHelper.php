@@ -79,7 +79,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Lowongan Magang',
-                'icon' => 'ti-building',
+                'icon' => 'ti-briefcase',
                 'submenu' => [
                     [
                         'name' => 'Informasi Lowongan',
@@ -107,9 +107,9 @@ class MenuHelper
             ],
             [
                 'name' => 'Jadwal Seleksi',
-                'route' => 'mitrajadwal.index',
+                'route' => 'jadwal_seleksi',
                 'icon' => 'ti-clock',
-                'permission' => 'jadwal_seleksi_mitra.view'
+                'permission' => 'jadwal_seleksi_lkm.view'
             ],
             [
                 'name' => 'Berkas Akhir Magang',

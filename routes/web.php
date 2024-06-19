@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\JadwalSeleksiController;
-use App\Http\Controllers\KelolaPenggunaController;
-use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MitraJadwalController;
+use App\Http\Controllers\JadwalSeleksiController;
+use App\Http\Controllers\KelolaPenggunaController;
 use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
 
 /*
@@ -168,9 +169,10 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::prefix('jadwal-seleksi/mitra')->controller(App\Http\Controllers\MitraJadwalController::class)->group(function () {
-        Route::get('/', 'index')->name('mitrajadwal.index');
-        Route::get('/show', 'show')->name('mitrajadwal.show');
+    Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(MitraJadwalController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'show')->name('.show');
+        Route::get('detail/{id}', 'detail')->name('.detail');
     });
 
     Route::prefix('/kegiatan-saya')->group(function () {
