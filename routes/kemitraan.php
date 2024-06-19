@@ -42,13 +42,13 @@ Route::prefix('lowongan-magang')->group(function () {
 
 Route::prefix('lowongan')->name('lowongan')->group(function () {
     Route::prefix('informasi-lowongan')->name('.informasi')->controller(InformasiMitraController::class)->group(function () {
-        Route::get('/', 'index')->name('.index');
+        Route::get('/', 'index');
         Route::get('show', 'show')->name('.show');
         Route::get('detail/{id}', 'detail')->name('.detail');
     });
 
     Route::prefix('kelola-lowongan')->name('.kelola')->controller(LowonganMagangLkmController::class)->group(function () {
-        Route::get('/', 'index')->name('.index');
+        Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');

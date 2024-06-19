@@ -106,7 +106,7 @@ class InformasiMitraController extends Controller
         $lowongan_count = $lowongan->count();
         $pendaftar_count = $pelamar?->count() ?? "0";
         $urlGetCard = url('informasi/lowongan', $id);
-        $urlBack = route('lowongan.informasi.index');
+        $urlBack = route('lowongan.informasi');
 
         return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact(
             'industri', 
