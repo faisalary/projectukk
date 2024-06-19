@@ -88,7 +88,8 @@
             background-color: #4EA971;
             border-color: #4EA971;
         }
-
+        
+        .app-brand-text,
         .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
             background-color: rgba(115, 103, 240, 0.08) !important;
             color: #4EA971 !important;
@@ -171,11 +172,10 @@
 
                 <!-- Admin -->
 
-                @can('slidebar.lkm')
+                
                 <ul class="menu-inner py-1">
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" style="font-size: small; font-family:Public-Sans; font-weight:bold; color: #485369;">Admin
-                            LKM</span>
+                        <span class="menu-header-text" style="font-size: small; font-weight:bold; color: #485369;">Admin LKM</span>
                     </li>
                     <!-- Dashboards -->
                     <li class="menu-item {{ request()->is('dashboard/admin*') ? 'active' : '' }}">
@@ -202,7 +202,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item {{ request()->is('informasi*') ? 'active' : '' }}">
                                 <a href="{{ route('mitra.index') }}" class="menu-link">
-                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan></div>
+                                    <div data-i18n="Informasi Lowongan">Informasi Lowongan</div>
                                 </a>
                             </li>
                             <li class="menu-item {{ request()->is('kelola/lowongan*') ? 'active' : '' }}">
@@ -214,16 +214,16 @@
                     </li>
 
                     <!-- Pengajuan Magang -->
-                    <li class="menu-item" {{ request()->is('mandiri/approve-mandiri') ? 'active' : '' }}">
-                        <a href="{{ route('approve_mandiri.index') }}" class="menu-link">
+                    <li class="menu-item" {{ request()->is('pengajuan-magang') ? 'active' : '' }}">
+                        <a href="{{ url('pengajuan-magang') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-files"></i>
                             <div data-i18n="Pengajuan Magang">Pengajuan Magang</div>
                         </a>
                     </li>
 
                     <!-- Data Mahasiswa -->
-                    <li class="menu-item {{ request()->is('data-mahasiswa-magang*') ? 'active' : '' }}">
-                        <a href="{{ route('data-magang.index') }}" class="menu-link">
+                    <li class="menu-item {{ request()->is('data_magang.index') ? 'active' : '' }}">
+                        <a href="{{ route('data_magang.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
@@ -382,8 +382,7 @@
                             </li>
                             <li class="menu-item {{ request()->is('master/pembimbing-mandiri*') ? 'active' : '' }}">
                                 <a href="/master/pembimbing-mandiri" class="menu-link">
-                                    <div data-i18n="Master Pembimbing Lapangan Mandiri">Master Pembimbing Lapangan
-                                        Mandiri</div>
+                                    <div data-i18n="Master Pembimbing Lapangan Mandiri">Master Pembimbing Lapangan Mandiri</div>
                                 </a>
                             </li>
                             <!-- <li class="menu-item {{ request()->is('master/laporan-akhir*') ? 'active' : '' }}">
@@ -425,7 +424,6 @@
                         </ul>
                     </li>
                 </ul>
-                @endcan
 
 
                 <!-- Mitra -->

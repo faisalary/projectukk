@@ -1,14 +1,9 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-
-</style>
-
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> Informasi Mitra Tahun Ajaran 2023/2024</h4>
@@ -50,11 +45,9 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var table = $('#table-informasi-mitra').DataTable({
-        ajax: "{{route('mitra.show')}}",
+        ajax: "{{route('lowongan.informasi.show')}}",
         serverSide: false,
         processing: true,
         deferRender: true,
