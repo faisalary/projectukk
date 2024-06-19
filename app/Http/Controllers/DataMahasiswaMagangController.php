@@ -9,6 +9,7 @@ use App\Models\MhsMandiri;
 use App\Models\PendaftaranMagang;
 use App\Models\PengajuanMandiri;
 use App\Models\ProgramStudi;
+use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -22,30 +23,11 @@ class DataMahasiswaMagangController extends Controller
     {
         $jenis = JenisMagang::all();
         $prodi = ProgramStudi::all();
+        $tahun_ajaran = TahunAkademik::orderBy('tahun', 'desc')->get();
 
-        return view('admin_kandidat.data_mhs_magang', compact('jenis', 'prodi'));
+        return view('admin_kandidat.data_mhs_magang', compact('jenis', 'prodi', 'tahun_ajaran'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
 
@@ -124,35 +106,5 @@ class DataMahasiswaMagangController extends Controller
 
     //         ->make(true);
     // }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function doc($file)
-    {
-        $path = storage_path($file);
-
-        return response()->file($path);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+ 
 }

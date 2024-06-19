@@ -1,101 +1,99 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css')}}" />
-<style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        color: #4EA971;
-    }
-
-    .light-style .tagify__tag .tagify__tag-text {
-        color: #4EA971 !important;
-    }
-</style>
 @endsection
 
 @section('content')
-<div class="row pe-2 ps-2">
-    <div class="col-md-9 col-12">
-        <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Data Mahasiswa Magang / </span>
-            Mahasiswa Magang Fakultas Tahun Ajaran 2023/2024
-        </h4>
-    </div>
-    <div class="col-md-3 col-12 mb-3  d-flex align-items-center justify-content-between">
-        <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
-            <option value="1">2023/2024 Genap</option>
-            <option value="2">2023/2024 Ganjil</option>
-            <option value="3">2022/2023 Genap</option>
-            <option value="4">2022/2023 Ganjil</option>
-            <option value="5">2021/2022 Genap</option>
-            <option value="6">2021/2022 Ganjil</option>
-        </select>
-        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i>
-        </button>
-    </div>
-
-    <div class="nav-align-top">
-        <div class="row">
-            <div class="col-6">
-                <ul class="nav nav-pills mb-3 " role="tablist">
-                    <li class="nav-item" style="font-size: small;">
-                        <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
-                            <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
-                            <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item" style="font-size: small;">
-                        <button type="button" class="nav-link showSingle" target="0" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                            <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
-                            <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
+    <div class="row pe-2 ps-2">
+        <div class="col-md-9 col-12">
+            <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Data Mahasiswa Magang / </span>
+                Mahasiswa Magang Fakultas 
+                Tahun Ajaran <span id="tahun-ajaran-title">{{ $tahun_ajaran[0]->tahun }}</span>
+                Semester <span id="semester-title">{{ $tahun_ajaran[0]->semester }}</span>
+            </h4>
         </div>
-        <div class="row">
-            <div class="col-md-12 d-flex justify-content-between mt-2">
-                <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Prodi:-, Jenis Magang:-" id="tooltip-filter"></i></p>
-            </div>
+        <div class="col-md-3 col-12 mb-3  d-flex align-items-center justify-content-between">
+            <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran" id="filter-title">
+                @foreach ($tahun_ajaran as $item)
+                    <option value="{{ $item->id_year_akademik }}" {{ ($loop->iteration == 1) ? 'selected' : '' }}>{{ $item->tahun }} - {{ $item->semester }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas"
+                data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i>
+            </button>
         </div>
-    </div>
 
-    <div class="tab-content p-0">
-        @foreach (['diterima', 'ditolak'] as $key => $item)
-        <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="table" id="{{ $item }}">
-                        <thead>
-                            <tr>
-                                <th style="min-width: 50px;">NOMOR</th>
-                                <th style="min-width: 150px;">NAMA/NIM</th>
-                                <th style="min-width: 200px;">PROGRAM STUDI</th>
-                                <th style="min-width: 200px;">JENIS MAGANG</th>
-                                <th style="min-width: 200px;">NAMA PERUSAHAAN</th>
-                                <th style="min-width: 150px;">POSISI MAGANG</th>
-                                @if ($item == 'diterima')
-                                <th style="min-width: 200px;">TANGGAL MAGANG</th>
-                                <th style="min-width: 170px;">DOKUMEN</th>
-                                <th style="min-width: 200px;">PEMBIMBING LAPANGAN</th>
-                                <th style="min-width: 200px;">PEMBIMBING AKADEMIK</th>
-                                <th style="min-width: 170px;">NILAI AKHIR</th>
-                                <th style="min-width: 170px;">INDEKS NILAI</th>
-                                @endif
-                            </tr>
-                        </thead>
-                    </table>
+        <div class="nav-align-top">
+            <div class="row">
+                <div class="col-6">
+                    <ul class="nav nav-pills mb-3 " role="tablist">
+                        <li class="nav-item" style="font-size: small;">
+                            <button type="button" class="nav-link active" target="1" role="tab"
+                                data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima"
+                                aria-controls="navs-pills-justified-diterima" aria-selected="false"
+                                style="padding: 8px 9px;">
+                                <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
+                            </button>
+                        </li>
+                        <li class="nav-item" style="font-size: small;">
+                            <button type="button" class="nav-link" target="0" role="tab"
+                                data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak"
+                                aria-controls="navs-pills-justified-ditolak" aria-selected="false"
+                                style="padding: 8px 9px;">
+                                <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1"
+                                    style="background-color: #DCEEE3; color: #4EA971;"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-between mt-2">
+                    <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1'
+                            data-bs-toggle="tooltip" data-bs-placement="right"
+                            data-bs-original-title="Prodi:-, Jenis Magang:-" id="tooltip-filter"></i></p>
                 </div>
             </div>
         </div>
-        @endforeach
+
+        <div class="tab-content p-0">
+            @foreach (['diterima', 'ditolak'] as $status)
+                <div class="tab-pane fade show @if ($loop->iteration == '1') active @endif"
+                    id="navs-pills-justified-{{ $status }}" role="tabpanel">
+                    <div class="card">
+                        <div class="card-datatable table-responsive">
+                            <table class="table" id="{{ $status }}">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 50px;">NOMOR</th>
+                                        <th style="min-width: 150px;">NAMA/NIM</th>
+                                        <th style="min-width: 200px;">PROGRAM STUDI</th>
+                                        <th style="min-width: 200px;">JENIS MAGANG</th>
+                                        <th style="min-width: 200px;">NAMA PERUSAHAAN</th>
+                                        <th style="min-width: 150px;">POSISI MAGANG</th>
+                                        @if ($status == 'diterima')
+                                            <th style="min-width: 200px;">TANGGAL MAGANG</th>
+                                            <th style="min-width: 170px;">DOKUMEN</th>
+                                            <th style="min-width: 200px;">PEMBIMBING LAPANGAN</th>
+                                            <th style="min-width: 200px;">PEMBIMBING AKADEMIK</th>
+                                            <th style="min-width: 170px;">NILAI AKHIR</th>
+                                            <th style="min-width: 170px;">INDEKS NILAI</th>
+                                        @endif
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
     </div>
-</div>
 
-<!-- FILTER -->
-@include('admin_kandidat.filter_mhs_magang')
-<!-- //FILTER -->
-
+    @include('admin_kandidat.filter_mhs_magang')
 @endsection
 
 @section('page_script')
@@ -124,11 +122,23 @@
         offcanvasFilter.offcanvas('hide');
     });
 
-    jQuery(function() {
-        jQuery('.showSingle').click(function() {
-            jQuery('.targetDiv').hide('.cnt');
-            jQuery('#div' + $(this).attr('target')).slideToggle();
-        });
+    $('#filter-title').on('change', function() {
+        let id_year_akademik = $(this).val();
+        let tahun_ajaran = $('#filter-title option:selected').text();
+        let tahun = tahun_ajaran.split(' - ')[0];
+        let semester = tahun_ajaran.split(' - ')[1];
+        $('#tahun-ajaran-title').text(tahun);
+        $('#semester-title').text(semester);
+
+        let data = {
+            'id_year_akademik': id_year_akademik
+        };
+
+        // filter belum tau berdasarkan apa
+        // $('.table').each(function() {
+        //     let idElement = $(this).attr('id');
+        //     TableMhsMagang(idElement, data);
+        // });
     });
 
     function loadData() {
