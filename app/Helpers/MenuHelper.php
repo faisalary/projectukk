@@ -133,12 +133,12 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'nilai-magang-fakultas.index',
+                        'route' => 'nilai_mahasiswa.fakultas',
                         'permission' => 'nilai_mahasiswa_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'nilai-magang-mandiri.index',
+                        'route' => 'nilai_mahasiswa.mandiri',
                         'permission' => 'nilai_mahasiswa_magang_mandiri.view'
                     ],
                 ]

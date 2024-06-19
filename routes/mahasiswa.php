@@ -33,15 +33,15 @@ Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(Be
     });
 });
 
-Route::prefix('nilai-mahasiswa')->controller(NilaiMahasiswaController::class)->group(function () {
-    Route::prefix('magang-fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas')->name('nilai-magang-fakultas.index');
-        Route::get('detail', 'detailMagangFakultas')->name('nilai-magang-fakultas.detail');
+Route::prefix('nilai-mahasiswa')->name('nilai_mahasiswa')->controller(NilaiMahasiswaController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+        Route::get('detail', 'detailMagangFakultas')->name('.detail');
     });
 
-    Route::prefix('magang-mandiri')->group(function () {
-        Route::get('/', 'viewMagangMandiri')->name('nilai-magang-mandiri.index');
-        Route::get('detail', 'detailMagangMandiri')->name('nilai-magang-mandiri.detail');
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+        Route::get('detail', 'detailMagangMandiri')->name('.detail');
     });
 });
 
