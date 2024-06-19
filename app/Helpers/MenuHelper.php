@@ -117,12 +117,12 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'berkas_akhir_magang_fakultas.index',
+                        'route' => 'berkas_akhir_magang.fakultas',
                         'permission' => 'berkas_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'berkas_akhir_magang_mandiri.index',
+                        'route' => 'berkas_akhir_magang.mandiri',
                         'permission' => 'berkas_magang_mandiri.view'
                     ],
                 ]

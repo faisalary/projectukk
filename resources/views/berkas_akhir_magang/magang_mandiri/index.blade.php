@@ -1,12 +1,9 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<style>
-
-</style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="d-flex align-items-center justify-content-between mb-3">
     <div>
         <h4 class="fw-bold"><span class="text-muted fw-light">Berkas Akhir Magang / </span>Magang Mandiri Tahun Ajaran 2023/2024</h4>

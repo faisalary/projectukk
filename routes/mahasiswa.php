@@ -24,12 +24,12 @@ Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswa
     Route::get('/doc/{file}', 'doc')->name('.doc');
 });
 
-Route::prefix('berkas-akhir-magang')->controller(BerkasAkhirMagangController::class)->group(function () {
-    Route::prefix('magang-fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas')->name('berkas_akhir_magang_fakultas.index');
+Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
     });
-    Route::prefix('magang-mandiri')->group(function () {
-        Route::get('/', 'viewMagangMandiri')->name('berkas_akhir_magang_mandiri.index');
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
     });
 });
 
