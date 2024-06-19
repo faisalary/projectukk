@@ -101,13 +101,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang.index',
-                'icon' => 'ti-file-analytics',
-                'permission' => 'data_magang.view'
-            ],
-            [
-                'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang.index',
+                'route' => 'data_magang',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_magang.view'
             ],

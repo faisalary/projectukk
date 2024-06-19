@@ -14,14 +14,14 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('mahasiswa-magang')->controller(DataMahasiswaMagangController::class)->group(function () {
-    Route::get('/', 'index')->name('data_magang.index');
-    Route::get('/show', 'show')->name('data_magang.show');
-    Route::post('/store', 'store')->name('data_magang.store');
-    Route::post('/update{id}', 'update')->name('data_magang.update');
-    Route::get('/edit{id}', 'edit')->name('data_magang.edit');
-    Route::post('/status/{id}', 'status')->name('data_magang.status');
-    Route::get('/doc/{file}', 'doc')->name('data_magang.doc');
+Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswaMagangController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::post('/store', 'store')->name('.store');
+    Route::post('/update{id}', 'update')->name('.update');
+    Route::get('/edit{id}', 'edit')->name('.edit');
+    Route::post('/status/{id}', 'status')->name('.status');
+    Route::get('/doc/{file}', 'doc')->name('.doc');
 });
 
 Route::prefix('berkas-akhir-magang')->controller(BerkasAkhirMagangController::class)->group(function () {
