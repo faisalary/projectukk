@@ -171,6 +171,72 @@ class MenuHelper
                 'icon' => 'ti-user   ',
                 'permission' => 'kelola_pengguna.view'
             ],
+            [
+                'name' => 'Master Data',
+                'icon' => 'ti-database',
+                'submenu' => [
+                    [
+                        'name' => 'Universitas',
+                        'route' => 'universitas.index',
+                        'permission' => 'universitas.view'
+                    ],
+                    [
+                        'name' => 'Fakultas',
+                        'route' => 'fakultas.index',
+                        'permission' => 'fakultas.view'
+                    ],
+                    [
+                        'name' => 'Program Studi',
+                        'route' => 'prodi.index',
+                        'permission' => 'prodi.view'
+                    ],
+                    [
+                        'name' => 'Tahun Akademik',
+                        'route' => 'thn-akademik.index',
+                        'permission' => 'thn-akademik.view'
+                    ],
+                    [
+                        'name' => 'Jenis Magang',
+                        'route' => 'jenismagang.index',
+                        'permission' => 'jenismagang.view'
+                    ],
+                    [
+                        'name' => 'Dosen',
+                        'route' => 'dosen.index',
+                        'permission' => 'dosen.view'
+                    ],
+                    [
+                        'name' => 'Mahasiswa',
+                        'route' => 'mahasiswa.index',
+                        'permission' => 'mahasiswa.view'
+                    ],
+                    [
+                        'name' => 'Pegawai Industri',
+                        'route' => 'pegawaiindustri.index',
+                        'permission' => 'pegawaiindustri.view'
+                    ],
+                    [
+                        'name' => 'Nilai Mutu',
+                        'route' => 'nilai-mutu.index',
+                        'permission' => 'nilai-mutu.view'
+                    ],
+                    [
+                        'name' => 'Komponen Penilaian',
+                        'route' => 'komponen-penilaian.index',
+                        'permission' => 'komponen-penilaian.view'
+                    ],
+                    [
+                        'name' => 'Dokumen Persyaratan',
+                        'route' => 'doc-syarat.index',
+                        'permission' => 'doc-syarat.view'
+                    ],
+                    [
+                        'name' => 'Pembimbing Lapangan Mandiri',
+                        'route' => 'pembimbing-lapangan-mandiri.index',
+                        'permission' => 'pembimbing-lapangan-mandiri.view'
+                    ],
+                ]
+            ],
         ];
     }
 }

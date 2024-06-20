@@ -126,7 +126,7 @@ Route::prefix('master')->middleware('can:only.lkm')->group(function () {
     });
     Route::get('pembimbing-mandiri', function () {
         return view('masters.pembimbing_lapangan_mandiri.index');
-    });
+    })->name('pembimbing-lapangan-mandiri.index');
 
     // Route::prefix('laporan-akhir')->group(function () {
     //     Route::get('/', [App\Http\Controllers\LaporanAkhirController::class, 'index'])->name('laporan-akhir.index');

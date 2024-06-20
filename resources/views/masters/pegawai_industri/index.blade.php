@@ -1,4 +1,4 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('meta_header')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -32,7 +32,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-6 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Pegawai Industri</h4>
@@ -53,7 +53,7 @@
                             <th>kONTAK</th>
                             <th>JABATAN</th>
                             <th>UNIT</th>
-                            <th>STATUS</th>
+                            <th class="text-center">STATUS</th>
                             <th style="min-width:100px;">AKSI</th>
                         </tr>
                     </thead>

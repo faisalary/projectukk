@@ -1,4 +1,4 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
 <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
@@ -30,7 +30,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-11 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Pembimbing Lapangan</h4>
@@ -83,7 +83,7 @@
                             <th>NIP</th>
                             <th>JABATAN</th>
                             <th>EMAIL</th>
-                            <th>AKSI</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -102,8 +102,8 @@
                             <th>NIP</th>
                             <th>JABATAN</th>
                             <th>EMAIL</th>
-                            <th>STATUS</th>
-                            <th>AKSI</th>
+                            <th class="text-center">STATUS</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                 </table>

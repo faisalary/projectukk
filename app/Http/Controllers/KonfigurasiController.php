@@ -57,8 +57,9 @@ class KonfigurasiController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
     
+                $url = route('konfigurasi.status', $row->id);
                 $btn = "<a data-bs-toggle='modal' data-bs-target='#modal-konfigurasi' data-id='{$row->name}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->name}' data-url='konfigurasi/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
     
                 return $btn;
             })

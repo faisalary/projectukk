@@ -93,8 +93,9 @@ class ProdiController extends Controller
                 $icon = ($prodi->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($prodi->status) ? "danger" : "success";
 
+                $url = route('prodi.status', $prodi->id_prodi);
                 $btn = "<a data-bs-toggle='modal' data-id='{$prodi->id_prodi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$prodi->status}' data-id='{$prodi->id_prodi}' data-url='prodi/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-url='{$url}' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })

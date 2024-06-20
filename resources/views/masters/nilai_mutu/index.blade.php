@@ -1,4 +1,4 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('meta_header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -29,7 +29,7 @@
 
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-6 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Nilai Mutu</h4>
@@ -56,8 +56,8 @@
                             <th>NILAI MINIMAL</th>
                             <th>NILAI MAKSIMAL</th>
                             <th>NILAI MUTU</th>
-                            <th>STATUS</th>
-                            <th>AKSI</th>
+                            <th class="text-center">STATUS</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                 </table>
