@@ -5,27 +5,6 @@
 @endsection
 
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <style>
-        .swal2-icon {
-            border-color: transparent !important;
-        }
-
-        .swal2-title {
-            font-size: 20px !important;
-            text-align: center !important;
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-        }
-
-        .swal2-modal.swal2-popup .swal2-title {
-            max-width: 100% !important;
-        }
-
-        .swal2-html-container {
-            font-size: 16px !important;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -34,8 +13,8 @@
             <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Fakultas</h4>
         </div>
         <div class="col-md-3 col-12 mb-2">
-            <select class="form-select select2" id="id_univ" name="namauniv" data-placeholder="Pilih Universitas">
-                <option disabled selected>Pilih Universitas</option>
+            <select class="form-select select2" onchange="filter();" id="id_univ" data-placeholder="Pilih Universitas">
+                <option selected value="all">Semua Universitas</option>
                 @foreach ($universitas as $u)
                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
                 @endforeach
@@ -73,19 +52,15 @@
     <script>
         $(document).ready(function() {
             fakultasList();
-            // $(".custom-select2").select2();
         });
 
-
-
-        $("#id_univ").on('change', function() {
-            // alert($('#namauniv').val());
+        function filter() {
             fakultasList($('#id_univ').val());
-        })
+        };
 
         function fakultasList(id_univ = 'all') {
             var table = $('#table-master-fakultas').DataTable({
-                ajax: `{{ url('master/fakultas/show/${id_univ}') }}`,
+                ajax: `{{ route('fakultas.show', ['id_univ' => ':id']) }}`.replace(':id', id_univ),
                 serverSide: false,
                 processing: true,
                 deferRender: true,
@@ -120,33 +95,36 @@
         function edit(e) {
             let id = e.attr('data-id');
 
-            let action = `{{ url('master/fakultas/update/') }}/${id}`;
-            var url = `{{ url('master/fakultas/edit/') }}/${id}`;
+            let action = `{{ route('fakultas.update', ['id' => ':id']) }}`.replace(':id', id);
+            var url = `{{ route('fakultas.edit', ['id' => ':id']) }}`.replace(':id', id);
+            let modal = $('#modal-fakultas');
+            modal.find(".modal-title").html("Edit Fakultas");
+            modal.find('form').attr('action', action);
+            modal.modal('show');
+
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    $("#modal-title").html("Edit Fakultas");
-                    $("#modal-button").html("Update Data")
-                    $('#modal-fakultas form').attr('action', action);
-                    $('#id_univ').val(response.id_univ).change();
+                    $('#namauniv').val(response.id_univ).change();
                     $('#namafakultas').val(response.namafakultas);
-                    $('#modal-fakultas').modal('show');
                 }
             });
         }
 
-        $("#modal-fakultas").on("hide.bs.modal", function() {
+        function afterAction(response) {
+            $("#modal-fakultas").modal("hide");
+            afterUpdateStatus(response);
+        }
 
-            $("#modal-title").html("Add Fakultas");
-            $("#modal-button").html("Save Data")
-            $('#modal-fakultas form')[0].reset();
-            $('#modal-fakultas form').attr('action', "{{ url('master/fakultas/store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
+        function afterUpdateStatus(response) {
+            $('#table-master-fakultas').DataTable().ajax.reload();
+            filter();
+        }
+
+        $("#modal-fakultas").on("hide.bs.modal", function() {
+            $(this).find(".modal-title").html("Tambah Fakultas");
+            $(this).find('form').attr('action', "{{ route('fakultas.store') }}");
         });
     </script>
-
-    <script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-    <script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection

@@ -21,26 +21,20 @@ class FakultasRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)) {
-            return [
-                
-                'namauniv' => ['required', 'string', 'max:255'],
-                'namafakultas' => ['required', 'string','max:255'],
-                // 'status' => ['required', 'boolean', 'default:true'],
-            ];    
-        }  
-        return [
-            'namauniv' => ['required', 'string', 'max:255'],
-            'namafakultas' => ['required', 'string','max:255'],
-            // 'status' => ['required', 'boolean', 'default:true'],
+        $validate = [
+            'namauniv' => ['required', 'exists:universitas,id_univ'],
+            'namafakultas' => ['required'],
         ];
+
+        return $validate;
     }           
     public function messages(): array
     {
         return [
             
-            'namauniv.required' => 'University name must be filled',
-            'namafakultas.required' => 'Fakultas name must be filled',
+            'namauniv.required' => 'Pilih Universitas',
+            'namauniv.exists' => 'Universitas tidak ditemukan',
+            'namafakultas.required' => 'Nama fakultas tidak boleh kosong',
         ];
     }
 }
