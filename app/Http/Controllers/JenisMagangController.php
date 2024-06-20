@@ -122,8 +122,9 @@ class JenisMagangController extends Controller
                 $icon = ($jenismagang->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($jenismagang->status) ? "danger" : "success";
 
+                $url = route('jenis-magang.status', $jenismagang->id_jenismagang);
                 $btn = "<a  href='jenis-magang/edit/{$jenismagang->id_jenismagang}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$jenismagang->status}' data-id='{$jenismagang->id_jenismagang}' data-url='jenis-magang/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-url='{$url}' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })

@@ -222,12 +222,12 @@
                     </li>
 
                     <!-- Data Mahasiswa -->
-                    <li class="menu-item {{ request()->is('data_magang.index') ? 'active' : '' }}">
+                    {{-- <li class="menu-item {{ request()->is('data_magang.index') ? 'active' : '' }}">
                         <a href="{{ route('data_magang.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-file-analytics"></i>
                             <div data-i18n="Data Mahasiswa Magang">Data Mahasiswa Magang</div>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <!-- Jadwal Seleksi -->
                     <li class="menu-item {{ request()->is('jadwal-seleksi*') ? 'active' : '' }}">

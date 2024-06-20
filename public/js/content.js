@@ -208,3 +208,50 @@ $('.modal').on('hide.bs.modal', function () {
     form.find('.is-invalid').removeClass('is-invalid');
     form.find('.invalid-feedback').html(null).removeClass('d-block');
 });
+
+$('.update-status').on('click', function () {
+    let id = $(this).data('id');
+    let url = $(this).data('url');
+
+    sweetAlertConfirm({
+        title: 'Apakah anda yakin?',
+        text: 'Anda akan mengubah status data ini.',
+        icon: 'warning',
+        confirmButtonText: 'Ya, saya yakin!',
+        cancelButtonText: 'Batal'
+    }, function () {
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                id: id,
+            },
+            success: function (response) {
+                if (!response.error) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                let res = xhr.responseJSON;
+                showSweetAlert({
+                    title: 'Gagal!',
+                    text: res.message,
+                    icon: 'error'
+                });
+            }
+        });
+    });
+});
