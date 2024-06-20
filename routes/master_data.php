@@ -30,8 +30,6 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', 'update')->name('prodi.update');
         Route::get('/edit/{id}', 'edit')->name('prodi.edit');
         Route::post('/status/{id}', 'status')->name('prodi.status');
-        Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('prodi.list_fakultas');
-        Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('prodi.list_prodi');
     });
     Route::prefix('dokumen-persyaratan')->controller(DokumenSyaratController::class)->group(function () {
         Route::get('/', 'index')->name('doc-syarat');

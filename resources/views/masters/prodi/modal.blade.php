@@ -5,40 +5,31 @@
                 <h5 class="modal-title" id="modal-title">Tambah Prodi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" method="POST" action="{{ route('prodi.store') }}">
+            <form class="default-form" action="{{ route('prodi.store') }}" function-callback="afterAction">
                 @csrf
-
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Universitas</label>
-                            <select class="form-select select2" id="pilihuniversitas_add" name="pilihuniversitas"
-                                data-placeholder="Pilih Universitas">
-                                <option disabled selected>Pilih Universitas</option>
+                        <div class="col-12 my-1 form-group">
+                            <label for="id_univ" class="form-label">Universitas</label>
+                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas">
+                                <option disabled selected value="">Pilih Universitas</option>
                                 @foreach ($universitas as $u)
                                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-2">
-                            <label for="fakultas" class="form-label">Fakultas</label>
-                            <select class="form-select select2" id="pilihfakultas_add" name="pilihfakultas"
-                                data-placeholder="Pilih Fakultas">
-                                <option disabled selected>Pilih Fakultas</option>
-                                @foreach ($fakultas as $f)
-                                    <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                @endforeach
+                        <div class="col-12 my-1 form-group">
+                            <label for="id_fakultas" class="form-label">Fakultas</label>
+                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" data-placeholder="Pilih Fakultas">
+                                <option disabled selected value="">Pilih Fakultas</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2">
+                        <div class="col-12 my-1 form-group">
                             <label for="prodi" class="form-label">Nama Prodi</label>
-                            <input type="text" name="namaprodi" id="namaprodi" class="form-control"
-                                placeholder="Nama Prodi" />
+                            <input type="text" name="namaprodi" id="namaprodi" class="form-control" placeholder="Nama Prodi" />
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -61,8 +52,7 @@
                 <div class="row">
                     <div class="col mb-2 form-input">
                         <label for="univ" class="form-label">Universitas</label>
-                        <select class="form-select select2" id="univ" name="univ"
-                            data-placeholder="Pilih Universitas">
+                        <select class="form-select select2" id="univ" name="univ" data-placeholder="Pilih Universitas">
                             <option disabled selected>Pilih Universitas</option>
                             @foreach ($universitas as $u)
                                 <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -74,24 +64,16 @@
                 <div class="row">
                     <div class="mb-2">
                         <label for="fakultas" class="form-label">Fakultas</label>
-                        <select class="form-select select2" id="fakultas" name="fakultas"
-                            data-placeholder="Pilih Fakultas">
+                        <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
                             <option disabled selected>Pilih Fakultas</option>
-                            @foreach ($fakultas as $f)
-                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mb-2 form-input">
                         <label for="univ" class="form-label">Prodi</label>
-                        <select class="form-select select2" id="prodi" name="prodi"
-                            data-placeholder="Pilih Prodi">
+                        <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
                             <option disabled selected>Pilih Prodi</option>
-                            @foreach ($prodi as $p)
-                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                            @endforeach
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>

@@ -234,8 +234,6 @@ $(document).on('click', '.update-status', function () {
                         icon: 'success'
                     });
 
-
-
                     if (typeof window[dataFunction] === "function") window[dataFunction](response);
                 } else {
                     showSweetAlert({
