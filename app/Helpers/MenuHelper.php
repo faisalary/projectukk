@@ -177,63 +177,63 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Universitas',
-                        'route' => 'universitas.index',
+                        'route' => 'universitas',
                         'permission' => 'universitas.view'
                     ],
                     [
                         'name' => 'Fakultas',
-                        'route' => 'fakultas.index',
+                        'route' => 'fakultas',
                         'permission' => 'fakultas.view'
                     ],
                     [
                         'name' => 'Program Studi',
-                        'route' => 'prodi.index',
-                        'permission' => 'prodi.view'
+                        'route' => 'prodi',
+                        'permission' => 'program_studi.view'
                     ],
                     [
                         'name' => 'Tahun Akademik',
-                        'route' => 'thn-akademik.index',
-                        'permission' => 'thn-akademik.view'
+                        'route' => 'thn-akademik',
+                        'permission' => 'tahun_akademik.view'
                     ],
                     [
                         'name' => 'Jenis Magang',
-                        'route' => 'jenismagang.index',
-                        'permission' => 'jenismagang.view'
+                        'route' => 'jenismagang',
+                        'permission' => 'jenis_magang.view'
                     ],
                     [
                         'name' => 'Dosen',
-                        'route' => 'dosen.index',
+                        'route' => 'dosen',
                         'permission' => 'dosen.view'
                     ],
                     [
                         'name' => 'Mahasiswa',
-                        'route' => 'mahasiswa.index',
+                        'route' => 'mahasiswa',
                         'permission' => 'mahasiswa.view'
                     ],
                     [
                         'name' => 'Pegawai Industri',
-                        'route' => 'pegawaiindustri.index',
-                        'permission' => 'pegawaiindustri.view'
+                        'route' => 'pegawaiindustri',
+                        'permission' => 'pegawai_industri.view'
                     ],
                     [
                         'name' => 'Nilai Mutu',
-                        'route' => 'nilai-mutu.index',
-                        'permission' => 'nilai-mutu.view'
+                        'route' => 'nilai-mutu',
+                        'permission' => 'nilai_mutu.view'
                     ],
                     [
                         'name' => 'Komponen Penilaian',
-                        'route' => 'komponen-penilaian.index',
-                        'permission' => 'komponen-penilaian.view'
+                        'route' => 'komponen-penilaian',
+                        'permission' => 'komponen_penilaian.view'
                     ],
                     [
                         'name' => 'Dokumen Persyaratan',
-                        'route' => 'doc-syarat.index',
-                        'permission' => 'doc-syarat.view'
+                        'route' => 'doc-syarat',
+                        'permission' => 'dokumen_syarat.view'
                     ],
                     [
                         'name' => 'Pembimbing Lapangan Mandiri',
-                        'route' => 'pembimbing-lapangan-mandiri.index',
-                        'permission' => 'pembimbing-lapangan-mandiri.view'
+                        'route' => 'pembimbing-lapangan-mandiri',
+                        'permission' => 'pembimbing_lapangan_mandiri.view'
                     ],
                 ]
             ],

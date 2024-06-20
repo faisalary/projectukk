@@ -16,18 +16,14 @@ class FakultasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:only.lkm', ['only' => ['index']]);
-        $this->middleware('permission:create.fakultas', ['only' => ['store']]);
-        $this->middleware('permission:edit.fakultas', ['only' => ['edit']]);
-        $this->middleware('permission:update.fakultas', ['only' => ['update']]);
-        $this->middleware('permission:status.fakultas', ['only' => ['status']]);
+        // $this->middleware('permission:only.lkm', ['only' => ['index']]);
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
+        $universitas = Universitas::all();
         $fakultas = Fakultas::all();
         return view('masters.fakultas.index', compact('fakultas','universitas'));
     }

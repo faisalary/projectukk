@@ -209,9 +209,9 @@ $('.modal').on('hide.bs.modal', function () {
     form.find('.invalid-feedback').html(null).removeClass('d-block');
 });
 
-$('.update-status').on('click', function () {
-    let id = $(this).data('id');
+$(document).on('click', '.update-status', function () {
     let url = $(this).data('url');
+    let dataFunction = $(this).attr('data-function');
 
     sweetAlertConfirm({
         title: 'Apakah anda yakin?',
@@ -223,8 +223,8 @@ $('.update-status').on('click', function () {
         $.ajax({
             url: url,
             type: "POST",
-            data: {
-                id: id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
                 if (!response.error) {
@@ -233,9 +233,10 @@ $('.update-status').on('click', function () {
                         text: response.message,
                         icon: 'success'
                     });
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+
+
+
+                    if (typeof window[dataFunction] === "function") window[dataFunction](response);
                 } else {
                     showSweetAlert({
                         title: 'Gagal!',
