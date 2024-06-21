@@ -1,0 +1,60 @@
+<?php 
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApproveMandiriController;
+use App\Http\Controllers\NilaiMahasiswaController;
+use App\Http\Controllers\BerkasAkhirMagangController;
+use App\Http\Controllers\DataMahasiswaMagangController;
+use App\Http\Controllers\LogBookMahasiswaController;
+
+Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('show', 'show')->name('.show');
+    Route::post('/approved/{id}', 'approved')->name('.approved');
+    Route::post('/rejected/{id}', 'rejected')->name('.rejected');
+});
+
+Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswaMagangController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::post('/store', 'store')->name('.store');
+    Route::post('/update{id}', 'update')->name('.update');
+    Route::get('/edit{id}', 'edit')->name('.edit');
+    Route::post('/status/{id}', 'status')->name('.status');
+    Route::get('/doc/{file}', 'doc')->name('.doc');
+});
+
+Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+    });
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+    });
+});
+
+Route::prefix('nilai-mahasiswa')->name('nilai_mahasiswa')->controller(NilaiMahasiswaController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+        Route::get('detail', 'detailMagangFakultas')->name('.detail');
+    });
+
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+        Route::get('detail', 'detailMagangMandiri')->name('.detail');
+    });
+});
+
+Route::prefix('logbook-mahasiswa')->name('logbook_magang')->controller(LogBookMahasiswaController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+        Route::get('detail', 'detailMagangFakultas')->name('.detail');
+        Route::get('view', 'showMagangFakultas')->name('.view');
+    });
+
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+        Route::get('detail', 'detailMagangMandiri')->name('.detail');
+        Route::get('view', 'showMagangMandiri')->name('.view');
+    });
+});

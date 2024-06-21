@@ -25,7 +25,7 @@ class LowonganMagangLkmController extends Controller
      * Display a listing of the resource.
      */
     
-     public function index(Request $id)
+     public function index()
      {
          // $user = Auth::user()->id;
          $lowongan = new LowonganMagang();

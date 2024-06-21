@@ -1,8 +1,4 @@
-@extends('partials_admin.template')
-
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('partials.vertical_menu')
 
 @section('page_style')
 <link rel="stylesheet" href="{{asset("app-assets/vendor/libs/sweetalert2/sweetalert2.css")}}" />
@@ -29,7 +25,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-8 col-12">
         <h4 class="fw-bold">Kelola Lowongan-Tahun Ajaran 21/10/2023 - 10/11/2023</h4>
@@ -50,37 +46,28 @@
 
 <div class="col-xl-12">
     <div class="nav-align-top">
-        <ul class="nav nav-pills mb-3 " role="tablist">
+        <ul class="nav nav-pills mb-1" role="tablist">
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-total" aria-controls="navs-pills-justified-total" aria-selected="true" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-briefcase ti-xs me-1"></i> Total Lowongan
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['total'] }}</span>
+                <button type="button" class="nav-link active" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-clock ti-clock me-1"></i> Tertunda
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clock ti-xs me-1"></i> Menunggu Persetujuan
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['tertunda'] }}</span>
+                <button type="button" class="nav-link" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-clipboard-check ti-clipboard-check me-1"></i> Disetujui
                 </button>
             </li>
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Lowongan Diterima
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['diterima'] }}</span>
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Lowongan Ditolak
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 ms-1" style="background-color: #DCEEE3; color: #4EA971;">{{ $lowongan['ditolak'] }}</span>
+                <button type="button" class="nav-link" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons ti ti-clipboard-x ti-clipboard-x me-1"></i> Ditolak
                 </button>
             </li>
         </ul>
     </div>
 
-    <div class="row mb-4">
-        <div class="col-md-8 col-12 ">
-            <div class="text-secondary mt-4">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Durasi Magang : -, Posisi Lowongan Magang : -, Status Lowongan Magang : -" id="tooltip-filter"></i></div>
+    <div class="row my-4">
+        <div class="col-md-8 col-12">
+            <div class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Durasi Magang : -, Posisi Lowongan Magang : -, Status Lowongan Magang : -" id="tooltip-filter"></i></div>
         </div>
     </div>
 </div>
@@ -143,11 +130,11 @@
 </div>
 
 <div class="tab-content p-0">
-    @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $tableId)
+    @foreach (['tertunda', 'diterima', 'ditolak'] as $tableId)
     <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}" id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
         <div class="card">
             <div class="row mt-3 ms-2">
-                <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
+                <div class="col-6 d-flex align-items-center" style="border: 1px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
                     <span class="badge badge-center bg-label-success mr-10"><i class="ti ti-briefcase"></i></span>Total Lowongan:</span>&nbsp;<span style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Lowongan </span>
                 </div>
             </div>
@@ -155,16 +142,13 @@
                 <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th style="max-width:70px;">NOMOR</th>
-                            @can('status.lowongan.lkm')
+                            <th style="max-width:70px;">No</th>
                             <th style="max-width: 100px;">PERUSAHAAN</th>
-                            @endcan
                             <th style="min-width:100px;">POSISI</th>
+                            <th style="min-width:100px;">Fakultas</th>
+                            <th style="min-width:100px;">Program Studi</th>
                             <th style="min-width:100px;">TANGGAL</th>
                             <th style="min-width:100px;">DURASI MAGANG</th>
-                            @can('status.lowongan.lkm')
-                            <th style="min-width:50px;">STATUS</th>
-                            @endcan
                             <th style="min-width:100px;">AKSI</th>
                         </tr>
                     </thead>
@@ -182,7 +166,7 @@
     <script>
         $('.table').each(function() {
             let idElement = $(this).attr('id');
-            let url = "{{ url('kelola/lowongan/lkm/show') }}?type=" + idElement;
+            let url = "{{ route('lowongan.kelola.show') }}?type=" + idElement;
 
             $(this).DataTable({
                 ajax: url,
@@ -191,17 +175,26 @@
                 deferRender: true,
                 type: 'GET',
                 destroy: true,
-                columns: [{
+                columns: [
+                    {
                         data: "DT_RowIndex"
                     },
-                    @can('status.lowongan.lkm') {
+                    {
                         data: 'industri.namaindustri',
                         name: 'namaindustri',
 
                     },
-                    @endcan {
+                    {
                         data: "intern_position",
                         name: "intern_position"
+                    },
+                    {
+                        data: "fakultas",
+                        name: "fakultas"
+                    },
+                    {
+                        data: "program_studi",
+                        name: "program_studi"
                     },
                     {
                         data: "tanggal",
@@ -211,11 +204,7 @@
                         data: "durasimagang",
                         name: "durasimagang"
                     },
-                    @can('status.lowongan.lkm') {
-                        data: "status",
-                        name: "status"
-                    },
-                    @endcan {
+                    {
                         data: "action",
                         name: "action"
                     }
@@ -224,22 +213,11 @@
 
         });
 
-        jQuery(function() {
-            jQuery('.showSingle').click(function() {
-                let idElement = $(this).attr('target');
-
-                jQuery('.targetDiv').hide('.cnt');
-                jQuery("#div" + idElement).slideToggle();
-
-                console.log(idElement);
-            });
-        });
-
         $('.display').DataTable({
             responsive: true
         });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
         });
 
@@ -308,7 +286,4 @@
             $('#status').val(null).trigger('change');
         });
     </script>
-
-    <script src="{{asset("app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
-    <script src="{{asset("app-assets/js/extended-ui-sweetalert2.js")}}"></script>
     @endsection

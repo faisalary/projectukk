@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Carbon\Carbon;
+use App\Helpers\Response;
 use App\Models\Universitas;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
@@ -17,17 +18,7 @@ class TahunAkademikController extends Controller
      */
     public function index()
     {
-        $tahun = TahunAkademik::all();
-
-        return view('masters.tahun_akademik.index', compact('tahun'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('masters.tahun_akademik.index');
     }
 
     /**
@@ -35,9 +26,8 @@ class TahunAkademikController extends Controller
      */
     public function store(TahunAkademikRequest $request)
     {
-
+        // dd($request->all());
         try {
-            
             $tahun = TahunAkademik::create([
                 'tahun' => $request->tahun,
                 'semester' => $request->semester,
@@ -48,17 +38,9 @@ class TahunAkademikController extends Controller
                 'status' => true,
             ]);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Tahun Akademik successfully Created!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
-            ]);
+            return Response::success(null, 'Tahun Akademik successfully Created!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -73,22 +55,28 @@ class TahunAkademikController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
+            })
+            ->addColumn('pendaftaran_magang', function ($row) {
+                return Carbon::parse($row->startdate_daftar)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_daftar)->format('d M Y');
+            })
+            ->addColumn('pengumpulan_berkas', function ($row) {
+                return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp; ' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_year_akademik}' data-url='tahun-akademik/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $url = route('thn-akademik.status', $row->id_year_akademik);
+                $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })
-            ->rawColumns(['action', 'status'])
-
+            ->rawColumns(['pendaftaran_magang', 'pengumpulan_berkas', 'action', 'status'])   
             ->make(true);
     }
 
@@ -98,7 +86,7 @@ class TahunAkademikController extends Controller
     public function edit(string $id)
     {
         $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-        return $tahun;
+        return Response::success($tahun, 'Successs');
     }
 
     /**
@@ -107,9 +95,8 @@ class TahunAkademikController extends Controller
     public function update(TahunAkademikRequest $request, string $id)
     {
         try {
-            // $validated = $request->validated();
-
             $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
+            if (!$tahun) return Response::error(null, 'Tahun Akademik not found!');
 
             $tahun->tahun = $request->tahun;
             $tahun->semester = $request->semester;
@@ -119,17 +106,9 @@ class TahunAkademikController extends Controller
             $tahun->enddate_pengumpulan_berkas = Carbon::parse($request->enddate_pengumpulan_berkas)->format('Y-m-d');
             $tahun->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
-            ]);
+            return Response::success(null, 'Tahun Akademik successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -140,20 +119,13 @@ class TahunAkademikController extends Controller
     {
         try {
             $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
-            $tahun->status = ($tahun->status) ? false : true;
-            $tahun->save();
+            if (!$tahun) return Response::error(null, 'Tahun Akademik not found!');
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Status Tahun Akademik successfully Updated!',
-                'modal' => '#modal-thn-akademik',
-                'table' => '#table-master-tahun-akademik'
-            ]);
+            $tahun->status = !$tahun->status;
+            $tahun->save();
+            return Response::success(null, 'Status Tahun Akademik successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 }

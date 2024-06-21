@@ -12602,7 +12602,7 @@ html:not([dir=rtl]) .card .card-separator {
 
 .bg-success {
   --bs-bg-opacity: 1;
-  background-color: #4EA971 !important;
+  background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-info {

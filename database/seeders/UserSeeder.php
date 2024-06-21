@@ -15,49 +15,61 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        
-        $superadmin = User::firstOrNew([
-            'email' => 'superadmin@demo.test',
-            'username' => 'SuperAdmin'
+        $administrator = User::firstOrNew([
+            'email' => 'superadmin@gmail.com',
+            'username' => 'Super Admin'
         ], [
-            'name' => 'Super Admin Role',
-            'password' => bcrypt('12345678'),
-            'isAdmin' => 0
+            'name' => 'Super Admin',
+            'password' => bcrypt('password'),
         ]);
 
-        if (!$superadmin->exists) {
-            $superadmin->save();
-            $superadmin->assignRole('superadmin');
+        if (!$administrator->exists) {
+            $administrator->save();
+            $administrator->assignRole('Super Admin');
         }
+        
+        // $superadmin = User::firstOrNew([
+        //     'email' => 'superadmin@gmail.com',
+        //     'username' => 'SuperAdmin'
+        // ], [
+        //     'name' => 'Super Admin Role',
+        //     'password' => bcrypt('12345678'),
+        //     'isAdmin' => 0
+        // ]);
+
+        // if (!$superadmin->exists) {
+        //     $superadmin->save();
+        //     $superadmin->assignRole('Super Admin');
+        // }
 
         
-        $admin = User::firstOrNew([
-                'email' => 'admin@role.test',
-                'username' => 'Admin'
-        ], [
-            'name' => 'Admin Role',
-            'password' => bcrypt('12345678'),
-            'isAdmin' => 1
-        ]);
+        // $admin = User::firstOrNew([
+        //         'email' => 'admin@role.test',
+        //         'username' => 'Admin'
+        // ], [
+        //     'name' => 'Admin',
+        //     'password' => bcrypt('12345678'),
+        //     'isAdmin' => 1
+        // ]);
 
-        if (!$admin->exists) {
-            $admin->save();
-            $admin->assignRole('admin');
-        }
+        // if (!$admin->exists) {
+        //     $admin->save();
+        //     $admin->assignRole('admin');
+        // }
 
         
-        $user = User::firstOrNew([
-            'email' => 'user@role.test',
-            'username' => 'User'
-        ], [
-            'name' => 'User Role',
-            'password' => bcrypt('12345678'),
-            'isAdmin' => 2
-        ]);
+        // $user = User::firstOrNew([
+        //     'email' => 'user@role.test',
+        //     'username' => 'User'
+        // ], [
+        //     'name' => 'User Role',
+        //     'password' => bcrypt('12345678'),
+        //     'isAdmin' => 2
+        // ]);
 
-        if (!$user->exists) {
-            $user->save();
-            $user->assignRole('user');
-        }
+        // if (!$user->exists) {
+        //     $user->save();
+        //     $user->assignRole('user');
+        // }
     }
 }

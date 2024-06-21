@@ -84,8 +84,9 @@ class KomponenPenilaianController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
 
+                $url = url('master/komponen-nilai/status/' . $row->id_kompnilai);
                 $btn = "<a data-bs-toggle='modal-komponen-nilai' data-id='{$row->id_kompnilai}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-url='komponen-penilaian/status' data-id='{$row->id_kompnilai}'  class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
+                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
 
                 return $btn;
             })

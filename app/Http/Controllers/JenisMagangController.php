@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Helpers\Response;
 use App\Models\JenisMagang;
 use App\Models\BerkasMagang;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\BerkasRequest;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\JenisMagangRequest;
 
@@ -20,10 +20,7 @@ class JenisMagangController extends Controller
      */
     public function index()
     {
-        $jenismagang = JenisMagang::all();
-        $tahun = TahunAkademik::all();
-        $berkas = BerkasMagang::all();
-        return view('masters.jenis_magang.index', compact('jenismagang', 'tahun', 'berkas'));
+        return view('masters.jenis_magang.index');
     }
 
     /**
@@ -34,24 +31,35 @@ class JenisMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $tahun = TahunAkademik::all();
         $berkas = BerkasMagang::all();
-        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun', 'berkas'));
+        $urlBack = route('jenismagang');
+        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun', 'berkas', 'urlBack'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(JenisMagangRequest $request, BerkasRequest $request2)
+    public function store(JenisMagangRequest $request)
     {
-        DB::beginTransaction();
         try {
+            $dataStep = Crypt::decryptString($request->data_step);
+            if ($dataStep == '1') {
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                    'target_parent' => '#detail_berkas_magang',
+                    'content' => view('masters/jenis_magang/step/detail_berkas_magang')->render(),
+                ], 'Valid data!');
+            }
+
+            DB::beginTransaction();
             $kategori = JenisMagang::create([
-                'namajenis' => $request->jenis,
+                'namajenis' => $request->namajenis,
                 'durasimagang' => $request->durasimagang,
-                'id_year_akademik' => $request->tahunakademik,
+                'id_year_akademik' => $request->id_year_akademik,
                 'status' => true,
             ]);
 
-            foreach ($request2->berkas as $key => $value) {
+            foreach ($request->berkas as $key => $value) {
                 BerkasMagang::create([
                     'id_jenismagang' => $kategori->id_jenismagang,
                     'nama_berkas' => $value['namaberkas'],
@@ -122,8 +130,9 @@ class JenisMagangController extends Controller
                 $icon = ($jenismagang->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($jenismagang->status) ? "danger" : "success";
 
+                $url = route('jenis-magang.status', $jenismagang->id_jenismagang);
                 $btn = "<a  href='jenis-magang/edit/{$jenismagang->id_jenismagang}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$jenismagang->status}' data-id='{$jenismagang->id_jenismagang}' data-url='jenis-magang/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                <a data-url='{$url}' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -147,7 +156,7 @@ class JenisMagangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(JenisMagangRequest $request, $id, BerkasRequest $request2)
+    public function update(JenisMagangRequest $request, $id)
     {
 
         try {
@@ -162,7 +171,7 @@ class JenisMagangController extends Controller
             $jenismagang->save();
 
             $arr = [];
-            foreach ($request2->berkas as $key => $item) {
+            foreach ($request->berkas as $key => $item) {
                 $arr[] .= $item['id_berkas'];
             }
 
@@ -174,9 +183,9 @@ class JenisMagangController extends Controller
 
             if (in_array(null, $berkas2)) {
 
-                if (isset($request2['template'])) {
+                if (isset($request['template'])) {
                     $data2[] = [
-                        'template' => $request2['template']->store('post')
+                        'template' => $request['template']->store('post')
                     ];
                 }
                 return response()->json([
@@ -188,13 +197,13 @@ class JenisMagangController extends Controller
             } else {
 
                 $data2 = [
-                    'id_berkas_magang' => $request2['id_berkas'],
-                    'nama_berkas' => $request2['namaberkas'],
-                    'status_upload' => $request2['statusupload'],
+                    'id_berkas_magang' => $request['id_berkas'],
+                    'nama_berkas' => $request['namaberkas'],
+                    'status_upload' => $request['statusupload'],
                 ];
             }
 
-            foreach ($request2->berkas as $key => $l) {
+            foreach ($request->berkas as $key => $l) {
                 BerkasMagang::updateOrCreate(
                     [
                         'id_berkas_magang' => $l['id_berkas'],

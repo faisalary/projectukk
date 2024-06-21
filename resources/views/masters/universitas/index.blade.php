@@ -1,13 +1,12 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('meta_header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
-    .swal2-icon {
+    /* .swal2-icon {
         border-color: transparent !important;
     }
 
@@ -24,22 +23,17 @@
 
     .swal2-html-container {
         font-size: 16px !important;
-    }
+    } */
 </style>
 @endsection
 
-@section('main')
+@section('content')
     <div class="row">
         <div class="col-md-6 col-12">
             <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Universitas</h4>
         </div>
         <div class="col-md-6 col-12 text-end">
-            
-      
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-universitas">Tambah
-                Universitas</button>
-           
-            
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-universitas">Tambah Universitas</button>
         </div>
     </div>
 <div class="row mt-2">
@@ -54,8 +48,8 @@
                             <th>Alamat</th>
                             <th>Kota</th>
                             <th>Telp</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th class="text-center">STATUS</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -112,35 +106,39 @@
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ url('master/universitas/update/') }}/${id}`;
-        var url = `{{ url('master/universitas/edit/') }}/${id}`;
+        let action = `{{ route('universitas.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('universitas.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let modal = $('#modal-universitas');
+
+        modal.find(".modal-title").html("Edit Universitas");
+        modal.find('form').attr('action', action);
+        modal.modal('show');
+
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
-                $("#modal-title").html("Edit Universitas");
-                $("#modal-button").html("Update Data")
-                $('#modal-universitas form').attr('action', action);
+
                 $('#namauniv').val(response.namauniv);
                 $('#jalan').val(response.jalan);
                 $('#kota').val(response.kota);
                 $('#telp').val(response.telp);
-                $('#modal-universitas').modal('show');
             }
         });
     }
 
-    $("#modal-universitas").on("hide.bs.modal", function() {
+    function afterAction(response) {
+        $("#modal-universitas").modal('hide');
+        afterUpdateStatus(response)
+    }
 
-        $("#modal-title").html("Add Universitas");
-        $("#modal-button").html("Save Data")
-        $('#modal-universitas form')[0].reset();
-        $('#modal-universitas form').attr('action', "{{ url('master/universitas/store') }}");
-        $('.invalid-feedback').removeClass('d-block');
-        $('.form-control').removeClass('is-invalid');
+    function afterUpdateStatus(response) {
+        $('#table-master-univ').DataTable().ajax.reload();
+    }
+
+    $("#modal-universitas").on("hidden.bs.modal", function() {
+        $(this).find(".modal-title").html("Tambah Universitas");
+        $(this).find('form').attr('action', "{{ route('universitas.store') }}");
     });
 </script>
-
-<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection

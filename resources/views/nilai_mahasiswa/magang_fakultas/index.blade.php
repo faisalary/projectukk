@@ -1,8 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -14,7 +12,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row pe-2 ps-2">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Nilai Mahasiswa / </span>
@@ -114,7 +112,7 @@
             "nilai_pbb_akademik": "96",
             "nilai_akhir": "97",
             "indeks_nilai_akhir": "A",
-            "aksi": "<a href='/detail-nilai-mahasiswa/magang-fakultas' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+            "aksi": "<a href='{{ route('nilai_mahasiswa.fakultas.detail') }}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
         },
         {
             "nomor": "2",
@@ -126,7 +124,7 @@
             "nilai_pbb_akademik": "96",
             "nilai_akhir": "97",
             "indeks_nilai_akhir": "A",
-            "aksi": "<a href='/detail-nilai-mahasiswa/magang-fakultas' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
+            "aksi": "<a href='{{ route('nilai_mahasiswa.fakultas.detail') }}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice'></i></a>",
         },
     ];
 

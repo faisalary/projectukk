@@ -1,7 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
     .select2-container .select2-selection--single .select2-selection__rendered {
         padding-right: 86px !important;
@@ -29,10 +28,10 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="">
-        <a href="/logbook-mahasiswa/magang-mandiri" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <a href="{{ route('logbook_magang.mandiri') }}" type="button" class="btn btn-outline-primary mb-3">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
@@ -43,7 +42,7 @@
 <div class="col-12">
     <div class="card">
         <div class="user-profile-header-banner">
-            <img src="../assets/logbookbg.png" alt="Banner image" class="rounded-top" width="100%" style="height: 129px !important;" />
+            <img src="{{ asset('assets/logbookbg.png') }}" alt="Banner image" class="rounded-top" width="100%" style="height: 129px !important;" />
         </div>
         <div class="user-profile-header text-sm-start text-center mb-4" style="justify-content: space-between !important;">
             <div class="flex-shrink-0 mt-n5 mx-sm-0 mx-auto ms-0 ms-sm-5">
@@ -51,7 +50,7 @@
                     <div class="col-6">
                         <div class="card" style="max-width:210px">
                             <div class="card-body">
-                                <img src="../assets/images/wings.png" alt="user image" class="d-block h-auto rounded user-profile-img" />
+                                <img src="{{ asset('assets/images/wings.png') }}" alt="user image" class="d-block h-auto rounded user-profile-img" />
                             </div>
                         </div>
                         <div style="margin-top: 24px;">
@@ -82,7 +81,7 @@
     </select>
 </div>
 
-<a href="/detail-logbook-mahasiswa/magang-fakultas" style="color:#5d596c;">
+<a href="{{ route('logbook_magang.mandiri.detail') }}" style="color:#5d596c;">
     <div class="mb-4" style="display: flex; justify-content: space-between; border: 1px solid #D3D6DB; padding: 10px 30px; background-color: white; border-radius: 6px; ">
         <div class="mt-3">
             <span class="badge bg-label-warning mb-2">Belum Disetujui</span>
@@ -93,29 +92,29 @@
         <div class="mt-3" style="display: flex !important;">
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Senin</p>
-                <img src="../assets/images/smile.png" alt="">
+                <img src="{{ asset('assets/images/smile.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Selasa</p>
-                <img src="../assets/images/love.png" alt="">
+                <img src="{{ asset('assets/images/love.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Rabu</p>
-                <img src="../assets/images/sad.png" alt="">
+                <img src="{{ asset('assets/images/sad.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>kamis</p>
-                <img src="../assets/images/kyaa.png" alt="">
+                <img src="{{ asset('assets/images/kyaa.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Jumat</p>
-                <img src="../assets/images/jutek.png" alt="">
+                <img src="{{ asset('assets/images/jutek.png') }}" alt="">
             </div>
         </div>
     </div>
 </a>
 
-<a href="/detail-logbook-mahasiswa/magang-fakultas" style="color:#5d596c;">
+<a href="{{ route('logbook_magang.mandiri.detail') }}" style="color:#5d596c;">
     <div class="mb-4" style="display: flex; justify-content: space-between; border: 1px solid #D3D6DB; padding: 10px 30px; background-color: white; border-radius: 6px; ">
         <div class="mt-3">
             <span class="badge bg-label-success mb-2">Disetujui</span>
@@ -126,29 +125,29 @@
         <div class="mt-3" style="display: flex !important;">
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Senin</p>
-                <img src="../assets/images/smile.png" alt="">
+                <img src="{{ asset('assets/images/smile.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Selasa</p>
-                <img src="../assets/images/love.png" alt="">
+                <img src="{{ asset('assets/images/love.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Rabu</p>
-                <img src="../assets/images/sad.png" alt="">
+                <img src="{{ asset('assets/images/sad.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>kamis</p>
-                <img src="../assets/images/kyaa.png" alt="">
+                <img src="{{ asset('assets/images/kyaa.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Jumat</p>
-                <img src="../assets/images/jutek.png" alt="">
+                <img src="{{ asset('assets/images/jutek.png') }}" alt="">
             </div>
         </div>
     </div>
 </a>
 
-<a href="/detail-logbook-mahasiswa/magang-fakultas" style="color:#5d596c;">
+<a href="{{ route('logbook_magang.mandiri.detail') }}" style="color:#5d596c;">
     <div class="mb-4" style="display: flex; justify-content: space-between; border: 1px solid #D3D6DB; padding: 10px 30px; background-color: white; border-radius: 6px; ">
         <div class="mt-3">
             <span class="badge bg-label-danger mb-2">Ditolak</span>
@@ -159,23 +158,23 @@
         <div class="mt-3" style="display: flex !important;">
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Senin</p>
-                <img src="../assets/images/smile.png" alt="">
+                <img src="{{ asset('assets/images/smile.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Selasa</p>
-                <img src="../assets/images/love.png" alt="">
+                <img src="{{ asset('assets/images/love.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Rabu</p>
-                <img src="../assets/images/sad.png" alt="">
+                <img src="{{ asset('assets/images/sad.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>kamis</p>
-                <img src="../assets/images/kyaa.png" alt="">
+                <img src="{{ asset('assets/images/kyaa.png') }}" alt="">
             </div>
             <div class="text-center" style=" margin-left: 20px; ">
                 <p>Jumat</p>
-                <img src="../assets/images/jutek.png" alt="">
+                <img src="{{ asset('assets/images/jutek.png') }}" alt="">
             </div>
         </div>
     </div>
@@ -184,8 +183,4 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection

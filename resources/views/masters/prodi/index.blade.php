@@ -1,46 +1,15 @@
-@extends('partials_admin.template')
-
-
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-
-    .swal2-deny {
-        display: none !important;
-    }
-</style>
-
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-10 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Prodi</h4>
     </div>
     <div class="col-md-2 col-12 text-end">
-        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"> <i class="tf-icons ti ti-filter"></i></button>
+        <button class="btn btn-primary btn-icon" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
     </div>
     <div class="col-md-12 d-flex justify-content-between mt-2">
         <p class="text-secondary">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Universitas : -, Fakultas : -, Prodi : -" id="tooltip-filter"></i></p>
@@ -58,7 +27,7 @@
                             <th>UNIVERSITAS</th>
                             <th>NAMA FAKULTAS</th>
                             <th>NAMA PRODI</th>
-                            <th>STATUS</th>
+                            <th class="text-center">STATUS</th>
                             <th style="min-width:100px;">AKSI</th>
                         </tr>
                     </thead>
@@ -69,110 +38,62 @@
 </div>
 
 <!-- Modal -->
-
 @include('masters.prodi.modal')
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
-    $("#modalTambahProdi").on("hide.bs.modal", function() {
 
+    $("#modalTambahProdi").on("hide.bs.modal", function() {
         $("#modal-title").html("Tambah Prodi");
-        $("#modal-button").html("Save Data");
-        $('#modalTambahProdi form #pilihuniversitas_add').val('').trigger('change');
-        $('#modalTambahProdi form #pilihfakultas_add').val('').trigger('change');
-        $('#modalTambahProdi form #namaprodi').val('').trigger('change');
     });
 
-    function edit(e) {
-        let id = e.attr('data-id');
-
-        let action = `{{ url('master/prodi/update/') }}/${id}`;
-        var url = `{{ url('master/prodi/edit/') }}/${id}`;
+    function getDataSelect(e) {
+        let idElement = e.attr('data-after');
         $.ajax({
+            url: `{{ route('prodi') }}?selected=` + e.val(),
             type: 'GET',
-            url: url,
-            success: function(response) {
-                $("#modal-title").html("Edit Prodi");
-                $("#modal-button").html("Update Data");
-                $('#modalTambahProdi form').attr('action', action);
-                $('#pilihuniversitas_add').val(response.id_univ).trigger("change");
-                $('#pilihfakultas_add').val(response.id_fakultas).trigger("change");
-                $('#namaprodi').val(response.namaprodi).trigger("change");
-
-                $('#modalTambahProdi').modal('show');
-
+            success: function (response) {
+                $(`#${idElement}`).find('option:not([disabled])').remove();
+                $(`#${idElement}`).val(null).trigger('change');
+                $.each(response.data, function () {
+                    $(`#${idElement}`).append(new Option(this.namafakultas, this.id_fakultas));
+                });
             }
         });
     }
 
-    $('#pilihuniversitas_add').on('change', function() {
-        id_univ = $("#pilihuniversitas_add option:selected").val();
+    function edit(e) {
+        let id = e.attr('data-id');
+
+        let action = `{{ route('prodi.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('prodi.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let modal = $('#modalTambahProdi');
+
+        modal.find(".modal-title").html("Edit Prodi");
+        modal.find('form').attr('action', action);
+        modal.modal('show');
 
         $.ajax({
-            url: "{{ url('/master/prodi/list-fakultas') }}" + '/' + id_univ,
-            method: "GET",
-            dataType: "json",
+            type: 'GET',
+            url: url,
             success: function(response) {
-                if ($('#pilihfakultas_add').data('select2')) {
-                    $("#pilihfakultas_add form").val("");
-                    $("#pilihfakultas_add").trigger("change");
-                    $('#pilihfakultas_add').empty().trigger("change");
-                }
-                $("#pilihfakultas_add").select2({
-                    data: response.data,
-                    dropdownParent: $('#modalTambahProdi'),
+                $.each(response, function ( key, value ) {
+                    let element = modal.find(`#${key}`);
+                    if (element.is('select') && element.find('option').length <= 1) {
+                        let interval = setInterval(() => {
+                            if (element.children('option').length > 1) {
+                                element.val(value).trigger('change');
+                                clearInterval(interval);
+                            }
+                        }, 10);
+                    } else {
+                        element.val(value).trigger('change');
+                    }
                 });
             }
-
-        })
-    });
-
-    $('#univ').on('change', function() {
-        id_univ = $("#univ option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/prodi/list-fakultas') }}" + '/' + id_univ,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#fakultas').data('select2')) {
-                    $("#fakultas form").val("");
-                    $("#fakultas").trigger("change");
-                    $('#fakultas').empty().trigger("change");
-                }
-                $("#fakultas").select2({
-                    data: response.data,
-                    dropdownParent: $('#modalSlide'),
-                });
-            }
-
-        })
-    });
-
-    $('#fakultas').on('change', function() {
-        id_fakultas = $("#fakultas option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/prodi/list-prodi') }}" + '/' + id_fakultas,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#prodi').data('select2')) {
-                    $("#prodi form").val("");
-                    $("#prodi").trigger("change");
-                    $('#prodi').empty().trigger("change");
-                }
-                $("#prodi").select2({
-                    data: response.data,
-                    dropdownParent: $('#modalSlide'),
-                });
-            }
-
-        })
-    });
+        });
+    }
 
     $(document).ready(function() {
         table_master_prodi();
@@ -234,8 +155,14 @@
             ]
         });
     }
-</script>
 
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+    function afterAction(response) {
+        $('#modalTambahProdi').modal('hide');
+        afterUpdateStatus(response);
+    }
+
+    function afterUpdateStatus(response) {
+        table_master_prodi();
+    }
+</script>
 @endsection

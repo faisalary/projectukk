@@ -68,25 +68,7 @@ class InformasiLowonganController extends Controller
         return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact('active_menu', 'industri', 'urlGetCard', 'lowongan_count', 'pendaftar_count', 'magang', 'lowongan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Request $request)
     {
         $lowongan = LowonganMagang::query();
@@ -105,18 +87,13 @@ class InformasiLowonganController extends Controller
         return $lowongan;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function add(string $id)
     {
         $date = LowonganMagang::where('id_lowongan', $id)->first();
         return $date;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function date(Request $request, string $id_lowongan)
     {
         try {
@@ -141,13 +118,5 @@ class InformasiLowonganController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;;
 use App\Models\Role;
@@ -19,10 +20,10 @@ class KonfigurasiController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:superadmin|role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:superadmin|role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:superadmin|role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:superadmin|role-delete', ['only' => ['destroy']]);
+        //  $this->middleware('permission:superadmin|role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        //  $this->middleware('permission:superadmin|role-create', ['only' => ['create','store']]);
+        //  $this->middleware('permission:superadmin|role-edit', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:superadmin|role-delete', ['only' => ['destroy']]);
     }
     
     /**
@@ -35,84 +36,72 @@ class KonfigurasiController extends Controller
         $role = Role::latest()->get();
         return view('konfigurasi.konfigurasi', compact('role', 'permissions'));
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Request $id)
     {
         $role = Role::orderBy('name', 'asc')
             ->get();
             return DataTables::of($role)
             ->addIndexColumn()
-            ->editColumn('status', function ($role) {
-                if ($role->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                }
-            })
             ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
-    
-                $btn = "<a data-bs-toggle='modal' data-bs-target='#modal-konfigurasi' data-id='{$row->name}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->name}' data-url='konfigurasi/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-    
-                return $btn;
+                return "<div class='text-center'><a data-id='{$row->uuid}' onclick=edit($(this)) class='cursor-pointer text-warning'><i class='tf-icons ti ti-edit' ></i></div>";
             })
-            ->rawColumns(['action','status'])
+            ->rawColumns(['action'])
             ->make(true);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $data = $request->only('name', 'permission_id');
-        $validatedData = Validator::make($data, [
-            'name' => 'required|max:191|unique:roles'
-        ]);
-        if ($validatedData->fails()) {
-            $messages = $validatedData->getMessageBag()->get('name');
-            return response()->json(['error' => true, 'message' => $messages[0]], 400);
-        }
-
-        $permission_id = $request->permission_id;
-
-        $result = Role::create([
-            'name' => $request->name,
-            'guard_name' => 'web'
-        ]);
-
-        foreach ($permission_id as $key => $value) {
-            $prevent = Role::where('permission_id', $value)->where('role_id', $result->id);
-
-            if ($prevent->get()->isEmpty()) {
-                $rhp = new RoleHas();
-                $rhp->permission_id = $value;
-                $rhp->role_id = $result->id;
-                $rhp->save();
-            } else {
-                $already = $prevent->first();
-                $already->save();
+        try {
+            $validatedData = Validator::make($request->all(), [
+                'name' => 'required|max:191|unique:roles'
+            ]);
+    
+            if ($validatedData->fails()) {
+                return Response::errorValidate($validatedData->errors(), 'Failed to Add Role!');
             }
+    
+            $result = Role::create([
+                'name' => $request->name,
+                'guard_name' => 'web'
+            ])->syncPermissions($request->permission_id);
+    
+            Artisan::call('cache:clear');
+
+            return Response::success(null, "Role added successfully!");
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
+    }
 
-        Artisan::call('cache:clear');
+    public function edit($id) {
+        $role = Role::findById($id);
+        if (!$role) return Response::error(null, "Role not found!");
+        $permissions = $role->permissions->pluck('uuid');
 
-        return response()->json(["error" => false, "message" => "Successfully Added Role!"], 201);
+        return Response::success([
+            "role" => $role->name,
+            "permissions" => $permissions
+        ], "Role found!");
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'name' => 'required|max:191|unique:roles,name,' . $id . ',uuid',
+        ]);
+
+        try {
+            $role = Role::findById($id);
+            if (!$role) return Response::error(null, "Role not found!");
+            $role->name = $request->name;
+            $role->save();
+            $role->syncPermissions($request->permission_id);
+
+            Artisan::call('cache:clear');
+
+            return Response::success(null, "Role updated successfully!");
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 }

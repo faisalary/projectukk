@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 
 class JenisMagangRequest extends FormRequest
@@ -22,28 +23,44 @@ class JenisMagangRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)) {
-            return [
-                'jenis' => ['required', 'string', 'max:255'],
-                'durasimagang' => ['required'],
-                'tahunakademik' => ['required'],
-            ];
-        }
-        return [
-            'jenis' => ['required', 'string', 'max:255'],
-            'durasimagang' => ['required'],
-            'tahunakademik' => ['required'],
+        $validate = [
+            'data_step' => ['required'],
+            'namajenis' => ['required'],
+            'durasimagang' => ['required', 'in:1 Semester,2 Semester'],
+            'id_year_akademik' => ['required', 'exists:tahun_akademik,id_year_akademik'],
         ];
+
+        if (isset($this->data_step)) {
+            $dataStep = Crypt::decryptString($this->data_step);
+            if ($dataStep == 2) {
+                $addValidate = [
+                    'berkas.*.namaberkas' => ['required'],
+                    'berkas.*.statusupload' => ['required', 'in:1,0'],
+                    'berkas.*.template' => ['required', 'mimes:pdf', 'max:2048'],
+                ];
+
+                $validate = array_merge($validate, $addValidate);
+            }
+        }
+
+        return $validate;
     }
 
     public function messages(): array
     {
         return [
-            'jenis.required' => 'Jenis Magang harus diisi!',
-            'jenis.string' => 'Jenis Magang harus huruf!',
-            'durasimagang.required' => 'Durasi Magang harus diisi!',
-            'tahunakademik.required' => 'Tahun Akademik harus diisi!',
-
+            'data_step.required' => 'Tidak valid!',
+            'namajenis.required' => 'Jenis Magang harus diisi!',
+            'durasimagang.required' => 'Durasi Magang harus dipilih!',
+            'durasimagang.in' => 'Durasi Magang tidak valid!',
+            'id_year_akademik.required' => 'Tahun Akademik harus dipilih!',
+            'id_year_akademik.exists' => 'Tahun Akademik tidak valid!',
+            'berkas.*.namaberkas.required' => 'Berkas Magang harus diisi!',
+            'berkas.*.statusupload.required' => 'Status Upload harus dipilih!',
+            'berkas.*.statusupload.in' => 'Status Upload tidak valid!',
+            'berkas.*.template.required' => 'Template harus diisi!',
+            'berkas.*.template.mimes' => 'Template harus berupa PDF!',
+            'berkas.*.template.max' => 'File Template tidak boleh lebih dari 2 MB!',
         ];
     }
 }

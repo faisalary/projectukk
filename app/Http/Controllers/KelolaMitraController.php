@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyReg;
 use App\Mail\RejectionNotification;
@@ -19,10 +20,6 @@ use Ramsey\Uuid\Uuid;
 
 class KelolaMitraController extends Controller
 {
-    public function __construct()
-    {
-       
-    }
     /**
      * Display a listing of the resource.
      */
@@ -33,60 +30,41 @@ class KelolaMitraController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(CompanyReg $request)
     {
         try{
-            DB::beginTransaction();
+            DB::beginTransaction();   
             $industri = Industri::create([
-            'namaindustri' => $request->namaindustri,
-            'email' => $request->email,
-            'notelpon' => $request->notelpon,
-            'alamatindustri'=> $request->alamatindustri,
-            'kategori_industri' => $request->kategori_industri,
-            'statuskerjasama' => $request->statuskerjasama,
-            'image' => $request->image->store('post'),
-            'status' => true,
-        ]);
- 
+                'namaindustri' => $request->namaindustri,
+                'email' => $request->email,
+                'notelpon' => $request->contact_person,
+                'penanggung_jawab' => $request->penanggung_jawab,
+                'alamatindustri'=> $request->alamat,
+                'description'=> $request->deskripsi,
+                'kategori_industri' => $request->kategori_industri,
+                'statuskerjasama' => $request->statuskerjasama,
+                'status' => true,
+            ]);
         
-        $code = Str::random(64);
-        $admin = User::create([
-            'name' => 'mitra',
-            'username' => $request->namaindustri,
-            'email' => $request->email,
-            'password' => Hash::make($industri->penanggung_jawab),
-            'remember_token' => $code,
-            'isAdmin'=>1,
-            'id_industri' => $industri->id_industri,
-        ]);
-        $admin->assignRole('admin');
-               
-        DB::commit();
-        
-        return response()->json([
-            'error' => false,
-            'message' => 'Industri successfully Created!',
-            'modal' => '#modalTambahMitra',
-            'table' => '#table-kelola-mitra2'
-        ]);
-
+            $code = Str::random(64);
+            $admin = User::create([
+                'name' => 'Mitra',
+                'username' => $request->namaindustri,
+                'email' => $request->email,
+                'password' => Hash::make($industri->penanggung_jawab),
+                'remember_token' => $code,
+                'isAdmin'=>1,
+                'id_industri' => $industri->id_industri,
+            ]);
+            $admin->assignRole('admin');
+                
+            DB::commit();
+            return Response::success(null, 'Industri successfully Created!');
         } catch (Exception $e) {
             DB::rollBack();
-            
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -94,49 +72,30 @@ class KelolaMitraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($statusapprove)
+    public function show(Request $request)
     {
-    $industri = Industri::where('statusapprove',$statusapprove)->orderBy('namaindustri')->get();
+        $industri = Industri::query();
+        $status = $request->status;
 
-    return DataTables::of($industri)
-        ->addIndexColumn()
-        ->editColumn('status', function ($industri) {
-            if ($industri->status == 1) {
-                return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-            } else {
-                return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-            }
-        })
-        ->addColumn('action', function ($row) {
-            $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-            $color = ($row->status) ? "danger" : "success";
+        if ($status == 'pending') $industri->where('statusapprove', 0);
+        elseif ($status == 'verified') $industri->where('statusapprove', 1);
+        elseif ($status == 'rejected') $industri->where('statusapprove', 2);
 
-            $btn = "<a data-bs-toggle='modal' data-bs-target='#modalTambahMitra' data-id='{$row->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-            <a data-status='{$row->status}' data-id='{$row->id_industri}' data-url='kelola-mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+        return DataTables::of($industri->get())
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($id) use ($status) {
+                $btn = "<div class='d-flex justify-content-center'>";
+                if ($status == 'pending') {
+                    $btn .= "<a onclick='approved($(this))' class='mx-1 text-success cursor-pointer' data-id='{$id->id_industri}'><i class='ti ti-file-check'></i></a>";
+                    $btn .= "<a onclick='rejected($(this))' class='mx-1 text-danger cursor-pointer' data-id='{$id->id_industri}'><i class='ti ti-file-x'></i></a>";
+                }
+                $btn .= "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='mx-1 text-warning cursor-pointer'><i class='ti ti-edit' ></i>";
+                $btn .= "</div>";
 
-            return $btn;
-        })
-        
-        ->addColumn('aksi', function ($id) {
-            $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusapprove='{$id->statusapprove}'>
-                    <i class='btn-icon ti ti-file-check text-success'></i>
-                    </a>
-                    <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_industri}' data-statusrejected='{$id->rejected}'>
-                    <i class='btn-icon ti ti-file-x text-danger'></i>
-                    </a>
-                    <a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
-            return $btn;
-        })
-        ->addColumn('editverified', function ($id) {
-            $btn = "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
-            return $btn;
-        })
-        ->addColumn('editrejected', function ($id) {
-            $btn = "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>";
-            return $btn;
-        })
-        ->rawColumns(['action', 'status', 'aksi', 'editverified', 'editrejected'])
-        ->make(true);
+                return $btn;
+            })
+            ->rawColumns(['aksi',])
+            ->make(true);
     }
 
     public function approved($id)
@@ -144,11 +103,8 @@ class KelolaMitraController extends Controller
         try {
             DB::beginTransaction(); 
             $data = Industri::find($id);
-            
+            if (!$data) throw new \Exception('Industri data not found.');
 
-            if (!$data) {
-                throw new \Exception('Industri data not found.');
-            }
             $data->statusapprove = 1;
             $data->save();
             
@@ -157,17 +113,10 @@ class KelolaMitraController extends Controller
             Mail::to($data->email)->send(new VerifyEmail($url));
             DB::commit();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Persetujuan berhasil.',
-            ]);
-            } catch (\Exception $e) {
-                DB::rollBack();
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessage(),
-            ]);
+            return Response::success(null, 'Persetujuan berhasil.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
         }
     }
     public function rejected($id, Request $request)
@@ -187,52 +136,27 @@ class KelolaMitraController extends Controller
         return $industri;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    public function update(CompanyReg $request, $id)
     {
-        
         try {
-            $industri = Industri::where('id_industri', $id)->first();
-            
+            $industri = Industri::where('id_industri', $id)->first();       
             $industri->namaindustri = $request->namaindustri;
             $industri->email = $request->email;
-            if($request->alamatindustri){
-                $industri->alamatindustri = $request->alamatindustri;               
-            }
-            if($request->description){
-                $industri->description = $request->description;
-            }
-            if($request->notelpon){
-               $industri->notelpon = $request->notelpon;
-           }
-           if($request->kategori_industri){
-               $industri->kategori_industri = $request->kategori_industri;
-           }
-           if($request->statuskerjasama){
+            $industri->notelpon = $request->contact_person;
+            $industri->penanggung_jawab = $request->penanggung_jawab;
+            $industri->alamatindustri = $request->alamat;
+            $industri->description = $request->deskripsi;
+            $industri->kategori_industri = $request->kategori_industri;
             $industri->statuskerjasama = $request->statuskerjasama;
-           }
-
-            if (!empty($request->image)) {
-                $industri->image = $request->image->store('post');
-            }
-            
             $industri->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
+            return Response::success(null, 'Data Successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
-    public function status(string $id)
+    public function status($id)
     {
         try {
             $industri = Industri::where('id_industri', $id)->first();

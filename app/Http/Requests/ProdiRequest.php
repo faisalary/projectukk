@@ -21,26 +21,19 @@ class ProdiRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)){
         return [
-            'pilihfakultas' => ['required'],
-            'pilihuniversitas' => ['required'],
+            'id_univ' => ['required', 'exists:universitas,id_univ'],
+            'id_fakultas' => ['required', 'exists:fakultas,id_fakultas'],
             'namaprodi' => ['required', 'string', 'max:255'],
         ];
-    }
-    return [
-        'pilihfakultas' => ['required'],
-        'pilihuniversitas' => ['required'],
-        'namaprodi' => ['required', 'string', 'max:255'],
-    ];
     }
 
     public function messages()
     {
         return [
-            'pilihfakultas.required' => 'Faculty must be filled',
-            'pilihuniversitas.required' => 'University must be filled',
-            'namaprodi.required' => 'Study Program must be filled'
+            'id_univ.required' => 'Pilih Universitas!',
+            'id_fakultas.required' => 'Pilih Fakultas!',
+            'namaprodi.required' => 'Masukkan Nama Prodi!',
         ];
     }
 }

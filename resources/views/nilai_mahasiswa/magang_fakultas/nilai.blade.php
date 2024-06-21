@@ -1,8 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: #4EA971;
@@ -14,11 +12,11 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row pe-2 ps-2">
     <div class="row">
         <div class="">
-            <a href="/nilai-mahasiswa/magang-fakultas" type="button" class="btn btn-outline-success mb-3 waves-effect">
+            <a href="{{ route('nilai_mahasiswa.fakultas') }}" type="button" class="btn btn-outline-success mb-3 waves-effect">
                 <span class="ti ti-arrow-left me-2"></span>Kembali
             </a>
         </div>
@@ -94,8 +92,6 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var jsonData = [{
             "nomor": "1",
@@ -182,9 +178,4 @@
         ],
     });
 </script>
-
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
-<script src="../../app-assets/js/forms-tagify.js"></script>
 @endsection

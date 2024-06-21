@@ -2,35 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProdiRequest;
 use Exception;
+use App\Models\Fakultas;
+use App\Helpers\Response;
+use App\Models\Universitas;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\Fakultas;
-use App\Models\Universitas;
 use Illuminate\Routing\Route;
+use App\Http\Requests\ProdiRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProdiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fakultas = Fakultas::all();
-        $universitas = Universitas::all();
-        $prodi = ProgramStudi::all();
-        return view('masters.prodi.index', compact('prodi', 'fakultas', 'universitas'));
-    }
+        if ($request->selected) {
+            $fakultas = Fakultas::where('id_univ', $request->selected)->get();
+            return Response::success($fakultas, 'Success');
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $universitas = Universitas::all();
+        return view('masters.prodi.index', compact('universitas'));
     }
 
     /**
@@ -38,29 +33,17 @@ class ProdiController extends Controller
      */
     public function store(ProdiRequest $request)
     {
-        $request->validate(
-            [
-                'pilihfakultas' => ['required'],
-                'pilihuniversitas' => ['required'],
-                'namaprodi' => ['required', 'string', 'max:255'],
-            ],
-            [
-                'pilihfakultas.required' => 'The Fakultas is required!'
-            ]
-        );
-
-        $prodi = ProgramStudi::create([
-            'id_fakultas' => $request->pilihfakultas,
-            'id_univ' => $request->pilihuniversitas,
-            'namaprodi' => $request->namaprodi,
-        ]);
-
-        return response()->json([
-            'error' => false,
-            'message' => 'Data Created!',
-            'modal' => '#modalTambahProdi',
-            'table' => '#table-master-prodi'
-        ]);
+        try {
+            $prodi = ProgramStudi::create([
+                'id_fakultas' => $request->id_fakultas,
+                'id_univ' => $request->id_univ,
+                'namaprodi' => $request->namaprodi,
+            ]);
+    
+            return Response::success(null, 'Data Created!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
     /**
@@ -84,17 +67,18 @@ class ProdiController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($prodi) {
                 if ($prodi->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($prodi) {
                 $icon = ($prodi->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($prodi->status) ? "danger" : "success";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$prodi->id_prodi}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$prodi->status}' data-id='{$prodi->id_prodi}' data-url='prodi/status' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $url = route('prodi.status', $prodi->id_prodi);
+                $btn = "<a data-bs-toggle='modal' data-id='{$prodi->id_prodi}' onclick=edit($(this)) class='cursor-pointer text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' data-function='afterUpdateStatus' class='update-status cursor-pointer text-{$color}'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -121,22 +105,14 @@ class ProdiController extends Controller
         try {
             $prodi = ProgramStudi::where('id_prodi', $id)->first();
 
-            $prodi->id_univ = $request->pilihuniversitas;
-            $prodi->id_fakultas = $request->pilihfakultas;
+            $prodi->id_univ = $request->id_univ;
+            $prodi->id_fakultas = $request->id_fakultas;
             $prodi->namaprodi = $request->namaprodi;
             $prodi->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Updated!',
-                'modal' => '#modalTambahProdi',
-                'table' => '#table-master-prodi'
-            ]);
+            return Response::success(null, 'Data successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -147,52 +123,14 @@ class ProdiController extends Controller
     {
         try {
             $prodi = ProgramStudi::where('id_prodi', $id)->first();
-            $prodi->status = ($prodi->status) ? false : true;
+            if (!$prodi) return Response::error(null, 'Data not found!');
+
+            $prodi->status = !$prodi->status;
             $prodi->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Deactived!',
-                'modal' => '#modalTambahProdi',
-                'table' => '#table-master-prodi'
-            ]);
+            return Response::success(null, 'Status successfully changed!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
-    }
-
-    public function list_fakultas($id_univ)
-    {
-        $fakultas = Fakultas::where("id_univ", $id_univ)->get();
-        $select = array(
-            0 => ["id" => '', 'text' => 'pilih']
-        );
-
-        foreach ($fakultas as $item) {
-            $select[] = ["id" => $item->id_fakultas, "text" => $item->namafakultas];
-        }
-        return response()->json([
-            'error' => false,
-            'data' => $select
-        ]);
-    }
-
-    public function list_prodi($id_fakultas)
-    {
-        $prodi = ProgramStudi::where("id_fakultas", $id_fakultas)->get();
-        $select = array(
-            0 => ["id" => '', 'text' => 'pilih']
-        );
-
-        foreach ($prodi as $item) {
-            $select[] = ["id" => $item->id_prodi, "text" => $item->namaprodi];
-        }
-        return response()->json([
-            'error' => false,
-            'data' => $select,
-        ]);
     }
 }

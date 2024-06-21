@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\View\View;
+use App\Helpers\MenuHelper;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View as ViewFacade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        ViewFacade::composer('partials.sidemenu', function (View $view) {
+            $data = ['menu' => MenuHelper::getInstance()];
+            $view->with($data);
+        });
     }
 }

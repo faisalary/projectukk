@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UniversitasRequest;
-use App\Models\Universitas;
 use Exception;
+use App\Helpers\Response;
+use App\Models\Universitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\UniversitasRequest;
 
 class UniversitasController extends Controller
 {
@@ -16,16 +17,7 @@ class UniversitasController extends Controller
      */
     public function index()
     {
-        $universities = Universitas::all();
-        return view('masters.universitas.index', compact('universities'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('masters.universitas.index');
     }
 
     /**
@@ -34,7 +26,6 @@ class UniversitasController extends Controller
     public function store(UniversitasRequest $request)
     {
         try {
-
             $univ = Universitas::create([
                 'namauniv' => $request->namauniv,
                 'jalan' => $request->jalan,
@@ -42,18 +33,9 @@ class UniversitasController extends Controller
                 'telp' => $request->telp,
                 'status' => true,
             ]);
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Universitas successfully Created!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
-            ]);
+            return Response::success(null, 'Universitas successfully created!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -68,17 +50,19 @@ class UniversitasController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-primary'>" . "Active" . "</div></div>";
                 } else {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+                $color = ($row->status) ? "danger" : "primary";
 
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_univ}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-status='{$row->status}' data-id='{$row->id_univ}' data-url='universitas/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $url = route('universitas.status', ['id' => $row->id_univ]);
+
+                $btn = "<div><a data-bs-toggle='modal' data-id='{$row->id_univ}' onclick=edit($(this)) class='cursor-pointer text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' data-function='afterUpdateStatus' class='cursor-pointer update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })
@@ -103,24 +87,15 @@ class UniversitasController extends Controller
     {
         try {
             $univ = Universitas::where('id_univ', $id)->first();
-
             $univ->namauniv = $request->namauniv;
             $univ->jalan = $request->jalan;
             $univ->kota = $request->kota;
             $univ->telp = $request->telp;
             $univ->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
-            ]);
+            return Response::success(null, 'Universitas successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -131,20 +106,14 @@ class UniversitasController extends Controller
     {
         try {
             $univ = Universitas::where('id_univ', $id)->first();
-            $univ->status = ($univ->status) ? false : true;
+            if (!$univ) return Response::error(null, 'Universitas not found!');
+
+            $univ->status = !$univ->status;
             $univ->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Status Universitas successfully Updated!',
-                'modal' => '#modal-universitas',
-                'table' => '#table-master-univ'
-            ]);
+            return Response::success(null, 'Status Universitas successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 }
