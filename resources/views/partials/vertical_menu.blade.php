@@ -167,14 +167,15 @@
 
 <!-- Main JS -->
 <script src="{{ asset('app-assets/js/main.js') }}"></script>
-
-
 <script src="{{ url('js/content.js') }}"></script>
 
-<!-- Page JS -->
-{{-- <script src="{{ asset('app-assets/js/dashboards-analytics.js') }}"></script> --}}
-{{-- <script src="{{ asset('app-assets/js/form-wizard-numbered.js') }}"></script> --}}
-{{-- <script src="{{ asset('app-assets/js/form-wizard-validation.js') }}"></script> --}}
+<script>
+    $(".flatpickr-date").flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
+</script>
 
 @yield('page_script')
 </body>

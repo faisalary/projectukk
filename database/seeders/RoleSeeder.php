@@ -16,10 +16,10 @@ class RoleSeeder extends Seeder
     public function run()
     {
         
-    $administrator = Role::where('name', 'Administrator')->first();
+    $administrator = Role::where('name', 'Super Admin')->first();
     if (!$administrator) {
         Role::create([
-            'name' => 'Administrator',
+            'name' => 'Super Admin',
             'guard_name' => 'web'
         ]);
     }

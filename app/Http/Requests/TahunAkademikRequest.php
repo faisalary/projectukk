@@ -22,27 +22,35 @@ class TahunAkademikRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        return [
-        'tahun' => 'required|string|max:255',
-        'semester' => 'required|string|max:255',
-        'startdate_daftar' => 'required',
-        'enddate_daftar' => 'required',
-        'startdate_pengumpulan_berkas' => 'required',
-        'enddate_pengumpulan_berkas' => 'required',
+        $validate = [
+            'tahun' => 'required|unique:tahun_akademik,tahun|numeric|digits:4',
+            'semester' => 'required||in:Ganjil,Genap',
+            'startdate_daftar' => 'required',
+            'enddate_daftar' => 'required',
+            'startdate_pengumpulan_berkas' => 'required',
+            'enddate_pengumpulan_berkas' => 'required',
         ];
+
+        if (isset($this->id)) {
+            $validate['tahun'] = 'required|unique:tahun_akademik,tahun,'.$this->id.',id_year_akademik|numeric|digits:4';
+        }
+
+        return $validate;
     }
 
     public function messages(): array
     {
         return [
-            'tahun.required' => 'Academic year must be filled',
-            'tahun.numeric' => 'Academic year must be number',
-            'semester.required' => 'Semester must be filled',
-            'startdate_daftar.required' => 'Tanggal Mulai Pendaftaran Magang must be filled',
-            'enddate_daftar.required' => 'Tanggal Akhir Pendaftaran Magang must be filled',
-            'startdate_pengumpulan_berkas.required' => 'Tanggal Mulai Pengumpulan Berkas must be filled',
-            'enddate_pengumpulan_berkas.required' => 'Tanggal Akhir Pengumpulan Berkas must be filled',
+            'tahun.required' => 'Tahun Ajaran harus diisi',
+            'tahun.unique' => 'Tahun Ajaran sudah ada',
+            'tahun.numeric' => 'Tahun Ajaran harus angka',
+            'tahun.digits' => 'Tahun Ajaran harus 4 digit',
+            'semester.required' => 'Semester harus dipilih',
+            'semester.in' => 'Semester tidak valid',
+            'startdate_daftar.required' => 'Tanggal Mulai Pendaftaran Magang harus diisi',
+            'enddate_daftar.required' => 'Tanggal Akhir Pendaftaran Magang harus diisi',
+            'startdate_pengumpulan_berkas.required' => 'Tanggal Mulai Pengumpulan Berkas harus diisi',
+            'enddate_pengumpulan_berkas.required' => 'Tanggal Akhir Pengumpulan Berkas harus diisi',
         ];
     }
 }

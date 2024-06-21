@@ -16,16 +16,16 @@ class UserSeeder extends Seeder
     public function run()
     {
         $administrator = User::firstOrNew([
-            'email' => 'administrator@gmail.com',
-            'username' => 'administrator'
+            'email' => 'superadmin@gmail.com',
+            'username' => 'Super Admin'
         ], [
-            'name' => 'Administrator',
+            'name' => 'Super Admin',
             'password' => bcrypt('password'),
         ]);
 
         if (!$administrator->exists) {
             $administrator->save();
-            $administrator->assignRole('Administrator');
+            $administrator->assignRole('Super Admin');
         }
         
         // $superadmin = User::firstOrNew([
