@@ -28,6 +28,7 @@ function initAllComponents() {
     initSelect2();
     initPopOver();
     initTooltips();
+    initFormRepeater();
 }
 
 function initSelect2() {
@@ -55,6 +56,34 @@ function initTooltips() {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+}
+
+function initFormRepeater() {
+    var row = 2;
+    var col = 1;
+    let formRepeater = $('.form-repeater');
+
+    formRepeater.repeater({
+        show: function () {
+            var fromControl = $(this).find('.form-control, .form-select');
+            var formLabel = $(this).find('.form-label');
+
+            fromControl.each(function (i) {
+                var id = 'form-repeater-' + row + '-' + col;
+                $(fromControl[i]).attr('id', id);
+                $(formLabel[i]).attr('for', id);
+                col++;
+            });
+
+            row++;
+
+            $(this).slideDown();
+        },
+        hide: function (e) {
+            confirm('Are you sure you want to delete this element?') && $(this).slideUp(e);
+        },
+        isFirstItemUndeletable: true
     });
 }
 
@@ -161,11 +190,13 @@ function store_data(content, button) {
         success: function (response) {
             btnBlock(button, false);
             if (!response.error) {
-                showSweetAlert({
-                    title: 'Berhasil!',
-                    text: response.message,
-                    icon: 'success'
-                });
+                if (!response.data.hasOwnProperty("ignore_alert") && response.data.ignore_alert == true) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                }
 
                 if (typeof window[callback] === "function") window[callback](response);
             } else {

@@ -164,6 +164,7 @@
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
 <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('app-assets/js/main.js') }}"></script>

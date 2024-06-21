@@ -1,35 +1,6 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-
-    .swal2-deny {
-        display: none !important;
-    }
-</style>
 @endsection
 
 @section('content')
@@ -38,8 +9,7 @@
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Jenis Magang</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <a href="{{ route('jenismagang.create') }}" class="btn btn-success">Tambah Jenis
-            Magang</a>
+        <a href="{{ route('jenismagang.create') }}" class="btn btn-success">Tambah Jenis Magang</a>
     </div>
 </div>
 
@@ -114,7 +84,6 @@
 
     //     let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
     //     var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
-    //     console.log(url);
     //     $.ajax({
     //         type: 'GET',
     //         url: url,
@@ -144,7 +113,4 @@
     //     $('.form-control').removeClass('is-invalid');
     // });
 </script>
-
-<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection
