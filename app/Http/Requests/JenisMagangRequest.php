@@ -43,6 +43,10 @@ class JenisMagangRequest extends FormRequest
             }
         }
 
+        if (isset($this->id)) {
+            $validate['berkas.*.template'] = ['nullable', 'mimes:pdf', 'max:2048'];
+        }
+
         return $validate;
     }
 

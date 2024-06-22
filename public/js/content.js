@@ -66,8 +66,11 @@ function initFormRepeater() {
 
     formRepeater.repeater({
         show: function () {
-            var fromControl = $(this).find('.form-control, .form-select');
-            var formLabel = $(this).find('.form-label');
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+
+            var fromControl = $(this).find('.form-control, .form-select, .form-check-input');
+            var formLabel = $(this).find('.form-label, .form-check-label');
 
             fromControl.each(function (i) {
                 var id = 'form-repeater-' + row + '-' + col;
@@ -81,7 +84,12 @@ function initFormRepeater() {
             $(this).slideDown();
         },
         hide: function (e) {
-            confirm('Are you sure you want to delete this element?') && $(this).slideUp(e);
+            confirm('Are you sure you want to delete this element?');
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+            $(this).removeAttr('data-callback');
+
+            $(this).slideUp(e);
         },
         isFirstItemUndeletable: true
     });
@@ -190,7 +198,10 @@ function store_data(content, button) {
         success: function (response) {
             btnBlock(button, false);
             if (!response.error) {
-                if (!response.data.hasOwnProperty("ignore_alert") && response.data.ignore_alert == true) {
+                if (
+                    (response.data == null) ||
+                    (response.data != null && !response.data.ignore_alert)
+                ) {
                     showSweetAlert({
                         title: 'Berhasil!',
                         text: response.message,

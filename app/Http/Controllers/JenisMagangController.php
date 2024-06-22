@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\JenisMagangRequest;
+use Illuminate\Support\Facades\Storage;
 
 class JenisMagangController extends Controller
 {
@@ -28,11 +29,10 @@ class JenisMagangController extends Controller
      */
     public function create()
     {
-        $jenismagang = JenisMagang::all();
         $tahun = TahunAkademik::all();
         $berkas = BerkasMagang::all();
         $urlBack = route('jenismagang');
-        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun', 'berkas', 'urlBack'));
+        return view('masters.jenis_magang.modal', compact('tahun', 'berkas', 'urlBack'));
     }
 
     /**
@@ -46,7 +46,6 @@ class JenisMagangController extends Controller
                 return Response::success([
                     'ignore_alert' => true,
                     'data_step' => (int) ($dataStep + 1),
-                    'target_parent' => '#detail_berkas_magang',
                     'content' => view('masters/jenis_magang/step/detail_berkas_magang')->render(),
                 ], 'Valid data!');
             }
@@ -60,28 +59,24 @@ class JenisMagangController extends Controller
             ]);
 
             foreach ($request->berkas as $key => $value) {
+                if ($value['template'] != null) {
+                    $file = Storage::put('template_berkas_magang', $value['template']);
+                }
+
                 BerkasMagang::create([
                     'id_jenismagang' => $kategori->id_jenismagang,
                     'nama_berkas' => $value['namaberkas'],
-                    'template' => $value['template']->store('post'),
+                    'template' => $file,
                     'status_upload' => $value['statusupload'],
                 ]);
             }
 
             DB::commit();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Created!',
-                'url' => url('master/jenis-magang/'),
-                'table' => '#table-master-jenis_magang'
-            ]);
+            return Response::success(null, 'Data successfully Created!');
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -96,9 +91,9 @@ class JenisMagangController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($jenismagang) {
                 if ($jenismagang->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->editColumn('status_upload', function ($row) {
@@ -130,14 +125,13 @@ class JenisMagangController extends Controller
                 $icon = ($jenismagang->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($jenismagang->status) ? "danger" : "success";
 
-                $url = route('jenis-magang.status', $jenismagang->id_jenismagang);
-                $btn = "<a  href='jenis-magang/edit/{$jenismagang->id_jenismagang}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $url = route('jenismagang.status', $jenismagang->id_jenismagang);
+                $btn = "<div class='d-flex justify-content-center'><a href='jenis-magang/edit/{$jenismagang->id_jenismagang}' class='btn-icon text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='update-status btn-icon text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })
             ->rawColumns(['status', 'action', 'berkas_magang', 'status_upload'])
-
             ->make(true);
     }
 
@@ -147,10 +141,10 @@ class JenisMagangController extends Controller
     public function edit($id)
     {
 
-        $jenismagang = JenisMagang::findOrFail($id);
+        $jenismagang = JenisMagang::where('id_jenismagang', $id)->first();
         $tahun = TahunAkademik::all();
-        $berkas = BerkasMagang::where('id_jenismagang', $id)->get();
-        return view('masters.jenis_magang.edit', compact('jenismagang', 'tahun', 'berkas'));
+
+        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun'));
     }
 
     /**
@@ -158,79 +152,69 @@ class JenisMagangController extends Controller
      */
     public function update(JenisMagangRequest $request, $id)
     {
-
         try {
+            $jenismagang = JenisMagang::with('berkas_magang')->where('id_jenismagang', $id)->first();
+            if (!$jenismagang) return Response::error(null, 'Jenis Magang not found!', 404);
 
-            $jenismagang = JenisMagang::where('id_jenismagang', $id)->first();
-            $berkas = BerkasMagang::where('id_jenismagang', $id)->pluck('id_berkas_magang')->toArray();
-            $berkas2 = BerkasMagang::where('id_jenismagang', $id)->pluck('template')->toArray();
+            $dataStep = Crypt::decryptString($request->data_step);
+            if ($dataStep == '1') {
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                    'content' => view('masters/jenis_magang/step/detail_berkas_magang', [
+                        'berkas_magang' => $jenismagang->berkas_magang
+                    ])->render(),
+                ], 'Valid data!');
+            }
 
-            $jenismagang->namajenis = $request->jenis;
+            DB::beginTransaction();
+
+            $jenismagang->namajenis = $request->namajenis;
             $jenismagang->durasimagang = $request->durasimagang;
-            $jenismagang->id_year_akademik = $request->tahunakademik;
+            $jenismagang->id_year_akademik = $request->id_year_akademik;
             $jenismagang->save();
 
-            $arr = [];
-            foreach ($request->berkas as $key => $item) {
-                $arr[] .= $item['id_berkas'];
-            }
-
-            foreach ($berkas as $key => $value) {
-                if (!in_array($value, $arr)) {
-                    BerkasMagang::where('id_berkas_magang', $value)->delete();
-                }
-            }
-
-            if (in_array(null, $berkas2)) {
-
-                if (isset($request['template'])) {
-                    $data2[] = [
-                        'template' => $request['template']->store('post')
-                    ];
-                }
-                return response()->json([
-                    'error' => false,
-                    'message' => 'Data successfully Updated!',
-                    'url' => url('master/jenis-magang/'),
-                    'table' => '#table-master-jenis_magang'
-                ]);
-            } else {
-
-                $data2 = [
-                    'id_berkas_magang' => $request['id_berkas'],
-                    'nama_berkas' => $request['namaberkas'],
-                    'status_upload' => $request['statusupload'],
-                ];
+            $berkasToDelete = $jenismagang->berkas_magang()->whereNotIn('id_berkas_magang', collect($request->berkas)->pluck('id_berkas_magang')->toArray())->get();
+            foreach ($berkasToDelete as $key => $value) {
+                Storage::delete($value->template);
+                $value->delete();
             }
 
             foreach ($request->berkas as $key => $l) {
-                BerkasMagang::updateOrCreate(
-                    [
-                        'id_berkas_magang' => $l['id_berkas'],
-                        'id_jenismagang' => $jenismagang->id_jenismagang,
+                if (isset($l['id_berkas_magang']) && $l['id_berkas_magang'] != null) {
+                    $berkas_magang = $jenismagang->berkas_magang->where('id_berkas_magang', $l['id_berkas_magang'])->first();
+                    $file = $berkas_magang->template;
+                    if (isset($l['template']) && $l['template'] != null) {
+                        if ($berkas_magang) {
+                            Storage::delete($berkas_magang->template);
+                        }
+                        $file = Storage::put('template_berkas_magang', $l['template']);
+                    }
 
-                    ],
-                    [
-                        'id_berkas_magang' => $l['id_berkas'],
+                    $berkas_magang->update([
                         'nama_berkas' => $l['namaberkas'],
+                        'template' => $file,
                         'status_upload' => $l['statusupload'],
-
-                    ]
-
-                );
+                    ]);
+                } else {
+                    $file = null;
+                    if ($l['template'] != null) {
+                        $file = Storage::put('template_berkas_magang', $l['template']);
+                    }
+                    BerkasMagang::create([
+                        'id_jenismagang' => $jenismagang->id_jenismagang,
+                        'nama_berkas' => $l['namaberkas'],
+                        'template' => $file,
+                        'status_upload' => $l['statusupload'],
+                    ]);
+                }
             }
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data successfully Updated!',
-                'url' => url('master/jenis-magang/'),
-                'table' => '#table-master-jenis_magang'
-            ]);
+            DB::commit();
+            return Response::success(null, 'Data successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage()
-            ]);
+            DB::rollBack();
+            return Response::errorCatch($e);
         }
     }
 
@@ -241,20 +225,14 @@ class JenisMagangController extends Controller
     {
         try {
             $jenismagang = JenisMagang::where('id_jenismagang', $id)->first();
-            $jenismagang->status = ($jenismagang->status) ? false : true;
+            if (!$jenismagang) return Response::error(null, 'Jenis Magang not found!');
+
+            $jenismagang->status = !$jenismagang->status;
             $jenismagang->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Status successfully updated!',
-                'modal' => '#modalTambahJenisMagang',
-                'table' => '#table-master-jenis_magang'
-            ]);
+            return Response::success(null, 'Status successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 }
