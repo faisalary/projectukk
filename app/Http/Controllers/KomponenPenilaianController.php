@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KomponenNilai;
-use App\Http\Requests\KomponenNilaiRequest;
-use App\Models\JenisMagang;
 use Exception;
-use Yajra\DataTables\DataTables;
+use App\Helpers\Response;
+use App\Models\JenisMagang;
 use Illuminate\Http\Request;
+use App\Models\KomponenNilai;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\KomponenNilaiRequest;
 
 class KomponenPenilaianController extends Controller
 {
@@ -26,41 +28,27 @@ class KomponenPenilaianController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(KomponenNilaiRequest $request)
     {
         try {
+            DB::beginTransaction();
             foreach ($request->komponen as $d) {
                 KomponenNilai::create([
                     'id_jenismagang' => $request->id_jenismagang,
-                    'bobot' => $request->bobot,
                     'aspek_penilaian' =>$d['aspek_penilaian'],
                     'deskripsi_penilaian' => $d['deskripsi_penilaian'],
                     'scored_by' => $d['scored_by'],
                     'nilai_max' => $d['nilai_max'],
                     'status' => true,
-
                 ]);
-                
-                
-            if( $d['scored_by'] == 1){
-                $table = '#table-akademik';
-            } else{
-                $table = '#table-lapangan';   
             }
-            }
-        
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Komponen Nilai successfully Add!',
-                'modal' => '#modal-komponen-nilai',
-                'table' => $table
-            ]);
+            DB::commit();
+
+            return Response::success(null, 'Komponen Nilai successfully Add!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            DB::rollBack();
+            return Response::errorCatch($e);
         }
     }
 
@@ -68,25 +56,38 @@ class KomponenPenilaianController extends Controller
      * Display the specified resource.
      */
 
-    public function show($scored_by)
+    public function show(Request $request)
     {
-        $penilaian = KomponenNilai::with("jenismagang")->where("scored_by",$scored_by)->orderBy('id_jenismagang', "asc")->get();
-        return DataTables::of($penilaian)
+        $penilaian = KomponenNilai::select('komponen_nilai.*', 'jenis_magang.namajenis', 'jenis_magang.id_jenismagang')
+        ->join('jenis_magang', 'komponen_nilai.id_jenismagang', '=', 'jenis_magang.id_jenismagang');
+
+        if ($request->id == 'table-akademik') {
+            $penilaian = $penilaian->where("scored_by", 1);
+        } else if ($request->id == 'table-lapangan') {
+            $penilaian = $penilaian->where("scored_by", 2);
+        } else {
+            return Response::error(null, 'Not Found.', 404);
+        }
+
+        return DataTables::of($penilaian->orderBy('jenis_magang.namajenis', "asc")->get())
             ->addIndexColumn()
+            ->editColumn('jenis_magang', function ($row) {
+                return $row->namajenis;
+            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+                $color = ($row->status) ? "danger" : "primary";
 
-                $url = url('master/komponen-nilai/status/' . $row->id_kompnilai);
-                $btn = "<a data-bs-toggle='modal-komponen-nilai' data-id='{$row->id_kompnilai}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></a>";
+                $url = route('komponen-penilaian.status', ['id' => $row->id_kompnilai]);
+                $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal-komponen-nilai' data-id='{$row->id_kompnilai}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></a></div>";
 
                 return $btn;
             })
@@ -102,25 +103,14 @@ class KomponenPenilaianController extends Controller
     {
         try {
             $nilai = KomponenNilai::where('id_kompnilai', $id)->first();
-            $nilai->status = ($nilai->status) ? false : true;
+            if (!$nilai) return Response::error(null, 'Not Found.', 404);
+
+            $nilai->status = !$nilai->status;
             $nilai->save();
 
-            if($nilai->scored_by == 1){
-                $table = '#table-akademik';
-            } else{
-                $table = '#table-lapangan';   
-            }
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Status successfully Updated!',
-                'table' => $table
-            ]);
+            return Response::success(null, 'Status successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
     /**
@@ -129,46 +119,29 @@ class KomponenPenilaianController extends Controller
     public function edit(string $id)
     {
         $penilaian = KomponenNilai::where('id_kompnilai', $id)->first();
-        return $penilaian;
+        return Response::success($penilaian, 'Success');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(KomponenNilaiRequest $request, string $id)
     {
         try {
-            // $validated = $request->validated();
-
             foreach ($request->komponen as $d) {
                 KomponenNilai::where('id_kompnilai',$id)->first()->update([
                     'id_jenismagang' => $request->id_jenismagang,
-                    'bobot' => $request->bobot,
                     'aspek_penilaian' =>$d['aspek_penilaian'],
                     'deskripsi_penilaian' => $d['deskripsi_penilaian'],
                     'scored_by' => $d['scored_by'],
                     'nilai_max' => $d['nilai_max'],
-
+                    'status' => true,
                 ]);
             }
             
-            $cek_scored = KomponenNilai::where('id_kompnilai',$id)->first()->scored_by;
-            if($cek_scored == 1){
-                $table = '#table-akademik';
-            } else{
-                $table = '#table-lapangan';   
-            }
-            return response()->json([
-                'error' => false,
-                'message' => 'Komponen Nilai successfully Updated!',
-                'modal' => '#modal-komponen-nilai',
-                'table' => $table
-            ]);
+            return Response::success(null, 'Komponen Nilai successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 }

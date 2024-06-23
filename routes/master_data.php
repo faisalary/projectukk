@@ -115,11 +115,11 @@ Route::prefix('master')->group(function () {
     });
     Route::prefix('komponen-penilaian')->controller(KomponenPenilaianController::class)->group(function () {
         Route::get('/', 'index')->name('komponen-penilaian');
-        Route::get('/show/{scored_by}', 'show')->name('komponen-penilaian.show');
+        Route::get('show', 'show')->name('komponen-penilaian.show');
         Route::post('/store', 'store')->name('komponen-penilaian.store');
         Route::post('/update/{id}', 'update')->name('komponen-penilaian.update');
         Route::get('/edit/{id}', 'edit')->name('komponen-penilaian.edit');
-        Route::post('/status/{id}', 'status')->name('komponen-penilaian.status');
+        Route::post('status/{id}', 'status')->name('komponen-penilaian.status');
         Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('komponen-penilaian.list_fakultas');
     });
     Route::get('pembimbing-mandiri', function () {
