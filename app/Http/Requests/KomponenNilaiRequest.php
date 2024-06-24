@@ -23,33 +23,24 @@ class KomponenNilaiRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)) {
-            return [
-                'jenismagang' => ['required'],
-                'halo1.*.namakomponen' => ['required', 'string', 'max:255'],
-                'halo1.*.bobot' => ['required', 'numeric', 'max:100'],
-                'halo1.*.scoredby' => ['required', 'string', 'max:255']
-
-            ];
-        }
         return [
+            'id_jenismagang' => ['required'],
+            'komponen.*.aspek_penilaian' => ['required'],
+            'komponen.*.deskripsi_penilaian' => ['required'],
+            'komponen.*.scored_by' => ['required', 'in:1,2'],
+            'komponen.*.nilai_max' => ['required']
 
-            'jenismagang' => ['required'],
-            'halo1.*.namakomponen' =>  ['required', 'string', 'max:255'],
-            'halo1.*.bobot' => ['required', 'numeric', 'max:100'],
-            'halo1.*.scoredby' =>  ['required', 'string', 'max:255'],
         ];
     }
 
     public function messages()
     {
         return [
-            'jenismagang.required' => 'Type of internship must be filled',
-            'halo1.*.namakomponen.required' => 'Component name must be filled',
-            'halo1.*.bobot.required' => 'Score must be filled',
-            'halo1.*.bobot.numeric' => 'Score must be number',
-            'halo1.*.bobot.max' => 'Maximum score is only 100',
-            'halo1.*.scoredby.required' => '"Assessed by" must be filled',
+            'id_jenismagang.required' => 'Jenis Magang harus diisi',
+            'komponen.*.aspek_penilaian.required' => 'Aspek Penilaian harus diisi',
+            'komponen.*.deskripsi_penilaian.required' => 'Deskripsi Penilaian harus diisi',
+            'komponen.*.scored_by.required' => 'Pilih salah satu.',
+            'komponen.*.nilai_max.required' => 'Nilai Max harus diisi',
 
         ];
     }

@@ -24,23 +24,35 @@ class JenisMagangRequest extends FormRequest
     public function rules(): array
     {
         $validate = [
-            'data_step' => ['required'],
-            'namajenis' => ['required'],
-            'durasimagang' => ['required', 'in:1 Semester,2 Semester'],
-            'id_year_akademik' => ['required', 'exists:tahun_akademik,id_year_akademik'],
+            'data_step' => ['required']
         ];
 
         if (isset($this->data_step)) {
             $dataStep = Crypt::decryptString($this->data_step);
-            if ($dataStep == 2) {
-                $addValidate = [
-                    'berkas.*.namaberkas' => ['required'],
-                    'berkas.*.statusupload' => ['required', 'in:1,0'],
-                    'berkas.*.template' => ['required', 'mimes:pdf', 'max:2048'],
-                ];
-
-                $validate = array_merge($validate, $addValidate);
+            switch ($dataStep) {
+                case '1':
+                    $addValidate = [
+                        'namajenis' => ['required'],
+                        'durasimagang' => ['required', 'in:1 Semester,2 Semester'],
+                        'id_year_akademik' => ['required', 'exists:tahun_akademik,id_year_akademik'],
+                    ];
+                    $validate = array_merge($validate, $addValidate);
+                    if ($dataStep == '1') break;
+                case '2':
+                    $addValidate = [
+                        'berkas.*.namaberkas' => ['required'],
+                        'berkas.*.statusupload' => ['required', 'in:1,0'],
+                        'berkas.*.template' => ['required', 'mimes:pdf', 'max:2048'],
+                    ];
+                    $validate = array_merge($validate, $addValidate);
+                    if ($dataStep == '2') break;
+                default:
+                    break;
             }
+        }
+
+        if (isset($this->id)) {
+            $validate['berkas.*.template'] = ['nullable', 'mimes:pdf', 'max:2048'];
         }
 
         return $validate;

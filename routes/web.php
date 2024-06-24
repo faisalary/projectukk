@@ -336,7 +336,7 @@ Route::get('/kelola/mahasiswa', function () {
 
 Route::prefix('/input/nilai/akademik')->group(function () {
     Route::get('/', [App\Http\Controllers\InputNilaiAkademikController::class, 'index'])->name('kelola_mahasiswa_akademik.index');
-    Route::get('/show/{scored_by}', [App\Http\Controllers\KomponenPenilaianController::class, 'show'])->name('komponen-penilaian.show');
+    Route::get('/show/{scored_by}', [App\Http\Controllers\KomponenPenilaianController::class, 'show']);
     Route::post('/store', [App\Http\Controllers\InputNilaiAkademikController::class, 'store'])->name('kelola_mahasiswa_akademik.store');
     Route::post('/update{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'update'])->name('kelola_mahasiswa_akademik.update');
     Route::get('/edit{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'edit'])->name('kelola_mahasiswa_akademik.edit');

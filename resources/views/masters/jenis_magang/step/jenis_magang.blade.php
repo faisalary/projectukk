@@ -3,7 +3,6 @@
         <h6 class="mb-0">Informasi Umum Magang</h6>
     </div>
     <div class="row g-3">
-        <input type="hidden" name="data_step" value="{{ Crypt::encryptString("1") }}">
         <div class="col-6 form-group">
             <label class="form-label" for="namajenis">Jenis Magang<span class="text-danger">*</span></label>
             <input type="text" name="namajenis" onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]+/gi, '');" id="namajenis" class="form-control" placeholder="Masukan Jenis Magang" />
@@ -33,7 +32,7 @@
                 <i class="ti ti-arrow-left me-sm-1 me-0"></i>
                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
             </button>
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary button-next" type="button" data-step="{{ Crypt::encryptString("1") }}">
                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                 <i class="ti ti-arrow-right"></i>
             </button>

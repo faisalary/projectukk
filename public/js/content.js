@@ -31,9 +31,32 @@ function initAllComponents() {
     initFormRepeater();
 }
 
-function initSelect2() {
-    $('.select2_custom').each(function () {
-        $(this).wrap('<div class="position-relative"></div>');
+function initSelect2(element = null) {
+
+    if (element != null) {
+        if ($(element).hasClass("select2-hidden-accessible")) {
+            $(element).select2("destroy");
+        }
+        $(element).select2({
+            tags: $(element).attr('data-tags') === 'true' ?? false,
+            allowClear: true,
+            placeholder: $(element).attr('data-placeholder') ?? null,
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $(element).parent(),
+        });
+        return;
+    }
+
+    $('select.select2').each(function () {
+        if ($(this).hasClass("select2-hidden-accessible")) {
+            $(this).removeClass('select2-hidden-accessible').next('.select2-container').remove();
+            $(this).removeAttr('data-select2-id tabindex aria-hidden');
+            $(this).parent().removeAttr('data-select2-id');
+        }
+
+        if (!$(this).parent().hasClass('position-relative')) $(this).wrap('<div class="position-relative"></div>');
+
         $(this).select2({
             tags: $(this).attr('data-tags') === 'true' ?? false,
             allowClear: true,
@@ -66,8 +89,11 @@ function initFormRepeater() {
 
     formRepeater.repeater({
         show: function () {
-            var fromControl = $(this).find('.form-control, .form-select');
-            var formLabel = $(this).find('.form-label');
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+
+            var fromControl = $(this).find('.form-control, .form-select, .form-check-input');
+            var formLabel = $(this).find('.form-label, .form-check-label');
 
             fromControl.each(function (i) {
                 var id = 'form-repeater-' + row + '-' + col;
@@ -78,10 +104,19 @@ function initFormRepeater() {
 
             row++;
 
+            // fix select2
+            initSelect2();
+            // --------------------------------------------
+
+
             $(this).slideDown();
         },
         hide: function (e) {
-            confirm('Are you sure you want to delete this element?') && $(this).slideUp(e);
+            confirm('Are you sure you want to delete this element?');
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+
+            $(this).slideUp(e);
         },
         isFirstItemUndeletable: true
     });
@@ -190,7 +225,10 @@ function store_data(content, button) {
         success: function (response) {
             btnBlock(button, false);
             if (!response.error) {
-                if (!response.data.hasOwnProperty("ignore_alert") && response.data.ignore_alert == true) {
+                if (
+                    (response.data == null) ||
+                    (response.data != null && !response.data.ignore_alert)
+                ) {
                     showSweetAlert({
                         title: 'Berhasil!',
                         text: response.message,

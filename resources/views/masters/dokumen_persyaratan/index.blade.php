@@ -1,31 +1,6 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-</style>
 @endsection
 
 @section('content')
@@ -95,35 +70,37 @@
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ url('master/dokumen-persyaratan/update/') }}/${id}`;
-        var url = `{{ url('master/dokumen-persyaratan/edit/') }}/${id}`;
+        let action = `{{ route('doc-syarat.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('doc-syarat.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let modal = $('#modal-dokumen');
+
+        modal.find(".modal-title").html("Edit Dokumen Persyaratan");
+        modal.find('form').attr('action', action);
+
+        modal.modal('show');
+
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
-                $("#modal-title").html("Edit Dokumen Persyaratan");
-                $("#modal-button").html("Update Data")
-                $('#modal-dokumen form').attr('action', action);
                 $('#jenis').val(response.id_jenismagang).trigger('change');
                 $('#namadokumen').val(response.namadocument);
-
-                $('#modal-dokumen').modal('show');
             }
         });
     }
 
-    $("#modal-dokumen").on("hide.bs.modal", function() {
+    function afterAction(response) {
+        $("#modal-dokumen").modal('hide');
+        afterUpdateStatus(response);
+    }
 
+    function afterUpdateStatus(response) {
+        $('#table-master-dokumen').DataTable().ajax.reload();
+    }
+
+    $("#modal-dokumen").on("hide.bs.modal", function() {
         $("#modal-title").html("Tambah Dokumen Syarat");
-        $("#modal-button").html("Simpan")
-        $('#modal-dokumen form')[0].reset();
-        $('#modal-dokumen form #jenis').val('').trigger('change');
-        $('#modal-dokumen form').attr('action', "{{ url('master/dokumen-persyaratan/store') }}");
-        $('.invalid-feedback').removeClass('d-block');
-        $('.form-control').removeClass('is-invalid');
+        $('#modal-dokumen form').attr('action', "{{ route('doc-syarat.store') }}");
     });
 </script>
-
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection

@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="modal-title">Tambah Dokumen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" method="POST" action="{{ route('doc-syarat.store') }}">
+            <form class="default-form" action="{{ route('doc-syarat.store') }}" function-callback="afterAction">
                 @csrf
                 <div class="modal-body">
 

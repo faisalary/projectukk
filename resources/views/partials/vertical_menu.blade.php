@@ -157,7 +157,6 @@
 <script src="{{ asset('app-assets/vendor/libs/select2/select2.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/block-ui/block-ui.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-<script src="{{ asset('app-assets/js/forms-selects.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>

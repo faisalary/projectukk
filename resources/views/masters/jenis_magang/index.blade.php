@@ -79,38 +79,8 @@
         ]
     });
 
-    // function edit(e) {
-    //     let id = e.attr('data-id');
-
-    //     let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
-    //     var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: url,
-    //         success: function(response) {
-    //             $(".modal-title").html("Edit Jenis Magang");
-    //             $("#modal-button").html("Update Data");
-    //             $('#modal-jenismagang form').attr('action', action);
-    //             $('#jenis').val(response.namajenis);
-    //             $('#durasimagang').val(response.durasimagang).trigger('change');
-    //             $('#tahunakademik').val(response.id_year_akademik).trigger('change');
-    //             $('#namaberkas').val(response.nama_berkas);
-    //             $('#statusupload').val(response.status_upload).trigger('change');
-    //             $('#template').val(response.template).trigger('change');
-
-    //             // $('#modal-jenismagang').modal('show');
-    //         }
-    //     });
-    // }
-
-    // $("#modal-jenismagang").on("hide.bs.modal", function() {
-    //     $(".modal-title").html("Tambah Jenis Magang");
-    //     $("#modal-button").html("Simpan");
-    //     $('#modal-jenismagang form')[0].reset();
-    //     $('#modal-jenismagang form #durasi').val('').trigger('change');
-    //     $('#modal-jenismagang form').attr('action', "{{ url('master/jenis-magang/store') }}");
-    //     $('.invalid-feedback').removeClass('d-block');
-    //     $('.form-control').removeClass('is-invalid');
-    // });
+    function afterUpdateStatus(response) {
+        table.ajax.reload();
+    }
 </script>
 @endsection

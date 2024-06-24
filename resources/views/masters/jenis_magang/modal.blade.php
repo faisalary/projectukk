@@ -13,7 +13,7 @@
 <div class="row ">
     <div class="mb-2">
         <h4 class="fw-bold text-sm modal-title"><span class="text-muted fw-light text-xs">Master Data/ </span>
-            Tambah Jenis Magang
+            {{ isset($jenismagang) ? 'Edit' : 'Tambah' }} Jenis Magang
         </h4>
     </div>
 </div>
@@ -25,12 +25,14 @@
                 @include('masters.jenis_magang.step.number_step')
             </div>
             <div class="bs-stepper-content">
-                <form class="default-form" action="{{ route('jenismagang.store') }}" function-callback="afterAction">
+                <form class="default-form" action="{{ isset($jenismagang) ? route('jenismagang.update', ['id' => $jenismagang->id_jenismagang]) : route('jenismagang.store') }}" function-callback="afterAction">
                     @csrf
                     <div id="jenis_magang">
                         @include('masters.jenis_magang.step.jenis_magang')
                     </div>
-                    <div id="detail_berkas_magang"></div>
+                    <div id="detail_berkas_magang">
+                        @include('masters.jenis_magang.step.detail_berkas_magang')
+                    </div>
                 </form>
             </div>
         </div>
@@ -40,25 +42,46 @@
 
 @section('page_script')
 <script>
+    $(document).ready(function () {
+        @if (isset($jenismagang))
+        loadDataEdit();
+        @endif
+    });
+
     function afterAction(response) {
         let data = response.data;
-        if (data.content) {
-            $(data.target_parent).html(data.content);
-            switchActive(data.target_parent);
-            initFormRepeater(data.target_parent);
+        if (data != null && data.data_step) {
+            let currentStepNumber = $('.bs-stepper-header').find(`[data-step="${data.data_step}"]`);
+            switchActive(currentStepNumber);
+        } else {
+            setTimeout(() => {
+                window.location.href = "{{ route('jenismagang') }}";
+            }, 1000);
         }
     }
+ 
+    $(document).on('click', '.button-next', function () {
+        let step = $(this).attr('data-step');
 
-    function switchActive(e) {
-        let currentStepNumber = $(`[data-target="${e}"]`);
+        if ($('.default-form').find('input[name="data_step"]').length > 0) {
+            $('.default-form').find('input[name="data_step"]').remove();
+        }
+
+        $('.default-form').prepend(`<input type="hidden" name="data_step" value="${step}">`);
+        $(this).attr('type', 'submit');
+        $('.default-form').submit();
+        $(this).attr('type', 'button');
+    });
+
+    function switchActive(currentStepNumber) {
         currentStepNumber.addClass('active');
 
-        let prevStepNumber = $(`[data-target="${e}"]`).attr('data-step') - 1;
+        let prevStepNumber = currentStepNumber.attr('data-step') - 1;
         prevStepNumber = $(`[data-step="${prevStepNumber}"]`);
         prevStepNumber.addClass('crossed').removeClass('active');
 
         let prevStepContent = $(prevStepNumber.attr('data-target')).find('.content');
-        let currentStepContent = $(e).find('.content');
+        let currentStepContent = $(currentStepNumber.attr('data-target')).find('.content');
 
         prevStepContent.removeClass('active');
         currentStepContent.addClass('active');
@@ -73,8 +96,22 @@
         prevStep.addClass('active');
         prevStep.removeClass('crossed');
 
-        currentContent.html(null);
+        currentContent.find('.content').removeClass('active');
         $(prevStep.attr('data-target')).find('.content').addClass('active');
     });
+
+    function afterShown(e) {
+        $(e).find('.container-label').find('a').remove();
+        $(e).find('input.id_berkas').remove();
+    }
+
+    @if (isset($jenismagang))
+    function loadDataEdit() {
+        let data = @json($jenismagang);
+        $.each(data, function ( key, value ) {
+            $(`[name="${key}"]`).val(value).trigger('change');
+        });
+    }
+    @endif
 </script>
 @endsection
