@@ -46,7 +46,6 @@ class JenisMagangController extends Controller
                 return Response::success([
                     'ignore_alert' => true,
                     'data_step' => (int) ($dataStep + 1),
-                    'content' => view('masters/jenis_magang/step/detail_berkas_magang')->render(),
                 ], 'Valid data!');
             }
 

@@ -30,7 +30,9 @@
                     <div id="jenis_magang">
                         @include('masters.jenis_magang.step.jenis_magang')
                     </div>
-                    <div id="detail_berkas_magang"></div>
+                    <div id="detail_berkas_magang">
+                        @include('masters.jenis_magang.step.detail_berkas_magang')
+                    </div>
                 </form>
             </div>
         </div>
@@ -41,19 +43,16 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
-        @if (isset($jenismagang)) 
+        @if (isset($jenismagang))
         loadDataEdit();
         @endif
     });
 
     function afterAction(response) {
         let data = response.data;
-        if (data != null && data.content && data.data_step) {
+        if (data != null && data.data_step) {
             let currentStepNumber = $('.bs-stepper-header').find(`[data-step="${data.data_step}"]`);
-            $(currentStepNumber.attr('data-target')).html(data.content);
-
             switchActive(currentStepNumber);
-            initFormRepeater();
         } else {
             setTimeout(() => {
                 window.location.href = "{{ route('jenismagang') }}";
@@ -97,7 +96,7 @@
         prevStep.addClass('active');
         prevStep.removeClass('crossed');
 
-        currentContent.html(null);
+        currentContent.find('.content').removeClass('active');
         $(prevStep.attr('data-target')).find('.content').addClass('active');
     });
 
