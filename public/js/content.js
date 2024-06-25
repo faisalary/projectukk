@@ -87,6 +87,8 @@ function initFormRepeater() {
     var col = 1;
     let formRepeater = $('.form-repeater');
 
+    if (formRepeater.length == 0) return;
+
     formRepeater.repeater({
         show: function () {
             let dataCallback = $(this).attr('data-callback');

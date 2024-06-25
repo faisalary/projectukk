@@ -1,17 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
-use App\Http\Controllers\MailController;
-use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
-use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\KelolaPenggunaController;
-use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,17 +30,19 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::prefix('company')->group(function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
-    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
-});
-Route::prefix('mahasiswa')->group(function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register.form');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
-    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'setting'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'updateset'])->name('update.password');
+// Route::prefix('company')->group(function () {
+//     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm']);
+//     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
+//     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
+//     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
+// });
+
+Route::prefix('register')->name('register')->controller(RegisteredUserController::class)->group(function () {
+    Route::get('set-password/{token}', 'newPassword')->name('.set-password');
+    Route::post('/set-password', 'storeNewPassword')->name('.set-password.store');
+    Route::get('successed', function () {
+        return view('auth.message-verify-email');
+    })->name('.successed');
 });
 
 require __DIR__ . '/auth.php';
@@ -369,10 +366,6 @@ Route::get('/status/magang', function () {
 
 Route::get('/berkas/akhir', function () {
     return view('kegiatan_saya.berkas_akhir.index');
-});
-
-Route::get('/dashboard/company', function () {
-    return view('dashboard.company.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

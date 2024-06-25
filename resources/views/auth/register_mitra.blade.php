@@ -5,9 +5,8 @@
         @csrf
         <div class="row">
             <div class="col mb-2 form-input">
-                <label for="role" class="form-label mt-3">Silahkan Pilih Role Untuk Registrasi</label>
-                <select class="form-select select2" id="roleregister" name="roleregister"
-                    data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
+                <label for="roleregister" class="form-label mt-3">Silahkan Pilih Role Untuk Registrasi</label>
+                <select class="form-select select2" id="roleregister" name="roleregister" data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="redirectToPage()">
                     <option value="mitra">Company</option>
                     <option value="user">Mahasiswa</option>
                 </select>
@@ -86,16 +85,8 @@
 @endsection
 @section('page_script')
     <script>
-        function success() {
-            Swal.fire({
-                        // position: "top-end",
-                        type: "success",
-                        icon: "success",
-                        title: "Succeed!",
-                        text: response.message,
-                        showConfirmButton: false,
-                        timer: 2000,
-                    })
+        function redirectToPage() {
+            
         }
     </script>
 @endsection

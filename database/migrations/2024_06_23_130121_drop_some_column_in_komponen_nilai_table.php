@@ -26,8 +26,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('komponen_nilai', function (Blueprint $table) {
-            $table->integer('bobot')->default(0)->change();
-            $table->string('kategori', 255)->nullable()->change();
+            $table->integer('bobot')->default(0);
+            $table->string('kategori', 255)->nullable();
             $table->uuid('id_year_akademik')->nullable();
             $table->foreign('id_year_akademik')->references('id_year_akademik')->on('tahun_akademik');
         });

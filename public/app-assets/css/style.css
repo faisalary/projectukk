@@ -4,7 +4,8 @@
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    color: var(--bs-primary) !important
+    color: var(--bs-primary) !important;
+    background-color: rgba(103, 240, 126, 0.08) !important;
 }
 
 .dropdown-item.active,
@@ -281,17 +282,6 @@ html:not([dir=rtl]) .app-brand-text {
 .btn-success {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
-}
-
-.dropdown-item:focus,
-.dropdown-item:hover {
-    color: var(--bs-primary) !important
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-    color: #FFF;
-    background-color: var(--bs-primary) !important
 }
 
 .d-flex i:hover {

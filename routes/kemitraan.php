@@ -97,3 +97,7 @@ Route::prefix('company')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
     });
 });
+
+Route::get('dashboard/company', function () {
+    return view('dashboard.company.index');
+})->name('dashboard_company');

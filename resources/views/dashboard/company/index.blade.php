@@ -1,8 +1,8 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/css/pages/app-calendar.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/fullcalendar/fullcalendar.css" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/css/pages/app-calendar.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
 <style>
     #outer {
         width: 100%;
@@ -34,7 +34,7 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="d-flex align-items-center justify-content-between mb-3">
     <div>
         <h4 class="fw-bold text-sm">Dashboard Mitra Perusahaan - Periode 2024</h4>
@@ -375,9 +375,9 @@
 @section('page_script')
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
-<script src="../../app-assets/js/app-calendar-events.js"></script>
-<script src="../../app-assets/js/app-calendar.js"></script>
-<script src="../../app-assets/vendor/libs/fullcalendar/fullcalendar.js"></script>
+<script src="{{asset('app-assets/js/app-calendar-events.js') }}"></script>
+<script src="{{asset('app-assets/js/app-calendar.js') }}"></script>
+<script src="{{asset('app-assets/vendor/libs/fullcalendar/fullcalendar.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
 <script>
     FusionCharts.ready(function() {
