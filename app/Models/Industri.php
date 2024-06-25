@@ -27,7 +27,7 @@ class Industri extends Model
             'id_lowongan'
         );
     }
-    public function total_lowongan()
+    public function lowongan_magang()
     {
         return $this->hasMany(LowonganMagang::class, 'id_industri');
     }

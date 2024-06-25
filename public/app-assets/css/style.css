@@ -1,5 +1,6 @@
 :root {
     --bs-primary: #4EA971;
+    --bs-label-primary: #e2ffed;
 }
 
 .dropdown-item:focus,
@@ -231,7 +232,20 @@ html:not([dir=rtl]) .app-brand-text {
 
 .select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {
     border-color: var(--bs-primary) !important;
-  }
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    position: relative;
+    font-size: 0.8125rem;
+    border-radius: 1rem;
+    padding: 0.395rem 0.625rem;
+    cursor: default;
+    line-height: 0.875;
+    float: left;
+    font-weight: 600;
+    color: var(--bs-primary);
+    background-color: var(--bs-label-primary);
+}
 
 .form-check-input:checked,
 .form-check-input[type=checkbox]:indeterminate {
@@ -388,7 +402,7 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
 }
 
 .bg-label-primary {
-    background-color: #e2ffed !important;
+    background-color: var(--bs-label-primary) !important;
     color: var(--bs-primary) !important;
 }
 

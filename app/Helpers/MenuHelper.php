@@ -100,12 +100,6 @@ class MenuHelper
                 'permission' => 'dashboard.dashboard_admin'
             ],
             [
-                'name' => 'Dashboard',
-                'route' => 'dashboard_company',
-                'icon' => 'ti-device-desktop-analytics',
-                'permission' => 'dashboard.dashboard_mitra'
-            ],
-            [
                 'name' => 'Kelola Mitra',
                 'route' => 'kelola_mitra',
                 'icon' => 'ti-building',
@@ -268,6 +262,29 @@ class MenuHelper
                         'name' => 'Pembimbing Lapangan Mandiri',
                         'route' => 'pembimbing-lapangan-mandiri',
                         'permission' => 'pembimbing_lapangan_mandiri.view'
+                    ],
+                ]
+            ],
+            // mitra
+            [
+                'name' => 'Dashboard',
+                'route' => 'dashboard_company',
+                'icon' => 'ti-device-desktop-analytics',
+                'permission' => 'dashboard.dashboard_mitra'
+            ],
+            [
+                'name' => 'Lowongan Magang',
+                'icon' => 'ti-briefcase',
+                'submenu' => [
+                    [
+                        'name' => 'Informasi Lowongan',
+                        'route' => 'informasi_lowongan',
+                        'permission' => 'informasi_lowongan_mitra.view'
+                    ],
+                    [
+                        'name' => 'Kelola Lowongan',
+                        'route' => 'kelola_lowongan',
+                        'permission' => 'kelola_lowongan_mitra.view'
                     ],
                 ]
             ],
