@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisMahasiswa extends FormRequest
+class RegisUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,17 +21,23 @@ class RegisMahasiswa extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'nim' => 'required|numeric|unique:users|exists:mahasiswa,nim'
-        ];
+        $validate = ['roleregister' => 'required|in:user,mitra'];
+
+        if ($this->roleregister == 'user') {
+            $validate['nim'] = 'required|numeric|exists:mahasiswa,nim';
+        } else if ($this->roleregister == 'mitra') {
+            $validate['namaindustri'] = 'required';
+            $validate['name'] = 'required';
+            $validate['email'] = 'required';
+            $validate['notelpon'] = 'required';
+        }
+
+        return $validate;
     }
     public function messages()
     {
         return[
-            'nim.required' => 'NIM harus di isi',
-            'nim.unique' => 'nim sudah terdaftar',
-            'nim.numeric' => 'nim harus angka',
-            'nim.exists' => 'nim tidak ditemukan, hubungi LKM untuk info lebih lanjut',
+            
         ];
     }
 }

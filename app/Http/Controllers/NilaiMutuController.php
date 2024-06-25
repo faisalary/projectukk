@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Helpers\Response;
 use App\Models\NilaiMutu;
 use Illuminate\Http\Request;
 use App\Http\Requests\NilaiMutuRequest;
@@ -15,8 +16,7 @@ class NilaiMutuController extends Controller
      */
     public function index()
     {
-        $nilai = NilaiMutu::all();
-        return view('masters.nilai_mutu.index', compact('nilai'));
+        return view('masters.nilai_mutu.index');
     }
 
     /**
@@ -33,7 +33,6 @@ class NilaiMutuController extends Controller
     public function store(NilaiMutuRequest $request)
     {
         try {
-
             $nilai = NilaiMutu::create([
                 'nilaimin' => $request->nilaimin,
                 'nilaimax' => $request->nilaimax,
@@ -41,17 +40,9 @@ class NilaiMutuController extends Controller
                 'status' => true,
             ]);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Nilai Mutu successfully Created!',
-                'modal' => '#modal-nilai-mutu',
-                'table' => '#table-master-nilai-mutu'
-            ]);
+            return Response::success(null, 'Nilai Mutu successfully Created!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -66,9 +57,9 @@ class NilaiMutuController extends Controller
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
@@ -76,8 +67,8 @@ class NilaiMutuController extends Controller
                 $color = ($row->status) ? "danger" : "success";
                 
                 $url = route('nilai-mutu.status', $row->id_nilai);
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_nilai}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal' data-id='{$row->id_nilai}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })

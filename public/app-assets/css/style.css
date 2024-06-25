@@ -4,7 +4,8 @@
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    color: var(--bs-primary) !important
+    color: var(--bs-primary) !important;
+    background-color: rgba(103, 240, 126, 0.08) !important;
 }
 
 .dropdown-item.active,
@@ -228,15 +229,14 @@ html:not([dir=rtl]) .app-brand-text {
     color: #fff;
 }
 
+.select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {
+    border-color: var(--bs-primary) !important;
+  }
+
 .form-check-input:checked,
 .form-check-input[type=checkbox]:indeterminate {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
-}
-
-.select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
-    background-color: rgba(115, 103, 240, 0.08) !important;
-    color: var(--bs-primary) !important;
 }
 
 .nav-pills .nav-link.active,
@@ -263,7 +263,7 @@ html:not([dir=rtl]) .app-brand-text {
 }
 
 .select2-container--default .select2-results__option--highlighted:not([aria-selected=true]) {
-    background-color: rgba(115, 103, 240, 0.08) !important;
+    background-color: rgba(103, 240, 114, 0.08) !important;
     color: var(--bs-primary) !important;
 }
 
@@ -282,17 +282,6 @@ html:not([dir=rtl]) .app-brand-text {
 .btn-success {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
-}
-
-.dropdown-item:focus,
-.dropdown-item:hover {
-    color: var(--bs-primary) !important
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-    color: #FFF;
-    background-color: var(--bs-primary) !important
 }
 
 .d-flex i:hover {
@@ -392,3 +381,41 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
     background-color: #f4f3fe !important;
     border-color: var(--bs-primary) !important;
 }
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: var(--bs-primary) !important;
+}
+
+.bg-label-primary {
+    background-color: #e2ffed !important;
+    color: var(--bs-primary) !important;
+}
+
+.bs-stepper .step.active .bs-stepper-circle {
+    background-color: var(--bs-primary);
+    color: #fff;
+  }
+  .bs-stepper .step.active .bs-stepper-icon svg {
+    fill: var(--bs-primary) !important;
+  }
+  .bs-stepper .step.active .bs-stepper-icon i,
+  .bs-stepper .step.active .bs-stepper-label {
+    color: var(--bs-primary) !important;
+  }
+  .bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
+    background-color: #f0fdf2 !important;
+    color: var(--bs-primary) !important;
+  }
+  .bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
+    fill: var(--bs-primary) !important;
+  }
+  .bs-stepper .step.crossed .step-trigger .bs-stepper-icon i {
+    color: var(--bs-primary) !important;
+  }
+  .bs-stepper.wizard-icons .step.crossed .bs-stepper-label {
+    color: var(--bs-primary) !important;
+  }
+  .bs-stepper.wizard-icons .step.crossed + .line i {
+    color: var(--bs-primary);
+  }

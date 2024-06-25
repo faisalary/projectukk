@@ -1,35 +1,6 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-
-    .swal2-deny {
-        display: none !important;
-    }
-</style>
 @endsection
 
 @section('content')
@@ -38,8 +9,7 @@
         <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Jenis Magang</h4>
     </div>
     <div class="col-md-6 col-12 text-end">
-        <a href="{{ route('jenismagang.create') }}" class="btn btn-success">Tambah Jenis
-            Magang</a>
+        <a href="{{ route('jenismagang.create') }}" class="btn btn-success">Tambah Jenis Magang</a>
     </div>
 </div>
 
@@ -109,42 +79,8 @@
         ]
     });
 
-    // function edit(e) {
-    //     let id = e.attr('data-id');
-
-    //     let action = `{{ url('master/jenis-magang/update/') }}/${id}`;
-    //     var url = `{{ url('master/jenis-magang/edit/') }}/${id}`;
-    //     console.log(url);
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: url,
-    //         success: function(response) {
-    //             $(".modal-title").html("Edit Jenis Magang");
-    //             $("#modal-button").html("Update Data");
-    //             $('#modal-jenismagang form').attr('action', action);
-    //             $('#jenis').val(response.namajenis);
-    //             $('#durasimagang').val(response.durasimagang).trigger('change');
-    //             $('#tahunakademik').val(response.id_year_akademik).trigger('change');
-    //             $('#namaberkas').val(response.nama_berkas);
-    //             $('#statusupload').val(response.status_upload).trigger('change');
-    //             $('#template').val(response.template).trigger('change');
-
-    //             // $('#modal-jenismagang').modal('show');
-    //         }
-    //     });
-    // }
-
-    // $("#modal-jenismagang").on("hide.bs.modal", function() {
-    //     $(".modal-title").html("Tambah Jenis Magang");
-    //     $("#modal-button").html("Simpan");
-    //     $('#modal-jenismagang form')[0].reset();
-    //     $('#modal-jenismagang form #durasi').val('').trigger('change');
-    //     $('#modal-jenismagang form').attr('action', "{{ url('master/jenis-magang/store') }}");
-    //     $('.invalid-feedback').removeClass('d-block');
-    //     $('.form-control').removeClass('is-invalid');
-    // });
+    function afterUpdateStatus(response) {
+        table.ajax.reload();
+    }
 </script>
-
-<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection

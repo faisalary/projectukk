@@ -9,80 +9,68 @@
             </div>
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
-                        <form class="form-repeater default-form" method="POST"
-                            action="{{ route('komponen-penilaian.store') }}">>
+                    <div class="card-body" id="container-form">
+                        <form class="default-form" method="POST" action="{{ route('komponen-penilaian.store') }}" function-callback="afterAction">
                             @csrf
                             <div class="row">
-                                <div class="mb-3 col-12 ol-lg-6 col-xl-3 col-12 mb-0">
-                                    <label for="jenis" class="form-label">Jenis Magang<span
-                                            style="color: red;">*</span></label>
-                                    <select name="id_jenismagang" class="form-select select2"
-                                        data-placeholder="Jenis Magang" id="id_jenismagang">
+                                <div class="mb-3 col-12 form-group">
+                                    <label for="id_jenismagang" class="form-label">Jenis Magang<span style="color: red;">*</span></label>
+                                    <select name="id_jenismagang" class="form-select select2" data-placeholder="Jenis Magang" id="id_jenismagang">
                                         <option value="">Jenis Magang</option>
                                         @foreach ($id_jenismagang as $u)
                                             <option value="{{ $u->id_jenismagang }}">{{ $u->namajenis }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="invalid-feedback"></div>
                                 </div>
-                                {{-- <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                    <label class="form-label" for="form-repeater-1-1">Bobot Penilaian<span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" name="bobot" id="bobot" class="form-control" placeholder="30%" />
-                                </div> --}}
                             </div>
-
                             <hr />
-                            <div data-repeater-list="komponen">
-                                <div data-repeater-item>
-                                    <div class="row">
-                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Aspek Penilaian<span
-                                                    style="color: red;">*</span></label>
-                                            <textarea name="aspek_penilaian" id="aspek_penilaian" class="form-control"
-                                                placeholder="Buku Laporan Akhir
-- Penulisan dan Tata Bahasa
-- Latar Belakang dan Tujuan"></textarea>
+                            <div class="form-repeater">
+                                <div data-repeater-list="komponen">
+                                    <div data-repeater-item data-callback="afterShown">
+                                        <div class="row">
+                                            <div class="mb-3 form-group col-xl-4 mb-0">
+                                                <label class="form-label" for="aspek_penilaian">Aspek Penilaian<span style="color: red;">*</span></label>
+                                                <textarea name="aspek_penilaian" id="aspek_penilaian" class="form-control" rows="4" placeholder="Buku Laporan Akhir&#10; - Penulisan dan Tata Bahasa &#10; - Latar Belakang dan Tujuan"></textarea>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3 form-group col-xl-4 mb-0">
+                                                <label class="form-label" for="deskripsi_penilaian">Deskripsi Aspek Penilaian<span style="color: red;">*</span></label>
+                                                <textarea name="deskripsi_penilaian" id="deskripsi_penilaian" rows="4" class="form-control" placeholder="Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif."></textarea>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3 form-group col-xl-4 mb-0">
+                                                <label class="form-label" for="scored_by">Dinilai Oleh</label>
+                                                <select name="scored_by" id="scored_by" class="form-select select2" data-placeholder="Dinilai Oleh">
+                                                    <option value="">Dinilai Oleh</option>
+                                                    <option value="1">Pembimbing Akademik</option>
+                                                    <option value="2">Pembimbing Lapangan</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3 form-group col-xl-4 mb-0">
+                                                <label class="form-label" for="nilai_max">Nilai Maksimal<span style="color: red;">*</span></label>
+                                                <input type="text" name="nilai_max" id="nilai_max" class="form-control" placeholder="30" />
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3 col-lg-12 col-xl-1 col-12 mb-0 p-0">
+                                                <button type="button" class="btn btn-label-danger mt-4" data-repeater-delete>
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Deskripsi Aspek
-                                                Penilaian<span style="color: red;">*</span></label>
-                                            <textarea name="deskripsi_penilaian" id="deskripsi_penilaian" class="form-control"
-                                                placeholder="Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif."></textarea>
-                                        </div>
-                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Dinilai Oleh</label>
-                                            <select name="scored_by" id="scored_by" class="form-select"
-                                                data-placeholder="Dinilai Oleh">
-                                                <option value="">Dinilai Oleh</option>
-                                                <option value="1">Pembimbing Akademik</option>
-                                                <option value="2">Pembimbing Lapangan</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <label class="form-label" for="form-repeater-1-1">Nilai Maksimal<span
-                                                style="color: red;">*</span></label>
-                                            <input type="text" name="nilai_max" id="nilai_max" class="form-control"
-                                                placeholder="30" />
-                                        </div>
-                                        <div class="mb-3 col-lg-12 col-xl-1 col-12 mb-0 p-0">
-                                            <button type="button" class="btn btn-label-danger mt-4"
-                                                data-repeater-delete>
-                                                <i class="ti ti-trash"></i>
-                                            </button>
-                                        </div>
+                                        <hr />
                                     </div>
-                                    <hr />
+                                </div>
+                                <div class="mb-0" id="container-add-row">
+                                    <button class="btn btn-outline-primary" type="button" data-repeater-create>
+                                        <i class="ti ti-plus me-1"></i>
+                                        <span class="align-middle">Data</span>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="mb-0">
-                                <button class="btn btn-outline-success" type="button" data-repeater-create>
-                                    <i class="ti ti-plus me-1"></i>
-                                    <span class="align-middle">Data</span>
-                                </button>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
+                            <div class="modal-footer px-0">
+                                <button type="submit" id="modal-button" class="btn btn-primary mx-0">Simpan</button>
                             </div>
                         </form>
                     </div>

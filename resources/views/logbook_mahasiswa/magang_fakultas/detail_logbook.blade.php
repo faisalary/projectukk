@@ -1,7 +1,6 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
 <style>
     .select2-container .select2-selection--single .select2-selection__rendered {
         padding-right: 86px !important;
@@ -29,10 +28,10 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="">
-        <a href="/view-logbook-mahasiswa/magang-fakultas" type="button" class="btn btn-outline-success mb-3 waves-effect">
+        <a href="{{ route('logbook_magang.fakultas.view') }}" type="button" class="btn btn-outline-primary mb-3">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
@@ -276,8 +275,4 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection

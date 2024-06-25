@@ -1,215 +1,78 @@
-<div class="modal fade modal-lg" id="modal-konfigurasi" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-
-        <div class="modal-content">
-            <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Roles</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form class="default-form" method="POST" action="{{ route('konfigurasi.store') }}">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <label for="name">Nama Role</label>
+<div class="modal fade text-left" id="modal-konfigurasi" tabindex="-1" role="dialog" aria-labelledby="modal-title"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="default-form" action="{{ route('roles.store') }}" function-callback="afterAction">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Role Name:</label>
                             <input type="text" placeholder="Role Name" name="name" id="name" required class="form-control" />
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-12">
-                            <h5 class="modal-title mt-3">Tetapkan Izin</h5>
-                            <ul class="nav nav-pills mb-3 mt-3" role="tablist">
-                                <li class="nav-item">
-                                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                        data-bs-target="#navs-pills-kelola-lowongan" aria-controls="navs-pills-kelola-lowongan"
-                                        aria-selected="true" id="kelola_lowongan" >
-                                        Kelola Lowongan 
-                                    </button>
-                                </li>
+                        <h5 class="my-3">Assign Permissions</h5>
+                        <div class="form-check form-check-primary">
+                            <input class="form-check-input all_checked" type="checkbox" id="select-all">
+                            <label class="form-check-label" style="font-size: 10pt;" for="select-all">Select All</label>
+                        </div>
+                        <div class='form-group'>
+                            <div class="row">
+                                @php
+                                    $i = 0;
+                                    
+                                    foreach ($permissions as $p) {
+                                        $temp = [];
+                                        $temp = explode('.', $p->name);
+                                    
+                                        $permissions_list['group'][$i] = $temp[0];
+                                        $permissions_list['function'][$temp[0]][] = ['name' => $temp[1], 'id' => $p->uuid];
+                                        $permissions_list['id'][$temp[0]][] = $p->name;
+                                    
+                                        $i++;
+                                    }
+                                    
+                                    $permissions_list['group'] = array_unique($permissions_list['group']);
+                                    $chunk = array_chunk($permissions_list['group'], 4);
 
-                                <li class="nav-item">
-                                    <button type="button" class="nav-link showSingle" target="2" role="tab" data-bs-toggle="tab"
-                                        data-bs-target="#navs-pills-informasi-lowongan" aria-controls="navs-pills-informasi-lowongan"
-                                        aria-selected="false">
-                                        Informasi Lowongan
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                        data-bs-target="#navs-pills-jadwal-seleksi" aria-controls="navs-pills-jadwal-seleksi"
-                                        aria-selected="false">
-                                        Jadwal Seleksi
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content mt-4">
-                            <div class="tab-pane fade show active" id="navs-pills-kelola-lowongan" role="tabpanel">
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="checkbox" value="" id="selectAll" />
-                                        <label class="form-check-label" for="defaultCheck1">Pilih Semua</label>
-                                    </div>
-                                    <span class="badge bg-success mt-3 mb-1">Kelola Lowongan</span>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck1" />
-                                        <label class="form-check-label" for="defaultCheck1"> Lihat </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck2" />
-                                        <label class="form-check-label" for="defaultCheck2"> Tambah </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck3" />
-                                        <label class="form-check-label" for="defaultCheck3"> Edit </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck4" />
-                                        <label class="form-check-label" for="defaultCheck4"> Approval </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck5" />
-                                        <label class="form-check-label" for="defaultCheck5"> Hapus </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input kelola" type="checkbox" value="" id="defaultCheck6" />
-                                        <label class="form-check-label" for="defaultCheck6"> Lihat Detail </label>
-                                    </div>
-                                </div>
-                            </div>    
-                            <div class="tab-pane fade" id="navs-pills-informasi-lowongan" role="tabpanel">
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="checkbox" value="" id="selectAll_informasi" />
-                                        <label class="form-check-label" for="defaultCheck1">Pilih Semua</label>
-                                    </div>
-                                <div class='form-group'>
-                                    <div class="row">
-                                        {{-- @php
-                                            $i = 0;
-                                            
-                                            foreach ($permissions as $p) {
-                                                $temp = [];
-                                                $temp = explode('.', $p->name);
-                                            
-                                                $permissions_id['group'][$i] = $temp[0];
-                                                $permissions_id['function'][$temp[0]][] = ['name' => $temp[1], 'id' => $p->id];
-                                                $permissions_id['id'][$temp[0]][] = $p->name;
-                                            
-                                                $i++;
-                                            }
-                                            
-                                            $permissions_id['group'] = array_unique($permissions_id['group']);
-                                            $listIdCheckbox = '';
-                                        @endphp --}}
-        
-                                        {{-- @foreach ($permissions_id['group'] as $val)
-                                            <div class="col-sm-3">
-                                                <span
-                                                    class="badge text-wrap text-left bg-primary mt-1 mb-1">{{ ucwords(str_replace('_', ' ', $val)) }}</span>
-                                                @foreach ($permissions_id['function'][$val] as $index => $value)
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input checkbox check-all"
-                                                            id="{{ $permissions_id['function'][$val][$index]['name'] . $i }}"
-                                                            name="permission_id[]" value="{{ $value['id'] }}">
-                                                        <label class="custom-control-label"
-                                                            for="{{ $permissions_id['function'][$val][$index]['name'] . $i }}">{{ ucwords(str_replace('_', ' ', $value['name'])) }}</label>
-                                                    </div>
-                                                    @php
-                                                        $listIdCheckbox = strval($permissions_id['function'][$val][$index]['name'] . $i) . '|' . $listIdCheckbox;
-                                                        $i++;
-                                                    @endphp
-                                                @endforeach
-                                            </div>
-                                        @endforeach --}}
-                                    </div>
-                                </div>
-                                    <span class="badge bg-success mt-3
-                                        mb-1">Informasi Lowongan</span>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck1" />
-                                        <label class="form-check-label" for="defaultCheck1"> Lihat </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck2" />
-                                        <label class="form-check-label" for="defaultCheck2"> Tambah </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck3" />
-                                        <label class="form-check-label" for="defaultCheck3"> Edit </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck4" />
-                                        <label class="form-check-label" for="defaultCheck4"> Screening </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck5" />
-                                        <label class="form-check-label" for="defaultCheck5"> Seleksi </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck6" />
-                                        <label class="form-check-label" for="defaultCheck6"> Penawaran </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck7" />
-                                        <label class="form-check-label" for="defaultCheck7"> Diterima </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck8" />
-                                        <label class="form-check-label" for="defaultCheck8"> Ditolak </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck9" />
-                                        <label class="form-check-label" for="defaultCheck9"> Lihat Detail Kandidat </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck10" />
-                                        <label class="form-check-label" for="defaultCheck10"> Set batas konfirmasi </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input informasi" type="checkbox" value="" id="defaultCheck11" />
-                                        <label class="form-check-label" for="defaultCheck11"> Lihat Detail Lowongan </label>
-                                    </div>
-                                </div>
-                            </div>    
-                            <div class="tab-pane fade" id="navs-pills-jadwal-seleksi" role="tabpanel">
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="checkbox" value="" id="selectAll_seleksi" />
-                                        <label class="form-check-label" for="defaultCheck1">Pilih Semua</label>
-                                    </div>
-                                    <span class="badge bg-success mt-3
-                                        mb-1">Jadwal Seleksi</span>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input seleksi" type="checkbox" value="" id="defaultCheck1" />
-                                        <label class="form-check-label" for="defaultCheck1"> Lihat </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input seleksi" type="checkbox" value="" id="defaultCheck2" />
-                                        <label class="form-check-label" for="defaultCheck2"> Tambah </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input seleksi" type="checkbox" value="" id="defaultCheck3" />
-                                        <label class="form-check-label" for="defaultCheck3"> Edit </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input seleksi" type="checkbox" value="" id="defaultCheck4" />
-                                        <label class="form-check-label" for="defaultCheck4"> Lihat Detail </label>
-                                    </div>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input seleksi" type="checkbox" value="" id="defaultCheck5" />
-                                        <label class="form-check-label" for="defaultCheck5"> Ubah Status Seleksi </label>
-                                    </div>
-                                </div>
-                            </div>    
+                                    $listIdCheckbox = '';
+                                @endphp
+                                @foreach ($chunk as $k => $item)
+                                    @foreach ($item as $key => $val)
+                                        @if ($key == 0)<div class="row">@endif
+                                        <div class="col-sm-3 my-auto">
+                                            <span class="badge text-wrap text-start bg-label-primary my-1" style="font-size: 10pt;">{{ ucwords(str_replace('_', ' ', $val)) }}</span>
+                                        </div>
+                                        @if (count($item) == ($key + 1))</div>@endif
+                                    @endforeach
+                                    @foreach ($item as $key => $val)
+                                        @if ($key == 0)<div class="row">@endif
+                                        <div class="col-sm-3 my-2">
+                                            @foreach ($permissions_list['function'][$val] as $index => $value)
+                                                <div class="form-check form-check-primary">
+                                                    <input class="form-check-input checkbox check-all" name="permission_id[]" type="checkbox" value="{{ $value['id'] }}" id="{{ $permissions_list['function'][$val][$index]['name'] . $i }}">
+                                                    <label class="form-check-label" style="font-size: 10pt;" for="{{ $permissions_list['function'][$val][$index]['name'] . $i }}">{{ ucwords(str_replace('_', ' ', $value['name'])) }}</label>
+                                                </div>
+                                                @php
+                                                    $listIdCheckbox = strval($permissions_list['function'][$val][$index]['name'] . $i) . '|' . $listIdCheckbox;
+                                                    $i++;
+                                                @endphp
+                                            @endforeach
+                                        </div>
+                                        @if (count($item) == ($key + 1))</div>@endif
+                                    @endforeach
+
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button> -->
-                    <button type="submit" id="modal-button" class="btn btn-success">Simpan</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>

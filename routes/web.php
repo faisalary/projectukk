@@ -1,15 +1,12 @@
 <?php
 
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\JadwalSeleksiController;
-use App\Http\Controllers\KelolaPenggunaController;
-use App\Http\Controllers\MailController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
-use Spatie\Permission\Middleware\RoleMiddleware as MiddlewareRoleMiddleware;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\KonfigurasiController;
+use App\Http\Controllers\MitraJadwalController;
+use App\Http\Controllers\KelolaPenggunaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,24 +30,24 @@ Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'i
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 
-Route::prefix('company')->group(function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm'])->name('register.form');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
-    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
-});
-Route::prefix('mahasiswa')->group(function () {
-    Route::get('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register.form');
-    Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
-    Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'setting'])->name('set.password');
-    Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'updateset'])->name('update.password');
+// Route::prefix('company')->group(function () {
+//     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm']);
+//     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
+//     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
+//     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
+// });
+
+Route::prefix('register')->name('register')->controller(RegisteredUserController::class)->group(function () {
+    Route::get('set-password/{token}', 'newPassword')->name('.set-password');
+    Route::post('/set-password', 'storeNewPassword')->name('.set-password.store');
+    Route::get('successed', function () {
+        return view('auth.message-verify-email');
+    })->name('.successed');
 });
 
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
-    //untuk lkm
-
     require __DIR__ . '/master_data.php';
     require __DIR__ . '/kemitraan.php';
     require __DIR__ . '/mahasiswa.php';
@@ -59,17 +56,17 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.admin.index');
     })->name('dashboard_admin');
     
-    Route::prefix('kelola-pengguna')->controller(KelolaPenggunaController::class)->group(function () {
-        Route::get('/', 'index')->name('kelola-pengguna.index');
+    Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
+        Route::get('/', 'index');
     });
 
-    Route::prefix('konfigurasi')->group(function () {
-        Route::get('/', [App\Http\Controllers\KonfigurasiController::class, 'index'])->name('konfigurasi.index');
-        Route::get('/show', [App\Http\Controllers\KonfigurasiController::class, 'show'])->name('konfigurasi.show');
-        Route::post('/store', [App\Http\Controllers\KonfigurasiController::class, 'store'])->name('konfigurasi.store');
-        Route::post('/update{id}', [App\Http\Controllers\KonfigurasiController::class, 'update'])->name('konfigurasi.update');
-        Route::get('/edit{id}', [App\Http\Controllers\KonfigurasiController::class, 'edit'])->name('konfigurasi.edit');
-        Route::post('/status/{id}', [App\Http\Controllers\KonfigurasiController::class, 'status'])->name('konfigurasi.status');
+    Route::prefix('roles')->name('roles')->controller(KonfigurasiController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'show')->name('.show');
+        Route::post('store', 'store')->name('.store');
+        Route::post('update/{id}', 'update')->name('.update');
+        Route::get('edit/{id}', 'edit')->name('.edit');
+        Route::post('status/{id}', 'status')->name('.status');
     });
     
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
@@ -168,9 +165,10 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::prefix('jadwal-seleksi/mitra')->controller(App\Http\Controllers\MitraJadwalController::class)->group(function () {
-        Route::get('/', 'index')->name('mitrajadwal.index');
-        Route::get('/show', 'show')->name('mitrajadwal.show');
+    Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(MitraJadwalController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'show')->name('.show');
+        Route::get('detail/{id}', 'detail')->name('.detail');
     });
 
     Route::prefix('/kegiatan-saya')->group(function () {
@@ -265,9 +263,6 @@ Route::get('/anggota/tim', function () {
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');
 });
-Route::get('/konfigurasi', function () {
-    return view('konfigurasi.konfigurasi', ['active_menu' => 'konfigurasi']);
-});
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
@@ -338,7 +333,7 @@ Route::get('/kelola/mahasiswa', function () {
 
 Route::prefix('/input/nilai/akademik')->group(function () {
     Route::get('/', [App\Http\Controllers\InputNilaiAkademikController::class, 'index'])->name('kelola_mahasiswa_akademik.index');
-    Route::get('/show/{scored_by}', [App\Http\Controllers\KomponenPenilaianController::class, 'show'])->name('komponen-penilaian.show');
+    Route::get('/show/{scored_by}', [App\Http\Controllers\KomponenPenilaianController::class, 'show']);
     Route::post('/store', [App\Http\Controllers\InputNilaiAkademikController::class, 'store'])->name('kelola_mahasiswa_akademik.store');
     Route::post('/update{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'update'])->name('kelola_mahasiswa_akademik.update');
     Route::get('/edit{id}', [App\Http\Controllers\InputNilaiAkademikController::class, 'edit'])->name('kelola_mahasiswa_akademik.edit');
@@ -371,10 +366,6 @@ Route::get('/status/magang', function () {
 
 Route::get('/berkas/akhir', function () {
     return view('kegiatan_saya.berkas_akhir.index');
-});
-
-Route::get('/dashboard/company', function () {
-    return view('dashboard.company.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

@@ -2,14 +2,42 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Cache;
+
 class MenuHelper
 {
 
     public static function getInstance()
     {
-        $data = self::getMenu();
+        $user = auth()->user();
+        if (!Cache::has('data_menu_'. $user->roles[0]->name)) {
+            $data = self::getMenu();
+            $getUserPermission = $user->roles[0]->permissions->pluck('name')->toArray();
+            $data = self::menuFilter($data, $getUserPermission);
+            Cache::forever('data_menu_'. $user->roles[0]->name, $data);
+        }
+
+        $data = Cache::get('data_menu_'. $user->roles[0]->name);
         $result = self::menuMaker($data);
+
         return $result;
+    }
+
+    private static function menuFilter($data, $getUserPermission) {
+        foreach ($data as $key => $value) {
+            if (isset($value['submenu'])) {
+                $data[$key]['submenu'] = self::menuFilter($value['submenu'], $getUserPermission);
+                if (empty($data[$key]['submenu'])) {
+                    unset($data[$key]);
+                }
+            } else {
+                if (!empty($getUserPermission) && !in_array($value['permission'], $getUserPermission)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        return $data;
     }
 
     private static function menuMaker($data)
@@ -72,6 +100,12 @@ class MenuHelper
                 'permission' => 'dashboard.dashboard_admin'
             ],
             [
+                'name' => 'Dashboard',
+                'route' => 'dashboard_company',
+                'icon' => 'ti-device-desktop-analytics',
+                'permission' => 'dashboard.dashboard_mitra'
+            ],
+            [
                 'name' => 'Kelola Mitra',
                 'route' => 'kelola_mitra',
                 'icon' => 'ti-building',
@@ -79,7 +113,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Lowongan Magang',
-                'icon' => 'ti-building',
+                'icon' => 'ti-briefcase',
                 'submenu' => [
                     [
                         'name' => 'Informasi Lowongan',
@@ -107,9 +141,9 @@ class MenuHelper
             ],
             [
                 'name' => 'Jadwal Seleksi',
-                'route' => 'mitrajadwal.index',
+                'route' => 'jadwal_seleksi',
                 'icon' => 'ti-clock',
-                'permission' => 'jadwal_seleksi_mitra.view'
+                'permission' => 'jadwal_seleksi_lkm.view'
             ],
             [
                 'name' => 'Berkas Akhir Magang',
@@ -117,12 +151,12 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'berkas_akhir_magang_fakultas.index',
+                        'route' => 'berkas_akhir_magang.fakultas',
                         'permission' => 'berkas_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'berkas_akhir_magang_mandiri.index',
+                        'route' => 'berkas_akhir_magang.mandiri',
                         'permission' => 'berkas_magang_mandiri.view'
                     ],
                 ]
@@ -133,12 +167,12 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'nilai-magang-fakultas.index',
+                        'route' => 'nilai_mahasiswa.fakultas',
                         'permission' => 'nilai_mahasiswa_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'nilai-magang-mandiri.index',
+                        'route' => 'nilai_mahasiswa.mandiri',
                         'permission' => 'nilai_mahasiswa_magang_mandiri.view'
                     ],
                 ]
@@ -149,27 +183,27 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Magang Fakultas',
-                        'route' => 'logbook-magang-fakultas.index',
+                        'route' => 'logbook_magang.fakultas',
                         'permission' => 'logbook_magang_fakultas.view'
                     ],
                     [
                         'name' => 'Magang Mandiri',
-                        'route' => 'logbook-magang-mandiri.index',
+                        'route' => 'logbook_magang.mandiri',
                         'permission' => 'logbook_magang_mandiri.view'
                     ],
                 ]
             ],
             [
                 'name' => 'Kelola Pengguna',
-                'route' => 'kelola-pengguna.index',
+                'route' => 'kelola_pengguna',
                 'icon' => 'ti-users',
                 'permission' => 'kelola_pengguna.view'
             ],
             [
                 'name' => 'Role',
-                'route' => 'kelola-pengguna.index',
+                'route' => 'roles',
                 'icon' => 'ti-user   ',
-                'permission' => 'kelola_pengguna.view'
+                'permission' => 'roles.view'
             ],
             [
                 'name' => 'Master Data',
@@ -177,63 +211,63 @@ class MenuHelper
                 'submenu' => [
                     [
                         'name' => 'Universitas',
-                        'route' => 'universitas.index',
+                        'route' => 'universitas',
                         'permission' => 'universitas.view'
                     ],
                     [
                         'name' => 'Fakultas',
-                        'route' => 'fakultas.index',
+                        'route' => 'fakultas',
                         'permission' => 'fakultas.view'
                     ],
                     [
                         'name' => 'Program Studi',
-                        'route' => 'prodi.index',
-                        'permission' => 'prodi.view'
+                        'route' => 'prodi',
+                        'permission' => 'program_studi.view'
                     ],
                     [
                         'name' => 'Tahun Akademik',
-                        'route' => 'thn-akademik.index',
-                        'permission' => 'thn-akademik.view'
+                        'route' => 'thn-akademik',
+                        'permission' => 'tahun_akademik.view'
                     ],
                     [
                         'name' => 'Jenis Magang',
-                        'route' => 'jenismagang.index',
-                        'permission' => 'jenismagang.view'
+                        'route' => 'jenismagang',
+                        'permission' => 'jenis_magang.view'
                     ],
                     [
                         'name' => 'Dosen',
-                        'route' => 'dosen.index',
+                        'route' => 'dosen',
                         'permission' => 'dosen.view'
                     ],
                     [
                         'name' => 'Mahasiswa',
-                        'route' => 'mahasiswa.index',
+                        'route' => 'mahasiswa',
                         'permission' => 'mahasiswa.view'
                     ],
                     [
                         'name' => 'Pegawai Industri',
-                        'route' => 'pegawaiindustri.index',
-                        'permission' => 'pegawaiindustri.view'
+                        'route' => 'pegawaiindustri',
+                        'permission' => 'pegawai_industri.view'
                     ],
                     [
                         'name' => 'Nilai Mutu',
-                        'route' => 'nilai-mutu.index',
-                        'permission' => 'nilai-mutu.view'
+                        'route' => 'nilai-mutu',
+                        'permission' => 'nilai_mutu.view'
                     ],
                     [
                         'name' => 'Komponen Penilaian',
-                        'route' => 'komponen-penilaian.index',
-                        'permission' => 'komponen-penilaian.view'
+                        'route' => 'komponen-penilaian',
+                        'permission' => 'komponen_penilaian.view'
                     ],
                     [
                         'name' => 'Dokumen Persyaratan',
-                        'route' => 'doc-syarat.index',
-                        'permission' => 'doc-syarat.view'
+                        'route' => 'doc-syarat',
+                        'permission' => 'dokumen_syarat.view'
                     ],
                     [
                         'name' => 'Pembimbing Lapangan Mandiri',
-                        'route' => 'pembimbing-lapangan-mandiri.index',
-                        'permission' => 'pembimbing-lapangan-mandiri.view'
+                        'route' => 'pembimbing-lapangan-mandiri',
+                        'permission' => 'pembimbing_lapangan_mandiri.view'
                     ],
                 ]
             ],

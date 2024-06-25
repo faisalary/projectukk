@@ -5,6 +5,8 @@
 <head>
     <meta charset="utf-8" />
     @yield('meta_header')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Talentern</title>
@@ -155,24 +157,25 @@
 <script src="{{ asset('app-assets/vendor/libs/select2/select2.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/block-ui/block-ui.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-<script src="{{ asset('app-assets/js/forms-selects.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
 <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('app-assets/js/main.js') }}"></script>
-
-
 <script src="{{ url('js/content.js') }}"></script>
 
-<!-- Page JS -->
-<script src="{{ asset('app-assets/js/dashboards-analytics.js') }}"></script>
-<script src="{{ asset('app-assets/js/form-wizard-numbered.js') }}"></script>
-<script src="{{ asset('app-assets/js/form-wizard-validation.js') }}"></script>
+<script>
+    $(".flatpickr-date").flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
+</script>
 
 @yield('page_script')
 </body>

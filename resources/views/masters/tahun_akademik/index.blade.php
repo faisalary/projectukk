@@ -1,31 +1,6 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
-    <link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <style>
-        .swal2-icon {
-            border-color: transparent !important;
-        }
-
-        .swal2-title {
-            font-size: 20px !important;
-            text-align: center !important;
-            margin-top: 0px !important;
-            margin-bottom: 0px !important;
-        }
-
-        .swal2-modal.swal2-popup .swal2-title {
-            max-width: 100% !important;
-        }
-
-        .swal2-html-container {
-            font-size: 16px !important;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -34,8 +9,7 @@
             <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> Tahun Akademik</h4>
         </div>
         <div class="col-md-6 col-12 text-end">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-thn-akademik">Tambah Tahun
-                Akademik</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-thn-akademik">Tambah Tahun Akademik</button>
         </div>
     </div>
     <div class="row mt-2">
@@ -65,20 +39,9 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
     <script>
-        $(".flatpickr-date").flatpickr({
-            altInput: true,
-            altFormat: 'j F Y',
-            dateFormat: 'Y-m-d'
-        });
-
-
         $('#table-master-tahun-akademik').DataTable({
-            ajax: '{{ route('thn-akademik.show') }}',
+            ajax: '{{ route("thn-akademik.show") }}',
             serverSide: false,
             processing: true,
             deferRender: true,
@@ -96,44 +59,12 @@
                     name: 'semester'
                 },
                 {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        var startdate = new Date(data.startdate_daftar);
-                        var enddate = new Date(data.enddate_daftar);
-
-                        var formatDate = function(date) {
-                            var day = date.getDate();
-                            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                                "Sep", "Oct", "Nov", "Dec"
-                            ];
-                            var month = monthNames[date.getMonth()];
-                            var year = date.getFullYear();
-                            return (day < 10 ? '0' : '') + day + ' ' + month + ' ' + year;
-                        };
-
-                        return formatDate(startdate) + '  -  ' + formatDate(enddate);
-                    }
+                    data: 'pendaftaran_magang',
+                    name: 'pendaftaran_magang',
                 },
                 {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        var startdate = new Date(data.startdate_pengumpulan_berkas);
-                        var enddate = new Date(data.enddate_pengumpulan_berkas);
-
-                        var formatDate = function(date) {
-                            var day = date.getDate();
-                            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                                "Sep", "Oct", "Nov", "Dec"
-                            ];
-                            var month = monthNames[date.getMonth()];
-                            var year = date.getFullYear();
-                            return (day < 10 ? '0' : '') + day + ' ' + month + ' ' + year;
-                        };
-
-                        return formatDate(startdate) + ' - ' + formatDate(enddate);
-                    }
+                    data: 'pengumpulan_berkas',
+                    name: 'pengumpulan_berkas'
                 },
                 {
                     data: 'status',
@@ -150,41 +81,48 @@
         function edit(e) {
             let id = e.attr('data-id');
 
-            let action = `{{ url('master/tahun-akademik/update/') }}/${id}`;
-            var url = `{{ url('master/tahun-akademik/edit/') }}/${id}`;
+            let action = `{{ route('thn-akademik.update', ['id' => ':id']) }}`.replace(':id', id);
+            var url = `{{ route('thn-akademik.edit', ['id' => ':id']) }}`.replace(':id', id);
+            let modal = $('#modal-thn-akademik');
+
+            modal.find(".modal-title").html("Edit Tahun Akademik");
+            modal.find('form').attr('action', action);
+            modal.modal('show');
+
             $.ajax({
                 type: 'GET',
                 url: url,
                 success: function(response) {
-                    $("#modal-title").html("Edit Tahun Akademik");
-                    $("#modal-button").html("Update Data")
-                    $('#modal-thn-akademik form').attr('action', action);
-                    $('#tahun').val(response.tahun);
-                    $('#semester').val(response.semester).trigger('change');
-                    $('#startdate_daftar').val(response.startdate_daftar).trigger('change');
-                    $('#enddate_daftar').val(response.enddate_daftar).trigger('change');
-                    $('#startdate_pengumpulan_berkas').val(response.startdate_pengumpulan_berkas).trigger(
-                        'change');
-                    $('#enddate_pengumpulan_berkas').val(response.enddate_pengumpulan_berkas).trigger('change');
-
-
-                    $('#modal-thn-akademik').modal('show');
+                    $.each(response.data, function ( key, value ) {
+                        let element = modal.find('form').find(`[name="${key}"]`);
+                        element.val(value).trigger('change');
+                        if (element.is('.flatpickr-date')) {
+                            element.flatpickr({
+                                altInput: true,
+                                altFormat: 'j F Y',
+                                dateFormat: 'Y-m-d',
+                                defaultDate: value
+                            });
+                        }
+                    });
                 }
             });
         }
 
-        $("#modal-thn-akademik").on("hide.bs.modal", function() {
+        function afterAction(response) {
+            $("#modal-thn-akademik").modal("hide");
+            afterUpdateStatus(response);
+        }
 
-            $("#modal-title").html("Tambah Tahun Akademik");
-            $("#modal-button").html("Simpan")
-            $('#modal-thn-akademik form')[0].reset();
-            $('#modal-thn-akademik form #semester').val('').trigger('change');
-            $('#modal-thn-akademik form').attr('action', "{{ url('master/tahun-akademik/store') }}");
-            $('.invalid-feedback').removeClass('d-block');
-            $('.form-control').removeClass('is-invalid');
+        function afterUpdateStatus(response) {
+            $('#table-master-tahun-akademik').DataTable().ajax.reload();
+        }
+
+        $("#modal-thn-akademik").on("hide.bs.modal", function() {
+            let modal = $('#modal-thn-akademik');
+            modal.find(".modal-title").html("Tambah Tahun Akademik");
+            modal.find("input[name='tahun']").val("{{ now()->format('Y') }}");
+            modal.find('form').attr('action', "{{ route('thn-akademik.store') }}");
         });
     </script>
-
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection

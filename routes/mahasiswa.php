@@ -24,37 +24,37 @@ Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswa
     Route::get('/doc/{file}', 'doc')->name('.doc');
 });
 
-Route::prefix('berkas-akhir-magang')->controller(BerkasAkhirMagangController::class)->group(function () {
-    Route::prefix('magang-fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas')->name('berkas_akhir_magang_fakultas.index');
+Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
     });
-    Route::prefix('magang-mandiri')->group(function () {
-        Route::get('/', 'viewMagangMandiri')->name('berkas_akhir_magang_mandiri.index');
-    });
-});
-
-Route::prefix('nilai-mahasiswa')->controller(NilaiMahasiswaController::class)->group(function () {
-    Route::prefix('magang-fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas')->name('nilai-magang-fakultas.index');
-        Route::get('detail', 'detailMagangFakultas')->name('nilai-magang-fakultas.detail');
-    });
-
-    Route::prefix('magang-mandiri')->group(function () {
-        Route::get('/', 'viewMagangMandiri')->name('nilai-magang-mandiri.index');
-        Route::get('detail', 'detailMagangMandiri')->name('nilai-magang-mandiri.detail');
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
     });
 });
 
-Route::prefix('logbook-mahasiswa')->controller(LogBookMahasiswaController::class)->group(function () {
-    Route::prefix('magang-fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas')->name('logbook-magang-fakultas.index');
-        Route::get('detail', 'detailMagangFakultas')->name('logbook-magang-fakultas.detail');
-        Route::get('view', 'showMagangFakultas')->name('logbook-magang-fakultas.view');
+Route::prefix('nilai-mahasiswa')->name('nilai_mahasiswa')->controller(NilaiMahasiswaController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+        Route::get('detail', 'detailMagangFakultas')->name('.detail');
     });
 
-    Route::prefix('magang-mandiri')->group(function () {
-        Route::get('/', 'viewMagangMandiri')->name('logbook-magang-mandiri.index');
-        Route::get('detail', 'detailMagangMandiri')->name('logbook-magang-mandiri.detail');
-        Route::get('view', 'showMagangMandiri')->name('logbook-magang-mandiri.view');
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+        Route::get('detail', 'detailMagangMandiri')->name('.detail');
+    });
+});
+
+Route::prefix('logbook-mahasiswa')->name('logbook_magang')->controller(LogBookMahasiswaController::class)->group(function () {
+    Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
+        Route::get('/', 'viewMagangFakultas');
+        Route::get('detail', 'detailMagangFakultas')->name('.detail');
+        Route::get('view', 'showMagangFakultas')->name('.view');
+    });
+
+    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+        Route::get('/', 'viewMagangMandiri');
+        Route::get('detail', 'detailMagangMandiri')->name('.detail');
+        Route::get('view', 'showMagangMandiri')->name('.view');
     });
 });

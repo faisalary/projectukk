@@ -28,11 +28,35 @@ function initAllComponents() {
     initSelect2();
     initPopOver();
     initTooltips();
+    initFormRepeater();
 }
 
-function initSelect2() {
-    $('.select2_custom').each(function () {
-        $(this).wrap('<div class="position-relative"></div>');
+function initSelect2(element = null) {
+
+    if (element != null) {
+        if ($(element).hasClass("select2-hidden-accessible")) {
+            $(element).select2("destroy");
+        }
+        $(element).select2({
+            tags: $(element).attr('data-tags') === 'true' ?? false,
+            allowClear: true,
+            placeholder: $(element).attr('data-placeholder') ?? null,
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $(element).parent(),
+        });
+        return;
+    }
+
+    $('select.select2').each(function () {
+        if ($(this).hasClass("select2-hidden-accessible")) {
+            $(this).removeClass('select2-hidden-accessible').next('.select2-container').remove();
+            $(this).removeAttr('data-select2-id tabindex aria-hidden');
+            $(this).parent().removeAttr('data-select2-id');
+        }
+
+        if (!$(this).parent().hasClass('position-relative')) $(this).wrap('<div class="position-relative"></div>');
+
         $(this).select2({
             tags: $(this).attr('data-tags') === 'true' ?? false,
             allowClear: true,
@@ -55,6 +79,48 @@ function initTooltips() {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+}
+
+function initFormRepeater() {
+    var row = 2;
+    var col = 1;
+    let formRepeater = $('.form-repeater');
+
+    if (formRepeater.length == 0) return;
+
+    formRepeater.repeater({
+        show: function () {
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+
+            var fromControl = $(this).find('.form-control, .form-select, .form-check-input');
+            var formLabel = $(this).find('.form-label, .form-check-label');
+
+            fromControl.each(function (i) {
+                var id = 'form-repeater-' + row + '-' + col;
+                $(fromControl[i]).attr('id', id);
+                $(formLabel[i]).attr('for', id);
+                col++;
+            });
+
+            row++;
+
+            // fix select2
+            initSelect2();
+            // --------------------------------------------
+
+
+            $(this).slideDown();
+        },
+        hide: function (e) {
+            confirm('Are you sure you want to delete this element?');
+            let dataCallback = $(this).attr('data-callback');
+            if (typeof window[dataCallback] === "function") window[dataCallback](this);
+
+            $(this).slideUp(e);
+        },
+        isFirstItemUndeletable: true
     });
 }
 
@@ -161,11 +227,16 @@ function store_data(content, button) {
         success: function (response) {
             btnBlock(button, false);
             if (!response.error) {
-                showSweetAlert({
-                    title: 'Berhasil!',
-                    text: response.message,
-                    icon: 'success'
-                });
+                if (
+                    (response.data == null) ||
+                    (response.data != null && !response.data.ignore_alert)
+                ) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                }
 
                 if (typeof window[callback] === "function") window[callback](response);
             } else {
@@ -209,9 +280,9 @@ $('.modal').on('hide.bs.modal', function () {
     form.find('.invalid-feedback').html(null).removeClass('d-block');
 });
 
-$('.update-status').on('click', function () {
-    let id = $(this).data('id');
+$(document).on('click', '.update-status', function () {
     let url = $(this).data('url');
+    let dataFunction = $(this).attr('data-function');
 
     sweetAlertConfirm({
         title: 'Apakah anda yakin?',
@@ -223,8 +294,8 @@ $('.update-status').on('click', function () {
         $.ajax({
             url: url,
             type: "POST",
-            data: {
-                id: id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
                 if (!response.error) {
@@ -233,9 +304,8 @@ $('.update-status').on('click', function () {
                         text: response.message,
                         icon: 'success'
                     });
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+
+                    if (typeof window[dataFunction] === "function") window[dataFunction](response);
                 } else {
                     showSweetAlert({
                         title: 'Gagal!',
