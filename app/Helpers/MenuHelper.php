@@ -2,14 +2,42 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Cache;
+
 class MenuHelper
 {
 
     public static function getInstance()
     {
-        $data = self::getMenu();
+        $user = auth()->user();
+        if (!Cache::has('data_menu_'. $user->roles[0]->name)) {
+            $data = self::getMenu();
+            $getUserPermission = $user->roles[0]->permissions->pluck('name')->toArray();
+            $data = self::menuFilter($data, $getUserPermission);
+            Cache::forever('data_menu_'. $user->roles[0]->name, $data);
+        }
+
+        $data = Cache::get('data_menu_'. $user->roles[0]->name);
         $result = self::menuMaker($data);
+
         return $result;
+    }
+
+    private static function menuFilter($data, $getUserPermission) {
+        foreach ($data as $key => $value) {
+            if (isset($value['submenu'])) {
+                $data[$key]['submenu'] = self::menuFilter($value['submenu'], $getUserPermission);
+                if (empty($data[$key]['submenu'])) {
+                    unset($data[$key]);
+                }
+            } else {
+                if (!empty($getUserPermission) && !in_array($value['permission'], $getUserPermission)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        return $data;
     }
 
     private static function menuMaker($data)
@@ -234,6 +262,29 @@ class MenuHelper
                         'name' => 'Pembimbing Lapangan Mandiri',
                         'route' => 'pembimbing-lapangan-mandiri',
                         'permission' => 'pembimbing_lapangan_mandiri.view'
+                    ],
+                ]
+            ],
+            // mitra
+            [
+                'name' => 'Dashboard',
+                'route' => 'dashboard_company',
+                'icon' => 'ti-device-desktop-analytics',
+                'permission' => 'dashboard.dashboard_mitra'
+            ],
+            [
+                'name' => 'Lowongan Magang',
+                'icon' => 'ti-briefcase',
+                'submenu' => [
+                    [
+                        'name' => 'Informasi Lowongan',
+                        'route' => 'informasi_lowongan',
+                        'permission' => 'informasi_lowongan_mitra.view'
+                    ],
+                    [
+                        'name' => 'Kelola Lowongan',
+                        'route' => 'kelola_lowongan',
+                        'permission' => 'kelola_lowongan_mitra.view'
                     ],
                 ]
             ],

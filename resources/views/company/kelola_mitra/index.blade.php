@@ -176,6 +176,7 @@
                     },
                     success: function(response) {
                         if (!response.error) {
+                            loadData();
                             showSweetAlert({
                                 title: 'Berhasil!',
                                 text: response.message,

@@ -33,6 +33,8 @@
       <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/typeahead-js/typeahead.css') }}" />
       <!-- Vendor -->
       <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+      <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/select2/select2.css') }}" />
+      <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
 
       <!-- Page CSS -->
       <link rel="stylesheet" href="{{ url('app-assets/vendor/css/pages/cards-advance.css') }}" />
@@ -43,11 +45,12 @@
       <!-- Helpers -->
       <script src="{{ url('app-assets/vendor/js/helpers.js') }}"></script>
 
-      @yield('page_style')
-      {{-- <script src="{{ url('app-assets/vendor/js/template-customizer.js') }}"></script> --}}
+      <script src="{{ url('app-assets/vendor/js/template-customizer.js') }}"></script>
       <script src="{{ url('app-assets/js/config.js') }}"></script>
 
       <link rel="stylesheet" href="{{ url('app-assets/css/style.css') }}" />
+
+      @yield('page_style')
   </head>
 
 <body>
@@ -76,12 +79,16 @@
     <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
     <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/block-ui/block-ui.js') }}"></script>
+    <script src="{{ asset('app-assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ url('app-assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{ url('app-assets/js/pages-auth.js') }}"></script>
+    {{-- <script src="{{ url('app-assets/js/pages-auth.js') }}"></script> --}}
+    @yield('page_script')
 </body>
 
 </html>

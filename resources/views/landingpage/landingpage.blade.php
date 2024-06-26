@@ -33,7 +33,7 @@
 
 @section('content')
     <div class="container-fluid px-0 flex-grow-1">
-        <div style="background-image: url({{ asset('assets/images/background/header.png') }}); background-repeat: no-repeat; background-size: cover; background-position: right; padding-bottom: 12rem;">
+        <div style="background-image: url({{ asset('assets/images/background/Header.png') }}); background-repeat: no-repeat; background-size: cover; background-position: right; padding-bottom: 12rem;">
             <div class="d-flex justify-content-start">
                 <div class="col-4 mx-5 mb-4 mt-5">
                     <div class="title-box wow animate__animated animate__fadeInUp" data-wow-delay="1000ms">

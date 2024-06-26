@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Response;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CompanyReg;
-use App\Mail\RejectionNotification;
-use Illuminate\Http\Request;
-use App\Models\Industri;
-use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use App\Mail\VerifyEmail;
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 use Ramsey\Uuid\Uuid;
+use App\Models\Industri;
+use App\Helpers\Response;
+use App\Jobs\SendMailJob;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\CompanyReg;
+use Illuminate\Support\Facades\DB;
+use App\Mail\RejectionNotification;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Yajra\DataTables\Facades\DataTables;
 
 class KelolaMitraController extends Controller
 {
@@ -25,7 +26,6 @@ class KelolaMitraController extends Controller
      */
     public function index()
     {
-        $industri = Industri::all();
         return view('company.kelola_mitra.index');
     }
 
@@ -54,9 +54,6 @@ class KelolaMitraController extends Controller
                 'username' => $request->namaindustri,
                 'email' => $request->email,
                 'password' => Hash::make($industri->penanggung_jawab),
-                'remember_token' => $code,
-                'isAdmin'=>1,
-                'id_industri' => $industri->id_industri,
             ]);
             $admin->assignRole('admin');
                 
@@ -103,14 +100,37 @@ class KelolaMitraController extends Controller
         try {
             DB::beginTransaction(); 
             $data = Industri::find($id);
-            if (!$data) throw new \Exception('Industri data not found.');
+            if (!$data) return Response::error(null, 'Not Found.');
+            if ($data->statusapprove != 0) return Response::error(null, 'Mitra sudah diapprove.');
 
             $data->statusapprove = 1;
+
+            $user = User::create([
+                'name' => $data->penanggung_jawab,
+                'username' => $data->penanggung_jawab,
+                'email' => $data->email,
+                'password' => Hash::make(Str::random(12)),
+            ])->assignRole('Mitra');
+
+            $data->id_user = $user->id;
             $data->save();
+
+            $code = Str::random(60);
+
+            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $data->email)->first();
             
-            $user = User::where('email', $data->email)->first();
-            $url = url('/company/set-password/' . $user->remember_token);
-            Mail::to($data->email)->send(new VerifyEmail($url));
+            if ($passwordResetToken) {
+                DB::table('password_reset_tokens')->where('email', $data->email)->delete();
+            }
+
+            DB::table('password_reset_tokens')->insert([
+                'email' => $data->email,
+                'token' => $code,
+                'created_at' => now(),
+            ]);
+            
+            $url = route('register.set-password', ['token' => $code]);
+            dispatch(new SendMailJob($data->email, new VerifyEmail($url)));
             DB::commit();
 
             return Response::success(null, 'Persetujuan berhasil.');

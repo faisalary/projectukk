@@ -72,7 +72,7 @@
 
                     <p class="text-center">
                         <span>New on our platform?</span>
-                        <a href="{{ url('mahasiswa/register') }}">
+                        <a href="{{ route('register') }}">
                             <span>Create an account</span>
                         </a>
                     </p>

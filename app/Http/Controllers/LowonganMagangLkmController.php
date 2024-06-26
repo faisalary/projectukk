@@ -19,7 +19,7 @@ class LowonganMagangLkmController extends Controller
 {
     public function __construct(){
 
-    $this->middleware(['role:superadmin']);
+    // $this->middleware(['role:superadmin']);
 }
      /**
      * Display a listing of the resource.

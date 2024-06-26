@@ -113,6 +113,7 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="{{url("app-assets/vendor/css/pages/page-auth.css")}}" />
+    <link rel="stylesheet" href="{{ url('app-assets/css/style.css') }}" />
     <!-- Helpers -->
     <script src="{{url("app-assets/vendor/js/helpers.js")}}"></script>
 
@@ -128,6 +129,7 @@
         <div class="text-center">
           <h3 class="mb-1 fw-bold">Selamat! Pendaftaran akun Anda berhasil! 🎉🥳</h3>
           <p class="mb-4" style="font-size: 18px">Silakan tunggu tautan verifikasi di email aktif yang Anda daftarkan saat mendaftar.</p>
+          <a href="{{ url('/') }}" class="btn btn-primary"><i class="ti ti-arrow-left"></i> Kembali</a>
         </div>
         <img alt="auth-login-cover" class="img-fluid" style="width: 500px; height: 508.214px; flex-shrink: 0;" src="{{ asset('assets/images/amico.svg') }}" alt="Login" />
       </div>

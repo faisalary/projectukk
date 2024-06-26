@@ -15,39 +15,14 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        
-    $administrator = Role::where('name', 'Super Admin')->first();
-    if (!$administrator) {
-        Role::create([
-            'name' => 'Super Admin',
-            'guard_name' => 'web'
-        ]);
+        $roles = [
+            'Super Admin',
+            'LKM',
+            'Mitra'
+        ];
+
+        foreach ($roles as $key => $value) {
+            Role::findOrCreate($value, 'web');
+        }
     }
-
-    // $superadminRole = Role::where('name', 'Super Admin')->first();
-    // if (!$superadminRole) {
-    //     Role::create([
-    //         'name' => 'Super Admin',
-    //         'guard_name' => 'web'
-    //     ]);
-    // }
-
-    
-    // $adminRole = Role::where('name', 'Admin')->first();
-    // if (!$adminRole) {
-    //     Role::create([
-    //         'name' => 'Admin',
-    //         'guard_name' => 'web'
-    //     ]);
-    // }
-
-   
-    // $userRole = Role::where('name', 'User')->first();
-    // if (!$userRole) {
-    //     Role::create([
-    //         'name' => 'User',
-    //         'guard_name' => 'web'
-    //     ]);
-    // }
-}
 }
