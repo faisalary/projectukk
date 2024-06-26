@@ -102,7 +102,10 @@
                     },
                     {
                         data: 'aspek_penilaian',
-                        name: 'aspek_penilaian'
+                        name: 'aspek_penilaian',
+                        render: function(data, type, row){
+                            return data.split("\n ").join("<br/>");
+                        }
                     },
                     {
                         data: 'deskripsi_penilaian',
