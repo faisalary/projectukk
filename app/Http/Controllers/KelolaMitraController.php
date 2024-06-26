@@ -104,7 +104,6 @@ class KelolaMitraController extends Controller
             if ($data->statusapprove != 0) return Response::error(null, 'Mitra sudah diapprove.');
 
             $data->statusapprove = 1;
-            $data->save();
 
             $user = User::create([
                 'name' => $data->penanggung_jawab,
@@ -112,6 +111,9 @@ class KelolaMitraController extends Controller
                 'email' => $data->email,
                 'password' => Hash::make(Str::random(12)),
             ])->assignRole('Mitra');
+
+            $data->id_user = $user->id;
+            $data->save();
 
             $code = Str::random(60);
 

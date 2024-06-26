@@ -4,33 +4,56 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Lokasi;
+use App\Models\Fakultas;
+use App\Models\Industri;
+use App\Helpers\Response;
 use App\Models\JenisMagang;
+use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
+use App\Models\LowonganProdi;
 use Illuminate\Routing\Route;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
-use App\Models\Fakultas;
-use App\Models\Industri;
-use App\Models\LowonganProdi;
-use App\Models\ProgramStudi;
-use Illuminate\Support\Facades\Auth;
 
 class LowonganMagangController extends Controller
 {
 
     public function __construct(){
 
-        $this->middleware(['role:admin']);
+        // $this->middleware(['role:admin']);
+    }
+
+    public function indexInformasi(Request $request) {
+        return view('company.lowongan_magang.informasi_lowongan.informasi_lowongan');
+    }
+
+    public function showInformasi(Request $request) {
+        $industri = auth()->user()->industri->load('lowongan_magang');
+        $lowongan_magang = $industri->lowongan_magang;
+        return datatables()->of($lowongan_magang)
+        ->addColumn('data', function ($data) {
+            $view = view('company/lowongan_magang/components/card_informasi_lowongan', compact('data'))->render();
+            return $view;
+        })
+        ->rawColumns(['data'])
+        ->make(true);
     }
 
     /** 
      * Display a listing of the resource.
      */
-    public function index(Request $request, $id)
+    public function index(Request $request)
     {
+        if ($request->element == 'id_prodi') {
+            $data = ProgramStudi::select('id_prodi as id', 'namaprodi as text')->where('id_fakultas', $request->selected)->get();
+            return Response::success($data, 'Success!');
+        }
+
         $lowongan = new LowonganMagang;
         $lowongan = [
             'total' => $lowongan->count(),
@@ -41,10 +64,8 @@ class LowonganMagangController extends Controller
         $jenismagang = JenisMagang::all();
         $prodi = ProgramStudi::all();
         $fakultas = Fakultas::all();
-        // $industri = Industri::where('id_industri', $id)->first();
-        $industri = Industri::first();
-        return view(
-            'company.lowongan_magang.halaman_lowongan_magang_mitra',
+        $industri = auth()->user()->industri;
+        return view('company.lowongan_magang.kelola_lowongan.halaman_lowongan_magang_mitra',
             compact('lowongan', 'jenismagang', 'prodi', 'fakultas', 'industri')
         );
     }
@@ -52,14 +73,16 @@ class LowonganMagangController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, $id)
+    public function create(Request $request)
     {
+        $user = auth()->user();
+        $industri = $user->industri;
         $seleksi = SeleksiTahap::all();
         $jenismagang = JenisMagang::all();
         $fakultas = Fakultas::all();
         $prodi = ProgramStudi::where('id_prodi')->get();
-        // $industri = Industri::where('id_industri')->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.tambah_lowongan_magang', compact('jenismagang', 'seleksi', 'prodi', 'fakultas'));
+
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'seleksi', 'prodi', 'fakultas', 'industri'));
     }
 
     /**
@@ -67,58 +90,63 @@ class LowonganMagangController extends Controller
      */
     public function store(LowonganMagangRequest $request)
     {
-        DB::beginTransaction();
         try {
-            $industri = Industri::where('id_industri', auth()->user()->id_industri)->first();
-            $fakultas = Fakultas::where('id_fakultas', auth()->user()->id_fakultas)->first();
+            DB::beginTransaction();
+            $dataStep = Crypt::decryptString($request->data_step);
+            if ($dataStep == 1) {
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                ], 'Valid data!');
+            }
+            if ($dataStep == 2) {
+                $tahap = $request->tahapan;
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                    'view' => view('company/lowongan_magang/kelola_lowongan/step/proses_seleksi', compact('tahap'))->render(),
+                ], 'Valid data!');
+            }
 
+            $user = auth()->user();
             $lowongan = LowonganMagang::create([
                 'id_jenismagang' => $request->jenismagang,
                 'intern_position' => $request->posisi,
                 'kuota' => $request->kuota,
                 'deskripsi' => $request->deskripsi,
                 'requirements' => $request->kualifikasi,
-                'gender' => $request->jenis,
+                'gender' => $request->jenis_kelamin,
                 'jenjang' => $request->jenjang,
                 'keterampilan' => $request->keterampilan,
                 'nominal_salary' => $request->nominal,
                 'benefitmagang' => $request->benefit,
-                'id_industri' => $industri->id_industri,
+                'id_industri' => $user->industri->id_industri,
                 'startdate' => $request->tanggal,
                 'pelaksanaan' => $request->pelaksanaan,
                 'enddate' => $request->tanggalakhir,
                 'durasimagang' => $request->durasimagang,
                 'tahapan_seleksi' => $request->tahapan,
+                'id_prodi' => $request->id_prodi,
                 'id_fakultas' => $request->fakultas,
                 'lokasi' => $request->lokasi,
                 'statusaprove' => 'tertunda'
             ]);
-            $i = 0;
-            foreach ((array) $request->mulai as $m) {
-                if ($m != null) {
-                    SeleksiTahap::create([
-                        'id_lowongan' => $lowongan->id_lowongan,
-                        'tgl_mulai' => $request->mulai[$i],
-                        'tgl_akhir' => $request->akhir[$i],
-                        'deskripsi' => $request->deskripsiseleksi[$i],
-                    ]);
-                }
-                $i++;
+            
+            foreach ($request->proses_seleksi as $key => $value) {
+                SeleksiTahap::create([
+                    'id_lowongan' => $lowongan->id_lowongan,
+                    'tahap' => Crypt::decryptString($value['seleksitahap']),
+                    'deskripsi' => $value['deskripsiseleksi'],
+                    'tgl_mulai' => $value['mulai'],
+                    'tgl_akhir' => $value['akhir'],
+                ]);    
             }
-            // dd($lowongan);
-            DB::commit();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Created!',
-                'url' => url('/kelola/lowongan/mitra', Auth::user()->id_industri)
-            ]);
+            DB::commit();
+            return Response::success(null, 'Lowongan magang ditambahkan!');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -128,7 +156,7 @@ class LowonganMagangController extends Controller
 
     public function show(Request $request)
     {
-        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', Auth::user()->id_industri);
+        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', Auth::user()->industri->id_industri);
         if ($request->type == "tertunda") {
             $lowongan =  $lowongan->where('statusaprove', 'tertunda');
         } elseif ($request->type == 'diterima') {
@@ -136,9 +164,9 @@ class LowonganMagangController extends Controller
         } elseif ($request->type == 'ditolak') {
             $lowongan =  $lowongan->where('statusaprove', 'ditolak');
         }
-        $lowongan = $lowongan
-            ->orderBy('id_jenismagang', 'asc')
-            ->get();
+
+        $lowongan = $lowongan->orderBy('id_jenismagang', 'asc')->get();
+        
         return DataTables::of($lowongan)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
@@ -165,7 +193,7 @@ class LowonganMagangController extends Controller
     }
     /**
      * Show the form for editing the specified resource.
-     */
+     */ 
     public function edit(Request $request, $id)
     {
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();

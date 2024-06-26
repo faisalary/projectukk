@@ -375,9 +375,9 @@
 @section('page_script')
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
-<script src="{{asset('app-assets/js/app-calendar-events.js') }}"></script>
-<script src="{{asset('app-assets/js/app-calendar.js') }}"></script>
-<script src="{{asset('app-assets/vendor/libs/fullcalendar/fullcalendar.js') }}"></script>
+<script src="{{asset('app-assets/js/app-calendar-events.js')}}"></script>
+<script src="{{asset('app-assets/js/app-calendar.js')}}"></script>
+<script src="{{asset('app-assets/vendor/libs/fullcalendar/fullcalendar.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
 <script>
     FusionCharts.ready(function() {

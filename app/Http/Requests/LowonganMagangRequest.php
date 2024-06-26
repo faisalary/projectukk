@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LowonganMagangRequest extends FormRequest
@@ -16,28 +16,97 @@ class LowonganMagangRequest extends FormRequest
 
     public function rules(): array
     {
-        if (isset($this->id)) {
-            return [
-                'posisi' => ['required', 'string','max:255'],
-                'kuota' => ['required', 'integer'],
-                'deskripsi' => ['required', 'string','max:255'],
-            ];
-        }
-        return [
-                'posisi' => ['required', 'string','max:255'],
-                'kuota' => ['required', 'integer'],
-                'deskripsi' => ['required', 'string','max:255'],
+        $validate = [
+            'data_step' => ['required']
         ];
+
+        if (isset($this->data_step)) {
+            $dataStep = Crypt::decryptString($this->data_step);
+            switch ($dataStep) {
+                case 3:
+                    $addValidate = [
+                        'proses_seleksi.*.seleksitahap' => ['required'],
+                        'proses_seleksi.*.deskripsiseleksi' => ['required'],
+                        'proses_seleksi.*.mulai' => ['required'],
+                        'proses_seleksi.*.akhir' => ['required'],
+                    ];
+                    $validate = array_merge($validate, $addValidate);
+                case 2:
+                    $addValidate = [
+                        'kualifikasi' => ['required'],
+                        'jenis_kelamin' => ['required', 'in:Laki-Laki,Perempuan,Laki-Laki & Perempuan'],
+                        'jenjang' => ['required', 'in:D3,S1,S2'],
+                        'fakultas' => ['required', 'exists:fakultas,id_fakultas'],
+                        'id_prodi' => ['required', 'exists:program_studi,id_prodi'],
+                        'keterampilan' => ['required', 'string'],
+                        'pelaksanaan' => ['required', 'in:Online,Onsite,Hybrid'],
+                        'gaji' => ['required', 'in:1,0'],
+                        'nominal' => ['required_if:gaji,1'],
+                        'benefit' => ['nullable', 'string'],
+                        'lokasi' => ['required'],
+                        'tanggal' => ['required'],
+                        'tanggalakhir' => ['required'],
+                        'durasimagang' => ['required', 'in:1 Semester,2 Semester'],
+                        'tahapan' => ['required', 'in:0,1,2'],
+                    ];
+                    $validate = array_merge($validate, $addValidate);
+                case 1:
+                    $addValidate = [
+                        'jenismagang' => ['required', 'exists:jenis_magang,id_jenismagang'],
+                        'posisi' => ['required'],
+                        'kuota' => ['required', 'integer', 'min:1'],
+                        'deskripsi' => ['required'],
+                    ];
+                    $validate = array_merge($validate, $addValidate);
+                
+                default:
+                    break;
+            }
+        }
+
+        return $validate;
     }
     public function messages(): array
     {
         return [
-            'posisi.required' => 'Posisi  magang wajib diisi',
+            // step 1
+            'jenismagang.required' => 'Pilih Jenis Magang terlebih dahulu.',
+            'jenismagang.exists' => 'Jenis Magang tidak valid.',
+            'posisi.required' => 'Posisi Magang wajib diisi',
             'kuota.required' => 'Kuota wajib di isi',
-            'deskripsi.required' => 'Deskripsi wajib di isi',
-            'posisi.string' => 'format tidak valid',
             'kuota.integer' => 'Kuota harus berupa angka',
+            'kuota.min' => 'Kuota minimal 1',
+            'deskripsi.required' => 'Deskripsi wajib di isi',
             'deskripsi.string' => 'Format deskripsi tidak valid',
+            // step 2
+            'kualifikasi.required' => 'Kualifikasi Magang wajib diisi',
+            'jenis_kelamin.required' => 'Jenis Kelamin wajib dipilih',
+            'jenis_kelamin.in' => 'Jenis Kelamin tidak valid',
+            'jenjang.required' => 'Jenjang wajib dipilih',
+            'jenjang.in' => 'Jenjang tidak valid',
+            'fakultas.required' => 'Fakultas wajib dipilih',
+            'fakultas.exists' => 'Fakultas tidak valid',
+            'id_prodi.required' => 'Program Studi wajib dipilih',
+            'id_prodi.exists' => 'Program Studi tidak valid',
+            'keterampilan.required' => 'Keterampilan wajib diisi',
+            'keterampilan.string' => 'Format keterampilan tidak valid',
+            'pelaksanaan.required' => 'Pelaksanaan Magang wajib dipilih',
+            'pelaksanaan.in' => 'Pelaksanaan Magang tidak valid',
+            'gaji.required' => 'Gaji wajib dipilih',
+            'gaji.in' => 'Gaji tidak valid',
+            'nominal.required_if' => 'Nominal Gaji wajib diisi',
+            'benefit.string' => 'Format benefit tidak valid',
+            'lokasi.required' => 'Lokasi Magang wajib diisi',
+            'tanggal.required' => 'Waktu Mulai Magang wajib diisi',
+            'tanggalakhir.required' => 'Waktu Akhir Magang wajib diisi',
+            'durasimagang.required' => 'Durasi Magang wajib dipilih',
+            'durasimagang.in' => 'Durasi Magang tidak valid',
+            'tahapan.required' => 'Tahapan Magang wajib dipilih',
+            'tahapan.in' => 'Tahapan Magang tidak valid',
+            // step 3
+            'proses_seleksi.*.deskripsiseleksi.required' => 'Deskripsi Seleksi harus diisi.',
+            'proses_seleksi.*.mulai.required' => 'Pilih tanggal mulai pelaksanaan.',
+            'proses_seleksi.*.akhir.required' => 'Pilih tanggal akhir pelaksanaan.',
             
         ];
     }

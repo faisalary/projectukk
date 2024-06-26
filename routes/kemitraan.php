@@ -19,19 +19,17 @@ Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraContr
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('lowongan-magang')->group(function () {
-    Route::prefix('informasi-lowongan')->name('informasi_lowongan')->controller(LowonganMagangController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::post('/show', 'show')->name('.show');
-        Route::get('/create/{id}', 'create')->name('.create');
-        Route::post('/store', 'store')->name('.store');
+Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->group(function () {
+    Route::prefix('informasi-lowongan')->name('informasi_lowongan')->group(function () {
+        Route::get('/', 'indexInformasi');
+        Route::get('/show', 'showInformasi')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
-        Route::get('/edit/{id}', 'edit')->name('.edit');
-        Route::post('/update/{id}', 'update')->name('.update');
     });
-    Route::prefix('kelola-lowongan')->name('kelola_lowongan')->controller(LowonganMagangLkmController::class)->group(function () {
+    Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
+        Route::get('/create', 'create')->name('.create');
+        Route::post('/store', 'store')->name('.store');
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');
         Route::put('/update/{id}', 'update')->name('.update');
