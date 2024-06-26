@@ -94,13 +94,13 @@ class MasterDataSeeder extends Seeder
         
 
         $NilaiMutu = [
-            ['nilaimin' => 0, 'nilaimax' => 39, 'nilaimutu' => 'E'],
-            ['nilaimin' => 40, 'nilaimax' => 49, 'nilaimutu' => 'D'],
-            ['nilaimin' => 50, 'nilaimax' => 59, 'nilaimutu' => 'C'],
-            ['nilaimin' => 60, 'nilaimax' => 64, 'nilaimutu' => 'BC'],
-            ['nilaimin' => 65, 'nilaimax' => 69, 'nilaimutu' => 'B'],
-            ['nilaimin' => 70, 'nilaimax' => 79, 'nilaimutu' => 'AB'],
-            ['nilaimin' => 80, 'nilaimax' => 100, 'nilaimutu' => 'A'],
+            ['nilaimin' => '0.00', 'nilaimax' => '40.00', 'nilaimutu' => 'E'],
+            ['nilaimin' => '40.01', 'nilaimax' => '50.00', 'nilaimutu' => 'D'],
+            ['nilaimin' => '50.01', 'nilaimax' => '60.00', 'nilaimutu' => 'C'],
+            ['nilaimin' => '60.01', 'nilaimax' => '65.00', 'nilaimutu' => 'BC'],
+            ['nilaimin' => '65.01', 'nilaimax' => '70.00', 'nilaimutu' => 'B'],
+            ['nilaimin' => '70.01', 'nilaimax' => '80.00', 'nilaimutu' => 'AB'],
+            ['nilaimin' => '80.01', 'nilaimax' => '100', 'nilaimutu' => 'A'],
         ];
         foreach($NilaiMutu as $value){
             NilaiMutu::updateOrCreate([
