@@ -56,6 +56,9 @@ class DokumenSyaratController extends Controller
 
         return DataTables::of($doc)
             ->addIndexColumn()
+            ->editColumn('jenis_magang', function ($row) {
+                return $row->namajenis;
+            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
