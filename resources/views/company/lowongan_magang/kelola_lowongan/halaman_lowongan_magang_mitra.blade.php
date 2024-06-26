@@ -136,8 +136,8 @@
                                 <th style="min-width:100px;">POSISI</th>
                                 <th style="min-width:100px;">TANGGAL</th>
                                 <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:50px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
+                                <th style="text-align:center;min-width:50px;">STATUS</th>
+                                <th style="text-align:center;min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -195,7 +195,6 @@
 
                 $('#' + idElement).DataTable({
                     ajax: "{{ route('kelola_lowongan.show') }}?type=" + idElement,
-                    serverSide: true,
                     processing: true,
                     destroy: true,
                     columns: [{

@@ -4,8 +4,8 @@
     </div>
     <div class="row g-3">
         <div class="col-lg-12 col-sm-6 form-group">
-            <label class="form-label" for="jenismagang">Jenis Magang<span class="text-danger">*</span></label>
-            <select name="jenismagang" id="jenismagang" class="select2 form-select" data-placeholder="Jenis Magang">
+            <label class="form-label" for="id_jenismagang">Jenis Magang<span class="text-danger">*</span></label>
+            <select name="id_jenismagang" id="id_jenismagang" class="select2 form-select" data-placeholder="Jenis Magang">
                 <option value="" disabled selected>Jenis Magang</option>
                 @foreach ($jenismagang as $j)
                 <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
@@ -14,8 +14,8 @@
             <div class="invalid-feedback"></div>
         </div>
         <div class="col-lg-12 col-sm-6 form-group">
-            <label class="form-label" for="posisi">Posisi<span class="text-danger">*</span></label>
-            <input type="text" name="posisi" id="posisi" class="form-control" placeholder="Masukan Posisi Pekerjaan" />
+            <label class="form-label" for="intern_position">Posisi<span class="text-danger">*</span></label>
+            <input type="text" name="intern_position" id="intern_position" class="form-control" placeholder="Masukan Posisi Pekerjaan" />
             <div class="invalid-feedback"></div>
         </div>
         <div class="col-lg-12 col-sm-6 form-group">

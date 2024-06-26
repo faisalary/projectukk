@@ -32,7 +32,7 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::post('/store', 'store')->name('.store');
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');
-        Route::put('/update/{id}', 'update')->name('.update');
+        Route::post('/update/{id}', 'update')->name('.update');
         Route::post('/approved/{id}', 'approved')->name('.approved');
         Route::post('/rejected/{id}', 'rejected')->name('.rejected');
     });
