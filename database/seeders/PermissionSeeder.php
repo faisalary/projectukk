@@ -53,6 +53,8 @@ class PermissionSeeder extends Seeder
             'anggota_tim.view',
         ];
 
+        $permission['Pembimbing Lapangan'] = [];
+
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {
                 Permission::findOrCreate($p, 'web');
