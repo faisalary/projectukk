@@ -13,8 +13,8 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $administrator = Role::where('name', 'Super Admin')->first();
-        $permission = [
+        $permission['LKM'] = [
+            // admin lkm 
             'dashboard.dashboard_admin',
             'kelola_mitra.view',
             'informasi_lowongan_lkm.view',
@@ -43,6 +43,9 @@ class PermissionSeeder extends Seeder
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
+        ];
+
+        $permission['Mitra'] = [
             // mitra
             'dashboard.dashboard_mitra',
             'informasi_lowongan_mitra.view',
@@ -50,8 +53,14 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($permission as $key => $value) {
-            $permission = Permission::findOrCreate($value);
-            $administrator->givePermissionTo($permission);
+            foreach ($value as $p) {
+                Permission::findOrCreate($p, 'web');
+            }
+            $role = Role::findOrCreate($key, 'web');
+            $role->givePermissionTo($value);
         }
+        
+        $role = Role::findOrCreate('Super Admin', 'web');
+        $role->givePermissionTo(Permission::all());
     }
 }

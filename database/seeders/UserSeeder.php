@@ -27,49 +27,19 @@ class UserSeeder extends Seeder
             $administrator->save();
             $administrator->assignRole('Super Admin');
         }
+
+        $mitra = User::firstOrNew([
+            'email' => 'mitra@gmail.com',
+            'username' => 'Mitra'
+        ], [
+            'name' => 'Mitra',
+            'password' => bcrypt('password'),
+        ]);
+
+        if (!$mitra->exists) {
+            $mitra->save();
+            $mitra->assignRole('Mitra');
+        }
         
-        // $superadmin = User::firstOrNew([
-        //     'email' => 'superadmin@gmail.com',
-        //     'username' => 'SuperAdmin'
-        // ], [
-        //     'name' => 'Super Admin Role',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 0
-        // ]);
-
-        // if (!$superadmin->exists) {
-        //     $superadmin->save();
-        //     $superadmin->assignRole('Super Admin');
-        // }
-
-        
-        // $admin = User::firstOrNew([
-        //         'email' => 'admin@role.test',
-        //         'username' => 'Admin'
-        // ], [
-        //     'name' => 'Admin',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 1
-        // ]);
-
-        // if (!$admin->exists) {
-        //     $admin->save();
-        //     $admin->assignRole('admin');
-        // }
-
-        
-        // $user = User::firstOrNew([
-        //     'email' => 'user@role.test',
-        //     'username' => 'User'
-        // ], [
-        //     'name' => 'User Role',
-        //     'password' => bcrypt('12345678'),
-        //     'isAdmin' => 2
-        // ]);
-
-        // if (!$user->exists) {
-        //     $user->save();
-        //     $user->assignRole('user');
-        // }
     }
 }
