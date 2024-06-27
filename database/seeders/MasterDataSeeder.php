@@ -84,8 +84,6 @@ class MasterDataSeeder extends Seeder
             ['namajenis' => 'Magang Fakultas', 'durasimagang' => '1 Semester'], 
             ['namajenis' => 'Magang Fakultas', 'durasimagang' => '2 Semester'], 
             ['namajenis' => 'Magang Mandiri', 'durasimagang' => '1 Semester'], 
-            ['namajenis' => 'Magang Startup', 'durasimagang' => '1 Semester'], 
-            ['namajenis' => 'Magang Kerja', 'durasimagang' => '1 Semester'],
             ['namajenis' => 'Magang MKBM - Kampus Merdeka', 'durasimagang' => '1 Semester'], 
         ];
         foreach($JenisMagang as $value){
@@ -118,14 +116,16 @@ class MasterDataSeeder extends Seeder
         ];
 
         foreach($DokumenPersyaratan as $magang => $documents){
-            $id_jenismagang = JenisMagang::where('namajenis', $magang)->first()->id_jenismagang;
-            foreach($documents as $val){
-                DocumentSyarat::updateOrCreate([
-                    'namadocument' => $val,
-                    'id_jenismagang' => $id_jenismagang
-                ],[
-                    'status' => 1
-                ]);
+            $jenismagang = JenisMagang::where('namajenis', $magang)->get()->pluck('id_jenismagang')->toArray();
+            foreach($jenismagang as $id_jenismagang){
+                foreach($documents as $val){
+                    DocumentSyarat::updateOrCreate([
+                        'namadocument' => $val,
+                        'id_jenismagang' => $id_jenismagang
+                    ],[
+                        'status' => 1
+                    ]);
+                }
             }
         }
 
@@ -158,17 +158,19 @@ class MasterDataSeeder extends Seeder
             ]]
         ];
         foreach($KomponenNilai as $magang => $komponen){
-            $id_jenismagang = JenisMagang::where('namajenis', $magang)->first()->id_jenismagang;
-            foreach($komponen as $value){
-                KomponenNilai::updateOrCreate([
-                    'id_jenismagang' => $id_jenismagang,
-                    'aspek_penilaian' => $value['aspek_penilaian'],
-                    'scored_by' => $value['scored_by'],
-                ],[
-                    'deskripsi_penilaian' => $value['deskripsi_penilaian'],
-                    'nilai_max' => $value['nilai_max'],
-                    'status' => 1
-                ]);
+            $jenismagang = JenisMagang::where('namajenis', $magang)->get()->pluck('id_jenismagang')->toArray();
+            foreach($jenismagang as $id_jenismagang){
+                foreach($komponen as $value){
+                    KomponenNilai::updateOrCreate([
+                        'id_jenismagang' => $id_jenismagang,
+                        'aspek_penilaian' => $value['aspek_penilaian'],
+                        'scored_by' => $value['scored_by'],
+                    ],[
+                        'deskripsi_penilaian' => $value['deskripsi_penilaian'],
+                        'nilai_max' => $value['nilai_max'],
+                        'status' => 1
+                    ]);
+                }
             }
         }
     }
