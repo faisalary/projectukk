@@ -16,7 +16,6 @@ class PermissionSeeder extends Seeder
         $administrator = Role::where('name', 'Super Admin')->first();
         $permission = [
             'dashboard.dashboard_admin',
-            'dashboard.dashboard_mitra',
             'kelola_mitra.view',
             'informasi_lowongan_lkm.view',
             'kelola_lowongan_lkm.view',
@@ -44,6 +43,10 @@ class PermissionSeeder extends Seeder
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
+            // mitra
+            'dashboard.dashboard_mitra',
+            'informasi_lowongan_mitra.view',
+            'kelola_lowongan_mitra.view'
         ];
 
         foreach ($permission as $key => $value) {

@@ -31,7 +31,7 @@ class MenuHelper
                     unset($data[$key]);
                 }
             } else {
-                if (!empty($getUserPermission) && !in_array($value['permission'], $getUserPermission)) {
+                if (!in_array($value['permission'], $getUserPermission)) {
                     unset($data[$key]);
                 }
             }
