@@ -30,9 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if(Auth::user()->can('dashboard.admin')) {
+        if(Auth::user()->can('dashboard.dashboard_admin')) {
             $url = RouteServiceProvider::ADMIN;
-        } elseif(Auth::user()->can('dashboard.mitra')) {
+        } elseif(Auth::user()->can('dashboard.dashboard_mitra')) {
             $url = RouteServiceProvider::MITRA;
         } else {
             $url = RouteServiceProvider::LANDINGPAGE;

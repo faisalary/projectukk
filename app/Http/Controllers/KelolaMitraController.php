@@ -15,6 +15,7 @@ use App\Http\Requests\CompanyReg;
 use Illuminate\Support\Facades\DB;
 use App\Mail\RejectionNotification;
 use App\Http\Controllers\Controller;
+use App\Models\PegawaiIndustri;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
@@ -71,7 +72,7 @@ class KelolaMitraController extends Controller
      */
     public function show(Request $request)
     {
-        $industri = Industri::query();
+        $industri = Industri::with('penanggungJawab');
         $status = $request->status;
 
         if ($status == 'pending') $industri->where('statusapprove', 0);
@@ -91,7 +92,10 @@ class KelolaMitraController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['aksi',])
+            ->editColumn('penanggung_jawab', function ($data) {
+                return $data->penanggungJawab->namapeg;
+            })
+            ->rawColumns(['aksi', 'penanggung_jawab'])
             ->make(true);
     }
 
@@ -102,35 +106,34 @@ class KelolaMitraController extends Controller
             $data = Industri::find($id);
             if (!$data) return Response::error(null, 'Not Found.');
             if ($data->statusapprove != 0) return Response::error(null, 'Mitra sudah diapprove.');
+            $pegawaiIndustri = PegawaiIndustri::where('id_peg_industri', $data->penanggung_jawab)->first();
+            if (!$pegawaiIndustri) return Response::error(null, 'Not Found.');
 
             $data->statusapprove = 1;
 
             $user = User::create([
-                'name' => $data->penanggung_jawab,
-                'username' => $data->penanggung_jawab,
-                'email' => $data->email,
+                'name' => $pegawaiIndustri->namapeg,
+                'username' => $pegawaiIndustri->namapeg,
+                'email' => $pegawaiIndustri->emailpeg,
                 'password' => Hash::make(Str::random(12)),
             ])->assignRole('Mitra');
 
-            $data->id_user = $user->id;
-            $data->save();
-
             $code = Str::random(60);
 
-            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $data->email)->first();
+            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $pegawaiIndustri->emailpeg)->first();
             
             if ($passwordResetToken) {
-                DB::table('password_reset_tokens')->where('email', $data->email)->delete();
+                DB::table('password_reset_tokens')->where('email', $pegawaiIndustri->emailpeg)->delete();
             }
 
             DB::table('password_reset_tokens')->insert([
-                'email' => $data->email,
+                'email' => $pegawaiIndustri->emailpeg,
                 'token' => $code,
                 'created_at' => now(),
             ]);
             
             $url = route('register.set-password', ['token' => $code]);
-            dispatch(new SendMailJob($data->email, new VerifyEmail($url)));
+            dispatch(new SendMailJob($pegawaiIndustri->emailpeg, new VerifyEmail($url)));
             DB::commit();
 
             return Response::success(null, 'Persetujuan berhasil.');
