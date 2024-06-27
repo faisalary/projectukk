@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
 use App\Http\Controllers\InformasiMitraController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
-use App\Http\Controllers\InformasiLowonganController;
 use App\Http\Controllers\LowonganMagangLkmController;
+use App\Http\Controllers\PegawaiIndustriController;
 
 Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraController::class)->group(function () {
     Route::get('/', 'index');
@@ -54,6 +54,15 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
         Route::post('/approved/{id}', 'approved')->name('.approved');
         Route::post('/rejected/{id}', 'rejected')->name('.rejected');
     });
+});
+
+Route::prefix('anggota-tim')->name('pegawaiindustri')->controller(PegawaiIndustriController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::post('/store', 'store')->name('.store');
+    Route::get('/edit/{id}', 'edit')->name('.edit');
+    Route::post('/update/{id}', 'update')->name('.update');
+    Route::post('/status/{id}', 'status')->name('.status');
 });
 
 Route::prefix('jadwal-seleksi')->group(function () {

@@ -256,9 +256,6 @@ Route::get('/detail-informasi-dokumen', function () {
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');
 });
-Route::get('/anggota/tim', function () {
-    return view('company.anggota_tim.index');
-});
 
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');

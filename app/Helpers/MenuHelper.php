@@ -239,11 +239,6 @@ class MenuHelper
                         'permission' => 'mahasiswa.view'
                     ],
                     [
-                        'name' => 'Pegawai Industri',
-                        'route' => 'pegawaiindustri',
-                        'permission' => 'pegawai_industri.view'
-                    ],
-                    [
                         'name' => 'Nilai Mutu',
                         'route' => 'nilai-mutu',
                         'permission' => 'nilai_mutu.view'
@@ -287,6 +282,12 @@ class MenuHelper
                         'permission' => 'kelola_lowongan_mitra.view'
                     ],
                 ]
+            ],
+            [
+                'name' => 'Anggota Tim',
+                'route' => 'pegawaiindustri',
+                'icon' => 'ti-users',
+                'permission' => 'anggota_tim.view'
             ],
         ];
     }
