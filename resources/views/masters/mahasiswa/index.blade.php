@@ -93,6 +93,11 @@
 
 @section('page_script')
 <script>
+    function afterAction(response) {
+        $('#modal-mahasiswa').modal('hide');
+        $('#table-master-mahasiswa').DataTable().ajax.reload();
+    }
+
     $("#modal-mahasiswa").on("hide.bs.modal", function() {
 
         $("#modal-title").html("Tambah Prodi");

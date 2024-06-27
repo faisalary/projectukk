@@ -22,29 +22,24 @@ class MahasiswaRequest extends FormRequest
      */
     public function rules(): array
     {
+        $nim = ['required', 'string','max:15','unique:mahasiswa'];
         if (isset($this->id)) {
-            return [
-                'nim' => ['required', 'string','max:15', 'unique:mahasiswa', Rule::unique('mahasiswa')->ignore($this->id, 'nim')],
-                'angkatan' => ['required', 'integer'],
-                'namaprodi' => ['required', 'string','max:255'],
-                'namauniv' => ['required', 'string', 'max:255'],
-                'namafakultas' => ['required', 'string', 'max:255'],
-                'namamhs' => ['required', 'string', 'max:255'],
-                'alamatmhs' => ['required', 'string', 'max:255'],
-                'emailmhs' => ['required', 'string', 'max:255'],
-                'nohpmhs' => ['required', 'numeric',],
-            ];    
+            array_push($nim, Rule::unique('mahasiswa')->ignore($this->id, 'nim'));
         }  
         return [
-            'nim' => ['required', 'string','max:15','unique:mahasiswa'],
+            'nim' => $nim,
             'angkatan' => ['required', 'integer'],
-            'namaprodi' => ['required', 'string','max:255'],
-            'namauniv' => ['required', 'string', 'max:255'],
-            'namafakultas' => ['required', 'string', 'max:255'],
+            'id_prodi' => ['required', 'string','max:255'],
+            'id_univ' => ['required', 'string', 'max:255'],
+            'id_fakultas' => ['required', 'string', 'max:255'],
             'namamhs' => ['required', 'string', 'max:255'],
             'alamatmhs' => ['required', 'string', 'max:255'],
             'emailmhs' => ['required', 'string', 'max:255'],
             'nohpmhs' => ['required', 'numeric',],
+            'eprt' => ['required', 'numeric',],
+            'tak' => ['required', 'numeric',],
+            'ipk' => ['required', 'regex:/^\d{1}(\.\d{0,2})?$/',],
+            'tunggakan_bpp' => ['required', 'string',],
         ];
     }           
     public function messages(): array

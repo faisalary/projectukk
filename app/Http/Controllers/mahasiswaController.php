@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Response;
 use Exception;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -43,26 +44,14 @@ class mahasiswaController extends Controller
     public function store(MahasiswaRequest $request)
     {
         try {
+            Mahasiswa::create($request->validated());
 
-        $mahasiswa = Mahasiswa::create([
-            'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
-            'id_prodi' => $request->namaprodi,
-            'id_univ' => $request->namauniv,
-            'id_fakultas' => $request->namafakultas,
-            'namamhs' => $request->namamhs,
-            'alamatmhs' => $request->alamatmhs,
-            'emailmhs' => $request->emailmhs,
-            'nohpmhs' => $request->nohpmhs, 
-            
-        ]);
-
-        return response()->json([
-            'error' => false,
-            'message' => 'Data Created!',
-            'modal' => '#modal-mahasiswa',
-            'table' => '#table-master-mahasiswa'
-        ]);
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Created!',
+                'modal' => '#modal-mahasiswa',
+                'table' => '#table-master-mahasiswa'
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'error' => true,
@@ -138,17 +127,9 @@ class mahasiswaController extends Controller
             $mahasiswa->nohpmhs = $request->nohpmhs;
             $mahasiswa->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Mahasiswa successfully Updated!',
-                'modal' => '#modal-mahasiswa',
-                'table' => '#table-master-mahasiswa'
-            ]);
+            return Response::success(null, 'Komponen Nilai successfully Add!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
     

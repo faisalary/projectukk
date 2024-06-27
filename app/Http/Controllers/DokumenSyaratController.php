@@ -57,7 +57,7 @@ class DokumenSyaratController extends Controller
         return DataTables::of($doc)
             ->addIndexColumn()
             ->editColumn('jenis_magang', function ($row) {
-                return $row->namajenis;
+                return $row->jenis->namajenis." (".$row->jenis->durasimagang.")";
             })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
