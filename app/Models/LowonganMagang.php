@@ -36,9 +36,6 @@ class LowonganMagang extends Model
         'nominal_salary',
         'gender',
         'status',
-        'prodi',
-        'id_prodi',
-        'id_fakultas',
         'alasantolak',
         'statusaprove',
         'lokasi'
@@ -97,9 +94,9 @@ class LowonganMagang extends Model
     {
         return $this->belongsTo(Universitas::class, 'id_univ');
     }
-    public function seleksi()
+    public function seleksi_tahap()
     {
-        return $this->hasMany(SeleksiTahap::class, 'id_lowongan');
+        return $this->hasMany(SeleksiTahap::class, 'id_lowongan', 'id_lowongan');
     }
     public function prodilowongan()
     {

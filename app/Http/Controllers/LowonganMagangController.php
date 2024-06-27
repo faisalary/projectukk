@@ -14,11 +14,13 @@ use Illuminate\Http\Request;
 use App\Models\LowonganProdi;
 use Illuminate\Routing\Route;
 use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\LowonganMagangRequest;
+use stdClass;
 
 class LowonganMagangController extends Controller
 {
@@ -77,12 +79,9 @@ class LowonganMagangController extends Controller
     {
         $user = auth()->user();
         $industri = $user->industri;
-        $seleksi = SeleksiTahap::all();
         $jenismagang = JenisMagang::all();
-        $fakultas = Fakultas::all();
-        $prodi = ProgramStudi::where('id_prodi')->get();
 
-        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'seleksi', 'prodi', 'fakultas', 'industri'));
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang'));
     }
 
     /**
@@ -100,7 +99,7 @@ class LowonganMagangController extends Controller
                 ], 'Valid data!');
             }
             if ($dataStep == 2) {
-                $tahap = $request->tahapan;
+                $tahap = $request->tahapan_seleksi;
                 return Response::success([
                     'ignore_alert' => true,
                     'data_step' => (int) ($dataStep + 1),
@@ -109,36 +108,39 @@ class LowonganMagangController extends Controller
             }
 
             $user = auth()->user();
+
+            $request->jenjang = array_map(function() {
+                return [];
+            }, array_flip($request->jenjang));
+
             $lowongan = LowonganMagang::create([
-                'id_jenismagang' => $request->jenismagang,
-                'intern_position' => $request->posisi,
+                'id_jenismagang' => $request->id_jenismagang,
+                'intern_position' => $request->intern_position,
                 'kuota' => $request->kuota,
                 'deskripsi' => $request->deskripsi,
-                'requirements' => $request->kualifikasi,
-                'gender' => $request->jenis_kelamin,
-                'jenjang' => $request->jenjang,
-                'keterampilan' => $request->keterampilan,
-                'nominal_salary' => $request->nominal,
-                'benefitmagang' => $request->benefit,
-                'id_industri' => $user->industri->id_industri,
-                'startdate' => $request->tanggal,
+                'requirements' => $request->requirements,
+                'gender' => $request->gender,
+                'jenjang' => json_encode($request->jenjang),
+                'keterampilan' => json_encode($request->keterampilan),
                 'pelaksanaan' => $request->pelaksanaan,
-                'enddate' => $request->tanggalakhir,
-                'durasimagang' => $request->durasimagang,
-                'tahapan_seleksi' => $request->tahapan,
-                'id_prodi' => $request->id_prodi,
-                'id_fakultas' => $request->fakultas,
-                'lokasi' => $request->lokasi,
+                'nominal_salary' => $request->nominal_salary,
+                'benefitmagang' => $request->benefitmagang,
+                'lokasi' => json_encode($request->lokasi),
+                'startdate' => Carbon::parse($request->startdate)->format('Y-m-d'),
+                'enddate' => Carbon::parse($request->enddate)->format('Y-m-d'),
+                'durasimagang' => json_encode($request->durasimagang),
+                'tahapan_seleksi' => $request->tahapan_seleksi,
+                'id_industri' => $user->industri->id_industri,
                 'statusaprove' => 'tertunda'
             ]);
             
             foreach ($request->proses_seleksi as $key => $value) {
                 SeleksiTahap::create([
                     'id_lowongan' => $lowongan->id_lowongan,
-                    'tahap' => Crypt::decryptString($value['seleksitahap']),
-                    'deskripsi' => $value['deskripsiseleksi'],
-                    'tgl_mulai' => $value['mulai'],
-                    'tgl_akhir' => $value['akhir'],
+                    'tahap' => Crypt::decryptString($value['tahap']),
+                    'deskripsi' => $value['deskripsi'],
+                    'tgl_mulai' => $value['tgl_mulai'],
+                    'tgl_akhir' => $value['tgl_akhir'],
                 ]);    
             }
 
@@ -178,17 +180,29 @@ class LowonganMagangController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+                $color = ($row->status) ? "danger" : "primary";
 
-                $btn = "<a href='" . url('kelola/lowongan/mitra/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
-                        <a href='" . url('kelola/lowongan/mitra/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                        <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<div class='d-flex justify-content-center'><a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>
+                        <a href='" . url('kelola/lowongan/mitra/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                        <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
-                return $row->startdate . " <br> " . $row->enddate;
+                $result = '<div class="text-start">';
+
+                $result .= '<span class="text-muted">Publish</span><br>';
+                $result .= '<span>' . Carbon::parse($row->startdate)->format('d F Y') . '</span><br>';
+                $result .= '<span class="text-muted">Takedown</span><br>';
+                $result .= '<span>' . Carbon::parse($row->enddate)->format('d F Y') . '</span>';
+
+                $result .= '</div>';
+                return  $result;
             })
-            ->rawColumns(['action', 'status', 'tanggal'])
+            ->editColumn('durasimagang', function ($data) {
+                $result = implode(' dan ', json_decode($data->durasimagang));
+                return $result;
+            })
+            ->rawColumns(['action', 'status', 'tanggal', 'durasimagang'])
             ->make(true);
     }
     /**
@@ -196,15 +210,20 @@ class LowonganMagangController extends Controller
      */ 
     public function edit(Request $request, $id)
     {
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('jenisMagang')->first();
+        $lowongan = LowonganMagang::with(['jenisMagang', 'seleksi_tahap'])->where('id_lowongan', $id)->first();
         $jenismagang = JenisMagang::all();
-        $prodi = ProgramStudi::all();
-        $fakultas = Fakultas::all();
-        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
-        return view('lowongan_magang.kelola_lowongan_magang_admin.edit_lowongan_magang', compact('jenismagang', 'lowongan', 'seleksi', 'prodi', 'fakultas'));
+        $tahap = $lowongan->tahapan_seleksi;
+
+        foreach ($lowongan->seleksi_tahap as $key => $value) {
+            $lowongan->{'proses_seleksi[' . $key . '][deskripsi]'} = $value->deskripsi;
+            $lowongan->{'proses_seleksi[' . $key . '][tgl_mulai]'} = $value->tgl_mulai;
+            $lowongan->{'proses_seleksi[' . $key . '][tgl_akhir]'} = $value->tgl_akhir;
+        }
+        
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap'));
     }
 
-    public function detail($id)
+    public function detail($id)  
     {
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
         $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
@@ -221,61 +240,71 @@ class LowonganMagangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(LowonganMagangRequest $request, $id)
     {
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
+
             $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
 
+            $dataStep = Crypt::decryptString($request->data_step);
+            if ($dataStep == 1) {
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                ], 'Valid data!');
+            }
+            if ($dataStep == 2) {
+                $tahap = $request->tahapan_seleksi;
+                $return = [
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                ];
+
+                if ($tahap != $lowongan->tahapan_seleksi) {
+                    $return['view'] = view('company/lowongan_magang/kelola_lowongan/step/proses_seleksi', compact('tahap'))->render();
+                }
+
+                return Response::success($return, 'Valid data!');
+            }
+
             $lowongan->id_jenismagang = $request->id_jenismagang;
-            $lowongan->intern_position = $request->posisi;
+            $lowongan->intern_position = $request->intern_position;
             $lowongan->kuota = $request->kuota;
             $lowongan->deskripsi = $request->deskripsi;
-            $lowongan->requirements = $request->kualifikasi;
+            $lowongan->requirements = $request->requirements;
             $lowongan->jenjang = $request->jenjang;
             $lowongan->keterampilan = $request->keterampilan;
-            $lowongan->gender = $request->jenis;
-            $lowongan->nominal_salary = $request->nominal;
-            $lowongan->benefitmagang = $request->benefit;
+            $lowongan->gender = $request->gender;
+            $lowongan->nominal_salary = $request->nominal_salary;
+            $lowongan->benefitmagang = $request->benefitmagang;
             $lowongan->lokasi = $request->lokasi;
             $lowongan->pelaksanaan = $request->pelaksanaan;
-            $lowongan->startdate = $request->tanggal;
-            $lowongan->enddate = $request->tanggalakhir;
+            $lowongan->startdate = $request->startdate;
+            $lowongan->enddate = $request->enddate;
             $lowongan->durasimagang = $request->durasimagang;
-            $lowongan->tahapan_seleksi = $request->tahapan;
+            $lowongan->tahapan_seleksi = $request->tahapan_seleksi;
             $lowongan->statusaprove = 'tertunda';
-            $lowongan->id_fakultas = $request->fakultas;
-            if ($lowongan->save()) {
-                $seleksi = SeleksiTahap::where('id_lowongan', $id)->delete();
-                $i = 0;
-                foreach ((array) $request->mulai as $m) {
-                    if ($m != null) {
-                        SeleksiTahap::create([
-                            'id_lowongan' => $lowongan->id_lowongan,
-                            'tgl_mulai' => $request->mulai[$i],
-                            'tgl_akhir' => $request->akhir[$i],
-                            'deskripsi' => $request->deskripsiseleksi[$i],
-                        ]);
-                    }
-                    $i++;
-                }
+
+            $lowongan->save();
+
+            SeleksiTahap::where('id_lowongan', $id)->delete();
+            foreach ($request->proses_seleksi as $key => $value) {
+                SeleksiTahap::create([
+                    'id_lowongan' => $lowongan->id_lowongan,
+                    'tahap' => Crypt::decryptString($value['tahap']),
+                    'deskripsi' => $value['deskripsi'],
+                    'tgl_mulai' => $value['tgl_mulai'],
+                    'tgl_akhir' => $value['tgl_akhir'],
+                ]);    
             }
 
             DB::commit();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'lowongan magang successfully Updated!',
-                'url' => url('/kelola/lowongan/mitra', Auth::user()->id_industri)
-                // 'url' => url('/kelola/lowongan/lkm')
-
-            ]);
+            return Response::success(null, 'lowongan magang successfully Updated!');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
