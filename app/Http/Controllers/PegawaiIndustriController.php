@@ -16,6 +16,11 @@ use App\Http\Requests\PegawaiIndustriRequest;
 
 class PegawaiIndustriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:pegawai_industri.view');
+    }
+
     /**
      * Display a listing of the resource.
      */

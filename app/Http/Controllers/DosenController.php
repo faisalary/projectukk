@@ -19,7 +19,7 @@ class DosenController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:only.lkm', ['only' => ['index']]);
+        $this->middleware('permission:dosen.view');
     }
     /**
      * Display a listing of the resource.

@@ -18,6 +18,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class mahasiswaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:mahasiswa.view');
+    }
+
     /**
      * Display a listing of the resource.
      */

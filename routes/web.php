@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/kemitraan.php';
     require __DIR__ . '/mahasiswa.php';
 
-    Route::get('dashboard/admin', function () {
+    Route::middleware('permission:dashboard.dashboard_admin')->get('dashboard/admin', function () {
         return view('dashboard.admin.index');
     })->name('dashboard_admin');
     

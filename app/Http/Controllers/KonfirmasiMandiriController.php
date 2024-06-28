@@ -15,7 +15,7 @@ class KonfirmasiMandiriController extends Controller
 {
     public function __construct()
     {
-       
+        $this->middleware('permission:pengajuan_magang.view');
     }
     /**
      * Display a listing of the resource.

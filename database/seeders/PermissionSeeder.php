@@ -17,9 +17,9 @@ class PermissionSeeder extends Seeder
             // admin lkm 
             'dashboard.dashboard_admin',
             'kelola_mitra.view',
-            'informasi_lowongan_lkm.view',
-            'kelola_lowongan_lkm.view',
-            'pengajuan_magang.view',
+            'informasi_lowongan_lkm.view', //
+            'kelola_lowongan_lkm.view',//
+            'pengajuan_magang.view',//
             'data_magang.view',
             'jadwal_seleksi_lkm.view',
             'berkas_magang_fakultas.view',
@@ -48,8 +48,8 @@ class PermissionSeeder extends Seeder
         $permission['Mitra'] = [
             // mitra
             'dashboard.dashboard_mitra',
-            'informasi_lowongan_mitra.view',
-            'kelola_lowongan_mitra.view',
+            'informasi_lowongan_mitra.view', //
+            'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
         ];
 

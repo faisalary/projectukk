@@ -14,6 +14,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProdiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:program_studi.view');
+    }
+
     /**
      * Display a listing of the resource.
      */

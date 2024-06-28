@@ -12,6 +12,11 @@ use App\Http\Requests\DokumenSyaratRequest;
 
 class DokumenSyaratController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:dokumen_syarat.view');
+    }
+
     /**
      * Display a listing of the resource.
      */
