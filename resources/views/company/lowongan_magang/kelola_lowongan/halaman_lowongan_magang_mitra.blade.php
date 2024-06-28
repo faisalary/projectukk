@@ -146,39 +146,7 @@
         </div>
         @endforeach
     </div>
-
-
-    {{-- <div class="tab-content p-0">
-        @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $tableId)
-            <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}" id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
-                <div class="card">
-                    
-                    <div class="row mt-3 ms-2">
-                        <div class="col-6 d-flex align-items-center"
-                            style="border: 2px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
-                            <span class="badge badge-center bg-label-success mr-10"><i
-                                    class="ti ti-briefcase"></i></span>Total Lowongan:</span>&nbsp;<span
-                                style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Lowongan </span>
-                        </div>
-                    </div>
-                    <div class="card-datatable table-responsive">
-                        <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width:70px;">NOMOR</th>
-                                    <th style="min-width:100px;">POSISI</th>
-                                    <th style="min-width:100px;">TANGGAL</th>
-                                    <th style="min-width:100px;">DURASI MAGANG</th>
-                                    <th style="min-width:50px;">STATUS</th>
-                                  
-                                    <th style="min-width:100px;">AKSI</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        @endforeach  --}}
+    
 @include('company/lowongan_magang/components/modal_kelola_lowongan')
 @endsection
 @section('page_script')

@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Lokasi;
 use App\Models\Fakultas;
 use App\Models\JenisMagang;
-use App\Models\Lokasi;
-use App\Models\LowonganMagang;
-use App\Models\LowonganProdi;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\LowonganProdi;
+use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class LowonganMagangLkmController extends Controller
 {
     public function __construct(){
 
-    // $this->middleware(['role:superadmin']);
-}
+        // $this->middleware(['role:superadmin']);
+    }
      /**
      * Display a listing of the resource.
      */
@@ -49,46 +50,54 @@ class LowonganMagangLkmController extends Controller
     public function show(Request $request)
     {
         $lowongan = LowonganMagang::query();
-        if ($request->type) {
-            if ($request->jenismagang != null) {
-                $lowongan->where("id_jenismagang", $request->jenismagang, $request->type);
-            } else if ($request->lokasi != null) {
-                $lowongan->where("id_lokasi", $request->lokasi, $request->type);
-            } else if ($request->prodi != null) {
-                $lowongan->where("id_prodi", $request->prodi, $request->type);
-            } else if ($request->fakultas != null) {
-                $lowongan->where("id_fakultas", $request->fakultas, $request->type);
-            } else if($request->type != 'total'){
-                $lowongan->where("statusaprove", $request->type);
-            }
-        }
+        // if ($request->type) {
+        //     if ($request->jenismagang != null) {
+        //         $lowongan->where("id_jenismagang", $request->jenismagang, $request->type);
+        //     } else if ($request->lokasi != null) {
+        //         $lowongan->where("id_lokasi", $request->lokasi, $request->type);
+        //     } else if ($request->prodi != null) {
+        //         $lowongan->where("id_prodi", $request->prodi, $request->type);
+        //     } else if ($request->fakultas != null) {
+        //         $lowongan->where("id_fakultas", $request->fakultas, $request->type);
+        //     } else if($request->type != 'total'){
+        //         $lowongan->where("statusaprove", $request->type);
+        //     }
+        // }
         $lowongan = $lowongan->with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->orderBy('id_jenismagang', 'desc')->get();
-
 
         return DataTables::of($lowongan)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-primary'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
-                
-                // <a href='" . url('kelola/lowongan/lkm/edit/' . $row->id_lowongan) . "' onclick=edit($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i></a>
+                $color = ($row->status) ? "danger" : "primary";
                 $btn = "
-                 <a href='" . url('kelola/lowongan/lkm/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                 <a href='" . route('lowongan.kelola.detail', ['id'=> $row->id_lowongan]) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>
                  <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
-                return $row->startdate . " <br> " . $row->enddate;
-            })
-            ->rawColumns(['action', 'status', 'tanggal'])
+                $result = '<div class="text-start">';
 
+                $result .= '<span class="text-muted">Publish</span><br>';
+                $result .= '<span>' . Carbon::parse($row->startdate)->format('d F Y') . '</span><br>';
+                $result .= '<span class="text-muted">Takedown</span><br>';
+                $result .= '<span>' . Carbon::parse($row->enddate)->format('d F Y') . '</span>';
+
+                $result .= '</div>';
+                return  $result;
+            })
+            ->editColumn('durasimagang', function ($data) {
+                $result = implode(' dan ', json_decode($data->durasimagang));
+                return $result;
+            })
+            ->rawColumns(['action', 'status', 'tanggal', 'durasimagang'])
             ->make(true);
     }
 
@@ -99,15 +108,11 @@ class LowonganMagangLkmController extends Controller
     public function detail($id)
     {
         $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
-        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
-        $fakultas = Fakultas::all();
         $prodi = ProgramStudi::all();
-        $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
         if (!$lowongan) {
             return redirect()->route('lowongan-magang.index');
         }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact( 'prodilo', 'prodilowongan','lowongan', 'seleksi', 'fakultas', 'prodi', 'fakultas'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi'));
     }
 
     public function approved(Request $request, $id)

@@ -56,20 +56,7 @@ class LowonganMagangController extends Controller
             return Response::success($data, 'Success!');
         }
 
-        $lowongan = new LowonganMagang;
-        $lowongan = [
-            'total' => $lowongan->count(),
-            'tertunda' => $lowongan->where('statusaprove', 'tertunda')->count(),
-            'diterima' => $lowongan->where('statusaprove', 'diterima')->count(),
-            'ditolak' => $lowongan->where('statusaprove', 'ditolak')->count(),
-        ];
-        $jenismagang = JenisMagang::all();
-        $prodi = ProgramStudi::all();
-        $fakultas = Fakultas::all();
-        $industri = auth()->user()->industri;
-        return view('company.lowongan_magang.kelola_lowongan.halaman_lowongan_magang_mitra',
-            compact('lowongan', 'jenismagang', 'prodi', 'fakultas', 'industri')
-        );
+        return view('company.lowongan_magang.kelola_lowongan.halaman_lowongan_magang_mitra');
     }
 
     /**
@@ -77,8 +64,6 @@ class LowonganMagangController extends Controller
      */
     public function create(Request $request)
     {
-        $user = auth()->user();
-        $industri = $user->industri;
         $jenismagang = JenisMagang::all();
 
         return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang'));
@@ -107,7 +92,7 @@ class LowonganMagangController extends Controller
                 ], 'Valid data!');
             }
 
-            $user = auth()->user();
+            $id_industri = auth()->user()->pegawai_industri->id_industri;
 
             $request->jenjang = array_map(function() {
                 return [];
@@ -130,7 +115,7 @@ class LowonganMagangController extends Controller
                 'enddate' => Carbon::parse($request->enddate)->format('Y-m-d'),
                 'durasimagang' => json_encode($request->durasimagang),
                 'tahapan_seleksi' => $request->tahapan_seleksi,
-                'id_industri' => $user->industri->id_industri,
+                'id_industri' => $id_industri,
                 'statusaprove' => 'tertunda'
             ]);
             
@@ -158,7 +143,8 @@ class LowonganMagangController extends Controller
 
     public function show(Request $request)
     {
-        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', Auth::user()->industri->id_industri);
+        $id_industri = auth()->user()->pegawai_industri->id_industri;
+        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', $id_industri);
         if ($request->type == "tertunda") {
             $lowongan =  $lowongan->where('statusaprove', 'tertunda');
         } elseif ($request->type == 'diterima') {
@@ -210,7 +196,7 @@ class LowonganMagangController extends Controller
      */ 
     public function edit(Request $request, $id)
     {
-        $lowongan = LowonganMagang::with(['jenisMagang', 'seleksi_tahap'])->where('id_lowongan', $id)->first();
+        $lowongan = LowonganMagang::with(['jenisMagang'])->where('id_lowongan', $id)->first();
         $jenismagang = JenisMagang::all();
         $tahap = $lowongan->tahapan_seleksi;
 

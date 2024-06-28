@@ -45,8 +45,7 @@
                                             id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
                                     @endif
                                 <div class="ms-5">
-                                    <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">{{$lowongan->industri?->namaindustri??''}}
-                                    </p>
+                                    <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">{{$lowongan->industri?->namaindustri??''}}</p>
                                     <p class="mt-n3" style="font-size: 18px; color: #4B465C">{{$lowongan->intern_position}}</p>
                                 </div>
                             </div>
