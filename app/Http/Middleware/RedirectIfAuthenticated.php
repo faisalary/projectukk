@@ -21,7 +21,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                if(Auth::user()->can('dashboard.dashboard_admin')) {
+                    $url = RouteServiceProvider::ADMIN;
+                } elseif(Auth::user()->can('dashboard.dashboard_mitra')) {
+                    $url = RouteServiceProvider::MITRA;
+                } else {
+                    $url = RouteServiceProvider::LANDINGPAGE;
+                }
+
+                return redirect($url);
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
 

@@ -11,12 +11,16 @@ class PegawaiIndustri extends Model
     use HasUuids;
 
     protected $table = 'pegawai_industri';
-    protected $fillable = ['id_peg_industri','id_industri', 'namapeg', 'nohppeg', 'emailpeg', 'jabatan', 'unit', 'statuspeg'];
+    protected $guarded = [];
     protected $primaryKey = 'id_peg_industri';
     protected $keyType = 'string';
     public $timestamps = false;
 
     public function industri(){
         return $this->belongsTo(industri::class, 'id_industri');
+    }
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'id_user');
     }
 }

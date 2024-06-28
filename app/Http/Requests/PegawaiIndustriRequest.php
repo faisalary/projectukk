@@ -12,7 +12,7 @@ class PegawaiIndustriRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,37 +22,30 @@ class PegawaiIndustriRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)){
-            return [
-                'namaperusahaan' => ['required'],
-                'namapeg' => ['required', 'string', 'max:255', Rule::unique('pegawai_industri')->ignore($this->id, 'id_peg_industri')],
-                'nohppeg' => ['required', 'numeric', 'digits:12'],
-                'emailpeg' => ['required', 'string', 'max:255'],
-                'jabatan' => ['required', 'string', 'max:255'],
-                'unit' => ['required', 'string', 'max:255'],
-            ];
-        }
-        return [
-            'namaperusahaan' => ['required'],
+        $validate = [
             'namapeg' => ['required', 'string', 'max:255'],
-            'nohppeg' => ['required', 'numeric', 'digits:12'],
-            'emailpeg' => ['required', 'string', 'max:255'],
+            'nohppeg' => ['required', 'phone:id'],
+            'emailpeg' => ['required', 'email', 'unique:pegawai_industri,emailpeg', 'unique:users,email'],
             'jabatan' => ['required', 'string', 'max:255'],
-            'unit' => ['required', 'string', 'max:255'],
         ];
+
+        if (isset($this->id)){
+            $validate['emailpeg'] = ['required', 'email', Rule::unique('pegawai_industri')->ignore($this->id, 'id_peg_industri')];
+        }
+
+        return $validate;
     }
 
     public function messages()
     {
         return[
-            'namaperusahaan.required' => 'Program Studin name must be filled',
-            'namapeg.required' => 'Program Studi name must be filled',
-            'nohppeg.required' => 'The phone number must be filled',
-            'nohppeg.numeric' => 'The phone number must be number',
-            'nohppeg.digits' => 'The phone number must be 12 digits',
-            'emailpeg.required' => 'The e-mail must be filled',
-            'jabatan.required' => 'The position must be filled',
-            'unit.required' => 'The units must be filled Studi',
+            'namapeg.required' => 'Nama Pegawai harus diisi.',
+            'nohppeg.required' => 'No HP harus diisi.',
+            'nohppeg.phone' => 'No HP tidak valid.',
+            'emailpeg.required' => 'Email harus diisi.',
+            'emailpeg.email' => 'Email tidak valid.',
+            'emailpeg.unique' => 'Email sudah terdaftar.',
+            'jabatan.required' => 'Jabatan harus diisi.',
         ];
     }
 }

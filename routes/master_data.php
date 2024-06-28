@@ -65,15 +65,6 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', 'status')->name('mitra.status');
         Route::get('/edit/{id}', 'edit')->name('mitra.edit');
     });
-    Route::prefix('pegawai-industri')->controller(PegawaiIndustriController::class)->group(function () {
-        Route::get('/', 'index')->name('pegawaiindustri');
-        Route::get('/show', 'show')->name('pegawaiindustri.show');
-        Route::get('/create', 'create')->name('pegawaiindustri.create');
-        Route::post('/store', 'store')->name('pegawaiindustri.store');
-        Route::post('/update/{id}', 'update')->name('pegawaiindustri.update');
-        Route::post('/status/{id}', 'status')->name('pegawaiindustri.status');
-        Route::get('/edit/{id}', 'edit')->name('pegawaiindustri.edit');
-    });
     Route::prefix('jenis-magang')->controller(JenisMagangController::class)->group(function () {
         Route::get('/', 'index')->name('jenismagang');
         Route::get('/create', 'create')->name('jenismagang.create');

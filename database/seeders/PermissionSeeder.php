@@ -49,8 +49,11 @@ class PermissionSeeder extends Seeder
             // mitra
             'dashboard.dashboard_mitra',
             'informasi_lowongan_mitra.view',
-            'kelola_lowongan_mitra.view'
+            'kelola_lowongan_mitra.view',
+            'anggota_tim.view',
         ];
+
+        $permission['Pembimbing Lapangan'] = [];
 
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {

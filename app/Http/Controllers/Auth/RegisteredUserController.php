@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\PegawaiIndustri;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -76,13 +77,20 @@ class RegisteredUserController extends Controller
             } else if ($request->roleregister == 'mitra') {
                 $industri = Industri::create([
                     'namaindustri' => $request->namaindustri,
-                    'penanggung_jawab' => $request->name,
-                    'email' => $request->email,
-                    'notelpon' => $request->notelpon,
                     'status' => 1,
                     'statusapprove' => 0,
-                    'statuskerjasama' => null
                 ]);
+
+                $pegawaiIndustri = PegawaiIndustri::create([
+                    'id_industri' => $industri->id_industri,
+                    'namapeg' => $request->name,
+                    'nohppeg' => $request->notelpon,
+                    'emailpeg' => $request->email,
+                    'jabatan' => 'Administrator',
+                    'statuspeg' => true
+                ]);
+
+                $industri->update(['penanggung_jawab' => $pegawaiIndustri->id_peg_industri]);
             }
 
             DB::commit();
