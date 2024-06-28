@@ -38,7 +38,7 @@ class PermissionSeeder extends Seeder
             'jenis_magang.view',
             'dosen.view',
             'mahasiswa.view',
-            'pegawai_industri.view',
+            // 'pegawai_industri.view',
             'nilai_mutu.view',
             'komponen_penilaian.view',
             'dokumen_syarat.view',
@@ -60,10 +60,10 @@ class PermissionSeeder extends Seeder
                 Permission::findOrCreate($p, 'web');
             }
             $role = Role::findOrCreate($key, 'web');
-            $role->givePermissionTo($value);
+            $role->syncPermissions($value);
         }
         
         $role = Role::findOrCreate('Super Admin', 'web');
-        $role->givePermissionTo(Permission::all());
+        $role->syncPermissions(Permission::all());
     }
 }

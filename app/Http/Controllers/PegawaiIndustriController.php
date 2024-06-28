@@ -18,7 +18,7 @@ class PegawaiIndustriController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:anggota_tim.view|pegawai_industri.view');
+        $this->middleware('permission:anggota_tim.view');
     }
 
     /**
