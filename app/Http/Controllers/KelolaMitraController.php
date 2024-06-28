@@ -110,6 +110,7 @@ class KelolaMitraController extends Controller
             if (!$pegawaiIndustri) return Response::error(null, 'Not Found.');
 
             $data->statusapprove = 1;
+            $data->save();
 
             $user = User::create([
                 'name' => $pegawaiIndustri->namapeg,
@@ -117,6 +118,8 @@ class KelolaMitraController extends Controller
                 'email' => $pegawaiIndustri->emailpeg,
                 'password' => Hash::make(Str::random(12)),
             ])->assignRole('Mitra');
+
+            $pegawaiIndustri->update(['id_user' => $user->id]);
 
             $code = Str::random(60);
 

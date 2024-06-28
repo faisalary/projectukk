@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function mahasiswa(){
         return $this->belongsTo(Mahasiswa::class,'nim');
     }
-    public function industri(){
-        return $this->hasOne(Industri::class, 'id_user', 'id');
+    public function pegawai_industri(){
+        return $this->hasOne(PegawaiIndustri::class, 'id_user', 'id');
     }
 }
