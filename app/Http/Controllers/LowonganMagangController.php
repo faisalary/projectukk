@@ -143,15 +143,14 @@ class LowonganMagangController extends Controller
 
     public function show(Request $request)
     {
+        $request->validate([
+            'type' => 'required|in:tertunda,diterima,ditolak',
+        ]);
+
         $id_industri = auth()->user()->pegawai_industri->id_industri;
         $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', $id_industri);
-        if ($request->type == "tertunda") {
-            $lowongan =  $lowongan->where('statusaprove', 'tertunda');
-        } elseif ($request->type == 'diterima') {
-            $lowongan =  $lowongan->where('statusaprove', 'diterima');
-        } elseif ($request->type == 'ditolak') {
-            $lowongan =  $lowongan->where('statusaprove', 'ditolak');
-        }
+
+        $lowongan =  $lowongan->where('statusaprove', $request->type);
 
         $lowongan = $lowongan->orderBy('id_jenismagang', 'asc')->get();
         
