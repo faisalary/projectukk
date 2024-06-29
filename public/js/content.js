@@ -252,15 +252,29 @@ function store_data(content, button) {
             let res = xhr.responseJSON;
             if (res.errors) {
                 $.each(res.errors, function (key, value) {
-                    key = key.replace(/\.(\d+)\.(\w+)/g, "[$1][$2]");
+                    // key = key.replace(/\.(\d+)\.(\w+)/g, "[$1][$2]");
                     // key = key.replace(/\./g, '[') + ']';
-                    $(`[name="${key}"]`, content).addClass('is-invalid');
-                    $(`[name="${key}"]`, content).parents('.form-group').find('.invalid-feedback').html(value[0]).addClass('d-block');
+
+                    key = key.replace(/(\.\d+)(\.\w+)?/g, (match, p1, p2) => {
+                        if (p2) {
+                            return `[${p1.substring(1)}][${p2.substring(1)}]`;
+                        } else if (p1) {
+                            return `[${p1.substring(1)}]`;
+                        }
+                    });
+
+                    if ($(`[name="${key}"]`, content).length > 0) {
+                        $(`[name="${key}"]`, content).addClass('is-invalid');
+                        $(`[name="${key}"]`, content).parents('.form-group').find('.invalid-feedback').html(value[0]).addClass('d-block');
+                    } else {
+                        $(`[name^="${key}"]`, content).addClass('is-invalid');
+                        $(`[name^="${key}"]`, content).parents('.form-group').find('.invalid-feedback').html(value[0]).addClass('d-block');
+                    }
                 });
             } else {
                 showSweetAlert({
                     title: 'Gagal!',
-                    text: "Terjadi kesalahan pada server, silahkan coba lagi nanti.",
+                    text: res.message,
                     icon: 'error'
                 });
             }

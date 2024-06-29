@@ -49,8 +49,6 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
         Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
-        Route::get('/edit/{id}', 'edit')->name('.edit');
-        Route::put('/update/{id}', 'update')->name('.update');
         Route::post('/approved/{id}', 'approved')->name('.approved');
         Route::post('/rejected/{id}', 'rejected')->name('.rejected');
     });

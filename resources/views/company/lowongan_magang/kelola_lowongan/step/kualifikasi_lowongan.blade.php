@@ -24,6 +24,7 @@
                     <label class="form-check-label" for="laki-laki_perempuan">Laki-Laki & Perempuan</label>
                 </div>
             </div>
+            <div class="invalid-feedback"></div>
         </div>
         <div class="col-lg-12 col-sm-6">
             <div class="border px-3 pb-3 pt-2 rounded-3">
@@ -35,6 +36,7 @@
                         <option value="D4">D4</option>
                         <option value="S1">S1</option>
                     </select>
+                    <div class="invalid-feedback"></div>
                 </div>
             </div>
         </div>

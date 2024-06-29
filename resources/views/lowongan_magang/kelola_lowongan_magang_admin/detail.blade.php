@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<a href="#" class="btn btn-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
+<a href="{{ route('lowongan.kelola') }}" class="btn btn-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
 <div class="d-flex justify-content-start mt-3">
     <h4 class="fw-bold text-sm">
         <span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /</span>
@@ -12,15 +12,10 @@
     </h4>
 </div>
 
-@php
-    $jenjang = get_object_vars(json_decode($lowongan->jenjang));
-    $jenjang = array_keys($jenjang);
-@endphp
-
 <div class="row">
-    <div class="col-9">
+    <div class="col">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body m-3">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-start align-items-center">
                         @if ($lowongan->industri->image)
@@ -36,18 +31,18 @@
                     <div class="d-flex flex-column my-auto align-items-center">
                         @switch($lowongan->statusaprove)
                             @case('ditolak')
-                                <div class='badge w-100 bg-label-danger'>{{$lowongan->statusaprove}}</div>
+                                <div class='badge w-100 bg-label-danger'>{{ucfirst($lowongan->statusaprove)}}</div>
                                 @break
                             @case('tertunda')
-                                <div class='badge w-100 bg-label-warning'>{{$lowongan->statusaprove}}</div>
+                                <div class='badge w-100 bg-label-warning'>{{ucfirst($lowongan->statusaprove)}}</div>
                                 @break
                             @case('diterima')
-                            <div class='badge w-100 bg-label-success'>{{$lowongan->statusaprove}}</div>
+                            <div class='badge w-100 bg-label-success'>{{ucfirst($lowongan->statusaprove)}}</div>
                                 @break
                             @default
                         @endswitch
-                        <h5 class="fw-bolder my-2">Detail Pengajuan</h5>
-                        <p class="mb-0">Pengajuan: <b>25/08/2020</b></p>
+                        <h6 class="fw-bolder my-2">Detail Pengajuan</h6>
+                        <small class="mb-0">Pengajuan: <b>25/08/2020</b></small>
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -59,14 +54,14 @@
                     <div class="col-4 border-start border-end">
                         <p><i class="ti ti-map-pin me-2"></i>{{ implode(', ', json_decode($lowongan->lokasi)) }}</p>
                         <p><i class="ti ti-currency-dollar me-2"></i>{{ $lowongan->nominal_salary ?? '-' }}</p>
-                        <p><i class="ti ti-building-community me-2"></i>{{ implode(', ', $jenjang) }}</p>
+                        <p><i class="ti ti-building-community me-2"></i>{{ implode(', ', $lowongan->jenjang_pendidikan) }}</p>
                     </div>
                     <div class="col-4">
                         <p class="mb-2"><i class="ti ti-school me-2"></i>Program Studi</p>
                         <ul class="ps-2 ms-4 mb-0">
-                            {{-- <li>Rekayasa Perangkat Lunak Aplikasi</li>
-                            <li>Sistem Informasi</li>
-                            <li>Teknik komputer</li> --}}
+                            @foreach ($lowongan->program_studi as $item)
+                                <li>{{ $item->namaprodi }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -125,24 +120,8 @@
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-column">
-                    <button class="btn btn-primary" type="button" id="btn-approve">
-                        <i class="ti ti-check me-2"></i>
-                        Setujui
-                    </button>
-                    <button class="btn btn-danger mt-2" type="button"  id="btn-reject">
-                        <i class="ti ti-x me-2"></i>
-                        Tolak
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('lowongan_magang/kelola_lowongan_magang_admin/components/card_right_detail')
 </div>
-
 @include('lowongan_magang/kelola_lowongan_magang_admin/components/modal_detail')
 @endsection
 
@@ -154,33 +133,18 @@
         modal.modal('show');
     });
 
-    function approval(data) {
-        $.ajax({
-            url: '',
-            type: 'POST',
-            success: function (response) {
-                if (!response.error) {
-                    showSweetAlert({
-                        title: 'Berhasil!',
-                        text: response.message,
-                        icon: 'success'
-                    });
-                } else {
-                    showSweetAlert({
-                        title: 'Gagal!',
-                        text: response.message,
-                        icon: 'error'
-                    });
-                }
-            }, 
-            error: function (xhr, ajaxOptions, thrownError) {
-                showSweetAlert({
-                    title: 'Gagal!',
-                    text: thrownError,
-                    icon: 'error'
-                });
-            }
-        })
+    $('#btn-reject').on('click', function () {
+        let btn = $(this);
+        let modal = $('#modalreject');
+        modal.modal('show');
+    });
+
+    function afterApprove(response) {
+        window.href.location = "{{ route('lowongan.kelola') }}";
+    }
+
+    function afterReject(response) {
+        window.href.location = "{{ route('lowongan.kelola') }}";
     }
 </script>
 @endsection
