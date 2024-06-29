@@ -22,6 +22,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class KelolaMitraController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:kelola_mitra.view');
+    }
     /**
      * Display a listing of the resource.
      */

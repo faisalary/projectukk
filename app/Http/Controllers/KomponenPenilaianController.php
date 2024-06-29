@@ -13,6 +13,11 @@ use App\Http\Requests\KomponenNilaiRequest;
 
 class KomponenPenilaianController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:komponen_penilaian.view');
+    }
+
     public function index()
     {
         $penilaian = KomponenNilai::all();

@@ -45,7 +45,7 @@
         type: 'GET',
         destroy: true,
         rowGroup: {
-            dataSrc: 'jenis.namajenis'
+            dataSrc: 'jenis_magang'
         },
         columns: [{
                 data: "DT_RowIndex"

@@ -12,6 +12,10 @@ use App\Http\Requests\UniversitasRequest;
 
 class UniversitasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:universitas.view');
+    }
     /**
      * Display a listing of the resource.
      */

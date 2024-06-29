@@ -17,10 +17,10 @@ class PermissionSeeder extends Seeder
             // admin lkm 
             'dashboard.dashboard_admin',
             'kelola_mitra.view',
-            'informasi_lowongan_lkm.view',
-            'kelola_lowongan_lkm.view',
+            'informasi_lowongan_lkm.view', //
+            'kelola_lowongan_lkm.view',//
             'kelola_lowongan_lkm.approval',
-            'pengajuan_magang.view',
+            'pengajuan_magang.view',//
             'data_magang.view',
             'jadwal_seleksi_lkm.view',
             'berkas_magang_fakultas.view',
@@ -39,7 +39,7 @@ class PermissionSeeder extends Seeder
             'jenis_magang.view',
             'dosen.view',
             'mahasiswa.view',
-            'pegawai_industri.view',
+            // 'pegawai_industri.view',
             'nilai_mutu.view',
             'komponen_penilaian.view',
             'dokumen_syarat.view',
@@ -49,8 +49,8 @@ class PermissionSeeder extends Seeder
         $permission['Mitra'] = [
             // mitra
             'dashboard.dashboard_mitra',
-            'informasi_lowongan_mitra.view',
-            'kelola_lowongan_mitra.view',
+            'informasi_lowongan_mitra.view', //
+            'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
         ];
 
@@ -61,10 +61,10 @@ class PermissionSeeder extends Seeder
                 Permission::findOrCreate($p, 'web');
             }
             $role = Role::findOrCreate($key, 'web');
-            $role->givePermissionTo($value);
+            $role->syncPermissions($value);
         }
         
         $role = Role::findOrCreate('Super Admin', 'web');
-        $role->givePermissionTo(Permission::all());
+        $role->syncPermissions(Permission::all());
     }
 }

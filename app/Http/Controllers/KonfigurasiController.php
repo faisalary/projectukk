@@ -20,10 +20,7 @@ class KonfigurasiController extends Controller
      */
     function __construct()
     {
-        //  $this->middleware('permission:superadmin|role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        //  $this->middleware('permission:superadmin|role-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:superadmin|role-edit', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:superadmin|role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:roles.view');
     }
     
     /**

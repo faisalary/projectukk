@@ -101,6 +101,6 @@ Route::prefix('company')->group(function () {
     });
 });
 
-Route::get('dashboard/company', function () {
+Route::middleware('permission:dashboard.dashboard_mitra')->get('dashboard/company', function () {
     return view('dashboard.company.index');
 })->name('dashboard_company');

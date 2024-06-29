@@ -113,7 +113,7 @@ Route::prefix('master')->group(function () {
         Route::post('status/{id}', 'status')->name('komponen-penilaian.status');
         Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('komponen-penilaian.list_fakultas');
     });
-    Route::get('pembimbing-mandiri', function () {
+    Route::middleware('permission:pembimbing_lapangan_mandiri.view')->get('pembimbing-mandiri', function () {
         return view('masters.pembimbing_lapangan_mandiri.index');
     })->name('pembimbing-lapangan-mandiri');
 
