@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Lokasi;
-use App\Models\Fakultas;
 use App\Helpers\Response;
-use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
-use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
@@ -105,7 +100,8 @@ class LowonganMagangLkmController extends Controller
         $prodi = ProgramStudi::all();
         if (!$lowongan) return redirect()->route('lowongan.kelola');
 
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi'));
+        $urlBack = route('lowongan.kelola');
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi', 'urlBack'));
     }
 
     public function approved(Request $request, $id)
@@ -133,7 +129,7 @@ class LowonganMagangLkmController extends Controller
 
             foreach ($lowongan->jenjang_pendidikan as $value) {
                 foreach ($request->input('prodi_' . $value) as $k => $v) {
-                    $result[$key][] = $v;
+                    $result[$value][] = $v;
                 }
             }
 

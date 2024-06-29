@@ -33,8 +33,6 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');
         Route::post('/update/{id}', 'update')->name('.update');
-        Route::post('/approved/{id}', 'approved')->name('.approved');
-        Route::post('/rejected/{id}', 'rejected')->name('.rejected');
     });
 });
 
@@ -49,8 +47,8 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
         Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
-        Route::post('/approved/{id}', 'approved')->name('.approved');
-        Route::post('/rejected/{id}', 'rejected')->name('.rejected');
+        Route::post('/approved/{id}', 'approved')->name('.approved')->middleware('kelola_lowongan_lkm.approval');
+        Route::post('/rejected/{id}', 'rejected')->name('.rejected')->middleware('kelola_lowongan_lkm.approval');
     });
 });
 

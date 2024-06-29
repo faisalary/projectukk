@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<a href="{{ route('lowongan.kelola') }}" class="btn btn-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
+<a href="{{ $urlBack }}" class="btn btn-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
 <div class="d-flex justify-content-start mt-3">
     <h4 class="fw-bold text-sm">
         <span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /</span>
@@ -120,13 +120,18 @@
             </div>
         </div>
     </div>
+    @if (auth()->user()->can('kelola_lowongan_lkm.approval'))
     @include('lowongan_magang/kelola_lowongan_magang_admin/components/card_right_detail')
+    @endif
 </div>
+@if (auth()->user()->can('kelola_lowongan_lkm.approval'))
 @include('lowongan_magang/kelola_lowongan_magang_admin/components/modal_detail')
+@endif
 @endsection
 
 @section('page_script')
 <script>
+    @if (auth()->user()->can('kelola_lowongan_lkm.approval'))
     $('#btn-approve').on('click', function () {
         let btn = $(this);
         let modal = $('#modalapprove');
@@ -140,11 +145,12 @@
     });
 
     function afterApprove(response) {
-        window.href.location = "{{ route('lowongan.kelola') }}";
+        window.location.href = "{{ $urlBack }}";
     }
 
     function afterReject(response) {
-        window.href.location = "{{ route('lowongan.kelola') }}";
+        window.location.href = "{{ $urlBack }}";
     }
+    @endif
 </script>
 @endsection

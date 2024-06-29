@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
             'kelola_mitra.view',
             'informasi_lowongan_lkm.view',
             'kelola_lowongan_lkm.view',
+            'kelola_lowongan_lkm.approval',
             'pengajuan_magang.view',
             'data_magang.view',
             'jadwal_seleksi_lkm.view',

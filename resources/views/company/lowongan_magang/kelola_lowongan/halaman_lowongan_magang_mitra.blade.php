@@ -199,55 +199,6 @@
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
         });
 
-        $("#modalTambahLowongan").on("hide.bs.modal", function() {
-
-            $("#modal-title").html("Tambah Lowongan Magang");
-            $("#modal-button").html("Save Data");
-            $('#modalTambahLowongan form #tahun').val('').trigger('change');
-            $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
-        });
-
-        function edit(e) {
-            let id = e.attr('data-id');
-            console.log(id);
-
-            let action = `{{ url('kelola/lowongan/mitra/update/') }}/${id}`;
-            var url = `{{ url('kelola/lowongan/mitra/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $("#modal-title").html("Edit Lowongan Mangang");
-                    $("#modal-button").html("Update Data")
-                    $('#modalTambahLowongan form').attr('action', action);
-                    $('#jenismagang').val(response.id_jenismagang).change();
-                    $('#posisi').val(response.intern_position);
-                    $('#kuota').val(response.kuota);
-                    $('#deskripsi').val(response.deskripsi);
-                    $('#kualifikasi').val(response.requirements);
-                    $('#jenis').val(response.gender);
-                    $('#jenjang').val(response.jenjang);
-                    $('#keterampilan').val(response.keterampilan);
-                    $('#gaji').val(response.paid);
-                    $('#nominal').val(response.nominal_salary);
-                    $('#benefit').val(response.benefitmagang);
-                    $('#lokasi').val(response.id_lokasi).change();
-                    $('#tanggal').val(response.startdate);
-                    $('#tanggalakhir').val(response.enddate);
-                    $('#durasimagang').val(response.durasimagang);
-                    $('#tahapan').val(response.tahapan_seleksi);
-                    $('#deskripsiseleksi[]').val(response.deskripsi);
-                    $('#mulai[]').val(response.tgl_mulai);
-                    $('#akhir[]').val(response.tgl_akhir);
-                    $('#prodi').val(response.id_prodi);
-                    $('#fakultas').val(response.id_fakultas);
-                    $('#modalTambahLowongan').modal('show');
-                }
-            });
-        }
-
-        $(document).ready(function() {});
-
         $(document).on('submit', '#filter', function(e) {
             const offcanvasFilter = $('#modalSlide');
             e.preventDefault();

@@ -169,7 +169,7 @@ class LowonganMagangController extends Controller
                 $color = ($row->status) ? "danger" : "primary";
 
                 $btn = "<div class='d-flex justify-content-center'><a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>
-                        <a href='" . url('kelola/lowongan/mitra/detail/' . $row->id_lowongan) . "' onclick=detail($(this)) data-id='{$row->id_lowongan}' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
+                        <a href='" . route('kelola_lowongan.detail' , $row->id_lowongan) . "' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
                         <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
                 return $btn;
             })
@@ -211,16 +211,11 @@ class LowonganMagangController extends Controller
 
     public function detail($id)  
     {
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('mahasiswa', 'fakultas', 'prodi', 'lokasi', 'industri')->first();
-        $seleksi = SeleksiTahap::where('id_lowongan', $id)->get();
-        $fakultas = Fakultas::all();
-        $prodi = ProgramStudi::all();
-        $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
-        if (!$lowongan) {
-            return redirect()->route('lowongan-magang.index');
-        }
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail_lowongan_magang', compact('prodilowongan', 'prodilo', 'prodi', 'lowongan', 'seleksi', 'fakultas','fakultas'));
+        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
+        if (!$lowongan) return redirect()->route('kelola_lowongan');
+
+        $urlBack = route('kelola_lowongan');
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact('lowongan', 'urlBack'));
     }
 
     /**
@@ -253,6 +248,10 @@ class LowonganMagangController extends Controller
 
                 return Response::success($return, 'Valid data!');
             }
+
+            $request->jenjang = array_map(function() {
+                return [];
+            }, array_flip($request->jenjang));
 
             $lowongan->id_jenismagang = $request->id_jenismagang;
             $lowongan->intern_position = $request->intern_position;
