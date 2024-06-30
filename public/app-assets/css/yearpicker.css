@@ -1,9 +1,9 @@
 :root {
-    --background-color: #ffffff;
-    --border-color: #8a8f8c;
-    --text-color: #000000;
-    --selected-text-color: #000000;
-    --hover-background-color: #4EA971;
+    --background-color: #fff;
+    --border-color: #ccc;
+    --text-color: #555;
+    --selected-text-color: #7367F0;
+    --hover-background-color: #eee;
 }
 
 .yearpicker-container {

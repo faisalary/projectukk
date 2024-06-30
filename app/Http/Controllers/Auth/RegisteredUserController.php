@@ -6,14 +6,16 @@ use Exception;
 use App\Models\User;
 use App\Models\Industri;
 use App\Helpers\Response;
+use App\Jobs\SendMailJob;
+use App\Mail\VerifyEmail;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use App\Mail\VerifyEmailMhs;
 use Illuminate\Http\Request;
+use App\Models\PegawaiIndustri;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\PegawaiIndustri;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -37,7 +39,7 @@ class RegisteredUserController extends Controller
             } else if ($request->roleregister == 'mitra') {
                 $validate['namaindustri'] = 'required';
                 $validate['name'] = 'required';
-                $validate['email'] = 'required|email|unique:users,email|unique:industri,email';
+                $validate['email'] = 'required|email|unique:users,email|unique:pegawai_industri,emailpeg';
                 $validate['notelpon'] = 'required';
             }
 
@@ -53,26 +55,40 @@ class RegisteredUserController extends Controller
                 'nim.numeric' => 'Nim harus angka',
                 'nim.exists' => 'Nim tidak ditemukan, hubungi LKM untuk info lebih lanjut',
             ]);
+
+            $validator->after(function ($validator) use ($request) {
+                if ($request->roleregister == 'user') {
+                    $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
+                    if (isset($mahasiswa) && isset($mahasiswa->user)) {
+                        $validator->errors()->add('nim', 'NIM sudah terdaftar, silahkan login atau jika belum set password, silahkan cek email anda.');
+                    }
+                }
+            });
     
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
             DB::beginTransaction();
-            $code = Str::random(60);
 
             if ($request->roleregister == 'user') {
                 $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
                 if (!$mahasiswa) return Response::error(null, 'Not Found.');
+                $passwordResetToken = DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->first();
+                if (!$passwordResetToken) return Response::error(null, 'Not Found.');
 
-                DB::table('password_reset_tokens')->insert([
+                $user = User::create([
+                    'name' => $mahasiswa->namamhs,
+                    'username' => $mahasiswa->namamhs,
                     'email' => $mahasiswa->emailmhs,
-                    'token' => $code,
-                    'created_at' => now(),
-                ]);
+                    'password' => Hash::make(Str::random(12)),
+                ])->assignRole('Mahasiswa');
 
-                $verifymhs = route('register.set-password', ['code' => $code]);
-                Mail::to($mahasiswa->emailmhs)->send(new VerifyEmailMhs($verifymhs));
+                $mahasiswa->id_user = $user->id;
+                $mahasiswa->save();
+
+                $url = route('register.set-password', ['token' => $passwordResetToken->token]);
+                dispatch(new SendMailJob($mahasiswa->emailmhs, new VerifyEmail($url)));
                 
             } else if ($request->roleregister == 'mitra') {
                 $industri = Industri::create([

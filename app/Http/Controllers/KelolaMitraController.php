@@ -61,7 +61,7 @@ class KelolaMitraController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($industri->penanggung_jawab),
             ]);
-            $admin->assignRole('admin');
+            $admin->assignRole('LKM');
                 
             DB::commit();
             return Response::success(null, 'Industri successfully Created!');

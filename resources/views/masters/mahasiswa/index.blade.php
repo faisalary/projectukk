@@ -1,43 +1,7 @@
 @extends('partials.vertical_menu')
 
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-
-    .swal2-deny {
-        display: none !important;
-    }
-
-
-    .dropdown-item.active,
-    .dropdown-item:active {
-        color: #FFF;
-        background-color: #4EA971 !important
-    }
-</style>
+@endsection
 
 
 @section('content')
@@ -84,7 +48,6 @@
         </div>
     </div>
 </div>
-@endsection
 <!-- Modal -->
 
 @include('masters.mahasiswa.modal')
@@ -93,18 +56,29 @@
 
 @section('page_script')
 <script>
+    function getDataSelect(e) {
+        let idElement = e.attr('data-after');
+        $.ajax({
+            url: `{{ route('mahasiswa') }}?type=${idElement}&selected=` + e.val(),
+            type: 'GET',
+            success: function (response) {
+                $(`#${idElement}`).find('option:not([disabled])').remove();
+                $(`#${idElement}`).val(null).trigger('change');
+                $.each(response.data, function () {
+                    $(`#${idElement}`).append(new Option(this.text, this.id));
+                });
+            }
+        });
+    }
+
     function afterAction(response) {
         $('#modal-mahasiswa').modal('hide');
         $('#table-master-mahasiswa').DataTable().ajax.reload();
     }
 
     $("#modal-mahasiswa").on("hide.bs.modal", function() {
-
         $("#modal-title").html("Tambah Prodi");
         $("#modal-button").html("Save Data");
-        $('#modal-mahasiswa form #pilihuniversitas_add').val('').trigger('change');
-        $('#modal-mahasiswa form #pilihfakultas_add').val('').trigger('change');
-        $('#modal-mahasiswa form #pilihprodi_add').val('').trigger('change');
     });
 
     $("#modal-import").on("hide.bs.modal", function() {
@@ -115,117 +89,36 @@
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ url('master/mahasiswa/update/') }}/${id}`;
-        var url = `{{ url('master/mahasiswa/edit/') }}/${id}`;
+        let action = `{{ route('mahasiswa.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('mahasiswa.edit', ['id' => ':id']) }}`.replace(':id', id);
+
+        $("#modal-title").html("Edit Mahasiswa");
+        $("#modal-button").html("Update Data")
+        $('#modal-mahasiswa form').attr('action', action);
+        $('#modal-mahasiswa').modal('show');
+
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
-                $("#modal-title").html("Edit Mahasiswa");
-                $("#modal-button").html("Update Data")
-                $('#modal-mahasiswa form').attr('action', action);
-                $('#nim').val(response.nim);
-                $('#pilihuniversitas_add').val(response.id_univ).change();
-                $('#pilihfakultas_add').val(response.id_fakultas).change();
-                $('#angkatan').val(response.angkatan);
-                $('#pilihprodi_add').val(response.id_prodi).change();
-                $('#namamhs').val(response.namamhs);
-                $('#nohpmhs').val(response.nohpmhs);
-                $('#emailmhs').val(response.emailmhs);
-                $('#alamatmhs').val(response.alamatmhs);
-
-                $('#modal-mahasiswa').modal('show');
+                $.each(response, function ( key, value ) {
+                    let element = $(`[name="${key}"]`);
+                    if (element.is('select') && element.find('option').length <= 1) {
+                        let interval = setInterval(() => {
+                            if (element.children('option').length > 1) {
+                                element.val(value).trigger('change');
+                                clearInterval(interval);
+                            }
+                        }, 10);
+                    } else if (element.is('[type="radio"]')) {
+                        $(`[name="${key}"][value="${value}"]`).prop("checked", true);
+                    } else {
+                        element.val(value).trigger('change');
+                    }
+                });
             }
         });
     }
-
-    $('#pilihuniversitas_add').on('change', function() {
-        id_univ = $("#pilihuniversitas_add option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/mahasiswa/list-fakultas') }}" + '/' + id_univ,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#pilihfakultas_add').data('select2')) {
-                    $("#pilihfakultas_add form").val("");
-                    $("#pilihfakultas_add").trigger("change");
-                    $('#pilihfakultas_add').empty().trigger("change");
-                }
-                $("#pilihfakultas_add").select2({
-                    data: response.data,
-                    dropdownParent: $('#modal-mahasiswa'),
-                });
-            }
-
-        })
-    });
-    $('#pilihfakultas_add').on('change', function() {
-        id_univ = $("#pilihfakultas_add option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/mahasiswa/list-prodi') }}" + '/' + id_univ,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#pilihprodi_add').data('select2')) {
-                    $("#pilihprodi_add form").val("");
-                    $("#pilihprodi_add").trigger("change");
-                    $('#pilihprodi_add').empty().trigger("change");
-                }
-                $("#pilihprodi_add").select2({
-                    data: response.data,
-                    dropdownParent: $('#modal-mahasiswa'),
-                });
-            }
-
-        })
-    });
-
-
-    $('#univ').on('change', function() {
-        id_univ = $("#univ option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/mahasiswa/list-fakultas') }}" + '/' + id_univ,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#fakultas').data('select2')) {
-                    $("#fakultas form").val("");
-                    $("#fakultas").trigger("change");
-                    $('#fakultas').empty().trigger("change");
-                }
-                $("#fakultas").select2({
-                    data: response.data,
-                    dropdownParent: $('#modalSlide'),
-                });
-            }
-
-        })
-    });
-
-    $('#fakultas').on('change', function() {
-        id_fakultas = $("#fakultas option:selected").val();
-
-        $.ajax({
-            url: "{{ url('/master/mahasiswa/list-prodi') }}" + '/' + id_fakultas,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if ($('#prodi').data('select2')) {
-                    $("#prodi form").val("");
-                    $("#prodi").trigger("change");
-                    $('#prodi').empty().trigger("change");
-                }
-                $("#prodi").select2({
-                    data: response.data,
-                    dropdownParent: $('#modalSlide'),
-                });
-            }
-
-        })
-    });
 
     $(document).ready(function() {
         table_master_mahasiswa();
@@ -314,16 +207,5 @@
             ]
         });
     }
-
-    $(document).ready(function() {
-        $(".yearpicker").yearpicker({
-            startYear: new Date().getFullYear() - 10,
-            endYear: new Date().getFullYear() + 10,
-        });
-    });
 </script>
-
-<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/yearpicker.js') }}"></script>
 @endsection
