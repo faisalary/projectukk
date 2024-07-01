@@ -56,6 +56,31 @@ class LowonganMagang extends Model
         static::creating(function ($model) {
             $model->created_at = $model->freshTimestamp();
         });
+
+        static::saving(function ($model) {
+            if (isset($model->jenjang_pendidikan)) unset($model->jenjang_pendidikan);
+            if (isset($model->program_studi)) unset($model->program_studi);
+        });
+    }
+
+    public function dataTambahan(string|array ...$typeGet)
+    {
+        $jenjang = get_object_vars(json_decode($this->jenjang));
+
+        if (count(array_filter($typeGet, 'is_array')) === count($typeGet)) {
+            $typeGet = array_merge(...array_values($typeGet));
+        }
+
+        foreach ($typeGet as $key => $value) {
+            if ($value == 'jenjang_pendidikan') {
+                $this->jenjang_pendidikan = array_keys($jenjang);
+            } else if ($value == 'program_studi') {
+                $this->program_studi = array_merge(...array_values($jenjang));
+                $this->program_studi = ProgramStudi::whereIn('id_prodi', $this->program_studi)->get();
+            }
+        }
+
+        return $this;
     }
 
     public function industri()

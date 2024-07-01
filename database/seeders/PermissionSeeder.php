@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
             'kelola_mitra.view',
             'informasi_lowongan_lkm.view', //
             'kelola_lowongan_lkm.view',//
+            'kelola_lowongan_lkm.approval',
             'pengajuan_magang.view',//
             'data_magang.view',
             'jadwal_seleksi_lkm.view',
@@ -54,6 +55,7 @@ class PermissionSeeder extends Seeder
         ];
 
         $permission['Pembimbing Lapangan'] = [];
+        $permission['Mahasiswa'] = [];
 
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {

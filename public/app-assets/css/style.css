@@ -1,6 +1,8 @@
 :root {
     --bs-primary: #4EA971;
     --bs-label-primary: #e2ffed;
+    --selected-text-color-yearpicker: #4EA971;
+    --hover-background-color-yearpicker: #4ea97121;
 }
 
 .dropdown-item:focus,
@@ -409,27 +411,49 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
 .bs-stepper .step.active .bs-stepper-circle {
     background-color: var(--bs-primary);
     color: #fff;
-  }
-  .bs-stepper .step.active .bs-stepper-icon svg {
+}
+.bs-stepper .step.active .bs-stepper-icon svg {
     fill: var(--bs-primary) !important;
-  }
-  .bs-stepper .step.active .bs-stepper-icon i,
-  .bs-stepper .step.active .bs-stepper-label {
+}
+.bs-stepper .step.active .bs-stepper-icon i,
+.bs-stepper .step.active .bs-stepper-label {
     color: var(--bs-primary) !important;
-  }
-  .bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
+}
+.bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
     background-color: #f0fdf2 !important;
     color: var(--bs-primary) !important;
-  }
-  .bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
+}
+.bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
     fill: var(--bs-primary) !important;
-  }
-  .bs-stepper .step.crossed .step-trigger .bs-stepper-icon i {
+}
+.bs-stepper .step.crossed .step-trigger .bs-stepper-icon i {
     color: var(--bs-primary) !important;
-  }
-  .bs-stepper.wizard-icons .step.crossed .bs-stepper-label {
+}
+.bs-stepper.wizard-icons .step.crossed .bs-stepper-label {
     color: var(--bs-primary) !important;
-  }
-  .bs-stepper.wizard-icons .step.crossed + .line i {
+}
+.bs-stepper.wizard-icons .step.crossed + .line i {
     color: var(--bs-primary);
-  }
+}
+
+.yearpicker-items {
+    list-style: none;
+    padding: 0.5rem 0.1rem;
+    margin: 3px;
+    flex: 0 0 29%;
+    width: 100%;
+}
+
+.yearpicker-items:hover {
+    background-color: var(--hover-background-color-yearpicker);
+    color: var(--selected-text-color-yearpicker);
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.yearpicker-items.selected {
+    color: #fff;
+    border-radius: 50px;
+    background-color: var(--selected-text-color-yearpicker);
+    border: 1px solid var(--selected-text-color-yearpicker);
+}

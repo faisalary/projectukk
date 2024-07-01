@@ -6,48 +6,41 @@
                 <h5 class="modal-title" id="modal-title">Tambah Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" id="" method="POST" action="{{ route('mahasiswa.store') }}" function-callback="afterAction">
+            <form class="default-form" action="{{ route('mahasiswa.store') }}" function-callback="afterAction">
                 @csrf
                 <div class="modal-body">
-
                     <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label">Universitas</label>
-                            <select class="form-select select2" id="pilihuniversitas_add" name="id_univ"
-                                data-placeholder="Pilih Universitas">
-                                <option disabled selected>Pilih Universitas</option>
+                        <div class="col mb-2 form-group">
+                            <label for="id_univ" class="form-label">Universitas</label>
+                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas">
+                                <option value="" disabled selected>Pilih Universitas</option>
                                 @foreach ($universitas as $u)
                                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="fakultas" class="form-label">Fakultas</label>
-                            <select class="form-select select2" id="pilihfakultas_add" name="id_fakultas"
-                                data-placeholder="Pilih Fakultas">
-                                <option disabled selected>Pilih Fakultas</option>
-                                @foreach ($fakultas as $f)
-                                    <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                                @endforeach
+                        <div class="col mb-2 form-group">
+                            <label for="id_fakultas" class="form-label">Fakultas</label>
+                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas">
+                                <option value="" disabled selected>Pilih Fakultas</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="prodi" class="form-label">Prodi</label>
-                            <select class="form-select select2" id="pilihprodi_add" name="id_prodi"
-                                data-placeholder="Pilih Prodi">
-                                <option disabled selected>Pilih Prodi</option>
-                                @foreach ($prodi as $p)
-                                    <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                                @endforeach
+                        <div class="col mb-2 form-group">
+                            <label for="id_prodi" class="form-label">Prodi</label>
+                            <select class="form-select select2" id="id_prodi" name="id_prodi" data-placeholder="Pilih Prodi">
+                                <option value="" disabled selected>Pilih Prodi</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="nim" class="form-label">NIM</label>
                             <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                 class="form-control" id="nim" name="nim" placeholder="6798374637" />
@@ -55,7 +48,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="tunggakan" class="form-label">Tunggakan BPP</label>
                             <div class="from-group">
                                 <div class="form-check form-check-inline">
@@ -71,15 +64,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="angkatan" class="form-label">IPK</label>
+                        <div class="col mb-2 form-group">
+                            <label for="ipk" class="form-label">IPK</label>
                             <input type="text" id="ipk" name="ipk" class="form-control"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^(\d{1,3})(\.\d{0,2})?.*/, '$1$2');"                                placeholder="3.80" />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="eprt" class="form-label">Eprt</label>
                             <input type="text"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
@@ -89,7 +82,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="tak" class="form-label">TAK</label>
                             <input type="text"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
@@ -99,15 +92,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="angkatan" class="form-label">Angkatan</label>
-                            <input type="text" id="angkatan" name="angkatan" class="form-select yearpicker"
-                                placeholder="Angkatan" readonly />
+                            <input type="text" id="angkatan" name="angkatan" class="form-control yearpicker" placeholder="Angkatan" readonly />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="namamhs" class="form-label">Nama Mahasiswa</label>
                             <input type="text" id="namamhs" name="namamhs" class="form-control"
                                 placeholder="Nama Mahasiswa" />
@@ -115,7 +107,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="nohpmhs" class="form-label">No Telepon</label>
                             <input type="text"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
@@ -125,7 +117,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="emailmhs" class="form-label">Email</label>
                             <input type="text" id="emailmhs" name="emailmhs" class="form-control"
                                 placeholder="Email" />
@@ -133,7 +125,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mb-2 form-input">
+                        <div class="col mb-2 form-group">
                             <label for="alamatmhs" class="form-label">Alamat</label>
                             <textarea class="form-control" name="alamatmhs" id="alamatmhs" placeholder="Alamat"></textarea>
                             <div class="invalid-feedback"></div>
@@ -160,7 +152,7 @@
         <form class="add-new-user pt-0" id="filter">
             <div class="col-12 mb-2">
                 <div class="row">
-                    <div class="col mb-2 form-input">
+                    <div class="col mb-2 form-group">
                         <label for="univ" class="form-label">Universitas</label>
                         <select class="form-select select2" id="univ" name="univ"
                             data-placeholder="Pilih Universitas">
@@ -175,24 +167,16 @@
                 <div class="row">
                     <div class="mb-2">
                         <label for="fakultas" class="form-label">Fakultas</label>
-                        <select class="form-select select2" id="fakultas" name="fakultas"
-                            data-placeholder="Pilih Fakultas">
+                        <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
                             <option disabled selected>Pilih Fakultas</option>
-                            @foreach ($fakultas as $f)
-                                <option value="{{ $f->id_fakultas }}">{{ $f->namafakultas }}</option>
-                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mb-2 form-input">
+                    <div class="col mb-2 form-group">
                         <label for="univ" class="form-label">Prodi</label>
-                        <select class="form-select select2" id="prodi" name="prodi"
-                            data-placeholder="Pilih Prodi">
+                        <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
                             <option disabled selected>Pilih Prodi</option>
-                            @foreach ($prodi as $p)
-                                <option value="{{ $p->id_prodi }}">{{ $p->namaprodi }}</option>
-                            @endforeach
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>

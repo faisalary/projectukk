@@ -1,12 +1,6 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
-{{-- <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" /> --}}
-<style>
-</style>
 @endsection
 
 @section('content')
@@ -51,10 +45,6 @@
 @endsection
 
 @section('page_script')
-{{-- <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script> --}}
 @include('company/lowongan_magang/kelola_lowongan/js/script')
 <script>
     $(document).ready(function () {
@@ -79,7 +69,6 @@
                 let dataLowongan = @json($lowongan);
                 $.each(dataLowongan, function ( key, value ) {
                     if ($(`input[name="${key}"]:not([type="radio"])`).length > 0 || $(`textarea[name="${key}"]`).length > 0) {
-                        console.log(key, value);
                         $(`[name="${key}"]`).val(value);
                         if ($(`[name="${key}"]`).is('.flatpickr-date')) {
                             $(`[name="${key}"]`).flatpickr({
@@ -154,15 +143,15 @@
     @if (isset($lowongan)) 
     function loadDataEdit() {
         let data = @json($lowongan);
-        // console.log(data);
         $.each(data, function ( key, value ) {
             if (key == 'nominal_salary') {
                 if (value == null) $(`[name="gaji"][value="0"]`).click();
                 if (value != null) $(`[name="gaji"][value="1"]`).click();
             }
 
+            if (value == null) return;
+
             if ($(`input[name="${key}"]:not([type="radio"])`).length > 0 || $(`textarea[name="${key}"]`).length > 0) {
-                console.log(key, value);
                 $(`[name="${key}"]`).val(value);
                 if ($(`[name="${key}"]`).is('.flatpickr-date')) {
                     $(`[name="${key}"]`).flatpickr({
