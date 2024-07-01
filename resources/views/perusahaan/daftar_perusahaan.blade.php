@@ -1,4 +1,4 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -122,14 +122,14 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
     <div class="row mt-5 mb-5" style="margin-left:70px;">
         <div class="col-5 mt-3">
             <div class="input-group input-group-merge border">
                 <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-                <input type="text" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
+                <input type="text" id="nama_perusahaan" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
             </div>
         </div>
         <div class="col-5 mt-3">
@@ -146,238 +146,50 @@
             </div>
         </div>
         <div class="col-2 mt-3">
-            <button class="btn btn-success" type="button" style="height: 50px;">Cari sekarang
-                <!-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading... -->
-            </button>
+            <button class="btn btn-success" id="search" type="button" style="height: 50px;" onclick="filter()">Cari sekarang</button>
         </div>
     </div>
 </div>
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="ms-2 mt-2 mb-4">Daftar Mitra</h4>
-    <div class="row">
-        <div class="col-4 pt-0">
-            <a href="/detail_perusahaan" style="color: #0C1019;">
-                <div class="card border">
-                    <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                        <div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
-                                </div>
-                                <div class="col-8">
-                                    <h4 style="margin-top: 10px;">PT Wings Surya</h4>
-                                </div>
-                            </div>
-                            <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                            <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                            </div>
-                            <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-4 pt-0">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-4">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lowongan_uniqlo.png')}}" alt="admin.upload"></figure>
-                            </div>
-                            <div class="col-8">
-                                <h4 style="margin-top: 10px;">Uniqlo Co., Ltd</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 pt-0">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-6">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png')}}" alt="admin.upload">
-                                </figure>
-                            </div>
-                            <div class="col-6">
-                                <h4>Lazada Group</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="container-industri">
+        @include("perusahaan.list_perusahaan")
     </div>
-    <div class="row">
-        <div class="col-4 mt-5">
-            <a href="/detail_perusahaan" style="color: #0C1019;">
-                <div class="card border">
-                    <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                        <div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
-                                </div>
-                                <div class="col-8">
-                                    <h4 style="margin-top: 10px;">PT Wings Surya</h4>
-                                </div>
-                            </div>
-                            <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                            <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                            </div>
-                            <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-4 mt-5">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-4">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lowongan_uniqlo.png')}}" alt="admin.upload"></figure>
-                            </div>
-                            <div class="col-8">
-                                <h4 style="margin-top: 10px;">Uniqlo Co., Ltd</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 mt-5">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-6">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png')}}" alt="admin.upload">
-                                </figure>
-                            </div>
-                            <div class="col-6">
-                                <h4>Lazada Group</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4 mt-5">
-            <a href="/detail_perusahaan" style="color: #0C1019;">
-                <div class="card border">
-                    <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                        <div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
-                                </div>
-                                <div class="col-8">
-                                    <h4 style="margin-top: 10px;">PT Wings Surya</h4>
-                                </div>
-                            </div>
-                            <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                            <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                            </div>
-                            <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-4 mt-5">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-4">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/lowongan_uniqlo.png')}}" alt="admin.upload"></figure>
-                            </div>
-                            <div class="col-8">
-                                <h4 style="margin-top: 10px;">Uniqlo Co., Ltd</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 mt-5">
-            <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-6">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png')}}" alt="admin.upload">
-                                </figure>
-                            </div>
-                            <div class="col-6">
-                                <h4>Lazada Group</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i> PT Fast Retailing Indonesia South Quarter Tower C, <br>17th Floor, Jl. R.A. Kartini Kav. 8 Cilandak, Jakarta Selatan, 12430.</div>
-                        <div class="mb-3"><i class="ti ti-building" style="padding-right :5px; padding-bottom:5px;"></i>Food
-                        </div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-end mb-5 mt-3">
-            <li class="page-item ">
-                <a class="page-link waves-effect" href="javascript:void(0);">Previous</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link waves-effect active" href="javascript:void(0);">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link waves-effect" href="javascript:void(0);">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link waves-effect" href="javascript:void(0);">3</a>
-            </li>
-            <li class="page-item ">
-                <a class="page-link waves-effect" href="javascript:void(0);">Next</a>
-            </li>
-
-        </ul>
-    </nav>
 </div>
 
 
 @endsection
 
 @section('page_script')
+<script>
+    function filter() {
+        let name = $('#nama_perusahaan').val(); 
+        
+        $.ajax({
+            url: `{{ url('daftar_perusahaan/filter?name=') }}`+name,
+            type: "GET",
+            success: function(response) {
+                $('#container-industri').html(response);
+            }
+        });
+    }
 
+    $('.page-item').on('click', function() {
+        let active = $(this);
+        let page = active.attr('page');
+        
+        console.log(page);
+        if(page != 'prev' && page != 'next'){
+            active.addClass('active');
+            active.siblings().removeClass('active');
+
+            showPage(page);
+        }
+    });
+
+    function showPage(pageNumber) {
+        $('.page-content').hide(); 
+        $('.page-' + pageNumber).show(); 
+    }
+
+</script>
 @endsection

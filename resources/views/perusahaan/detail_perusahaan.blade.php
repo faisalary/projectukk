@@ -48,8 +48,8 @@
                     </figure>
                 </div>
                 <div class="col-4 ">
-                    <h2 class="mb-1">PT Wings Surya</h2>
-                    <p>Wings Food</p>
+                    <h2 class="mb-1">{{$detail->namaindustri}}</h2>
+                    <p>{{$detail->kategori_industri ?? ''}}</p>
                 </div>
                 <div class="col-6 text-end">
                     <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan" data-bs-placement="bottom" data-bs-original-title="Bagikan">
@@ -60,16 +60,15 @@
             <div class="row mt-3">
                 <div class="col-4">
                     <h6 class="mb-0">Alamat Perusahaan</h6>
-                    <p>Jl. Tipar Cakung Kav. F 5-7, Cakung Barat, <br>
-                        Cakung, Jakarta Timur, Jakarta 13910, ID</p>
+                    <p>{{$detail->alamatindustri ?? ''}}</p>
                 </div>
                 <div class="col-4">
                     <h6 class="mb-0">Email</h6>
-                    <p>wing@gmail.com</p>
+                    <p>{{$detail->email ?? ''}}</p>
                 </div>
                 <div class="col-4">
                     <h6 class="mb-0">Phone</h6>
-                    <p>+6295948438388</p>
+                    <p>+{{$detail->notelpon ?? ''}}</p>
                 </div>
             </div>
         </div>
@@ -80,17 +79,7 @@
             <div class="border-bottom mt-3">
                 <h4> Tentang Perusahaan</h4>
             </div>
-            <p class="mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit
-                non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper,
-                fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in
-                eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus.
-                Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac risus sem. Sed sapien purus, consectetur ac elit
-                non, iaculis bibendum quam. In sed risus quis urna molestie interdum in eu quam. Mauris id dolor semper,
-                fermentum mi non, consectetur ex. Duis aliquam, tortor ut dictum sodales, mauris erat imperdiet lorem, in
-                eleifend purus nisi vitae sapien. Suspendisse eget viverra ex. Sed malesuada elit ut magna interdum finibus.
-                Nulla volutpat posuere felis, ac tempor turpis hendrerit pretium. Duis dictum posuere augue vel aliquet. </p>
+            <p class="mt-3">{!! nl2br($detail->description) !!}</p>
         </div>
     </div>
 
@@ -335,7 +324,7 @@
                             <div class="border" style="border-radius: 20px;">
                                 <div class="row">
                                     <div class="col-10">
-                                        <p class="m-2">https://youtu.be/TGxKkBC6L2k</p>
+                                        <p class="m-2">{{url()->current()}}</p>
                                     </div>
                                     <div class="col-2">
                                         <button type="button" class="btn rounded-pill btn-success waves-effect waves-light" style="width: 65px; height:40px;">
