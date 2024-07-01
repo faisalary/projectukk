@@ -289,6 +289,12 @@ class MenuHelper
                 'icon' => 'ti-users',
                 'permission' => 'anggota_tim.view'
             ],
+            [
+                'name' => 'Profile Perusahaan',
+                'route' => 'profile_company',
+                'icon' => 'ti-building',
+                'permission' => 'profile_perusahaan.view'
+            ],
         ];
     }
 }

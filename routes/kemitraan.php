@@ -47,8 +47,8 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
         Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
-        Route::post('/approved/{id}', 'approved')->name('.approved')->middleware('kelola_lowongan_lkm.approval');
-        Route::post('/rejected/{id}', 'rejected')->name('.rejected')->middleware('kelola_lowongan_lkm.approval');
+        Route::post('/approved/{id}', 'approved')->name('.approved')->middleware('permission:kelola_lowongan_lkm.approval');
+        Route::post('/rejected/{id}', 'rejected')->name('.rejected')->middleware('permission:kelola_lowongan_lkm.approval');
     });
 });
 
@@ -77,14 +77,13 @@ Route::prefix('jadwal-seleksi')->group(function () {
     });
 });
 
-Route::prefix('company')->group(function () {
-        
-    Route::prefix('profile-company')->controller(ProfileCompanyController::class)->group(function () {
-        Route::get('/', 'index')->name('profile_company.index');
-        Route::put('/{id}', 'update');
-        Route::get('/edit/{id}', 'edit');
-    });
+Route::prefix('profile-perusahaan')->name('profile_company')->controller(ProfileCompanyController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::post('/{id}', 'update')->name('.update');
+    Route::get('/edit/{id}', 'edit')->name('.edit');
+});
 
+Route::prefix('company')->group(function () {
     Route::prefix('summary-profile')->controller()->group(function () {
         Route::get('/', [App\Http\Controllers\SummaryProfileController::class, 'index'])->name('summary_profile.index');
         Route::put('/{id}', [App\Http\Controllers\KelolaMitraController::class, 'update']);

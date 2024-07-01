@@ -7,77 +7,62 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Account -->
-            <form action="{{ url('company/summary-profile/' . $industri->id_industri) }}" class="default-form"
-                autocomplete="off" enctype="multipart/form-data">
+            <form action="{{ route('profile_company.update', ['id' => $industri->id_industri]) }}" class="default-form" function-callback="afterAction">
                 @csrf
-                @method('PUT')
                 <div class="modal-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
-                        @if ($industri->image)
-                            <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar"
-                                class="d-block w-px-100 h-px-100 rounded" id="imgPreview2">
-                        @else
-                            <img src="../../app-assets/img/avatars/14.png" alt="user-avatar"
-                                class="rounded-circle w-px100 mb-3 pt-1 mt-4" id="imgPreview2"
-                                data-default-src="../../app-assets/img/avatars/14.png">
-                        @endif
-                        <div class="button-wrapper">
-                            <label for="changePicture"
-                                class="btn btn-white text-success me-2 mb-3 waves-effect waves-light" tabindex="0">
-                                <i class="ti ti-upload d-block pe-2"></i>
-                                <span class="d-none d-sm-block">Unggah Baru Logo Perusahaan</span>
-                                <input type="file" id="changePicture" name="image" class="account-file-input"
-                                    hidden accept="image/png, image/jpeg">
-                            </label>
-                            <button type="button" class="btn btn-white text-danger account-image-reset mb-3 waves-effect"
-                                onclick="removeImage()">
-                                <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Remove</span>
-                            </button>
-
-                            <div class="text-muted">Format FIle JPG, GIF atau PNG. Ukuran Maksimal 800KB</div>
+                        <div class="rounded-circle w-px-100 h-px-100 text-center" style="overflow: hidden;">
+                            @if ($industri->image)
+                                <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar" class="d-block w-100" id="imgPreview2">
+                            @else
+                                <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block w-100" id="imgPreview2" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
+                            @endif
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex justify-content-start">
+                                <label for="changePicture" class="btn btn-primary mx-2" id="btn-change-picture">
+                                    <i class="ti ti-upload d-block pe-2"></i>
+                                    <span class="d-none d-sm-block">Unggah Baru Logo Perusahaan</span>
+                                    <input type="file" id="changePicture" name="image" class="account-file-input" hidden accept="image/png, image/jpeg">
+                                </label>
+                                <button type="button" class="btn btn-white mx-2 text-danger account-image-reset" onclick="removeImage()">
+                                    <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Remove</span>
+                                </button>
+                            </div>
+                            <small class="text-muted mx-2 mt-2">Format FIle JPG, JPEG atau PNG. Ukuran Maksimal 2MB</small>
                         </div>
                     </div>
                     <div class="border-top">
 
                         <div class="row mt-4">
-                            <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                <label for="namaperusahaan" class="form-label">Nama Perusahaan <span
-                                        class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="namaindustri" name="namaindustri"
-                                    placeholder="Nama Perusahaan" autofocus="" value="{{ $industri->namaindustri }}">
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            <div class="mb-3 col-md-12 form-group">
+                                <label for="namaindustri" class="form-label">Nama Perusahaan <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="namaindustri" name="namaindustri" placeholder="Nama Perusahaan" autofocus="" value="{{ $industri->namaindustri }}">
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                <label for="alamat" class="form-label">Alamat Perusahaan <span
-                                        class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamatindustri"
-                                    name="alamatindustri">{{ $industri->alamatindustri }}</textarea>
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            <div class="mb-3 col-md-12 form-group">
+                                <label for="alamatindustri" class="form-label">Alamat Perusahaan <span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamatindustri" name="alamatindustri">{{ $industri->alamatindustri }}</textarea>
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                <label for="deskripsi" class="form-label">Deskripsi Perusahaan <span
-                                        class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description"
-                                    name="description">{{ $industri->description }}</textarea>
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            <div class="mb-3 col-md-12 form-group">
+                                <label for="description" class="form-label">Deskripsi Perusahaan <span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description" name="description">{{ $industri->description }}</textarea>
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="mb-3 col-md-12 fv-plugins-icon-container">
+                            <div class="mb-3 col-md-12">
                                 <div class="border rounded p-3">
                                     <label class="form-label">Kontak Perusahaan</label>
-                                    <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                        <label for="notelp" class="form-label">No. Telepon Perusahaan <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="notelpon"
-                                            name="notelpon"placeholder="Masukan Nomor Telepon"
-                                            aria-describedby="floatingInputHelp" value="{{ $industri->notelpon }}">
+                                    <div class="mb-3 col-md-12 form-group">
+                                        <label for="notelpon" class="form-label">No. Telepon Perusahaan <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="notelpon" name="notelpon"placeholder="Masukan Nomor Telepon" aria-describedby="floatingInputHelp" value="{{ $industri->notelpon }}">
+                                        <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                        <label for="lastName" class="form-label">E-mail Perusahaan <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" id="email" name="email" class="form-control"
-                                            placeholder="Masukan E-mail Perusahaan" aria-label="john.doe"
-                                            aria-describedby="basic-default-email2" value="{{ $industri->email }}">
+                                    <div class="mb-3 col-md-12 form-group">
+                                        <label for="email" class="form-label">E-mail Perusahaan <span class="text-danger">*</span></label>
+                                        <input type="text" id="email" name="email" class="form-control" placeholder="Masukan E-mail Perusahaan" value="{{ $industri->email }}">
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
                             </div>

@@ -52,6 +52,7 @@ class PermissionSeeder extends Seeder
             'informasi_lowongan_mitra.view', //
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
+            'profile_perusahaan.view',
         ];
 
         $permission['Pembimbing Lapangan'] = [];
