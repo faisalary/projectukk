@@ -98,7 +98,7 @@ class KelolaMitraController extends Controller
                 return $btn;
             })
             ->editColumn('penanggung_jawab', function ($data) {
-                return $data->penanggungJawab->namapeg;
+                return $data->penanggungJawab->namapeg ?? '-';
             })
             ->rawColumns(['aksi', 'penanggung_jawab'])
             ->make(true);
