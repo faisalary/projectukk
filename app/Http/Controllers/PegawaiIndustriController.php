@@ -2,86 +2,105 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Models\User;
+use App\Helpers\Response;
+use App\Jobs\SendMailJob;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Str;
 use App\Models\PegawaiIndustri;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Industri;
+use App\Http\Requests\PegawaiIndustriRequest;
 
 class PegawaiIndustriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:anggota_tim.view');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-    $industri = Industri::all();
-    $pegawai_industri = PegawaiIndustri::all();
-    return view('masters.pegawai_industri.index', compact('pegawai_industri', 'industri'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('company.pegawai_industri.index');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PegawaiIndustriRequest $request)
     {
         try{
-            $pegawai_industri = PegawaiIndustri::create([
-            'id_industri' => $request->namaperusahaan,
-            'namapeg'=> $request->namapeg,
-            'nohppeg' => $request->nohppeg,
-            'emailpeg' => $request->emailpeg,
-            'jabatan' => $request->jabatan,
-            'unit' => $request->unit,
-            'statuspeg' => true,
-        ]);
+            DB::beginTransaction();
 
-        return response()->json([
-            'error' => false,
-            'message' => 'Pegawai Industri successfully Created!',
-            'modal' => '#modalTambahPegawai',
-            'table' => '#table-master-pegawai'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'error' => true,
-            'message' => $e->getMessage(),
-        ]);
+            $user = auth()->user();
+
+            $userCreated = User::create([
+                'name' => $request->namapeg,
+                'username' => $request->namapeg,
+                'email' => $request->emailpeg,
+                'password' => Hash::make(Str::random(12)),
+            ])->assignRole('Pegawai Industri');
+
+            $pegawai_industri = PegawaiIndustri::create([
+                'id_industri' => $user->industri->id_industri,
+                'id_user'=> $userCreated->id,
+                'namapeg'=> $request->namapeg,
+                'nohppeg' => $request->nohppeg,
+                'emailpeg' => $request->emailpeg,
+                'jabatan' => $request->jabatan,
+                'statuspeg' => true,
+            ]);
+
+            $code = Str::random(60);
+            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $request->emailpeg)->first();
+            if ($passwordResetToken) {
+                DB::table('password_reset_tokens')->where('email', $request->emailpeg)->delete();
+            }
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->emailpeg,
+                'token' => $code,
+                'created_at' => now(),
+            ]);
+            
+            $url = route('register.set-password', ['token' => $code]);
+            dispatch(new SendMailJob($request->emailpeg, new VerifyEmail($url)));
+            DB::commit();
+
+            return Response::success(null, 'Anggota Tim successfully Created!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
-}
 
     /**
      * Display the spesified resource.
      */
     public function show()
     {
-        $pegawai_industri = PegawaiIndustri::with("industri")->orderBy('id_peg_industri', 'asc')->get();
+        $pegawai_industri = PegawaiIndustri::orderBy('namapeg', 'asc')->get();
         return DataTables::of($pegawai_industri)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->statuspeg == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->statuspeg) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->statuspeg) ? "danger" : "success";
+                $color = ($row->statuspeg) ? "danger" : "primary";
 
-                $url = route('pegawai_industri.status', $row->id_peg_industri);
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_peg_industri}' onclick= edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='update-status btn-icon text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $url = route('pegawaiindustri.status', $row->id_peg_industri);
+
+                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_peg_industri}' onclick= edit($(this)) class='cursor-pointer text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='update-status cursor-pointer text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a>";
 
                 return $btn;
             })
@@ -91,7 +110,7 @@ class PegawaiIndustriController extends Controller
             ->addColumn('kontak', function ($row) {
                 return $row->nohppeg.'<br>'.$row->emailpeg;
             })
-
+            ->addColumn('role', fn ($data) => $data->user->roles->pluck('name')->first())
             ->rawColumns(['action', 'status','pegawai_industri','kontak'])
 
             ->make(true);
@@ -109,30 +128,19 @@ class PegawaiIndustriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PegawaiIndustriRequest $request, string $id)
     {
         try{
             $pegawai_industri = PegawaiIndustri::where('id_peg_industri', $id)->first();
-
-            $pegawai_industri->id_industri = $request->namaperusahaan;
             $pegawai_industri->namapeg = $request->namapeg;
             $pegawai_industri->nohppeg = $request->nohppeg;
             $pegawai_industri->emailpeg = $request->emailpeg;
             $pegawai_industri->jabatan = $request->jabatan;
-            $pegawai_industri->unit = $request->unit;
             $pegawai_industri->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Pegawai Industri successfully Updated!',
-                'modal' => '#modalTambahPegawai',
-                'table' => '#table-master-pegawai'
-            ]);
+            return Response::success(null, 'Pegawai Industri successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
@@ -143,20 +151,14 @@ class PegawaiIndustriController extends Controller
     {
         try{
             $pegawai_industri = PegawaiIndustri::where('id_peg_industri', $id)->first();
+            if (!$pegawai_industri) return Response::error(null, 'Pegawai industri not found!');
+
             $pegawai_industri->statuspeg = ($pegawai_industri->statuspeg) ? false : true;
             $pegawai_industri->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Pegawai Industri successfully Deactived!',
-                'modal' => '#modalTambahPegawai',
-                'table' => '#table-master-pegawai'
-            ]);
+            return Response::success(null, 'Pegawai Industri successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 }

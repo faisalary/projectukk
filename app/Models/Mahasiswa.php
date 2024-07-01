@@ -37,6 +37,11 @@ class Mahasiswa extends Model
     protected $primaryKey = 'nim';
     public $timestamps = false;
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'id_user');
+    }
+
     public function prodi()
     {
         return $this->belongsTo(ProgramStudi::class, 'id_prodi');

@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Storage;
 
 class JenisMagangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:jenis_magang.view');
+    }
+
     /**
      * Display a listing of the resource.
      */

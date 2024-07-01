@@ -3,30 +3,50 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\Mahasiswa;
-use Illuminate\Http\Request;
-use App\Http\Requests\MahasiswaRequest;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
-use App\Models\Fakultas;
-use App\Models\ProgramStudi;
-use App\Models\Universitas;
 use App\Models\User;
+use App\Models\Fakultas;
+use App\Helpers\Response;
+use App\Models\Mahasiswa;
 use App\Imports\MhsImport;
+use App\Models\Universitas;
+use Illuminate\Support\Str;
+use App\Models\ProgramStudi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\MahasiswaRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class mahasiswaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:mahasiswa.view');
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswa = Mahasiswa::all();
-        $fakultas = Fakultas::all();
-        $prodi = ProgramStudi::all();
+        if ($request->type) {
+            switch ($request->type) {
+                case 'id_fakultas':
+                    $data = Fakultas::select('namafakultas as text', 'id_fakultas as id')->where('id_univ', $request->selected)->get();
+                    break;
+                case 'id_prodi':
+                    $data = ProgramStudi::select('namaprodi as text', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            return Response::success($data, 'Success');
+        }
+
         $universitas = Universitas::all();
-        return view('masters.mahasiswa.index', compact('mahasiswa','fakultas','prodi','universitas'));
+        return view('masters.mahasiswa.index', compact('universitas'));
     }
 
     /**
@@ -43,31 +63,27 @@ class mahasiswaController extends Controller
     public function store(MahasiswaRequest $request)
     {
         try {
+            DB::beginTransaction();
+            $mahasiswa = Mahasiswa::create($request->validated());
 
-        $mahasiswa = Mahasiswa::create([
-            'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
-            'id_prodi' => $request->namaprodi,
-            'id_univ' => $request->namauniv,
-            'id_fakultas' => $request->namafakultas,
-            'namamhs' => $request->namamhs,
-            'alamatmhs' => $request->alamatmhs,
-            'emailmhs' => $request->emailmhs,
-            'nohpmhs' => $request->nohpmhs, 
-            
-        ]);
+            $code = Str::random(60);
 
-        return response()->json([
-            'error' => false,
-            'message' => 'Data Created!',
-            'modal' => '#modal-mahasiswa',
-            'table' => '#table-master-mahasiswa'
-        ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
+            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->first();
+            if ($passwordResetToken) {
+                DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->delete();
+            }
+
+            DB::table('password_reset_tokens')->insert([
+                'email' => $mahasiswa->emailmhs,
+                'token' => $code,
+                'created_at' => now(),
             ]);
+
+            DB::commit();
+            return Response::success(null, 'Data Created!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
         }
     }
 
@@ -126,29 +142,11 @@ class mahasiswaController extends Controller
     {
         try {
             $mahasiswa = Mahasiswa::where('nim', $id)->first();
-
-            $mahasiswa->nim = $request->nim;
-            $mahasiswa->angkatan = $request->angkatan;
-            $mahasiswa->id_prodi = $request->namaprodi;
-            $mahasiswa->id_univ = $request->namauniv;
-            $mahasiswa->id_fakultas = $request->namafakultas;
-            $mahasiswa->namamhs = $request->namamhs;
-            $mahasiswa->alamatmhs = $request->alamatmhs;
-            $mahasiswa->emailmhs = $request->emailmhs;
-            $mahasiswa->nohpmhs = $request->nohpmhs;
-            $mahasiswa->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Mahasiswa successfully Updated!',
-                'modal' => '#modal-mahasiswa',
-                'table' => '#table-master-mahasiswa'
-            ]);
+            $mahasiswa->update($request->all());
+            
+            return Response::success(null, 'Komponen Nilai successfully Add!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
     
@@ -163,49 +161,10 @@ class mahasiswaController extends Controller
             $mahasiswa->status = ($mahasiswa->status) ? false : true;
             $mahasiswa->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Status Mahasiswa successfully Updated!',
-                'modal' => '#modal-mahasiswa',
-                'table' => '#table-master-mahasiswa'
-            ]);
+            return Response::success(null, 'Status Mahasiswa successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
-    }
-    public function list_fakultas($id_univ)
-    {
-        $fakultas = Fakultas::where("id_univ", $id_univ)->get();
-        $select = array(
-            0 => ["id" => '', 'text' => 'pilih']
-        );
-
-        foreach ($fakultas as $item) {
-            $select[] = ["id" => $item->id_fakultas, "text" => $item->namafakultas];
-        }
-        return response()->json([
-            'error' => false,
-            'data' => $select
-        ]);
-    }
-
-    public function list_prodi($id_fakultas)
-    {
-        $prodi = ProgramStudi::where("id_fakultas", $id_fakultas)->get();
-        $select = array(
-            0 => ["id" => '', 'text' => 'pilih']
-        );
-
-        foreach ($prodi as $item) {
-            $select[] = ["id" => $item->id_prodi, "text" => $item->namaprodi];
-        }
-        return response()->json([
-            'error' => false,
-            'data' => $select,
-        ]);
     }
 
     public function import (Request $request){

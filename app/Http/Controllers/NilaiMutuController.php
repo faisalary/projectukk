@@ -11,6 +11,10 @@ use Yajra\DataTables\Facades\DataTables;
 
 class NilaiMutuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:nilai_mutu.view');
+    }
     /**
      * Display a listing of the resource.
      */

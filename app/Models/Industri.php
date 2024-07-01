@@ -31,4 +31,9 @@ class Industri extends Model
     {
         return $this->hasMany(LowonganMagang::class, 'id_industri');
     }
+
+    public function penanggungJawab()
+    {
+        return $this->hasOne(PegawaiIndustri::class, 'id_peg_industri', 'penanggung_jawab');
+    }
 }

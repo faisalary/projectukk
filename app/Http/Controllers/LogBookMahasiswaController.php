@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class LogBookMahasiswaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:logbook_magang_fakultas.view', ['only' => ['viewMagangFakultas', 'detailMagangFakultas', 'showMagangFakultas']]);
+        $this->middleware('permission:logbook_magang_mandiri.view', ['only' => ['viewMagangMandiri', 'detailMagangMandiri', 'showMagangMandiri']]);
+    }
+
     public function viewMagangFakultas()
     {
         return view('logbook_mahasiswa.magang_fakultas.index');

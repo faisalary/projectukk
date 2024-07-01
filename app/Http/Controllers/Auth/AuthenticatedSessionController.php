@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -29,7 +30,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if(Auth::user()->can('dashboard.dashboard_admin')) {
+            $url = RouteServiceProvider::ADMIN;
+        } elseif(Auth::user()->can('dashboard.dashboard_mitra')) {
+            $url = RouteServiceProvider::MITRA;
+        } else {
+            $url = RouteServiceProvider::LANDINGPAGE;
+        }
+        return redirect()->intended($url);
     }
 
     /**

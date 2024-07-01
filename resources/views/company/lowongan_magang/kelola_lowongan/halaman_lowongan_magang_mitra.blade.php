@@ -136,8 +136,8 @@
                                 <th style="min-width:100px;">POSISI</th>
                                 <th style="min-width:100px;">TANGGAL</th>
                                 <th style="min-width:100px;">DURASI MAGANG</th>
-                                <th style="min-width:50px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
+                                <th style="text-align:center;min-width:50px;">STATUS</th>
+                                <th style="text-align:center;min-width:100px;">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -146,39 +146,7 @@
         </div>
         @endforeach
     </div>
-
-
-    {{-- <div class="tab-content p-0">
-        @foreach (['total', 'tertunda', 'diterima', 'ditolak'] as $tableId)
-            <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}" id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
-                <div class="card">
-                    
-                    <div class="row mt-3 ms-2">
-                        <div class="col-6 d-flex align-items-center"
-                            style="border: 2px solid #D3D6DB; max-width:280px; height:40px;border-radius:8px;">
-                            <span class="badge badge-center bg-label-success mr-10"><i
-                                    class="ti ti-briefcase"></i></span>Total Lowongan:</span>&nbsp;<span
-                                style="color:#7367F0;">50</span>&nbsp;<span style="color:#4EA971;"> Lowongan </span>
-                        </div>
-                    </div>
-                    <div class="card-datatable table-responsive">
-                        <table class="table tab1c" id="{{ $tableId }}" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width:70px;">NOMOR</th>
-                                    <th style="min-width:100px;">POSISI</th>
-                                    <th style="min-width:100px;">TANGGAL</th>
-                                    <th style="min-width:100px;">DURASI MAGANG</th>
-                                    <th style="min-width:50px;">STATUS</th>
-                                  
-                                    <th style="min-width:100px;">AKSI</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        @endforeach  --}}
+    
 @include('company/lowongan_magang/components/modal_kelola_lowongan')
 @endsection
 @section('page_script')
@@ -195,7 +163,6 @@
 
                 $('#' + idElement).DataTable({
                     ajax: "{{ route('kelola_lowongan.show') }}?type=" + idElement,
-                    serverSide: true,
                     processing: true,
                     destroy: true,
                     columns: [{
@@ -231,55 +198,6 @@
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
         });
-
-        $("#modalTambahLowongan").on("hide.bs.modal", function() {
-
-            $("#modal-title").html("Tambah Lowongan Magang");
-            $("#modal-button").html("Save Data");
-            $('#modalTambahLowongan form #tahun').val('').trigger('change');
-            $('#modalTambahLowongan form #jenismagang').val('').trigger('change');
-        });
-
-        function edit(e) {
-            let id = e.attr('data-id');
-            console.log(id);
-
-            let action = `{{ url('kelola/lowongan/mitra/update/') }}/${id}`;
-            var url = `{{ url('kelola/lowongan/mitra/edit/') }}/${id}`;
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function(response) {
-                    $("#modal-title").html("Edit Lowongan Mangang");
-                    $("#modal-button").html("Update Data")
-                    $('#modalTambahLowongan form').attr('action', action);
-                    $('#jenismagang').val(response.id_jenismagang).change();
-                    $('#posisi').val(response.intern_position);
-                    $('#kuota').val(response.kuota);
-                    $('#deskripsi').val(response.deskripsi);
-                    $('#kualifikasi').val(response.requirements);
-                    $('#jenis').val(response.gender);
-                    $('#jenjang').val(response.jenjang);
-                    $('#keterampilan').val(response.keterampilan);
-                    $('#gaji').val(response.paid);
-                    $('#nominal').val(response.nominal_salary);
-                    $('#benefit').val(response.benefitmagang);
-                    $('#lokasi').val(response.id_lokasi).change();
-                    $('#tanggal').val(response.startdate);
-                    $('#tanggalakhir').val(response.enddate);
-                    $('#durasimagang').val(response.durasimagang);
-                    $('#tahapan').val(response.tahapan_seleksi);
-                    $('#deskripsiseleksi[]').val(response.deskripsi);
-                    $('#mulai[]').val(response.tgl_mulai);
-                    $('#akhir[]').val(response.tgl_akhir);
-                    $('#prodi').val(response.id_prodi);
-                    $('#fakultas').val(response.id_fakultas);
-                    $('#modalTambahLowongan').modal('show');
-                }
-            });
-        }
-
-        $(document).ready(function() {});
 
         $(document).on('submit', '#filter', function(e) {
             const offcanvasFilter = $('#modalSlide');

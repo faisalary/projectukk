@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class BerkasAkhirMagangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:berkas_magang_fakultas.view', ['only' => ['viewMagangFakultas']]);
+        $this->middleware('permission:berkas_magang_mandiri.view', ['only' => ['viewMagangMandiri']]);
+    }
+
     public function viewMagangFakultas()
     {
         return view('berkas_akhir_magang.magang_fakultas.index');

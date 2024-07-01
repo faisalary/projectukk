@@ -15,6 +15,10 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DataMahasiswaMagangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:data_magang.view');
+    }
     /**
      * Display a listing of the resource.
      */

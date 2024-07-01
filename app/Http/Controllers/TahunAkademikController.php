@@ -13,6 +13,11 @@ use App\Http\Requests\TahunAkademikRequest;
 
 class TahunAkademikController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:tahun_akademik.view');
+    }
+
     /**
      * Display a listing of the resource.
      */

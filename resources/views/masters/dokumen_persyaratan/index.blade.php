@@ -20,7 +20,6 @@
                     <thead>
                         <tr>
                             <th>NOMOR</th>
-                            <th>JENIS MAGANG</th>
                             <th>NAMA DOKUMEN</th>
                             <th class="text-center">STATUS</th>
                             <th class="text-center">AKSI</th>
@@ -45,12 +44,11 @@
         deferRender: true,
         type: 'GET',
         destroy: true,
+        rowGroup: {
+            dataSrc: 'jenis_magang'
+        },
         columns: [{
                 data: "DT_RowIndex"
-            },
-            {
-                data: 'jenis.namajenis',
-                name: 'namajenis'
             },
             {
                 data: 'namadocument',

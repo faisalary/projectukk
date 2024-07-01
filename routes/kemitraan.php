@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
 use App\Http\Controllers\InformasiMitraController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
-use App\Http\Controllers\InformasiLowonganController;
 use App\Http\Controllers\LowonganMagangLkmController;
+use App\Http\Controllers\PegawaiIndustriController;
 
 Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraController::class)->group(function () {
     Route::get('/', 'index');
@@ -32,9 +32,7 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::post('/store', 'store')->name('.store');
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');
-        Route::put('/update/{id}', 'update')->name('.update');
-        Route::post('/approved/{id}', 'approved')->name('.approved');
-        Route::post('/rejected/{id}', 'rejected')->name('.rejected');
+        Route::post('/update/{id}', 'update')->name('.update');
     });
 });
 
@@ -49,11 +47,18 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
         Route::get('/', 'index');
         Route::get('/show', 'show')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
-        Route::get('/edit/{id}', 'edit')->name('.edit');
-        Route::put('/update/{id}', 'update')->name('.update');
-        Route::post('/approved/{id}', 'approved')->name('.approved');
-        Route::post('/rejected/{id}', 'rejected')->name('.rejected');
+        Route::post('/approved/{id}', 'approved')->name('.approved')->middleware('kelola_lowongan_lkm.approval');
+        Route::post('/rejected/{id}', 'rejected')->name('.rejected')->middleware('kelola_lowongan_lkm.approval');
     });
+});
+
+Route::prefix('anggota-tim')->name('pegawaiindustri')->controller(PegawaiIndustriController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::post('/store', 'store')->name('.store');
+    Route::get('/edit/{id}', 'edit')->name('.edit');
+    Route::post('/update/{id}', 'update')->name('.update');
+    Route::post('/status/{id}', 'status')->name('.status');
 });
 
 Route::prefix('jadwal-seleksi')->group(function () {
@@ -96,6 +101,6 @@ Route::prefix('company')->group(function () {
     });
 });
 
-Route::get('dashboard/company', function () {
+Route::middleware('permission:dashboard.dashboard_mitra')->get('dashboard/company', function () {
     return view('dashboard.company.index');
 })->name('dashboard_company');

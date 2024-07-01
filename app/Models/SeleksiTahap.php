@@ -17,5 +17,7 @@ class SeleksiTahap extends Model
     protected $casts = [
         'date_confirm_closing' => 'datetime'
     ];
-     public $timestamps = false;
+    public $timestamps = false;
+
+    
 }

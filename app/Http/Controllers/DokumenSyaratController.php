@@ -12,6 +12,11 @@ use App\Http\Requests\DokumenSyaratRequest;
 
 class DokumenSyaratController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:dokumen_syarat.view');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -56,6 +61,9 @@ class DokumenSyaratController extends Controller
 
         return DataTables::of($doc)
             ->addIndexColumn()
+            ->editColumn('jenis_magang', function ($row) {
+                return $row->jenis->namajenis." (".$row->jenis->durasimagang.")";
+            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";

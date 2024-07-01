@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
     <link rel="stylesheet" href="{{url('app-assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/css/yearpicker.css') }}" />
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('/app-assets/vendor/css/pages/cards-advance.css') }}" />
 
@@ -164,6 +165,7 @@
 <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+<script src="{{ url('app-assets/js/yearpicker.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('app-assets/js/main.js') }}"></script>
@@ -175,6 +177,8 @@
         altFormat: 'j F Y',
         dateFormat: 'Y-m-d'
     });
+
+    $(".yearpicker").yearpicker();
 </script>
 
 @yield('page_script')

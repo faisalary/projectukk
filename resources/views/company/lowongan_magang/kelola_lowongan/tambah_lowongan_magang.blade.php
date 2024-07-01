@@ -1,12 +1,6 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
-{{-- <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css ') }}" />
-<link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" /> --}}
-<style>
-</style>
 @endsection
 
 @section('content')
@@ -16,7 +10,7 @@
 <div class="row ">
     <div class="mb-2">
         <h4 class="fw-bold text-sm"><span class="text-muted fw-light text-xs">Lowongan Magang / </span>
-            Tambah Lowongan Magang
+            {{ isset($lowongan) ? 'Edit' : 'Tambah' }} Lowongan Magang
         </h4>
     </div>
 </div>
@@ -29,7 +23,7 @@
                 @include('company/lowongan_magang/kelola_lowongan/number_step')
             </div>
             <div class="bs-stepper-content">
-                <form class="default-form" action="{{ route('kelola_lowongan.store') }}" function-callback="afterAction">
+                <form class="default-form" action="{{ isset($lowongan) ? route('kelola_lowongan.update', ['id' => $lowongan->id_lowongan]) : route('kelola_lowongan.store') }}" function-callback="afterAction">
                     @csrf
                     <div id="container-detail-lowongan">
                         @include('company/lowongan_magang/kelola_lowongan/step/detail_lowongan')
@@ -38,7 +32,9 @@
                         @include('company/lowongan_magang/kelola_lowongan/step/kualifikasi_lowongan')
                     </div>
                     <div id="container-proses-seleksi">
-                        {{-- @include('company/lowongan_magang/kelola_lowongan/step/proses_seleksi') --}}
+                        @if (isset($lowongan))
+                        @include('company/lowongan_magang/kelola_lowongan/step/proses_seleksi')
+                        @endif
                     </div>
                 </form>
             </div>
@@ -49,20 +45,10 @@
 @endsection
 
 @section('page_script')
-{{-- <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script> --}}
 @include('company/lowongan_magang/kelola_lowongan/js/script')
 <script>
-    // $(".flatpickr-date").flatpickr({
-    //     altInput: true,
-    //     altFormat: 'j F Y',
-    //     dateFormat: 'Y-m-d'
-    // });
-
     $(document).ready(function () {
-        @if (isset($jenismagang))
+        @if (isset($lowongan))
         loadDataEdit();
         @endif
     });
@@ -71,15 +57,31 @@
         let data = response.data;
         if (data != null && data.data_step) {
             let currentStepNumber = $('.bs-stepper-header').find(`[data-step="${data.data_step}"]`);
-            if (data.data_step == 3) {
+            if (data.view) {
                 $('#container-proses-seleksi').html(data.view);
                 // reinit
-                initSelect2();
                 $(".flatpickr-date").flatpickr({
                     altInput: true,
                     altFormat: 'j F Y',
                     dateFormat: 'Y-m-d'
                 });
+                @if (isset($lowongan)) 
+                let dataLowongan = @json($lowongan);
+                $.each(dataLowongan, function ( key, value ) {
+                    if ($(`input[name="${key}"]:not([type="radio"])`).length > 0 || $(`textarea[name="${key}"]`).length > 0) {
+                        $(`[name="${key}"]`).val(value);
+                        if ($(`[name="${key}"]`).is('.flatpickr-date')) {
+                            $(`[name="${key}"]`).flatpickr({
+                                altInput: true,
+                                altFormat: 'j F Y',
+                                dateFormat: 'Y-m-d',
+                                defaultDate: value
+                            });
+                        }
+                    }
+                });
+                @endif
+                initSelect2();
                 // end reinit
             }
             switchActive(currentStepNumber);
@@ -132,18 +134,64 @@
 
     $(document).on('change', `input[name="gaji"]`, function () {
         if ($(this).val() == 1) {
-            $(`input[name="nominal"]`).parent().show();
+            $(`input[name="nominal_salary"]`).parent().show();
         } else {
-            $(`input[name="nominal"]`).parent().hide();
+            $(`input[name="nominal_salary"]`).parent().hide();
         }
     });
 
-    @if (isset($jenismagang))
+    @if (isset($lowongan)) 
     function loadDataEdit() {
-        let data = @json($jenismagang);
+        let data = @json($lowongan);
         $.each(data, function ( key, value ) {
-            $(`[name="${key}"]`).val(value).trigger('change');
+            if (key == 'nominal_salary') {
+                if (value == null) $(`[name="gaji"][value="0"]`).click();
+                if (value != null) $(`[name="gaji"][value="1"]`).click();
+            }
+
+            if (value == null) return;
+
+            if ($(`input[name="${key}"]:not([type="radio"])`).length > 0 || $(`textarea[name="${key}"]`).length > 0) {
+                $(`[name="${key}"]`).val(value);
+                if ($(`[name="${key}"]`).is('.flatpickr-date')) {
+                    $(`[name="${key}"]`).flatpickr({
+                        altInput: true,
+                        altFormat: 'j F Y',
+                        dateFormat: 'Y-m-d',
+                        defaultDate: value
+                    });
+                }
+            } else if ($(`input[name="${key}"]:is([type="radio"])`).length > 0) {
+                $(`[name="${key}"][value="${value}"]`).prop("checked", true);
+
+            } else if ($(`select[name^="${key}"]`).length > 0) {
+                if ($(`select[name^="${key}"]`).prop('multiple')) {
+                    let option = $(`select[name^="${key}"] option`);
+                    value = JSON.parse(value);
+
+                    if (!Array.isArray(value)) {
+                        value = Object.keys(value);
+                    }
+
+                    let newOption = value.filter(function ( item ) {
+                        return !option.is(`[value="${item}"]`);
+                    });
+
+                    newOption.map(function ( item ) {
+                        $(`select[name^="${key}"]`).append(`<option value="${item}" selected>${item}</option>`);
+                    });
+                    
+                    $(`select[name^="${key}"] option`).each(function () {
+                        if (value.includes($(this).val())) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                } else {
+                    $(`[name="${key}"]`).val(value).trigger('change');
+                }
+            }
         });
+        initSelect2();
     }
     @endif
 </script>

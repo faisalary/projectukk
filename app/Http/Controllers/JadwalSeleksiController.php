@@ -25,6 +25,11 @@ use Illuminate\Console\View\Components\Alert;
 
 class JadwalSeleksiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:jadwal_seleksi_lkm.view');
+    }
+
     public function index(Request $request, $id)
     {
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang')->first();
