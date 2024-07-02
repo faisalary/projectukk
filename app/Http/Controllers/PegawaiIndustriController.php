@@ -44,10 +44,10 @@ class PegawaiIndustriController extends Controller
                 'username' => $request->namapeg,
                 'email' => $request->emailpeg,
                 'password' => Hash::make(Str::random(12)),
-            ])->assignRole('Pegawai Industri');
+            ])->assignRole('Pembimbing Lapangan');
 
             $pegawai_industri = PegawaiIndustri::create([
-                'id_industri' => $user->industri->id_industri,
+                'id_industri' => $user->pegawai_industri->id_industri,
                 'id_user'=> $userCreated->id,
                 'namapeg'=> $request->namapeg,
                 'nohppeg' => $request->nohppeg,
@@ -131,13 +131,21 @@ class PegawaiIndustriController extends Controller
     public function update(PegawaiIndustriRequest $request, string $id)
     {
         try{
+            DB::beginTransaction();
             $pegawai_industri = PegawaiIndustri::where('id_peg_industri', $id)->first();
             $pegawai_industri->namapeg = $request->namapeg;
             $pegawai_industri->nohppeg = $request->nohppeg;
             $pegawai_industri->emailpeg = $request->emailpeg;
             $pegawai_industri->jabatan = $request->jabatan;
             $pegawai_industri->save();
+            if (isset($pegawai_industri->user)) {
+                $user = $pegawai_industri->user;
+                $user->name = $request->namapeg;
+                $user->email = $request->emailpeg;
+                $user->save();
+            }
 
+            DB::commit();
             return Response::success(null, 'Pegawai Industri successfully Updated!');
         } catch (Exception $e) {
             return Response::errorCatch($e);

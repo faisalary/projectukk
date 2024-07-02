@@ -29,14 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->midd
 Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-
-// Route::prefix('company')->group(function () {
-//     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm']);
-//     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
-//     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
-//     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
-// });
-
 Route::prefix('register')->name('register')->controller(RegisteredUserController::class)->group(function () {
     Route::get('set-password/{token}', 'newPassword')->name('.set-password');
     Route::post('/set-password', 'storeNewPassword')->name('.set-password.store');

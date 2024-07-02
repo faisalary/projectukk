@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Industri;
 use Exception;
+use App\Models\Industri;
+use App\Helpers\Response;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileCompanyController extends Controller
 {
@@ -15,50 +17,10 @@ class ProfileCompanyController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $data =[
-            'industri' => Industri::find($user->id_industri)
-            
-        ];
-        return view('company.summary_profile.index',$data);
-    }
+        $penanggungJawab = $user->pegawai_industri;
+        $industri = $penanggungJawab->industri;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        
-
-            // $industri = Industri::create([
-            //     // 'namaindustri' => $request->namaindustri,
-            //     'notelpon' => $request->notelpon,
-            //     'alamatindustri' => $request->alamatindustri,
-            //     'description' => $request->description,
-            //     // 'email' => $request->email,
-            // ]);
-
-            // return response()->json([
-            //     'error' => false,
-            //     'message' => 'Mitra Data successfully Created!',
-            //     'url' => url('/dashbord')
-            // ]);
-        
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return view('company.summary_profile.index', compact('industri', 'penanggungJawab'));
     }
 
     /**
@@ -74,53 +36,62 @@ class ProfileCompanyController extends Controller
      * Update the specified resource in storage.
      */
 
-     public function update(Request $request, $id)
-     {
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'remove_image' => 'nullable|in:1',
+            'namaindustri' => 'required',
+            'alamatindustri' => 'required',
+            'description' => 'required',
+            'notelpon' => 'required',
+            'email' => 'required|email|unique:industri,email,' . $id . ',id_industri',
+            'image' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
+        ], [
+            'namaindustri.required' => 'Nama Industri wajib diisi.',
+            'alamatindustri.required' => 'Alamat Industri wajib diisi.',
+            'description.required' => 'Deskripsi Industri wajib diisi.',
+            'notelpon.required' => 'No telp Industri wajib diisi.',
+            'email.required' => 'Email Industri wajib diisi.',
+            'email.email' => 'Email Industri tidak valid.',
+            'email.unique' => 'Email Industri sudah digunakan.',
+            'image.file' => 'File harus berupa gambar.',
+            'image.mimes' => 'File harus berupa jpg, png atau jpeg.',
+        ]);
+
         try {
             $industri = Industri::where('id_industri', $id)->first();
             
             $industri->namaindustri = $request->namaindustri;
+            $industri->alamatindustri = $request->alamatindustri;
+            $industri->description = $request->description;
+            $industri->notelpon = $request->notelpon;
             $industri->email = $request->email;
-            if($request->alamatindustri){
-                $industri->alamatindustri = $request->alamatindustri;               
-            }
-            if($request->description){
-                $industri->description = $request->description;
-            }
-            if($request->notelpon){
-               $industri->notelpon = $request->notelpon;
-           }
-           if($request->kategori_industri){
-               $industri->kategori_industri = $request->kategori_industri;
-           }
-           if($request->statuskerjasama){
-            $industri->statuskerjasama = $request->statuskerjasama;
-           }
 
-            if (!empty($request->image)) {
-                $industri->image = $request->image->store('post');
+            $file = $industri->image ?? null;
+            if ($request->hasFile('image')) {
+                if ($file != null && Storage::has($file)) {
+                    Storage::delete($file);
+                }
+                $file = Storage::put('photo_industri', $request->image);
+            }
+            $industri->image = $file;
+
+            if ($request->remove_image == 1) {
+                if (isset($industri->image)) {
+                    Storage::delete($industri->image);
+                }
+                $industri->image = null;
             }
             
             $industri->save();
+            $penanggungJawab = $industri->penanggungJawab;
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
+            return Response::success([
+                'view' => view('company/summary_profile/components/card_detail', compact('industri', 'penanggungJawab'))->render(),
+                'image' => ($industri->image != null) ? url('storage/' . $industri->image) : null
+            ], 'Data Successfully Updated!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
-     }
-    
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
