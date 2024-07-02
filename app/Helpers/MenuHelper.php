@@ -188,6 +188,12 @@ class MenuHelper
                 ]
             ],
             [
+                'name' => 'Kelola Semua Pengguna',
+                'route' => 'kelola_semua_pengguna',
+                'icon' => 'ti-users',
+                'permission' => 'kelola_semua_pengguna.view'
+            ],
+            [
                 'name' => 'Kelola Pengguna',
                 'route' => 'kelola_pengguna',
                 'icon' => 'ti-users',

@@ -7,6 +7,7 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\KelolaSemuaPenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,13 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
         Route::get('/', 'index');
+    });
+
+    Route::prefix('kelola-semua-pengguna')->name('kelola_semua_pengguna')->controller(KelolaSemuaPenggunaController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'getData')->name('.show');
+        Route::get('edit/{id}', 'edit')->name('.edit');
+        Route::post('update/{id}', 'update')->name('.update');
     });
 
     Route::prefix('roles')->name('roles')->controller(KonfigurasiController::class)->group(function () {
