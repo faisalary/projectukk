@@ -7,6 +7,7 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KelolaSemuaPenggunaController;
 use App\Http\Controllers\MitraPerusahaanController;
 
@@ -22,7 +23,11 @@ use App\Http\Controllers\MitraPerusahaanController;
 */
 
 // landingpage
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::controller(HomeController::class)->name('dashboard')->group(function () {
+    Route::get('/', 'index');
+    Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail-lowongan');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
@@ -250,12 +255,6 @@ Route::get('/detail-informasi-pengalaman', function () {
 
 Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
-});
-
-
-
-Route::get('/detail/lowongan/magang', function () {
-    return view('program_magang.detail_lowongan');
 });
 
 Route::get('/detail/lowongan/magang', function () {
