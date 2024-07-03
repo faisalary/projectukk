@@ -25,7 +25,7 @@
 
                     <!-- Perusahaan -->
                     <li class="menu-item">
-                        <a href="/daftar_perusahaan" class="menu-link">
+                        <a href="{{ route('daftar_perusahaan') }}" class="menu-link">
                             <div data-i18n="Mitra Perusahaan">Mitra Perusahaan</div>
                         </a>
                     </li>

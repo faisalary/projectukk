@@ -2,20 +2,40 @@
 
 namespace App\Http\Controllers;
 use App\Models\Industri;
-use App\Http\Controllers\Controller;
+use App\Helpers\Response;
 use App\Models\LowonganMagang;
-
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class MitraPerusahaanController extends Controller
 {
-    protected $page_per = 12; // jumlah data per halaman
+    protected $page_per = 9; // jumlah data per halaman
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['industries'] = Industri::where('statusapprove', 1)->get();
-        $data['page_per'] = $this->page_per;
+
+        $data['industries'] = Industri::where('statusapprove', 1);
+        if ($request->name) {
+            $data['industries'] = $data['industries']->where('namaindustri', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->location) {
+            $data['industries'] = $data['industries']->where('alamatindustri', 'like', '%' . $request->location . '%');
+        }
+
+        $data['industries'] = $data['industries']->paginate($this->page_per)->toJson();
+        $data['pagination'] = json_decode($data['industries'], true);
+        $data['industries'] = $data['pagination']['data'];
+
+        if ($request->ajax()) {
+            return Response::success([
+                'pagination' => view('perusahaan/components/pagination', $data)->render(),
+                'view' => view('perusahaan/card_perusahaan', $data)->render(),
+            ]);
+        }
+
         return view('perusahaan.daftar_perusahaan', $data);
     }
 

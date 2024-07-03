@@ -225,6 +225,12 @@ Route::middleware('auth')->group(function () {
     // });
 });
 
+Route::prefix('daftar-perusahaan')->name('daftar_perusahaan')->group(function () {
+    Route::get('/', [MitraPerusahaanController::class, 'index']);
+    Route::get('/detail/{id}', [MitraPerusahaanController::class, 'show'])->name('.detail');
+    Route::get('/filter', [MitraPerusahaanController::class, 'filter'])->name('.filter');
+});
+
 Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
 });
@@ -263,11 +269,6 @@ Route::get('/detail/lowongan/magang', function () {
 
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
-});
-Route::prefix('daftar_perusahaan')->group(function () {
-    Route::get('/', [MitraPerusahaanController::class, 'index']);
-    Route::get('/detail/{id}', [MitraPerusahaanController::class, 'show']);
-    Route::get('/filter', [MitraPerusahaanController::class, 'filter']);
 });
 
 Route::get('/pratinjau/diri', function () {

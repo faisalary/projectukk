@@ -41,6 +41,10 @@
             right: 0px !important;
             top: 60% !important;
         }
+
+        .input-group:focus-within {
+            box-shadow: none;
+        }
     </style>
 @endsection
 
