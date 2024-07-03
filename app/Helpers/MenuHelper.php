@@ -188,6 +188,12 @@ class MenuHelper
                 ]
             ],
             [
+                'name' => 'Kelola Semua Pengguna',
+                'route' => 'kelola_semua_pengguna',
+                'icon' => 'ti-users',
+                'permission' => 'kelola_semua_pengguna.view'
+            ],
+            [
                 'name' => 'Kelola Pengguna',
                 'route' => 'kelola_pengguna',
                 'icon' => 'ti-users',
@@ -288,6 +294,12 @@ class MenuHelper
                 'route' => 'pegawaiindustri',
                 'icon' => 'ti-users',
                 'permission' => 'anggota_tim.view'
+            ],
+            [
+                'name' => 'Profile Perusahaan',
+                'route' => 'profile_company',
+                'icon' => 'ti-building',
+                'permission' => 'profile_perusahaan.view'
             ],
         ];
     }

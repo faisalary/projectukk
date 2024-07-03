@@ -27,6 +27,19 @@
 
         .bootstrap-select .dropdown-toggle:after {
             right: 5px !important;
+            top: 50% !important;
+        }
+
+        .light-style .bootstrap-select .dropdown-toggle {
+            padding-left: 0%;
+        }
+
+        .bootstrap-select.dropup .dropdown-toggle:after {
+            transform: rotate(-45deg) translateY(-50%);
+            height: 0.5em;
+            width: 0.5em;
+            right: 0px !important;
+            top: 60% !important;
         }
     </style>
 @endsection
@@ -74,13 +87,11 @@
                                 <div class="flex-fill">
                                     <div class="input-group input-group-merge position-relative">
                                         <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
-                                        <select name="jenis_magang" class="selectpicker pe-2" data-style="btn-default">
-                                            <option value="">Jenis Magang</option>
-                                            <option value="44">Magang 1 Semester</option>
-                                            <option value="106">Magang 2 Semester</option>
-                                            <option value="46">Magang Kerja</option>
-                                            <option value="48">Magang StartUp</option>
-                                            <option value="47">Magang Mandiri</option>
+                                        <select name="jenis_magang" class="selectpicker pe-3" data-style="btn-default">
+                                            <option value="" selected disabled>Pilih Jenis Magang</option>
+                                            @foreach ($jenisMagang as $item)
+                                                <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -96,400 +107,7 @@
 
         {{-- Lowongan Magang Untuk Kamu --}}
         <div class="d-flex flex-column">
-            <div class="nav-align-top">
-                <h2 class="text-center mt-3">Lowongan Magang Untuk Kamu</h2>
-                <p class="text-center mt-1" style="font-size:20px;">Temukan berbagai lowongan kerja yang kamu inginkan</p>
-                <ul class="nav nav-pills mt-2 mb-3 justify-content-center" role="tablist">
-                    <li class="nav-item" style="font-size: large;">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-terbaru" aria-controls="navs-pills-justified-terbaru" aria-selected="false"> Lowongan Terbaru</button>
-                    </li>
-                    <li class="nav-item" style="font-size: large;">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-populer" aria-controls="navs-pills-justified-populer" aria-selected="false"> Lowongan Populer</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content p-0">
-                <div class="tab-pane fade show active" id="navs-pills-justified-terbaru" role="tabpanel">
-                    <div class="row" style="margin-left: 10rem;margin-right: 10rem;">
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade show" id="navs-pills-justified-populer" role="tabpanel">
-                    <div class="row" style="margin-left: 10rem;margin-right: 10rem;">
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 mt-4">
-                            <div class="card h-100 border">
-                                <div class="card-body pb-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between" style="height: 70px;">
-                                                <img class="img-fluid h-100" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                                <div class="clock"> 8 hari lalu </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">PT Wing o Wings</p>
-                                        </div>
-                                    </div>
-                                    <h2 class="mb-3 text-truncate"> Programmer</h2>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-map-pin"></i>
-                                        <span class="ps-2 text-truncate">Jakarta Selatan, Indonesia</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-currency-dollar"></i>
-                                        <span class="ps-2 text-truncate">Rp 1.000.000 - 5.000.000</span>
-                                    </div>
-                                    <div class="location mb-3">
-                                        <i class="ti ti-calendar-time"></i>
-                                        <span class="ps-2 text-truncate">2 Semester</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card-footer">
-                                    <div class="demo-inline-spacing text-center">
-                                        <a href="/apply" class="btn btn-primary">Lamar</a>
-                                        <a href="/detail/lowongan/magang" class="btn btn-outline-primary">Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <div id="container-lowongan-magang"></div>
             <div class="text-center">
                 <a class="mb-5 mt-5" type="button" class="btn btn-outline-success" style="color:#4EA971;; font-size:20px; margin: 20px;">Lihat
                     Semua Lowongan <span class="ti ti-chevron-right" style="margin-bottom:5px;"></span></a>
@@ -571,147 +189,7 @@
                 <h2>Mitra Perusahaan</h2>
                 <div class="text" style="font-size:20px;">Talentern menjalin kerjasama dengan 500+ perusahaan nasional dan multinasional</div>
             </div>
-            <div class="row mx-5">
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Wings Surya</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="/detail_perusahaan" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;">
-                                    <img style="border-radius: 0%;"
-                                        src="{{ asset('front/assets/img/lowongan_uniqlo.png') }}" alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    Uniqlo Co., Ltd</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="#" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;   flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/lazada.png') }}"
-                                        alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    Lazada Group</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="#" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/bca.png') }}"
-                                        alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Bank Central Asia Tbk</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="#" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/Nestle.png') }}"
-                                        alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    Nestle SA</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="#" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card">
-                        <div class="card-body" style="text-align: left; border-radius: 4px;  flex-shrink: 0;">
-                            <div>
-                                <figure class="image" style="border-radius: 0%; margin-left:0px; height:55px;">
-                                    <img style="border-radius: 0%;" src="{{ asset('front/assets/img/mayapada.png') }}"
-                                        alt="admin.upload">
-                                </figure>
-                                <h4
-                                    style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Sejahteraraya Anugerahjaya</h4>
-                                <div class="location"
-                                    style="-webkit-line-clamp: 3;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
-                                    PT Fast Retailing Indonesia South Quarter Tower C, 17th Floor, Jl. R.A. Kartini Kav. 8
-                                    Cilandak, Jakarta Selatan, 12430.
-                                </div>
-                                <div class="button-container">
-                                    <a href="#" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="container-mitra"></div>
             <div class="text-center">
                 <a class="mb-5 mt-5" type="button" class="btn btn-outline-success"
                     style="color:#4EA971;; font-size:20px; margin: 20px;">Lihat Perusahaan Lainnya<span
@@ -834,5 +312,23 @@
 @endsection
 
 @section('page_script')
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        loadData('container-lowongan-magang', 'container-mitra');
+    });
+
+    function loadData(...type) {
+        $.each(type, function (key, value) {
+            $.ajax({
+                url: "{{ route('dashboard') }}?component=" + value,
+                type: 'GET',
+                success: function (response) {
+                    $('#' + value).html(response);
+                }
+            });
+        });
+    }
+</script>
 @endsection

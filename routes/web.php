@@ -7,6 +7,8 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KelolaSemuaPenggunaController;
 use App\Http\Controllers\MitraPerusahaanController;
 
 /*
@@ -21,7 +23,11 @@ use App\Http\Controllers\MitraPerusahaanController;
 */
 
 // landingpage
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::controller(HomeController::class)->name('dashboard')->group(function () {
+    Route::get('/', 'index');
+    Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail-lowongan');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
@@ -29,14 +35,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->midd
 //super admin
 Route::get('/super-admin', [App\Http\Controllers\SuperAdminController::class, 'index'])->middleware(['auth'])->name('dashboard.superadmin');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-
-// Route::prefix('company')->group(function () {
-//     Route::get('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'showRegistrationForm']);
-//     Route::post('/register', [App\Http\Controllers\Auth\RegisterMitraController::class, 'store'])->name('register.store');
-//     Route::get('/set-password/{token}', [App\Http\Controllers\Auth\SetPasswordController::class, 'index'])->name('set.password');
-//     Route::post('/set-password', [App\Http\Controllers\Auth\SetPasswordController::class, 'update'])->name('update.password');
-// });
 
 Route::prefix('register')->name('register')->controller(RegisteredUserController::class)->group(function () {
     Route::get('set-password/{token}', 'newPassword')->name('.set-password');
@@ -59,6 +57,13 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
         Route::get('/', 'index');
+    });
+
+    Route::prefix('kelola-semua-pengguna')->name('kelola_semua_pengguna')->controller(KelolaSemuaPenggunaController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'getData')->name('.show');
+        Route::get('edit/{id}', 'edit')->name('.edit');
+        Route::post('update/{id}', 'update')->name('.update');
     });
 
     Route::prefix('roles')->name('roles')->controller(KonfigurasiController::class)->group(function () {
@@ -250,12 +255,6 @@ Route::get('/detail-informasi-pengalaman', function () {
 
 Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
-});
-
-
-
-Route::get('/detail/lowongan/magang', function () {
-    return view('program_magang.detail_lowongan');
 });
 
 Route::get('/detail/lowongan/magang', function () {

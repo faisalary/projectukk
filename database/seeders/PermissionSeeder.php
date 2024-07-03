@@ -13,6 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        $permission['Super Admin'] = ['kelola_semua_pengguna.view'];
         $permission['LKM'] = [
             // admin lkm 
             'dashboard.dashboard_admin',
@@ -52,6 +53,7 @@ class PermissionSeeder extends Seeder
             'informasi_lowongan_mitra.view', //
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
+            'profile_perusahaan.view',
         ];
 
         $permission['Pembimbing Lapangan'] = [];
