@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
         Route::get('/', 'index');
+        Route::get('get-data', 'getData')->name('.get_data');
+        Route::post('store' , 'store')->name('.store');
     });
 
     Route::prefix('kelola-semua-pengguna')->name('kelola_semua_pengguna')->controller(KelolaSemuaPenggunaController::class)->group(function () {
@@ -207,6 +209,8 @@ Route::middleware('auth')->group(function () {
     // Route::prefix('/apply')->group(function () {
     //     Route::get('/', [App\Http\Controllers\DetailLowonganController::class, 'index'])->name('detail-lowongan.index');
     // });
+
+
 });
 
 Route::prefix('daftar-perusahaan')->name('daftar_perusahaan')->group(function () {
