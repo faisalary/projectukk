@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="#" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
+    <a href="{{ $urlBack }}" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
     <div class="d-flex justify-content-start mt-3">
         <h4 class="fw-bold">
             Detail Lowongan Pekerjaan
