@@ -177,22 +177,6 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/{id}', 'detail')->name('.detail');
     });
 
-    Route::prefix('/kegiatan-saya')->group(function () {
-        Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
-        Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
-        Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
-        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
-        Route::get('/porto/{file}', [App\Http\Controllers\KonfirmasiMagangController::class, 'porto'])->name('lamaran_saya.porto');
-        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
-        Route::post('/mulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'mulai'])->name('mulai.update');
-        Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
-        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
-        Route::get('/editMulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'editMulai'])->name('mulai.edit');
-        Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
-        Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
-        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-    });
-
     Route::prefix('mandiri')->group(function () {
         Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
@@ -247,10 +231,6 @@ Route::get('/lowongan-magang-tersimpan', function () {
     return view('program_magang.lowongan_magang_tersimpan');
 });
 
-Route::get('/lowongan-pekerjaan-tersimpan', function () {
-    return view('program_magang.lowongan_pekerjaan_tersimpan');
-});
-
 Route::get('/informasi/pribadi', function () {
     return view('profile.informasi_pribadi');
 });
@@ -273,14 +253,6 @@ Route::get('/kegiatan_saya/lamaran_saya/status', function () {
 
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
-});
-
-Route::get('/logbook', function () {
-    return view('logbook.logbook', ['active_menu' => 'logbook']);
-});
-
-Route::get('/logbook-detail', function () {
-    return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
 });
 
 Route::get('/cv', function () {
@@ -307,10 +279,6 @@ Route::get('/aboutus/techno', function () {
 
 Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
-});
-
-Route::get('/nilai/magang', function () {
-    return view('kegiatan_saya.nilai_magang.nilai');
 });
 
 Route::get('/pengajuan/magang', function () {
@@ -352,10 +320,6 @@ Route::get('/verifikasi/akun', function () {
 
 Route::get('/status/magang', function () {
     return view('kegiatan_saya.status_magang.index');
-});
-
-Route::get('/berkas/akhir', function () {
-    return view('kegiatan_saya.berkas_akhir.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');
