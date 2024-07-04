@@ -7,189 +7,186 @@
         display: none;
     }
 
-    .page-item.active .page-link,
-    .pagination li.active>a:not(.page-link) {
-        border-color: #4EA971 !important;
-        background-color: #4EA971 !important;
-        color: #fff;
-    }
-
-    .btn-success {
-        color: #fff;
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-
-    .highlight {
-        background-color: #4EA971 !important;
-        color: white !important;
-    }
-
-    .light-style .select2-container--default .select2-selection--single {
-        width: 530px;
-    }
-
-    .light-style .select2-container--default .select2-selection {
-        border-left: 0px;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-    }
-
-    .layout-wrapper,
-    .layout-container {
-        width: 100%;
-        display: flex;
-        flex: 1 1 auto;
-        align-items: stretch;
-        background-color: #fff;
-    }
-
-    input[type="checkbox"]:focus {
-        outline: 0px auto -webkit-focus-ring-color;
-        outline-offset: -2px;
-    }
-
-    .form-check-input:checked,
-    .form-check-input[type=checkbox]:indeterminate {
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-
-    .light-style .flatpickr-input[readonly],
-    .light-style .flatpickr-input~.form-control[readonly] {
-        background: #F8F8F8
-    }
-
-    .select2-results__option[role="option"][aria-selected="true"] {
-        background-color: #4EA971;
-        color: #fff;
-    }
-
-    .select2-container--default .select2-results__option--highlighted:not([aria-selected="true"]) {
-        background-color: rgba(115, 103, 240, 0.08) !important;
-        color: #4EA971 !important;
-    }
-
-    .light-style .select2-container--default .select2-selection--single {
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        /* width: 100% !important; */
         height: 48px !important;
-    }
-
-    .light-style .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 2.67rem !important;
-    }
-
-    span.select2-dropdown.select2-dropdown--below {
-        width: 530px !important;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow b {
-        position: absolute;
-        height: 18px;
-        width: 20px;
-        top: 36% !important;
-        background-repeat: no-repeat;
-        background-size: 20px 18px;
-        margin-left: 307px !important;
+        border: none;
+        border-radius: 5px;
     }
 
     .input-group:not(.has-validation)> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating),
     .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
     .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control,
     .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select {
+        border: 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        border-top: 0;
-        border-bottom: 0;
-        border-right: 0;
-        border-left: 0;
     }
 
-    span.select2-selection.select2-selection--single {
-        border-top: 10px !important;
-        border-bottom: 10px !important;
-        border-right: 10px !important;
+    .dropdown.bootstrap-select {
+        max-width: 170px;
+        max-height: 45px;
     }
 
-    .light-style .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 3.2rem !important;
+    .bootstrap-select .dropdown-toggle:after {
+        right: 5px !important;
+        top: 50% !important;
     }
 
-    .page-item > .page-link.active {
-    border-color: #4EA971 !important;
-    background-color: #4EA971 !important;
-    color: #fff;
-}
+    .light-style .bootstrap-select .dropdown-toggle {
+        padding-left: 0%;
+    }
+
+    .light-style .select2-container--default .select2-selection--single {
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        background-color: #fff;
+        border: none;
+        border-radius: 0.375rem;
+    }
+
+    .select2-container{
+        padding: 0.35rem 0rem;
+        margin: 0;
+        width: 100% !important;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        box-sizing: border-box;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        position: absolute;
+        height: 18px;
+        width: 20px;
+        top: 40%;
+        right: 0%;
+        background-repeat: no-repeat;
+        background-size: 20px 18px;
+    }
+
+    .position-relative {
+        position: relative !important;
+        width: 90% !important;
+    }
+
+    .bootstrap-select.dropup .dropdown-toggle:after {
+        transform: rotate(-45deg) translateY(-50%);
+        height: 0.5em;
+        width: 0.5em;
+        right: 0px !important;
+        top: 60% !important;
+    }
+
+    .input-group:focus-within {
+        box-shadow: none;
+    }
 </style>
 @endsection
 
 @section('content')
 
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
-    <div class="row mt-5 mb-5" style="margin-left:70px;">
-        <div class="col-5 mt-3">
+    <div class="d-flex justify-content-center mt-5 mb-5 mx-5">
+        <div class="col-5">
             <div class="input-group input-group-merge border">
                 <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-                <input type="text" id="nama_perusahaan" class="form-control" placeholder="Lowongan Magang" aria-label="Lowongan Magang" aria-describedby="basic-addon-search31" style="height: 37px;">
+                <input type="text" id="nama_perusahaan" class="form-control" placeholder="Nama Perusahaan">
             </div>
         </div>
-        <div class="col-5 mt-3">
-            <div class="input-group input-group-merge border">
-                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-map-pin"></i></span>
-                <select class="select2 form-control" data-placeholder="Pilih lokasi Magang" aria-describedby="basic-addon-search31">
-                    <option disabled selected> Lokasi Magang </option>
-                    <option> Bandung </option>
-                    <option> Jakarta </option>
-                    <option> Medan </option>
-                    <option> Surabaya </option>
-                    <option> Yogyakarta </option>
+        <div class="col-5 mx-2">
+            <div class="input-group input-group-merge bg-white border">
+                <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
+                <select name="location" id="location" class="select2 form-select" data-placeholder="Lokasi Perusahaan">
+                    <option value disabled selected> Lokasi Perusahaan </option>
+                    <option value="Bandung">Bandung</option>
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Medan">Medan</option>
+                    <option value="Surabaya">Surabaya</option>
+                    <option value="Yogyakarta">Yogyakarta</option>
                 </select>
             </div>
         </div>
-        <div class="col-2 mt-3">
-            <button class="btn btn-success" id="search" type="button" style="height: 50px;" onclick="filter()">Cari sekarang</button>
+        <div class="col-auto">
+            <button class="btn btn-primary" id="search" type="button" style="height: 50px;" onclick="filter()">Cari sekarang</button>
         </div>
     </div>
 </div>
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div id="container-industri">
-        @include("perusahaan.list_perusahaan")
-    </div>
+    @if(count($industries) != 0)
+        <h4 class="ms-2 mt-2 mb-0">Daftar Mitra</h4>
+        <div id="container-industri" class="row"></div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end mb-5 mt-4" id="container-pagination">
+                @include('perusahaan/components/pagination')
+            </ul>
+        </nav>
+    @else
+        <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
+        auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 25%;">
+        <div class="sec-title mt-5 mb-4 text-center">
+            <h4>Belum ada mitra yang terdaftar</h4>
+        </div>
+    @endif
 </div>
-
-
 @endsection
 
 @section('page_script')
 <script>
+    $(document).ready(function () {
+        loadData();
+    });
+
+    let dataFilter = {};
+    function pagination(e) {
+        url = e.attr('data-url');
+        if (url == '') return;
+        dataFilter.page = url.split('page=')[1];
+
+        $('.page-item').removeClass('active');
+        e.addClass('active');
+
+        loadData();
+    }
+
     function filter() {
         let name = $('#nama_perusahaan').val(); 
-        
+        let location = $('#location').val();
+        dataFilter.name = name;
+        dataFilter.location = location;
+        loadData();
+    }
+
+    function loadData() {
+        let url = `{{ route('daftar_perusahaan') }}`;
+
         $.ajax({
-            url: `{{ url('daftar_perusahaan/filter?name=') }}`+name,
+            url: url,
             type: "GET",
+            data: dataFilter,
             success: function(response) {
-                $('#container-industri').html(response);
+                $('#container-industri').html(response.data.view);
+                $('#container-pagination').html(response.data.pagination);
             }
         });
     }
 
-    $('.page-item').on('click', function() {
-        let active = $(this);
-        let page = active.attr('page');
+    // $('.page-item').on('click', function() {
+    //     let active = $(this);
+    //     let page = active.attr('page');
         
-        console.log(page);
-        if(page != 'prev' && page != 'next'){
-            active.addClass('active');
-            active.siblings().removeClass('active');
+    //     console.log(page);
+    //     if(page != 'prev' && page != 'next'){
+    //         active.addClass('active');
+    //         active.siblings().removeClass('active');
 
-            showPage(page);
-        }
-    });
+    //         showPage(page);
+    //     }
+    // });
 
-    function showPage(pageNumber) {
-        $('.page-content').hide(); 
-        $('.page-' + pageNumber).show(); 
-    }
+    // function showPage(pageNumber) {
+    //     $('.page-content').hide(); 
+    //     $('.page-' + pageNumber).show(); 
+    // }
 
 </script>
 @endsection
