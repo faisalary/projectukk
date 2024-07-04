@@ -12,24 +12,22 @@
 
 @section('content')
 <div class="d-flex justify-content-between">
-    <h4 class="fw-bold">
-        Kelola Pengguna
-    </h4>
+    <h4 class="fw-bold my-auto">Kelola Pengguna</h4>
     <div class="">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahMitra">Tambah Pengguna</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahUser">Tambah Pengguna</button>
     </div>
 </div>
-<div class="col-xl-12">
+<div class="col-xl-12 mt-3">
     <div class="card">
         <div class="card-datatable table-responsive">
             <table class="table" id="table-pengguna">
                 <thead>
                     <tr>
-                        <th>NOMOR</th>
+                        <th>NO</th>
                         <th style="min-width: 125px;">NAMA</th>
                         <th>EMAIL</th>
-                        <th>Role</th>
-                        <th>AKSI</th>
+                        <th style="text-align: center;">Role</th>
+                        <th style="text-align: center;">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -48,47 +46,42 @@
             { data: "DT_RowIndex" },
             { data: "name" },
             { data: "email" },
-            { data: null },
+            { data: "roles" },
             { data: "action" }
         ]
     });
 
     function afterAction(response) {
         $('#table-pengguna').DataTable().ajax.reload();
-        $('#modalTambahMitra').modal('hide');
+        $('#modalTambahUser').modal('hide');
     }
 
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ url('sesuaikan') }}/${id}`;
-        var url = `{{ url('sesuaikan') }}/${id}`;
+        let url = `{{ route('kelola_pengguna.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let action = `{{ route('kelola_pengguna.update', ['id' => ':id']) }}`.replace(':id', id);
+        let modal = $('#modalTambahUser');
+
+        modal.find('.modal-title').html('Edit Pengguna');
+        modal.find('form').attr('action', action);
+        modal.modal('show');
+
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
-                $("#modalTambahMitraTitle").html("Edit Pengguna");
-                $("#modal-button").html("Update Data")
-                $('#modalTambahMitra form').attr('action', action);
-                $('#nama').val(response.nama);
-                $('#nohp').val(response.nohp);
+                response = response.data;
+                $('#name').val(response.name);
                 $('#email').val(response.email);
-                $('#role').val(response.role).trigger('change');
-
-                $('#modal-thn-akademik').modal('show');
             }
         });
     }
 
-    $("#modalTambahMitra").on("hide.bs.modal", function() {
-
-        $("#modalTambahMitraTitle").html("Tambah Pengguna");
-        $("#modal-button").html("Simpan")
-        $('#modalTambahMitra form')[0].reset();
-        $('#modalTambahMitra form #role').val('').trigger('change');
-        $('#modalTambahMitra form').attr('action', "{{ url('sesuaikan') }}");
-        $('.invalid-feedback').removeClass('d-block');
-        $('.form-control').removeClass('is-invalid');
+    $("#modalTambahUser").on("hide.bs.modal", function(e) {
+        let modal = $("#modalTambahUser");
+        modal.find(".modal-title").html('Tambah Pengguna');
+        modal.find('form').attr('action', "{{ route('kelola_pengguna.store') }}");
     });
 </script>
 @endsection

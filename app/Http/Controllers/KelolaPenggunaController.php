@@ -25,19 +25,22 @@ class KelolaPenggunaController extends Controller
 
     public function getData(Request $request) {
         $roles = ['LKM', 'Pembimbing Akademik', 'Dosen Wali', 'Kaprodi'];
-        $user = User::whereHas('roles', function ($query) use ($roles) {
+        $user = User::with('roles')->whereHas('roles', function ($query) use ($roles) {
             $query->whereIn('name', $roles);
         })->get();
 
         return datatables()->of($user)
         ->addIndexColumn()
+        ->editColumn('roles', function ($data) {
+            return '<div class="text-center">' .$data->roles[0]->name. '</div>';
+        })
         ->addColumn('action', function ($data) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= '<a class="cursor-pointer text-warning"><i class="ti ti-edit"></i></a>';
+            $result .= '<a class="cursor-pointer text-warning" onclick="edit($(this))" data-id="' .$data->id. '"><i class="ti ti-edit"></i></a>';
             $result .= '</>';
             return $result;
         })
-        ->rawColumns(['action'])
+        ->rawColumns(['roles', 'action'])
         ->make(true);
     }
 
@@ -76,6 +79,36 @@ class KelolaPenggunaController extends Controller
             return Response::success(null, 'LKM successfully created! Please check his/her email for verification.');
         } catch (\Exception $e) {
             DB::rollBack();
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function edit($id) {
+        $user = User::where('id', $id)->first();
+        if (!$user) return Response::error(null, 'User not found!');
+        return Response::success($user, 'Success');
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id . ',id'
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.'
+        ]);
+
+        try {
+            $user = User::where('id', $id)->first();
+            if (!$user) return Response::error(null, 'User not found!');
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+
+            return Response::success(null, 'User successfully updated!');
+        } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
     }
