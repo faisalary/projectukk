@@ -1,328 +1,133 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
-<style>
-    .hidden {
-        display: none;
-    }
-
-    .page-item.active .page-link,
-    .pagination li.active>a:not(.page-link) {
-        border-color: #FFFFFF !important;
-        background-color: #4EA971 !important;
-    }
-
-    .btn-success {
-        color: #fff;
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-
-    .highlight {
-        background-color: #4EA971 !important;
-        color: white !important;
-    }
-</style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a id="back" type="button" class="btn btn-outline-success text-success mt-4 mb-3 waves-effect">
-        <span class="ti ti-arrow-left me-2"></span>Kembali
-    </a>
-    <div class="sec-title">
-        <h4>Detail Lowongan Pekerjaan</h4>
+    <a href="#" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
+    <div class="d-flex justify-content-start mt-3">
+        <h4 class="fw-bold">
+            Detail Lowongan Pekerjaan
+        </h4>
     </div>
-    <div class="mb-5">
-        <div class="card" style="padding: 50px 30px; width: 100%;">
-            <div class="card-body d-flex flex-row justify-content-between" style=" border-bottom: 1px solid #D3D6DB  !important">
-                <div class="">
-                    <div class="d-flex items-center justify-content-start">
-                        <img src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="" style="width: 150px; height: 90px !important">
-                        <div class="ms-5">
-                            <p class="fw-bolder text-black" style="font-size: 32px; color: #23314B">Human Resources</p>
-                            <p class="mt-n3" style="font-size: 18px; color: #4B465C">IT consultant</p>
-                        </div>
-                    </div>
-                    <div class="d-flex" style="margin-top: 40px; font-size: 16px; color: #23314B !important">
-                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 0;">
-                            <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-users ti-xs me-2"></i>
-                                5 Kouta Penerimaan
-                            </li>
-                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-briefcase ti-xs me-2"></i>
-                                Onsite
-                            </li>
-                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-calendar-time  ti-xs me-2"></i>
-                                2 Semerter
-                            </li>
-                        </ul>
-                        <ul style="border-right: 1px solid #D3D6DB; padding: 0 20px 0 20px;">
-                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-map-pin  ti-xs me-2"></i>
-                                Bandung & Jakarta
-                            </li>
-                            <li class=" d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-currency-dollar  ti-xs me-2"></i>
-                                Rp 1.000.000 - 5.000.000
-                            </li>
-                            <li class="d-flex align-items-center fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-building-community  ti-xs me-2"></i>
-                                D3
-                            </li>
-                        </ul>
-                        <ul style="padding: 0 0 0 20px;">
-                            <li class="list-group-item d-flex align-items-start fw-semibold" style="margin-top: 15px !important">
-                                <i class="ti ti-school ti-xs me-2"></i>
-                                <div>
-                                    Program Studi
-                                    <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
-                                        <li>Rekayasa Perangkat Lunak</li>
-                                        <li>Manajemen Pemasaran</li>
-                                        <li>Sistem Informasi</li>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body m-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="flex-grow-1 me-5">
+                            <div class="d-flex justify-content-start align-items-center">
+                                @if ($lowongan->image)
+                                    <img src="{{ asset('storage/' . $lowongan->image) }}" alt="user-avatar" style="max-width:170px; max-height: 140px" id="imgPreview">
+                                @else
+                                    <img src="{{ asset('app-assets/img/avatars/14.png') }}" alt="user-avatar" class="" height="125" width="125" id="imgPreview" data-default-src="{{ asset('app-assets/img/avatars/14.png') }}">
+                                @endif
+                                <div class="ms-4">
+                                    <h2 class="fw-bolder mb-0">{{$lowongan?->namaindustri ?? ''}}</h2>
+                                    <h4 class="fw-lighter text-muted">{{$lowongan->intern_position}}</h4>
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-4">
+                                    <p><i class="ti ti-users me-2"></i>{{ $lowongan->kuota }}</p>
+                                    <p><i class="ti ti-briefcase me-2"></i>{{ $lowongan->pelaksanaan }}</p>
+                                    <p><i class="ti ti-calendar-time me-2"></i>{{ implode(' dan ', json_decode($lowongan->durasimagang)) }}</p>
+                                </div>
+                                <div class="col-4 border-start border-end">
+                                    <p><i class="ti ti-map-pin me-2"></i>{{ implode(', ', json_decode($lowongan->lokasi)) }}</p>
+                                    <p><i class="ti ti-currency-dollar me-2"></i>{{ $lowongan->nominal_salary ?? '-' }}</p>
+                                    <p><i class="ti ti-man me-2"></i>{{ $lowongan->gender }}</p>
+                                </div>
+                                <div class="col-4">
+                                    <p class="mb-2"><i class="ti ti-school me-2"></i>Program Studi</p>
+                                    <ul class="ps-2 ms-4 mb-0">
+                                        @foreach ($lowongan->program_studi as $item)
+                                            <li>{{ $item->namaprodi }}</li>
+                                        @endforeach
                                     </ul>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="w-auto text-end">
-                    <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
-                    <div class="text-end mt-4 me-2">
-                        <div class="row">
-                            <!-- <div class="col-3" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Laporkan"><button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                                    <i class="ti ti-flag"></i>
-                                </button>
-                            </div> -->
-                            <div class="col-6" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan ">
-                                <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan" style="width: 95px;">
-                                    <i class="ti ti-share" style="font-size: x-large;"></i>
-                                </button>
-                            </div>
-                            <div class="col-6" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
-                                <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalalert" style="width: 95px;">
-                                    <i class="ti ti-bookmark" style="font-size: x-large;"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4"></div>
-                    <a href="/apply" type="submit" class="btn btn-success waves-effect waves-light" style="height: 50px; width: 230px;">
-                        Lamar Lowongan
-                    </a>
-                </div>
-            </div>
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Deskipsi pekerjaan</h3>
-                <ul style="list-style-type: disc; padding-left: 50px; margin-top: 5px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
-                    <li>Manage Talent Acquisition activities for Desk Worker and Non-Desk Worker
-                    </li>
-                    <li>
-                        Lead HR Internal Communication and Employer Branding
-                    </li>
-                    <li>
-                        Manage On-Boarding program for new hire.
-                    </li>
-                    <li>
-                        Manage People Development process from training need analysis into post-training effectiveness
-                        evaluation including ROI.
-                    </li>
-                    <li>
-                        Support employee Performance Evaluation process.
-
-                    </li>
-                    <li>
-                        Support Talent Management and Succession Planning function.
-                    </li>
-                    <li>
-                        Manage HR Digital function (Workday) in the country by ensuring data accuracy and updates.
-                    </li>
-                    <li>
-                        Conduct HR People Analytic such as headcount, labor-cost, hours-work, etc.
-                    </li>
-                    <li>
-                        Lead Employee Engagement activities and events.
-                    </li>
-                    <li>
-                        Liaise with relevant parties to ensure HR function executed smoothly.
-                    </li>
-                    <li>Support other HR Indonesia operations activities.</li>
-                </ul>
-            </div>
-
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Requirements</h3>
-                <ul style="list-style-type: disc; padding-left: 50px; margin-top: 5px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
-                    <li>
-                        At least Bachelor's degree in any field
-
-                    </li>
-                    <li>
-                        At least 3 years of experience in HR / HRBP
-
-                    </li>
-                    <li>
-                        Has strong numerical capability and excel expertise
-
-                    </li>
-                    <li>
-                        Has experience using Workday will be an advantage
-
-                    </li>
-                    <li>
-                        Good command of spoken and written English.
-
-
-                    </li>
-                    <li>
-                        Experience within a rapidly changing organization in Multinational Company preferably within a
-                        Manufacturing environment.
-                    </li>
-                    <li>
-                        Strong attention to detail
-
-                    </li>
-                    <li>
-                        Self-motivated and able to work without supervision
-
-                    </li>
-                    <li>
-                        Willing to work in Cikampek area.
-
-                    </li>
-                </ul>
-            </div>
-
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Benefit</h3>
-                <ul style="list-style-type: disc; padding-left: 50px; margin-top: 5px; padding-bottom: 30px; font-size: 18px; color: #23314B;">
-                    <li>
-                        Family Care
-                    </li>
-                    <li>
-                        Parking Access
-                    </li>
-                    <li>
-                        Reward Compensation
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Kemampuan</h3>
-
-                <div class="d-flex" style="column-gap: 10px; padding-left: 20px; padding-bottom: 30px !important">
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">SPSS</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Microsoft Office</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Google Suite</span>
-                    <span class="badge rounded-pill bg-success bg-glow" style="font-size: 15px;">Counseling Tools</span>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h3 style="padding-left: 20px;">Seleksi Tahap 1</h3>
-                <div class="mb-3" style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Seleksi Administrasi</div>
-                <div style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
-            </div>
-
-            <div class="mt-4">
-                <h3 style="padding-left: 20px;">Seleksi Tahap 2</h3>
-                <div class="mb-3" style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Wawancara HR</div>
-                <div style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
-            </div>
-
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Seleksi Tahap 3</h3>
-                <div class="mb-3" style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Wawancara User</div>
-                <div class="mb-4" style="padding-left: 20px; font-size: 18px;"><i class="ti ti-clipboard-list" style="font-size: xx-large;"></i>Range Tanggal Pelaksanaan: 18/10/2023 - 20/10/2023</div>
-            </div>
-
-            <div class="mt-4" style="border-bottom: 1px solid #D3D6DB;">
-                <h3 style="padding-left: 20px;">Tentang Perusahaan</h3>
-
-                <p style="margin-top: 5px; padding-left: 20px; font-size: 18px; color: #23314B;">
-                    ÅF and Pöyry joined forces in order to become an international engineering, design and advisory company,
-                    driving digitalisation and sustainability for the energy, infrastructure and industrial sectors all over
-                    the
-                    world. AFRY as a new common brand of ÅF Pöyry is one of the largest international power sector
-                    consulting
-                    and engineering company with about 17,000 experts working across the world to create sustainable
-                    solutions
-                    for future generations
-                </p>
-                <div style="margin-top: 5px; padding-left: 20px; padding-bottom: 30px;">
-                    <a href="/detail_perusahaan" class="btn btn-outline-success btn-label-success mt-2" type="button">LIhat Perusahaan</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalbagikan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="card">
-                <div class="card-body text-center pb-0">
-                    <!-- <figure class="image"><img src="{{ url('/app-assets/img/Talentern.svg')}}"></figure> -->
-                    <div class="text-start">
-                        <h4>Share </h4>
-                    </div>
-                </div>
-                <div class="modal-body pt-0">
-                    <div class="row">
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-dark waves-effect waves-light" style="width: 50px; height:50px;">
-                                <span class="ti ti-brand-tiktok" style="font-size: 40px;"></span>
-                            </button>
-                            <p class="mt-1">TikTok</p>
-                        </div>
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-success waves-effect waves-light" style="width: 50px; height:50px; background-color: #65D072 !important;">
-                                <span class="ti ti-brand-whatsapp" style="font-size: 35px;"></span>
-                            </button>
-                            <p class="mt-1">WhatsApp</p>
-                        </div>
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-primary waves-effect waves-light" style="width: 50px; height:50px; background-color: #425893 !important;">
-                                <span class="ti ti-brand-facebook" style="font-size: 30px;"></span>
-                            </button>
-                            <p class="mt-1">Facebook</p>
-                        </div>
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-info waves-effect waves-light" style="width: 50px; height:50px; background-color: #1EA1F2 !important;">
-                                <span class="ti ti-brand-twitter" style="font-size: 25px;"></span>
-                            </button>
-                            <p class="mt-1">Twitter</p>
-                        </div>
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-secondary waves-effect waves-light" style="width: 50px; height:50px;">
-                                <span class="ti ti-mail" style="font-size: 35px;"></span>
-                            </button>
-                            <p class="mt-1">Email</p>
-                        </div>
-                        <div class="col-2 mb-3 text-center p-0">
-                            <button type="button" class="btn rounded-pill btn-icon btn-danger waves-effect waves-light" style="width: 50px; height:50px; background-color: #FF0000 !important;">
-                                <span class="ti ti-brand-youtube" style="font-size: 35px;"></span>
-                            </button>
-                            <p class="mt-1">Youtube</p>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="border" style="border-radius: 20px;">
-                            <div class="row">
-                                <div class="col-10">
-                                    <p class="m-2">http://sample.info/?#UIUX</p>
-                                </div>
-                                <div class="col-2">
-                                    <button type="button" class="btn rounded-pill btn-success waves-effect waves-light" style="width: 65px; height:40px;">
-                                        Copy
-                                    </button>
+                        <div class="text-end">
+                            <p class="mt-5" style="font-size: 18px;">Batas Melamar 13 Juli 2023</p>
+                            <div class="text-end mt-4 me-2">
+                                <div class="row">
+                                    <div class="col-6" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Bagikan ">
+                                        <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan" style="width: 95px;">
+                                            <i class="ti ti-share" style="font-size: x-large;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-6" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Simpan">
+                                        <button type="button" class="btn btn-outline-dark waves-effect" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalalert" style="width: 95px;">
+                                            <i class="ti ti-bookmark" style="font-size: x-large;"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="mt-4"></div>
+                            <a href="/apply" type="submit" class="btn btn-primary waves-effect waves-light" style="height: 50px; width: 230px;">
+                                Lamar Lowongan
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-4 border-top">
+                        <div class="col py-3">
+                            <h4>Deskripsi Pekerjaan</h4>
+                            <ul class="ps-2 ms-3 mb-0">
+                                @foreach (explode(PHP_EOL, $lowongan->deskripsi) as $item)
+                                <li>{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col py-3">
+                            <h4>Requirement</h4>
+                            <ul class="ps-2 ms-3 mb-0">
+                                @foreach (explode(PHP_EOL, $lowongan->requirements) as $item)
+                                <li>{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col py-3">
+                            <h4>Benefit</h4>
+                            <ul class="ps-2 ms-3 mb-0">
+                                @foreach (explode(PHP_EOL, $lowongan->benefitmagang) as $item)
+                                <li>{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col py-3">
+                            <h4>Kemampuan</h4>
+                            <div class="d-flex justify-content-start">
+                                @foreach (json_decode($lowongan->keterampilan) as $item)
+                                <span class="badge rounded-pill bg-primary mx-1">{{ $item }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border-top">
+                        @for ($i = 0; $i <= $lowongan->tahapan_seleksi; $i++)
+                        <div class="col-12 py-3">
+                            <h5 class="mb-2">Seleksi Tahap {{ ($i + 1) }}</h5>
+                            <p class="mb-1"><i class="ti ti-clipboard-list me-2"></i>{{ $lowongan->seleksi_tahap[$i]->deskripsi }}</p>
+                            <p class="mb-1">
+                                <i class="ti ti-calendar-event me-2"></i>Range Tanggal Pelaksaan:&ensp;
+                                <b>{{ Carbon\Carbon::parse($lowongan->seleksi_tahap[$i]->tgl_mulai)->format('d/m/Y') }}</b> &ensp;-&ensp; <b>{{ Carbon\Carbon::parse($lowongan->seleksi_tahap[$i]->tgl_akhir)->format('d/m/Y') }}</b>
+                            </p>
+                        </div>
+                        @endfor 
+                    </div>
+                    <div class="row border-top">
+                        <div class="col py-3">
+                            <h4>Tentang Perusahaan</h4>
+                            <p>{{ $lowongan->deskripsi_industri }}</p>
                         </div>
                     </div>
                 </div>
@@ -330,36 +135,10 @@
         </div>
     </div>
 </div>
-<!-- modal -->
-<!-- <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center pb-0">
-                <img src="../../app-assets/img/alert.png" alt="">
-                <h5 class="modal-title" id="modal-title">Apakah anda yakin untuk tidak menyimpan lowongan ini ?</h5>
-                <p>Data yang anda pilih tidak akan tersimpan pada halaman ini</p>
-                <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
-            </div>
-            <div class="modal-footer" style="display: flex; justify-content:center;">
-                <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
-                <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-            </div>
-        </div>
-    </div>
-</div> -->
 @endsection
 
 @section('page_script')
 <script>
-    function changeColor(button) {
-        button.classList.toggle('highlight');
-    }
-
-    document.getElementById("back").addEventListener("click", () => {
-        history.back();
-    });
+    
 </script>
 @endsection

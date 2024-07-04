@@ -7,6 +7,9 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KelolaSemuaPenggunaController;
+use App\Http\Controllers\MitraPerusahaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +23,11 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 */
 
 // landingpage
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::controller(HomeController::class)->name('dashboard')->group(function () {
+    Route::get('/', 'index');
+    Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail-lowongan');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
@@ -50,6 +57,13 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('kelola-pengguna')->name('kelola_pengguna')->controller(KelolaPenggunaController::class)->group(function () {
         Route::get('/', 'index');
+    });
+
+    Route::prefix('kelola-semua-pengguna')->name('kelola_semua_pengguna')->controller(KelolaSemuaPenggunaController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('show', 'getData')->name('.show');
+        Route::get('edit/{id}', 'edit')->name('.edit');
+        Route::post('update/{id}', 'update')->name('.update');
     });
 
     Route::prefix('roles')->name('roles')->controller(KonfigurasiController::class)->group(function () {
@@ -163,22 +177,6 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/{id}', 'detail')->name('.detail');
     });
 
-    Route::prefix('/kegiatan-saya')->group(function () {
-        Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
-        Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
-        Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
-        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
-        Route::get('/porto/{file}', [App\Http\Controllers\KonfirmasiMagangController::class, 'porto'])->name('lamaran_saya.porto');
-        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
-        Route::post('/mulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'mulai'])->name('mulai.update');
-        Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
-        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
-        Route::get('/editMulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'editMulai'])->name('mulai.edit');
-        Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
-        Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
-        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-    });
-
     Route::prefix('mandiri')->group(function () {
         Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
@@ -211,6 +209,12 @@ Route::middleware('auth')->group(function () {
     // });
 });
 
+Route::prefix('daftar-perusahaan')->name('daftar_perusahaan')->group(function () {
+    Route::get('/', [MitraPerusahaanController::class, 'index']);
+    Route::get('/detail/{id}', [MitraPerusahaanController::class, 'show'])->name('.detail');
+    Route::get('/filter', [MitraPerusahaanController::class, 'filter'])->name('.filter');
+});
+
 Route::get('/pengaturan', function () {
     return view('pengaturan_akun.pengaturan');
 });
@@ -227,10 +231,6 @@ Route::get('/lowongan-magang-tersimpan', function () {
     return view('program_magang.lowongan_magang_tersimpan');
 });
 
-Route::get('/lowongan-pekerjaan-tersimpan', function () {
-    return view('program_magang.lowongan_pekerjaan_tersimpan');
-});
-
 Route::get('/informasi/pribadi', function () {
     return view('profile.informasi_pribadi');
 });
@@ -243,12 +243,6 @@ Route::get('/detail-informasi-dokumen', function () {
     return view('profile.dokumen');
 });
 
-
-
-Route::get('/detail/lowongan/magang', function () {
-    return view('program_magang.detail_lowongan');
-});
-
 Route::get('/detail/lowongan/magang', function () {
     return view('program_magang.detail_lowongan');
 });
@@ -256,30 +250,9 @@ Route::get('/detail/lowongan/magang', function () {
 Route::get('/kegiatan_saya/lamaran_saya/status', function () {
     return view('kegiatan_saya.lamaran_saya.status_lamaran');
 });
-Route::get('/detail_perusahaan', function () {
-    return view('landingpage.detail_perusahaan');
-});
-
-Route::get('/detail_perusahaan', function () {
-    return view('perusahaan.detail_perusahaan');
-});
-Route::get('/daftar_perusahaan', function () {
-    return view('perusahaan.daftar_perusahaan');
-});
-Route::get('/lowongan/magang', function () {
-    return view('perusahaan.lowongan');
-});
 
 Route::get('/pratinjau/diri', function () {
     return view('apply.pratinjau');
-});
-
-Route::get('/logbook', function () {
-    return view('logbook.logbook', ['active_menu' => 'logbook']);
-});
-
-Route::get('/logbook-detail', function () {
-    return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
 });
 
 Route::get('/cv', function () {
@@ -306,10 +279,6 @@ Route::get('/aboutus/techno', function () {
 
 Route::get('/aboutus/lkmfit', function () {
     return view('landingpage.about_us_lkm');
-});
-
-Route::get('/nilai/magang', function () {
-    return view('kegiatan_saya.nilai_magang.nilai');
 });
 
 Route::get('/pengajuan/magang', function () {
@@ -351,10 +320,6 @@ Route::get('/verifikasi/akun', function () {
 
 Route::get('/status/magang', function () {
     return view('kegiatan_saya.status_magang.index');
-});
-
-Route::get('/berkas/akhir', function () {
-    return view('kegiatan_saya.berkas_akhir.index');
 });
 
 // Route::get('kirim-email', 'App\Http\Controllers\MailController@index');

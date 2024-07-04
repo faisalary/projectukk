@@ -25,11 +25,12 @@
 
                     <!-- Perusahaan -->
                     <li class="menu-item">
-                        <a href="/daftar_perusahaan" class="menu-link">
+                        <a href="{{ route('daftar_perusahaan') }}" class="menu-link">
                             <div data-i18n="Mitra Perusahaan">Mitra Perusahaan</div>
                         </a>
                     </li>
 
+                    @role('Mahasiswa')
                     <!-- Kegiatan Saya -->
                     <li class="menu-item">
                         <a href="javascript:void(0)" class="menu-link menu-toggle">
@@ -75,6 +76,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endrole
 
                     <!-- Layanan LKM -->
                     <li class="menu-item">
