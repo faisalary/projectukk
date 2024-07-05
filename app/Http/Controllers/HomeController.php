@@ -38,7 +38,9 @@ class HomeController extends Controller
         ->where('id_lowongan', $id)->first()->dataTambahan('program_studi');
         if (!$lowongan) abort(404);
 
-        return view('program_magang.detail_lowongan', compact('lowongan'));
+        $urlBack = route('dashboard');
+
+        return view('program_magang.detail_lowongan', compact('lowongan', 'urlBack'));
     }
 
 
@@ -74,7 +76,8 @@ class HomeController extends Controller
                 return $item;
             });
 
-            return view('landingpage/components/mitra', compact('mitra'))->render();
+            $urlBack = route('dashboard');
+            return view('landingpage/components/mitra', compact('mitra', 'urlBack'))->render();
         }
 
     }

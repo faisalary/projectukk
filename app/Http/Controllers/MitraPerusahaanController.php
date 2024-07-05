@@ -32,17 +32,38 @@ class MitraPerusahaanController extends Controller
         if ($request->ajax()) {
             return Response::success([
                 'pagination' => view('perusahaan/components/pagination', $data)->render(),
-                'view' => view('perusahaan/card_perusahaan', $data)->render(),
+                'view' => view('perusahaan/components/card_perusahaan', $data)->render(),
             ]);
         }
 
         return view('perusahaan.daftar_perusahaan', $data);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $data['detail'] = Industri::where('id_industri', $id)->first();
-        $data['lowongan'] = LowonganMagang::where('id_industri', $id)->get();
+        $data['lowongan'] = LowonganMagang::where('id_industri', $id);
+
+        if ($request->name) {
+            $data['lowongan'] = $data['lowongan']->where('intern_position', 'like', '%' .$request->name. '%');
+        }
+
+        $data['lowongan'] = $data['lowongan']->paginate(5)->toJson();
+        $data['pagination'] = json_decode($data['lowongan'], true);
+        $data['lowongan'] = $data['pagination']['data'];
+
+        if (request()->ajax()) {
+            return Response::success([
+                'pagination' => view('perusahaan/components/pagination', $data)->render(),
+                'view' => view('perusahaan/components/card_lowongan', $data)->render(),
+            ]);
+        }
+
+        $data['urlBack'] = route('daftar_perusahaan');
+        if ($request->url_back) {
+            $data['urlBack'] = $request->url_back;
+        }
+
         return view('perusahaan.detail_perusahaan', $data);
     }
 

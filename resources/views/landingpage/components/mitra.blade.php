@@ -12,7 +12,7 @@
                             {{ $item->alamatindustri }}
                         </div>
                         <div class="button-container">
-                            <a href="/detail_perusahaan" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
+                            <a href="{{ route('daftar_perusahaan.detail', ['id' => $item->id_industri]) }}?url_back={{ $urlBack }}" class="btn btn-outline-primary mt-3">Lihat Perusahaan</a>
                         </div>
                     </div>
                 </div>
