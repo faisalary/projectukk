@@ -336,13 +336,17 @@
 
         <!-- Page JS -->
         <script src="{{ url('app-assets/js/dashboards-analytics.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-tagify.js') }}"></script>
         <script src="{{ url('app-assets/js/form-wizard-validation.js') }}"></script>
         <script src="{{ url('app-assets/js/form-wizard-icons.js') }}"></script>
         <script src="{{ url('app-assets/js/ui-carousel.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-file-upload.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
         <script src="{{ url('js/content.js') }}"></script>
+
+        <script>
+            $('.flatpickr-range').flatpickr({
+                mode: "range",
+                enableTime: false,
+            });
+        </script>
 
         @yield('page_script')
 </body>

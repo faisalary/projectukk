@@ -114,7 +114,9 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     @if(count($industries) != 0)
         <h4 class="ms-2 mt-2 mb-0">Daftar Mitra</h4>
-        <div id="container-industri" class="row"></div>
+        <div id="container-industri" class="row">
+            @include('perusahaan/components/card_perusahaan')
+        </div>
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-end mb-5 mt-4" id="container-pagination">
                 @include('perusahaan/components/pagination')
@@ -133,7 +135,7 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
-        loadData();
+        // loadData();
     });
 
     let dataFilter = {};

@@ -46,6 +46,14 @@ Route::prefix('register')->name('register')->controller(RegisteredUserController
 
 require __DIR__ . '/auth.php';
 
+Route::prefix('/apply-lowongan')->name('apply_lowongan')->group(function () {
+    Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index']);
+    Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('.detail');
+    Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('detail.lamar');
+    Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index');
+    Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('apply.store');
+});
+
 Route::middleware('auth')->group(function () {
     require __DIR__ . '/master_data.php';
     require __DIR__ . '/kemitraan.php';
@@ -200,13 +208,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
     });
 
-    Route::prefix('/apply-lowongan')->group(function () {
-        Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index'])->name('lowongan.user.index');
-        Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('lowongan.detail.index');
-        Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('detail.lamar');
-        Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index');
-        Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('apply.store');
-    });
 
     // Route::prefix('/apply')->group(function () {
     //     Route::get('/', [App\Http\Controllers\DetailLowonganController::class, 'index'])->name('detail-lowongan.index');
