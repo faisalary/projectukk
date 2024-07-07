@@ -27,6 +27,8 @@ class ApplyLowonganFakultasController extends Controller
         )
         ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')->where('statusaprove', 'diterima');
 
+        $data = self::filterData($data, $request);
+
         $data['lowongan'] = $data['lowongan']->paginate(3)->toJson();
         $data['pagination'] = json_decode($data['lowongan'], true);
         $data['lowongan'] = $data['pagination']['data'];
@@ -173,5 +175,50 @@ class ApplyLowonganFakultasController extends Controller
         }
 
         return $persentase;
+    }
+
+    private static function filterData($data, $request) {
+        if ($request->lowongan) {
+            $data['lowongan'] = $data['lowongan']->where('intern_position', 'like', '%'.$request->lowongan.'%');
+        }
+
+        if ($request->location) {
+            $data['lowongan'] = $data['lowongan']->where('lokasi', 'like', '%'.$request->location.'%');
+        }
+        if ($request->start_date && $request->end_date) {
+            $start = Carbon::parse($request->start_date)->format('Y-m-d');
+            $end = Carbon::parse($request->end_date)->format('Y-m-d');
+            $data['lowongan'] = $data['lowongan']->whereBetween('lowongan_magang.created_at', [$start, $end]);
+        }
+
+        if ($request->perusahaan) {
+            $data['lowongan'] = $data['lowongan']->whereIn('lowongan_magang.id_industri', $request->perusahaan);
+        }
+
+        if ($request->paymentType) {
+            if ($request->paymentType == 'berbayar' && $request->nominal_minimal) {
+                $data['lowongan'] = $data['lowongan']->where('nominal_salary', '>=', $request->nominal_minimal);
+            } else {
+                $data['lowongan'] = $data['lowongan']->whereNull('nominal_salary');
+            }
+        }
+
+        if ($request->type_magang) {
+            $data['lowongan'] = $data['lowongan']->where(function ($query) use ($request) {
+                foreach ($request->type_magang as $key => $value) {
+                    $query->orWhere('durasimagang', 'like', '%' . $value . '%');
+                }
+            });
+        }
+
+        if ($request->pelaksanaan) {
+            $data['lowongan'] = $data['lowongan']->where(function ($query) use ($request) {
+                foreach ($request->pelaksanaan as $key => $value) {
+                    $query->orWhere('pelaksanaan', $value);
+                }
+            });
+        }
+
+        return $data;
     }
 }

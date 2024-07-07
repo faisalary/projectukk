@@ -20,116 +20,122 @@
             </div>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" id="search" type="button" style="height: 50px;" onclick="filter()">Cari sekarang</button>
+            <button class="btn btn-primary h-100" id="search" type="button" onclick="filter();">Cari sekarang</button>
         </div>
     </div>
     <div class="row mt-4 mb-3">
         <div class="col-1 ms-5"></div>
         <div class="col-2">
-            <p class="flatpickr-input bg-transparent flatpickr-range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
+            <p class="flatpickr-input bg-transparent" id="picker_range">Tanggal Posting <i class=" ti ti-chevron-down" style="font-size: 15px;"></i></p>
         </div>
         <div class="col-2">
-            <div class="dropdown cursor-pointer">
-                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <a class="dropdown-toogle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                     Perusahaan
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
+                <ul class="dropdown-menu form-filter pt-3" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
                     @foreach ($perusahaan as $key => $item)
                     <li class="mb-2 px-3">
                         <div class="form-check" style="margin-top: 0px; margin-right:3px">
-                            <input class="form-check-input" type="checkbox" value="{{ $item->id_industri }}" id="checkbox-{{ $key }}">
+                            <input class="form-check-input" name="perusahaan[]" type="checkbox" value="{{ $item->id_industri }}" id="checkbox-{{ $key }}">
                             <label class="form-check-label" for="checkbox-{{ $key }}"> {{ $item->namaindustri }} </label>
                         </div>
                     </li>
                     @endforeach
                     <hr>
-                    <div class=" d-flex justify-content-between ms-2 me-2">
-                        <button class="btn btn-outline-danger" type="submit">Reset</button>
-                        <button class="btn btn-success" type="submit">Terapkan</button>
+                    <div class="d-flex justify-content-between ms-2 me-2">
+                        <button class="btn btn-sm btn-outline-danger" type="reset">Reset</button>
+                        <button class="btn btn-sm btn-success" type="button">Terapkan</button>
                     </div>
                 </ul>
             </div>
         </div>
         <div class="col-2">
-            <div class="dropdown cursor-pointer">
-                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <a class="dropdown-toogle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                     Uang Saku
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 250px !important;">
+                <ul class="dropdown-menu form-filter pt-3" aria-labelledby="dropdownMenu1" style="min-width: 250px !important;">
                     <div class="form-check mb-2 ms-2">
-                        <input name="paymentType" class="form-check-input" type="radio" value="tidakBerbayar" id="tidakBerbayarRadio" onclick="toggleDivVisibility(this)">
+                        <input name="paymentType" class="form-check-input" type="radio" value="tidakBerbayar" id="tidakBerbayarRadio">
                         <label class="form-check-label" for="tidakBerbayarRadio"> Tidak Berbayar </label>
                     </div>
-
                     <div class="form-check mb-2 ms-2">
-                        <input name="paymentType" class="form-check-input" type="radio" value="berbayar" id="berbayarRadio" onclick="toggleDivVisibility(this)">
+                        <input name="paymentType" class="form-check-input" type="radio" value="berbayar" id="berbayarRadio">
                         <label class="form-check-label" for="berbayarRadio"> Berbayar </label>
                     </div>
-
-                    <div id="myDIV" style="display: none;">
-                        <div class="ms-2 me-3">
-                            <div class="input-group border">
-                                <span class="input-group-text" id="basic-addon11">IDR</span>
-                                <input type="text" class="form-control" placeholder="Masukkan minimal nominal" aria-label="Masukkan minimal nominal" aria-describedby="basic-addon11" style="width: 150px !important;">
-                            </div>
+                    <div class="mx-2" id="container-nominal-minimal" style="display: none;">
+                        <div class="input-group border">
+                            <span class="input-group-text" id="basic-addon11">IDR</span>
+                            <input type="text" name="nominal_minimal" class="form-control ps-0" placeholder="Minimal nominal">
                         </div>
                     </div>
-
                     <hr>
                     <div class=" d-flex justify-content-between ms-2 me-2">
-                        <button class="btn btn-outline-danger" type="submit">Reset</button>
-                        <button class="btn btn-success" type="submit">Terapkan</button>
+                        <button class="btn btn-sm btn-outline-danger" type="reset">Reset</button>
+                        <button class="btn btn-sm btn-success" type="button">Terapkan</button>
                     </div>
                 </ul>
             </div>
         </div>
         <div class="col-2">
-            <div class="dropdown cursor-pointer">
-                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <a class="dropdown-toogle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                     Durasi Magang
-                    <!-- <span class="badge badge-center rounded-pill bg-success">2</span> -->
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
-                    <li class="mb-2 ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 1 Semester
+                <ul class="dropdown-menu form-filter pt-3" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
+                    <li class="mb-2 px-3">
+                        <div class="form-check" style="margin-top: 0px; margin-right:3px">
+                            <input class="form-check-input" name="type_magang[]" type="checkbox" value="1 Semester" id="checkbox-1-semester">
+                            <label class="form-check-label" for="checkbox-1-semester"> Magang 1 Semester </label>
+                        </div>
                     </li>
-
-                    <li class="mb-2 ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px">Magang 2 Semester
+                    <li class="mb-2 px-3">
+                        <div class="form-check" style="margin-top: 0px; margin-right:3px">
+                            <input class="form-check-input" name="type_magang[]" type="checkbox" value="2 Semester" id="checkbox-2-semester">
+                            <label class="form-check-label" for="checkbox-2-semester"> Magang 2 Semester </label>
+                        </div>
                     </li>
                     <hr>
                     <div class=" d-flex justify-content-between ms-2 me-2">
-                        <button class="btn btn-outline-danger" type="submit">Reset</button>
-                        <button class="btn btn-success" type="submit">Terapkan</button>
+                        <button class="btn btn-sm btn-outline-danger" type="reset">Reset</button>
+                        <button class="btn btn-sm btn-success" type="button">Terapkan</button>
                     </div>
                 </ul>
             </div>
         </div>
         <div class="col-2">
-            <div class="dropdown cursor-pointer">
-                <a class="dropdown-toogle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <a class="dropdown-toogle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                     Pelaksanaan
-                    <!-- <span class="badge badge-center rounded-pill bg-success">2</span> -->
                     <i class="ti ti-chevron-down pb-1" style="font-size: medium;"></i>
                 </a>
-                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
-                    <li class="mb-2 ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Onsite
+                <ul class="dropdown-menu form-filter pt-3" aria-labelledby="dropdownMenu1" style="min-width: 230px !important;">
+                    <li class="mb-2 px-3">
+                        <div class="form-check" style="margin-top: 0px; margin-right:3px">
+                            <input class="form-check-input" name="pelaksanaan[]" type="checkbox" value="Onsite" id="checkbox-onsite">
+                            <label class="form-check-label" for="checkbox-onsite"> Onsite  </label>
+                        </div>
                     </li>
-
-                    <li class="mb-2 ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Hybrid
+                    <li class="mb-2 px-3">
+                        <div class="form-check" style="margin-top: 0px; margin-right:3px">
+                            <input class="form-check-input" name="pelaksanaan[]" type="checkbox" value="Hybrid" id="checkbox-hybrid">
+                            <label class="form-check-label" for="checkbox-hybrid"> Hybrid  </label>
+                        </div>
                     </li>
-                    <li class="mb-2 ps-2 pe-5">
-                        <input class="form-check-input" type="checkbox" style="margin-top: 0px; margin-right:3px"> Online
+                    <li class="mb-2 px-3">
+                        <div class="form-check" style="margin-top: 0px; margin-right:3px">
+                            <input class="form-check-input" name="pelaksanaan[]" type="checkbox" value="Online" id="checkbox-online">
+                            <label class="form-check-label" for="checkbox-online"> Online  </label>
+                        </div>
                     </li>
                     <hr>
                     <div class=" d-flex justify-content-between ms-2 me-2">
-                        <button class="btn btn-outline-danger" type="submit">Reset</button>
-                        <button class="btn btn-success" type="submit">Terapkan</button>
+                        <button class="btn btn-sm btn-outline-danger" type="reset">Reset</button>
+                        <button class="btn btn-sm btn-success" type="button">Terapkan</button>
                     </div>
                 </ul>
             </div>

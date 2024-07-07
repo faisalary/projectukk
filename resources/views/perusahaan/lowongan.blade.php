@@ -120,7 +120,28 @@
 @section('page_script')
 <script>
 
+
     let dataFilter = {};
+    $(document).ready(function () {
+        $('#picker_range').flatpickr({
+            mode: "range",
+            enableTime: false,
+            onChange: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length <= 1) return;
+                let start_date = dateStr.split(' to ')[0];
+                let end_date = dateStr.split(' to ')[1];
+                dataFilter.start_date = start_date;
+                dataFilter.end_date = end_date;
+
+                loadData();
+            }
+        });
+
+        $('.dropdown-menu').on('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
     function pagination(e) {
         url = e.attr('data-url');
         if (url == '') return;
@@ -128,6 +149,16 @@
 
         $('.page-item').removeClass('active');
         e.addClass('active');
+
+        loadData();
+    }
+
+    function filter() {
+        let lowongan = $('#lowongan_magang').val();
+        let location = $('#location').val();
+
+        dataFilter.lowongan = lowongan;
+        dataFilter.location = location;
 
         loadData();
     }
@@ -159,108 +190,47 @@
         });
     }
 
-    function detail_old(e) {
-        let id = e.attr('data-id');
-        var url = `{{ url('apply-lowongan/detail/') }}/${id}`; 
+    $('.form-filter button[type="button"]').on('click', function() {
+        let input = $(this).parents('.form-filter').find('input');
+        let dataTemp = [];
+        let nameElement = input[0].name;
 
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function(response) {
-                var response2 = response.prodilowongan;
-                var response1 = response.lowonganshow2;
-                $('#namaindustri').text(response1.industri.namaindustri);
-                $('#intern_position').text(response1.intern_position);
-                $('#kuota').text(' ' + response1.kuota);
-                $('#pelaksanaan').text(' ' + response1.pelaksanaan);
-                $('#durasimagang').text(' ' + response1.durasimagang);
-                $('#lokasi').text(' '+response1.lokasi);
-                if(response1.nominal_salary !== null) {
-                    $('#nominal_salary').text(response1.nominal_salary);
-                    $('#nominal_salary').show(); 
-                } else {
-                    $('#nominal_salary').hide(); 
-                }
-
-                response2.forEach(function(lowongan){
-                    $('#prodi-lowongan').text(' ' + lowongan.prodi.namaprodi);
-                });
-                $('#deskripsi').text(response1.deskripsi);
-                $('#jenjang').text(' ' + response1.jenjang);   
-                $('#btn-detail').click(function(e){
-                    e.preventDefault(); 
-                    var url = `{{ url('apply-lowongan/lamar/') }}/${id}`; 
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        success: function(response1) {
-                            window.location.href = url 
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                });
-                var dateString = response1.enddate;
-                var date = new Date(dateString);
-                var tahun = date.getFullYear();
-                var bulan = date.getMonth() + 1;
-                var tanggal = ('0' + date.getDate()).slice(-2);
-                var namaBulan = {
-                    1: 'Januari',
-                    2: 'Februari',
-                    3: 'Maret',
-                    4: 'April',
-                    5: 'Mei',
-                    6: 'Juni',
-                    7: 'Juli',
-                    8: 'Agustus',
-                    9: 'September',
-                    10: 'Oktober',
-                    11: 'November',
-                    12: 'Desember'
-                };
-                var namaBulanIndonesia = namaBulan[bulan];
-                var tanggalBulanTahun = tanggal + ' ' + namaBulanIndonesia + ' ' + tahun;
-
-                $('#batas_melamar').text('Batas Lamaran '+tanggalBulanTahun);
-                $('#requirements').text(response1.requirements);
-                $('#benefitmagang').text(response1.benefitmagang);
-                $('#keterampilan').text(response1.keterampilan);
-                $('#keterampilan').text(response1.keterampilan);
-                $('#deskripsiperusahaan').text(response1.industri.description);
-                // $('#prodi-lowongan').text(response1.prodilowongan.namaprodi);
-
-                $('#image').html(`<img src="{{ asset('storage/${response1.industri.image}') }}" alt="user-avatar"
-                                                style="max-width:120px; max-height: 125px"
-                                                id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">`);
-
-                $('#lowongan-terpilih').show();
-                $('#tidak-ada-lowongan').hide();
-            }   
-            
+        input.each(function() { 
+            if ($(this).is(':checkbox') && $(this).is(':checked')) {
+                dataTemp.push($(this).val());
+            } else if ($(this).is(':radio') && $(this).is(':checked')) {
+                dataTemp = $(this).val();
+            } else if ($(this).is(':text')) {
+                dataFilter[$(this).attr('name')] = $(this).val();
+            }
         });
-    }
 
-</script>
-<script>
-    $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
-        $(this).closest("li").toggleClass("active", this.checked);
+        $(this).parents('.form-filter').removeClass('show');
+        if (dataTemp.length > 0) dataFilter[nameElement] = dataTemp;
+        loadData();
     });
 
-    $(document).on('click', '.allow-focus', function(e) {
-        e.stopPropagation();
+    $('.form-filter button[type="reset"]').on('click', function() {
+        let input = $(this).parents('.form-filter').find('input');
+
+        input.each(function() { 
+            if (($(this).is(':checkbox') || $(this).is(':radio')) && $(this).is(':checked')) {
+                $(this).prop('checked', false);
+                delete dataFilter[$(this).attr('name')];
+            } else if ($(this).is(':text')) {
+                $(this).val(null);
+                delete dataFilter[$(this).attr('name')];
+            }
+        });
     });
 
-    function toggleDivVisibility(radio) {
-        var x = document.getElementById("myDIV");
-        if (radio.value === "berbayar") {
-            x.style.display = "block";
+    $(document).on('change', 'input[name="paymentType"]:checked', function () {
+        if ($(this).val() === "berbayar") {
+            $('#container-nominal-minimal').show();
         } else {
-            x.style.display = "none";
+            $('#container-nominal-minimal').hide();
         }
-    }
-
+    });
 
     function myFunction(x) {
         x.classList.toggle("fa-bookmark-o");
