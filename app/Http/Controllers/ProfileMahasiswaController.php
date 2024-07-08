@@ -2,52 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DokumenRequest;
-use App\Http\Requests\InfoPribRequest;
-use App\Http\Requests\InformasiKeahlianReq;
-use App\Http\Requests\InformasiPendidikanReq;
-use App\Http\Requests\InformasiPengalamanReq;
-use App\Http\Requests\InformasiTambahanReq;
-use App\Models\Education;
-use App\Models\Experience;
-use App\Models\InformasiPribadi;
-use App\Models\Mahasiswa;
-use App\Models\BahasaMahasiswa;
-use App\Models\Sertif;
-use App\Models\Sertifikat;
-use App\Models\Skill;
-use App\Models\SosmedTambahan;
 use Exception;
-use Illuminate\Support\Carbon;
+use App\Models\Skill;
+use App\Helpers\Response;
+use App\Models\Education;
+use App\Models\Mahasiswa;
+use App\Models\Experience;
+use App\Models\Sertifikat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\SosmedTambahan;
+use App\Models\BahasaMahasiswa;
+use App\Models\InformasiPribadi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\DokumenRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\InformasiKeahlianReq;
+use App\Http\Requests\InformasiTambahanReq;
+use App\Http\Requests\InformasiPendidikanReq;
+use App\Http\Requests\InformasiPengalamanReq;
 
 class ProfileMahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id) { 
-        $dokumen = Sertifikat::where('nim', $id)->first();
-        $dokumen1 = Sertifikat::where('nim', $id)->orderby('id_sertif', 'asc')->get();
-        $pengalaman = Experience::where('nim', $id)->first();
-        $pengalaman1 = Experience::where('nim', $id)->get();
-        $skill = Mahasiswa::where('nim', $id)->first();  
-        $skill1 = Mahasiswa::where('nim', $id)->get();  
-        $pendidikan = Education::where('nim' ,$id)->first();
-        $informasiprib = InformasiPribadi::where('nim', $id)->first();
-        $informasitambahan = Mahasiswa::where('nim', $id)->first();
-        $bahasamahasiswa = Mahasiswa::find($id);
-        $sosmed = Mahasiswa::find($id);
-         // Menghitung persentase kelengkapan profil
-        $persentase = $this->persentase($id);
-        $mahasiswa = Mahasiswa::where('nim', $id)->with('sosmedmhs','bahasamhs','informasiprib', 'fakultas', 'univ', 'prodi', 'informasitambahan')->first();
-        return view('profile.informasi_pribadi', 
-        compact('persentase', 'sosmed', 'skill1', 'pengalaman1', 'dokumen', 'dokumen1', 'pengalaman', 'skill', 'informasiprib', 'mahasiswa', 'informasitambahan', 'pendidikan', 'bahasamahasiswa'));
+    public function index() { 
+        // Menghitung persentase kelengkapan profil
+        // $persentase = $this->persentase($id);
+        
+        $user = auth()->user();
+        $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi');
+
+        return view('profile.informasi_pribadi', compact('mahasiswa'));
     }
+
+    public function getDataProfile() {
+        $user = auth()->user();
+        $mahasiswa = Mahasiswa::join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->where('id_user', $user->id)->first();
+
+        return Response::success($mahasiswa, 'Success get detail profile.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'tgl_lahir' => 'required|before:today',
+            'gender' => 'required|in:Laki-Laki,Perempuan',
+            'headliner' => 'required',
+            'profile_picture' => 'nullable',
+            'deskripsi_diri' => 'required',
+        ], [
+            'tgl_lahir.required' => 'Tanggal lahir wajib di isi.',
+            'tgl_lahir.before' => 'Tidak boleh melebihi tanggal hari ini.',
+            'gender.required' =>  'Pilih jenis kelamin terlebih dahulu.',
+            'gender.in' => 'Jenis kelamin tidak valid',
+            'headliner.required' => 'Headliner wajib diisi.',
+            'deskripsi_diri.required' => 'Deskripsi wajib diisi.'
+        ]);
+
+        try {
+            $user = auth()->user();
+
+            $mahasiswa = Mahasiswa::where('id_user', $user->id)->first();
+            if (!$mahasiswa) return Response::error(null, 'Mahasiswa not found', 404);
+            
+            $mahasiswa->tgl_lahir = $request->tgl_lahir;
+            $mahasiswa->headliner = $request->headliner;
+            $mahasiswa->deskripsi_diri = $request->deskripsi_diri;
+            $mahasiswa->gender = $request->gender;
+            $mahasiswa->save();
+
+            $mahasiswa = $mahasiswa->load('univ', 'fakultas', 'prodi');
+            
+            return Response::success([
+                'view' => view('profile/components/informasi_pribadi_detail', compact('mahasiswa'))->render()
+            ], 'Informasi pribadi successfully updated.');
+        } catch (Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -141,53 +183,6 @@ class ProfileMahasiswaController extends Controller
         $mahasiswa = InformasiPribadi::where('id_infoprib', $id)->first();
         return $mahasiswa;
         
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(InfoPribRequest $request, $id)
-    {
-        
-        try {
-            $informasiprib = InformasiPribadi::where('id_infoprib', $id)->first();
-            $file = null;
-            if ($request->file('profile_picture')) {
-                $file = Storage::put('profile-picture' , $request->file('profile_picture'));
-            }
-            $data = [
-                'tgl_lahir' => $request->tgl_lahir,
-                'headliner' => $request->headliner,
-                'deskripsi_diri' => $request->deskripsi_diri,
-                'profile_picture' => $file,
-                'gender' => $request->gender,
-            ];
-            
-            if ($informasiprib) {   
-                $informasiprib->tgl_lahir = $request->tgl_lahir;    
-                $informasiprib->headliner = $request->headliner;    
-                $informasiprib->deskripsi_diri = $request->deskripsi_diri;    
-                $informasiprib->gender = $request->gender;  
-                $informasiprib->profile_picture = $file;  
-                $informasiprib->save();
-
-            } else {
-                $data['nim'] = $id;
-                InformasiPribadi::create($data);
-            }
-
-            
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-                'url' => Auth::user()->nim
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
     }
 
     public function updateinformasitambahan(InformasiTambahanReq $request, $id) { 

@@ -58,6 +58,7 @@
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
 
     <!-- Page CSS -->
@@ -330,6 +331,9 @@
         <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/block-ui/block-ui.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 
         <!-- Main JS -->
         <script src="{{ url('app-assets/js/main.js') }}"></script>
@@ -345,6 +349,12 @@
             $('.flatpickr-range').flatpickr({
                 mode: "range",
                 enableTime: false,
+            });
+
+            $(".flatpickr-date").flatpickr({
+                altInput: true,
+                altFormat: 'j F Y',
+                dateFormat: 'Y-m-d'
             });
         </script>
 

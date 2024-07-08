@@ -480,3 +480,8 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
 .flatpickr-day.today {
     border-color: var(--bs-primary);
 }
+
+.progress-bar {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
