@@ -7,14 +7,14 @@
         </button>
     </li>
     <li class="nav-item" style="font-size: small;">
-        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
             data-bs-target="#navs-pills-justified-pendidikan"
             aria-controls="navs-pills-justified-pendidikan" aria-selected="false">
             Pendidikan
         </button>
     </li>
     <li class="nav-item" style="font-size: small;">
-        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
             data-bs-target="#navs-pills-justified-keahlian-pengalaman"
             aria-controls="navs-pills-justified-keahlian-pengalaman" aria-selected="false">
             Keahlian & Pengalaman

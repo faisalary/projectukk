@@ -1,0 +1,126 @@
+<script>
+    function editData(e) {
+    let dataTarget = e.attr('data-target-modal');
+    let dataId = e.attr('data-id');
+    let modal = $('#' + dataTarget);
+
+    let modalTitle = modal.find('.modal-title');
+    if (modalTitle.attr('data-label-edit') !== undefined) {
+      let text = modalTitle.attr('data-label-edit');
+      modalTitle.html(text);
+    }
+
+    modal.modal('show');
+
+    let data = { section: dataTarget };
+    if (dataId != null) {
+      Object.assign(data, { data_id: dataId });
+      modal.find('form').prepend(`<input type="hidden" name="data_id" value="${dataId}">`);
+    }
+
+    $.ajax({
+      url: `{{ route('profile.get_data') }}`,
+      type: 'GET',
+      data: data,
+      success: function (response) {
+        response = response.data;
+
+        $.each(response, function (key, value) {
+          let element = modal.find(`[name="${key}"]`);
+          if (element.is(':radio')) {
+            modal.find(`[name="${key}"][value="${value}"]`).prop('checked', true);
+          } else if ($(`select[name^="${key}"]`).prop('multiple')) {
+              let option = $(`select[name^="${key}"] option`);
+              value = JSON.parse(value);
+
+              let newOption = value.filter(function ( item ) {
+                  return !option.is(`[value="${item}"]`);
+              });
+
+              newOption.map(function ( item ) {
+                  $(`select[name^="${key}"]`).append(`<option value="${item}" selected>${item}</option>`);
+              });
+              
+              $(`select[name^="${key}"] option`).each(function () {
+                if (value.includes($(this).val())) {
+                    $(this).prop('selected', true);
+                }
+              });
+
+              initSelect2();
+          } else {
+            element.val(value).trigger('change');
+
+            if (element.hasClass('flatpickr-date')) {
+              element.flatpickr({
+                  altInput: true,
+                  altFormat: 'j F Y',
+                  dateFormat: 'Y-m-d',
+                  defaultDate: value
+              });
+            }
+
+            if (element.hasClass('month-picker')) {
+              element.flatpickr({
+                plugins: [
+                    new monthSelectPlugin({
+                        defaultDate: value,
+                        shorthand: true,
+                        dateFormat: "F Y",
+                        altFormat: "F Y",
+                    })
+                ]
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  function deleteData(e) {
+    let url = e.data('url');
+    let dataFunction = e.attr('data-function');
+
+    sweetAlertConfirm({
+        title: 'Apakah anda yakin?',
+        text: 'Ingin menghapus data ini.',
+        icon: 'warning',
+        confirmButtonText: 'Ya, saya yakin!',
+        cancelButtonText: 'Batal'
+    }, function () {
+        $.ajax({
+            url: url,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                if (!response.error) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+
+                    if (typeof window[dataFunction] === "function") window[dataFunction](response);
+                } else {
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                let res = xhr.responseJSON;
+                showSweetAlert({
+                    title: 'Gagal!',
+                    text: res.message,
+                    icon: 'error'
+                });
+            }
+        });
+    });
+  }
+</script>

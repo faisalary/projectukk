@@ -72,10 +72,6 @@
 
 @section('page_script')
 <script>
-  $(document).ready(function () {
-
-  });
-
   function afterUpdateDetailInfo(response) {
     response = response.data
     $('#container-info-detail').html(response.view)
@@ -91,117 +87,26 @@
     $('#container-pendidikan').html(response.data.view);
   }
 
+  function afterActionSkill(response) {
+    $('#modalTambahKeahlian').modal('hide');
+    $('#container-keahlian').html(response.data.view);
+  }
+
+  function afterActionExperience(response) {
+    $('#modalTambahPengalaman').modal('hide');
+    afterDeleteExperience(response);
+  }
+
+  function afterDeleteExperience(response) {
+    $('#container-pengalaman').html(response.data.view);
+  }
+
   $('.modal').on('hide.bs.modal', function () {
     let modalTitle = $(this).find('.modal-title');
     if (modalTitle.attr('data-label-default') !== undefined) modalTitle.html(modalTitle.attr('data-label-default'));
     $(this).find('form').find('input[name="data_id"]').remove();
   });
-
-  function editData(e) {
-    let dataTarget = e.attr('data-target-modal');
-    let dataId = e.attr('data-id');
-    let modal = $('#' + dataTarget);
-
-    let modalTitle = modal.find('.modal-title');
-    if (modalTitle.attr('data-label-edit') !== undefined) {
-      let text = modalTitle.attr('data-label-edit');
-      modalTitle.html(text);
-    }
-
-    modal.modal('show');
-
-    let data = { section: dataTarget };
-    if (dataId != null) {
-      Object.assign(data, { data_id: dataId });
-      modal.find('form').prepend(`<input type="hidden" name="data_id" value="${dataId}">`);
-    }
-
-    $.ajax({
-      url: `{{ route('profile.get_data') }}`,
-      type: 'GET',
-      data: data,
-      success: function (response) {
-        response = response.data;
-
-        $.each(response, function (key, value) {
-          let element = modal.find(`[name="${key}"]`);
-          if (element.is(':radio')) {
-            modal.find(`[name="${key}"][value="${value}"]`).prop('checked', true);
-          } else {
-            element.val(value).trigger('change');
-
-            if (element.hasClass('flatpickr-date')) {
-              element.flatpickr({
-                  altInput: true,
-                  altFormat: 'j F Y',
-                  dateFormat: 'Y-m-d',
-                  defaultDate: value
-              });
-            }
-
-            if (element.hasClass('month-picker')) {
-              element.flatpickr({
-                plugins: [
-                    new monthSelectPlugin({
-                        defaultDate: value,
-                        shorthand: true,
-                        dateFormat: "F Y",
-                        altFormat: "F Y",
-                    })
-                ]
-              });
-            }
-          }
-        });
-      }
-    });
-  }
-
-  function deleteData(e) {
-    let url = e.data('url');
-    let dataFunction = e.attr('data-function');
-
-    sweetAlertConfirm({
-        title: 'Apakah anda yakin?',
-        text: 'Ingin menghapus data ini.',
-        icon: 'warning',
-        confirmButtonText: 'Ya, saya yakin!',
-        cancelButtonText: 'Batal'
-    }, function () {
-        $.ajax({
-            url: url,
-            type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                if (!response.error) {
-                    showSweetAlert({
-                        title: 'Berhasil!',
-                        text: response.message,
-                        icon: 'success'
-                    });
-
-                    if (typeof window[dataFunction] === "function") window[dataFunction](response);
-                } else {
-                    showSweetAlert({
-                        title: 'Gagal!',
-                        text: response.message,
-                        icon: 'error'
-                    });
-                }
-            },
-            error: function (xhr, status, error) {
-                let res = xhr.responseJSON;
-                showSweetAlert({
-                    title: 'Gagal!',
-                    text: res.message,
-                    icon: 'error'
-                });
-            }
-        });
-    });
-  }
-
 </script>
+
+@include('profile/edit_delete_js')
 @endsection

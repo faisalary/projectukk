@@ -284,20 +284,19 @@
 
 <!-- Modal Tambah Keahlian -->
 <div class="modal fade" id="modalTambahKeahlian" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-block">
                 <h5 class="modal-title" id="modal-title">Edit Keahlian</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" action="{{ route('profile.update_keahlian') }}">
+            <form class="default-form" action="{{ route('profile.update_keahlian') }}" function-callback="afterActionSkill">
                 <div class="modal-body border-top mt-3">
                     @csrf
                     <div class="row">
                         <div class="mb-3 col-12 form-group">
-                            <label for="keahlian" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                            <select class="form-select select2" name="keahlian[]" id="keahlian" data-placeholder="Pilih Keahlian" data-tags="true" multiple>
-                                <option value="" disabled selected>Pilih Keahlian</option>
+                            <label for="skills" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                            <select class="form-select select2" name="skills[]" id="skills" data-placeholder="Pilih Keahlian" data-tags="true" multiple>
                                 <option value="Figma">Figma</option>
                                 <option value="Valorant">Valorant</option>
                                 <option value="Mobile Legend">Mobile Legend</option>
@@ -306,7 +305,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer p-0">
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
                 </div>
             </form>
@@ -319,25 +318,25 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Pengalaman</h5>
+                <h5 class="modal-title" id="modal-title" data-label-default="Tambah Pengalaman" data-label-edit="Edit Pengalaman">Tambah Pengalaman</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Account -->
             <div class="modal-body border-top mt-3">
                 <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
                 </div>
-                <form class="default-form" action="#">
+                <form class="default-form" action="{{ route('profile.update_experience') }}" function-callback="afterActionExperience">
                     @csrf
                     <div class="row">
-                        <div class="mb-3 col-md-6 form-input form-input">
+                        <div class="mb-3 col-md-6 form-group">
                             <label for="posisi" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" name="posisi" placeholder="Ex: UI/UX Designer" />
+                            <input class="form-control" type="text" name="posisi" id="posisi" placeholder="Ex: UI/UX Designer" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-6 form-input form-input">
-                            <label for="pekerjaan" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                            <select name="jenis" class="select2 form-select">
-                                <option disabled selected>Pilih Jenis Pekerjaan</option>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="jenis" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
+                            <select name="jenis" id="jenis" class="select2 form-select" data-placeholder="Pilih Jenis Pekerjaan" data-tags="true">
+                                <option value="" disabled selected>Pilih Jenis Pekerjaan</option>
                                 <option value="Front End">Front End</option>
                                 <option value="Back End">Back End</option>
                                 <option value="Ui/Ux Designer">Ui/Ux Designer</option>
@@ -345,87 +344,24 @@
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="namaperusahaan" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" name="name_intitutions" placeholder="Ex: PT Techno Infinity" />
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="name_intitutions" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
+                            <input class="form-control" type="text" name="name_intitutions" id="name_intitutions" placeholder="Ex: PT Techno Infinity" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="month" name="startdate" class="form-control" placeholder="Month" />
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="startdate" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                            <input type="text" name="startdate" id="startdate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                            <input type="month" name="enddate" class="form-control" placeholder="Month" />
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="enddate" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
+                            <input type="text" name="enddate" id="enddate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
+                        <div class="mb-3 col-md-12 form-group">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
                             <textarea class="form-control" type="text" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-                    </div>
-                </form>
-
-            </div>
-            <!-- /Account -->
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Pengalaman -->
-<div class="modal fade" id="modalEditPengalaman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Edit Pengalaman</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- Account -->
-            <div class="modal-body border-top mt-3">
-                <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
-                </div>
-                <form class="default-form" action="#">
-                    @csrf
-                    <div class="row">
-                        <div class="mb-3 col-md-6 form-input">
-                            <label for="" class="form-label">Posisi / Bidang <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="posisi" name="posisi" placeholder="Ex: UI/UX Designer" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-6 form-input">
-                            <label for="" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
-                            <select id="editjenis" name="jenis" class="select2 form-select">
-                                <option disabled selected>Pilih Jenis Pekerjaan</option>
-                                <option value="Front End">Front End</option>
-                                <option value="Back End">Back End</option>
-                                <option value="Ui/Ux Designer">Ui/Ux Designer</option>
-                                <option value="System Analyst">System Analyst</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Nama Perusahaan <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="name_intitutions" name="name_intitutions" placeholder="Ex: PT Techno Infinity" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="yearpicker" id="editstartdate" name="startdate" class="form-control" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                            <input type="date" id="editenddate" name="enddate" class="form-control" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

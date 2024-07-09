@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="navs-pills-justified-pendidikan" role="tabpanel">
+<div class="tab-pane fade show" id="navs-pills-justified-pendidikan" role="tabpanel">
     <div class="card mb-4">
         <div class="d-flex justify-content-between border-bottom pt-3 ps-3 pe-3">
             <h5 class="text-secondary">Pendidikan</h5>
@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="card-body pb-0" id="container-pendidikan">
-            @include('profile/components/timeline-pendidikan')
+            @include('profile/components/timeline_pendidikan')
         </div>
     </div>
 </div>

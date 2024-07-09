@@ -71,4 +71,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Education::class, 'nim', 'nim');
     }
+
+    public function experience()
+    {
+        return $this->hasMany(Experience::class, 'nim', 'nim');
+    }
 }

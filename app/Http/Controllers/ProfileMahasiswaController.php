@@ -37,7 +37,9 @@ class ProfileMahasiswaController extends Controller
         $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi');
 
         $data['mahasiswa'] = $mahasiswa;
+        $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
         $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
 
         return view('profile.informasi_pribadi', $data);
     }
@@ -52,13 +54,19 @@ class ProfileMahasiswaController extends Controller
             case 'modalTambahPendidikan':
                 $data = self::getDataPendidikan($user->mahasiswa->nim, $request->data_id);
                 break;
+            case 'modalTambahKeahlian':
+                $data = Mahasiswa::select('skills')->where('nim', $user->mahasiswa->nim)->first();
+                $data = json_decode($data);
+                break;
+            case 'modalTambahPengalaman':
+                $data = self::getDataExperience($user->mahasiswa->nim, $request->data_id);
+                break;
             
             default:
                 return Response::error(null, 'Not Found');
         }
 
         if (!$data) return Response::error(null, 'Not Found');
-
         return Response::success($data, 'Success get detail profile.');
     }
 
@@ -126,7 +134,7 @@ class ProfileMahasiswaController extends Controller
 
             $pendidikan = $mahasiswa->education;
             return Response::success([
-                'view' => view('profile/components/timeline-pendidikan', compact('pendidikan'))->render()
+                'view' => view('profile/components/timeline_pendidikan', compact('pendidikan'))->render()
             ], 'Data Successfully Updated!');
         } catch (Exception $e) {
             return Response::errorCatch($e);
@@ -142,7 +150,7 @@ class ProfileMahasiswaController extends Controller
 
             $pendidikan = $mahasiswa->education;
             return Response::success([
-                'view' => view('profile/components/timeline-pendidikan', compact('pendidikan'))->render()
+                'view' => view('profile/components/timeline_pendidikan', compact('pendidikan'))->render()
             ], 'Data Successfully Deleted!');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
@@ -152,29 +160,62 @@ class ProfileMahasiswaController extends Controller
     public function updateKeahlian(InformasiKeahlianReq $request) { 
         try{
             $mahasiswa = auth()->user()->mahasiswa;
-            $skill = Skill::where('nim', $mahasiswa->nim)->first();
+            $mahasiswa->skills = json_encode($request->skills);
+            $mahasiswa->save();
+
+            $skills = $request->skills;
+            return Response::success([
+                'view' => view('profile/components/badge_skills', compact('skills'))->render()
+            ], 'Data Successfully Updated!');
+        } catch (Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function updateExperience(InformasiPengalamanReq $request) {
+        try {
+            $mahasiswa = auth()->user()->mahasiswa;
+            $experience = Experience::where('nim', $mahasiswa->nim)->where('id_experience', $request->data_id)->first();
             
-            $keahlian = [
-                'skills' => $request->skills
+            $data = [
+                'posisi' => $request->posisi,
+                'jenis' => $request->jenis,
+                'name_intitutions' => $request->name_intitutions,
+                'startdate'=> Carbon::createFromFormat('F Y', $request->startdate)->format('Y-m') . '-01',
+                'enddate' => Carbon::createFromFormat('F Y', $request->enddate)->format('Y-m') . '-01',
+                'deskripsi' => $request->deskripsi,
             ];
 
-            if ($skill) {
-                $skill->update($keahlian);
+            if ($experience) {
+                $experience->update($data);
             } else {
-                Mahasiswa::create($keahlian);
+                $data['nim'] = $mahasiswa->nim;
+                Experience::create($data);
             }
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
-        } catch (Exception $e) {
-            
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+
+            $experience = $mahasiswa->experience;
+            return Response::success([
+                'view' => view('profile/components/timeline_pengalaman', compact('experience'))->render()
+            ], 'Data Successfully Updated!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
-        
+    }
+
+    public function deleteExperience($id) {
+        try {
+            $mahasiswa = auth()->user()->mahasiswa;
+            $experience = Experience::where('nim', $mahasiswa->nim)->where('id_experience', $id)->first();
+            if (!$experience) return Response::error(null, 'Experience not found', 404);
+            $experience->delete();
+
+            $experience = $mahasiswa->experience;
+            return Response::success([
+                'view' => view('profile/components/timeline_pengalaman', compact('experience'))->render()
+            ], 'Data Successfully Deleted!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
     private static function getDataProfileDetail($user) {
@@ -192,6 +233,13 @@ class ProfileMahasiswaController extends Controller
         $education->startdate = Carbon::parse($education->startdate)->format('F Y');
         $education->enddate = Carbon::parse($education->enddate)->format('F Y');
         return $education;
+    }
+
+    private static function getDataExperience($nim, $id) {
+        $experience = Experience::where('nim', $nim)->where('id_experience', $id)->first();
+        $experience->startdate = Carbon::parse($experience->startdate)->format('F Y');
+        $experience->enddate = Carbon::parse($experience->enddate)->format('F Y');
+        return $experience;
     }
 
     /**
@@ -337,36 +385,6 @@ class ProfileMahasiswaController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-
-    
-
-    public function store(InformasiPengalamanReq $request, $id) { 
-        
-        try {
-            $pengalaman = Experience::where('nim', $id)->first();
-            $pengalaman = Experience::create([
-                'nim' => $id,
-                'posisi' => $request->posisi,
-                'jenis' => $request->jenis,
-                'name_intitutions' => $request->name_intitutions,
-                'startdate' => $request->startdate . '-01',
-                'enddate' => $request->enddate . '-01',
-                'deskripsi' => $request->deskripsi,
-            ]);
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Created!',
-            ]);
-            
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-        
     }
 
     public function editpengalaman($id){
