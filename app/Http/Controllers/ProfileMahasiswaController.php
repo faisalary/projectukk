@@ -11,6 +11,7 @@ use App\Models\Experience;
 use App\Models\Sertifikat;
 use Illuminate\Http\Request;
 use App\Models\SosmedTambahan;
+use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
 use App\Models\InformasiPribadi;
 use Illuminate\Support\Facades\DB;
@@ -35,17 +36,30 @@ class ProfileMahasiswaController extends Controller
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi');
 
-        return view('profile.informasi_pribadi', compact('mahasiswa'));
+        $data['mahasiswa'] = $mahasiswa;
+        $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+
+        return view('profile.informasi_pribadi', $data);
     }
 
-    public function getDataProfile() {
+    public function getDataProfile(Request $request) {
         $user = auth()->user();
-        $mahasiswa = Mahasiswa::join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
-        ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
-        ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
-        ->where('id_user', $user->id)->first();
+        
+        switch ($request->section) {
+            case 'modalEditInformasi':
+                $data = self::getDataProfileDetail($user);
+                break;
+            case 'modalTambahPendidikan':
+                $data = self::getDataPendidikan($user->mahasiswa->nim, $request->data_id);
+                break;
+            
+            default:
+                return Response::error(null, 'Not Found');
+        }
 
-        return Response::success($mahasiswa, 'Success get detail profile.');
+        if (!$data) return Response::error(null, 'Not Found');
+
+        return Response::success($data, 'Success get detail profile.');
     }
 
     /**
@@ -88,6 +102,96 @@ class ProfileMahasiswaController extends Controller
         } catch (Exception $e) {
             return Response::errorCatch($e);
         }
+    }
+
+    public function updatePendidikan(InformasiPendidikanReq $request) { 
+        try{
+            $mahasiswa = auth()->user()->mahasiswa;
+            $pendidikan = Education::where('nim', $mahasiswa->nim)->where('id_education', $request->data_id)->first();
+            
+            $data = [
+                'name_intitutions' => $request->name_intitutions,
+                'tingkat' => $request->tingkat,
+                'startdate'=> Carbon::createFromFormat('F Y', $request->startdate)->format('Y-m') . '-01',
+                'enddate' => Carbon::createFromFormat('F Y', $request->enddate)->format('Y-m') . '-01',
+                'nilai' => $request->nilai,
+            ];
+
+            if ($pendidikan) {
+                $pendidikan->update($data);
+            } else {
+                $data['nim'] = $mahasiswa->nim;
+                Education::create($data);
+            }
+
+            $pendidikan = $mahasiswa->education;
+            return Response::success([
+                'view' => view('profile/components/timeline-pendidikan', compact('pendidikan'))->render()
+            ], 'Data Successfully Updated!');
+        } catch (Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function deletePendidikan($id) {
+        try {
+            $mahasiswa = auth()->user()->mahasiswa;
+            $education = Education::where('nim', $mahasiswa->nim)->where('id_education', $id)->first();
+            if (!$education) return Response::error(null, 'Education not found', 404);
+            $education->delete();
+
+            $pendidikan = $mahasiswa->education;
+            return Response::success([
+                'view' => view('profile/components/timeline-pendidikan', compact('pendidikan'))->render()
+            ], 'Data Successfully Deleted!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function updateKeahlian(InformasiKeahlianReq $request) { 
+        try{
+            $mahasiswa = auth()->user()->mahasiswa;
+            $skill = Skill::where('nim', $mahasiswa->nim)->first();
+            
+            $keahlian = [
+                'skills' => $request->skills
+            ];
+
+            if ($skill) {
+                $skill->update($keahlian);
+            } else {
+                Mahasiswa::create($keahlian);
+            }
+            return response()->json([
+                'error' => false,
+                'message' => 'Data Successfully Updated!',
+            ]);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+    }
+
+    private static function getDataProfileDetail($user) {
+
+        $mahasiswa = Mahasiswa::join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->where('id_user', $user->id)->first();
+
+        return $mahasiswa;
+    }
+
+    private static function getDataPendidikan($nim, $id) {
+        $education = Education::where('nim', $nim)->where('id_education', $id)->first();
+        $education->startdate = Carbon::parse($education->startdate)->format('F Y');
+        $education->enddate = Carbon::parse($education->enddate)->format('F Y');
+        return $education;
     }
 
     /**
@@ -235,67 +339,7 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
-   
-
-    public function updatependidikan(InformasiPendidikanReq $request, $id) { 
-            try{
-            $pendidikan = Education::where('nim', $id)->first();
-            
-            $data2 = [
-                'name_intitutions' => $request->name_intitutions,
-                'tingkat' => $request->tingkat,
-                'startdate'=> $request->startdate . '-01',
-                'enddate' => $request->enddate . '-01',
-                'nilai' => $request->nilai,
-            ];
-
-            if ($pendidikan) {
-                $pendidikan->update($data2);
-            } else {
-                $data2['nim'] = $id;
-                Education::create($data2);
-            }
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
-        } catch (Exception $e) {
-            
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-        
-    }
-
-    public function updateskill(InformasiKeahlianReq $request, $id) { 
-
-        try{
-            $skill = Mahasiswa::where('nim', $id)->first();
-            
-            $keahlian = [
-                'skills' => $request->skills                
-            ];
-
-            if ($skill) {
-                $skill->update($keahlian);
-            } else {
-                Mahasiswa::create($keahlian);
-            }
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
-        } catch (Exception $e) {
-            
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-        
-    }
+    
 
     public function store(InformasiPengalamanReq $request, $id) { 
         

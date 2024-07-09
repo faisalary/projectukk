@@ -485,3 +485,23 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
     background-color: var(--bs-primary);
     color: #fff;
 }
+
+.flatpickr-monthSelect-month.selected,
+.flatpickr-monthSelect-month.startRange,
+.flatpickr-monthSelect-month.endRange {
+    background-color: var(--bs-primary);
+    box-shadow: none;
+    color: #fff;
+    border-color: var(--bs-primary);
+}
+
+.flatpickr-monthSelect-month.today {
+    border-color: var(--bs-primary);
+}
+
+.flatpickr-monthSelect-month.today:hover,
+.flatpickr-monthSelect-month.today:focus {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}

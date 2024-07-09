@@ -3,7 +3,9 @@
         <div class="d-flex justify-content-between pt-3 ps-4 pe-3">
             <h5 class="text-secondary">Keahlian</h5>
             <div class="text-end">
-                <i class="menu-icon tf-icons ti ti-edit text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian"></i>
+                <a href="javascript:void(0)" class="text-warning mt-2" data-bs-toggle="modal" data-bs-target="#modalTambahKeahlian">
+                    <i class="ti ti-edit fw-bolder"></i>
+                </a>
             </div>
         </div>
         <div class="card-body pb-0 pt-0">

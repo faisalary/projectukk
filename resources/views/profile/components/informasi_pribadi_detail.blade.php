@@ -2,7 +2,7 @@
     <div class="card-body pb-0">
         <div class="d-flex justify-content-between border-bottom">
             <h5 class="text-secondary">Informasi Pribadi</h5>
-            <a href="#" class="text-warning" onclick="editInfoProfile();">
+            <a href="#" class="text-warning" onclick="editData($(this));" data-target-modal="modalEditInformasi">
                 <i class="menu-icon tf-icons ti ti-edit"></i>
             </a>
         </div>

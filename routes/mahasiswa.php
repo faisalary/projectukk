@@ -64,6 +64,11 @@ Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController
     Route::get('/', 'index');
     Route::get('get-data-profile', 'getDataProfile')->name('.get_data');
     Route::post('update-data', 'update')->name('.update_data');
+
+    Route::post('update-pendidikan', 'updatePendidikan')->name('.update_pendidikan');
+    Route::post('delete-pendidikan/{id}', 'deletePendidikan')->name('.delete_pendidikan');
+
+    Route::post('update-keahlian', 'updateKeahlian')->name('.update_keahlian');
 });
 
 // kegiatan saya -> landing page

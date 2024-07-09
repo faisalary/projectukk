@@ -232,89 +232,45 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Edit Pendidikan</h5>
+                <h5 class="modal-title" id="modal-title" data-label-default="Tambah Pendidikan" data-label-edit="Edit Pendidikan">Tambah Pendidikan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="default-form" action="#">
+                <form class="default-form" action="{{ route('profile.update_pendidikan') }}" function-callback="afterActionEducation">
                     @csrf
                     <div class="row">
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="namasekolah" name="name_intitutions" placeholder="Nama Sekolah" />
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="name_intitutions" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
+                            <input class="form-control" type="text" id="name_intitutions" name="name_intitutions" placeholder="Nama Sekolah" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="pendidikan" class="form-label">Jenis Pendidikan<span style="color: red;">*</span></label>
-                            <select name="tingkat" id="pendidikan" class="select2 form-select">
-                                <option disabled selected>Pilih Tingkat Pendidikan</option>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="tingkat" class="form-label">Jenis Pendidikan<span style="color: red;">*</span></label>
+                            <select name="tingkat" id="tingkat" class="select2 form-select" data-placeholder="Pilih Tingkat Pendidikan">
+                                <option disabled value="" selected>Pilih Tingkat Pendidikan</option>
+                                <option value="SMP">SMP</option>
                                 <option value="SMA">SMA</option>
                                 <option value="SMK">SMK</option>
+                                <option value="D3">D3</option>
+                                <option value="D4">D4</option>
+                                <option value="S1">S1</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="date" id="startdate" name="startdate" class="form-control" />
+                        <div class="mb-3 col-6 form-group">
+                            <label for="startdate" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                            <input type="text" id="startdate" name="startdate" class="form-control month-picker" placeholder="Tanggal Mulai" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
-                            <input type="date" id="enddate" name="enddate" class="form-control" />
+                        <div class="mb-3 col-6 form-group">
+                            <label for="enddate" class="form-label">Tanggal Berakhir<span style="color: red;">*</span></label>
+                            <input type="text" id="enddate" name="enddate" class="form-control month-picker" placeholder="Tanggal Berakhir" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
+                        <div class="mb-3 col-md-12 form-group">
                             <label for="NILAI" class="form-label">Nilai Akhir</label>
-                            <input class="form-control" type="text" id="nilai" name="nilai"/>
+                            <input class="form-control" type="text" id="nilai" name="nilai" placeholder="3.8"/>
                             <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Pendidikan -->
-<div class="modal fade" id="modalEditPendidikan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Edit Pendidikan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form" method="POST">
-                    <div class="row">
-                        <div class="mb-3 col-md-12">
-                            <label for="namasekolah" class="form-label">Nama Sekolah/Universitas<span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="namasekolah" name="namasekolah" value="" placeholder="Nama Sekolah" />
-                        </div>
-                        <div class="mb-3 col-md-12">
-                            <label for="pendidikan1" class="form-label">Tingkat Pendidkan<span style="color: red;">*</span></label>
-                            <select id="pendidikan1" class="select2 form-select">
-                                <option disabled selected>Pilih Tingkat Pendidkan</option>
-                                <option value="pendidikan">D3</option>
-                                <option value="pendidikan">S1</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-md-12">
-                            <label for="" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
-                            <input type="month" id="month" class="form-control" placeholder="Month" />
-                        </div>
-                        <div class="mb-3 col-md-12">
-                            <label for="" class="form-label">Tanggal Berakhir<span
-                                    style="color: red;">*</span></label>
-                            <input type="month" id="month" class="form-control" placeholder="Month" />
-                        </div>
-                        <div class="mb-3 col-md-12">
-                            <label for="IPK" class="form-label">IPK</label>
-                            <input class="form-control" type="text" id="ipk" name="ipk"
-                                placeholder="4.00" autofocus />
                         </div>
                     </div>
                     <div class="modal-footer p-0">
@@ -331,50 +287,29 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">edit Keahlian</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body border-top mt-3">
-                <form class="default-form" action="{{ url('mahasiswa/profile/skill/update/' . Auth::user()->nim) }}"
-                    method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                            <input id="" multiple class="form-control" name="skills" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Keahlian -->
-<div class="modal fade" id="modalEditKeahlian" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block">
                 <h5 class="modal-title" id="modal-title">Edit Keahlian</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body border-top mt-3">
-                <form id="" method="POST" onsubmit="return false">
+            <form class="default-form" action="{{ route('profile.update_keahlian') }}">
+                <div class="modal-body border-top mt-3">
+                    @csrf
                     <div class="row">
-                        <div class="mb-3 col-md-12">
-                            <label for="TagifyBasic1" class="form-label">Keahlian<span style="color: red;">*</span></label>
-                            <input id="TagifyBasic1" class="form-control" name="TagifyBasic1" value="" />
+                        <div class="mb-3 col-12 form-group">
+                            <label for="keahlian" class="form-label">Keahlian<span style="color: red;">*</span></label>
+                            <select class="form-select select2" name="keahlian[]" id="keahlian" data-placeholder="Pilih Keahlian" data-tags="true" multiple>
+                                <option value="" disabled selected>Pilih Keahlian</option>
+                                <option value="Figma">Figma</option>
+                                <option value="Valorant">Valorant</option>
+                                <option value="Mobile Legend">Mobile Legend</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer p-0">
+                    <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

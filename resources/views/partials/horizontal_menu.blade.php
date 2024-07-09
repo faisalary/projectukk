@@ -55,6 +55,7 @@
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/typeahead-js/typeahead.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/css/monthpicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/tagify/tagify.css') }}" />
@@ -327,6 +328,7 @@
         <script src="{{ url('app-assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/dropzone/dropzone.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+        <script src="{{ url('app-assets/js/monthpicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
@@ -355,6 +357,16 @@
                 altInput: true,
                 altFormat: 'j F Y',
                 dateFormat: 'Y-m-d'
+            });
+
+            $(".month-picker").flatpickr({
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true, //defaults to false
+                        dateFormat: "F Y", //defaults to "F Y"
+                        altFormat: "F Y", //defaults to "F Y"
+                    })
+                ]
             });
         </script>
 

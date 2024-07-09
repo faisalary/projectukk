@@ -2,7 +2,6 @@
 
 @section('page_style')
     <link rel="stylesheet" href="{{ url('assets/css/yearpicker.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ url('assets/css/monthpicker.css') }}">
 
     <style>
         .hidden {
@@ -83,13 +82,44 @@
     $('#modalEditInformasi').modal('hide');
   }
 
-  function editInfoProfile() {
-    let modal = $('#modalEditInformasi');
+  function afterActionEducation(response) {
+    $('#modalTambahPendidikan').modal('hide');
+    afterDeletePendidikan(response);
+  }
+
+  function afterDeletePendidikan(response) {
+    $('#container-pendidikan').html(response.data.view);
+  }
+
+  $('.modal').on('hide.bs.modal', function () {
+    let modalTitle = $(this).find('.modal-title');
+    if (modalTitle.attr('data-label-default') !== undefined) modalTitle.html(modalTitle.attr('data-label-default'));
+    $(this).find('form').find('input[name="data_id"]').remove();
+  });
+
+  function editData(e) {
+    let dataTarget = e.attr('data-target-modal');
+    let dataId = e.attr('data-id');
+    let modal = $('#' + dataTarget);
+
+    let modalTitle = modal.find('.modal-title');
+    if (modalTitle.attr('data-label-edit') !== undefined) {
+      let text = modalTitle.attr('data-label-edit');
+      modalTitle.html(text);
+    }
+
     modal.modal('show');
+
+    let data = { section: dataTarget };
+    if (dataId != null) {
+      Object.assign(data, { data_id: dataId });
+      modal.find('form').prepend(`<input type="hidden" name="data_id" value="${dataId}">`);
+    }
 
     $.ajax({
       url: `{{ route('profile.get_data') }}`,
       type: 'GET',
+      data: data,
       success: function (response) {
         response = response.data;
 
@@ -98,6 +128,8 @@
           if (element.is(':radio')) {
             modal.find(`[name="${key}"][value="${value}"]`).prop('checked', true);
           } else {
+            element.val(value).trigger('change');
+
             if (element.hasClass('flatpickr-date')) {
               element.flatpickr({
                   altInput: true,
@@ -106,10 +138,68 @@
                   defaultDate: value
               });
             }
-            element.val(value);
+
+            if (element.hasClass('month-picker')) {
+              element.flatpickr({
+                plugins: [
+                    new monthSelectPlugin({
+                        defaultDate: value,
+                        shorthand: true,
+                        dateFormat: "F Y",
+                        altFormat: "F Y",
+                    })
+                ]
+              });
+            }
           }
         });
       }
+    });
+  }
+
+  function deleteData(e) {
+    let url = e.data('url');
+    let dataFunction = e.attr('data-function');
+
+    sweetAlertConfirm({
+        title: 'Apakah anda yakin?',
+        text: 'Ingin menghapus data ini.',
+        icon: 'warning',
+        confirmButtonText: 'Ya, saya yakin!',
+        cancelButtonText: 'Batal'
+    }, function () {
+        $.ajax({
+            url: url,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                if (!response.error) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+
+                    if (typeof window[dataFunction] === "function") window[dataFunction](response);
+                } else {
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                let res = xhr.responseJSON;
+                showSweetAlert({
+                    title: 'Gagal!',
+                    text: res.message,
+                    icon: 'error'
+                });
+            }
+        });
     });
   }
 
