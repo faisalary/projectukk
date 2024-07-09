@@ -76,4 +76,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Experience::class, 'nim', 'nim');
     }
+
+    public function sertifikat()
+    {
+        return $this->hasMany(Sertif::class, 'nim', 'nim');
+    }
 }

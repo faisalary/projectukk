@@ -101,10 +101,21 @@
     $('#container-pengalaman').html(response.data.view);
   }
 
+  function afterActionDokumen(response) {
+    $('#modalTambahDokumen').modal('hide');
+    afterDeleteDokumen(response);
+  }
+
+  function afterDeleteDokumen(response) {
+    $('#container-dokumen-pendukung').html(response.data.view);
+  }
+
   $('.modal').on('hide.bs.modal', function () {
     let modalTitle = $(this).find('.modal-title');
     if (modalTitle.attr('data-label-default') !== undefined) modalTitle.html(modalTitle.attr('data-label-default'));
     $(this).find('form').find('input[name="data_id"]').remove();
+    $(this).find('form').find('a[id="sertif_open"]').unwrap();
+    $(this).find('form').find('a[id="sertif_open"]').remove();
   });
 </script>
 

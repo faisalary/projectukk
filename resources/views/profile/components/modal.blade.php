@@ -14,7 +14,7 @@
                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4 ">
                         <img src="{{ url('app-assets/img/avatars/14.png') }}" alt="user-avatar" class="img-fluid rounded mb-3 pt-1 mt-4" id="imgPreview" />
                         <div class="button-wrapper form-input">
-                            <label for="changePicture" class="btn btn-white text-success me-2 mb-3 waves-effect waves-light" tabindex="0">
+                            <label for="changePicture" class="btn btn-white text-primary me-2 mb-3 waves-effect waves-light" tabindex="0">
                                 <i class="ti ti-upload d-block pe-2"></i>
                                 <span class="d-none d-sm-block">Upload</span>
                                 <input type="file" id="changePicture" name="profile_picture" class="account-file-input" hidden accept="image/png, image/jpeg">
@@ -174,7 +174,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-outline-success" data-repeater-create>
+                                    <button type="button" class="btn btn-outline-primary" data-repeater-create>
                                         <span class="align-middle">Tambah</span>
                                     </button>
                                 </div>
@@ -209,7 +209,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-outline-success waves-effect"
+                                    <button type="button" class="btn btn-outline-primary waves-effect"
                                         data-repeater-create="">
                                         <span class="align-middle">Tambah</span>
                                     </button>
@@ -218,7 +218,7 @@
                         </div>
                     </div>
                     <div class="modal-footer pt-3 pe-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+                        <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
                     </div>
                 </form>
             </div>
@@ -274,7 +274,7 @@
                         </div>
                     </div>
                     <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+                        <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
                     </div>
                 </form>
             </div>
@@ -366,7 +366,7 @@
                         </div>
                     </div>
                     <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
+                        <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
                     </div>
                 </form>
             </div>
@@ -380,145 +380,58 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Dokumen Pendukung</h5>
+                <h5 class="modal-title" id="modal-title" data-label-default="Tambah Dokumen Pendukung" data-label-edit="Edit Dokumen Pendukung">Tambah Dokumen Pendukung</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Account -->
             <div class="modal-body border-top mt-3">
                 <div class="d-flex align-items-start align-items-sm-center gap-4 mb-2">
                 </div>
-                <form class="default-form" action="#">
+                <form class="default-form" action="{{ route('profile.update_dokumen') }}" function-callback="afterActionDokumen">
                     @csrf
                     <div class="row">
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="sertifikat" class="form-label">Nama Sertifikasi<span style="color: red;">*</span></label>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="nama_sertif" class="form-label">Nama Sertifikasi<span style="color: red;">*</span></label>
                             <input class="form-control" type="text" id="nama_sertif" name="nama_sertif" placeholder="Masukkan nama sertifikasi " />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Penerbit Sertifikasi<span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" name="penerbit" placeholder="Masukkan nama penerbit " />
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="penerbit" class="form-label">Penerbit Sertifikasi<span style="color: red;">*</span></label>
+                            <input class="form-control" type="text" name="penerbit" id="penerbit" placeholder="Masukkan nama penerbit " />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
-                            <input type="month" id="month" name="startdate" class="form-control" placeholder="Month" />
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="startdate" class="form-label">Tanggal Terbit<span style="color: red;">*</span></label>
+                            <input type="text" id="startdate" name="startdate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
-                            <input type="month" id="month" name="enddate" class="form-control" placeholder="Month" />
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="enddate" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
+                            <input type="enddate" id="enddate" name="enddate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="unggahfile" class="form-label">Upload File<span style="color: red;">*</span></label>
-                            <input class="form-control" type="file" name="file_sertif" id="unggahfile" multiple="">
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="file_sertif" class="form-label">Upload File<span style="color: red;">*</span></label>
+                            <input class="form-control" type="file" name="file_sertif" id="file_sertif">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="link" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="link" name="link_sertif"
-                                placeholder="Masukkan link Sertifikat  " />
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="link_sertif" class="form-label">Link Sertifikasi <span style="color: red;">*</span>&ensp;</label>
+                            <input class="form-control" type="text" id="link_sertif" name="link_sertif" placeholder="Masukkan link Sertifikat  " />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" type="text" name="deskripsi" placeholder="Ketik di sini..."></textarea>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer p-0">
-                        <button type="submit" class="btn btn-success m-0">Simpan Data</button>
-                    </div>
-                </form>
-
-            </div>
-            <!-- /Account -->
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Dokumen Pendukung -->
-<div class="modal fade" id="modalEditDokumen" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block">
-                <h5 class="modal-title" id="modal-title">Edit Dokumen Pendukung</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- Account -->
-            <div class="modal-body border-top mt-3">
-                <form class="default-form" action="#" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label"> Nama Sertifikasi <span
-                                    style="color: red;">*</span></label>
-                            <input class="form-control" type="text" name="nama_sertif" id="editnama_sertif"
-                                name="" placeholder="Masukkan nama sertifikasi" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label"> Penerbit Sertifikasi <span
-                                    style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="editpenerbit" name="penerbit"
-                                placeholder="Masukkan nama penerbit " />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Terbit<span
-                                    style="color: red;">*</span></label>
-                            <input type="month" id="startdateEdit" name="startdate" class="form-control" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Tanggal Kadaluwarsa<span
-                                    style="color: red;">*</span></label>
-                            <input type="month" id="enddateEdit" name="enddate" class="form-control" />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Upload File<span style="color: red;">*</span></label>
-                            <input class="form-control" type="file" name="file_sertif" id="editfile_sertif">
-                            {{-- <small>current file : <a class="currfile" href=""></span></small> --}}
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label"> Link Sertifikasi <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="editlink_sertif" name="link_sertif" placeholder="Masukkan link Sertifikat " />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-input">
-                            <label for="" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" type="text" name="deskripsi" id="editdeskripsi" placeholder="Ketik di sini..."></textarea>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" type="text" id="deskripsi" name="deskripsi" placeholder="Ketik di sini..."></textarea>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer p-0">
-                        <button id="modal-button" type="submit" class="btn btn-success m-0">Simpan Data</button>
+                        <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
                     </div>
                 </form>
             </div>
             <!-- /Account -->
-        </div>
-    </div>
-</div>
-
-<!-- Modal Delete Pengalaman -->
-<div class="modal fade" id="deleteModalPengalaman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <h5 class="modal-title" id="modal-title">Apakah Anda Ingin menghapus <br> Pengalaman Ini?</h5>
-            </div>
-            <div class="modal-footer" style="display: flex; justify-content:center;">
-                <button type="submit" id="modal-button" class="btn btn-success">Iya</button>
-                <button type="submit" id="modal-button" class="btn btn-danger">Tidak</button>
-            </div>
-
         </div>
     </div>
 </div>

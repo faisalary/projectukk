@@ -21,26 +21,35 @@ class DokumenRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $validate = [
             'nama_sertif' => 'required|max:255|min:3',
             'penerbit' => 'required|max:255|min:3',
-            'file_sertif' =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
+            'file_sertif' =>  'required|file|max:2000|mimes:doc,docx,pdf,png,jpeg,jpg',
             'link_sertif' => 'required|url',
             'startdate' => 'required',
             'enddate' => 'required',
             'deskripsi' => 'required|max:255|string'
         ];
+
+        if ($this->data_id) $validate['file_sertif'] = 'nullable|file|max:2000|mimes:doc,docx,pdf,png,jpeg,jpg';
+
+        return $validate;
     }
 
     public function messages()
     {
         return [
-            'nama_sertif.required' => 'nama tidak boleh kosong',
-            'nama_sertif.max' => 'nama terlalu panjang',
-            'nama_sertid.min' => 'nama terlalu pendek',
-            'penerbit.required' => 'penerbit tidak boleh kosong',
+            'nama_sertif.required' => 'Masukkan Nama Dokumen',
+            'penerbit.required' => 'Masukkan Penerbit',
+            'file_sertif.required' => 'Masukkan File Dokumen',
+            'link_sertif.required' => 'Masukkan Link Dokumen',
+            'startdate.required' => 'Masukkan Start Date',
+            'enddate.required' => 'Masukkan End Date',
+            'deskripsi.required' => 'Masukkan Deskripsi',
+            'file_sertif.max' => 'File tidak boleh lebih dari 2000 KB',
+            'file_sertif.mimes' => 'File harus berupa doc, docx, pdf, png, jpeg, jpg',
+            'link_sertif.url' => 'Masukkan link dengan benar'
 
-            
         ];
     }
 }

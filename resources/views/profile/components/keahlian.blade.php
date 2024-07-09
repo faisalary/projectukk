@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="navs-pills-justified-keahlian-pengalaman" role="tabpanel">
+<div class="tab-pane fade show" id="navs-pills-justified-keahlian-pengalaman" role="tabpanel">
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-flex justify-content-between">

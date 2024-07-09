@@ -48,6 +48,12 @@
               });
 
               initSelect2();
+          } else if (element.is(':file')) {
+            let parent = element.parents('.form-group');
+            let label = parent.find('label');
+            label.wrap(`<div class="d-flex justify-content-start"></div>`);
+            label.parent().append(`<a href="{{ url('storage') }}/${value}" target="_blank" id="sertif_open" class="ms-2"><small><i>Existing File</i></small></a>`);
+            console.log('lewat');
           } else {
             element.val(value).trigger('change');
 

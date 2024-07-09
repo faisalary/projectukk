@@ -8,7 +8,6 @@ use App\Helpers\Response;
 use App\Models\Education;
 use App\Models\Mahasiswa;
 use App\Models\Experience;
-use App\Models\Sertifikat;
 use Illuminate\Http\Request;
 use App\Models\SosmedTambahan;
 use Illuminate\Support\Carbon;
@@ -23,6 +22,7 @@ use App\Http\Requests\InformasiKeahlianReq;
 use App\Http\Requests\InformasiTambahanReq;
 use App\Http\Requests\InformasiPendidikanReq;
 use App\Http\Requests\InformasiPengalamanReq;
+use App\Models\Sertif;
 
 class ProfileMahasiswaController extends Controller
 {
@@ -40,6 +40,8 @@ class ProfileMahasiswaController extends Controller
         $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
         $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
         $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
 
         return view('profile.informasi_pribadi', $data);
     }
@@ -60,6 +62,9 @@ class ProfileMahasiswaController extends Controller
                 break;
             case 'modalTambahPengalaman':
                 $data = self::getDataExperience($user->mahasiswa->nim, $request->data_id);
+                break;
+            case 'modalTambahDokumen':
+                $data = self::getDataDokumen($user->mahasiswa->nim, $request->data_id);
                 break;
             
             default:
@@ -218,6 +223,62 @@ class ProfileMahasiswaController extends Controller
         }
     }
 
+    public function updateDokumenPendukung(DokumenRequest $request) {
+        try {
+            $mahasiswa = auth()->user()->mahasiswa;
+            $sertifikat = Sertif::where('nim', $mahasiswa->nim)->where('id_sertif', $request->data_id)->first();
+
+            $file = null;
+            if ($request->hasFile('file_sertif')) {
+                $file = Storage::put('sertifikat', $request->file('file_sertif'));
+            }
+            
+            $data = [
+                'nama_sertif' => $request->nama_sertif,
+                'penerbit' => $request->penerbit,
+                'startdate'=> Carbon::createFromFormat('F Y', $request->startdate)->format('Y-m') . '-01',
+                'enddate' => Carbon::createFromFormat('F Y', $request->enddate)->format('Y-m') . '-01',
+                'file_sertif' => $file,
+                'link_sertif' => $request->link_sertif,
+                'deskripsi' => $request->deskripsi
+            ];
+
+            if ($sertifikat) {
+                if ($file != null) Storage::delete($sertifikat->file_sertif);
+                else $data['file_sertif'] = $sertifikat->file_sertif;
+
+                $sertifikat->update($data);
+            } else {
+                $data['nim'] = $mahasiswa->nim;
+                Sertif::create($data);
+            }
+
+            $dokumenPendukung = $mahasiswa->sertifikat;
+            return Response::success([
+                'view' => view('profile/components/card_dokumen_pendukung', compact('dokumenPendukung'))->render()
+            ], 'Data Successfully Updated!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function deleteDokumen($id) {
+        try {
+            $mahasiswa = auth()->user()->mahasiswa;
+            $sertifikat = Sertif::where('nim', $mahasiswa->nim)->where('id_sertif', $id)->first();
+            if (!$sertifikat) return Response::error(null, 'Sertifikat not found', 404);
+            Storage::delete($sertifikat->file_sertif);
+            $sertifikat->delete();
+
+            $dokumenPendukung = $mahasiswa->sertifikat;
+            return Response::success([
+                'view' => view('profile/components/card_dokumen_pendukung', compact('dokumenPendukung'))->render()
+            ], 'Data Successfully Deleted!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
     private static function getDataProfileDetail($user) {
 
         $mahasiswa = Mahasiswa::join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
@@ -240,6 +301,13 @@ class ProfileMahasiswaController extends Controller
         $experience->startdate = Carbon::parse($experience->startdate)->format('F Y');
         $experience->enddate = Carbon::parse($experience->enddate)->format('F Y');
         return $experience;
+    }
+
+    private static function getDataDokumen($nim, $id) {
+        $sertifikat = Sertif::where('nim', $nim)->where('id_sertif', $id)->first();
+        $sertifikat->startdate = Carbon::parse($sertifikat->startdate)->format('F Y');
+        $sertifikat->enddate = Carbon::parse($sertifikat->enddate)->format('F Y');
+        return $sertifikat;
     }
 
     /**
@@ -317,249 +385,4 @@ class ProfileMahasiswaController extends Controller
 
         return $persentase;
     }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        $mahasiswa = InformasiPribadi::where('id_infoprib', $id)->first();
-        return $mahasiswa;
-        
-    }
-
-    public function updateinformasitambahan(InformasiTambahanReq $request, $id) { 
-
-        try{
-            $bahasamahasiswa = BahasaMahasiswa::where('nim', $id)->first();
-            $informasitambahan = Mahasiswa::where('nim', $id)->first();
-            $sosialmedia = SosmedTambahan::where('nim', $id)->first();
-
-            if ($informasitambahan) { 
-                $informasitambahan->update([
-                    'nim' => $id,
-                    'lok_magang' => $request->lok_magang,
-                ]);
-            }
-            
-            if ($bahasamahasiswa){
-                $bahasamahasiswa->update();
-            } else {
-                foreach ($request->tambahan as $t) {
-                    BahasaMahasiswa::create([
-                        'nim' => $id,
-                        'bahasa' => $t['bahasa'],
-                    ]);
-                }
-            }
-            
-            // if ($sosialmedia){
-                foreach ($request->sosialmedia as $s) {
-                    SosmedTambahan::create([
-                        'nim' => $id,
-                        'namaSosmed' => $s['sosmed'],
-                        'urlSosmed' => $s['url_sosmed']
-                    ]);
-                }
-            // } else{
-            //     $sosialmedia->update();
-            // }            
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
-            
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function editpengalaman($id){
-        $pengalaman = Experience::where('id_experience', $id)->first();
-        return $pengalaman;
-    }
-
-    public function updatepengalaman(InformasiPengalamanReq $request, $id) {
-
-
-        try {
-            $pengalaman = Experience::where('id_experience', $id)->first();
-            $pengalaman->posisi = $request->posisi;
-            $pengalaman->jenis = $request->jenis;
-            $pengalaman->name_intitutions = $request->name_intitutions;
-            $pengalaman->startdate = $request->startdate . '-01';
-            $pengalaman->enddate = $request->enddate . '-01';
-            $pengalaman->deskripsi = $request->deskripsi;
-            $pengalaman->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-            ]);
-
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function detailpengalaman(Request $request, $id) { 
-
-        $pengalaman = Experience::where('nim', $id)->get();
-        $skill = Skill::where('nim', $id)->get();
-        return view('profile.pengalaman', compact('pengalaman', 'skill'));
-    }
-
-    public function deletepengalaman(Request $request, $id) { 
-
-        try {
-            Experience::where('id_experience', $id)->delete();
-    
-            return response()->json([
-                'error' => false,
-                'message' => 'Pengalaman berhasil dihapus',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-    
-    public function storedokumen(DokumenRequest $request, $id) { 
-
-        try {
-            $dokumen = Sertifikat::where('nim', $id)->first();
-            $file = null; 
-            if ($request->file('file_sertif')) {
-                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
-            }
-
-            $dokumen = Sertifikat::create([
-                'nim' => $id,
-                'nama_sertif' => $request->nama_sertif,
-                'penerbit' => $request->penerbit,
-                'startdate' => $request->startdate . '-01',
-                'enddate' => $request->enddate . '-01',
-                'file_sertif' => $file,
-                'link_sertif' => $request->link_sertif,
-                'deskripsi' => $request->deskripsi,
-            ]);
-            $dokumen->save();
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-                'url' => Auth::user()->nim
-            ]);
-            
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-                
-            ]);
-        }
-    }
-
-    public function editdokumen1($id) {
-        $dokumen = Sertifikat::where('id_sertif', $id)->first();
-        return $dokumen;
-    }
-
-    public function updatedokumen(Request $request, $id) { 
-        try {
-            
-            if ($request->file('file_sertif')) {
-                $file = Storage::put('file_sertif' , $request->file('file_sertif'));
-            }
-            $dokumen = Sertifikat::where('id_sertif', $id)->first();
-            $message =  [
-                'nama_sertif.required' => 'nama tidak boleh kosong',
-                'nama_sertif.max' => 'nama terlalu panjang',
-                'nama_sertid.min' => 'nama terlalu pendek',
-                'penerbit.required' => 'penerbit tidak boleh kosong',
-            ];
-            $validate=[
-                
-                    'nama_sertif' => 'required|max:255|min:3',
-                    'penerbit' => 'required|max:255|min:3',
-                    'file_sertif' =>  'required|file|max:10000|mimes:doc,docx,pdf,png,jpeg,jpg',
-                    'link_sertif' => 'required|url',
-                    'startdate' => 'required',
-                    'enddate' => 'required',
-                    'deskripsi' => 'required|max:255|string'
-                
-            ];
-            if ($dokumen->file_sertif !== null){
-                unset($validate['file_sertif']);
-            }
-            $valid = Validator::make($request->toArray(), $validate, $message);
-            if($valid->fails()){
-                return response([
-                    'errors' => $valid->errors(),
-                    'error' => true,
-                ], 422);
-            }
- 
-            $dokumen->nama_sertif = $request->nama_sertif; 
-            $dokumen->penerbit = $request->penerbit;
-            if ($request->file_sertif){
-                $dokumen->file_sertif = $file;
-            }
-            $dokumen->startdate = $request->startdate. '-01' ; 
-            $dokumen->enddate = $request->enddate . '-01'; 
-            $dokumen->link_sertif = $request->link_sertif; 
-            $dokumen->deskripsi = $request->deskripsi;  
-            $dokumen->save();
-        
-            return response()->json([
-                'error' => false,
-                'message' => 'Data Successfully Updated!',
-                'url' => Auth::user()->nim
-            ]);
-                
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-    public function detail(Request $request, $id) { 
-        $dokumen = Sertifikat::where('nim', $id)->first();
-        $dokumen1 = Sertifikat::where('nim', $id)->get();
-        return view('profile.dokumen', compact('dokumen1', 'dokumen'));
-    }
-
-    public function deletedok(Request $request, $id) { 
-        try {
-            Sertifikat::where('id_sertif', $id)->delete();
-    
-            return response()->json([
-                'error' => false,
-                'message' => 'Sertifikat berhasil dihapus',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }   
 }
