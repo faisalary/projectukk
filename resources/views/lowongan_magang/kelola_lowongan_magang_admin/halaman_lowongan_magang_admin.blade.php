@@ -87,7 +87,7 @@
                                     <th style="text-align:center;">No</th>
                                     <th>PERUSAHAAN</th>
                                     <th style="">POSISI</th>
-                                    <th style="">Fakultas</th>
+                                    {{-- <th style="">Fakultas</th> --}}
                                     <th style="">Program Studi</th>
                                     <th style="">TANGGAL</th>
                                     <th style="">DURASI MAGANG</th>
@@ -139,11 +139,7 @@
                 {
                     data: "intern_position",
                     name: "intern_position"
-                },
-                {
-                    data: null,
-                    name: "fakultas"
-                },
+                },                
                 {
                     data: 'prodi',
                     name: "program_studi"

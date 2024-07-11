@@ -93,16 +93,40 @@ class mahasiswaController extends Controller
      */
     public function show(Request $request)
     {
-        $mahasiswa = Mahasiswa::query();
+        $mahasiswa = Mahasiswa::leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas');
         if ($request->fakultas != null) {
-            $mahasiswa->where("id_fakultas", $request->fakultas);
+            $mahasiswa->where("mahasiswa.id_fakultas", $request->fakultas);
         } else if ($request->univ !=null) {
-            $mahasiswa->where("id_univ", $request->univ);
+            $mahasiswa->where("mahasiswa.id_univ", $request->univ);
         }
         $mahasiswa = $mahasiswa->with("univ", "prodi","fakultas")->orderBy('nim', "asc")->get();
 
         return DataTables::of($mahasiswa)
             ->addIndexColumn()
+            ->addColumn('name', function ($data) {
+                $result = "<span class='text-nowrap fw-bolder mb-2'>$data->namamhs</span><br>";
+                $result .= "<small class='text-muted'>$data->nim</small>";
+                return $result;
+            })
+            ->addColumn('univ_fakultas', function ($data) {
+                $result = "<span class='text-nowrap fw-bolder mb-2'>$data->namauniv</span><br>";
+                $result .= "<span class='text-nowrap mb-2'>$data->namafakultas</span><br>";
+                $result .= "<small class='text-nowrap text-muted'>$data->namaprodi</small>";
+
+                return $result;
+            })
+            ->editColumn('tunggakan_bpp', fn ($data) => "<div class='text-center'>$data->tunggakan_bpp</div>")
+            ->editColumn('ipk', fn ($data) => "<div class='text-center'>$data->ipk</div>")
+            ->editColumn('eprt', fn ($data) => "<div class='text-center'>$data->eprt</div>")
+            ->editColumn('tak', fn ($data) => "<div class='text-center'>$data->tak</div>")
+            ->editColumn('angkatan', fn ($data) => "<div class='text-center'>$data->angkatan</div>")
+            ->addColumn('contact', function ($data) {
+                $result = "<span class='fw-bolder mb-2'>$data->nohpmhs</span><br>";
+                $result .= "<small>$data->emailmhs</small>";
+                return $result;
+            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
@@ -120,8 +144,10 @@ class mahasiswaController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['action', 'status'])
-
+            ->rawColumns([
+                'action', 'status', 'name', 'univ_fakultas', 'tunggakan_bpp', 
+                'ipk', 'eprt', 'tak', 'angkatan', 'contact'
+            ])
             ->make(true);
     }
 

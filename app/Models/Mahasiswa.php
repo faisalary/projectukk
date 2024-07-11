@@ -54,10 +54,6 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Fakultas::class, "id_fakultas");
     }
-    public function informasiprib()
-    {
-        return $this->belongsTo(InformasiPribadi::class, "id_infoprib");
-    }
     public function informasitambahan()
     {
         return $this->belongsTo(InformasiTamabahan::class, "id_infotab");
@@ -69,5 +65,20 @@ class Mahasiswa extends Model
     public function sosmedmhs()
     {
         return $this->hasMany(SosmedTambahan::class, 'nim');
+    }
+
+    public function education()
+    {
+        return $this->hasMany(Education::class, 'nim', 'nim');
+    }
+
+    public function experience()
+    {
+        return $this->hasMany(Experience::class, 'nim', 'nim');
+    }
+
+    public function sertifikat()
+    {
+        return $this->hasMany(Sertif::class, 'nim', 'nim');
     }
 }

@@ -22,13 +22,15 @@ class InformasiKeahlianReq extends FormRequest
     public function rules(): array
     {
         return [
-            'skills' => 'required|max:250',
+            'skills' => 'required|array|min:1',
         ];
     }
     public function messages()
     {
         return [
-            'skills.required' => 'Keahlian wajib di isi'
+            'skills.required' => 'Keahlian wajib di isi',
+            'skills.min' => 'Keahlian wajib di isi',
+            'skills.array' => 'Keahlian wajib di isi',
         ];
     }
 }

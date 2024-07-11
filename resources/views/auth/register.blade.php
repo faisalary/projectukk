@@ -64,6 +64,18 @@
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-12 mt-2 form-group">
+                                    <label for="statuskerjasama" class="form-label">Status Kerjasama</label>
+                                    <select class="form-select select2 @error('statuskerjasama') is-invalid @enderror" id="statuskerjasama" name="statuskerjasama" data-placeholder="Pilih Status Kerjasama">
+                                        <option disabled selected value="">Pilih Status Kerjasama</option>
+                                        <option value="Iya" @selected(old('statuskerjasama') == 'Iya')>Iya</option>
+                                        <option value="Tidak" @selected(old('statuskerjasama') == 'Tidak')>Tidak</option>
+                                        <option value="Internal Tel-u" @selected(old('statuskerjasama') == 'Internal Tel-u')>Internal Tel-u</option>
+                                    </select>
+                                    @error('statuskerjasama')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group mt-3">

@@ -41,6 +41,7 @@ class RegisteredUserController extends Controller
                 $validate['name'] = 'required';
                 $validate['email'] = 'required|email|unique:users,email|unique:pegawai_industri,emailpeg';
                 $validate['notelpon'] = 'required';
+                $validate['statuskerjasama'] = 'required|in:Ya,Tidak,Internal Tel-u';
             }
 
             $validator = Validator::make($request->all(), $validate, [
@@ -50,6 +51,8 @@ class RegisteredUserController extends Controller
                 'email.required' => 'Email harus diisi',
                 'email.unique' => 'Email sudah terdaftar',
                 'notelpon.required' => 'No. Telepon harus diisi',
+                'statuskerjasama.required' => 'Status Kerjasama harus dipilih.',
+                'statuskerjasama.in' => 'Status Kerjasama tidak valid.',
                 'namaindustri.required' => 'Nama harus diisi',
                 'nim.required' => 'NIM harus di isi',
                 'nim.numeric' => 'Nim harus angka',
@@ -95,6 +98,7 @@ class RegisteredUserController extends Controller
                     'namaindustri' => $request->namaindustri,
                     'status' => 1,
                     'statusapprove' => 0,
+                    'statuskerjasama' => $request->statuskerjasama
                 ]);
 
                 $pegawaiIndustri = PegawaiIndustri::create([

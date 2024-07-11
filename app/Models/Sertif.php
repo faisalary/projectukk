@@ -11,16 +11,7 @@ class Sertif extends Model
     use HasUuids;
 
     protected $table = 'sertifikat';
-    protected $fillable = [
-        'nama_sertif',
-        'nim',
-        'penerbit',
-        'startdate',
-        'enddate',
-        'file_sertif',
-        'link_sertif',
-        'deskripsi',
-    ];
+    protected $guarded = [];
     public $timestamps = false;
     protected $primaryKey = 'id_sertif';
     protected $keyType = 'string';
