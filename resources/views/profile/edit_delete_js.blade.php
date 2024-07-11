@@ -27,9 +27,16 @@
 
         $.each(response, function (key, value) {
           let element = modal.find(`[name="${key}"]`);
-          if (element.is(':radio')) {
+          if (modal.find(`div[data-repeater-list="${key}"]`).length > 0) {
+            value = JSON.parse(value);
+            formRepeaterCustom.setList(value);
+
+          } else if (element.is(':radio')) {
+
             modal.find(`[name="${key}"][value="${value}"]`).prop('checked', true);
+
           } else if ($(`select[name^="${key}"]`).prop('multiple')) {
+
               let option = $(`select[name^="${key}"] option`);
               value = JSON.parse(value);
 
@@ -48,13 +55,16 @@
               });
 
               initSelect2();
+
           } else if (element.is(':file')) {
+
             let parent = element.parents('.form-group');
             let label = parent.find('label');
             label.wrap(`<div class="d-flex justify-content-start"></div>`);
             label.parent().append(`<a href="{{ url('storage') }}/${value}" target="_blank" id="sertif_open" class="ms-2"><small><i>Existing File</i></small></a>`);
-            console.log('lewat');
+
           } else {
+
             element.val(value).trigger('change');
 
             if (element.hasClass('flatpickr-date')) {
@@ -128,5 +138,43 @@
             }
         });
     });
+  }
+
+  function initFormRepeaterCustom() {
+    var row = 2;
+    var col = 1;
+
+    formRepeaterCustom = $('.form-repeater-custom');
+
+    formRepeaterCustom.repeater({
+      show: function () {
+          var fromControl = $(this).find('.form-control, .form-select, .form-check-input');
+          var formLabel = $(this).find('.form-label, .form-check-label');
+
+          fromControl.each(function (i) {
+              var id = 'form-repeater-' + row + '-' + col;
+              $(fromControl[i]).attr('id', id);
+              $(formLabel[i]).attr('for', id);
+              col++;
+          });
+
+          row++;
+
+          // fix select2
+          initSelect2();
+          // --------------------------------------------
+
+
+          $(this).slideDown();
+      },
+      hide: function (e) {
+          let confirm_ = confirm('Are you sure you want to delete this element?');
+          if (!confirm_) return;
+
+          $(this).slideUp(e);
+      }
+    });
+
+    return formRepeaterCustom;
   }
 </script>

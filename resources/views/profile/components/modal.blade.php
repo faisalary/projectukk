@@ -140,89 +140,67 @@
                 <hr />
             </div>
 
-            <div class="modal-body p-0 ms-5 me-5">
-                <form class="default-form" action="{{ url('mahasiswa/profile/informasi-tambahan/update/' . Auth::user()->nim) }}">
+            <form class="default-form" action="{{ route('profile.update_info_tambahan') }}" function-callback="afterActionInfoTambahan">
+                <div class="modal-body">
                     @csrf
-                    <div class="row">
-                        <div class="mb-3 col-md-12 p-0 form-input">
-                            <label for="lok_kerja" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="lok_magang" name="lok_magang" placeholder="Lokasi Kerja" />
+                    <div class="row px-5">
+                        <div class="mb-3 col-md-12 form-group">
+                            <label for="lokasi_yg_diharapkan" class="form-label">Lokasi kerja yang diharapkan <span style="color: red;">*</span></label>
+                            <input class="form-control" type="text" id="lokasi_yg_diharapkan" name="lokasi_yg_diharapkan" placeholder="Lokasi Kerja" />
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="border mb-3" style="border-radius: 8px;">
-                            <div class="form-repeater">
-                                <div data-repeater-list="tambahan">
-                                    <div data-repeater-item="">
-                                        <div class="row mt-2 me-1">
-                                            <div class="mb-3 col-md-11 form-input">
-                                                <label class="form-label" for="bahasaedit">Bahasa <span style="color: red;">*</span></label>
-                                                <select id="bahasaedit" name="bahasa" class="form-select">
-                                                    <option disabled selected>Pilih Jenis Bahasa</option>
-                                                    <option value="Indonesia">Indonesia</option>
-                                                    <option value="Inggris">Inggris</option>
-                                                    <option value="Korea">Korea</option>
-                                                    <option value="Jepang">Jepang</option>
-                                                </select>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3 col-md-1 mb-0">
-                                                <button type="button" class="btn btn-outline-danger mt-4" style="width:0px" data-repeater-delete>
-                                                    <i class="ti ti-trash fa-lg"></i>
+                        <div class="mb-3 col-md-12 form-group">
+                            <label class="form-label" for="bahasa">Bahasa <span style="color: red;">*</span></label>
+                            <select id="bahasa" name="bahasa[]" class="select2 form-select" data-placeholder="Pilih Jenis Bahasa" multiple data-tags="true">
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Inggris">Inggris</option>
+                                <option value="Korea">Korea</option>
+                                <option value="Jepang">Jepang</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="border px-3" style="border-radius: 8px;">
+                                <div class="form-repeater-custom">
+                                    <div data-repeater-list="sosmedmhs_">
+                                        <div data-repeater-item="">
+                                            <div class="d-flex justify-content-between mt-2">
+                                                <div class="form-group w-100">
+                                                    <label for="namaSosmed" class="form-label">Sosial Media <span style="color: red;">*</span></label>
+                                                    <select id="namaSosmed" name="namaSosmed" class="select2 form-select" data-placeholder="Pilih Sosial Media">
+                                                        <option value="" disabled selected>Pilih Sosial Media</option>
+                                                        <option value="Instagram">Instagram</option>
+                                                        <option value="Linkedin">Linkedin</option>
+                                                        <option value="Facebook">Facebook</option>
+                                                        <option value="Twiteer">Twiteer</option>
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+                                                <div class="form-group col-7 ms-2">
+                                                    <label for="urlSosmed" class="form-label"></label>
+                                                    <input class="form-control" type="text" id="urlSosmed" name="urlSosmed" style="margin-top: 0.22rem !important" placeholder="URL/Username" />
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+                                                <button type="button" class="btn btn-icon btn-outline-danger ms-2" style="margin-top: 1.55rem !important" data-repeater-delete>
+                                                    <i class="ti ti-trash ti-xs"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-outline-primary" data-repeater-create>
-                                        <span class="align-middle">Tambah</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border" style="border-radius: 8px;">
-                            <div class="form-repeater">
-                                <div data-repeater-list="sosialmedia">
-                                    <div data-repeater-item="">
-                                        <div class="row mt-2 me-1">
-                                            <div class="mb-3 col-md-4 form-input">
-                                                <label for="form-repeater-1-1" class="form-label">Sosial Media <span style="color: red;">*</span></label>
-                                                <select id="sosmed1" name="sosmed" class="form-select">
-                                                    <option disabled selected>Pilih Sosial Media</option>
-                                                    <option value="Instagram">Instagram</option>
-                                                    <option value="Linkedin">Linkedin</option>
-                                                    <option value="Facebook">Facebook</option>
-                                                    <option value="Twiteer">Twiteer</option>
-                                                </select>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3 col-md-7 form-input">
-                                                <input class="form-control mt-4" type="text" id="urlsosmed" name="url_sosmed" placeholder="URL/Username" />
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3 col-md-1">
-                                                <button type="button" class="btn btn-outline-danger mt-4 waves-effect" style="width:0px" data-repeater-delete="">
-                                                    <i class="ti ti-trash fa-lg"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="my-3">
+                                        <button type="button" class="btn btn-outline-primary waves-effect" data-repeater-create="">
+                                            <span class="align-middle">Tambah</span>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-outline-primary waves-effect"
-                                        data-repeater-create="">
-                                        <span class="align-middle">Tambah</span>
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer pt-3 pe-0">
-                        <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
-                    </div>
-                </form>
-            </div>
-
+                </div>
+                <div class="modal-footer pt-3">
+                    <button type="submit" class="btn btn-primary m-0">Simpan Data</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

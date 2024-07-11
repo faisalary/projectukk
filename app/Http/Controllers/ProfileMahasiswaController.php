@@ -40,7 +40,8 @@ class ProfileMahasiswaController extends Controller
         $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
         $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
         $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['sosmed'] = SosmedTambahan::where('nim', $mahasiswa->nim)->orderBy('namaSosmed', 'asc')->get();
+        $data['bahasa'] = BahasaMahasiswa::where('nim', $mahasiswa->nim)->orderBy('bahasa', 'asc')->get();
         $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
 
         return view('profile.informasi_pribadi', $data);
@@ -52,6 +53,9 @@ class ProfileMahasiswaController extends Controller
         switch ($request->section) {
             case 'modalEditInformasi':
                 $data = self::getDataProfileDetail($user);
+                break;
+            case 'modalEditInformasiTambahan':
+                $data = self::getDataInfoTambahan($user->mahasiswa);
                 break;
             case 'modalTambahPendidikan':
                 $data = self::getDataPendidikan($user->mahasiswa->nim, $request->data_id);
@@ -113,6 +117,41 @@ class ProfileMahasiswaController extends Controller
                 'view' => view('profile/components/informasi_pribadi_detail', compact('mahasiswa'))->render()
             ], 'Informasi pribadi successfully updated.');
         } catch (Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function updateInfoTambahan(InformasiTambahanReq $request) {
+        try {
+            DB::beginTransaction();
+            $mahasiswa = auth()->user()->mahasiswa;
+
+            $mahasiswa->lokasi_yg_diharapkan = $request->lokasi_yg_diharapkan;
+            $mahasiswa->bahasamhs()->delete();
+            foreach ($request->bahasa as $key => $value) {
+                BahasaMahasiswa::create([
+                    'nim' => $mahasiswa->nim,
+                    'bahasa' => $value,
+                ]);
+            }
+
+            $mahasiswa->sosmedmhs()->delete();
+            foreach ($request->sosmedmhs_ as $key => $value) {
+                SosmedTambahan::create([
+                    'nim' => $mahasiswa->nim,
+                    'namaSosmed' => $value['namaSosmed'],
+                    'urlSosmed' => $value['urlSosmed'],
+                ]);
+            }
+            $mahasiswa->save();
+
+            $sosmed = $mahasiswa->sosmedmhs;
+            $bahasa = $mahasiswa->bahasamhs;
+            DB::commit();
+            return Response::success([
+                'view' => view('profile/components/detail_info_tambahan', compact('mahasiswa', 'sosmed', 'bahasa'))->render()
+            ], 'Data Successfully Updated!');
+        } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
     }
@@ -286,6 +325,14 @@ class ProfileMahasiswaController extends Controller
         ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
         ->where('id_user', $user->id)->first();
 
+        return $mahasiswa;
+    }
+
+    private static function getDataInfoTambahan($mahasiswa) {
+        $mahasiswa->bahasa = json_encode($mahasiswa->bahasamhs->pluck('bahasa')->toArray());
+        $mahasiswa->sosmedmhs_ = json_encode($mahasiswa->sosmedmhs->select('namaSosmed', 'urlSosmed')->toArray());
+        unset($mahasiswa->bahasamhs);
+        unset($mahasiswa->sosmedmhs);
         return $mahasiswa;
     }
 

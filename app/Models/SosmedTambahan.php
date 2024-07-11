@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SosmedTambahan extends Model
 {
-    use HasFactory;protected $table = 'sosmed_tambahans';
+    use HasFactory;
+    
+    protected $table = 'sosmed_tambahans';
     protected $fillable = [
         'nim',
         'namaSosmed',

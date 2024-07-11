@@ -72,10 +72,21 @@
 
 @section('page_script')
 <script>
+  let formRepeaterCustom;
+  $(document).ready(function () {
+    formRepeaterCustom = initFormRepeaterCustom();
+  });
+
   function afterUpdateDetailInfo(response) {
     response = response.data
     $('#container-info-detail').html(response.view)
-    $('#modalEditInformasi').modal('hide');
+    $('#modalEditInformasiTambahan').modal('hide');
+  }
+
+  function afterActionInfoTambahan(response) {
+    response = response.data
+    $('#container-informasi-tambahan').html(response.view)
+    $('#modalEditInformasiTambahan').modal('hide');
   }
 
   function afterActionEducation(response) {

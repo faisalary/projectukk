@@ -505,3 +505,8 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
     border-color: var(--bs-primary);
     color: #fff;
 }
+
+.timeline .timeline-point-primary {
+    background-color: var(--bs-primary) !important;
+    box-shadow: 0 0 0 0.1875rem rgba(68, 161, 85, 0.226);
+}
