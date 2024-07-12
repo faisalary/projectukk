@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    use HasUuids;
+    // use HasUuids;
 
     protected $table = 'dosen';
-    protected $fillable = ['nip','namadosen', 'nohpdosen', 'emaildosen', 'status','id_prodi','kode_dosen','id_univ','id_fakultas'];
+    protected $guarded = [];    
     protected $primaryKey = 'nip';
-    protected $keyType = 'string';
     public $timestamps = false;
 
     public function univ(){

@@ -49,9 +49,9 @@ require __DIR__ . '/auth.php';
 Route::prefix('/apply-lowongan')->name('apply_lowongan')->group(function () {
     Route::get('/', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'index']);
     Route::get('/detail/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'show'])->name('.detail');
-    Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('detail.lamar')->middleware('auth');
+    Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('.detail.lamar')->middleware('auth');
     Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index')->middleware('auth');
-    Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('apply.store')->middleware('auth');
+    Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('apply')->middleware('auth');
 });
 
 Route::middleware('auth')->group(function () {
@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function () {
         Route::post('update/{id}', 'update')->name('.update');
         Route::get('edit/{id}', 'edit')->name('.edit');
         Route::post('status/{id}', 'status')->name('.status');
-    });
+});
     
     Route::prefix('data-kandidat')->middleware('can:only.lkm')->group(function () {
         Route::get('/', [App\Http\Controllers\DatakandidatController::class, 'index'])->name('data-kandidat.index');

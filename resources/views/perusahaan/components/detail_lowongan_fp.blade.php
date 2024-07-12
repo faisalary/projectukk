@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <button class="btn btn-primary w-100">Lamar</button>
+            <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
         </div>
         <div class="row mt-4">
             <div class="col py-3">

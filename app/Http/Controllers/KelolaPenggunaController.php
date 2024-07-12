@@ -24,7 +24,7 @@ class KelolaPenggunaController extends Controller
     }
 
     public function getData(Request $request) {
-        $roles = ['LKM', 'Pembimbing Akademik', 'Dosen Wali', 'Kaprodi'];
+        $roles = ['LKM', 'Pembimbing Akademik', 'Dosen Wali', 'Kaprodi', 'Dosen'];
         $user = User::with('roles')->whereHas('roles', function ($query) use ($roles) {
             $query->whereIn('name', $roles);
         })->get();

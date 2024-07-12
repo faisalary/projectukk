@@ -20,18 +20,19 @@
                 <div class="col-4 ps-5 pe-0">
                     <div class="d-flex justify-content-between">
                         <h6 class="text-start">Kelengkapan Profil</h6>
-                        <h6 class="text-end">20%</h6>
+                        <h6 class="text-end" id="percentage_progress">0%</h6>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20"
-                            aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" id="progress_bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div class="col-2 text-end ps-0">
-                    <button class="btn btn-secondary buttons-collection  btn-label-success ms-4 mt-2" tabindex="0"
-                        aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog"
-                        aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span
-                                class="d-none d-sm-inline-block">Unduh Profile</span></span></button>
+                    <button class="btn btn-secondary buttons-collection btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-download me-sm-1"></i> 
+                          <span class="d-none d-sm-inline-block">Unduh Profile</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -75,6 +76,18 @@
   let formRepeaterCustom;
   $(document).ready(function () {
     formRepeaterCustom = initFormRepeaterCustom();
+
+    // $.ajax({
+    //   url: `{{ route('profile.get_data') }}`,
+    //   type: 'GET',
+    //   data: { section: 'completeness_percentage' },
+    //   success: function (response) {
+    //     $('#progress_bar').css('width', response.data.percentage + '%');
+    //     $('#progress_bar').attr('aria-valuenow', response.data.percentage);
+    //     $('#percentage_progress').text(response.data.percentage + '%');
+    //   }
+    // });
+
   });
 
   function afterUpdateDetailInfo(response) {
