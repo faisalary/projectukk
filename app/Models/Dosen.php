@@ -24,4 +24,8 @@ class Dosen extends Model
     public function fakultas(){
         return $this->belongsTo(Fakultas::class,'id_prodi');
     }
+
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'id_user');
+    }
 }

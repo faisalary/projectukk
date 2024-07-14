@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <label for="role" class="form-label">Role</label>
-                    <select id="role" name="role" class="select2 form-select" data-placeholder="Pilih Role" disabled>
-                        <option value="LKM" selected>LKM</option>
+                    <select id="role" name="role" class="select2 form-select" data-placeholder="Pilih Role">
+                        <option value="" selected disabled>Pilih Role</option>
                     </select>
                 </div>
                 <div class="modal-footer">
