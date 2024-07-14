@@ -33,7 +33,16 @@
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_prodi" class="form-label">Prodi</label>
-                            <select class="form-select select2" id="id_prodi" name="id_prodi" data-placeholder="Pilih Prodi">
+                            <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi">
+                                <option value="" disabled selected>Pilih Prodi</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-group">
+                            <label for="kode_dosen" class="form-label">Dosen Wali</label>
+                            <select class="form-select select2" id="kode_dosen" name="kode_dosen" data-placeholder="Pilih Dosen Wali">
                                 <option value="" disabled selected>Pilih Prodi</option>
                             </select>
                             <div class="invalid-feedback"></div>

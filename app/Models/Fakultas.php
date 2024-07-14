@@ -23,4 +23,9 @@ class Fakultas extends Model
     public function lowongan(){
         return $this->belongsTo(Universitas::class,'id_lowongan');
     }
+
+    public function program_studi()
+    {
+        return $this->hasMany(ProgramStudi::class, 'id_fakultas');
+    }
 }
