@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Education;
 use Exception;
 use Carbon\Carbon;
+use App\Models\Industri;
+use App\Helpers\Response;
+use App\Models\Education;
 use App\Models\Mahasiswa;
-use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
 use App\Models\LowonganProdi;
 use App\Models\LowonganMagang;
 use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
-use App\Models\InformasiTamabahan;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\PendaftaranMagangStatusEnum;
+use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
 {
@@ -22,25 +24,43 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::with('prodi')->get();
-        // return $prodilowongan;
-        $lowongan = LowonganMagang::with('industri', 'fakultas')->first();
-        $lowongan2 = LowonganMagang::with('industri')->get();
+        $data['lowongan'] = LowonganMagang::select(
+            'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
+        )
+        ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')->where('statusaprove', 'diterima');
 
-        return view('perusahaan.lowongan', compact('prodilo', 'prodilowongan', 'lowongan2', 'lowongan'));
+        $data = self::filterData($data, $request);
+
+        $data['lowongan'] = $data['lowongan']->paginate(3)->toJson();
+        $data['pagination'] = json_decode($data['lowongan'], true);
+        $data['lowongan'] = $data['pagination']['data'];
+
+        if ($request->ajax()) {
+            return Response::success([
+                'pagination' => view('perusahaan/components/pagination', $data)->render(),
+                'view' => view('perusahaan/components/card_lowongan_fp', $data)->render(),
+            ]);
+        }
+
+        $data['perusahaan'] = Industri::where('statusapprove', 1)->get();
+
+        return view('perusahaan.lowongan', $data);
     }
 
     public function show($id)
     {
-        $prodilo = LowonganProdi::with('prodi')->first();
-        $prodilowongan = LowonganProdi::where('id_lowongan', $id)->with('prodi')->get();
-        $lowonganshow2 = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi')->first();
-        $data = [
-            'prodilowongan' => $prodilowongan,
-            'lowonganshow2' => $lowonganshow2
-        ];
-        return $data;
+        $detailLowongan = LowonganMagang::select(
+            'lowongan_magang.*', 'industri.image', 'industri.namaindustri',
+            'industri.description as deskripsi_industri'
+        )
+        ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')
+        ->where('id_lowongan', $id)
+        ->where('statusaprove', 'diterima')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
+
+        if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan'))->render();
+
+        return Response::success($data, 'Success');
     }
 
     // Detail Lowongan 
@@ -48,114 +68,95 @@ class ApplyLowonganFakultasController extends Controller
     {
         $nim = Auth::user()->nim;
 
-        $profilemhs = InformasiPribadi::where('nim', $nim)->first();
-        $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ', 'informasiprib')->first();
+        $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
-        $persentase = $this->persentase($nim);
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi', 'mahasiswa')->first();
+        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
 
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();
 
-        return view('apply.apply', compact('persentase', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'profilemhs', 'nim', 'pendaftaran', 'magang'));
+        $urlBack = route('apply_lowongan.detail', ['id' => $id]);
+
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
+        $request->validate([
+            'porto' => 'required|mimes:pdf|max:5000',
+        ], [
+            'porto.mimes' => 'File harus berupa pdf',
+            'porto.max' => 'File melebihi 5 MB'
+        ]);
+
         try {
-            $nim = Auth::user()->nim;
+            $mahasiswa = auth()->user()->mahasiswa;
 
-            PendaftaranMagang::create([
+            $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
+            if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
+
+            $file = null;
+            if ($request->hasFile('porto')) {
+                $file = Storage::put('portofolio', $request->porto);
+            }
+
+            $pendaftaran = PendaftaranMagang::create([
                 'id_lowongan' => $id,
-                'nim' => $nim,
-                'tanggaldaftar' => Carbon::parse(now()),
-                'current_step' => 'screening',
-                'portofolio' =>  $request->porto?->store('post'),
+                'nim' => $mahasiswa->nim,
+                'tanggaldaftar' => now(),
+                'current_step' => PendaftaranMagangStatusEnum::PENDING,
+                'portofolio' => $file
             ]);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Lamaran berhasil dikirim!',
-                'url' => `{{url('apply-lowongan/lamar')}} /${id}`,
-            ]);
+            return Response::success(null, 'Lamaran berhasil dikirim!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
     }
 
-    // Persentase profile
-    public function persentase($id)
-    {
-        $mahasiswa = Mahasiswa::find($id);
-        $informasiprib = InformasiPribadi::where('nim', $id)->first();
-        $pendidikan = Education::where('nim', $id)->first();
-        if ($mahasiswa && $pendidikan && $informasiprib) {
-            $filledColumns = 0;
-
-            $mahasiswaColumns = [
-                'nim', 
-                'angkatan', 
-                'id_prodi', 
-                'id_univ', 
-                'id_fakultas', 
-                'namamhs', 
-                'alamatmhs', 
-                'emailmhs', 
-                'nohpmhs', 
-                'status',
-                'eprt',
-                'ipk',
-                'tak',
-                'lok_magang',
-                'skills',
-                'tunggakan_bpp'
-            ];
-
-            $infropribcolumns = [
-                'tgl_lahir',
-                'headliner',
-                'deskripsi_diri',
-                'profile_picture',
-                'gender',
-            ];
-            
-            $pendidikanColumns = [
-                'name_intitutions',
-                'tingkat',
-                'nilai',
-                'startdate',
-                'enddate',
-            ];
-
-            $totalColumns = count($mahasiswaColumns) + count($pendidikanColumns) + count($infropribcolumns);
-
-            foreach ($mahasiswaColumns as $column) {
-                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($infropribcolumns as $column) {
-                if (!is_null($informasiprib->$column) && $informasiprib->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($pendidikanColumns as $column) {
-                if (!is_null($pendidikan->$column) && $pendidikan->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-            $persentase = ($filledColumns / $totalColumns) * 100;
-            
-        } else {
-            $persentase = 0;
+    private static function filterData($data, $request) {
+        if ($request->lowongan) {
+            $data['lowongan'] = $data['lowongan']->where('intern_position', 'like', '%'.$request->lowongan.'%');
         }
 
-        return $persentase;
+        if ($request->location) {
+            $data['lowongan'] = $data['lowongan']->where('lokasi', 'like', '%'.$request->location.'%');
+        }
+        if ($request->start_date && $request->end_date) {
+            $start = Carbon::parse($request->start_date)->format('Y-m-d');
+            $end = Carbon::parse($request->end_date)->format('Y-m-d');
+            $data['lowongan'] = $data['lowongan']->whereBetween('lowongan_magang.created_at', [$start, $end]);
+        }
+
+        if ($request->perusahaan) {
+            $data['lowongan'] = $data['lowongan']->whereIn('lowongan_magang.id_industri', $request->perusahaan);
+        }
+
+        if ($request->paymentType) {
+            if ($request->paymentType == 'berbayar' && $request->nominal_minimal) {
+                $data['lowongan'] = $data['lowongan']->where('nominal_salary', '>=', $request->nominal_minimal);
+            } else {
+                $data['lowongan'] = $data['lowongan']->whereNull('nominal_salary');
+            }
+        }
+
+        if ($request->type_magang) {
+            $data['lowongan'] = $data['lowongan']->where(function ($query) use ($request) {
+                foreach ($request->type_magang as $key => $value) {
+                    $query->orWhere('durasimagang', 'like', '%' . $value . '%');
+                }
+            });
+        }
+
+        if ($request->pelaksanaan) {
+            $data['lowongan'] = $data['lowongan']->where(function ($query) use ($request) {
+                foreach ($request->pelaksanaan as $key => $value) {
+                    $query->orWhere('pelaksanaan', $value);
+                }
+            });
+        }
+
+        return $data;
     }
 }

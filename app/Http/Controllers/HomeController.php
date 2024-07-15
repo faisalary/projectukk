@@ -51,7 +51,7 @@ class HomeController extends Controller
         if ($type == 'container-lowongan-magang') {
             $lowongan = LowonganMagang::select(
                 'id_lowongan', 'intern_position', 'industri.namaindustri', 'industri.image', 
-                'created_at', 'lokasi', 'nominal_salary', 'durasimagang', 'gender'
+                'created_at', 'lokasi', 'nominal_salary', 'durasimagang', 'gender', 'lowongan_magang.statusaprove'
             )
             ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri');
 
@@ -59,7 +59,7 @@ class HomeController extends Controller
             // $lowonganTerpopuler = $lowongan->
             // ------------------------------------
 
-            $lowonganTerbaru = $lowongan->limit(6)->orderBy('created_at', 'desc')->get()->transform(function ( $item, $key) {
+            $lowonganTerbaru = $lowongan->where('lowongan_magang.statusaprove', 'diterima')->limit(6)->orderBy('created_at', 'desc')->get()->transform(function ( $item, $key) {
                 $item->created_at = Carbon::parse($item->created_at)->diffForHumans(Carbon::now());
                 $item->durasimagang = implode(' dan ', json_decode($item->durasimagang));
                 $item->lokasi = implode(', ', json_decode($item->lokasi));
@@ -69,7 +69,7 @@ class HomeController extends Controller
 
             return view('landingpage/components/lowongan', compact('lowonganTerbaru'))->render();
         } else if ('container-mitra') {
-            $mitra = Industri::limit(6)->get()->transform(function ( $item, $key) {
+            $mitra = Industri::where('statusapprove', 1)->limit(6)->get()->transform(function ( $item, $key) {
 
                 $item->image = url('storage/' . $item->image);
 

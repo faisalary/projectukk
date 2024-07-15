@@ -21,14 +21,20 @@ class InformasiPengalamanReq extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'posisi' => 'required|max:100',
+        $validate = [
+            'posisi' => 'required',
             'jenis' => 'required',
-            'name_intitutions' => 'required|max:191',
-            'startdate' => 'required|date',
+            'name_intitutions' => 'required',
+            'startdate' => 'required',
             'enddate' => 'required',
             'deskripsi' => 'required|max:255'
         ];
+
+        if ($this->data_id) {
+            $validate['data_id'] = 'required|exists:experience,id_experience';
+        }
+
+        return $validate;
     }
 
     public function messages()

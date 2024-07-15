@@ -19,12 +19,22 @@
                                 <label for="roleregister" class="form-label">Role Registrasi</label>
                                 <select class="form-select select2 @error('roleregister') is-invalid @enderror" id="roleregister" name="roleregister" data-placeholder="Pilih Role Anda Terlebih Dahulu" onchange="loadField('clear');" autofocus>
                                     <option disabled selected value="">Pilih Role Anda Terlebih Dahulu</option>
+                                    <option value="dosen" @selected(old('roleregister') == 'dosen')>Dosen</option>
                                     <option value="user" @selected(old('roleregister') == 'user')>Mahasiswa</option>
                                     <option value="mitra" @selected(old('roleregister') == 'mitra')>Company</option>
                                 </select>
                                 @error('roleregister')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
+                            </div>
+                            <div class="dosen-section" style="display: none;">
+                                <div class="col-12 mt-2 form-group">
+                                    <label for="nip" class="form-label">Nip</label>
+                                    <input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" autocomplete="nip" value="{{ old('nip') }}" placeholder="Masukkan NIP">
+                                    @error('nip')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mahasiswa-section" style="display: none;">
                                 <div class="col-12 mt-2 form-group">
@@ -61,6 +71,18 @@
                                     <label for="notelpon" class="form-label">No Hp Penanggung Jawab</label>
                                     <input id="notelpon" type="text" class="form-control @error('notelpon') is-invalid @enderror" name="notelpon" autocomplete="notelpon" value="{{ old('notelpon') }}" placeholder="Masukkan No Hp Penanggung Jawab">
                                     @error('notelpon')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-12 mt-2 form-group">
+                                    <label for="statuskerjasama" class="form-label">Status Kerjasama</label>
+                                    <select class="form-select select2 @error('statuskerjasama') is-invalid @enderror" id="statuskerjasama" name="statuskerjasama" data-placeholder="Pilih Status Kerjasama">
+                                        <option disabled selected value="">Pilih Status Kerjasama</option>
+                                        <option value="Iya" @selected(old('statuskerjasama') == 'Iya')>Iya</option>
+                                        <option value="Tidak" @selected(old('statuskerjasama') == 'Tidak')>Tidak</option>
+                                        <option value="Internal Tel-u" @selected(old('statuskerjasama') == 'Internal Tel-u')>Internal Tel-u</option>
+                                    </select>
+                                    @error('statuskerjasama')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -126,10 +148,16 @@
             $('form').find('.invalid-feedback').html(null).removeClass('d-block');
         }
 
-        if (role == 'user') {
+        if (role == 'dosen') {
+            $('.dosen-section').show();
+            $('.mahasiswa-section').hide();
+            $('.company-section').hide();
+        } else if (role == 'user') {
+            $('.dosen-section').hide();
             $('.mahasiswa-section').show();
             $('.company-section').hide();
         } else if (role == 'mitra') {
+            $('.dosen-section').hide();
             $('.mahasiswa-section').hide();
             $('.company-section').show();
         }

@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
+use App\Http\Controllers\LogBookMahasiswaController;
+use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagangController;
-use App\Http\Controllers\LogBookMahasiswaController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
@@ -58,6 +59,30 @@ Route::prefix('logbook-mahasiswa')->name('logbook_magang')->controller(LogBookMa
         Route::get('view', 'showMagangMandiri')->name('.view');
     });
 });
+
+Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('get-data-profile', 'getDataProfile')->name('.get_data');
+    Route::post('update-data', 'update')->name('.update_data');
+
+    Route::post('update-informasi-tambahan', 'updateInfoTambahan')->name('.update_info_tambahan');
+    
+    Route::post('update-pendidikan', 'updatePendidikan')->name('.update_pendidikan');
+    Route::post('delete-pendidikan/{id}', 'deletePendidikan')->name('.delete_pendidikan');
+    
+    Route::post('update-keahlian', 'updateKeahlian')->name('.update_keahlian');
+
+    Route::post('update-experience', 'updateExperience')->name('.update_experience');
+    Route::post('delete-experience/{id}', 'deleteExperience')->name('.delete_experience');
+
+    Route::post('update-dokumen', 'updateDokumenPendukung')->name('.update_dokumen');
+    Route::post('delete-dokumen/{id}', 'deleteDokumen')->name('.delete_dokumen');
+});
+
+// view dimasukin ke sini, pake profile mahasiswacontroller
+// buat agar si cv ngambil datanya dari database
+// di akun mahasiswa, ada unduh profile, saat diklik nanti diarahin ke halaman baru untuk ekspor cv
+
 
 // kegiatan saya -> landing page
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki

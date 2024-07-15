@@ -58,6 +58,11 @@ class PermissionSeeder extends Seeder
 
         $permission['Pembimbing Lapangan'] = [];
         $permission['Mahasiswa'] = [];
+        $permission['Dosen'] = [
+            // approval mahasiswa
+            'approval_mhs_doswal.view',
+        ];
+        $permission['Kaprodi'] = [];
 
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {
@@ -68,6 +73,8 @@ class PermissionSeeder extends Seeder
         }
         
         $role = Role::findOrCreate('Super Admin', 'web');
-        $role->syncPermissions(Permission::all());
+
+        $permission['Super Admin'] = array_merge($permission['Super Admin'], $permission['LKM']);
+        $role->syncPermissions($permission['Super Admin']);
     }
 }

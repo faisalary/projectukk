@@ -163,7 +163,9 @@ class KelolaMitraController extends Controller
 
     public function edit(string $id)
     {
-        $industri = Industri::where('id_industri', $id)->first();
+        $industri = Industri::with('penanggungJawab')->where('id_industri', $id)->first();
+        $industri->penanggung_jawab = $industri->penanggungJawab->namapeg;
+        unset($industri->penanggungJawab);
         return $industri;
     }
 

@@ -34,6 +34,8 @@ class AuthenticatedSessionController extends Controller
             $url = RouteServiceProvider::ADMIN;
         } elseif(Auth::user()->can('dashboard.dashboard_mitra')) {
             $url = RouteServiceProvider::MITRA;
+        } elseif(Auth::user()->can('approval_mhs_doswal.view')) {
+            $url = RouteServiceProvider::DOSEN;
         } else {
             $url = RouteServiceProvider::LANDINGPAGE;
         }

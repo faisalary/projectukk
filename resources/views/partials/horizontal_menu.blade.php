@@ -55,9 +55,11 @@
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/typeahead-js/typeahead.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ url('app-assets/css/monthpicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/pickr/pickr-themes.css') }}" />
     <link rel="stylesheet" href="{{ url('app-assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
 
     <!-- Page CSS -->
@@ -318,7 +320,7 @@
         <script src="{{ url('app-assets/vendor/libs/select2/select2.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-        <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+        {{-- <script src="{{ url('app-assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script> --}}
         <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
@@ -326,23 +328,47 @@
         <script src="{{ url('app-assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/dropzone/dropzone.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+        <script src="{{ url('app-assets/js/monthpicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/block-ui/block-ui.js') }}"></script>
+        <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 
         <!-- Main JS -->
         <script src="{{ url('app-assets/js/main.js') }}"></script>
 
         <!-- Page JS -->
         <script src="{{ url('app-assets/js/dashboards-analytics.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-tagify.js') }}"></script>
         <script src="{{ url('app-assets/js/form-wizard-validation.js') }}"></script>
         <script src="{{ url('app-assets/js/form-wizard-icons.js') }}"></script>
         <script src="{{ url('app-assets/js/ui-carousel.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-file-upload.js') }}"></script>
-        <script src="{{ url('app-assets/js/forms-pickers.js') }}"></script>
         <script src="{{ url('js/content.js') }}"></script>
+
+        <script>
+            $('.flatpickr-range').flatpickr({
+                mode: "range",
+                enableTime: false,
+            });
+
+            $(".flatpickr-date").flatpickr({
+                altInput: true,
+                altFormat: 'j F Y',
+                dateFormat: 'Y-m-d'
+            });
+
+            $(".month-picker").flatpickr({
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true, //defaults to false
+                        dateFormat: "F Y", //defaults to "F Y"
+                        altFormat: "F Y", //defaults to "F Y"
+                    })
+                ]
+            });
+        </script>
 
         @yield('page_script')
 </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Exception;
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Industri;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
@@ -32,15 +33,18 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     { 
         try {
-            $validate = ['roleregister' => 'required|in:user,mitra'];
+            $validate = ['roleregister' => 'required|in:dosen,user,mitra'];
 
-            if ($request->roleregister == 'user') {
+            if ($request->roleregister == 'dosen') {
+                $validate['nip'] = 'required|numeric|exists:dosen,nip';
+            } else if ($request->roleregister == 'user') {
                 $validate['nim'] = 'required|numeric|exists:mahasiswa,nim';
             } else if ($request->roleregister == 'mitra') {
                 $validate['namaindustri'] = 'required';
                 $validate['name'] = 'required';
                 $validate['email'] = 'required|email|unique:users,email|unique:pegawai_industri,emailpeg';
                 $validate['notelpon'] = 'required';
+                $validate['statuskerjasama'] = 'required|in:Ya,Tidak,Internal Tel-u';
             }
 
             $validator = Validator::make($request->all(), $validate, [
@@ -50,20 +54,16 @@ class RegisteredUserController extends Controller
                 'email.required' => 'Email harus diisi',
                 'email.unique' => 'Email sudah terdaftar',
                 'notelpon.required' => 'No. Telepon harus diisi',
+                'statuskerjasama.required' => 'Status Kerjasama harus dipilih.',
+                'statuskerjasama.in' => 'Status Kerjasama tidak valid.',
                 'namaindustri.required' => 'Nama harus diisi',
                 'nim.required' => 'NIM harus di isi',
-                'nim.numeric' => 'Nim harus angka',
-                'nim.exists' => 'Nim tidak ditemukan, hubungi LKM untuk info lebih lanjut',
+                'nim.numeric' => 'NIM harus angka',
+                'nim.exists' => 'NIM tidak ditemukan, hubungi LKM untuk info lebih lanjut',
+                'nip.required' => 'NIP harus di isi',
+                'nip.numeric' => 'NIP harus angka',
+                'nip.exists' => 'NIP tidak ditemukan, hubungi LKM untuk info lebih lanjut',
             ]);
-
-            $validator->after(function ($validator) use ($request) {
-                if ($request->roleregister == 'user') {
-                    $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
-                    if (isset($mahasiswa) && isset($mahasiswa->user)) {
-                        $validator->errors()->add('nim', 'NIM sudah terdaftar, silahkan login atau jika belum set password, silahkan cek email anda.');
-                    }
-                }
-            });
     
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -71,23 +71,68 @@ class RegisteredUserController extends Controller
 
             DB::beginTransaction();
 
-            if ($request->roleregister == 'user') {
+            if ($request->roleregister == 'dosen') {
+                $dosen = Dosen::where('nip', $request->nip)->first();
+                if (!$dosen) return Response::error(null, 'Not Found.');
+                
+                $code = Str::random(60);
+                $passwordResetToken = DB::table('password_reset_tokens')->where('email', $dosen->emaildosen)->first();
+                if ($passwordResetToken) {
+                    DB::table('password_reset_tokens')->where('email', $dosen->emaildosen)->delete();
+                }
+
+                DB::table('password_reset_tokens')->insert([
+                    'email' => $dosen->emaildosen,
+                    'token' => $code,
+                    'created_at' => now(),
+                ]);
+
+                $user = User::where('email', $dosen->emaildosen)->first();
+                if (!$user) {
+                    $user = User::create([
+                        'name' => $dosen->namadosen,
+                        'username' => $dosen->namadosen,
+                        'email' => $dosen->emaildosen,
+                        'password' => Hash::make(Str::random(12)),
+                    ])->assignRole('Dosen');
+
+                    $dosen->id_user = $user->id;
+                    $dosen->save();
+                }
+
+                $url = route('register.set-password', ['token' => $code]);
+                dispatch(new SendMailJob($dosen->emaildosen, new VerifyEmail($url)));
+
+            } else if ($request->roleregister == 'user') {
                 $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
                 if (!$mahasiswa) return Response::error(null, 'Not Found.');
+
+                $code = Str::random(60);
                 $passwordResetToken = DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->first();
-                if (!$passwordResetToken) return Response::error(null, 'Not Found.');
+                if ($passwordResetToken) {
+                    DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->delete();
+                }
 
-                $user = User::create([
-                    'name' => $mahasiswa->namamhs,
-                    'username' => $mahasiswa->namamhs,
+                DB::table('password_reset_tokens')->insert([
                     'email' => $mahasiswa->emailmhs,
-                    'password' => Hash::make(Str::random(12)),
-                ])->assignRole('Mahasiswa');
+                    'token' => $code,
+                    'created_at' => now(),
+                ]);
 
-                $mahasiswa->id_user = $user->id;
-                $mahasiswa->save();
+                $user = User::where('email', $mahasiswa->emailmhs)->first();
+                if (!$user) {
+                    $user = User::create([
+                        'name' => $mahasiswa->namamhs,
+                        'username' => $mahasiswa->namamhs,
+                        'email' => $mahasiswa->emailmhs,
+                        'password' => Hash::make(Str::random(12)),
+                    ])->assignRole('Mahasiswa');
 
-                $url = route('register.set-password', ['token' => $passwordResetToken->token]);
+                    $mahasiswa->id_user = $user->id;
+                    $mahasiswa->save();
+                }
+
+                $url = route('register.set-password', ['token' => $code]);
                 dispatch(new SendMailJob($mahasiswa->emailmhs, new VerifyEmail($url)));
                 
             } else if ($request->roleregister == 'mitra') {
@@ -95,6 +140,7 @@ class RegisteredUserController extends Controller
                     'namaindustri' => $request->namaindustri,
                     'status' => 1,
                     'statusapprove' => 0,
+                    'statuskerjasama' => $request->statuskerjasama
                 ]);
 
                 $pegawaiIndustri = PegawaiIndustri::create([

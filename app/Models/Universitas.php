@@ -14,6 +14,11 @@ class Universitas extends Model
     protected $primaryKey = 'id_univ';
     
     public $timestamps = false;
+
+    public function fakultas()
+    {
+        return $this->hasMany(Fakultas::class, 'id_univ');
+    }
 }
 
 

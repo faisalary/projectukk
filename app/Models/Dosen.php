@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    use HasUuids;
+    // use HasUuids;
 
     protected $table = 'dosen';
-    protected $fillable = ['nip','namadosen', 'nohpdosen', 'emaildosen', 'status','id_prodi','kode_dosen','id_univ','id_fakultas'];
+    protected $guarded = [];    
     protected $primaryKey = 'nip';
-    protected $keyType = 'string';
     public $timestamps = false;
 
     public function univ(){
@@ -24,5 +23,9 @@ class Dosen extends Model
     }
     public function fakultas(){
         return $this->belongsTo(Fakultas::class,'id_prodi');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'id_user');
     }
 }

@@ -31,7 +31,8 @@ class Mahasiswa extends Model
         'lok_magang',
         'skills',
         'bahasa',
-        'tunggakan_bpp'
+        'tunggakan_bpp',
+        'kode_dosen',
     ];
     protected $keyType = 'string';
     protected $primaryKey = 'nim';
@@ -54,14 +55,6 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Fakultas::class, "id_fakultas");
     }
-    public function informasiprib()
-    {
-        return $this->belongsTo(InformasiPribadi::class, "id_infoprib");
-    }
-    public function informasitambahan()
-    {
-        return $this->belongsTo(InformasiTamabahan::class, "id_infotab");
-    }
     public function bahasamhs()
     {
         return $this->hasMany(BahasaMahasiswa::class, 'nim');
@@ -69,5 +62,25 @@ class Mahasiswa extends Model
     public function sosmedmhs()
     {
         return $this->hasMany(SosmedTambahan::class, 'nim');
+    }
+
+    public function education()
+    {
+        return $this->hasMany(Education::class, 'nim', 'nim');
+    }
+
+    public function experience()
+    {
+        return $this->hasMany(Experience::class, 'nim', 'nim');
+    }
+
+    public function sertifikat()
+    {
+        return $this->hasMany(Sertif::class, 'nim', 'nim');
+    }
+
+    public function dosen_wali()
+    {
+        return $this->hasOne(Dosen::class, 'kode_dosen', 'kode_dosen');
     }
 }

@@ -1,8 +1,8 @@
 @php
     if (auth()->user()->hasRole('Mahasiswa')){
-        $url = url('mahasiswa/profile/pribadi', Auth::user()->nim);
+        $url = route('profile');
     }else{
-        $url = url('company/profile-company');
+        $url = route('profile_company');
     }
 @endphp
 <ul class="dropdown-menu dropdown-menu-end">
@@ -46,7 +46,7 @@
         <a class="dropdown-item"
             href="{{ $url }}">
             <i class="ti ti-user-circle me-2 ti-sm"></i>
-            <span class="align-middle">Profil Saya</span>
+            <span class="align-middle">Profil</span>
         </a>
     </li>
     <li>

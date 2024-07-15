@@ -15,13 +15,13 @@
   font-weight: 400;
   margin: 0.5px;
   justify-content: center;
-  padding: 10px;
+  padding: 5px;
   position: relative;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   text-align: center;
-  width: 33%;
+  width: 30%;
 }
 
 .flatpickr-monthSelect-month.flatpickr-disabled {
