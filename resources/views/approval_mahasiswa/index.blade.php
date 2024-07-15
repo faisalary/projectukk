@@ -36,7 +36,7 @@
                                 <tr>
                                     <th>NO</th>
                                     <th>NAMA</th>
-                                    <th>TANGGAL DAFTAR</th>
+                                    <th style="text-align:center;">TANGGAL DAFTAR</th>
                                     <th>PERUSAHAAN</th>
                                     <th>POSISI MAGANG</th>
                                     <th>NO. TELEPON</th>
@@ -51,12 +51,20 @@
             </div>
         </div>
     </div>
+@include('approval_mahasiswa/components/modal')
 @endsection
 
 @section('page_script')
 <script>
     $(document).ready(function () {
         loadData();
+    });
+
+    // fix datatable when click button tab
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
+        $('.table').each(function () {
+            $(this).DataTable().columns.adjust().responsive.recalc();
+        });
     });
 
     function loadData() {
@@ -85,5 +93,78 @@
             });
         });
     }
+
+    function approved(e) {
+        let status = e.attr('data-status');
+        let dataId = e.attr('data-id');
+
+        sweetAlertConfirm({
+            title: 'Apakah anda yakin ingin menyetujui pendaftaran magang?',
+            text: 'Data terpilih akan secara otomatis berubah dan melanjutkan ke status berikutnya!',
+            icon: 'warning',
+            confirmButtonText: 'Ya, saya yakin!',
+            cancelButtonText: 'Batal'
+        }, function () {
+            $.ajax({
+                url: `{{ route('approval_mahasiswa.approval', ['id' => ':id']) }}`.replace(':id', dataId),
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    status: status
+                },
+                success: function (response) {
+                    if (!response.error) {
+                        showSweetAlert({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success'
+                        });
+
+                        $('.table').each(function () {
+                            $(this).DataTable().ajax.reload(); 
+                        });
+                    } else {
+                        showSweetAlert({
+                            title: 'Gagal!',
+                            text: response.message,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    let res = xhr.responseJSON;
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: res.message,
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+    }
+
+    function rejected(e) {
+        let status = e.attr('data-status');
+        let dataId = e.attr('data-id');
+        let modal = $("#modalRejectLamaran");
+
+        modal.find('form').attr('action', `{{ route('approval_mahasiswa.approval', ['id' => ':id']) }}`.replace(':id', dataId));
+        modal.find('form').prepend(`<input type="hidden" name="status" value="${status}">`);
+        modal.modal('show');
+    }
+
+    function afterActionRejected(response) {
+        let modal = $("#modalRejectLamaran");
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload(); 
+        });
+
+        modal.modal('hide');
+    }
+
+    $("#modalRejectLamaran").on('hide.bs.modal', function () {
+        $(this).find('form').find('input[name="status"]').remove();
+    });
 </script>
 @endsection
