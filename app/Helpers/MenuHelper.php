@@ -301,6 +301,13 @@ class MenuHelper
                 'icon' => 'ti-building',
                 'permission' => 'profile_perusahaan.view'
             ],
+            //dosen
+            [
+                'name' => 'Approval Mahasiswa',
+                'route' => 'approval_mahasiswa',
+                'icon' => 'ti-briefcase',
+                'permission' => 'approval_mhs_doswal.view'
+            ],
         ];
     }
 }

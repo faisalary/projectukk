@@ -58,7 +58,10 @@ class PermissionSeeder extends Seeder
 
         $permission['Pembimbing Lapangan'] = [];
         $permission['Mahasiswa'] = [];
-        $permission['Dosen'] = [];
+        $permission['Dosen'] = [
+            // approval mahasiswa
+            'approval_mhs_doswal.view',
+        ];
         $permission['Kaprodi'] = [];
 
         foreach ($permission as $key => $value) {

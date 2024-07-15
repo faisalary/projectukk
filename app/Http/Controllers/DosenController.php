@@ -74,9 +74,9 @@ class DosenController extends Controller
     {
 
         $dosen = Dosen::select('dosen.*', 'universitas.namauniv', 'fakultas.namafakultas', 'program_studi.namaprodi')
-        ->join('universitas', 'universitas.id_univ', '=', 'dosen.id_univ')
-        ->join('fakultas', 'fakultas.id_fakultas', '=', 'dosen.id_fakultas')
-        ->join('program_studi', 'program_studi.id_prodi', '=', 'dosen.id_prodi');
+        ->leftJoin('universitas', 'universitas.id_univ', '=', 'dosen.id_univ')
+        ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'dosen.id_fakultas')
+        ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'dosen.id_prodi');
 
         return DataTables::of($dosen->orderBy('nip', "asc")->get())
             ->addIndexColumn()
