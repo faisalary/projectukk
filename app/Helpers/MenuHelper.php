@@ -308,6 +308,13 @@ class MenuHelper
                 'icon' => 'ti-briefcase',
                 'permission' => 'approval_mhs_doswal.view'
             ],
+            //kaprodi
+            [
+                'name' => 'Approval Mahasiswa Kaprodi',
+                'route' => 'approval_mahasiswa_kaprodi',
+                'icon' => 'ti-briefcase',
+                'permission' => 'approval_mhs_kaprodi.view'
+            ],
         ];
     }
 }

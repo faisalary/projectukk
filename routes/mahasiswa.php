@@ -79,6 +79,11 @@ Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController
     Route::post('delete-dokumen/{id}', 'deleteDokumen')->name('.delete_dokumen');
 });
 
+// view dimasukin ke sini, pake profile mahasiswacontroller
+// buat agar si cv ngambil datanya dari database
+// di akun mahasiswa, ada unduh profile, saat diklik nanti diarahin ke halaman baru untuk ekspor cv
+
+
 // kegiatan saya -> landing page
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki
 Route::middleware('role:Mahasiswa')->group(function () {
