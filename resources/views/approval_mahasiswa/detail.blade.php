@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="d-flex justify-content-start">
-    <a href="#" class="btn btn-outline-primary">
+    <a href="{{ $urlBack }}" class="btn btn-outline-primary">
         <i class="ti ti-arrow-left"></i>&ensp;
         Kembali
     </a>

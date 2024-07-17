@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Helpers\Response;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 
 class ApprovalMahasiswaKaprodiController extends Controller
@@ -16,7 +18,10 @@ class ApprovalMahasiswaKaprodiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('approval_mahasiswa/index');
+        return view('approval_mahasiswa/index', [
+            'urlGetData' => route('approval_mahasiswa_kaprodi.get_data'),
+            'urlApproval' => route('approval_mahasiswa_kaprodi.approval', ['id' => ':id'])
+        ]);
     }
 
     /**
@@ -42,12 +47,13 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
-        ->where('mahasiswa.kode_dosen', $dosen->kode_dosen);
+        ->where('mahasiswa.id_fakultas', $dosen->id_fakultas);
 
         // Filter data berdasarkan parameter tiap bagian/section
-        if ($request->section == 'sudah-approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL);
-        if ($request->section == 'sudah-approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
-        if ($request->section == 'belum-approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI);
+        if ($request->section == 'approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL);
+        if ($request->section == 'sudah-approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI)->orWhere('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
+
+        // dd($data->toSql());
 
         // Mengembalikan data dalam format tabel
         return datatables()->of($data->get())
@@ -79,10 +85,10 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->addColumn('action', function ($data) {
             // Format the 'action' column
             $result = '<div class="d-flex justify-content-center">';
-            $result .= "<a class='mx-1 text-primary cursor-pointer' data-id='$data->id_pendaftaran'><i class='ti ti-file-invoice'></i></a>";
+            $result .= "<a href='".route('approval_mahasiswa_kaprodi.detail', $data->id_pendaftaran)."' class='mx-1 text-primary cursor-pointer'><i class='ti ti-file-invoice'></i></a>";
             if ($data->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL) {
-                $result .= "<a onclick='approved($(this))' class='mx-1 text-success cursor-pointer' data-id='$data->id_pendaftaran'><i class='ti ti-file-check'></i></a>";
-                $result .= "<a onclick='rejected($(this))' class='mx-1 text-danger cursor-pointer' data-id='$data->id_pendaftaran'><i class='ti ti-file-x'></i></a>";
+                $result .= "<a onclick='approved($(this))' class='mx-1 text-success cursor-pointer' data-status='approved' data-id='$data->id_pendaftaran'><i class='ti ti-file-check'></i></a>";
+                $result .= "<a onclick='rejected($(this))' class='mx-1 text-danger cursor-pointer' data-status='rejected' data-id='$data->id_pendaftaran'><i class='ti ti-file-x'></i></a>";
             }
             $result .= '</div>';
 
@@ -90,5 +96,57 @@ class ApprovalMahasiswaKaprodiController extends Controller
         })
         ->rawColumns(['namamhs', 'tanggaldaftar', 'current_step', 'action'])
         ->make(true);
+    }
+
+    public function detail($id) {
+        $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
+            'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
+            'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
+            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas'
+        )
+        ->join('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+        ->join('users', 'mahasiswa.id_user', '=', 'users.id')
+        ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->where('pendaftaran_magang.id_pendaftaran', $id)->first();
+
+        $data['urlBack'] = route('approval_mahasiswa_kaprodi');
+
+        return view('approval_mahasiswa/detail', $data);
+    }
+
+    public function approval(Request $request, $id) {
+        try {
+            $validate = Validator::make($request->all(), [
+                'status' => 'required|in:approved,rejected',
+                'reason' => 'required_if:status,rejected'
+            ], ['reason.required_if' => 'Alasan harus diisi.']);
+    
+            if ($validate->fails()) {
+                if ($validate->errors()->has('status')) {
+                    return Response::error(null, 'Invalid.');
+                } else {
+                    return Response::errorValidate($validate->errors(), 'Invalid.');
+                }
+            };
+
+            $pendaftaranMahasiswa = PendaftaranMagang::where('id_pendaftaran', $id)->first();
+            if (!$pendaftaranMahasiswa) return Response::error(null, 'Pendaftaran mahasiswa tidak ditemukan.');
+
+            $message = 'Pendaftaran mahasiswa approved.';
+            if ($request->status == 'approved') $pendaftaranMahasiswa->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+            else {
+                $pendaftaranMahasiswa->current_step = PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI;
+                $pendaftaranMahasiswa->reason_reject = $request->reason;
+                $message = 'Pendaftaran mahasiswa rejected.';
+            }
+            $pendaftaranMahasiswa->save();
+
+            return Response::success(null, $message);
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 }

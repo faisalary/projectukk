@@ -71,7 +71,7 @@
         $('.table').each(function () {
             $(this).DataTable({
                 ajax: {
-                    url: `{{ route('approval_mahasiswa.get_data') }}`,
+                    url: `{{ $urlGetData }}`,
                     type: 'GET',
                     data: { section: $(this).attr('id') }
                 },
@@ -106,7 +106,7 @@
             cancelButtonText: 'Batal'
         }, function () {
             $.ajax({
-                url: `{{ route('approval_mahasiswa.approval', ['id' => ':id']) }}`.replace(':id', dataId),
+                url: `{{ $urlApproval }}`.replace(':id', dataId),
                 type: "POST",
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
@@ -148,7 +148,7 @@
         let dataId = e.attr('data-id');
         let modal = $("#modalRejectLamaran");
 
-        modal.find('form').attr('action', `{{ route('approval_mahasiswa.approval', ['id' => ':id']) }}`.replace(':id', dataId));
+        modal.find('form').attr('action', `{{ $urlApproval }}`.replace(':id', dataId));
         modal.find('form').prepend(`<input type="hidden" name="status" value="${status}">`);
         modal.modal('show');
     }

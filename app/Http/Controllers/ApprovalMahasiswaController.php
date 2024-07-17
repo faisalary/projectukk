@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Validator;
 class ApprovalMahasiswaController extends Controller
 {
     public function index() {
-        return view('approval_mahasiswa/index');
+        return view('approval_mahasiswa/index', [
+            'urlGetData' => route('approval_mahasiswa.get_data'),
+            'urlApproval' => route('approval_mahasiswa.approval', ['id' => ':id'])
+        ]);
     }
 
     public function getData(Request $request) {
@@ -79,7 +82,7 @@ class ApprovalMahasiswaController extends Controller
     }
 
     public function detail($id) {
-        $data = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
+        $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
             'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
             'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas'
@@ -92,7 +95,9 @@ class ApprovalMahasiswaController extends Controller
         ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->where('pendaftaran_magang.id_pendaftaran', $id)->first();
 
-        return view('approval_mahasiswa/detail', compact('data'));
+        $data['urlBack'] = route('approval_mahasiswa');
+
+        return view('approval_mahasiswa/detail', $data);
     }
 
     public function approval(Request $request, $id) {
@@ -113,14 +118,16 @@ class ApprovalMahasiswaController extends Controller
             $pendaftaranMahasiswa = PendaftaranMagang::where('id_pendaftaran', $id)->first();
             if (!$pendaftaranMahasiswa) return Response::error(null, 'Pendaftaran mahasiswa tidak ditemukan.');
 
+            $message = 'Pendaftaran mahasiswa approved.';
             if ($request->status == 'approved') $pendaftaranMahasiswa->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL;
             else {
                 $pendaftaranMahasiswa->current_step = PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL;
                 $pendaftaranMahasiswa->reason_reject = $request->reason;
+                $message = 'Pendaftaran mahasiswa rejected.';
             }
             $pendaftaranMahasiswa->save();
 
-            return Response::success(null, 'Pendaftaran mahasiswa approved.');
+            return Response::success(null, $message);
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
