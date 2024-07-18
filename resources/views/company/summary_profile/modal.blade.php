@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
                         <div class="rounded-circle w-px-100 h-px-100 text-center" style="overflow: hidden;">
-                            <img src="{{ $industri->image }}" alt="user-avatar" class="d-block w-100" id="imgPreview2" default-src="{{ $industri->image }}">
+                            <img src="" alt="user-avatar" class="d-block w-100" id="imgPreview2" default-src="">
                         </div>
                         <div class="d-flex flex-column">
                             <div class="d-flex justify-content-start">

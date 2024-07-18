@@ -8,15 +8,13 @@
         </div>
         <div class="user-avatar-section">
             <div class="d-flex align-items-center flex-column">
-                @if ($mahasiswa->profile_picture)
-                    <img src="{{ url('storage/' . $mahasiswa->profile_picture) }}" alt="profile-image"
-                        class="img-fluid rounded mb-3 pt-1 mt-4" style="max-height: 140px; max-width: 180px;"
-                        alt="img">
-                @else
-                    <img src="{{ url('app-assets/img/avatars/14.png') }}" alt="user-avatar"
-                        class="img-fluid rounded mb-3 pt-1 mt-4">
-                @endif
-
+                <div class="rounded-circle text-center my-4" style="overflow: hidden; width: 100px; height: 100px;">
+                    @if ($mahasiswa->profile_picture)
+                        <img src="{{ asset('storage/' . $mahasiswa->profile_picture) }}" alt="user-avatar" class="d-block" width="100" id="image_industri">
+                    @else
+                        <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="100" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
+                    @endif
+                </div>
                 <div class="user-info text-center">
                     <h4 class="mb-2">{{ $mahasiswa->namamhs }}</h4>
                     <span class="badge bg-label-success mt-1">{{ $mahasiswa->headliner }}</span>

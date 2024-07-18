@@ -90,10 +90,34 @@
 
   });
 
+  $('#changePicture').on('change', function (event) {
+      let file = event.target.files[0];
+      if (file) {
+          $('#imgPreview2').attr('src', URL.createObjectURL(file));
+      } else {
+          $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/user.png') }}");
+      }
+  });
+
+  function removeImage() {
+      $('#formEditInformasi').find('input[name="remove_image"]').remove();
+      $('#formEditInformasi').prepend(`<input type="hidden" name="remove_image" value="1">`);
+      $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/user.png') }}");
+  }
+
+  $('#modalEditInformasi').on('hide.bs.modal', function () {
+      $('#formEditInformasi').find('input[name="remove_image"]').remove();
+      let defaultSrc = $('#imgPreview2').attr('default-src');
+      $('#imgPreview2').attr('src', defaultSrc);
+  });
+
   function afterUpdateDetailInfo(response) {
     response = response.data
+    let resourceGambar = response.image ?? "{{ asset('app-assets/img/avatars/user.png') }}";
+    $('#imgPreview2').attr('src', resourceGambar);
+    $('#imgPreview2').attr('default-src', resourceGambar);
     $('#container-info-detail').html(response.view)
-    $('#modalEditInformasiTambahan').modal('hide');
+    $('#modalEditInformasi').modal('hide');
   }
 
   function afterActionInfoTambahan(response) {

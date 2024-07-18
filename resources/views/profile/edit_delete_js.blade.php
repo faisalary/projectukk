@@ -26,6 +26,9 @@
         response = response.data;
 
         $.each(response, function (key, value) {
+          
+          if (value == null) return;
+          
           let element = modal.find(`[name="${key}"]`);
           if (modal.find(`div[data-repeater-list="${key}"]`).length > 0) {
             value = JSON.parse(value);
@@ -63,6 +66,9 @@
             label.wrap(`<div class="d-flex justify-content-start"></div>`);
             label.parent().append(`<a href="{{ url('storage') }}/${value}" target="_blank" id="sertif_open" class="ms-2"><small><i>Existing File</i></small></a>`);
 
+          } else if (key == 'profile_picture') {
+            $('#imgPreview2').attr('src', value);
+            $('#imgPreview2').attr('default-src', value);
           } else {
 
             element.val(value).trigger('change');
