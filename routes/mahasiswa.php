@@ -16,7 +16,7 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswaMagangController::class)->group(function () {
+Route::prefix('mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/show', 'show')->name('.show');
     Route::post('/store', 'store')->name('.store');

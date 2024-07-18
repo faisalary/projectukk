@@ -51,9 +51,14 @@ class ApprovalMahasiswaKaprodiController extends Controller
 
         // Filter data berdasarkan parameter tiap bagian/section
         if ($request->section == 'approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL);
-        if ($request->section == 'sudah-approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI)->orWhere('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
 
-        // dd($data->toSql());
+        $array_status = [];
+        if ($request->section == 'sudah-approval') {
+            $array_status = array_diff(PendaftaranMagangStatusEnum::getConstants(), ['pending', 'approved_by_doswal', 'rejected_by_doswal']);
+            foreach ($array_status as $key => $value) {
+                $data = $data->orWhere('pendaftaran_magang.current_step', constant('App\Enums\PendaftaranMagangStatusEnum::' . $key));
+            }
+        }
 
         // Mengembalikan data dalam format tabel
         return datatables()->of($data->get())
@@ -69,12 +74,12 @@ class ApprovalMahasiswaKaprodiController extends Controller
             return $result;
         })
         ->editColumn('tanggaldaftar', fn ($data) => '<div class="text-center">' . Carbon::parse($data->tanggaldaftar)->format('d M Y') . '</div>')
-        ->editColumn('current_step', function ($data) {
+        ->editColumn('current_step', function ($data) use ($array_status) {
             // Format the 'current_step' column
             $result = '<div class="text-center">';
             if ($data->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL) {
                 $result .= '<span class="badge bg-label-secondary">Sudah Approval Tahap 1</span>';
-            } elseif ($data->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+            } elseif ($data->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI || in_array($data->current_step, $array_status)) {
                 $result .= '<span class="badge bg-label-warning">Sudah Approval Tahap 2</span>';
             } elseif ($data->current_step == PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI) {
                 $result.= '<span class="badge bg-label-primary">Belum Approval Tahap 2</span>';

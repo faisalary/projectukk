@@ -129,7 +129,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang',
+                'route' => 'data_mahasiswa',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_magang.view'
             ],
@@ -320,6 +320,12 @@ class MenuHelper
                 'route' => 'approval_mahasiswa_kaprodi',
                 'icon' => 'ti-briefcase',
                 'permission' => 'approval_mhs_kaprodi.view'
+            ],
+            [
+                'name' => 'Data Mahasiswa Magang',
+                'route' => 'mahasiswa_magang_kaprodi',
+                'icon' => 'ti-file-analytics',
+                'permission' => 'data_mahasiswa_magang_kaprodi.view'
             ],
         ];
     }
