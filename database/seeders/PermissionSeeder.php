@@ -53,6 +53,7 @@ class PermissionSeeder extends Seeder
             'informasi_lowongan_mitra.view', //
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
+            'jadwal_seleksi_mitra.view',
             'profile_perusahaan.view',
         ];
 

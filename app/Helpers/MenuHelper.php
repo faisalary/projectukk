@@ -296,6 +296,12 @@ class MenuHelper
                 'permission' => 'anggota_tim.view'
             ],
             [
+                'name' => 'Jadwal Seleksi',
+                'route' => 'jadwal_seleksi',
+                'icon' => 'ti-clock',
+                'permission' => 'jadwal_seleksi_mitra.view'
+            ],
+            [
                 'name' => 'Profile Perusahaan',
                 'route' => 'profile_company',
                 'icon' => 'ti-building',

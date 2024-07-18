@@ -1,30 +1,6 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
-<style>
-    .swal2-icon {
-        border-color: transparent !important;
-    }
-
-    .swal2-title {
-        font-size: 20px !important;
-        text-align: center !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
-    }
-
-    .swal2-modal.swal2-popup .swal2-title {
-        max-width: 100% !important;
-    }
-
-    .swal2-html-container {
-        font-size: 16px !important;
-    }
-
-    a:hover {
-        color: #6F6B7D !important;
-    }
-</style>
 @endsection
 
 @section('content')
@@ -53,57 +29,7 @@
 
 <div class="row mt-2">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row mt-4">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="d-flex align-items-center justify-content-start">
-                            <span>Show</span>
-                            <select class="form-select mx-2" style="width: 14%;">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                            <span>entries</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="d-flex align-items-center justify-content-end">
-                            <span>Search:</span>
-                            <input type="search" class="form-control ms-2" placeholder="Search" style="width: 50%;">
-                        </div>
-                    </div>
-                </div>
-                <!-- card-informasi-lowongan -->
-                <div id="container-card" class="mb-3">
-                    @if ($lowongan_count == 0)
-                    <img src="\assets\images\no-data.png" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 40%;">
-                    @endif
-                </div>
-            </div>
-
-
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-end" style="margin-right:25px;">
-                    <li class="page-item first">
-                        <a class="page-link" href="javascript:void(0);">Previous</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:void(0);">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">3</a>
-                    </li>
-                    <li class="page-item last">
-                        <a class="page-link" href="javascript:void(0);">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <table class="" id="table-jadwal"></table>
     </div>
 </div>
 @endsection
@@ -117,21 +43,17 @@
         loadData();
     });
 
-    document.getElementById("back").addEventListener("click", () => {
-        history.back();
-    });
-
     function loadData() {
-        $.ajax({
-            url: "{{ $urlGetCard }}?component=card",
-            type: "get",
-            success: function(res) {
-                // $("#container-card").html(res);
-                if (res != "") {
-                    $("#container-card").html(res);
-                }
-            }
-        })
+        $('#table-jadwal').DataTable({
+            ajax: "{{ route('jadwal_seleksi.get_data') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            type: 'GET',
+            destroy: true,
+            ordering: false,
+            columns: [{data: 'card', name: 'card'}]
+        });
     }
 </script>
 @endsection

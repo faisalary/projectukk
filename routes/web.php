@@ -139,13 +139,6 @@ Route::middleware('auth')->group(function () {
     //     });
     // });
 
-
-    Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(MitraJadwalController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('show', 'show')->name('.show');
-        Route::get('detail/{id}', 'detail')->name('.detail');
-    });
-
     Route::prefix('mandiri')->group(function () {
         Route::prefix('approve-mandiri')->middleware('can:only.lkm')->group(function () {
             Route::get('/', [App\Http\Controllers\ApproveMandiriController::class, 'index'])->name('approve_mandiri.index');
