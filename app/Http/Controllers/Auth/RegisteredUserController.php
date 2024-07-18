@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
                 $validate['name'] = 'required';
                 $validate['email'] = 'required|email|unique:users,email|unique:pegawai_industri,emailpeg';
                 $validate['notelpon'] = 'required';
-                $validate['statuskerjasama'] = 'required|in:Ya,Tidak,Internal Tel-u';
+                $validate['statuskerjasama'] = 'required|in:Iya,Tidak,Internal Tel-u';
             }
 
             $validator = Validator::make($request->all(), $validate, [
