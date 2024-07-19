@@ -14,6 +14,8 @@ use App\Models\LowonganMagang;
 use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\PendaftaranMagangStatusEnum;
+use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
 {
@@ -66,115 +68,51 @@ class ApplyLowonganFakultasController extends Controller
     {
         $nim = Auth::user()->nim;
 
-        $profilemhs = InformasiPribadi::where('nim', $nim)->first();
-        $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ', 'informasiprib')->first();
+        $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
-        $persentase = $this->persentase($nim);
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi', 'mahasiswa')->first();
+        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
 
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();
 
-        return view('apply.apply', compact('persentase', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'profilemhs', 'nim', 'pendaftaran', 'magang'));
+        $urlBack = route('apply_lowongan.detail', ['id' => $id]);
+
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
+        $request->validate([
+            'porto' => 'required|mimes:pdf|max:5000',
+        ], [
+            'porto.mimes' => 'File harus berupa pdf',
+            'porto.max' => 'File melebihi 5 MB'
+        ]);
+
         try {
-            $nim = Auth::user()->nim;
+            $mahasiswa = auth()->user()->mahasiswa;
 
-            PendaftaranMagang::create([
+            $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
+            if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
+
+            $file = null;
+            if ($request->hasFile('porto')) {
+                $file = Storage::put('portofolio', $request->porto);
+            }
+
+            $pendaftaran = PendaftaranMagang::create([
                 'id_lowongan' => $id,
-                'nim' => $nim,
-                'tanggaldaftar' => Carbon::parse(now()),
-                'current_step' => 'screening',
-                'portofolio' =>  $request->porto?->store('post'),
+                'nim' => $mahasiswa->nim,
+                'tanggaldaftar' => now(),
+                'current_step' => PendaftaranMagangStatusEnum::PENDING,
+                'portofolio' => $file
             ]);
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Lamaran berhasil dikirim!',
-                'url' => `{{url('apply-lowongan/lamar')}} /${id}`,
-            ]);
+            return Response::success(null, 'Lamaran berhasil dikirim!');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
-    }
-
-    // Persentase profile
-    public function persentase($id)
-    {
-        $mahasiswa = Mahasiswa::find($id);
-        $informasiprib = InformasiPribadi::where('nim', $id)->first();
-        $pendidikan = Education::where('nim', $id)->first();
-        if ($mahasiswa && $pendidikan && $informasiprib) {
-            $filledColumns = 0;
-
-            $mahasiswaColumns = [
-                'nim', 
-                'angkatan', 
-                'id_prodi', 
-                'id_univ', 
-                'id_fakultas', 
-                'namamhs', 
-                'alamatmhs', 
-                'emailmhs', 
-                'nohpmhs', 
-                'status',
-                'eprt',
-                'ipk',
-                'tak',
-                'lok_magang',
-                'skills',
-                'tunggakan_bpp'
-            ];
-
-            $infropribcolumns = [
-                'tgl_lahir',
-                'headliner',
-                'deskripsi_diri',
-                'profile_picture',
-                'gender',
-            ];
-            
-            $pendidikanColumns = [
-                'name_intitutions',
-                'tingkat',
-                'nilai',
-                'startdate',
-                'enddate',
-            ];
-
-            $totalColumns = count($mahasiswaColumns) + count($pendidikanColumns) + count($infropribcolumns);
-
-            foreach ($mahasiswaColumns as $column) {
-                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($infropribcolumns as $column) {
-                if (!is_null($informasiprib->$column) && $informasiprib->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($pendidikanColumns as $column) {
-                if (!is_null($pendidikan->$column) && $pendidikan->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-            $persentase = ($filledColumns / $totalColumns) * 100;
-            
-        } else {
-            $persentase = 0;
-        }
-
-        return $persentase;
     }
 
     private static function filterData($data, $request) {

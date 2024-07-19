@@ -42,7 +42,7 @@
                             <th>KONTAK</th>
                             <th>ALAMAT</th>
                             <th class="text-center">STATUS</th>
-                            <th style="min-width:100px;">AKSI</th>
+                            <th style="text-center;">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -73,9 +73,13 @@
         });
     }
 
+    function afterUpdateStatus(response) {
+        $('#table-master-mahasiswa').DataTable().ajax.reload();
+    }
+
     function afterAction(response) {
         $('#modal-mahasiswa').modal('hide');
-        $('#table-master-mahasiswa').DataTable().ajax.reload();
+        afterUpdateStatus(response);
     }
 
     $("#modal-mahasiswa").on("hide.bs.modal", function() {

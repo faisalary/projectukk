@@ -4,11 +4,13 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between card-header mb-3" style="background-color: #FFFFFF; padding:0px;">
                     <div class="d-flex justify-content-start">
+                        <div class="text-center" style="overflow: hidden; width: 100px; height: 100px;">
                         @if ($l['image'])
-                            <img src="{{ asset('storage/' . $l['image']) }}" alt="user-avatar" id="imgPreview">
+                            <img src="{{ url('storage/' . $l['image']) }}" alt="profile-image" class="d-block" width="100" alt="img">
                         @else
-                            <img src="../../app-assets/img/avatars/14.png" alt="user-avatar" class="" height="65" width="65" id="imgPreview" data-default-src="../../app-assets/img/avatars/14.png">
+                            <img src="{{ url('app-assets/img/avatars/14.png')}}" alt="user-avatar" class="d-block" width="100">
                         @endif
+                        </div>
                         <div class="ms-2 my-auto">
                             <h5 class="mb-1 text-truncate">{{$l['intern_position'] ?? ''}}</h5>
                             <p class="mb-0">{{$l['namaindustri'] ?? ''}}</p>

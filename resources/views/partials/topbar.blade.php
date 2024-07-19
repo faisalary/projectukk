@@ -44,7 +44,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ url('kegiatan-saya/lamaran-saya') }}" class="menu-link">
+                                <a href="{{ route('lamaran_saya') }}" class="menu-link">
                                     <div data-i18n="Status Lamaran Magang">Status Lamaran Magang</div>
                                 </a>
                             </li>

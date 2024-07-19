@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
 use App\Mail\VerifyEmail;
+use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,11 +21,12 @@ class KelolaPenggunaController extends Controller
 
     public function index()
     {
-        return view('admin.kelola-pengguna.index');
+        $roles = Role::whereIn('name', ['LKM', 'Dosen', 'Kaprodi'])->get();
+        return view('admin.kelola-pengguna.index', compact('roles'));
     }
 
     public function getData(Request $request) {
-        $roles = ['LKM', 'Pembimbing Akademik', 'Dosen Wali', 'Kaprodi'];
+        $roles = ['LKM', 'Kaprodi', 'Dosen'];
         $user = User::with('roles')->whereHas('roles', function ($query) use ($roles) {
             $query->whereIn('name', $roles);
         })->get();
@@ -86,29 +88,50 @@ class KelolaPenggunaController extends Controller
     public function edit($id) {
         $user = User::where('id', $id)->first();
         if (!$user) return Response::error(null, 'User not found!');
+        $user->role = $user->roles->first()->name;
         return Response::success($user, 'Success');
     }
 
     public function update(Request $request, $id) {
-        $request->validate([
+
+        $validate = [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id . ',id'
-        ], [
+            'email' => 'required|email|unique:users,email,' . $id . ',id',
+            'role' => 'required|in:Dosen,Kaprodi'
+        ];
+
+        $user = User::where('id', $id)->first();
+        if (!$user) return Response::error(null, 'User not found!');
+        if ($user->hasRole('LKM')) unset($validate['role']);
+
+        $request->validate($validate, [
             'name.required' => 'Nama harus diisi.',
             'email.required' => 'Email harus diisi.',
             'email.email' => 'Email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar.'
+            'email.unique' => 'Email sudah terdaftar.',
+            'role.required' => 'Role harus diisi.',
+            'role.in' => 'Role tidak valid.'
         ]);
 
         try {
-            $user = User::where('id', $id)->first();
-            if (!$user) return Response::error(null, 'User not found!');
+            DB::beginTransaction();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
 
+            if ($user->hasAnyRole(['Dosen', 'Kaprodi'])) {
+                $user->dosen()->update([
+                    'namadosen' => $request->name,
+                    'emaildosen' => $request->email
+                ]);
+            }
+
+            $user->syncRoles([$request->role]);
+
+            DB::commit();
             return Response::success(null, 'User successfully updated!');
         } catch (\Exception $e) {
+            DB::rollBack();
             return Response::errorCatch($e);
         }
     }

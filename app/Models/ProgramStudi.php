@@ -22,4 +22,9 @@ class ProgramStudi extends Model
        return $this->belongsTo(Fakultas::class,"id_fakultas");
     }
 
+    public function dosen()
+    {
+        return $this->hasMany(Dosen::class, 'id_prodi');
+    }
+
 }

@@ -1,31 +1,9 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
-<style>
-    .tooltip-inner {
-        min-width: 100%;
-        max-width: 100%;
-    }
-
-    .position-relative {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
-    h6,
-    .h6 {
-        font-size: 0.9375rem;
-        margin-bottom: 0px;
-    }
-
-    #more {
-        display: none;
-    }
-</style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-9 col-12">
         <button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 15%; height:12%;">
@@ -37,8 +15,7 @@
         <div class="card-body mt-3 flex-grow-0 pt-0 h-100">
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    <button class="btn btn-success waves-effect waves-light" data-bs-target="" style="min-width: 200px;"><i class="tf-icons ti ti-download me-2"></i><span class="mt-1">Unduh CV</span>
-                    </button>
+                    <button class="btn btn-success waves-effect waves-light" data-bs-target="" style="min-width: 200px;"><i class="tf-icons ti ti-download me-2"></i><span class="mt-1">Unduh CV</span></button>
                 </div>
             </div>
             <div class="mb-3">

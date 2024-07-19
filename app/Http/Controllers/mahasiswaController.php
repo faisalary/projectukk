@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Fakultas;
 use App\Helpers\Response;
 use App\Models\Mahasiswa;
@@ -38,6 +39,14 @@ class mahasiswaController extends Controller
                 case 'id_prodi':
                     $data = ProgramStudi::select('namaprodi as text', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
                     break;
+                case 'kode_dosen':
+                    $data = Dosen::where('id_prodi', $request->selected)->get()->transform(function ($item) {
+                        $result = new \stdClass();
+                        $result->text = $item->kode_dosen . ' | ' . $item->namadosen;
+                        $result->id = $item->kode_dosen;
+                        return $result;
+                    });
+                    break;
                 default:
                     # code...
                     break;
@@ -64,21 +73,7 @@ class mahasiswaController extends Controller
     {
         try {
             DB::beginTransaction();
-            $mahasiswa = Mahasiswa::create($request->validated());
-
-            $code = Str::random(60);
-
-            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->first();
-            if ($passwordResetToken) {
-                DB::table('password_reset_tokens')->where('email', $mahasiswa->emailmhs)->delete();
-            }
-
-            DB::table('password_reset_tokens')->insert([
-                'email' => $mahasiswa->emailmhs,
-                'token' => $code,
-                'created_at' => now(),
-            ]);
-
+            Mahasiswa::create($request->validated());
             DB::commit();
             return Response::success(null, 'Data Created!');
         } catch (Exception $e) {
@@ -93,7 +88,10 @@ class mahasiswaController extends Controller
      */
     public function show(Request $request)
     {
-        $mahasiswa = Mahasiswa::leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        $mahasiswa = Mahasiswa::select(
+            'mahasiswa.*', 'universitas.namauniv', 'fakultas.namafakultas', 'program_studi.namaprodi'
+        )
+        ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas');
         if ($request->fakultas != null) {
@@ -129,18 +127,18 @@ class mahasiswaController extends Controller
             })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-primary'>Active</div></div>";
                 } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
+                $color = ($row->status) ? "danger" : "primary";
 
                 $url = route('mahasiswa.status', $row->nim);
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
+                $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
+                <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })
@@ -167,11 +165,19 @@ class mahasiswaController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            DB::beginTransaction();
             $mahasiswa = Mahasiswa::where('nim', $id)->first();
+            if (!$mahasiswa) return Response::error(null, 'Mahasiswa not found!');
             $mahasiswa->update($request->all());
+            $mahasiswa->user()->update([
+                'name' => $request->namamhs,
+                'email' => $request->emailmhs
+            ]);
             
-            return Response::success(null, 'Komponen Nilai successfully Add!');
+            DB::commit();
+            return Response::success(null, 'Mahasiswa successfully Add!');
         } catch (Exception $e) {
+            DB::rollBack();
             return Response::errorCatch($e);
         }
     }

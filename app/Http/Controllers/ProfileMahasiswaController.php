@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\Skill;
+use App\Models\Sertif;
 use App\Helpers\Response;
 use App\Models\Education;
 use App\Models\Mahasiswa;
@@ -12,17 +12,13 @@ use Illuminate\Http\Request;
 use App\Models\SosmedTambahan;
 use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
-use App\Models\InformasiPribadi;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DokumenRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\InformasiKeahlianReq;
 use App\Http\Requests\InformasiTambahanReq;
 use App\Http\Requests\InformasiPendidikanReq;
 use App\Http\Requests\InformasiPengalamanReq;
-use App\Models\Sertif;
 
 class ProfileMahasiswaController extends Controller
 {
@@ -53,6 +49,7 @@ class ProfileMahasiswaController extends Controller
         switch ($request->section) {
             case 'modalEditInformasi':
                 $data = self::getDataProfileDetail($user);
+                $data->profile_picture = ($data->profile_picture != null) ? asset('storage/' . $data->profile_picture) : asset('app-assets/img/avatars/user.png');
                 break;
             case 'modalEditInformasiTambahan':
                 $data = self::getDataInfoTambahan($user->mahasiswa);
@@ -88,7 +85,7 @@ class ProfileMahasiswaController extends Controller
             'tgl_lahir' => 'required|before:today',
             'gender' => 'required|in:Laki-Laki,Perempuan',
             'headliner' => 'required',
-            'profile_picture' => 'nullable',
+            'image' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
             'deskripsi_diri' => 'required',
         ], [
             'tgl_lahir.required' => 'Tanggal lahir wajib di isi.',
@@ -96,6 +93,8 @@ class ProfileMahasiswaController extends Controller
             'gender.required' =>  'Pilih jenis kelamin terlebih dahulu.',
             'gender.in' => 'Jenis kelamin tidak valid',
             'headliner.required' => 'Headliner wajib diisi.',
+            'image.mimes' => 'File harus berupa JPG, PNG atau JPEG.',
+            'image.max' => 'File tidak boleh lebih dari 2 MB.',
             'deskripsi_diri.required' => 'Deskripsi wajib diisi.'
         ]);
 
@@ -105,10 +104,28 @@ class ProfileMahasiswaController extends Controller
             $mahasiswa = Mahasiswa::where('id_user', $user->id)->first();
             if (!$mahasiswa) return Response::error(null, 'Mahasiswa not found', 404);
             
+            $profile_picture = $mahasiswa->profile_picture ?? null;
+            if ($request->hasFile('image')) {
+                if ($profile_picture != null &&  Storage::has($profile_picture)) {
+                    Storage::delete($profile_picture);
+                }
+                $profile_picture = Storage::put('profile_picture_mahasiswa', $request->file('image'));
+            }
+
             $mahasiswa->tgl_lahir = $request->tgl_lahir;
             $mahasiswa->headliner = $request->headliner;
             $mahasiswa->deskripsi_diri = $request->deskripsi_diri;
             $mahasiswa->gender = $request->gender;
+
+            $mahasiswa->profile_picture = $profile_picture;
+            
+            if ($request->remove_image == 1) {
+                if (isset($mahasiswa->profile_picture)) {
+                    Storage::delete($mahasiswa->profile_picture);
+                }
+                $mahasiswa->profile_picture = null;
+            }
+
             $mahasiswa->save();
 
             $mahasiswa = $mahasiswa->load('univ', 'fakultas', 'prodi');
@@ -355,81 +372,5 @@ class ProfileMahasiswaController extends Controller
         $sertifikat->startdate = Carbon::parse($sertifikat->startdate)->format('F Y');
         $sertifikat->enddate = Carbon::parse($sertifikat->enddate)->format('F Y');
         return $sertifikat;
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function persentase($id)
-    {
-        $mahasiswa = Mahasiswa::find($id);
-        $informasiprib = InformasiPribadi::where('nim', $id)->first();
-        $pendidikan = Education::where('nim', $id)->first();
-
-        // Pastikan bahwa setiap objek tidak null dan mengandung beberapa data
-        if ($mahasiswa && $pendidikan && $informasiprib) {
-            $filledColumns = 0;
-
-            $mahasiswaColumns = [
-                'nim', 
-                'angkatan', 
-                'id_prodi', 
-                'id_univ', 
-                'id_fakultas', 
-                'namamhs', 
-                'alamatmhs', 
-                'emailmhs', 
-                'nohpmhs', 
-                'status',
-                'eprt',
-                'ipk',
-                'tak',
-                'lok_magang',
-                'skills',
-                'tunggakan_bpp'
-            ];
-
-            $infropribcolumns = [
-                'tgl_lahir',
-                'headliner',
-                'deskripsi_diri',
-                'profile_picture',
-                'gender',
-            ];
-            
-            $pendidikanColumns = [
-                'name_intitutions',
-                'tingkat',
-                'nilai',
-                'startdate',
-                'enddate',
-            ];
-
-            $totalColumns = count($mahasiswaColumns) + count($pendidikanColumns) + count($infropribcolumns);
-
-            foreach ($mahasiswaColumns as $column) {
-                if (!is_null($mahasiswa->$column) && $mahasiswa->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($infropribcolumns as $column) {
-                if (!is_null($informasiprib->$column) && $informasiprib->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-
-            foreach ($pendidikanColumns as $column) {
-                if (!is_null($pendidikan->$column) && $pendidikan->$column !== '') {
-                    $filledColumns++;
-                }
-            }
-            
-            $persentase = ($filledColumns / $totalColumns) * 100;
-        } else {
-            $persentase = 78;
-        }
-
-        return $persentase;
     }
 }

@@ -129,7 +129,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Data Mahasiswa Magang',
-                'route' => 'data_magang',
+                'route' => 'data_mahasiswa',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_magang.view'
             ],
@@ -296,10 +296,36 @@ class MenuHelper
                 'permission' => 'anggota_tim.view'
             ],
             [
+                'name' => 'Jadwal Seleksi',
+                'route' => 'jadwal_seleksi',
+                'icon' => 'ti-clock',
+                'permission' => 'jadwal_seleksi_mitra.view'
+            ],
+            [
                 'name' => 'Profile Perusahaan',
                 'route' => 'profile_company',
                 'icon' => 'ti-building',
                 'permission' => 'profile_perusahaan.view'
+            ],
+            //dosen
+            [
+                'name' => 'Approval Mahasiswa',
+                'route' => 'approval_mahasiswa',
+                'icon' => 'ti-briefcase',
+                'permission' => 'approval_mhs_doswal.view'
+            ],
+            //kaprodi
+            [
+                'name' => 'Approval Mahasiswa Kaprodi',
+                'route' => 'approval_mahasiswa_kaprodi',
+                'icon' => 'ti-briefcase',
+                'permission' => 'approval_mhs_kaprodi.view'
+            ],
+            [
+                'name' => 'Data Mahasiswa Magang',
+                'route' => 'mahasiswa_magang_kaprodi',
+                'icon' => 'ti-file-analytics',
+                'permission' => 'data_mahasiswa_magang_kaprodi.view'
             ],
         ];
     }
