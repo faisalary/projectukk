@@ -26,14 +26,16 @@
                         <div class="progress-bar" id="progress_bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
+                <!-- untuk unduh profile, diarahkan ke halaman unduh-profile/{nim} -->
                 <div class="col-2 text-end ps-0">
-                    <button class="btn btn-secondary buttons-collection btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
-                        <span>
-                          <i class="ti ti-download me-sm-1"></i> 
-                          <span class="d-none d-sm-inline-block">Unduh Profile</span>
-                        </span>
-                    </button>
+                  <button id="unduhProfileBtn" class="btn btn-secondary buttons-collection btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-download me-sm-1"></i> 
+                      <span class="d-none d-sm-inline-block">Unduh Profile</span>
+                    </span>
+                  </button>
                 </div>
+
             </div>
         </div>
         <div class="row">
@@ -140,6 +142,11 @@
     $(this).find('form').find('input[name="data_id"]').remove();
     $(this).find('form').find('a[id="sertif_open"]').unwrap();
     $(this).find('form').find('a[id="sertif_open"]').remove();
+  });
+
+  document.getElementById('unduhProfileBtn').addEventListener('click', function() {
+    var nim = '{{ $mahasiswa->nim }}';
+    window.open('/unduh-profile/' + nim, '_blank');
   });
 </script>
 
