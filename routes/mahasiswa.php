@@ -7,6 +7,7 @@ use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagangController;
+use App\Http\Controllers\StatusLamaranMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
@@ -15,7 +16,7 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('mahasiswa-magang')->name('data_magang')->controller(DataMahasiswaMagangController::class)->group(function () {
+Route::prefix('mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/show', 'show')->name('.show');
     Route::post('/store', 'store')->name('.store');
@@ -95,31 +96,38 @@ Route::middleware('role:Mahasiswa')->group(function () {
         return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
     });
 
-    Route::prefix('/kegiatan-saya')->group(function () {
-        Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
-        Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
-        Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
-        Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
-        Route::get('/porto/{file}', [App\Http\Controllers\KonfirmasiMagangController::class, 'porto'])->name('lamaran_saya.porto');
-        Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
-        Route::post('/mulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'mulai'])->name('mulai.update');
-        Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
-        Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
-        Route::get('/editMulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'editMulai'])->name('mulai.edit');
-        Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
-        Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
-        Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-    });
+    // Route::prefix('/kegiatan-saya')->group(function () {
+    //     // Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
+    //     Route::post('/show', [App\Http\Controllers\KonfirmasiMagangController::class, 'show'])->name('lamaran_saya.show');
+    //     Route::post('/store', [App\Http\Controllers\KonfirmasiMagangController::class, 'store'])->name('lamaran_saya.store');
+    //     Route::get('/detail/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'detail'])->name('lamaran_saya.detail');
+    //     Route::get('/porto/{file}', [App\Http\Controllers\KonfirmasiMagangController::class, 'porto'])->name('lamaran_saya.porto');
+    //     Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'update'])->name('lamaran_saya.update');
+    //     Route::post('/mulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'mulai'])->name('mulai.update');
+    //     Route::post('/updateDitolak/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'updateDitolak'])->name('lamaran_saya.updateDitolak');
+    //     Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'edit'])->name('lamaran_saya.edit');
+    //     Route::get('/editMulai/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'editMulai'])->name('mulai.edit');
+    //     Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
+    //     Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
+    //     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
+    // });
 
-    Route::get('/nilai/magang', function () {
-        return view('kegiatan_saya.nilai_magang.nilai');
-    });
+    // Route::get('/nilai/magang', function () {
+    //     return view('kegiatan_saya.nilai_magang.nilai');
+    // });
 
-    Route::get('/berkas/akhir', function () {
-        return view('kegiatan_saya.berkas_akhir.index');
-    });
+    // Route::get('/berkas/akhir', function () {
+    //     return view('kegiatan_saya.berkas_akhir.index');
+    // });
 
-    Route::get('/lowongan-pekerjaan-tersimpan', function () {
-        return view('program_magang.lowongan_pekerjaan_tersimpan');
+    // Route::get('/lowongan-pekerjaan-tersimpan', function () {
+    //     return view('program_magang.lowongan_pekerjaan_tersimpan');
+    // });
+});
+
+Route::prefix('kegiatan-saya')->group(function () {
+    Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('detail/{id}', 'detail')->name('.detail');
     });
 });

@@ -1,7 +1,7 @@
 <div class="alert alert-dark alert-dismissible" role="alert">
     Anda hanya bisa menerima satu tawaran lowongan magang!
 </div>
-@if ($pendaftar->where('konfirmasi_status', 1)->count() == 0)
+@if (!isset($pendaftar) || $pendaftar->where('konfirmasi_status', 1)->count() == 0)
 <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
 auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 25%;">
 <div class="sec-title mt-5 mb-4 text-center">

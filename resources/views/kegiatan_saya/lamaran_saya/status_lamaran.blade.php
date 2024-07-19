@@ -1,4 +1,4 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -212,10 +212,10 @@
 </style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="col-md-9 col-12">
-        <button class="btn btn-outline-success mt-4 mb-3 waves-effect" type="button" id="back">
+        <button class="btn btn-outline-success mt-4 mb-3 waves-effect" type="button">
             <i class="ti ti-arrow-left me-2 text-success"> Kembali </i>
         </button>
         <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya / Status Lamaran Magang / </span>Detail Status lamaran Magang </h4>
@@ -306,14 +306,10 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @section('page_script')
 <script>
-    document.getElementById("back").addEventListener("click", () => {
-        history.back();
-    });
+    
 </script>
 @endsection

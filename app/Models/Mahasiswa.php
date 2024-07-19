@@ -83,4 +83,9 @@ class Mahasiswa extends Model
     {
         return $this->hasOne(Dosen::class, 'kode_dosen', 'kode_dosen');
     }
+
+    public function lamaran_magang()
+    {
+        return $this->hasMany(PendaftaranMagang::class, 'nim', 'nim');
+    }
 }

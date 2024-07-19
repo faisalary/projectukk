@@ -2,10 +2,10 @@
 
 namespace App\Enums;
 
-use ReflectionClass;
-
 abstract class PendaftaranMagangStatusEnum
 {
+    use EnumTrait;
+
     const PENDING = 'pending';
     const APPROVED_BY_DOSWAL = 'approved_by_doswal';
     const REJECTED_BY_DOSWAL = 'rejected_by_doswal';
@@ -20,9 +20,4 @@ abstract class PendaftaranMagangStatusEnum
     const REJECTED_BY_COMPANY = 'rejected_by_company';
     const APPROVED_BY_MAHASISWA = 'approved_by_mahasiswa';
     const REJECTED_BY_MAHASISWA = 'rejected_by_mahasiswa';
-
-    public static function getConstants() {
-        $reflectionClass = new ReflectionClass(static::class);
-        return $reflectionClass->getConstants();
-    }
 }

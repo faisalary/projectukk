@@ -21,6 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     public const ADMIN = '/dashboard/admin';
     public const MITRA = '/dashboard/company';
     public const DOSEN = '/approval-mahasiswa';
+    public const KAPRODI = '/approval-mahasiswa-kaprodi';
     public const LANDINGPAGE = '/';
 
     /**

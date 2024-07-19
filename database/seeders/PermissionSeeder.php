@@ -53,6 +53,7 @@ class PermissionSeeder extends Seeder
             'informasi_lowongan_mitra.view', //
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
+            'jadwal_seleksi_mitra.view',
             'profile_perusahaan.view',
         ];
 
@@ -62,7 +63,10 @@ class PermissionSeeder extends Seeder
             // approval mahasiswa
             'approval_mhs_doswal.view',
         ];
-        $permission['Kaprodi'] = [];
+        $permission['Kaprodi'] = [
+            'approval_mhs_kaprodi.view',
+            'data_mahasiswa_magang_kaprodi.view'
+        ];
 
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {
