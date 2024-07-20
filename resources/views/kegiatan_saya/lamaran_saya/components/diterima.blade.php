@@ -1,14 +1,14 @@
 <div class="alert alert-dark alert-dismissible" role="alert">
     Anda hanya bisa menerima satu tawaran lowongan magang!
 </div>
-@if (!isset($pendaftar) || $pendaftar->where('konfirmasi_status', 1)->count() == 0)
+@if ($approved->count() == 0)
 <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
 auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 25%;">
 <div class="sec-title mt-5 mb-4 text-center">
     <h4>Anda belum memiliki Lowongan Magang yang Diterima</h4>
 </div>
 @else
-@foreach ($pendaftar->where('konfirmasi_status', 1) as $item)
+@foreach ($approved as $item)
 <div class="card mt-2">
     <div class="card-body">
         <div class="alert alert-warning alert-dismissible" role="alert">

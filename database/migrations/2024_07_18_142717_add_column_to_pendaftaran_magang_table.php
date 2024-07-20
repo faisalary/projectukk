@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Enums\PendaftaranMagangStatusSeleksiEnum;
 
 return new class extends Migration
 {
@@ -13,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pendaftaran_magang', function (Blueprint $table) {
-            $table->enum('status_seleksi', PendaftaranMagangStatusSeleksiEnum::getConstants())->default(PendaftaranMagangStatusSeleksiEnum::NOT_YET);
+            $table->enum('status_seleksi', ['not_yet', 'done'])->default('not_yet');
         });
     }
 
