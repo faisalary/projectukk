@@ -294,6 +294,14 @@ $('.modal').on('hide.bs.modal', function () {
     form.find('.select2_custom').val(null).trigger('change');
     form.find('.is-invalid').removeClass('is-invalid');
     form.find('.invalid-feedback').html(null).removeClass('d-block');
+
+    // reset flatpickr
+    form.find('.flatpickr-date').val(null).trigger('change');
+    form.find('.flatpickr-date').flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
 });
 
 $(document).on('click', '.update-status', function () {

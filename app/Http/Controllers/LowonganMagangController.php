@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use Exception;
-use App\Models\Lokasi;
-use App\Models\Fakultas;
-use App\Models\Industri;
 use App\Helpers\Response;
 use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
-use App\Models\LowonganProdi;
-use Illuminate\Routing\Route;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use App\Enums\LowonganMagangStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
+use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
-use stdClass;
 
 class LowonganMagangController extends Controller
 {
 
     public function __construct(){
-
-        // $this->middleware(['role:admin']);
+        $this->my_lowongan_magang = null;
     }
 
     public function indexInformasi(Request $request) {
@@ -35,8 +30,51 @@ class LowonganMagangController extends Controller
     }
 
     public function showInformasi(Request $request) {
-        $industri = auth()->user()->industri->load('lowongan_magang');
-        $lowongan_magang = $industri->lowongan_magang;
+        $this->getLowonganMagang(function ($query) {
+            return $query->where('statusaprove', LowonganMagangStatusEnum::APPROVED);
+        });
+
+        $lowonganMagang = $this->my_lowongan_magang;
+
+        $validSteps = [
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
+        ];
+
+        $lowongan_magang = $lowonganMagang->map(function ($item) use ($validSteps) {
+            $total_pelamar = $item->total_pelamar;
+
+            $item->total_pelamar = $total_pelamar->count();
+            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI)->count();
+            $item->proses_seleksi = $total_pelamar->whereIn('current_step', 
+                array_diff(PendaftaranMagangStatusEnum::getConstants(), [
+                    'rejected_by_doswal', 'rejected_by_kaprodi', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2',
+                    'rejected_seleksi_tahap_3', 'rejected_penawaran'
+                ])
+            )->count();
+    
+            $item->penawaran = $total_pelamar->filter(function ($data) use ($validSteps) {
+                return isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step];
+            })->count();
+
+            $item->approved = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
+            $rejected = [
+                PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+                PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+                PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
+            ];
+    
+            $item->rejected = $total_pelamar->filter(function ($data) use ($rejected) {
+                return in_array($data->current_step, $rejected);
+            })->count();
+
+            return $item;
+        });
+
         return datatables()->of($lowongan_magang)
         ->addColumn('data', function ($data) {
             $view = view('company/lowongan_magang/components/card_informasi_lowongan', compact('data'))->render();
@@ -44,6 +82,24 @@ class LowonganMagangController extends Controller
         })
         ->rawColumns(['data'])
         ->make(true);
+    }
+
+    public function setDateConfirmClosing(Request $request, $id) {
+        try {
+            $this->getLowonganMagang(function ($query) use ($id) {
+                return $query->where('id_lowongan', $id);
+            });
+
+            if (!$this->my_lowongan_magang) return Response::error(null, 'Lowongan Magang Not Found');
+
+            $this->my_lowongan_magang->first()->update([
+                'date_confirm_closing' => Carbon::parse($request->date)->format('Y-m-d')
+            ]);
+
+            return Response::success(null, 'Berhasil memperbarui Tanggal Batas Konfirmasi!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
     /** 
@@ -116,7 +172,7 @@ class LowonganMagangController extends Controller
                 'durasimagang' => json_encode($request->durasimagang),
                 'tahapan_seleksi' => $request->tahapan_seleksi,
                 'id_industri' => $id_industri,
-                'statusaprove' => 'tertunda'
+                'statusaprove' => LowonganMagangStatusEnum::PENDING,
             ]);
             
             foreach ($request->proses_seleksi as $key => $value) {
@@ -270,7 +326,6 @@ class LowonganMagangController extends Controller
             $lowongan->enddate = $request->enddate;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan_seleksi;
-            $lowongan->statusaprove = 'tertunda';
 
             $lowongan->save();
 
@@ -315,5 +370,16 @@ class LowonganMagangController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    private function getLowonganMagang($additional = null){
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+
+        $this->my_lowongan_magang = LowonganMagang::with('total_pelamar')->where('id_industri', $pegawaiIndustri->id_industri);
+        if ($additional) $this->my_lowongan_magang = $additional($this->my_lowongan_magang);
+        $this->my_lowongan_magang = $this->my_lowongan_magang->get();
+
+        return $this;
     }
 }
