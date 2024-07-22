@@ -91,7 +91,7 @@ class ApplyLowonganFakultasController extends Controller
         ]);
 
         try {
-            $mahasiswa = auth()->user()->mahasiswa;
+            $mahasiswa = auth()->user()->mahasiswa;  
 
             $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
             if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);

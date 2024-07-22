@@ -39,7 +39,7 @@
                         <tbody>
                             <tr>
                                 <td class="pb-2"><span class="fw-bolder">NIM</span> : {{ $data->nim }}</td>
-                                <td class="pb-2"><span class="fw-bolder">TAK</span> : {{ $data->tak }}</td>
+                                <td class="pb-2"><span class="fw-bolder">TAK</span> : {{ $data->tak }}</td>  
                             </tr>
                             <tr>
                                 <td class="pb-2"><span class="fw-bolder">Universitas</span> : {{ $data->namauniv }}</td>
