@@ -373,4 +373,31 @@ class ProfileMahasiswaController extends Controller
         $sertifikat->enddate = Carbon::parse($sertifikat->enddate)->format('F Y');
         return $sertifikat;
     }
+
+    // fungsi untuk menampilkan cv pada halaman unduh-profile/{nim}
+    public static function showCV($nim){
+        $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+
+        $dataProfile = self::getDataProfileDetail($mahasiswa);
+        $dataInfoTambahan = self::getDataInfoTambahan($mahasiswa);
+
+        $pendidikan = Education::where('nim', $nim)->orderBy('startdate', 'asc')->get();
+        $experience = Experience::where('nim', $nim)->orderBy('startdate', 'asc')->get();
+        $dokumenPendukung = Sertif::where('nim', $nim)->orderBy('startdate', 'asc')->get();
+
+        // // Check apakah seluruh data yang dibutuhkan pada halaman profil mahasiswa telah diisi
+        // $isDataComplete = !empty($dataProfile) && !empty($dataInfoTambahan) && $pendidikan->isNotEmpty() && $experience->isNotEmpty() && $dokumenPendukung->isNotEmpty();
+
+        $data = [
+            'dataProfile' => $dataProfile,
+            'dataInfoTambahan' => $dataInfoTambahan,
+            'pendidikan' => $pendidikan,
+            'experience' => $experience,
+            'dokumenPendukung' => $dokumenPendukung,
+            'nim' => $nim,
+            // 'isDataComplete' => $isDataComplete
+        ];
+
+        return view('mahasiswa.cv', $data);
+    }
 }

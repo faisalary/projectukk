@@ -29,7 +29,7 @@
                 </div>
                 <div class="border-bottom">
                     <h4 class="fw-semibold mt-5">Mengapa Saya harus diterima?</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum facere unde magni, saepe maxime molestiae iusto cum consectetur ut nihil harum error optio dolor! Tenetur ea autem quod praesentium accusamus!</p>
+                    <p>{{ $data->reason_aplicant }}</p>
                 </div>
                 <div class="border-bottom mt-3">
                     <h4 class="fw-semibold">Informasi Pribadi</h4>
@@ -39,7 +39,7 @@
                         <tbody>
                             <tr>
                                 <td class="pb-2"><span class="fw-bolder">NIM</span> : {{ $data->nim }}</td>
-                                <td class="pb-2"><span class="fw-bolder">TAK</span> : {{ $data->tak }}</td>
+                                <td class="pb-2"><span class="fw-bolder">TAK</span> : {{ $data->tak }}</td>  
                             </tr>
                             <tr>
                                 <td class="pb-2"><span class="fw-bolder">Universitas</span> : {{ $data->namauniv }}</td>
