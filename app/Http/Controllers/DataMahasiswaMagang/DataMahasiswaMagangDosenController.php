@@ -20,11 +20,26 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
     }
 
     public function getData(Request $request) {
+        $user = auth()->user();
+        $dosen = $user->dosen;
 
         if ($request->type == 'diterima') {
-            $this->getPendaftaranMagangDiterima();
+            $this->getPendaftaranMagang(function ($query) use ($dosen) {
+                return $query->where('mahasiswa.kode_dosen', $dosen->kode_dosen)
+                    ->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+            });
         } else if ($request->type == 'ditolak') {
-            $this->getPendaftaranMagangDitolak();
+            $this->getPendaftaranMagang(function ($query) use ($dosen) {
+                return $query->where('mahasiswa.kode_dosen', $dosen->kode_dosen)
+                ->whereIn('pendaftaran_magang.current_step', [
+                    PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+                    PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+            });
         }
 
         $validSteps = [
@@ -103,6 +118,8 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
     private function getViewDesign() {
         $title = 'Data Mahasiswa Magang';
 
+        $urlGetData = route('mahasiswa_magang_dosen.get_data');
+
         $diterima = [
             '<th class="text-nowrap">No</th>',
             '<th class="text-nowrap">Nama/Nim</th>',
@@ -143,6 +160,7 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
 
         return compact(
             'title',
+            'urlGetData',
             'diterima', 
             'ditolak', 
             'columnsDiterima', 
