@@ -85,9 +85,13 @@ class ApplyLowonganFakultasController extends Controller
     {
         $request->validate([
             'porto' => 'required|mimes:pdf|max:5000',
+            'reason' => 'required|string|max:1000'
         ], [
             'porto.mimes' => 'File harus berupa pdf',
-            'porto.max' => 'File melebihi 5 MB'
+            'porto.max' => 'File melebihi 5 MB',
+            'reason.required' => 'Alasan pengajuan harus diisi',
+            'reason.string' => 'Alasan pengajuan harus berupa string',
+            'reason.max' => 'Alasan pengajuan maksimal 1000 karakter'
         ]);
 
         try {
@@ -106,7 +110,8 @@ class ApplyLowonganFakultasController extends Controller
                 'nim' => $mahasiswa->nim,
                 'tanggaldaftar' => now(),
                 'current_step' => PendaftaranMagangStatusEnum::PENDING,
-                'portofolio' => $file
+                'portofolio' => $file,
+                'reason_aplicant' => $request->reason
             ]);
 
             return Response::success(null, 'Lamaran berhasil dikirim!');

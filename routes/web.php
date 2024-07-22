@@ -286,3 +286,8 @@ Route::post('submit-contact', [ContactController::class, 'store'])->name('submit
 Route::get('/test', function () {
     return view('auth.message-verify-email');
 });
+
+Route::middleware(['auth', 'permission:data_magang.view'])->group(function () {
+    Route::get('/data-magang', [DataMahasiswaMagangController::class, 'index'])->name('data_magang');
+    Route::get('/data-magang/show', [DataMahasiswaMagangController::class, 'show'])->name('data_magang.show');
+});
