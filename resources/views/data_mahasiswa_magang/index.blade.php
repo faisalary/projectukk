@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="d-flex justify-content-start">
-        <h4>Data Mahasiswa Magang</h4>
+        <h4>{{ $view['title'] }}</h4>
     </div>
     <div class="nav-align-top mt-3">
         <ul class="nav nav-pills" role="tablist">
@@ -23,6 +23,10 @@
             </li>
         </ul>
     </div>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <span class="text-muted">Filter Berdasarkan: </span>
+        {!! $view['buttonRight'] ?? null !!}
+    </div>
     <div class="tab-content px-0">
         @foreach (['diterima', 'ditolak'] as $key => $item)
         <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-{{ $item }}" role="tabpanel">
@@ -31,7 +35,7 @@
                     <table class="table" id="{{ $item }}">
                         <thead>
                             <tr>
-                                @foreach ($table[$item] as $item)
+                                @foreach ($view[$item] as $item)
                                 {!! $item !!}
                                 @endforeach
                             </tr>
@@ -54,10 +58,10 @@
     });
 
     $('.table').each(function () {
-        let columns = {!! $table['columnsDiterima'] !!};
+        let columns = {!! $view['columnsDiterima'] !!};
 
         if ($(this).attr('id') == 'ditolak') {
-            columns = {!! $table['columnsDitolak'] !!};
+            columns = {!! $view['columnsDitolak'] !!};
         }
 
         $(this).DataTable({

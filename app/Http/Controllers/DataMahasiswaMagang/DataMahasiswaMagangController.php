@@ -29,15 +29,7 @@ class DataMahasiswaMagangController extends Controller
 
     protected function getPendaftaranMagangDiterima() {
         $this->getPendaftaranMagang(function ($query) {
-            return $query->whereIn('pendaftaran_magang.current_step', [
-                PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
-                PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI,
-                PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1,
-                PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1,
-                PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2,
-                PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3,
-                PendaftaranMagangStatusEnum::APPROVED_PENAWARAN
-            ]);
+            return $query->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
         });
 
         return $this;

@@ -14,9 +14,9 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
     }
 
     public function index() {
-        $table = $this->getTableDesign();
+        $view = $this->getViewDesign();
 
-        return view('data_mahasiswa_magang.index', compact('table'));
+        return view('data_mahasiswa_magang.index', compact('view'));
     }
 
     public function getData(Request $request) {
@@ -100,7 +100,9 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
         ])->make(true);
     }
 
-    private function getTableDesign() {
+    private function getViewDesign() {
+        $title = 'Data Mahasiswa Magang';
+
         $diterima = [
             '<th class="text-nowrap">No</th>',
             '<th class="text-nowrap">Nama/Nim</th>',
@@ -139,6 +141,12 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
             {data: 'file_document_mitra'}
         ]";
 
-        return compact('diterima', 'ditolak', 'columnsDiterima', 'columnsDitolak');
+        return compact(
+            'title',
+            'diterima', 
+            'ditolak', 
+            'columnsDiterima', 
+            'columnsDitolak'
+        );
     }
 }
