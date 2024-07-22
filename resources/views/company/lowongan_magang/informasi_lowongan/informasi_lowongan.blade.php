@@ -33,7 +33,7 @@
                                         <i class="ti ti-users" style="font-size: 12pt;"></i>
                                     </span>
                                     <span class="mb-0 me-2">Total Pelamar :</span>
-                                    <h5 class="mb-0 me-2 text-primary">350</h5>
+                                    <h5 class="mb-0 me-2 text-primary" id="set_total_pelamar">0</h5>
                                     <span class="mb-0 me-2">Kandidat Melamar</span>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
                                     </span>
                                     <span class="mb-0 me-2">Total Lowongan :</span>
-                                    <h5 class="mb-0 me-2 text-primary">50</h5>
+                                    <h5 class="mb-0 me-2 text-primary" id="set_total_lowongan">0</h5>
                                     <span class="mb-0 me-2">Lowongan</span>
                                 </div>
                             </div>
@@ -65,6 +65,7 @@
         </div>
     </div>
 </div>
+@include('company/lowongan_magang/informasi_lowongan/modal')
 @endsection
 
 @section('page_script')
@@ -80,6 +81,17 @@
             processing: true,
             deferRender: true,
             destroy: true,
+            drawCallback: function ( settings, json ) {
+                let total = this.api().data().count();
+                let totalPelamar = 0;
+
+                $('.total_pelamar').each(function () {
+                    totalPelamar += parseInt($(this).text());
+                });
+
+                $('#set_total_lowongan').text(total);
+                $('#set_total_pelamar').text(totalPelamar);
+            },
             columns: [{data: "data"}],
             language: {
                 emptyTable: `<img src="{{ asset('assets/images/lowongan-empty.svg') }}" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  max-width: 80%;">`,
@@ -87,5 +99,21 @@
             ordering: false
         });
     }
+
+    function afterSetConfirmClosing(response) {
+        $('#modal-set-batas-confirm').modal('hide');
+    }
+
+    function setDateConfirm(e) {
+        let modal = $('#modal-set-batas-confirm');
+        let url = `{{ route('informasi_lowongan.set_confirm_closing', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
+
+        modal.find('form').attr('action', url);
+        modal.modal('show');
+    }
+
+    $('#modal-set-batas-confirm').on("hide.bs.modal", function() {
+        $(this).find('form').attr('action', '#'); 
+    });
 </script>
 @endsection

@@ -1,10 +1,10 @@
-@if($lamaran_magang->count() == 0)
+@if($proses_seleksi->count() == 0)
 <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
 <div class="sec-title mt-5 mb-4 text-center">
     <h4>Anda belum mengirim lamaran, silahkan pergi ke halaman Lowongan Magang!</h4>
 </div>
 @else
-@foreach($lamaran_magang as $item)
+@foreach($proses_seleksi as $item)
 <div class="cursor-pointer card mt-4" onclick="window.location.href='{{ route('lamaran_saya.detail', $item->id_pendaftaran) }}'">
     <div class="card-body">
         <div class="d-flex justify-content-between">

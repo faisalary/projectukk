@@ -26,6 +26,7 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/', 'indexInformasi');
         Route::get('/show', 'showInformasi')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
+        Route::post('set-date-confirm-closing/{id}', 'setDateConfirmClosing')->name('.set_confirm_closing');
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');

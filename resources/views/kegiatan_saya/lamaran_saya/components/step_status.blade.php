@@ -11,9 +11,7 @@
     @endforeach
 </div>
 <div class="d-flex justify-content-center">
-    <span class="fw-semibold mt-4 text-center" style="width: 245px;">Belum diproses</span>
-    <span class="fw-semibold mt-4 text-center" style="width: 245px;">Screening</span>
-    <span class="fw-semibold mt-4 text-center" style="width: 245px;">Seleksi</span>
-    <span class="fw-semibold mt-4 text-center" style="width: 245px;">Penawaran</span>
-    <span class="fw-semibold mt-4 text-center" style="width: 245px;">Diterima/Ditolak</span>
+    @foreach ($data as $key => $item)
+    <span class="fw-semibold mt-4 text-center" style="width: 249px;">{{ $item['desc'] }}</span>
+    @endforeach
 </div>

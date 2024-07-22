@@ -1,10 +1,10 @@
-@if (!isset($pendaftar) || $pendaftar->where('konfirmasi_status', 3)->count() == 0)
+@if ($penawaran->count() == 0)
 <img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
 <div class="sec-title mt-5 mb-4 text-center">
     <h4>Anda belum memiliki Lowongan Magang pada tahap Penawaran</h4>
 </div>
 @else
-@foreach ($pendaftar->where('konfirmasi_status', 3) as $item)
+@foreach ($penawaran as $item)
 <div class="card mt-2">
     <div class="card-body">
         <div class="alert alert-danger alert-dismissible" role="alert">

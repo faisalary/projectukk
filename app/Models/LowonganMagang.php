@@ -38,7 +38,8 @@ class LowonganMagang extends Model
         'status',
         'alasantolak',
         'statusaprove',
-        'lokasi'
+        'lokasi',
+        'id_year_akademik',
     ];
     protected $keyType = 'string';
     protected $casts = [

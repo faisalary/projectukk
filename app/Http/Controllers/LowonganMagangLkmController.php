@@ -6,6 +6,7 @@ use App\Helpers\Response;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
+use App\Models\TahunAkademik;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -98,10 +99,11 @@ class LowonganMagangLkmController extends Controller
             ->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
 
         $prodi = ProgramStudi::all();
+        $tahunAjaran = TahunAkademik::all();
         if (!$lowongan) return redirect()->route('lowongan.kelola');
 
         $urlBack = route('lowongan.kelola');
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi', 'urlBack'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi', 'tahunAjaran', 'urlBack'));
     }
 
     public function approved(Request $request, $id)
@@ -110,8 +112,11 @@ class LowonganMagangLkmController extends Controller
             $lowongan = LowonganMagang::find($id)->dataTambahan('jenjang_pendidikan');
             if (!$lowongan) return Response::error(null, 'Lowongan tidak ditemukan');
 
-            $validate = [];
-            $message = [];
+            $validate = ['tahun_ajaran' => 'required|exists:tahun_akademik,id_year_akademik'];
+            $message = [
+                'tahun_ajaran.required' => 'Pilih tahun ajaran terlebih dahulu',
+                'tahun_ajaran.exists' => 'Tahun ajaran tidak valid'
+            ];
             foreach ($lowongan->jenjang_pendidikan as $key => $value) {
                 $validate["prodi_" . $value] = 'required|array|min:1|exists:program_studi,id_prodi';
                 
@@ -133,9 +138,9 @@ class LowonganMagangLkmController extends Controller
                 }
             }
 
+            $lowongan->id_year_akademik = $request->tahun_ajaran;
             $lowongan->jenjang = json_encode($result);
             $lowongan->statusaprove = 'diterima';
-            $lowongan->date_confirm_closing = date('Y-m-d');
             $lowongan->save();
 
             DB::commit();

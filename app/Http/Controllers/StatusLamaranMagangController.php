@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Industri;
 use App\Helpers\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Enums\PendaftaranMagangStatusStepEnum;
 
 class StatusLamaranMagangController extends Controller
 {
@@ -20,21 +22,57 @@ class StatusLamaranMagangController extends Controller
             return self::getDataCard($request);
         }
 
-        $lamaran_magang = $this->getDataProsesSeleksi()->setUpBadgeProsesSeleksi()->lamaran_magang;
-        return view('kegiatan_saya/lamaran_saya/index', compact('lamaran_magang'));
+        $this->getDataLamaran()->setUpBadgeDataLamaran();
+
+        $proses_seleksi = $this->lamaran_magang->whereIn('current_step', 
+            array_diff(PendaftaranMagangStatusEnum::getConstants(), [
+                'rejected_by_doswal', 'rejected_by_kaprodi', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2',
+                'rejected_seleksi_tahap_3', 'rejected_penawaran'
+            ])
+        );
+
+        $validSteps = [
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
+        ];
+
+        $penawaran = $this->lamaran_magang->filter(function ($data) use ($validSteps) {
+
+            return isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step];
+        });
+        $approved = $this->lamaran_magang->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+
+        $rejected = [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
+        ];
+
+        $rejected = $this->lamaran_magang->filter(function ($data) use ($rejected) {
+
+            return in_array($data->current_step, $rejected);
+        });
+
+        return view('kegiatan_saya/lamaran_saya/index', compact('proses_seleksi', 'penawaran', 'approved', 'rejected'));
     }
 
     public function detail($id) {
         $mahasiswa = auth()->user()->mahasiswa;
 
-        $pelamar = $this->getDataProsesSeleksi(function ($query) use ($id) {
+        $pelamar = $this->getDataLamaran(function ($query) use ($id) {
             return $query->where('pendaftaran_magang.id_pendaftaran', $id);
-        })->setUpStepStatusLamaran()->setUpBadgeProsesSeleksi()->lamaran_magang->first();
+        })->setUpStepStatusLamaran()->setUpBadgeDataLamaran()->lamaran_magang->first();
+
+        $pelamar->lowongan_tersedia = ($pelamar->enddate > Carbon::now()) ? true : false;
 
         return view('kegiatan_saya.lamaran_saya.detail', compact('pelamar'));
     }
 
-    private function getDataProsesSeleksi($additionalBeforeGet = null) 
+    private function getDataLamaran($additionalBeforeGet = null) 
     {
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa;
@@ -51,26 +89,27 @@ class StatusLamaranMagangController extends Controller
     private function getDataCard(Request $request) {
         switch ($request->component) {
             case 'proses-seleksi':
-                $lamaran_magang = $this->getDataProsesSeleksi(function ($query) use ($request) {
+                $proses_seleksi = $this->getDataLamaran(function ($query) use ($request) {
                     if ($request->filter == 'Pending') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::PENDING)
-                        ->orWhere('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL)
-                        ->orWhere('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
+                        return $query->whereIn('current_step', [
+                            PendaftaranMagangStatusEnum::PENDING,
+                            PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL
+                        ]);
                     } else if ($request->filter == 'Screening') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::SCREENING);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
                     } else if ($request->filter == 'Tahap 1') {
                         return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 2') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_2);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 3') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_3);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2);
                     } else {
                         return $query;
                     }
-                })->setUpBadgeProsesSeleksi()->lamaran_magang;
+                })->setUpBadgeDataLamaran()->lamaran_magang;
 
                 return Response::success([
-                    'view' => view('kegiatan_saya.lamaran_saya.components.proses_seleksi', compact('lamaran_magang'))->render()
+                    'view' => view('kegiatan_saya.lamaran_saya.components.proses_seleksi', compact('proses_seleksi'))->render()
                 ], 'Successed');
                 break;
             
@@ -83,36 +122,35 @@ class StatusLamaranMagangController extends Controller
     private function setUpStepStatusLamaran()
     {
         $data = [
-            ['title' => '1', 'active' => false],
-            ['title' => '2', 'active' => false],
-            ['title' => '3', 'active' => false],
-            ['title' => '4', 'active' => false],
-            ['title' => '5', 'active' => false]
+            ['title' => '1', 'desc' => 'Pra-seleksi oleh internal', 'active' => false],
+            ['title' => '2', 'desc' => 'Screening', 'active' => false],
+            ['title' => '3', 'desc' => 'Seleksi', 'active' => false],
+            ['title' => '4', 'desc' => 'Penawaran', 'active' => false],
+            ['title' => '5', 'desc' => 'Diterima/Ditolak', 'active' => false]
         ];
 
         switch ($this->lamaran_magang[0]->current_step) {
             case PendaftaranMagangStatusEnum::PENDING:
             case PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL:
-            case PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI:
-            case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
-            case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
                 $data[0]['active'] = true;
                 break;
-            case PendaftaranMagangStatusEnum::SCREENING:
+            case PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI:
                 $data[1]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
-            case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_2:
-            case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_3:
-            case PendaftaranMagangStatusEnum::APPROVED_BY_COMPANY:
-            case PendaftaranMagangStatusEnum::REJECTED_BY_COMPANY:
+            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1:
+            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2:
                 $data[2]['active'] = true;
                 break;
-            case PendaftaranMagangStatusEnum::PENAWARAN:
+            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3:
                 $data[3]['active'] = true;
                 break;
-            case PendaftaranMagangStatusEnum::APPROVED_BY_MAHASISWA:
-            case PendaftaranMagangStatusEnum::REJECTED_BY_MAHASISWA:
+            case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
+            case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
+            case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1:
+            case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2:
+            case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3:
+            case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:
                 $data[4]['active'] = true;
                 break;
             default:
@@ -124,33 +162,11 @@ class StatusLamaranMagangController extends Controller
         return $this;
     }
 
-    private function setUpBadgeProsesSeleksi() {
+    private function setUpBadgeDataLamaran() {
+
         $this->lamaran_magang->transform(function ($item) {
-            switch ($item->current_step) {
-                case PendaftaranMagangStatusEnum::PENDING:
-                case PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL:
-                case PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI:
-                    $item->status_badge = '<span class="badge bg-label-warning text-end">Pending</span>';
-                    break;
-                case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
-                case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
-                    $item->status_badge = '<span class="badge bg-label-danger text-end">Rejected</span>';
-                    break;
-                case PendaftaranMagangStatusEnum::SCREENING:
-                    $item->status_badge = '<span class="badge bg-label-info text-end">Screening</span>';
-                    break;
-                case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
-                    $item->status_badge = '<span class="badge bg-label-primary text-end">Seleksi Tahap 1</span>';
-                    break;
-                case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_2:
-                    $item->status_badge = '<span class="badge bg-label-primary text-end">Seleksi Tahap 2</span>';
-                    break;
-                case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_3:
-                    $item->status_badge = '<span class="badge bg-label-primary text-end">Seleksi Tahap 3</span>';
-                    break;
-                default:
-                    break;
-            }
+            $getLabel = PendaftaranMagangStatusEnum::getWithLabel($item->current_step);
+            $item->status_badge = '<span class="badge bg-label-' . $getLabel['color'] . ' text-end">' . $getLabel['title'] . '</span>';
             return $item;
         });
 

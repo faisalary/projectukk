@@ -9,6 +9,16 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
+                        <div class="form-group col-12 mb-3">
+                            <label for="tahun_ajaran">Tahun Ajaran<span class="text-danger">*</span></label>
+                            <select class="form-select select2" name="tahun_ajaran" id="tahun_ajaran" data-placeholder="Pilih Tahun Ajaran">
+                                <option value="" disabled selected>Pilih Tahun Ajaran</option>
+                                @foreach ($tahunAjaran as $item)
+                                    <option value="{{ $item->id_year_akademik }}">{{ $item->tahun }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
                         @foreach ($lowongan->jenjang_pendidikan as $key => $item)
                         <div class="form-group col-12 mb-3">
                             <label for="prodi-{{ $item }}" class="form-label">Masukkan Program Studi relevan - {{ $item }}<span class="text-danger">*</span></label>

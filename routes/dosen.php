@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ApprovalMahasiswaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApprovalMahasiswaController;
 use App\Http\Controllers\ApprovalMahasiswaKaprodiController;
-use App\Http\Controllers\DataMahasiswaMagangKaprodiController;
+use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangDosenController;
+use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangKaprodiController;
 
 // Dosen Wali
 Route::prefix('approval-mahasiswa')->name('approval_mahasiswa')->controller(ApprovalMahasiswaController::class)->group(function () {
@@ -11,6 +12,10 @@ Route::prefix('approval-mahasiswa')->name('approval_mahasiswa')->controller(Appr
     Route::get('get-data', 'getData')->name('.get_data')->middleware('permission:approval_mhs_doswal.view');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::post('approval/{id}', 'approval')->name('.approval');
+});
+Route::prefix('data-mahasiswa-magang-dosen')->name('mahasiswa_magang_dosen')->controller(DataMahasiswaMagangDosenController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('get-data', 'getData')->name('.get_data');
 });
 
 // Kaprodi
