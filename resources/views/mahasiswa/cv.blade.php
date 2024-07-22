@@ -226,10 +226,10 @@
     <div class="container">
         <div class="section">
             <div class="header">
-                <img src="{{$dataInfoTambahan->profile_picture}}" alt="Profile Picture">
+                <img src="{{$dataInfoTambahan->profile_picture ?? '-'}}" alt="Profile Picture">
                 <div>
-                    <h2 class="name">{{$dataInfoTambahan->namamhs}}</h2>
-                    <p class="role">Frontend Developer</p>
+                    <h2 class="name">{{$dataInfoTambahan->namamhs ?? '-'}}</h2>
+                    <p class="role">{{$dataInfoTambahan->headliner ?? '-'}}</p>
                 </div>
             </div>
         </div>
@@ -237,15 +237,15 @@
         <div class="section">
             <div class="info">
                 <div style="margin-left: 0;">
-                    <p style="font-size: 11.5pt"><i class="ti ti-mail"></i>{{$dataInfoTambahan->emailmhs}}</p>
-                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-phone"></i>{{$dataInfoTambahan->nohpmhs}}</p>
+                    <p style="font-size: 11.5pt"><i class="ti ti-mail"></i>{{$dataInfoTambahan->emailmhs ?? '-'}}</p>
+                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-phone"></i>{{$dataInfoTambahan->nohpmhs ?? '-'}}</p>
                 </div>
                 <div style="margin: auto;">
-                    <p style="font-size: 11.5pt"><i class="ti ti-calendar"></i>{{$dataInfoTambahan->tgl_lahir}}</p>
-                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-map-pin"></i>{{$dataInfoTambahan->alamatmhs}}</p>
+                    <p style="font-size: 11.5pt"><i class="ti ti-calendar"></i>{{$dataInfoTambahan->tgl_lahir ?? '-'}}</p>
+                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-map-pin"></i>{{$dataInfoTambahan->alamatmhs ?? '-'}}</p>
                 </div>
                 <div style="margin-rught: 0;">
-                    <p style="margin-right: 1rem; font-size: 11.5pt"><i class="ti ti-user"></i>{{$dataInfoTambahan->gender}}</p>
+                    <p style="margin-right: 1rem; font-size: 11.5pt"><i class="ti ti-user"></i>{{$dataInfoTambahan->gender ?? '-'}}</p>
                 </div>
             </div>
         </div>
@@ -254,29 +254,29 @@
             <div class="row-1">
                 <div>
                     <p class="title">Deskripsi Diri</p>
-                    <p style="font-size: 11.5pt">{{$dataInfoTambahan->deskripsi_diri}} </p>
+                    <p style="font-size: 11.5pt">{{$dataInfoTambahan->deskripsi_diri ?? '-'}} </p>
                 </div>
                 <p class="title">Pengalaman</p>
                 @foreach($experience as $exp)
                 <div class="experience">
-                    <p style="font-size: 13.5pt" class="title-experience">{{$exp->posisi}}</p>
-                    <p class="title-company">{{$exp->name_intitutions}}</p>
-                    <p class="time">{{\Carbon\Carbon::parse($exp->startdate)->format('F Y')}} - {{\Carbon\Carbon::parse($exp->enddate)->format('F Y')}}</p>
+                    <p style="font-size: 13.5pt" class="title-experience">{{$exp->posisi ?? '-'}}</p>
+                    <p class="title-company">{{$exp->name_intitutions ?? '-'}}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($exp->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($exp->enddate)->format('F Y') ?? '-'}}</p>
                     <ul>
-                        <p style="font-size: 11.5pt">{{$exp->deskripsi}}</p>
+                        <p style="font-size: 11.5pt">{{$exp->deskripsi ?? '-'}}</p>
                     </ul>
                 </div>
                 @endforeach
                 <p class="title">Dokumen Pendukung</p>
                 @foreach($dokumenPendukung as $doc)
                 <div class="experience">
-                    <p style="font-size: 13.5pt" class="title-experience">{{ $doc->nama_dokumen }}</p>
-                    <p class="title-company">{{ $doc->penerbit }}</p>
-                    <p class="time">{{\Carbon\Carbon::parse($doc->startdate)->format('F Y')}} - {{\Carbon\Carbon::parse($doc->enddate)->format('F Y')}}</p>
-                    <p style="font-size: 11.5pt">{{ $doc->deskripsi }}</p>
+                    <p style="font-size: 13.5pt" class="title-experience">{{ $doc->nama_dokumen ?? '-' }}</p>
+                    <p class="title-company">{{ $doc->penerbit ?? '-' }}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($doc->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($doc->enddate)->format('F Y') ?? '-'}}</p>
+                    <p style="font-size: 11.5pt">{{ $doc->deskripsi ?? '-' }}</p>
                     <p class="file-highlight" style="font-size: 11pt">
-                        <a href="{{ $doc->link_sertif }}" target="_blank" rel="noopener noreferrer">
-                            {{ Illuminate\Support\Str::limit($doc->link_sertif, 30, '...') }}
+                        <a href="{{ $doc->link_sertif ?? '#' }}" target="_blank" rel="noopener noreferrer">
+                            {{ Illuminate\Support\Str::limit($doc->link_sertif ?? '-', 30, '...') }}
                         </a>
                     </p>
                 </div>
@@ -285,8 +285,8 @@
             <div class="row-2">
                 <p class="title">Keahlian</p>
                 <ul>
-                    @foreach(json_decode($dataInfoTambahan->skills) as $skill)
-                    <li style="font-size: 11.5pt">{{ $skill }}</li>
+                    @foreach(json_decode($dataInfoTambahan->skills ?? '[]') as $skill)
+                    <li style="font-size: 11.5pt">{{ $skill ?? '-' }}</li>
                     @endforeach
                 </ul>
                 <p class="title">Pendidikan</p>
@@ -294,30 +294,30 @@
                 <div class="colage">
                     <p style="font-size: 13.5pt" class="title-colage">{{$pen->name_intitutions ?? '-'}}</p>
                     <p style="font-size: 11.5pt" class="title-major">{{$pen->tingkat ?? '-'}}</p>
-                    <p style="font-size: 11.5pt" class="ipk">{{$pen->nilai ?? '-'}} </p>
-                    <p class="time">{{\Carbon\Carbon::parse($pen->startdate)->format('F Y')}} - {{\Carbon\Carbon::parse($pen->enddate)->format('F Y')}}</p>
+                    <p style="font-size: 11.5pt" class="ipk">{{$pen->nilai ?? '-'}}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($pen->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($pen->enddate)->format('F Y') ?? '-'}}</p>
                 </div>
                 @endforeach
                 <p class="title">Informasi Tambahan</p>
                 <div class="information">
                     <p class="title-info">Media Sosial</p>
                     <ul>
-                        @foreach(json_decode($dataInfoTambahan->sosmedmhs) as $sosmed)
-                        <li style="margin-top: 10px; font-size: 10.5pt">{{ $sosmed->namaSosmed }}: {{ $sosmed->urlSosmed }}</li>
+                        @foreach(json_decode($dataInfoTambahan->sosmedmhs ?? '[]') as $sosmed)
+                        <li style="margin-top: 10px; font-size: 10.5pt">{{ $sosmed->namaSosmed ?? '-' }}: {{ $sosmed->urlSosmed ?? '-' }}</li>
                         @endforeach
                     </ul>
                     <div class="information">
                         <p class="title-info">Bahasa</p>
                         <ul>
-                            @foreach(json_decode($dataInfoTambahan->bahasa) as $bahasa)
-                            <li style="margin-top: 10px; font-size: 10.5pt">Bahasa {{ $bahasa }}</li>
+                            @foreach(json_decode($dataInfoTambahan->bahasa ?? '[]') as $bahasa)
+                            <li style="margin-top: 10px; font-size: 10.5pt">Bahasa {{ $bahasa ?? '-' }}</li>
                             @endforeach
                         </ul>
                     </div>
 
                     <div class="information">
                         <p class="title-info">Lokasi kerja yang diharapkan :</p>
-                        <p style="margin-top: 10px; font-size: 10.5pt">{{$dataInfoTambahan->lokasi_yg_diharapkan}}</p>
+                        <p style="margin-top: 10px; font-size: 10.5pt">{{$dataInfoTambahan->lokasi_yg_diharapkan ?? '-'}}</p>
                     </div>
                 </div>
             </div>
