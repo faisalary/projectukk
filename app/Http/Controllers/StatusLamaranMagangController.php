@@ -98,11 +98,11 @@ class StatusLamaranMagangController extends Controller
                     } else if ($request->filter == 'Screening') {
                         return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
                     } else if ($request->filter == 'Tahap 1') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 2') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 3') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2);
                     } else {
                         return $query;
                     }

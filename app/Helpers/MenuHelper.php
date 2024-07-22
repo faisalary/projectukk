@@ -13,7 +13,9 @@ class MenuHelper
         if (!Cache::has('data_menu_'. $user->roles[0]->name)) {
             $data = self::getMenu();
             $getUserPermission = $user->roles[0]->permissions->pluck('name')->toArray();
-            $data = self::menuFilter($data, $getUserPermission);
+            $getUserRole = $user->roles[0]->name;
+            $data = self::menuFilter($data, $getUserPermission, $getUserRole);
+            // $data = self::specialCase($data);
             Cache::forever('data_menu_'. $user->roles[0]->name, $data);
         }
 
@@ -23,9 +25,17 @@ class MenuHelper
         return $result;
     }
 
-    private static function menuFilter($data, $getUserPermission) {
+    private static function specialCase($data) {
+        return $data;
+    }
+
+    private static function menuFilter($data, $getUserPermission, $getUserRole = null) {
         foreach ($data as $key => $value) {
-            if (isset($value['submenu'])) {
+            if (isset($value['type']) && $value['type'] == 'menu-header') {
+                if ($value['role'] != $getUserRole) {
+                    unset($data[$key]);
+                }
+            } else if (isset($value['submenu'])) {
                 $data[$key]['submenu'] = self::menuFilter($value['submenu'], $getUserPermission);
                 if (empty($data[$key]['submenu'])) {
                     unset($data[$key]);
@@ -93,6 +103,11 @@ class MenuHelper
     private static function getMenu()
     {
         return [
+            [
+                'type' => 'menu-header',
+                'name' => 'Dashboard LKM',
+                'role' => 'LKM'
+            ],
             [
                 'name' => 'Dashboard',
                 'route' => 'dashboard_admin',
@@ -268,6 +283,11 @@ class MenuHelper
             ],
             // mitra
             [
+                'type' => 'menu-header',
+                'name' => 'Mitra',
+                'role' => 'Mitra'
+            ],
+            [
                 'name' => 'Dashboard',
                 'route' => 'dashboard_company',
                 'icon' => 'ti-device-desktop-analytics',
@@ -309,12 +329,28 @@ class MenuHelper
             ],
             //dosen
             [
+                'type' => 'menu-header',
+                'name' => 'Dosen',
+                'role' => 'Dosen'
+            ],
+            [
                 'name' => 'Approval Mahasiswa',
                 'route' => 'approval_mahasiswa',
                 'icon' => 'ti-briefcase',
                 'permission' => 'approval_mhs_doswal.view'
             ],
+            [
+                'name' => 'Data Mahasiswa Magang',
+                'route' => 'mahasiswa_magang_dosen',
+                'icon' => 'ti-file-analytics',
+                'permission' => 'data_mahasiswa_magang_dosen.view'
+            ],
             //kaprodi
+            [
+                'type' => 'menu-header',
+                'name' => 'Kaprodi',
+                'role' => 'Kaprodi'
+            ],
             [
                 'name' => 'Approval Mahasiswa Kaprodi',
                 'route' => 'approval_mahasiswa_kaprodi',
