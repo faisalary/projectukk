@@ -26,28 +26,5 @@ class DataMahasiswaMagangController extends Controller
 
         return $this;
     }
-
-    protected function getPendaftaranMagangDiterima() {
-        $this->getPendaftaranMagang(function ($query) {
-            return $query->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
-        });
-
-        return $this;
-    }
-
-    protected function getPendaftaranMagangDitolak() {
-        $this->getPendaftaranMagang(function ($query) {
-            return $query->whereIn('pendaftaran_magang.current_step', [
-                PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
-                PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-                PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
-            ]);
-        });
-
-        return $this;
-    }
  
 }

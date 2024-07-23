@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers\DataMahasiswaMagang;
 
-use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\Dosen;
+use App\Helpers\Response;
+use App\Models\MhsMagang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
 {
     public function index() {
         $view = $this->getViewDesign();
 
-        return view('data_mahasiswa_magang.index', compact('view'));
+        $dosen = Dosen::whereHas('user')->get();
+
+        return view('data_mahasiswa_magang.index', compact('view', 'dosen'));
     }
 
     public function getData(Request $request) {
 
         if ($request->type == 'diterima') {
-            $this->getPendaftaranMagangDiterima();
+            $this->getPendaftaranMagang(function ($query) {
+                return $query->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+            });
         } else if ($request->type == 'ditolak') {
-            $this->getPendaftaranMagangDitolak();
+            $this->getPendaftaranMagang(function ($query) {
+                return $query->whereIn('pendaftaran_magang.current_step', [
+                    PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+                    PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+            });
         }
 
         $validSteps = [
@@ -47,12 +64,12 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
         ->editColumn('file_document_mitra', function ($data) use ($validSteps, $rejectSteps) {
             $result = '<div class="d-flex flex-column align-items-center">';
 
-            if (isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step]) {
+            if ($data->file_document_mitra == null) {
+                $result .= '<span>-</span>';
+            } elseif (isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step]) {
                 $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="btn btn-primary btn-sm">Bukti Penerimaan.pdf</a>';
             } elseif (in_array($data->current_step, $rejectSteps)) {
                 $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="btn btn-primary btn-sm">Bukti Penolakan.pdf</a>';
-            } elseif ($data->file_document_mitra == null) {
-                $result .= '<span>-</span>';
             }
 
             $result .= '</div>';
@@ -87,19 +104,46 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
             });
         }
 
-
         return $datatables->rawColumns([
             'namamhs', 'namaindustri', 'intern_position', 'file_document_mitra', 'tanggalmagang', 
             'pembimbing_lapangan', 'pembimbing_akademik'
         ])->make(true);
     }
 
+    public function assignPemAkademik(Request $request) {
+
+        $request->validate([
+            'id_pendaftaran' => 'required|array|exists:pendaftaran_magang,id_pendaftaran',
+            'dosen_pembimbing' => 'required|exists:dosen,nip'
+        ], [
+            'dosen_pembimbing.required' => 'Pilih dosen pembimbing akademik',
+            'id_pendaftaran.array' => 'Data tidak valid',
+            'dosen_pembimbing.exists' => 'Dosen tidak ditemukan',
+            'id_pendaftaran.exists' => 'Data tidak ditemukan',
+            'id_pendaftaran.required' => 'Data tidak valid'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            MhsMagang::whereIn('id_pendaftaran', $request->id_pendaftaran)->update([
+                'nip' => $request->dosen_pembimbing
+            ]);
+
+            DB::commit();
+            return Response::success(null, 'Berhasil assign dosen pembimbing akademik.');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
     private function getViewDesign() {
         $title = 'Data Mahasiswa Magang';
-
-        $buttonRight = '<a class="btn btn-primary text-white">Assign Dosen Pembimbing Akademik</a>';
+        $urlGetData = route('mahasiswa_magang_kaprodi.get_data');
+        $isKaprodi = true;
 
         $diterima = [
+            '<th></th>',
             '<th class="text-nowrap">No</th>',
             '<th class="text-nowrap">Nama/Nim</th>',
             '<th class="text-nowrap">Nama Perusahaan</th>',
@@ -119,6 +163,7 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
         ];
 
         $columnsDiterima = "[
+            {data: null},
             {data: 'DT_RowIndex'},
             {data: 'namamhs'},
             {data: 'namaindustri'},
@@ -137,9 +182,26 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
             {data: 'file_document_mitra'}
         ]";
 
+        $columnDefs = "
+        {
+            targets: 0,
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row, meta) {
+                console.log(data);
+                return `<input type='checkbox' class='dt-checkboxes form-check-input' value='` + data.id_pendaftaran + `'>`;
+            },
+            checkboxes: {
+                selectRow: false,
+                selectAllRender: `<input type='checkbox' class='form-check-input'>`
+            }
+        },";
+
         return compact(
             'title',
-            'buttonRight',
+            'isKaprodi',
+            'urlGetData',
+            'columnDefs',
             'diterima', 
             'ditolak', 
             'columnsDiterima', 

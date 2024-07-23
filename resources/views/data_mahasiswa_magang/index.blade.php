@@ -23,13 +23,15 @@
             </li>
         </ul>
     </div>
-    <div class="d-flex justify-content-between align-items-center mt-4">
-        <span class="text-muted">Filter Berdasarkan: </span>
-        {!! $view['buttonRight'] ?? null !!}
-    </div>
     <div class="tab-content px-0">
         @foreach (['diterima', 'ditolak'] as $key => $item)
         <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-{{ $item }}" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center my-4">
+                <span class="text-muted">Filter Berdasarkan: </span>
+                @if (($view['isKaprodi'] ?? false) && $item == 'diterima')
+                <button type="button" id="assign-pembimbing" class="btn btn-primary text-white">Assign Dosen Pembimbing Akademik</button>
+                @endif
+            </div>
             <div class="card">
                 <div class="card-datatable table-responsive">
                     <table class="table" id="{{ $item }}">
@@ -46,6 +48,9 @@
         </div>
         @endforeach
     </div>
+    @if ($view['isKaprodi'] ?? false)
+    @include('data_mahasiswa_magang/components/modal')
+    @endif
 @endsection
 
 @section('page_script')
@@ -64,16 +69,57 @@
             columns = {!! $view['columnsDitolak'] !!};
         }
 
-        $(this).DataTable({
-            ajax: `{{ route('mahasiswa_magang_dosen.get_data') }}?type=` + $(this).attr('id'),
+        let attrDatatable = {
+            ajax: `{{ $view['urlGetData'] }}?type=` + $(this).attr('id'),
             serverSide: false,
             processing: true,
-            deferRender: true,
             destroy: true,
             columns: columns,
+            columnDefs: [{!! $view['columnDefs'] ?? null !!}],
             ordering: false,
-            scrollX: true
-        });
+            scrollX: true,
+            @if ($view['isKaprodi'] ?? false)
+            select: {style: 'multi', selector: 'td:first-child input:checkbox'},
+            @endif
+        };
+
+        if ($(this).attr('id') == 'ditolak') {
+            delete attrDatatable.columnDefs;
+            delete attrDatatable.select;
+        }
+
+        $(this).DataTable(attrDatatable);
     });
 </script>
+@if ($view['isKaprodi'] ?? false) 
+<script>
+    $('#assign-pembimbing').on('click', function() {
+        let modal = $('#modal-assign');
+        let selectedValue = $('input.dt-checkboxes:checked');
+
+        if (selectedValue.length == 0) {
+            showSweetAlert({
+                title: 'Invalid',
+                text: 'Pilih mahasiswa terlebih dahulu',
+                icon: 'warning'
+            });
+            return;
+        }
+
+        selectedValue.each(function() {
+            modal.find('form').prepend('<input type="hidden" name="id_pendaftaran[]" value="' + $(this).val() + '">');
+        });
+
+        modal.modal('show');
+    });
+
+    $('#modal-assign').on('hide.bs.modal', function() {
+        $(this).find('form').find('input[name="id_pendaftaran[]"]').remove();
+    });
+
+    function afterAssigning(response) {
+        $("#modal-assign").modal("hide");
+    }
+</script>
+@endif
 @endsection
