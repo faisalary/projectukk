@@ -2,14 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KelolaSemuaPenggunaController;
 use App\Http\Controllers\MitraPerusahaanController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\KelolaSemuaPenggunaController;
+use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -285,9 +286,4 @@ Route::post('submit-contact', [ContactController::class, 'store'])->name('submit
 
 Route::get('/test', function () {
     return view('auth.message-verify-email');
-});
-
-Route::middleware(['auth', 'permission:data_magang.view'])->group(function () {
-    Route::get('/data-magang', [DataMahasiswaMagangController::class, 'index'])->name('data_magang');
-    Route::get('/data-magang/show', [DataMahasiswaMagangController::class, 'show'])->name('data_magang.show');
 });

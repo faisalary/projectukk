@@ -1,22 +1,11 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css" />
-<style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        color: #4EA971;
-    }
-
-    .light-style .tagify__tag .tagify__tag-text {
-        color: #4EA971 !important;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Kelola Mahasiswa</h4>
@@ -88,8 +77,8 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
+<script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+<script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
 <script src="https://cdn.datatables.net/fixedcolumns/5.0.0/js/dataTables.fixedColumns.js"></script>
 <script>
     var jsonData = [{

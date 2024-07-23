@@ -6,7 +6,6 @@ use App\Http\Controllers\NilaiMahasiswaController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
-use App\Http\Controllers\DataMahasiswaMagangController;
 use App\Http\Controllers\StatusLamaranMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
@@ -16,15 +15,15 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/show', 'show')->name('.show');
-    Route::post('/store', 'store')->name('.store');
-    Route::post('/update{id}', 'update')->name('.update');
-    Route::get('/edit{id}', 'edit')->name('.edit');
-    Route::post('/status/{id}', 'status')->name('.status');
-    Route::get('/doc/{file}', 'doc')->name('.doc');
-});
+// Route::prefix('mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
+//     Route::get('/', 'index');
+//     Route::get('/show', 'show')->name('.show');
+//     Route::post('/store', 'store')->name('.store');
+//     Route::post('/update{id}', 'update')->name('.update');
+//     Route::get('/edit{id}', 'edit')->name('.edit');
+//     Route::post('/status/{id}', 'status')->name('.status');
+//     Route::get('/doc/{file}', 'doc')->name('.doc');
+// });
 
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
     Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
