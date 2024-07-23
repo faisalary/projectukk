@@ -37,40 +37,46 @@ class LowonganMagangController extends Controller
         $lowonganMagang = $this->my_lowongan_magang;
 
         $validSteps = [
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
             PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
             PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
         ];
 
-        $lowongan_magang = $lowonganMagang->map(function ($item) use ($validSteps) {
+        $rejected = [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
+        ];
+
+        $lowongan_magang = $lowonganMagang->map(function ($item) use ($validSteps, $rejected) {
             $total_pelamar = $item->total_pelamar;
 
             $item->total_pelamar = $total_pelamar->count();
             $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI)->count();
-            $item->proses_seleksi = $total_pelamar->whereIn('current_step', 
-                array_diff(PendaftaranMagangStatusEnum::getConstants(), [
-                    'rejected_by_doswal', 'rejected_by_kaprodi', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2',
-                    'rejected_seleksi_tahap_3', 'rejected_penawaran'
-                ])
-            )->count();
-    
-            $item->penawaran = $total_pelamar->filter(function ($data) use ($validSteps) {
-                return isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step];
-            })->count();
+
+            $countProsesSeleksi = 0;
+            $countPenawaran = 0;
+            $countRejected = 0;
+
+            foreach ($total_pelamar as $key => $data) {
+                if (isset($validSteps[$data->current_step]) && ($item->tahapan_seleksi + 1) > $validSteps[$data->current_step]) {
+                    $countProsesSeleksi++;
+                } else if (isset($validSteps[$data->current_step]) && ($item->tahapan_seleksi + 1) == $validSteps[$data->current_step]) {
+                    $countPenawaran++;
+                } else if (in_array($data->current_step, $rejected)) {
+                    $countRejected++;
+                }
+            }
+
+            $item->proses_seleksi = $countProsesSeleksi;
+            $item->penawaran = $countPenawaran;
 
             $item->approved = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
-            $rejected = [
-                PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
-                PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-                PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
-            ];
-    
-            $item->rejected = $total_pelamar->filter(function ($data) use ($rejected) {
-                return in_array($data->current_step, $rejected);
-            })->count();
+            $item->rejected = $countRejected;
 
             return $item;
         });
