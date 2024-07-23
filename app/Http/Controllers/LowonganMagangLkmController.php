@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\Response;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
-use App\Models\LowonganMagang;
 use App\Models\TahunAkademik;
+use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Enums\LowonganMagangStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,7 @@ class LowonganMagangLkmController extends Controller
      */
     public function show(Request $request)
     {
-        $request->validate(['type' => 'string|in:tertunda,diterima,ditolak']);
+        $request->validate(['type' => 'string|in:' . implode(',', LowonganMagangStatusEnum::getConstants())]);
 
         $lowongan = LowonganMagang::query();
 
@@ -112,10 +113,18 @@ class LowonganMagangLkmController extends Controller
             $lowongan = LowonganMagang::find($id)->dataTambahan('jenjang_pendidikan');
             if (!$lowongan) return Response::error(null, 'Lowongan tidak ditemukan');
 
-            $validate = ['tahun_ajaran' => 'required|exists:tahun_akademik,id_year_akademik'];
+            $validate = [
+                'tahun_ajaran' => 'required|exists:tahun_akademik,id_year_akademik',
+                'mulai_magang' => 'required|before:selesai_magang',
+                'selesai_magang' => 'required|after:mulai_magang',
+            ];
             $message = [
                 'tahun_ajaran.required' => 'Pilih tahun ajaran terlebih dahulu',
-                'tahun_ajaran.exists' => 'Tahun ajaran tidak valid'
+                'tahun_ajaran.exists' => 'Tahun ajaran tidak valid',
+                'mulai_magang.required' => 'Masukkan tanggal mulai magang terlebih dahulu',
+                'mulai_magang.before' => 'Masukkan tanggal mulai magang terlebih dahulu',
+                'selesai_magang.required' => 'Masukkan tanggal selesai magang terlebih dahulu',
+                'selesai_magang.after' => 'Masukkan tanggal selesai magang terlebih dahulu',
             ];
             foreach ($lowongan->jenjang_pendidikan as $key => $value) {
                 $validate["prodi_" . $value] = 'required|array|min:1|exists:program_studi,id_prodi';
@@ -140,7 +149,9 @@ class LowonganMagangLkmController extends Controller
 
             $lowongan->id_year_akademik = $request->tahun_ajaran;
             $lowongan->jenjang = json_encode($result);
-            $lowongan->statusaprove = 'diterima';
+            $lowongan->mulai_magang = Carbon::parse($request->mulai_magang)->format('Y-m-d');
+            $lowongan->selesai_magang = Carbon::parse($request->selesai_magang)->format('Y-m-d');
+            $lowongan->statusaprove = LowonganMagangStatusEnum::APPROVED;
             $lowongan->save();
 
             DB::commit();
@@ -163,7 +174,7 @@ class LowonganMagangLkmController extends Controller
             if (!$data) return Response::error(null, 'Lowongan tidak ditemukan.');
 
             $data->alasantolak = $request->alasan;
-            $data->statusaprove = 'ditolak';
+            $data->statusaprove = LowonganMagangStatusEnum::REJECTED;
             $data->date_confirm_closing = date('Y-m-d');
             $data->save();
             DB::commit();

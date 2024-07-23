@@ -26,7 +26,7 @@ abstract class PendaftaranMagangStatusEnum
         $data = [
             self::PENDING => ['title' => 'Menunggu Approval Dosen Wali', 'color' => 'warning'],
             self::APPROVED_BY_DOSWAL => ['title' => 'Menunggu Approval Kaprodi', 'color' => 'warning'],
-            self::REJECTED_BY_DOSWAL => ['title' => 'Ditolak oleh Dosen Wali', 'color' => 'warning'],
+            self::REJECTED_BY_DOSWAL => ['title' => 'Ditolak oleh Dosen Wali', 'color' => 'danger'],
             self::APPROVED_BY_KAPRODI => ['title' => 'Screening oleh Industri', 'color' => 'warning'],
             self::REJECTED_BY_KAPRODI => ['title' => 'Ditolak oleh Kaprodi', 'color' => 'warning'],
             self::SELEKSI_TAHAP_1 => ['title' => 'Seleksi Tahap 1', 'color' => 'info'],
