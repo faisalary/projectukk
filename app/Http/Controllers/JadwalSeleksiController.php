@@ -16,6 +16,12 @@ class JadwalSeleksiController extends Controller
     {
         $this->lowongan_magang = null;
         $this->pendaftaran_magang = null;
+
+        $this->valid_step = [
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 2,
+            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 3
+        ];
     }
 
     public function index(Request $request)
@@ -24,64 +30,24 @@ class JadwalSeleksiController extends Controller
     }
 
     public function getData(Request $request) {
-        $lowongan = $this->getLowonganMagang()->lowongan_magang;
+
+        $lowongan = $this->getLowonganMagang(function ($query) {
+            return $query->with('total_pelamar');
+        })->lowongan_magang->map(function ($item) {
+            $item->total_kandidat = $item->total_pelamar->count();
+
+            for ($i=1; $i <= ($item->tahapan_seleksi + 1); $i++) { 
+                $item->{'seleksi_tahap_' . $i} = $item->total_pelamar->filter(function ($data) use ($i) {
+                    return isset($this->valid_step[$data->current_step]) && $i == $this->valid_step[$data->current_step];
+                })->count();
+            }
+
+            return $item;
+        });
 
         return datatables()->of($lowongan)
         ->addColumn('card', function ($data) {
-            $result = 
-            '<div class="card border cursor-pointer" onclick="window.location.href=`' . route('jadwal_seleksi.detail', $data->id_lowongan) . '`">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex justify-content-start">
-                            <div class="rounded-circle text-center" style="overflow: hidden; width: 70px; height: 70px;">
-                                <img src="' . asset('app-assets/img/avatars/user.png') . '" alt="user-avatar" class="d-block" width="70" id="image_industri" data-default-src="' . asset('app-assets/img/avatars/user.png') . '">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center ms-3">
-                                <h4 class="mb-1">Fullstack Developer</h4>
-                                <span>IT Computer Software</span>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="badge bg-label-primary">Status</span>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between border-bottom pb-4 mt-4">
-                        <div class="d-flex justify-content-start">
-                            <span class="badge badge-center rounded-pill bg-label-primary" style="padding: 1.5rem;">
-                                <i class="ti ti-users" style="font-size: 15pt"></i>
-                            </span>
-                            <div class="d-flex flex-column justify-content-start ms-2">
-                                <span>Total Kandidat</span>
-                                <h5 class="text-primary">0</h5>
-                            </div>
-                        </div>';
-
-            for ($i = 1; $i <= ($data->tahapan_seleksi + 1) ; $i++) {
-                $result .= 
-                '<div class="d-flex justify-content-start">
-                    <span class="badge badge-center rounded-pill bg-label-primary" style="padding: 1.5rem;">
-                        <i class="ti ti-file-report" style="font-size: 15pt"></i>
-                    </span>
-                    <div class="d-flex flex-column justify-content-start ms-2">
-                        <span>Seleksi Tahap ' . $i . '</span>
-                        <h5 class="text-primary">0</h5>
-                    </div>
-                </div>';
-            }
-
-            $result .= '</div>';
-            $result .= '<div class="d-flex justify-content-start mt-3">
-                <div class="d-flex justify-content-start align-items-center">
-                    <i class="ti ti-calendar"></i>
-                    <span class="ms-3">30 Juli 2023 - 30 Juni 2024</span>
-                </div>
-                <div class="ms-4 d-flex justify-content-start align-items-center">
-                    <i class="ti ti-users"></i>
-                    <span class="ms-3">Kuota Penerimaan: 50</span>
-                </div>
-            </div>';
-
-            $result .= '</div></div>';
+            $result = view('company/jadwal_seleksi/components/card_list_lowongan', compact('data'))->render();
             return $result;
         })
         ->rawColumns(['card'])
@@ -109,19 +75,18 @@ class JadwalSeleksiController extends Controller
             return $query->where('id_lowongan', $id);
         });
 
-        $lowongan_ = $this->lowongan_magang->first();
+        $lowongan_ = $this->lowongan_magang->first()->load('seleksi_tahap');
 
         $this->getPendaftaranMagang(function ($query) use ($id, $request, $lowongan_) {
             $query = $query->join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
             ->where('pendaftaran_magang.id_lowongan', $id);
-            for ($i=1; $i <= ($lowongan_->tahapan_seleksi+1); $i++) {
-                if ($request->tahap == $i) $query = $query->where('current_step', constant('App\Enums\PendaftaranMagangStatusEnum::SELEKSI_TAHAP_' . $i));
-            }
+
+            if ($request->tahap) $query = $query->where('current_step', array_search($request->tahap, $this->valid_step));
 
             return $query;
         });
         $pendaftaran_magang = $this->pendaftaran_magang->transform(function ($item) use ($lowongan_, $request) {
-            $item->seleksi = $lowongan_->load('seleksi_tahap')->seleksi_tahap->where('tahap', $request->tahap)->first();
+            $item->seleksi = $lowongan_->seleksi_tahap->where('tahap', $request->tahap)->first();
             return $item;
         });
 

@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="d-flex justify-content-start">
-    <a href="#" class="btn btn-outline-primary">
+    <a href="{{ route('jadwal_seleksi') }}" class="btn btn-outline-primary">
         <i class="ti ti-arrow-left"></i>
         <span class="ms-2">Kembali</span>
     </a>
