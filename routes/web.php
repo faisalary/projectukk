@@ -287,3 +287,12 @@ Route::post('submit-contact', [ContactController::class, 'store'])->name('submit
 Route::get('/test', function () {
     return view('auth.message-verify-email');
 });
+
+Route::middleware(['auth', 'permission:data_magang.view'])->group(function () {
+    Route::get('/data-magang', function () {
+        return 'data-magang';
+    })->name('data_magang');
+    Route::get('/data-magang/show', function () {
+        return 'data-magang-show';
+    })->name('data_magang.show');
+});
