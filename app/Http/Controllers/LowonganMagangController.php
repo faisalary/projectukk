@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use stdClass;
 use Exception;
 use App\Helpers\Response;
+use App\Models\Education;
+use App\Models\Experience;
 use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
+use App\Models\BahasaMahasiswa;
+use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
@@ -22,7 +26,22 @@ class LowonganMagangController extends Controller
 {
 
     public function __construct(){
-        $this->my_lowongan_magang = null;
+        $this->middleware(function ($request, $next) {
+            $id = $request->route()->parameters()['id'] ?? null;
+
+            $this->getLowonganMagang(function ($query) use ($id) {
+                return $query->where('id_lowongan', $id);
+            });
+            
+            return $next($request);
+        }, ['only' => ['setDateConfirmClosing', 'detailInformasi', 'getDataDetailInformasi', 'edit', 'detail', 'update', 'status']]);
+
+        $this->valid_step = [
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
+        ];
     }
 
     public function indexInformasi(Request $request) {
@@ -36,13 +55,6 @@ class LowonganMagangController extends Controller
 
         $lowonganMagang = $this->my_lowongan_magang;
 
-        $validSteps = [
-            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
-        ];
-
         $rejected = [
             PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
             PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
@@ -52,7 +64,7 @@ class LowonganMagangController extends Controller
             PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
         ];
 
-        $lowongan_magang = $lowonganMagang->map(function ($item) use ($validSteps, $rejected) {
+        $lowongan_magang = $lowonganMagang->map(function ($item) use ($rejected) {
             $total_pelamar = $item->total_pelamar;
 
             $item->total_pelamar = $total_pelamar->count();
@@ -63,9 +75,9 @@ class LowonganMagangController extends Controller
             $countRejected = 0;
 
             foreach ($total_pelamar as $key => $data) {
-                if (isset($validSteps[$data->current_step]) && ($item->tahapan_seleksi + 1) > $validSteps[$data->current_step]) {
+                if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) > $this->valid_step[$data->current_step]) {
                     $countProsesSeleksi++;
-                } else if (isset($validSteps[$data->current_step]) && ($item->tahapan_seleksi + 1) == $validSteps[$data->current_step]) {
+                } else if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) == $this->valid_step[$data->current_step]) {
                     $countPenawaran++;
                 } else if (in_array($data->current_step, $rejected)) {
                     $countRejected++;
@@ -92,10 +104,6 @@ class LowonganMagangController extends Controller
 
     public function setDateConfirmClosing(Request $request, $id) {
         try {
-            $this->getLowonganMagang(function ($query) use ($id) {
-                return $query->where('id_lowongan', $id);
-            });
-
             if (!$this->my_lowongan_magang) return Response::error(null, 'Lowongan Magang Not Found');
 
             $this->my_lowongan_magang->first()->update([
@@ -106,6 +114,104 @@ class LowonganMagangController extends Controller
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
+    }
+
+    public function detailInformasi(Request $request, $id) {
+
+        if ($request->ajax()) {
+            $this->getPendaftarMagang(function ($query) use ($id, $request) {
+                return $query->where('id_lowongan', $id)->where('id_pendaftaran', $request->data_id);
+            });
+
+            $data['pendaftar'] = $this->my_pendaftar_magang->first();
+            $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
+            $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
+            $data['skills'] = json_decode($data['pendaftar']->skills, true);
+            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
+
+            $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
+            return Response::success($view, 'Success');
+        }
+
+        $data['lowongan'] = $this->my_lowongan_magang->first();
+
+        $data['tab'] = [
+            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI],
+        ];
+
+        $data['listStatus'] = [];
+        for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) { 
+            $data['tab']['tahap_' . $i] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'icon' => 'ti ti-device-desktop-analytics', 'table' => array_search($i, $this->valid_step)];
+            $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
+        }
+
+        array_push($data['listStatus'], 
+            ['value' => array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step), 'label' => 'Penawaran'],
+            ['value' => 'rejected', 'label' => 'Ditolak'],
+        );
+
+        $data['tab']['penawaran'] = ['label' => 'Penawaran', 'icon' => 'ti ti-writing-sign', 'table' => array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step)];
+        $data['tab']['diterima'] = ['label' => 'Diterima', 'icon' => 'ti ti-user-check', 'table' => PendaftaranMagangStatusEnum::APPROVED_PENAWARAN];
+        $data['tab']['ditolak'] = ['label' => 'Ditolak', 'icon' => 'ti ti-user-x', 'table' => 'all_rejected'];
+
+        $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
+        $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
+
+        return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
+    }
+
+    public function getDataDetailInformasi(Request $request, $id) {
+        $lowongan = $this->my_lowongan_magang->first();
+
+        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+        for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
+            $inArray .= ',' . array_search($i, $this->valid_step);
+        }
+        $inArray .= ',';
+        $inArray .= implode(',', [
+            array_search(($lowongan->tahapan_seleksi + 1), $this->valid_step),
+            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
+            'all_rejected'
+        ]);
+
+        $request->validate(['type' => 'required|' . $inArray]);
+
+        $this->getPendaftarMagang(function ($query) use ($id, $request) {
+            return $query->where('id_lowongan', $id)->where('current_step', $request->type);
+        });
+
+        return datatables()->of($this->my_pendaftar_magang)
+        ->addIndexColumn()
+        ->editColumn('namamhs', function ($data) {
+            $result = '<div class="d-flex flex-column align-items-start">';
+            $result .= '<span class="fw-semibold text-nowrap">' .$data->namamhs. '</span>';
+            $result .= '<span class="text-nowrap">' .$data->nim. '</span>';
+            $result .= '</div>';
+            return $result;
+        })
+        ->editColumn('nohpmhs', fn ($data) => '<span class="text-nowrap">' . $data->nohpmhs . '</span>')
+        ->editColumn('emailmhs', fn ($data) => '<span class="text-nowrap">' . $data->emailmhs . '</span>')
+        ->editColumn('tanggaldaftar', function ($data) {
+            return '<span class="text-nowrap">' . Carbon::parse($data->tanggaldaftar)->format('d F Y') . '</span>';
+        })
+        ->editColumn('namaprodi', fn ($data) => '<span class="text-nowrap">' . $data->namaprodi . '</span>')
+        ->editColumn('namafakultas', fn ($data) => '<span class="text-nowrap">' . $data->namafakultas . '</span>')
+        ->editColumn('namauniv', fn ($data) => '<span class="text-nowrap">' . $data->namauniv . '</span>')
+        ->editColumn('current_step', function ($data) {
+            $status = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
+            return '<div class="d-flex justify-content-center"><span class="badge bg-label-' . $status['color'] . '">'. $status['title'] .'</span></div>';
+        })
+        ->addColumn('action', function ($data) {
+            $result = '<div class="d-flex justify-content-center">';
+            $result .= '<a class="cursor-pointer text-primary" onclick="detailInfo($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-file-invoice"></i></a>';
+            $result .= '</div>';
+
+            return $result;
+        })
+        ->rawColumns([
+            'namamhs', 'nohpmhs', 'emailmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action'
+        ])
+        ->make(true);
     }
 
     /** 
@@ -209,16 +315,13 @@ class LowonganMagangController extends Controller
             'type' => 'required|in:total,tertunda,diterima,ditolak',
         ]);
 
-        $id_industri = auth()->user()->pegawai_industri->id_industri;
-        $lowongan = LowonganMagang::with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->where('id_industri', $id_industri);
-
-        if ($request->type != 'total') {
-            $lowongan =  $lowongan->where('statusaprove', $request->type);
-        }
-
-        $lowongan = $lowongan->orderBy('id_jenismagang', 'asc')->get();
+        $this->getLowonganMagang(function ($query) use ($request) {
+            $query = $query->with("jenismagang", "lokasi", "prodi", "fakultas", "industri")->orderBy('intern_position', 'asc');
+            if ($request->type == 'total') return $query;
+            return $query->where('statusaprove', $request->type);
+        });
         
-        return DataTables::of($lowongan)
+        return DataTables::of($this->my_lowongan_magang)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
@@ -233,7 +336,7 @@ class LowonganMagangController extends Controller
 
                 $btn = "<div class='d-flex justify-content-center'><a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>
                         <a href='" . route('kelola_lowongan.detail' , $row->id_lowongan) . "' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                        <a data-status='{$row->status}' data-id='{$row->id_lowongan}' data-url='/kelola/lowongan/mitra/status' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
+                        <a data-function='afterUpdateStatus' data-url='".route('kelola_lowongan.change_status', ['id' => $row->id_lowongan])."' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
@@ -259,7 +362,8 @@ class LowonganMagangController extends Controller
      */ 
     public function edit(Request $request, $id)
     {
-        $lowongan = LowonganMagang::with(['jenisMagang'])->where('id_lowongan', $id)->first();
+        $lowongan = $this->my_lowongan_magang->load('jenisMagang')->first();
+
         $jenismagang = JenisMagang::all();
         $tahap = $lowongan->tahapan_seleksi;
 
@@ -274,7 +378,7 @@ class LowonganMagangController extends Controller
 
     public function detail($id)  
     {
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->with('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
+        $lowongan = $this->my_lowongan_magang->load('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
         if (!$lowongan) return redirect()->route('kelola_lowongan');
 
         $urlBack = route('kelola_lowongan');
@@ -288,8 +392,7 @@ class LowonganMagangController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
+            $lowongan = $this->my_lowongan_magang->first();
 
             $dataStep = Crypt::decryptString($request->data_step);
             if ($dataStep == 1) {
@@ -361,7 +464,7 @@ class LowonganMagangController extends Controller
     public function status($id)
     {
         try {
-            $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
+            $lowongan = $this->my_lowongan_magang->first();
             $lowongan->status = ($lowongan->status) ? false : true;
             $lowongan->save();
 
@@ -386,6 +489,23 @@ class LowonganMagangController extends Controller
         if ($additional) $this->my_lowongan_magang = $additional($this->my_lowongan_magang);
         $this->my_lowongan_magang = $this->my_lowongan_magang->get();
 
+        return $this;
+    }
+
+    private function getPendaftarMagang($additional = null){
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+        
+        $this->my_pendaftar_magang = PendaftaranMagang::join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->whereHas('lowongan_magang', function ($query) use ($pegawaiIndustri) {
+            $query->where('id_industri', $pegawaiIndustri->id_industri);
+        });
+        if ($additional) $this->my_pendaftar_magang = $additional($this->my_pendaftar_magang);
+        $this->my_pendaftar_magang = $this->my_pendaftar_magang->get();
+        
         return $this;
     }
 }

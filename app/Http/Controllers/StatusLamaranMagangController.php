@@ -32,9 +32,9 @@ class StatusLamaranMagangController extends Controller
         );
 
         $validSteps = [
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
         ];
 
         $penawaran = $this->lamaran_magang->filter(function ($data) use ($validSteps) {
@@ -100,9 +100,9 @@ class StatusLamaranMagangController extends Controller
                     } else if ($request->filter == 'Tahap 1') {
                         return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 2') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 3') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2);
                     } else {
                         return $query;
                     }
@@ -138,11 +138,11 @@ class StatusLamaranMagangController extends Controller
                 $data[1]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1:
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2:
                 $data[2]['active'] = true;
                 break;
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:
                 $data[3]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:

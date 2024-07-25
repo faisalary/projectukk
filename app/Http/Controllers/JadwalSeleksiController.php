@@ -19,8 +19,8 @@ class JadwalSeleksiController extends Controller
 
         $this->valid_step = [
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 3
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 3
         ];
     }
 
