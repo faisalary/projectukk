@@ -214,8 +214,16 @@
             @endphp
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
+                    <div class="d-flex justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                                <img src="{{ url(Auth::user()->profile_image_url ?? 'assets/images/super-admin.png') }}" alt class="h-auto rounded-circle" />
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <span class="fw-semibold d-block user-name">{{Auth::user()->name ?? 'Unknown User'}}</span>
+                            <small class="text-muted user-status">{{Auth::user()->roles[0]->name ?? 'Unknown Role'}}</small>
+                        </div>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -224,7 +232,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ Auth::user()->profile_image_url ?? '\assets\images\super-admin.png' }}" alt class="h-auto rounded-circle" />
+                                        <img src="{{ Auth::user()->profile_image_url ?? '/assets/images/super-admin.png' }}" alt class="h-auto rounded-circle" />
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
