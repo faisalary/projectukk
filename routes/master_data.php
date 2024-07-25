@@ -95,13 +95,11 @@ Route::prefix('master')->group(function () {
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');
-        Route::post('/show', 'show')->name('dosen.show');
+        Route::get('/show', 'show')->name('dosen.show');
         Route::post('/store', 'store')->name('dosen.store');
         Route::post('/update/{id}', 'update')->name('dosen.update');
         Route::get('/edit/{id}', 'edit')->name('dosen.edit');
         Route::post('/status/{id}', 'status')->name('dosen.status');
-        Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('dosen.list_fakultas');
-        Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('dosen.list_prodi');
         Route::post('/import', 'import')->name('dosen.import');
     });
     Route::prefix('komponen-penilaian')->controller(KomponenPenilaianController::class)->group(function () {

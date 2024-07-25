@@ -65,6 +65,10 @@
 
         modal.find('.modal-title').html('Edit Pengguna');
         modal.find('form').attr('action', action);
+
+        modal.find(`[name="role"]`).append(new Option('Dosen', 'Dosen', true, true));
+        modal.find(`[name="role"]`).append(new Option('Kaprodi', 'Kaprodi', true, true));
+        modal.find(`[name="role"]`).val(null).change();
         modal.modal('show');
 
         $.ajax({
@@ -74,14 +78,26 @@
                 response = response.data;
                 $('#name').val(response.name);
                 $('#email').val(response.email);
+                $('#role').val(response.role).change();
             }
         });
     }
+
+    $(`button[data-bs-target="#modalTambahUser"]`).on('click', function () {
+        let modal = $("#modalTambahUser");
+        modal.find(`[name="role"]`).append(new Option('LKM', 'LKM', true, true));
+        modal.find(`[name="role"]`).val('LKM').change();
+        modal.find(`[name="role"]`).attr('disabled', true);
+    });
 
     $("#modalTambahUser").on("hide.bs.modal", function(e) {
         let modal = $("#modalTambahUser");
         modal.find(".modal-title").html('Tambah Pengguna');
         modal.find('form').attr('action', "{{ route('kelola_pengguna.store') }}");
+
+        modal.find(`[name="role"]`).html(null);
+        modal.find(`[name="role"]`).removeAttr('disabled');
+        modal.find(`[name="role"]`).val(null).change();
     });
 </script>
 @endsection

@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
+use App\Http\Controllers\MitraJadwalController;
+use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\InformasiMitraController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
-use App\Http\Controllers\LowonganMagangLkmController;
 use App\Http\Controllers\PegawaiIndustriController;
+use App\Http\Controllers\LowonganMagangLkmController;
 
 Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraController::class)->group(function () {
     Route::get('/', 'index');
@@ -24,6 +26,7 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/', 'indexInformasi');
         Route::get('/show', 'showInformasi')->name('.show');
         Route::get('/detail/{id}', 'detail')->name('.detail');
+        Route::post('set-date-confirm-closing/{id}', 'setDateConfirmClosing')->name('.set_confirm_closing');
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');
@@ -61,21 +64,28 @@ Route::prefix('anggota-tim')->name('pegawaiindustri')->controller(PegawaiIndustr
     Route::post('/status/{id}', 'status')->name('.status');
 });
 
-Route::prefix('jadwal-seleksi')->group(function () {
-
-    Route::prefix('/lowongan')->group(function () {
-        Route::get('/{id_industri}', [App\Http\Controllers\LowonganJadwalController::class, 'index'])->name('jadwal.index');
-    });
-
-    Route::prefix('/lanjutan')->group(function () {
-        Route::get('/{id_lowongan}', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
-        Route::get('/show/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
-        Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
-        Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
-        Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
-        Route::get('/kirim-email', [App\Http\Controllers\MailController::class, 'index'])->name('seleksi.email');
-    });
+Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(JadwalSeleksiController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('get-data', 'getData')->name('.get_data');
+    Route::get('detail/{id}', 'detail')->name('.detail');
+    Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
 });
+
+// Route::prefix('jadwal-seleksi')->group(function () {
+
+//     Route::prefix('/lowongan')->group(function () {
+//         Route::get('/{id_industri}', [App\Http\Controllers\LowonganJadwalController::class, 'index'])->name('jadwal.index');
+//     });
+
+//     Route::prefix('/lanjutan')->group(function () {
+//         Route::get('/{id_lowongan}', [App\Http\Controllers\JadwalSeleksiController::class, 'index'])->name('seleksi.index');
+//         Route::get('/show/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'show'])->name('seleksi.show');
+//         Route::post('/store', [App\Http\Controllers\JadwalSeleksiController::class, 'store'])->name('seleksi.store');
+//         Route::get('/detail/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'detail'])->name('seleksi.detail');
+//         Route::post('/update/{id}', [App\Http\Controllers\JadwalSeleksiController::class, 'update'])->name('seleksi.update');
+//         Route::get('/kirim-email', [App\Http\Controllers\MailController::class, 'index'])->name('seleksi.email');
+//     });
+// });
 
 Route::prefix('profile-perusahaan')->name('profile_company')->controller(ProfileCompanyController::class)->group(function () {
     Route::get('/', 'index');

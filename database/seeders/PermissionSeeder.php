@@ -53,11 +53,21 @@ class PermissionSeeder extends Seeder
             'informasi_lowongan_mitra.view', //
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
+            'jadwal_seleksi_mitra.view',
             'profile_perusahaan.view',
         ];
 
         $permission['Pembimbing Lapangan'] = [];
         $permission['Mahasiswa'] = [];
+        $permission['Dosen'] = [
+            // approval mahasiswa
+            'approval_mhs_doswal.view',
+            'data_mahasiswa_magang_dosen.view'
+        ];
+        $permission['Kaprodi'] = [
+            'approval_mhs_kaprodi.view',
+            'data_mahasiswa_magang_kaprodi.view'
+        ];
 
         foreach ($permission as $key => $value) {
             foreach ($value as $p) {
@@ -68,6 +78,8 @@ class PermissionSeeder extends Seeder
         }
         
         $role = Role::findOrCreate('Super Admin', 'web');
-        $role->syncPermissions(Permission::all());
+
+        $permission['Super Admin'] = array_merge($permission['Super Admin'], $permission['LKM']);
+        $role->syncPermissions($permission['Super Admin']);
     }
 }

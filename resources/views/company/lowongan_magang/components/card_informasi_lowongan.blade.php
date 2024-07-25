@@ -1,4 +1,4 @@
-<div class="card mt-4 border border-secondary">
+<div class="card mt-4 border shadow-none border-secondary" style="border-color: #D3D6DB !important">
     <div class="card-body">
         <div class="row">
             <div class="col-2">
@@ -6,8 +6,8 @@
             </div>
             <div class="col-10 d-flex justify-content-between">
                 <div>
-                    <h5>Fullstack Developer</h5>
-                    <p>IT-Computer - Software</p>
+                    <h5>{{ $data->intern_position }}</h5>
+                    <p>{{ $data->deskripsi }}</p>
                 </div>
                 <div>
                     <span class="badge bg-label-success me-1 text-end">Aktif</span>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-info">
                         <small>Total Pelamar</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0 total_pelamar">{{ $data->total_pelamar }}</h5>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="card-info">
                         <small>Screening</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0">{{ $data->screening }}</h5>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="card-info">
                         <small>Proses Seleksi</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0">{{ $data->proses_seleksi }}</h5>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="card-info">
                         <small>Penawaran</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0">{{ $data->penawaran }}</h5>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-info">
                         <small>Diterima</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0">{{ $data->approved }}</h5>
                     </div>
                 </div>
             </div>
@@ -77,24 +77,32 @@
                     </div>
                     <div class="card-info">
                         <small>Ditolak</small>
-                        <h5 class="mb-0">0</h5>
+                        <h5 class="mb-0">{{ $data->rejected }}</h5>
                     </div>
                 </div>
             </div>
         </div>
         <hr />
-        <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-between">
-                <div class="col-6">
-                    <div class="tf-icons ti ti-calendar" style="font-size: medium; margin-right:10px;"> 30 Juli 2023 - 30 Juni 2024</div>
-                    <div class="tf-icons ti ti-users" style="font-size: medium;"> Kuota Penerimaan : 50</div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-start">
+                <div class="d-flex align-items-center">
+                    <i class="ti ti-calendar me-2"></i>
+                    <span>{{ Carbon\Carbon::parse($data->startdate)->format('d F Y') }} - {{ Carbon\Carbon::parse($data->enddate)->format('d F Y') }}</span>
                 </div>
-                <div class="col-6 text-end">
-                    <a href="#"><button type="button" class="btn btn-outline-success waves-effect me-2"><i class="ti ti-edit text-success" style="font-size: medium;"> Tanggal Batas Konfirmasi</i>
-                    </button></a>
-                    <a href="/detail/kandidat"><button type="button" class="btn btn-outline-dark waves-effect"><i class="ti ti-eye text-dark" style="font-size: medium;"> Lihat Kandidat</i>
-                    </button></a>
+                <div class="ms-4 d-flex align-items-center">
+                    <i class="ti ti-users me-2"></i>
+                    <span>Kuota Penerimaan : {{ $data->kuota }}</span>
                 </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-sm btn-outline-primary me-2" onclick="setDateConfirm($(this));" data-id="{{ $data->id_lowongan }}">
+                    <i class="ti ti-edit me-2"></i>
+                    Tanggal Batas Konfirmasi
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-warning">
+                    <i class="ti ti-eye me-2"></i>
+                    Lihat Kandidat
+                </button>
             </div>
         </div>
     </div>

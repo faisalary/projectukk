@@ -31,16 +31,18 @@
                 <table class="table" id="table-master-mahasiswa">
                     <thead>
                         <tr>
-                            <th>NOMOR</th>
-                            <th style="min-width:150px;">UNIVERSITAS</th>
-                            <th>NIM</th>
-                            <th>ANGKATAN</th>
-                            <th>NAMA MAHASISWA</th>
-                            <th>NOMOR TELEPON</th>
-                            <th>EMAIL</th>
+                            <th>NO</th>
+                            <th>NAMA/NIM</th>
+                            <th>UNIVERSITAS & FAKULTAS</th>
+                            <th class="text-center">TUNGGAKAN BPP</th>
+                            <th class="text-center">IPK</th>
+                            <th class="text-center">EPRT</th>
+                            <th class="text-center">TAK</th>
+                            <th class="text-center">ANGKATAN</th>
+                            <th>KONTAK</th>
                             <th>ALAMAT</th>
                             <th class="text-center">STATUS</th>
-                            <th style="min-width:100px;">AKSI</th>
+                            <th style="text-center;">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -71,9 +73,13 @@
         });
     }
 
+    function afterUpdateStatus(response) {
+        $('#table-master-mahasiswa').DataTable().ajax.reload();
+    }
+
     function afterAction(response) {
         $('#modal-mahasiswa').modal('hide');
-        $('#table-master-mahasiswa').DataTable().ajax.reload();
+        afterUpdateStatus(response);
     }
 
     $("#modal-mahasiswa").on("hide.bs.modal", function() {
@@ -161,49 +167,19 @@
             scrollX: true,
             // deferRender: true,
             destroy: true,
-            columns: [{
-                    data: "DT_RowIndex"
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.univ.namauniv + '<br>' + data.fakultas.namafakultas + '<br>' + data
-                            .prodi.namaprodi;
-                    }
-                },
-                {
-                    data: "nim",
-                    name: "nim"
-                },
-                {
-                    data: "angkatan",
-                    name: "angkatan"
-                },
-                {
-                    data: "namamhs",
-                    name: "namamhs"
-                },
-                {
-                    data: "nohpmhs",
-                    name: "nohpmhs"
-                },
-                {
-                    data: "emailmhs",
-                    name: "emailmhs"
-                },
-                {
-                    data: "alamatmhs",
-                    name: "alamatmhs"
-                },
-                {
-                    data: "status",
-                    name: "status"
-                },
-                {
-                    data: "action",
-                    name: "action"
-                }
+            columns: [
+                { data: "DT_RowIndex" },
+                { data: 'name', name: 'name' },
+                { data: 'univ_fakultas', name: 'univ_fakultas' },
+                { data: 'tunggakan_bpp', name: 'tunggakan_bpp' },
+                { data: 'ipk', name: 'ipk' },
+                { data: 'eprt', name: 'eprt' },
+                { data: 'tak', name: 'tak' },
+                { data: 'angkatan', name: 'angkatan' },
+                { data: 'contact', name: 'contact' },
+                { data: 'alamatmhs', name: 'alamatmhs' },
+                { data: 'status', name: 'status' },
+                { data: 'action', name: 'action' },
             ]
         });
     }

@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATS CV</title>
-    <link rel="stylesheet" href="<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
         p {
             margin: 0;
@@ -24,7 +24,7 @@
         }
 
         .section {
-            font-family: 'Public Sans'
+            font-family: 'Public Sans';
         }
 
         .section img {
@@ -66,7 +66,6 @@
         .info .item p {
             color: #000000;
             margin-bottom: 0.625em;
-
         }
 
         .info .item i {
@@ -99,7 +98,6 @@
             letter-spacing: 2px;
             margin-bottom: 0.313em;
             margin-top: 1.5em;
-
         }
 
         .body-section .row-1 .experience .title-experience {
@@ -165,7 +163,6 @@
             font-weight: 700;
         }
 
-
         .row-1 {
             flex: 0 60%;
             margin-right: 2.5em;
@@ -174,6 +171,54 @@
         .row-2 {
             flex: 1;
         }
+
+        .experience {
+            margin-bottom: 25px;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                width: auto;
+                height: auto;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                outline: none;
+            }
+
+            .container {
+                width: auto;
+                height: auto;
+                box-sizing: border-box;
+            }
+
+            #print-button {
+                display: none;
+            }
+        }
+
+        /* Button Styling */
+        #print-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #print-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 
@@ -181,10 +226,10 @@
     <div class="container">
         <div class="section">
             <div class="header">
-                <img src="assets/14.png" alt="Profile Picture">
+                <img src="{{$dataInfoTambahan->profile_picture ?? '-'}}" alt="Profile Picture">
                 <div>
-                    <h2 class="name">John Doe</h2>
-                    <p class="role">Frontend Developer</p>
+                    <h2 class="name">{{$dataInfoTambahan->namamhs ?? '-'}}</h2>
+                    <p class="role">{{$dataInfoTambahan->headliner ?? '-'}}</p>
                 </div>
             </div>
         </div>
@@ -192,15 +237,15 @@
         <div class="section">
             <div class="info">
                 <div style="margin-left: 0;">
-                    <p><i class="ti ti-mail"></i>Mark.lee@gmail.com</p>
-                    <p style="margin-top: 1rem;"><i class="ti ti-phone"></i>098765432110</p>
+                    <p style="font-size: 11.5pt"><i class="ti ti-mail"></i>{{$dataInfoTambahan->emailmhs ?? '-'}}</p>
+                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-phone"></i>{{$dataInfoTambahan->nohpmhs ?? '-'}}</p>
                 </div>
                 <div style="margin: auto;">
-                    <p><i class="ti ti-calendar"></i>01 Januari 2000</p>
-                    <p style="margin-top: 1rem;"><i class="ti ti-map-pin"></i>jln. Rancabolang No. 123</p>
+                    <p style="font-size: 11.5pt"><i class="ti ti-calendar"></i>{{$dataInfoTambahan->tgl_lahir ?? '-'}}</p>
+                    <p style="margin-top: 1rem; font-size: 11.5pt"><i class="ti ti-map-pin"></i>{{$dataInfoTambahan->alamatmhs ?? '-'}}</p>
                 </div>
                 <div style="margin-rught: 0;">
-                    <p ><i class="ti ti-user"></i>Laki - laki</p>
+                    <p style="margin-right: 1rem; font-size: 11.5pt"><i class="ti ti-user"></i>{{$dataInfoTambahan->gender ?? '-'}}</p>
                 </div>
             </div>
         </div>
@@ -209,85 +254,86 @@
             <div class="row-1">
                 <div>
                     <p class="title">Deskripsi Diri</p>
-                    <p>Pengembang perangkat lunak berpengalaman selama 7 tahun dengan keahlian dalam pengembangan
-                        aplikasi
-                        web, manajemen proyek, dan kerja tim lintas disiplin. </p>
+                    <p style="font-size: 11.5pt">{{$dataInfoTambahan->deskripsi_diri ?? '-'}} </p>
                 </div>
                 <p class="title">Pengalaman</p>
+                @foreach($experience as $exp)
                 <div class="experience">
-                    <p class="title-experience">Frontend Developer</p>
-                    <p class="title-company">Techno Infinity - Internship</p>
-                    <p class="time">Juli 2023 - Juni 2024</p>
+                    <p style="font-size: 13.5pt" class="title-experience">{{$exp->posisi ?? '-'}}</p>
+                    <p class="title-company">{{$exp->name_intitutions ?? '-'}}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($exp->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($exp->enddate)->format('F Y') ?? '-'}}</p>
                     <ul>
-                        <li>Merancang dan mengimplementasikan fitur-fitur baru dengan menggunakan HTML, CSS, dan
-                            JavaScript untuk meningkatkan pengalaman pengguna.</li>
-                        <li>Bertanggung jawab atas penyesuaian dan perbaikan desain antarmuka berdasarkan umpan balik
-                            pengguna dan kebutuhan bisnis.</li>
+                        <p style="font-size: 11.5pt">{{$exp->deskripsi ?? '-'}}</p>
                     </ul>
                 </div>
+                @endforeach
+                <p class="title">Dokumen Pendukung</p>
+                @foreach($dokumenPendukung as $doc)
                 <div class="experience">
-                    <p class="title-experience">Frontend Developer</p>
-                    <p class="title-company">Techno Infinity - Internship</p>
-                    <p class="time">Juli 2023 - Juni 2024</p>
-                    <ul>
-                        <li>Merancang dan mengimplementasikan fitur-fitur baru dengan menggunakan HTML, CSS, dan
-                            JavaScript untuk meningkatkan pengalaman pengguna.</li>
-                        <li>Bertanggung jawab atas penyesuaian dan perbaikan desain antarmuka berdasarkan umpan balik
-                            pengguna dan kebutuhan bisnis.</li>
-                    </ul>
+                    <p style="font-size: 13.5pt" class="title-experience">{{ $doc->nama_dokumen ?? '-' }}</p>
+                    <p class="title-company">{{ $doc->penerbit ?? '-' }}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($doc->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($doc->enddate)->format('F Y') ?? '-'}}</p>
+                    <p style="font-size: 11.5pt">{{ $doc->deskripsi ?? '-' }}</p>
+                    <p class="file-highlight" style="font-size: 11pt">
+                        <a href="{{ $doc->link_sertif ?? '#' }}" target="_blank" rel="noopener noreferrer">
+                            {{ Illuminate\Support\Str::limit($doc->link_sertif ?? '-', 30, '...') }}
+                        </a>
+                    </p>
                 </div>
-                <div class="experience">
-                    <p class="title">Dokumen pendukung</p>
-                    <p class="title-experience">Desain UI/UX </p>
-                    <p class="title-company">Coursera</p>
-                    <p class="time">Juli 2023 - Juli 2025</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididuntut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                    <p class="file-highlight">sertifikat_mark_lee.pdf</p>
-                </div>
+                @endforeach
             </div>
             <div class="row-2">
                 <p class="title">Keahlian</p>
-                <p>HTML CSS Visual Studio Figma User Interface
-                    User Experience</p>
+                <ul>
+                    @foreach(json_decode($dataInfoTambahan->skills ?? '[]') as $skill)
+                    <li style="font-size: 11.5pt">{{ $skill ?? '-' }}</li>
+                    @endforeach
+                </ul>
                 <p class="title">Pendidikan</p>
+                @foreach($pendidikan as $pen)
                 <div class="colage">
-                    <p class="title-colage">University Of Melbourne</p>
-                    <p class="title-major">Magister Management</p>
-                    <p class="ipk">IPK 3.89/4.00 </p>
-                    <p class="time">Juli 2023 - Juli 2025</p>
+                    <p style="font-size: 13.5pt" class="title-colage">{{$pen->name_intitutions ?? '-'}}</p>
+                    <p style="font-size: 11.5pt" class="title-major">{{$pen->tingkat ?? '-'}}</p>
+                    <p style="font-size: 11.5pt" class="ipk">{{$pen->nilai ?? '-'}}</p>
+                    <p class="time">{{\Carbon\Carbon::parse($pen->startdate)->format('F Y') ?? '-'}} - {{\Carbon\Carbon::parse($pen->enddate)->format('F Y') ?? '-'}}</p>
                 </div>
-                <div class="colage">
-                    <p class="title-colage">University Of Melbourne</p>
-                    <p class="title-major">Magister Management</p>
-                    <p class="ipk">IPK 3.89/4.00 </p>
-                    <p class="time">Juli 2023 - Juli 2025</p>
-                </div>
+                @endforeach
                 <p class="title">Informasi Tambahan</p>
                 <div class="information">
                     <p class="title-info">Media Sosial</p>
-                    <p style="margin-top: 10px;">Instagram: mark_lee </p>
-                    <p style="margin-top: 10px;">Linkedin: mark_lee </p>
-                </div>
-                <div class="information">
-                    <p class="title-info">Bahasa</p>
-                    <p style="margin-top: 10px;">Bahasa Indonesia</p>
-                    <p style="margin-top: 10px;">Bahasa Inggris</p>
+                    <ul>
+                        @foreach(json_decode($dataInfoTambahan->sosmedmhs ?? '[]') as $sosmed)
+                        <li style="margin-top: 10px; font-size: 10.5pt">{{ $sosmed->namaSosmed ?? '-' }}: {{ $sosmed->urlSosmed ?? '-' }}</li>
+                        @endforeach
+                    </ul>
+                    <div class="information">
+                        <p class="title-info">Bahasa</p>
+                        <ul>
+                            @foreach(json_decode($dataInfoTambahan->bahasa ?? '[]') as $bahasa)
+                            <li style="margin-top: 10px; font-size: 10.5pt">Bahasa {{ $bahasa ?? '-' }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                </div>
-                <div class="information">
-                    <p class="title-info">Ekspektasi Gaji</p>
-                    <p style="margin-top: 10px;">2.000.000</p>
-
-                </div>
-                <div class="information">
-                    <p class="title-info">Lokasi kerja yang diharapkan :</p>
-                    <p style="margin-top: 10px;">Bandung</p>
-
+                    <div class="information">
+                        <p class="title-info">Lokasi kerja yang diharapkan :</p>
+                        <p style="margin-top: 10px; font-size: 10.5pt">{{$dataInfoTambahan->lokasi_yg_diharapkan ?? '-'}}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Print button -->
+    <button id="print-button" onclick="printCV()">Unduh CV</button>
+
+    <script>
+        function printCV() {
+            const printButton = document.getElementById('print-button');
+            printButton.style.display = 'none';
+            window.print();
+            printButton.style.display = 'block';
+        }
+    </script>
 </body>
 
 </html>

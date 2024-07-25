@@ -17,7 +17,7 @@ class PegawaiIndustri extends Model
     public $timestamps = false;
 
     public function industri(){
-        return $this->belongsTo(industri::class, 'id_industri');
+        return $this->belongsTo(Industri::class, 'id_industri');
     }
 
     public function user() {

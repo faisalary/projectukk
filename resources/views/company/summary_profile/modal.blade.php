@@ -12,11 +12,7 @@
                 <div class="modal-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
                         <div class="rounded-circle w-px-100 h-px-100 text-center" style="overflow: hidden;">
-                            @if ($industri->image)
-                                <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar" class="d-block w-100" id="imgPreview2">
-                            @else
-                                <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block w-100" id="imgPreview2" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
-                            @endif
+                            <img src="" alt="user-avatar" class="d-block w-100" id="imgPreview2" default-src="">
                         </div>
                         <div class="d-flex flex-column">
                             <div class="d-flex justify-content-start">
@@ -34,21 +30,20 @@
                         </div>
                     </div>
                     <div class="border-top">
-
                         <div class="row mt-4">
                             <div class="mb-3 col-md-12 form-group">
                                 <label for="namaindustri" class="form-label">Nama Perusahaan <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="namaindustri" name="namaindustri" placeholder="Nama Perusahaan" autofocus="" value="{{ $industri->namaindustri }}">
+                                <input class="form-control" type="text" id="namaindustri" name="namaindustri" placeholder="Nama Perusahaan" autofocus="">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 col-md-12 form-group">
                                 <label for="alamatindustri" class="form-label">Alamat Perusahaan <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamatindustri" name="alamatindustri">{{ $industri->alamatindustri }}</textarea>
+                                <textarea class="form-control" rows="2" placeholder="Masukan Alamat Perusahaan" id="alamatindustri" name="alamatindustri"></textarea>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 col-md-12 form-group">
                                 <label for="description" class="form-label">Deskripsi Perusahaan <span class="text-danger">*</span></label>
-                                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description" name="description">{{ $industri->description }}</textarea>
+                                <textarea class="form-control" rows="2" placeholder="Masukan Deskripsi Perusahaan" id="description" name="description"></textarea>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 col-md-12">
@@ -56,12 +51,12 @@
                                     <label class="form-label">Kontak Perusahaan</label>
                                     <div class="mb-3 col-md-12 form-group">
                                         <label for="notelpon" class="form-label">No. Telepon Perusahaan <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="notelpon" name="notelpon"placeholder="Masukan Nomor Telepon" aria-describedby="floatingInputHelp" value="{{ $industri->notelpon }}">
+                                        <input type="text" class="form-control" id="notelpon" name="notelpon" placeholder="Masukan Nomor Telepon">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3 col-md-12 form-group">
                                         <label for="email" class="form-label">E-mail Perusahaan <span class="text-danger">*</span></label>
-                                        <input type="text" id="email" name="email" class="form-control" placeholder="Masukan E-mail Perusahaan" value="{{ $industri->email }}">
+                                        <input type="text" id="email" name="email" class="form-control" placeholder="Masukan E-mail Perusahaan">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>

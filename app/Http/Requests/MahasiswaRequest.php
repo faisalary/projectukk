@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
+
+use App\Models\Fakultas;
+use App\Models\ProgramStudi;
+use App\Models\Universitas;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,9 +33,28 @@ class MahasiswaRequest extends FormRequest
         return [
             'nim' => $nim,
             'angkatan' => ['required', 'integer'],
-            'id_prodi' => ['required', 'string','max:255', 'exists:program_studi,id_prodi'],
+            'id_prodi' => ['required', 'string','max:255', function ($attribute, $value, $fail) {
+                $fakultas = Fakultas::where('id_fakultas', $this->id_fakultas)->first();
+                $prodi = $fakultas->program_studi()->where('id_prodi', $value)->first();
+                if (!$prodi) {
+                    $fail('Program Studi not found');
+                }
+            }],
             'id_univ' => ['required', 'string', 'max:255', 'exists:universitas,id_univ'],
-            'id_fakultas' => ['required', 'string', 'max:255', 'exists:fakultas,id_fakultas'],
+            'id_fakultas' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                $univ = Universitas::where('id_univ', $this->id_univ)->first();
+                $fakultas = $univ->fakultas()->where('id_fakultas', $value)->first();
+                if (!$fakultas) {
+                    $fail('Fakultas not found');
+                }
+            }],
+            'kode_dosen' => ['required', 'string', 'max:5', function ($attribute, $value, $fail) {
+                $prodi = ProgramStudi::where('id_prodi', $this->id_prodi)->first();
+                $dosen = $prodi->dosen()->where('kode_dosen', $value)->first();
+                if (!$dosen) {
+                    $fail('Dosen not found');
+                }
+            }],
             'namamhs' => ['required', 'string', 'max:255'],
             'alamatmhs' => ['required', 'string', 'max:255'],
             'emailmhs' => ['required', 'string', 'max:255'],
@@ -54,6 +77,9 @@ class MahasiswaRequest extends FormRequest
             'id_univ.exists' => 'Universitas not found',
             'id_fakultas.required' => 'Fakultas must be filled',
             'id_fakultas.exists' => 'Fakultas not found',
+            'kode_dosen.required' => 'Dosen must be filled',
+            'kode_dosen.exists' => 'Dosen not found',
+            'kode_dosen.max' => 'Dosen must be 5 characters',
             'namamhs.required' => 'The name of Mahasiswa must be filled',
             'emailmhs.required' => 'The Email must be filled',
             'nohpmhs.required' => 'The phone number must be filled',

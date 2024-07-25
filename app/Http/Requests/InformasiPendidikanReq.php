@@ -21,18 +21,26 @@ class InformasiPendidikanReq extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $validate = [
             'name_intitutions' => 'required|max:100',
-            'tingkat' => 'required|max:100',
+            'tingkat' => 'required|in:SMP,SMA,SMK,D3,D4,S1',
             'startdate' => 'required',
             'enddate' => 'required',
             'nilai' => 'required|numeric|min:0|max:100'
         ];
+
+        if ($this->data_id) {
+            $validate['data_id'] = 'required|exists:education,id_education';
+        }
+
+
+        return $validate;
     }
 
     public function messages()
     {
         return[
+            'id_education.required' => 'Invalid.',
             'name_intitutions.required' => 'nama institusi wajib di isi',
             'tingkat.required' => 'tingkat wajib di isi',
             'startdate.required' => 'Tahun Pelaksanaan wajib di isi',

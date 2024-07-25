@@ -114,7 +114,8 @@ function initFormRepeater() {
             $(this).slideDown();
         },
         hide: function (e) {
-            confirm('Are you sure you want to delete this element?');
+            let confirm_ = confirm('Are you sure you want to delete this element?');
+            if (!confirm_) return;
             let dataCallback = $(this).attr('data-callback');
             if (typeof window[dataCallback] === "function") window[dataCallback](this);
 
@@ -174,6 +175,7 @@ function sweetAlertConfirm(config, callback) {
         icon: icon,
         showCancelButton: true,
         confirmButtonText: confirmButtonText,
+        cancelButtonText: cancelButtonText,
         customClass: {
             confirmButton: 'btn btn-primary me-3',
             cancelButton: 'btn btn-label-secondary'
@@ -292,6 +294,14 @@ $('.modal').on('hide.bs.modal', function () {
     form.find('.select2_custom').val(null).trigger('change');
     form.find('.is-invalid').removeClass('is-invalid');
     form.find('.invalid-feedback').html(null).removeClass('d-block');
+
+    // reset flatpickr
+    form.find('.flatpickr-date').val(null).trigger('change');
+    form.find('.flatpickr-date').flatpickr({
+        altInput: true,
+        altFormat: 'j F Y',
+        dateFormat: 'Y-m-d'
+    });
 });
 
 $(document).on('click', '.update-status', function () {

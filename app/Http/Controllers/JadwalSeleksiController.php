@@ -2,224 +2,189 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PendaftaranMagangStatusEnum;
 use Exception;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Skill;
-use App\Models\Sertif;
-use App\Models\Seleksi;
-use App\Models\Education;
-use App\Models\Mahasiswa;
-use App\Models\Experience;
+use App\Helpers\Response;
 use Illuminate\Http\Request;
-use App\Models\email_template;
-use App\Models\LowonganMagang;
-use App\Models\InformasiPribadi;
-use App\Models\PendaftaranMagang;
-use App\Models\InformasiTamabahan;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules\Can;
 use App\Http\Requests\SeleksiRequest;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Console\View\Components\Alert;
+use App\Models\LowonganMagang;
+use App\Models\PendaftaranMagang;
 
 class JadwalSeleksiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:jadwal_seleksi_lkm.view');
+        $this->lowongan_magang = null;
+        $this->pendaftaran_magang = null;
     }
 
-    public function index(Request $request, $id)
+    public function index(Request $request)
     {
-        $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang')->first();
-        $mahasiswa = Mahasiswa::all();
-        $lowongan = LowonganMagang::where('id_lowongan', $id)->first();
-        // dd($lowongan);
-        // $lowongan = new LowonganMagang();
-        // $lowongan = [
-        //     'tahap1' => $lowongan->where('tahapan_seleksi', 1)->cound(),
-        //     'tahap2' => $lowongan->where('tahapan_seleksi', 2)->cound(),
-        //     'tahap3' => $lowongan->where('tahapan_seleksi', 3)->cound(),
-
-        // ];
-        // dd($id);
-        $seleksi = Seleksi::all();
-        $email = email_template::all();
-        return view('company.jadwal_seleksi.tambah', compact('pendaftaran', 'mahasiswa', 'seleksi', 'email', 'lowongan'));
+        return view('company.jadwal_seleksi.jadwal');
     }
 
-    public function create()
-    {
-        //
-    }
+    public function getData(Request $request) {
+        $lowongan = $this->getLowonganMagang()->lowongan_magang;
 
-    public function store(SeleksiRequest $request)
-    {
-        try {
-
-            $pendaftaran = PendaftaranMagang::where('current_step', $request->tahapan_seleksi)->get();
-            $pesan = 'Tahap tersebut belum dapat dibuat!';
-            $type = "info";
-            $icon = "info";
-            $title = "Info!";
-
-
-            if ($pendaftaran != null) {
-                foreach ($pendaftaran as $key =>  $value) {
-
-                    list($startDateTime, $endDateTime) = explode(' to ', $request->mulai);
-                    $startTimestamp = strtotime(trim($startDateTime));
-                    $startDate = date('Y-m-d', $startTimestamp);
-                    $startTime = date('H:i', $startTimestamp);
-                    $endTimestamp = strtotime(trim($endDateTime));
-                    $endDate = date('Y-m-d', $endTimestamp);
-                    $endTime = date('H:i', $endTimestamp);
-                    $seleksi = Seleksi::create([
-                        'id_pendaftaran' => $value->id_pendaftaran,
-                        'start_date' => $startDate . " " . $startTime,
-                        'end_date' => $endDate . " " . $endTime,
-                        'tahapan_seleksi' => $request->tahapan_seleksi,
-                        'id_email_tamplate' => $request->subjek,
-                        'id_lowongan' => $value->id_lowongan,
-                    ]);
-                    $pesan = 'Data berhasil dibuat!';
-                    $type = "success";
-                    $icon = "success";
-                    $title = "Succeed!";
-                }
-            }
-
-            $email = email_template::where('id_email_template', $request->subjek)->first();
-            $user = 'Mita Mutiara';
-            Mail::to('mitamutiara476@gmail.com')->send(new \App\Mail\EmailJadwalSeleksi($user, $email->subject_email));
-
-            return response()->json([
-                'error' => false,
-                'message' => $pesan,
-                'title' => $title,
-                'icon' => $icon,
-                'type' => $type,
-                'modal' => '#modalTambahJadwal',
-                'table' => '.table-jadwal-seleksi'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function show(Request $request, $id)
-    {
-        $pelamar = PendaftaranMagang::where('id_lowongan', $id)->get();
-
-        $seleksi = Seleksi::where('id_lowongan', $id)->with('pendaftar', 'pendaftar.mahasiswa');
-
-        if ($request->type) {
-            $seleksi = $seleksi->where('tahapan_seleksi', $request->type)->with('pendaftar', 'pendaftar.mahasiswa');
-        }
-
-        // return $seleksi->get();
-        return DataTables::of($seleksi->get())
-            ->addIndexColumn()
-            ->addColumn('start_date', function ($seleksi) {
-                $time = '<span class="text-muted">Tanggal Mulai</span> <br> <span>' . Carbon::parse($seleksi->start_date)->format('d F Y') . '</span><br> <span class="text-muted">Tanggal Akhir</span><br> <span>' . Carbon::parse($seleksi->end_date)->format('d F Y') . '</span>';
-                return $time;
-            })
-            // ->editColumn('progress', function ($seleksi) {
-            //     return "<div class='col-md-12'>
-            //         <div class='position-relative'>
-            //                 <select class='form-select select2' onchange='progress($(this))' data-type='progress' data-tahap=' " . $seleksi->pendaftar->current_step . " ' data-id='" . $seleksi->id_seleksi_lowongan . " '>
-            //                 <option value='0' " . ((isset($seleksi->seleksi_status->progress) && $seleksi->seleksi_status->progress == '0') ? "selected" : '') . ">Belum Seleksi</option>
-            //                 <option value='1' " . ((isset($seleksi->seleksi_status->progress) && $seleksi->seleksi_status->progress == '1') ? "selected" : '') . ">Sudah Seleksi</option>
-            //             </select>
-            //         </div>
-            //     </div>";
-            // })
-            ->editColumn('status_seleksi', function ($seleksi) {
-                $permission = auth()->user()->can('only.mitra');
-                $status =
-                    "<div class='col-md-12'>
-                    <div class='position-relative'>
-                            <select class='form-select select2' " . (!$permission ? "disabled" : '') . " onchange='progress($(this))' data-tahap=' " . $seleksi->pendaftar->current_step . " ' data-type='status_seleksi' data-id='" . $seleksi->id_seleksi_lowongan . "' data-placeholder='Pilih Status'>
-                            <option value='' disabled selected >Pilih Status</option>
-                            <option value='0' " . ((isset($seleksi->pendaftar->status_seleksi) && $seleksi->pendaftar->status_seleksi == '0') ? "selected" : '') . ">Ditolak</option>
-                            <option value='1' " . ((isset($seleksi->pendaftar->status_seleksi) && $seleksi->pendaftar->status_seleksi == '1') ? "selected" : '') . ">Diterima</option>
-                        </select>
+        return datatables()->of($lowongan)
+        ->addColumn('card', function ($data) {
+            $result = 
+            '<div class="card border cursor-pointer" onclick="window.location.href=`' . route('jadwal_seleksi.detail', $data->id_lowongan) . '`">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-start">
+                            <div class="rounded-circle text-center" style="overflow: hidden; width: 70px; height: 70px;">
+                                <img src="' . asset('app-assets/img/avatars/user.png') . '" alt="user-avatar" class="d-block" width="70" id="image_industri" data-default-src="' . asset('app-assets/img/avatars/user.png') . '">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center ms-3">
+                                <h4 class="mb-1">Fullstack Developer</h4>
+                                <span>IT Computer Software</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="badge bg-label-primary">Status</span>
+                        </div>
                     </div>
-                </div>";
-                return $status;
-            })
-            ->addColumn('action', function ($seleksi) {
-                $btn = "<a href='detail/{$seleksi->id_pendaftaran}' data-id='{$seleksi->id_seleksi_lowongan}' onclick=get($(this)) class='btn-icon text-success waves-effect waves-light'><i class='tf-icons ti ti-file-invoice' ></i></a>";
-                return $btn;
-            })
-            ->rawColumns(['status_seleksi', 'action', 'start_date',])
+                    <div class="d-flex justify-content-between border-bottom pb-4 mt-4">
+                        <div class="d-flex justify-content-start">
+                            <span class="badge badge-center rounded-pill bg-label-primary" style="padding: 1.5rem;">
+                                <i class="ti ti-users" style="font-size: 15pt"></i>
+                            </span>
+                            <div class="d-flex flex-column justify-content-start ms-2">
+                                <span>Total Kandidat</span>
+                                <h5 class="text-primary">0</h5>
+                            </div>
+                        </div>';
 
-            ->make(true);
-    }
-
-    public function detail(Request $request, $id)
-    {
-        $seleksi = Seleksi::where('id_pendaftaran', $id)->first();
-        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $seleksi->id_pendaftaran)->with('lowongan_magang', 'mahasiswa', 'mahasiswa.prodi', 'mahasiswa.fakultas', 'mahasiswa.univ')->first();
-        $lowongan = LowonganMagang::where('id_lowongan', $pendaftar->id_lowongan)->first();
-        $prib = InformasiPribadi::where('nim', $pendaftar->nim)->first();
-        $infoTambah = InformasiTamabahan::where('nim', $pendaftar->nim)->get();
-        $education = Education::where('nim', $pendaftar->nim)->first();
-        $experience = Experience::where('nim', $pendaftar->nim)->get();
-        $skills = Skill::where('nim', $pendaftar->nim)->get();
-        $sertif = Sertif::where('nim', $pendaftar->nim)->get();
-        $picture = $prib?->profile_picture ? url('assets/images/' . $prib->profile_picture) : '\assets\images\no-pictures';
-        $img = $picture . '.png';
-
-        // dd($img);
-
-        return view('company.jadwal_seleksi.detail_mahasiswa', compact('pendaftar', 'lowongan', 'prib', 'img', 'education', 'experience', 'skills', 'sertif', 'infoTambah'));
-    }
-
-    public function edit($id)
-    {
-    }
-
-    public function update(Request $request, $id)
-    {
-        $seleksilowongan = Seleksi::find($id);
-        // $status = StatusSeleksi::find($seleksilowongan->id_status_seleksi);
-        $pendaftaran = PendaftaranMagang::find($seleksilowongan->id_pendaftaran);
-        $lowongan = LowonganMagang::find($pendaftaran->id_lowongan);
-
-        $batas_tahap = $lowongan->tahapan_seleksi;
-
-        $tahap = filter_var($request->tahap, FILTER_SANITIZE_NUMBER_INT);
-        // dd($request->tahap);
-
-        if ($request->type == 'status_seleksi') {
-            if ($request->value == 0) {
-                $pendaftaran->current_step = "ditolak";
-                $pendaftaran->status_seleksi = 0;
-            } else {
-                $pendaftaran->status_seleksi = null;
-
-                if ($tahap == $batas_tahap) {
-                    $pendaftaran->current_step = "penawaran";
-                    $pendaftaran->konfirmasi_status = 3;
-                    $pendaftaran->save();
-                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $batas_tahap;
-                } else if ($request->tahap == 'tahap2') {
-                    $pendaftaran->current_step = 'tahap' . $request->value + 2;
-                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $request->value + 1;
-                } else {
-                    $pendaftaran->current_step = 'tahap' . $request->value + 1;
-                    $seleksilowongan->tahapan_seleksi = 'tahap ' . $request->value;
-                }
-
-                $pendaftaran->save();
-                $seleksilowongan->save();
+            for ($i = 1; $i <= ($data->tahapan_seleksi + 1) ; $i++) {
+                $result .= 
+                '<div class="d-flex justify-content-start">
+                    <span class="badge badge-center rounded-pill bg-label-primary" style="padding: 1.5rem;">
+                        <i class="ti ti-file-report" style="font-size: 15pt"></i>
+                    </span>
+                    <div class="d-flex flex-column justify-content-start ms-2">
+                        <span>Seleksi Tahap ' . $i . '</span>
+                        <h5 class="text-primary">0</h5>
+                    </div>
+                </div>';
             }
-        }
-        $pendaftaran->save();
+
+            $result .= '</div>';
+            $result .= '<div class="d-flex justify-content-start mt-3">
+                <div class="d-flex justify-content-start align-items-center">
+                    <i class="ti ti-calendar"></i>
+                    <span class="ms-3">30 Juli 2023 - 30 Juni 2024</span>
+                </div>
+                <div class="ms-4 d-flex justify-content-start align-items-center">
+                    <i class="ti ti-users"></i>
+                    <span class="ms-3">Kuota Penerimaan: 50</span>
+                </div>
+            </div>';
+
+            $result .= '</div></div>';
+            return $result;
+        })
+        ->rawColumns(['card'])
+        ->make(true);
+    }
+
+    public function detail($id)
+    {
+        $this->getLowonganMagang(function ($query) use ($id) {
+            return $query->where('id_lowongan', $id);
+        });
+
+        $lowongan = $this->lowongan_magang->first();
+        $urlGetData = route('jadwal_seleksi.get_data_detail', $id);
+
+        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData'));
+    }
+
+    public function getDetailData(Request $request, $id) {
+        $request->validate([
+            'tahap' => 'required|in:1,2,3'
+        ]);
+
+        $this->getLowonganMagang(function ($query) use ($id) {
+            return $query->where('id_lowongan', $id);
+        });
+
+        $lowongan_ = $this->lowongan_magang->first();
+
+        $this->getPendaftaranMagang(function ($query) use ($id, $request, $lowongan_) {
+            $query = $query->join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+            ->where('pendaftaran_magang.id_lowongan', $id);
+            for ($i=1; $i <= ($lowongan_->tahapan_seleksi+1); $i++) {
+                if ($request->tahap == $i) $query = $query->where('current_step', constant('App\Enums\PendaftaranMagangStatusEnum::SELEKSI_TAHAP_' . $i));
+            }
+
+            return $query;
+        });
+        $pendaftaran_magang = $this->pendaftaran_magang->transform(function ($item) use ($lowongan_, $request) {
+            $item->seleksi = $lowongan_->load('seleksi_tahap')->seleksi_tahap->where('tahap', $request->tahap)->first();
+            return $item;
+        });
+
+        return datatables()->of($pendaftaran_magang)
+        ->addIndexColumn()
+        ->editColumn('namamhs', function ($x) {
+            $result = '<div class="d-flex flex-column align-items-start">';
+            $result .= '<span class="fw-bolder">' .$x->namamhs. '</span>';
+            $result .= '<span>' .$x->nim. '</span>';
+            $result .= '</div>';
+
+            return $result;
+        })
+        ->addColumn('tanggalpelaksaan', function ($x) {
+            $result = '<div class="d-flex flex-column justify-content-start">';
+            $result .= '<span class="text-muted">Tanggal Mulai</span>';
+            $result .= '<span>' .$x->seleksi->tgl_mulai. '</span>';
+            $result .= '<span class="text-muted">Tanggal Akhir</span>';
+            $result .= '<span>' .$x->seleksi->tgl_akhir. '</span>';
+            $result .= '</div>';
+
+            return $result;
+        })
+        ->editColumn('status', function ($x) {
+            $result = '<select class="select2 form-select" id="status_select">';
+            $result .= '<option value="not_yet">Belum Seleksi</option>';
+            $result .= '<option value="approved">Diterima</option>';
+            $result .= '<option value="rejected">Ditolak</option>';
+            $result .= '</select>';
+
+            return $result;
+        })
+        ->addColumn('action', function ($x) {
+            $result = '<div class="d-flex justify-content-center">';
+            $result .= '<a class="cursor-pointer text-primary"><i class="ti ti-file-invoice"></i></a>';
+            $result .= '</div>';
+
+            return $result;
+        })
+        ->rawColumns(['namamhs', 'tanggalpelaksaan', 'status', 'action'])
+        ->make(true);
+    }
+
+    private function getLowonganMagang($additional = null) {
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+
+        $this->lowongan_magang = LowonganMagang::where('id_industri', $pegawaiIndustri->id_industri);
+        if ($additional != null) $this->lowongan_magang = $additional($this->lowongan_magang);
+        $this->lowongan_magang = $this->lowongan_magang->get();
+        return $this;
+    }
+
+    private function getPendaftaranMagang($addition = null) {
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+
+        $this->pendaftaran_magang = PendaftaranMagang::join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->where('lowongan_magang.id_industri', $pegawaiIndustri->id_industri);
+
+        if ($addition != null) $this->pendaftaran_magang = $addition($this->pendaftaran_magang);
+
+        $this->pendaftaran_magang = $this->pendaftaran_magang->get();
+        return $this;
     }
 }
