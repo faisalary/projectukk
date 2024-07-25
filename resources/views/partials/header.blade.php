@@ -227,7 +227,7 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="pages-account-settings-account.html">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
@@ -244,14 +244,14 @@
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
-                    </li>
+                    </li> --}}
                     <li>
                         <a class="dropdown-item" href="pages-profile-user.html">
                             <i class="ti ti-user-check me-2 ti-sm"></i>
                             <span class="align-middle">My Profile</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="pages-account-settings-account.html">
                             <i class="ti ti-settings me-2 ti-sm"></i>
                             <span class="align-middle">Settings</span>
@@ -289,7 +289,7 @@
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
-                    </li>
+                    </li> --}}
                     <li>
                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" href="{{ route('logout') }}">
                             <i class="ti ti-logout me-2 ti-sm"></i>
