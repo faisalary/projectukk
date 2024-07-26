@@ -6,8 +6,8 @@ use App\Http\Controllers\NilaiMahasiswaController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
-use App\Http\Controllers\DataMahasiswaMagangController;
 use App\Http\Controllers\StatusLamaranMagangController;
+use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');

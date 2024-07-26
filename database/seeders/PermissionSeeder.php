@@ -62,7 +62,8 @@ class PermissionSeeder extends Seeder
         $permission['Dosen'] = [
             // approval mahasiswa
             'approval_mhs_doswal.view',
-            'data_mahasiswa_magang_dosen.view'
+            'data_mahasiswa_magang_dosen.view', 
+            'kelola_mhs_pemb_akademik.view'
         ];
         $permission['Kaprodi'] = [
             'approval_mhs_kaprodi.view',

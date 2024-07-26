@@ -13,7 +13,12 @@ use App\Enums\PendaftaranMagangStatusStepEnum;
 class StatusLamaranMagangController extends Controller
 {
     public function __construct(){
-        $this->lamaran_magang = null;
+        $this->valid_step = [
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
+        ];
     }
 
     public function index(Request $request) {
@@ -31,16 +36,10 @@ class StatusLamaranMagangController extends Controller
             ])
         );
 
-        $validSteps = [
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
-        ];
-
-        $penawaran = $this->lamaran_magang->filter(function ($data) use ($validSteps) {
-
-            return isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step];
+        $penawaran = $this->lamaran_magang->filter(function ($data) {
+            return isset($this->valid_step[$data->current_step]) && ($data->tahapan_seleksi + 1) == $this->valid_step[$data->current_step];
         });
+
         $approved = $this->lamaran_magang->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
 
         $rejected = [
@@ -100,9 +99,9 @@ class StatusLamaranMagangController extends Controller
                     } else if ($request->filter == 'Tahap 1') {
                         return $query->where('current_step', PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 2') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1);
                     } else if ($request->filter == 'Tahap 3') {
-                        return $query->where('current_step', PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2);
+                        return $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2);
                     } else {
                         return $query;
                     }
@@ -138,12 +137,14 @@ class StatusLamaranMagangController extends Controller
                 $data[1]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1:
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2:
-                $data[2]['active'] = true;
-                break;
-            case PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3:
-                $data[3]['active'] = true;
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:
+                if ($this->lamaran_magang[0]->current_step == array_search(($this->lamaran_magang[0]->tahapan_seleksi + 1), $this->valid_step)) {
+                    $data[3]['active'] = true;
+                } else {
+                    $data[2]['active'] = true;
+                }
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
             case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
@@ -165,7 +166,12 @@ class StatusLamaranMagangController extends Controller
     private function setUpBadgeDataLamaran() {
 
         $this->lamaran_magang->transform(function ($item) {
-            $getLabel = PendaftaranMagangStatusEnum::getWithLabel($item->current_step);
+            if ($item->current_step == array_search(($item->tahapan_seleksi + 1), $this->valid_step)) {
+                $getLabel = ['title' => 'Penawaran', 'color' => 'info'];
+            } else {
+                $getLabel = PendaftaranMagangStatusEnum::getWithLabel($item->current_step);
+            }
+
             $item->status_badge = '<span class="badge bg-label-' . $getLabel['color'] . ' text-end">' . $getLabel['title'] . '</span>';
             return $item;
         });
