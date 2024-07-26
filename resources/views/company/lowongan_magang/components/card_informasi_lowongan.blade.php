@@ -99,10 +99,10 @@
                     <i class="ti ti-edit me-2"></i>
                     Tanggal Batas Konfirmasi
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-warning">
+                <a href="{{ route('informasi_lowongan.detail', $data->id_lowongan) }}" class="btn btn-sm btn-outline-warning">
                     <i class="ti ti-eye me-2"></i>
                     Lihat Kandidat
-                </button>
+                </a>
             </div>
         </div>
     </div>

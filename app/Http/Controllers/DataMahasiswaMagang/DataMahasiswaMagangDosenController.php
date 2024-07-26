@@ -43,9 +43,9 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
         }
 
         $validSteps = [
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
         ];
 
         $rejectSteps = [

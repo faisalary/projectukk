@@ -14,9 +14,19 @@
                             <select class="form-select select2" name="tahun_ajaran" id="tahun_ajaran" data-placeholder="Pilih Tahun Ajaran">
                                 <option value="" disabled selected>Pilih Tahun Ajaran</option>
                                 @foreach ($tahunAjaran as $item)
-                                    <option value="{{ $item->id_year_akademik }}">{{ $item->tahun }}</option>
+                                    <option value="{{ $item->id_year_akademik }}">{{ $item->tahun }} [{{ $item->semester }}]</option>
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="mulai_magang">Mulai Magang<span class="text-danger">*</span></label>
+                            <input type="text" name="mulai_magang" id="mulai_magang" class="form-control flatpickr-date">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="selesai_magang">Akhir Magang<span class="text-danger">*</span></label>
+                            <input type="text" name="selesai_magang" id="selesai_magang" class="form-control flatpickr-date">
                             <div class="invalid-feedback"></div>
                         </div>
                         @foreach ($lowongan->jenjang_pendidikan as $key => $item)

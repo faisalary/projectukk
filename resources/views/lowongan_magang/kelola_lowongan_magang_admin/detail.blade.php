@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<a href="{{ $urlBack }}" class="btn btn-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
+<a href="{{ $urlBack }}" class="btn btn-outline-primary"><i class="ti ti-arrow-left me-2"></i>Kembali</a>
 <div class="d-flex justify-content-start mt-3">
     <h4 class="fw-bold text-sm">
         <span class="text-muted fw-light text-xs">Lowongan Magang / Kelola Magang /</span>
@@ -145,11 +145,17 @@
     });
 
     function afterApprove(response) {
-        window.location.href = "{{ $urlBack }}";
+        $('#modalapprove').modal('hide');
+        setTimeout(() => {
+            window.location.href = "{{ $urlBack }}";
+        }, 1500);
     }
 
     function afterReject(response) {
-        window.location.href = "{{ $urlBack }}";
+        $('#modalreject').modal('hide');
+        setTimeout(() => {
+            window.location.href = "{{ $urlBack }}";
+        }, 1500);
     }
     @endif
 </script>

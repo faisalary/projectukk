@@ -28,4 +28,8 @@ class Dosen extends Model
     public function user(){
         return $this->hasOne(User::class, 'id', 'id_user');
     }
+
+    public function mahasiswaBimbingan() {
+        return $this->hasMany(MhsMagang::class, 'nip', 'nip');
+    }
 }
