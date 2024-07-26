@@ -10,11 +10,11 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         <div class="d-flex justify-content-end w-100">
             <button class="btn btn-sm btn-primary" type="button">
-                <i class="tf-icons ti ti-file-symlink"></i>
+                <i class="tf-icons ti ti-file-symlink me-2"></i>
                 Unduh Format CV
             </button>
             <div class="col-8" style="max-width:230px;">
-                <select name="change_status" id="change_status" class="select2 form-select form-select-sm" data-placeholder="Ubah Status">
+                <select name="change_status" id="change_status" onchange="changeStatus($(this));" class="select2 form-select form-select-sm" data-placeholder="Ubah Status">
                     <option value="" disabled selected>Ubah Status</option>
                     @foreach ($listStatus as $key => $item)
                         <option value="{{ $item['value'] }}">{{ $item['label'] }}</option>
@@ -25,6 +25,34 @@
     </div>
     <div class="offcanvas-body pt-1 flex-grow-0 h-100" id="container_detail_pelamar"></div>
 </div>
+
+<!-- Modal Tambah-->
+<div class="modal fade" id="modal-upload-file" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto">Berkas Penerimaan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="default-form" action="" function-callback="afterUploadBerkas">
+                @csrf
+                <div class="modal-body pt-2">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="date" class="form-label">Berkas<span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" name="file" id="file">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer pt-0">
+                    <button type="submit" class="btn btn-primary me-0">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="filter" aria-labelledby="offcanvasAddUserLabel">
     <div class="offcanvas-header">

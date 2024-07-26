@@ -21,6 +21,9 @@ use App\Enums\LowonganMagangStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
+use App\Models\MhsMagang;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class LowonganMagangController extends Controller
 {
@@ -130,7 +133,11 @@ class LowonganMagangController extends Controller
             $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
-            return Response::success($view, 'Success');
+            return Response::success([
+                'view' => $view,
+                'id_pendaftar' => $data['pendaftar']->id_pendaftaran,
+                'current_step' => $data['pendaftar']->current_step
+            ], 'Success');
         }
 
         $data['lowongan'] = $this->my_lowongan_magang->first();
@@ -145,8 +152,9 @@ class LowonganMagangController extends Controller
             $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
         }
 
+        $data['last_seleksi'] = array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step);
         array_push($data['listStatus'], 
-            ['value' => array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step), 'label' => 'Penawaran'],
+            ['value' => $data['last_seleksi'], 'label' => 'Penawaran'],
             ['value' => 'rejected', 'label' => 'Ditolak'],
         );
 
@@ -177,7 +185,22 @@ class LowonganMagangController extends Controller
         $request->validate(['type' => 'required|' . $inArray]);
 
         $this->getPendaftarMagang(function ($query) use ($id, $request) {
-            return $query->where('id_lowongan', $id)->where('current_step', $request->type);
+            $query = $query->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
+            ->where('pendaftaran_magang.id_lowongan', $id);
+
+            if ($request->type == 'all_rejected') {
+                $query = $query->whereIn('current_step', [
+                    PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+                    PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+                    PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+            } else {
+                $query = $query->where('current_step', $request->type);
+            }
+
+            return $query;
         });
 
         return datatables()->of($this->my_pendaftar_magang)
@@ -198,7 +221,12 @@ class LowonganMagangController extends Controller
         ->editColumn('namafakultas', fn ($data) => '<span class="text-nowrap">' . $data->namafakultas . '</span>')
         ->editColumn('namauniv', fn ($data) => '<span class="text-nowrap">' . $data->namauniv . '</span>')
         ->editColumn('current_step', function ($data) {
-            $status = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
+            if ($data->current_step == array_search(($data->tahapan_seleksi + 1), $this->valid_step)) {
+                $status = ['title' => 'Penawaran', 'color' => 'info'];
+            } else {
+                $status = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
+            }  
+
             return '<div class="d-flex justify-content-center"><span class="badge bg-label-' . $status['color'] . '">'. $status['title'] .'</span></div>';
         })
         ->addColumn('action', function ($data) {
@@ -212,6 +240,69 @@ class LowonganMagangController extends Controller
             'namamhs', 'nohpmhs', 'emailmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action'
         ])
         ->make(true);
+    }
+
+    public function updateStatusPelamar(Request $request, $id) {
+        try {
+            $this->getPendaftarMagang(function ($query) use ($id) {
+                return $query->where('id_pendaftaran', $id);
+            });
+
+            $pendaftar = $this->my_pendaftar_magang->first()->load('lowongan_magang');
+            if (!$pendaftar) return Response::error(null, 'Pendaftaran Not Found');
+
+            $lowongan = $pendaftar->lowongan_magang;
+
+            $listStatus = [];
+            for ($i = 0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
+                $listStatus[] = array_search($i, $this->valid_step);
+            }
+
+            $last_seleksi = array_search(($lowongan->tahapan_seleksi + 1), $this->valid_step);
+            array_push($listStatus, 
+                $last_seleksi,
+                'rejected'
+            );
+
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|in:' . implode(',', $listStatus),
+                'file' => 'required_if:status,' . $last_seleksi . '|mimes:pdf|max:2048',
+            ]);
+
+            if ($validator->fails()) {
+                return Response::error($validator->errors()->all(), 'Invalid.');
+            }
+
+            $file = null;
+            if ($request->hasFile('file')) {
+                $file = Storage::put('berkas_mitra', $request->file('file'));
+            }
+
+            $statusPicked = $request->status;
+            if ($request->status == 'rejected') {
+                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3;
+                }
+            }
+
+            $pendaftar->update([
+                'current_step' => $statusPicked,
+                'file_document_mitra' => $file
+            ]);
+            
+            return Response::success([
+                'id_pendaftar' => $pendaftar->id_pendaftaran,
+                'current_step' => $pendaftar->current_step
+            ], 'Success');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
     /** 
