@@ -88,4 +88,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(PendaftaranMagang::class, 'nim', 'nim');
     }
+
+    public function pekerjaan_tersimpan()
+    {
+        return $this->belongsToMany(LowonganMagang::class, 'pekerjaan_tersimpans', 'nim', 'id_lowongan');
+    }
 }

@@ -70,7 +70,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/lowongan-pekerjaan-tersimpan" class="menu-link">
+                                <a href="{{ route('lowongan_tersimpan') }}" class="menu-link">
                                     <div data-i18n="Lowongan Tersimpan">Lowongan Tersimpan</div>
                                 </a>
                             </li>

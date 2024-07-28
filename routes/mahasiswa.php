@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
+use App\Http\Controllers\SimpanLowonganController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
@@ -129,5 +130,10 @@ Route::prefix('kegiatan-saya')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
+    });
+
+    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('save/{id}', 'simpanLowongan')->name('.save');
     });
 });
