@@ -25,8 +25,11 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
     Route::prefix('informasi-lowongan')->name('informasi_lowongan')->group(function () {
         Route::get('/', 'indexInformasi');
         Route::get('/show', 'showInformasi')->name('.show');
-        Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::post('set-date-confirm-closing/{id}', 'setDateConfirmClosing')->name('.set_confirm_closing');
+
+        Route::get('/detail/{id}', 'detailInformasi')->name('.detail');
+        Route::get('/get-data/{id}', 'getDataDetailInformasi')->name('.get_data');
+        Route::post('update-status/{id}', 'updateStatusPelamar')->name('.update_status');
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');
@@ -36,6 +39,7 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/detail/{id}', 'detail')->name('.detail');
         Route::get('/edit/{id}', 'edit')->name('.edit');
         Route::post('/update/{id}', 'update')->name('.update');
+        Route::post('/change-status/{id}', 'status')->name('.change_status');
     });
 });
 

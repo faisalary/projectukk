@@ -150,8 +150,6 @@
 @include('company/lowongan_magang/components/modal_kelola_lowongan')
 @endsection
 @section('page_script')
-    <script src="{{url("app-assets/vendor/libs/jquery-repeater/jquery-repeater.js")}}"></script>
-    <script src="{{url("app-assets/js/forms-extras.js")}}"></script>
     <script>
         $(document).ready(function () {
             loadData();
@@ -195,6 +193,12 @@
             });
         }
 
+        function afterUpdateStatus(response) {
+            $('.table').each(function () {
+                $(this).DataTable().ajax.reload();
+            });
+        }
+
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
         });
@@ -215,7 +219,4 @@
             $('#status').val(null).trigger('change');
         });
     </script>
-
-    <script src="{{url("/app-assets/vendor/libs/sweetalert2/sweetalert2.js")}}"></script>
-    <script src="{{url("/app-assets/js/extended-ui-sweetalert2.js")}}"></script>
 @endsection
