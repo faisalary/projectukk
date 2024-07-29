@@ -2,120 +2,208 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Industri;
-use App\Models\Permission;
+use App\Helpers\Response;
+use App\Models\Education;
+use App\Models\Experience;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
+use App\Models\BahasaMahasiswa;
 use App\Models\PendaftaranMagang;
-use Illuminate\Support\Http\Hash;
-use Illuminate\Support\Http\Storage;
-use Illuminate\Support\Http\Validator;
-use Yajra\DataTables\Facades\DataTables;
+use App\Enums\LowonganMagangStatusEnum;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class InformasiMitraController extends Controller
 {
 
     public function __construct()
     {
-        // $this->middleware('permission:only.lkm,', ['only' => ['index']]);
+        $this->valid_step = [
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
+        ];
     }
 
     public function index()
     {
-        $mitra = LowonganMagang::all();
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('mitra'));
+        return view('lowongan_magang.informasi_lowongan.informasi_mitra');
     }
 
     public function show()
     {
-        $mitra = Industri::with('total_lowongan')->get();
+        $lowongan_magang = LowonganMagang::with('total_pelamar')->where('statusaprove', LowonganMagangStatusEnum::APPROVED)->get();
 
-        return DataTables::of($mitra)
-            ->addIndexColumn()
-            ->addColumn('status', function ($mitra) {
-                if ($mitra->statuskerjasama == "Ya") {
-                    return "<span class='badge bg-label-success me-1'>Ya</span>";
-                } else if ($mitra->statuskerjasama == "Tidak") {
-                    return "<span class='badge bg-label-secondary me-1'>Tidak</span>";
-                } else {
-                    return "<span class='badge bg-label-info me-1'>Internal Telyu</span>";
+        $rejected = [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
+        ];
+
+        $lowongan_magang = $lowongan_magang->map(function ($item) use ($rejected) {
+            $total_pelamar = $item->total_pelamar;
+
+            $item->total_pelamar = $total_pelamar->count();
+            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI)->count();
+
+            $countProsesSeleksi = 0;
+            $countPenawaran = 0;
+            $countRejected = 0;
+
+            foreach ($total_pelamar as $key => $data) {
+                if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) > $this->valid_step[$data->current_step]) {
+                    $countProsesSeleksi++;
+                } else if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) == $this->valid_step[$data->current_step]) {
+                    $countPenawaran++;
+                } else if (in_array($data->current_step, $rejected)) {
+                    $countRejected++;
                 }
-            })
-            ->addColumn('action', function ($row) {
-                return "<a href='" .route('lowongan.informasi.detail', ['id' => $row->id_industri]). "' class='text-success cursor-pointer'><i class='tf-icons ti ti-file-invoice'></a>";
-            })
-            ->editColumn('total_lowongan', function ($row) {
-                return $row->total_lowongan->count();
-            })
-            ->editColumn('total_pelamar', function ($row) {
-                return PendaftaranMagang::leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
-                    ->where('id_industri', $row->id_industri)
-                    ->count();
-            })
+            }
 
-            ->rawColumns(['action', 'status'])
+            $item->proses_seleksi = $countProsesSeleksi;
+            $item->penawaran = $countPenawaran;
 
-            ->make(true);
+            $item->approved = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
+            $item->rejected = $countRejected;
+
+            return $item;
+        });
+
+        return datatables()->of($lowongan_magang)
+            ->addColumn('data', function ($data) {
+            $view = view('lowongan_magang/informasi_lowongan/components/card_informasi_lowongan', compact('data'))->render();
+            return $view;
+        })
+        ->rawColumns(['data'])
+        ->make(true);
     }
 
     public function detail(Request $request, $id)
     {
-        if ($request->ajax() && $request->component == "card") {
-            $lowongan = LowonganMagang::where('id_industri', $id)->get();
-            $industri = Industri::where('id_industri', $id)->first();
+        if ($request->ajax()) {
+            $my_pendaftar_magang = PendaftaranMagang::join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+                ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+                ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+                ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+                ->where('id_lowongan', $id)
+                ->where('id_pendaftaran', $request->data_id);
 
-            $picture = $industri?->image ? url('assets/images/' . $industri->image) : '\assets\images\no-pictures.png';
+            $data['pendaftar'] = $my_pendaftar_magang->first();
+            $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
+            $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
+            $data['skills'] = json_decode($data['pendaftar']->skills, true);
+            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
 
-            $lowongan->transform(function ($item) {
-                $now = Carbon::now();
-                if ($now->lessThan($item->enddate) && $now->greaterThan($item->startdate)) {
-                    $item->status = true;
-                } elseif ($now->greaterThan($item->enddate)) {
-                    $item->status = false;
-                }
+            $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
+            return Response::success([
+                'view' => $view,
+                'id_pendaftar' => $data['pendaftar']->id_pendaftaran,
+                'current_step' => $data['pendaftar']->current_step
+            ], 'Success');
+        }
+        
+        $data['lowongan'] = LowonganMagang::with('total_pelamar')->where('id_lowongan', $id)->first();
 
-                if ($item->status == 'true') {
-                    $item->status = 'Aktif';
-                    $item->color = 'success';
-                } else {
-                    $item->status = 'Non-aktif';
-                    $item->color = 'danger';
-                }
+        $data['tab'] = [
+            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI],
+        ];
 
-                $item->kandidat = $item->total_pelamar->count();
-                $item->screening = $item->total_pelamar->where('current_step', 'screening')->count();
-                $item->penawaran = $item->total_pelamar->where('current_step', 'penawaran')->count();
-                $item->diterima = $item->total_pelamar->where('current_step', 'diterima')->count();
-                $item->ditolak = $item->total_pelamar->where('current_step', 'ditolak')->count();
-
-                return $item;
-            });
-
-
-            return view('lowongan_magang.informasi_lowongan.lowongan_card', compact('lowongan', 'img'))->render();
+        $data['listStatus'] = [];
+        for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) { 
+            $data['tab']['tahap_' . $i] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'icon' => 'ti ti-device-desktop-analytics', 'table' => array_search($i, $this->valid_step)];
+            $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
         }
 
-        $lowongan = LowonganMagang::where('id_industri', $id)->get();
-        $magang = LowonganMagang::where('id_industri', $id)->with('industri')->first();
+        $data['last_seleksi'] = array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step);
+        array_push($data['listStatus'], 
+            ['value' => $data['last_seleksi'], 'label' => 'Penawaran'],
+            ['value' => 'rejected', 'label' => 'Ditolak'],
+        );
 
-        $industri = Industri::where('id_industri', $id)->with('total_lowongan')->first();
-        $pelamar = PendaftaranMagang::where('id_lowongan', $magang->id_lowongan ?? "")->with('lowongan_magang')->first();
-        $lowongan_count = $lowongan->count();
-        $pendaftar_count = $pelamar?->count() ?? "0";
-        $urlGetCard = url('informasi/lowongan', $id);
-        $urlBack = route('lowongan.informasi');
+        $data['tab']['penawaran'] = ['label' => 'Penawaran', 'icon' => 'ti ti-writing-sign', 'table' => array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step)];
+        $data['tab']['diterima'] = ['label' => 'Diterima', 'icon' => 'ti ti-user-check', 'table' => PendaftaranMagangStatusEnum::APPROVED_PENAWARAN];
+        $data['tab']['ditolak'] = ['label' => 'Ditolak', 'icon' => 'ti ti-user-x', 'table' => 'all_rejected'];
 
-        return view('lowongan_magang.informasi_lowongan.informasi_lowongan', compact(
-            'industri', 
-            'urlGetCard', 
-            'lowongan_count', 
-            'pendaftar_count', 
-            'magang', 
-            'lowongan',
-            'urlBack'
-        ));
+        $data['urlGetData'] = route('lowongan.informasi.get_data', $id);
+        $data['urlDetailPelamar'] = route('lowongan.informasi.detail', $id);
+
+        return view('lowongan_magang/informasi_lowongan/detail', $data);
+    }
+
+    public function getDataDetail(Request $request, $id)
+    {
+        $lowongan =  LowonganMagang::where('id_lowongan', $id)->first();
+
+        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+        for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
+            $inArray .= ',' . array_search($i, $this->valid_step);
+        }
+        $inArray .= ',';
+        $inArray .= implode(',', [
+            array_search(($lowongan->tahapan_seleksi + 1), $this->valid_step),
+            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
+            'all_rejected'
+        ]);
+
+        $request->validate(['type' => 'required|' . $inArray]);
+
+        $pendaftarMagang = PendaftaranMagang::join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->where('id_lowongan', $id);
+        if ($request->type == 'all_rejected') {
+            $pendaftarMagang = $pendaftarMagang->whereIn('current_step', [
+                PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+                PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+                PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+            ]);
+        } else {
+            $pendaftarMagang = $pendaftarMagang->where('current_step', $request->type);
+        };
+
+        return datatables()->of($pendaftarMagang)
+        ->addIndexColumn()
+        ->editColumn('namamhs', function ($data) {
+            $result = '<div class="d-flex flex-column align-items-start">';
+            $result .= '<span class="fw-semibold text-nowrap">' .$data->namamhs. '</span>';
+            $result .= '<span class="text-nowrap">' .$data->nim. '</span>';
+            $result .= '</div>';
+            return $result;
+        })
+        ->editColumn('nohpmhs', fn ($data) => '<span class="text-nowrap">' . $data->nohpmhs . '</span>')
+        ->editColumn('emailmhs', fn ($data) => '<span class="text-nowrap">' . $data->emailmhs . '</span>')
+        ->editColumn('tanggaldaftar', function ($data) {
+            return '<span class="text-nowrap">' . Carbon::parse($data->tanggaldaftar)->format('d F Y') . '</span>';
+        })
+        ->editColumn('namaprodi', fn ($data) => '<span class="text-nowrap">' . $data->namaprodi . '</span>')
+        ->editColumn('namafakultas', fn ($data) => '<span class="text-nowrap">' . $data->namafakultas . '</span>')
+        ->editColumn('namauniv', fn ($data) => '<span class="text-nowrap">' . $data->namauniv . '</span>')
+        ->editColumn('current_step', function ($data) {
+            if ($data->current_step == array_search(($data->tahapan_seleksi + 1), $this->valid_step)) {
+                $status = ['title' => 'Penawaran', 'color' => 'info'];
+            } else {
+                $status = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
+            }  
+
+            return '<div class="d-flex justify-content-center"><span class="badge bg-label-' . $status['color'] . '">'. $status['title'] .'</span></div>';
+        })
+        ->addColumn('action', function ($data) {
+            $result = '<div class="d-flex justify-content-center">';
+            $result .= '<a class="cursor-pointer text-primary" onclick="detailInfo($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-file-invoice"></i></a>';
+            $result .= '</div>';
+
+            return $result;
+        })
+        ->rawColumns([
+            'namamhs', 'nohpmhs', 'emailmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action'
+        ])
+        ->make(true);
     }
 }

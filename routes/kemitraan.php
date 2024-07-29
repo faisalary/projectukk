@@ -47,7 +47,9 @@ Route::prefix('lowongan')->name('lowongan')->group(function () {
     Route::prefix('informasi')->name('.informasi')->controller(InformasiMitraController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('show', 'show')->name('.show');
+
         Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::get('/get-data/{id}', 'getDataDetail')->name('.get_data');
     });
 
     Route::prefix('kelola')->name('.kelola')->controller(LowonganMagangLkmController::class)->group(function () {
