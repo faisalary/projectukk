@@ -10,7 +10,7 @@
 <div class="d-flex justify-content-center">
     @foreach ($data as $key => $item)
         <div class="d-flex flex-column justify-content-center align-items-center">
-            <span class="badge badge-center rounded-pill {{ $key <= $activeIndex ? ($item['active'] ? ($item['isReject'] ? 'bg-danger' : 'bg-primary') : 'bg-label-primary') : 'bg-secondary'}}" style="font-size: 19pt;padding: 1.9rem;">{{ $item['title'] }}</span>
+            <span class="badge badge-center rounded-pill {{ $key <= $activeIndex ? ($item['active'] ? ($item['isReject'] ? 'bg-danger' : ($key == count($data) - 1 ? 'bg-primary' : 'bg-label-primary')) : 'bg-primary') : 'bg-secondary'}}" style="font-size: 19pt;padding: 1.9rem;">{{ $item['title'] }}</span>
         </div>
         @if (($key+1) != count($data))      
         <div style="width: 10%;" class="position-relative mx-4">
