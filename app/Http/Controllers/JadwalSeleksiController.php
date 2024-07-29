@@ -12,6 +12,8 @@ use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SeleksiRequest;
 use App\Enums\PendaftaranMagangStatusEnum;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class JadwalSeleksiController extends Controller
 {
@@ -20,7 +22,8 @@ class JadwalSeleksiController extends Controller
         $this->valid_step = [
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 2,
-            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 3
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 3,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 4,
         ];
 
         $this->middleware(function ($request, $next) {
@@ -70,7 +73,9 @@ class JadwalSeleksiController extends Controller
         $urlGetData = route('jadwal_seleksi.get_data_detail', $id);
         $urlSetJadwal = route('jadwal_seleksi.set_jadwal', ['id' => $id]);
 
-        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData', 'urlSetJadwal'));
+        $lastSelection = $lowongan->tahapan_seleksi + 1;
+
+        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData', 'urlSetJadwal', 'lastSelection'));
     }
 
     public function getDetailData(Request $request, $id) {
@@ -115,8 +120,8 @@ class JadwalSeleksiController extends Controller
         })
         ->addColumn('action', function ($x) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= '<a class="mx-1 cursor-pointer text-primary"><i class="ti ti-file-check"></i></a>';
-            $result .= '<a class="mx-1 cursor-pointer text-danger"><i class="ti ti-file-x"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-primary" onclick="approved($(this))" data-id="' .$x->id_pendaftaran. '" data-step="' .$this->valid_step[$x->current_step]. '"><i class="ti ti-file-check"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-danger" onclick="rejected($(this))" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
             $result .= '<a class="mx-1 cursor-pointer text-info"><i class="ti ti-file-invoice"></i></a>';
             $result .= '</div>';
 
@@ -153,6 +158,76 @@ class JadwalSeleksiController extends Controller
             return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
         } catch (\Exception $e) {
             DB::rollBack();
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function approval(Request $request, $id) {
+        try {
+            //code...
+            $this->getPendaftaranMagang(function ($query) use ($id) {
+                return $query->where('id_pendaftaran', $id);
+            });
+
+            $pendaftar = $this->pendaftaran_magang->first();
+            if (!$pendaftar) {
+                return Response::error(null, 'Pendaftar not found');
+            }
+
+            $validateArray = ['status' => 'required|in:approved,rejected'];
+
+            $currentStep = $this->valid_step[$pendaftar->current_step];
+            if ($request->status == 'approved') {
+                if ($currentStep == ($pendaftar->tahapan_seleksi + 1)) {
+                    $validateArray['file'] = 'required|mimes:pdf|max:2048';
+                }
+            } else if ($request->status == 'rejected') {
+                $validateArray['file'] = 'required|mimes:pdf|max:2048';
+            }
+
+            $validator = Validator::make($request->all(), $validateArray, [
+                'status.required' => 'Status harus dipilih',
+                'status.in' => 'Status tidak valid',
+                'file.required' => 'File harus diisi',
+            ]);
+            if ($validator->fails()) return Response::errorValidate($validator->errors(), 'Validation error');
+
+            $statusPicked = $request->status;
+            if ($request->status == 'approved') {
+                $pendaftar->current_step;
+                $data = ['current_step' => array_search(($this->valid_step[$pendaftar->current_step] + 1), $this->valid_step)];
+                if ($currentStep == ($pendaftar->tahapan_seleksi + 1) && $request->hasFile('file')) {
+                    $file = null;
+                    if ($pendaftar->file_document_mitra) Storage::delete($pendaftar->file_document_mitra);
+
+                    $file = Storage::put('berkas_mitra', $request->file('file'));
+                    $data['file_document_mitra'] = $file;
+                }
+            } else if ($request->status == 'rejected') {
+                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2;
+                } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2) {
+                    $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3;
+                }
+
+                $file = null;
+                if ($pendaftar->file_document_mitra) Storage::delete($pendaftar->file_document_mitra);
+
+                $file = Storage::put('berkas_mitra', $request->file('file'));
+                $data['file_document_mitra'] = $file;
+                $data['current_step'] = $statusPicked;
+                $data['reason_reject'] = $request->reason;
+            }
+
+            $pendaftar->update($data);
+
+
+            return Response::success(null, 'Success');
+        } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
     }

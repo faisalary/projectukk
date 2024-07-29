@@ -94,7 +94,86 @@
             altFormat: 'j F Y, H:i',
             dateFormat: 'Y-m-d H:i'
         });
-    })
+    });
+
+    function approved(e) {
+        let data = {'status': 'approved'};
+        let url = "{{ route('jadwal_seleksi.approval', ['id' => ':id']) }}".replace(':id', e.attr('data-id'));
+
+        if ("{{ $lastSelection }}" == e.attr('data-step')) {
+            let modal = $('#modal-upload-file');
+
+            modal.find('form').attr('action', url);
+            modal.find('form').prepend('<input type="hidden" name="status" value="approved">');
+            modal.modal('show');
+            
+        } else {
+            sweetAlertConfirm({
+                title: 'Apakah anda yakin?',
+                text: 'Meloloskan pendaftar pada tahap ini?',
+                icon: 'warning',
+                confirmButtonText: 'Ya, saya yakin!',
+                cancelButtonText: 'Batal'
+            }, function () {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: data,
+                    success: function (response) {
+                        showSweetAlert({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success'
+                        });
+    
+                        $('.table').each(function () {
+                            $(this).DataTable().ajax.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        showSweetAlert({
+                            title: 'Gagal!',
+                            text: xhr.responseJSON.message,
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
+        }
+    }
+
+    function rejected(e) {
+        let modal = $('#modalRejectLamaran');
+        let url = "{{ route('jadwal_seleksi.approval', ['id' => ':id']) }}".replace(':id', e.attr('data-id'));
+
+        modal.find('form').attr('action', url);
+        modal.find('form').prepend('<input type="hidden" name="status" value="rejected">');
+        modal.modal('show');
+    }
+
+    function afterActionRejected(response) {
+        let modal = $('#modalRejectLamaran');
+        modal.find('form').attr('action', '');
+        modal.find('form').find('input[name="status"]').remove();
+        modal.modal('hide');
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+    }
+
+    function afterUploadBerkas(response) {
+        let modal = $('#modal-upload-file');
+
+        modal.find('form').attr('action', '');
+        modal.find('form').find('input[name="status"]').remove();
+        modal.modal('hide');
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+    }
 
     function loadData() {
         $('.table').each(function () {

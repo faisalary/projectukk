@@ -74,6 +74,7 @@ Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(JadwalSeleks
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
     Route::post('detail/{id}/set-jadwal', 'setJadwal')->name('.set_jadwal');
+    Route::post('detail/approval/{id}', 'approval')->name('.approval');
 });
 
 // Route::prefix('jadwal-seleksi')->group(function () {
