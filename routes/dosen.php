@@ -35,4 +35,5 @@ Route::prefix('data-mahasiswa-magang-kaprodi')->name('mahasiswa_magang_kaprodi')
 
 Route::prefix('kelola-mahasiswa')->name('kelola_mhs_pemb_akademik')->controller(KelolaMahasiswaPemAkademikController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('get-data', 'getData')->name('.get_data');
 });
