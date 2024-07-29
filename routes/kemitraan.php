@@ -73,6 +73,7 @@ Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(JadwalSeleks
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
+    Route::get('detail/{id_lowongan}/mahasiswa/{id_pendaftaran}', 'detailMahasiswa')->name('.detail_mahasiswa');
     Route::post('detail/{id}/set-jadwal', 'setJadwal')->name('.set_jadwal');
     Route::post('detail/approval/{id}', 'approval')->name('.approval');
 });

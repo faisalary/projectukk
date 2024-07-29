@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Seleksi;
 use App\Helpers\Response;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SeleksiRequest;
-use App\Enums\PendaftaranMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class JadwalSeleksiController extends Controller
 {
@@ -47,7 +48,11 @@ class JadwalSeleksiController extends Controller
         $lowongan = $this->getLowonganMagang(function ($query) {
             return $query->with('total_pelamar');
         })->lowongan_magang->map(function ($item) {
-            $item->total_kandidat = $item->total_pelamar->count();
+            $item->total_kandidat = $item->total_pelamar->whereIn('current_step', [
+                PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1,
+                PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
+                PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2
+            ])->count();
 
             for ($i=1; $i <= ($item->tahapan_seleksi + 1); $i++) { 
                 $item->{'seleksi_tahap_' . $i} = $item->total_pelamar->filter(function ($data) use ($i) {
@@ -122,13 +127,32 @@ class JadwalSeleksiController extends Controller
             $result = '<div class="d-flex justify-content-center">';
             $result .= '<a class="mx-1 cursor-pointer text-primary" onclick="approved($(this))" data-id="' .$x->id_pendaftaran. '" data-step="' .$this->valid_step[$x->current_step]. '"><i class="ti ti-file-check"></i></a>';
             $result .= '<a class="mx-1 cursor-pointer text-danger" onclick="rejected($(this))" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
-            $result .= '<a class="mx-1 cursor-pointer text-info"><i class="ti ti-file-invoice"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-info" href="' .route('jadwal_seleksi.detail_mahasiswa', ['id_lowongan' => $x->id_lowongan, 'id_pendaftaran' => $x->id_pendaftaran]). '"><i class="ti ti-file-invoice"></i></a>';
             $result .= '</div>';
 
             return $result;
         })
         ->rawColumns(['namamhs', 'tanggalpelaksaan', 'action'])
         ->make(true);
+    }
+
+    public function detailMahasiswa($id_lowongan, $id_pendaftaran) {
+        $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
+            'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
+            'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
+            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas'
+        )
+        ->join('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+        ->join('users', 'mahasiswa.id_user', '=', 'users.id')
+        ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->where('pendaftaran_magang.id_pendaftaran', $id_pendaftaran)->first();
+
+        $data['urlBack'] = route('jadwal_seleksi.detail', $id_lowongan);
+
+        return view('company/jadwal_seleksi/detail_mahasiswa', $data);
     }
 
     public function setJadwal(Request $request, $id) {
