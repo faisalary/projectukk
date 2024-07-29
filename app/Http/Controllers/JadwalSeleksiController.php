@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\PendaftaranMagangStatusEnum;
 use Exception;
+use App\Models\Seleksi;
 use App\Helpers\Response;
 use Illuminate\Http\Request;
-use App\Http\Requests\SeleksiRequest;
 use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\SeleksiRequest;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class JadwalSeleksiController extends Controller
 {
     public function __construct()
     {
-        $this->lowongan_magang = null;
-        $this->pendaftaran_magang = null;
-
         $this->valid_step = [
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 3
         ];
+
+        $this->middleware(function ($request, $next) {
+            $id = $request->route()->parameters()['id'] ?? null;
+
+            $this->getLowonganMagang(function ($query) use ($id) {
+                return $query->where('id_lowongan', $id);
+            });
+
+            return $next($request);
+        })->only(['detail', 'getDetailData', 'setJadwal']);
     }
 
     public function index(Request $request)
@@ -54,16 +64,13 @@ class JadwalSeleksiController extends Controller
         ->make(true);
     }
 
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
-        $this->getLowonganMagang(function ($query) use ($id) {
-            return $query->where('id_lowongan', $id);
-        });
-
         $lowongan = $this->lowongan_magang->first();
         $urlGetData = route('jadwal_seleksi.get_data_detail', $id);
+        $urlSetJadwal = route('jadwal_seleksi.set_jadwal', ['id' => $id]);
 
-        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData'));
+        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData', 'urlSetJadwal'));
     }
 
     public function getDetailData(Request $request, $id) {
@@ -71,13 +78,9 @@ class JadwalSeleksiController extends Controller
             'tahap' => 'required|in:1,2,3'
         ]);
 
-        $this->getLowonganMagang(function ($query) use ($id) {
-            return $query->where('id_lowongan', $id);
-        });
-
         $lowongan_ = $this->lowongan_magang->first()->load('seleksi_tahap');
 
-        $this->getPendaftaranMagang(function ($query) use ($id, $request, $lowongan_) {
+        $this->getPendaftaranMagang(function ($query) use ($id, $request) {
             $query = $query->join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
             ->where('pendaftaran_magang.id_lowongan', $id);
 
@@ -110,24 +113,48 @@ class JadwalSeleksiController extends Controller
 
             return $result;
         })
-        ->editColumn('status', function ($x) {
-            $result = '<select class="select2 form-select" id="status_select">';
-            $result .= '<option value="not_yet">Belum Seleksi</option>';
-            $result .= '<option value="approved">Diterima</option>';
-            $result .= '<option value="rejected">Ditolak</option>';
-            $result .= '</select>';
-
-            return $result;
-        })
         ->addColumn('action', function ($x) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= '<a class="cursor-pointer text-primary"><i class="ti ti-file-invoice"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-primary"><i class="ti ti-file-check"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-danger"><i class="ti ti-file-x"></i></a>';
+            $result .= '<a class="mx-1 cursor-pointer text-info"><i class="ti ti-file-invoice"></i></a>';
             $result .= '</div>';
 
             return $result;
         })
-        ->rawColumns(['namamhs', 'tanggalpelaksaan', 'status', 'action'])
+        ->rawColumns(['namamhs', 'tanggalpelaksaan', 'action'])
         ->make(true);
+    }
+
+    public function setJadwal(Request $request, $id) {
+        try {
+            $this->getPendaftaranMagang(function ($query) use ($id, $request) {
+                return $query->where('pendaftaran_magang.id_lowongan', $id)
+                    ->where('current_step', array_search($request->tahapan_seleksi, $this->valid_step));
+            });
+
+            $pendaftar = $this->pendaftaran_magang;
+
+            DB::beginTransaction();
+            foreach ($pendaftar as $key => $value) {
+                Seleksi::updateOrCreate(
+                    [
+                        'id_pendaftaran' => $value->id_pendaftaran,
+                        'tahapan_seleksi' => $request->tahapan_seleksi
+                    ],
+                    [
+                        'start_date' => Carbon::parse($request->mulai_date)->format('Y-m-d H:i:s'),
+                        'end_date' => Carbon::parse($request->selesai_date)->format('Y-m-d H:i:s')
+                    ]
+                );
+            }
+
+            DB::commit();
+            return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     private function getLowonganMagang($additional = null) {

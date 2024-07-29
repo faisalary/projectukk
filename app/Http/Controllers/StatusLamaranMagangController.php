@@ -18,6 +18,14 @@ class StatusLamaranMagangController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
+            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN => 4
+        ];
+        $this->rejected_step = [ 
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING => 0,                       
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1 => 1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2 => 2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3 => 3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN => 4,
         ];
     }
 
@@ -28,7 +36,7 @@ class StatusLamaranMagangController extends Controller
         }
 
         $this->getDataLamaran()->setUpBadgeDataLamaran();
-
+        
         $proses_seleksi = $this->lamaran_magang->whereIn('current_step', 
             array_diff(PendaftaranMagangStatusEnum::getConstants(), [
                 'rejected_by_doswal', 'rejected_by_kaprodi', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2',
@@ -121,11 +129,11 @@ class StatusLamaranMagangController extends Controller
     private function setUpStepStatusLamaran()
     {
         $data = [
-            ['title' => '1', 'desc' => 'Pra-seleksi oleh internal', 'active' => false],
-            ['title' => '2', 'desc' => 'Screening', 'active' => false],
-            ['title' => '3', 'desc' => 'Seleksi', 'active' => false],
-            ['title' => '4', 'desc' => 'Penawaran', 'active' => false],
-            ['title' => '5', 'desc' => 'Diterima/Ditolak', 'active' => false]
+            ['title' => '1', 'desc' => 'Pra-seleksi oleh internal', 'active' => false, 'isReject' => false],
+            ['title' => '2', 'desc' => 'Screening', 'active' => false, 'isReject' => false],
+            ['title' => '3', 'desc' => 'Seleksi', 'active' => false, 'isReject' => false],
+            ['title' => '4', 'desc' => 'Penawaran', 'active' => false, 'isReject' => false],
+            ['title' => '5', 'desc' => 'Diterima/Ditolak', 'active' => false, 'isReject' => false],
         ];
 
         switch ($this->lamaran_magang[0]->current_step) {
@@ -139,7 +147,8 @@ class StatusLamaranMagangController extends Controller
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2:
-            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:  
+            case PendaftaranMagangStatusEnum::APPROVED_PENAWARAN:                      
                 if ($this->lamaran_magang[0]->current_step == array_search(($this->lamaran_magang[0]->tahapan_seleksi + 1), $this->valid_step)) {
                     $data[3]['active'] = true;
                 } else {
@@ -147,13 +156,26 @@ class StatusLamaranMagangController extends Controller
                 }
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
-            case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
+            case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:      
+                $data[0]['active'] = true;
+                $data[0]['isReject'] = true;
+                break;                     
+            case PendaftaranMagangStatusEnum::REJECTED_SCREENING:
+                $data[1]['active'] = true;
+                $data[1]['isReject'] = true;
+                break;
             case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2:
             case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3:
-            case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:
-                $data[4]['active'] = true;
-                break;
+            case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:      
+                if ($this->lamaran_magang[0]->current_step == array_search(($this->lamaran_magang[0]->tahapan_seleksi + 1), $this->rejected_step)) {
+                    $data[3]['active'] = true;
+                    $data[3]['isReject'] = true;
+                } else {
+                    $data[2]['active'] = true;
+                    $data[2]['isReject'] = true;
+                }
+                break;                          
             default:
                 # code...
                 break;

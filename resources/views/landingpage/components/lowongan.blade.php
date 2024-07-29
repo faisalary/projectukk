@@ -45,7 +45,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="demo-inline-spacing text-center">
-                                <a href="/apply" class="btn btn-primary">Lamar</a>  
+                                <a href="{{ route('apply_lowongan.detail.lamar', $item->id_lowongan) }}" class="btn btn-primary">Lamar</a>  
                                 <a href="{{ route('dashboard.detail-lowongan', $item->id_lowongan) }}" class="btn btn-outline-primary">Detail</a>
                             </div>  
                         </div>

@@ -29,7 +29,7 @@
         </ul>
     </div>
     <div class="text-end">
-        <button class="btn btn-primary">Buat Jadwal</button>
+        <button class="btn btn-primary" id="buatJadwalBtn">Buat Jadwal</button>
     </div>
 </div>
 <div class="row">
@@ -46,7 +46,6 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Pelaksaaan</th>
-                                        <th>Status</th>
                                         <th class="text-center">AKSI</th>
                                     </tr>
                                 </thead>
@@ -60,13 +59,42 @@
     </div>
 </div>
 
+@include('company/jadwal_seleksi/components/modal')
 @endsection
 
 @section('page_script')
 <script>
     $(document).ready(function () {
         loadData();
+
+        $(".flatpickr-date-custom").flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'j F Y, H:i',
+            dateFormat: 'Y-m-d H:i'
+        });
     });
+
+    $('#buatJadwalBtn').on('click', function () {
+        let modal = $("#modalTambahJadwal");
+        let tabActive = $('.nav-link.active').attr('data-bs-target').replace('#navs-pills-', '');
+        modal.find('form').find('#tahapan_seleksi').val(tabActive).change();
+        modal.find('form').find('input[name="tahapan_seleksi"]').val(tabActive);
+
+        modal.modal('show');
+    });
+
+    $("#modalTambahJadwal").on('hide.bs.modal', function () {
+        $(this).find('form').find('input[name="mulai_date"]').val(null).change();
+        $(this).find('form').find('input[name="selesai_date"]').val(null).change();
+
+        $(".flatpickr-date-custom").flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'j F Y, H:i',
+            dateFormat: 'Y-m-d H:i'
+        });
+    })
 
     function loadData() {
         $('.table').each(function () {
@@ -90,11 +118,14 @@
                     { data: 'DT_RowIndex' },
                     { data: 'namamhs', name: 'namamhs' },
                     { data: 'tanggalpelaksaan', name: 'tanggalpelaksaan' },
-                    { data: 'status', name: 'status' },
                     { data: 'action', name: 'action' },
                 ]
             });
         });
+    }
+
+    function afterSetJadwal(response) {
+        $('#modalTambahJadwal').modal('hide');
     }
 </script>
 @endsection
