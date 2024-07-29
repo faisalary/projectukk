@@ -40,9 +40,7 @@ class ApprovalMahasiswaController extends Controller
         $array_status = [];
         if ($request->section == 'sudah-approval') {
             $array_status = array_diff(PendaftaranMagangStatusEnum::getConstants(), ['pending']);
-            foreach ($array_status as $key => $value) {
-                $data = $data->orWhere('pendaftaran_magang.current_step', constant('App\Enums\PendaftaranMagangStatusEnum::' . $key));
-            }
+            $data = $data->whereIn('pendaftaran_magang.current_step', $array_status);
         }
 
         return datatables()->of($data->get())
@@ -59,13 +57,10 @@ class ApprovalMahasiswaController extends Controller
         ->editColumn('tanggaldaftar', fn ($data) => '<div class="text-center">' . Carbon::parse($data->tanggaldaftar)->format('d M Y') . '</div>')
         ->editColumn('current_step', function ($data) use ($array_status) {
             $result = '<div class="text-center">';
-            if ($data->current_step == PendaftaranMagangStatusEnum::PENDING) {
-                $result .= '<span class="badge bg-label-secondary">Belum Approval Tahap 1</span>';
-            } elseif ($data->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL || in_array($data->current_step, $array_status)) {
-                $result .= '<span class="badge bg-label-warning">Sudah Approval Tahap 1</span>';
-            } elseif ($data->current_step == PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL) {
-                $result .= '<span class="badge bg-label-danger">Ditolak</span>';
-            }
+
+            $getStatusLabel = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
+            $result .= '<span class="badge bg-label-' .$getStatusLabel['color']. '">' .$getStatusLabel['title']. '</span>';
+
             $result .= '</div>';
             return $result;
         })
