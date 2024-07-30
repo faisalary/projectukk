@@ -4,7 +4,13 @@
 @endsection
 
 @section('content')
-<div class="row">
+<div class="d-flex justify-content-start">
+    <a href="{{ route('lowongan.informasi') }}" class="btn btn-outline-primary">
+        <i class="ti ti-arrow-left"></i>
+        Kembali
+    </a>
+</div>
+<div class="row mt-3">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang / </span>Informasi Lowongan - Tahun Ajaran 2324</h4>
     </div>
@@ -75,7 +81,7 @@
 
     function loadData(){
         $('#table').DataTable({
-            ajax: "{{ route('lowongan.informasi.show') }}",
+            ajax: "{{ $urlGetData }}",
             serverSide: false,
             processing: true,
             deferRender: true,

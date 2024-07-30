@@ -12,6 +12,7 @@ use App\Models\BahasaMahasiswa;
 use App\Models\PendaftaranMagang;
 use App\Enums\LowonganMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\Industri;
 
 class InformasiMitraController extends Controller
 {
@@ -26,14 +27,60 @@ class InformasiMitraController extends Controller
         ];
     }
 
-    public function index()
-    {
-        return view('lowongan_magang.informasi_lowongan.informasi_mitra');
+    public function listMitra() {
+        return view('lowongan_magang.informasi_lowongan.index');
     }
 
-    public function show()
+    public function getListMitra() {
+        $listMitra = Industri::with([
+            'lowongan_magang' => function ($query) {
+                $query->where('statusaprove', LowonganMagangStatusEnum::APPROVED);
+            },
+            'lowongan_magang.total_pelamar',
+        ])->where('statusapprove', 1)
+        ->get();
+
+        return datatables()->of($listMitra)
+            ->addIndexColumn()
+            ->addColumn('total_lowongan', function($x) {
+                $result = '<div class="d-flex justify-content-center">';
+                $result .= $x->lowongan_magang->count();
+                $result .= '</div>';
+                
+                return $result;
+            })
+            ->addColumn('total_pelamar', function($x) {
+                $result = '<div class="d-flex justify-content-center">';
+                $result .= $x->lowongan_magang->sum(function ($x) {
+                    return $x->total_pelamar->count();
+                });
+                $result .= '</div>';
+                
+                return $result;
+            })
+            ->addColumn('action', function ($x) {
+                $result = '<div class="d-flex justify-content-center">';
+                $result .= '<a href="' .route('lowongan.informasi.list_lowongan', $x->id_industri). '" class="text-primary"><i class="ti ti-file-invoice"></i></a>';
+                $result .= '</div>';
+                return $result;
+            })
+            ->editColumn('statuskerjasama', fn($x) => '<div class="text-center">' . $x->statuskerjasama . '</div>')
+            ->rawColumns(['total_lowongan', 'total_pelamar', 'statuskerjasama', 'action'])
+            ->make(true);
+    }
+
+    public function index($id)
     {
-        $lowongan_magang = LowonganMagang::with('total_pelamar')->where('statusaprove', LowonganMagangStatusEnum::APPROVED)->get();
+        $urlGetData = route('lowongan.informasi.show', $id);
+        return view('lowongan_magang.informasi_lowongan.informasi_mitra', compact('urlGetData'));
+    }
+
+    public function show($id)
+    {
+        $lowongan_magang = LowonganMagang::with('total_pelamar')
+            ->where('id_industri', $id)
+            ->where('statusaprove', LowonganMagangStatusEnum::APPROVED)
+            ->get();
 
         $rejected = [
             PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,

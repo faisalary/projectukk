@@ -45,8 +45,11 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
 
 Route::prefix('lowongan')->name('lowongan')->group(function () {
     Route::prefix('informasi')->name('.informasi')->controller(InformasiMitraController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('show', 'show')->name('.show');
+        Route::get('/', 'listMitra');
+        Route::get('get-mitra', 'getListMitra')->name('.get_mitra');
+
+        Route::get('mitra/{id}', 'index')->name('.list_lowongan');
+        Route::get('show/{id}', 'show')->name('.show');
 
         Route::get('detail/{id}', 'detail')->name('.detail');
         Route::get('/get-data/{id}', 'getDataDetail')->name('.get_data');
