@@ -29,7 +29,7 @@
         </ul>
     </div>
     <div class="text-end">
-        <button class="btn btn-primary">Buat Jadwal</button>
+        <button class="btn btn-primary" id="buatJadwalBtn">Buat Jadwal</button>
     </div>
 </div>
 <div class="row">
@@ -46,7 +46,6 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Pelaksaaan</th>
-                                        <th>Status</th>
                                         <th class="text-center">AKSI</th>
                                     </tr>
                                 </thead>
@@ -60,13 +59,121 @@
     </div>
 </div>
 
+@include('company/jadwal_seleksi/components/modal')
 @endsection
 
 @section('page_script')
 <script>
     $(document).ready(function () {
         loadData();
+
+        $(".flatpickr-date-custom").flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'j F Y, H:i',
+            dateFormat: 'Y-m-d H:i'
+        });
     });
+
+    $('#buatJadwalBtn').on('click', function () {
+        let modal = $("#modalTambahJadwal");
+        let tabActive = $('.nav-link.active').attr('data-bs-target').replace('#navs-pills-', '');
+        modal.find('form').find('#tahapan_seleksi').val(tabActive).change();
+        modal.find('form').find('input[name="tahapan_seleksi"]').val(tabActive);
+
+        modal.modal('show');
+    });
+
+    $("#modalTambahJadwal").on('hide.bs.modal', function () {
+        $(this).find('form').find('input[name="mulai_date"]').val(null).change();
+        $(this).find('form').find('input[name="selesai_date"]').val(null).change();
+
+        $(".flatpickr-date-custom").flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'j F Y, H:i',
+            dateFormat: 'Y-m-d H:i'
+        });
+    });
+
+    function approved(e) {
+        let data = {'status': 'approved'};
+        let url = "{{ route('jadwal_seleksi.approval', ['id' => ':id']) }}".replace(':id', e.attr('data-id'));
+
+        if ("{{ $lastSelection }}" == e.attr('data-step')) {
+            let modal = $('#modal-upload-file');
+
+            modal.find('form').attr('action', url);
+            modal.find('form').prepend('<input type="hidden" name="status" value="approved">');
+            modal.modal('show');
+            
+        } else {
+            sweetAlertConfirm({
+                title: 'Apakah anda yakin?',
+                text: 'Meloloskan pendaftar pada tahap ini?',
+                icon: 'warning',
+                confirmButtonText: 'Ya, saya yakin!',
+                cancelButtonText: 'Batal'
+            }, function () {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: data,
+                    success: function (response) {
+                        showSweetAlert({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success'
+                        });
+    
+                        $('.table').each(function () {
+                            $(this).DataTable().ajax.reload();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        showSweetAlert({
+                            title: 'Gagal!',
+                            text: xhr.responseJSON.message,
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
+        }
+    }
+
+    function rejected(e) {
+        let modal = $('#modalRejectLamaran');
+        let url = "{{ route('jadwal_seleksi.approval', ['id' => ':id']) }}".replace(':id', e.attr('data-id'));
+
+        modal.find('form').attr('action', url);
+        modal.find('form').prepend('<input type="hidden" name="status" value="rejected">');
+        modal.modal('show');
+    }
+
+    function afterActionRejected(response) {
+        let modal = $('#modalRejectLamaran');
+        modal.find('form').attr('action', '');
+        modal.find('form').find('input[name="status"]').remove();
+        modal.modal('hide');
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+    }
+
+    function afterUploadBerkas(response) {
+        let modal = $('#modal-upload-file');
+
+        modal.find('form').attr('action', '');
+        modal.find('form').find('input[name="status"]').remove();
+        modal.modal('hide');
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+    }
 
     function loadData() {
         $('.table').each(function () {
@@ -90,11 +197,14 @@
                     { data: 'DT_RowIndex' },
                     { data: 'namamhs', name: 'namamhs' },
                     { data: 'tanggalpelaksaan', name: 'tanggalpelaksaan' },
-                    { data: 'status', name: 'status' },
                     { data: 'action', name: 'action' },
                 ]
             });
         });
+    }
+
+    function afterSetJadwal(response) {
+        $('#modalTambahJadwal').modal('hide');
     }
 </script>
 @endsection

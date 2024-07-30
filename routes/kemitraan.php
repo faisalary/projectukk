@@ -45,9 +45,14 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
 
 Route::prefix('lowongan')->name('lowongan')->group(function () {
     Route::prefix('informasi')->name('.informasi')->controller(InformasiMitraController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('show', 'show')->name('.show');
+        Route::get('/', 'listMitra');
+        Route::get('get-mitra', 'getListMitra')->name('.get_mitra');
+
+        Route::get('mitra/{id}', 'index')->name('.list_lowongan');
+        Route::get('show/{id}', 'show')->name('.show');
+
         Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::get('/get-data/{id}', 'getDataDetail')->name('.get_data');
     });
 
     Route::prefix('kelola')->name('.kelola')->controller(LowonganMagangLkmController::class)->group(function () {
@@ -73,6 +78,9 @@ Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(JadwalSeleks
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
+    Route::get('detail/{id_lowongan}/mahasiswa/{id_pendaftaran}', 'detailMahasiswa')->name('.detail_mahasiswa');
+    Route::post('detail/{id}/set-jadwal', 'setJadwal')->name('.set_jadwal');
+    Route::post('detail/approval/{id}', 'approval')->name('.approval');
 });
 
 // Route::prefix('jadwal-seleksi')->group(function () {
