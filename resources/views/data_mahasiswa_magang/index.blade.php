@@ -119,6 +119,12 @@
 
     function afterAssigning(response) {
         $("#modal-assign").modal("hide");
+
+        $('input.dt-checkboxes').prop('checked', false);
+
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
     }
 </script>
 @endif

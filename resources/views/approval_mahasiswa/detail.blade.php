@@ -102,9 +102,9 @@
                 <div class="border-bottom mt-3">
                     <h4 class="mb-3">Keahlian</h4>
                     <div class="d-flex justify-content-start mb-3">
-                        <span class="badge rounded-pill mx-1 bg-primary">Check</span>
-                        <span class="badge rounded-pill mx-1 bg-primary">Check</span>
-                        <span class="badge rounded-pill mx-1 bg-primary">Check</span>
+                        @foreach (json_decode($data->skills, true) as $item)
+                        <span class="badge rounded-pill mx-1 bg-primary">{{ $item }}</span>
+                        @endforeach
                     </div>
                 </div>
                 <div class="mt-3">

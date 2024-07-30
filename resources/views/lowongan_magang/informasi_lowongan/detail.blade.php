@@ -1,13 +1,6 @@
-@extends('partials_admin.template')
-@section('meta_header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/tagify/tagify.css') }}" />
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
-<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
 <style>
     .tooltip-inner {
         min-width: 100%;
@@ -28,41 +21,13 @@
     #more {
         display: none;
     }
-
-    span.select2-selection.select2-selection--single {
-        width: 200px;
-    }
 </style>
 @endsection
 
-@section('main')
-<button class="btn btn-outline-success my-2 waves-effect p-3 mb-4" type="button" id="back" style="width: 10%; height:5%;">
-    <i class="bi bi-arrow-left text-success" style="font-size: medium;"> Kembali </i>
-</button>
-<div class="row">
-    <div class="col-md-12 col-12">
-        <nav aria-label="breadcrumb">
-            <h4>
-                <ol class="breadcrumb breadcrumb-style1">
-                    @can('title.info.lowongan.admin')
-                    <li class="breadcrumb-item text-secondary">
-                        Informasi Mitra
-                    </li>
-                    @endcan
-                    <li class="breadcrumb-item">
-                        <a class="text-secondary">Informasi Lowongan</a>
-                    </li>
-                    <li class="breadcrumb-item active">Lowongan
-                        {{ $pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position }} Periode 21 April
-                        - 14 Juni 2023
-                    </li>
-                </ol>
-            </h4>
-        </nav>
-        <!-- <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> <span class="text-muted fw-light">Informasi Lowongan /</span> Fullstack Developer - Tahun Ajaran 2324</h4> -->
-    </div>
-    <div class="col-9"></div>
-    <div class="col-md-3 col-12 mb-3 d-flex align-items-center justify-content-between">
+@section('content')
+<div class="d-flex justify-content-between">
+    <h4 class="fw-bold"><span class="text-muted fw-light">Informasi Lowongan / </span>{{ $lowongan->intern_position }}</h4>
+    <div class="d-flex justify-content-end">
         <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
             <option value="1">2023/2024 Genap</option>
             <option value="2">2023/2024 Ganjil</option>
@@ -71,195 +36,75 @@
             <option value="5">2021/2022 Genap</option>
             <option value="6">2021/2022 Ganjil</option>
         </select>
-        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalfilter"><i class="tf-icons ti ti-filter"></i>
-        </button>
+        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
     </div>
 </div>
 
 <div class="col-xl-12">
     <div class="nav-align-top">
         <ul class="nav nav-pills mb-3 " role="tablist">
+            @foreach ($tab as $key => $item)
             <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link active showSingle" target="1" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-kandidat" aria-controls="navs-pills-justified-kandidat" aria-selected="true" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-users ti-xs me-1"></i> Data Kandidat
+                <button type="button" class="{{ $loop->first ? 'active' : '' }} nav-link" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#{{ $key }}" aria-controls="{{ $key }}" aria-selected="false" style="padding: 8px 9px;">
+                    <i class="tf-icons {{ $item['icon'] }} ti-xs me-1"></i>
+                    {{ $item['label'] }}
+                    <span class="badge rounded-pill bg-label-primary badge-center h-px-20 w-px-20 ms-1" id="total_{{ $item['table'] }}">
+                        0
+                    </span>
                 </button>
             </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class=" nav-link showSingle" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-screening" aria-controls="navs-pills-justified-screening" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-files ti-xs me-1"></i> Screening
-                </button>
-            </li>
-            @if ($lowongan->tahapan_seleksi == '1')
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                </button>
-            </li>
-            @elseif($lowongan->tahapan_seleksi == '2')
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
-                </button>
-            </li>
-            @else
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="3" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap1" aria-controls="navs-pills-justified-tahap1" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 1
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="4" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap2" aria-controls="navs-pills-justified-tahap2" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 2
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="5" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tahap3" aria-controls="navs-pills-justified-tahap3" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-device-desktop-analytics ti-xs me-1"></i> Seleksi Tahap 3
-                </button>
-            </li>
-            @endif
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="6" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-penawaran" aria-controls="navs-pills-justified-penawaran" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-writing-sign ti-xs me-1"></i> Penawaran
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="7" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-diterima" aria-controls="navs-pills-justified-diterima" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Diterima
-                </button>
-            </li>
-            <li class="nav-item" style="font-size: small;">
-                <button type="button" class="nav-link showSingle" target="8" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false" style="padding: 8px 9px;">
-                    <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Ditolak
-                </button>
-            </li>
+            @endforeach
         </ul>
     </div>
 
     <div class="row cnt">
-        <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta" id="tooltip-filter"></i></div>
-        @foreach (['2', '3', '4', '5'] as $statusId)
-        @if ($statusId == 2)
-        @can('ubah.lowongan.admin')
-        <div id="div{{ $statusId }}" class="col-xl-1 targetDiv" style="display: none;">
-
+        <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta, Status :  Diterima" id="tooltip-filter"></i></div>
+        <div id="div2" class="col-1 targetDiv" style="display: none;">
             <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <form class="status-form d-flex" method=" POST" action="{{ route('kandidat.status') }}">
-                    @csrf
-                    <select class="form-select select2" data-placeholder="Ubah Status Kandidat" name="status">
-                        <option value="" disabled selected>Ubah Status Kandidat</option>
-                        <option value="tahap1">Tahap 1</option>
-                        <option value="ditolak">Ditolak</option>
-                    </select>
-
-                    <button class="btn btn-success waves-effect waves-light mr-4" type="submit" style="min-width: 142px;"><i class="tf-icons ti ti-checks"> Terapkan</i>
-                    </button>
-                </form>
+                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
+                </select>
+                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks">
+                        Terapkan</i>
+                </button>
             </div>
-        </div>
-        @endcan
-        @endif
-        @endforeach
-    </div>
-
-    <!-- Modal Filter -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalfilter" aria-labelledby="offcanvasAddUserLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title" style="padding-left: 15px;">Filter Berdasarkan
-            </h5>
-        </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-            <form class="add-new-user pt-0" id="filter">
-                <div class="col-12 mb-2">
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label" style="padding-left: 15px;">Universitas</label>
-                            <select class="form-select select2" id="univ" name="univ" data-placeholder="Pilih Universitas">
-                                <option disabled selected>Pilih Universitas</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-2">
-                            <label for="fakultas" class="form-label" style="padding-left: 15px;">Fakultas</label>
-                            <select class="form-select select2" id="fakultas" name="fakultas" data-placeholder="Pilih Fakultas">
-                                <option disabled selected>Pilih Fakultas</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-2 form-input">
-                            <label for="univ" class="form-label" style="padding-left: 15px;">Prodi</label>
-                            <select class="form-select select2" id="prodi" name="prodi" data-placeholder="Pilih Prodi">
-                                <option disabled selected>Pilih Prodi</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="row cnt">
-                        <div id="div1" class="targetDiv">
-                            <div class="col mb-2 form-input">
-                                <label for="univ" class="form-label" style="padding-left: 15px;">Status
-                                    Kandidat</label>
-                                <select class="form-select select2" id="status" name="status" data-placeholder="Status Kandidat">
-                                    <option disabled selected>Pilih Status Kandidat</option>
-                                    <option>Screening</option>
-                                    <option>Seleksi Tahap 1</option>
-                                    <option>Seleksi Tahap 2</option>
-                                    <option>Penawaran</option>
-                                    <option>Diterima</option>
-                                    <option>Ditolak</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3 text-end">
-                    <button type="button" class="btn btn-label-danger">Reset</button>
-                    <button type="submit" class="btn btn-success">Terapkan</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <div class="tab-content p-0">
-        @foreach (['kandidat', 'screening', 'tahap1', 'tahap2', 'tahap3', 'penawaran', 'diterima', 'ditolak'] as $tableId)
-        <div class="tab-pane fade show {{ $loop->iteration == 1 ? 'active' : '' }}" id="navs-pills-justified-{{ $tableId }}" role="tabpanel">
+        @foreach ($tab as $key => $item)
+        <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="{{ $key }}" role="tabpanel">
             <div class="card">
-                <div class="row mt-3 ms-2">
-                    <div class="col-6 d-flex align-items-center" style="border: 2px solid #D3D6DB; max-width:420px; height:40px;border-radius:8px;">
-                        <span style="color:#4B465C;">Total Kandidat
-                            {{ $pendaftar->lowonganMagang->intern_position ?? $lowongan->intern_position }}:</span>&nbsp;<span style="color:#7367F0;">{{ $total['kandidat'] ?? '0' }}</span>&nbsp;<span style="color:#4EA971;"> Kandidat Melamar </span>
+                <div class="d-flex align-items-center justify-content-between p-3">
+                    <div class="card shadow-none border border-secondary">
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span class="badge p-2 bg-label-success me-2">
+                                    <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
+                                </span>
+                                <span class="mb-0 me-2">Total Pelamar:</span>
+                                <h5 class="mb-0 me-2 text-primary" id="total-{{ $item['table'] }}">0</h5>
+                                <span class="mb-0 me-2">Lowongan </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 d-flex align-items-center justify-content-end" style="margin-left:180px;">
-                        <span style="color:#4B465C;">Batas Konfirmasi Penerimaan :</span>&nbsp;<span style="color:#4EA971;">{{ $lowongan->date_confirm_closing?->format('d-m-Y') ?? 'Masukan batas konfirmasi penerimaan' }}</span>
+                    <div>
+                        <span class="fw-semibold">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">20 Juli 2023</span></span>
                     </div>
                 </div>
-
                 <div class="card-datatable table-responsive">
-                    <table class="table tab1c" id="{{ $tableId }}">
+                    <table class="table" id="{{ $item['table'] }}" style="width: 100%;">
                         <thead>
                             <tr>
-                                @can('only.lkm')
-                                <th style="min-width: 35px;">SELECT</th>
-                                @endcan
-                                <th style="min-width: 35px;">NOMOR</th>
-                                <th style="min-width:100px;">NAMA</th>
-                                <th style="min-width:150px;">TANGGAL DAFTAR</th>
-                                <th style="min-width:100px;">NO TELEPON </th>
-                                <th style="min-width:200px;">EMAIL</th>
-                                <th style="min-width:150px;">PROGRAM STUDI</th>
-                                <th style="min-width:100px;">FAKULTAS</th>
-                                <th style="min-width:150px;">UNIVERSITAS</th>
-                                <th style="min-width:100px;">STATUS</th>
-                                <th style="min-width:100px;">AKSI</th>
+                                <th>No</th>
+                                <th>NAMA</th>
+                                <th>NO TELEPON </th>
+                                <th>EMAIL</th>
+                                <th class="text-center">Tanggal Daftar</th>
+                                <th>PROGRAM STUDI</th>
+                                <th>FAKULTAS</th>
+                                <th>UNIVERSITAS</th>
+                                <th class="text-center">STATUS</th>
+                                <th class="text-center">AKSI</th>
                             </tr>
                         </thead>
                     </table>
@@ -267,143 +112,71 @@
             </div>
         </div>
         @endforeach
-
     </div>
-    @endsection
+    @include('lowongan_magang/informasi_lowongan/components/modal')
+</div>
+@endsection
 
-    @section('page_script')
-    <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-    <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
-    <script>
-        $('.table').each(function() {
-            let idElement = $(this).attr('id');
-            let idLowongan = `{{ $pendaftar->id_lowongan ?? 0 }}`;
-            let url = `{{ url('/informasi/kandidat/show/${idLowongan}') }}?type=` + idElement;
-            if ($(this).attr('id') == null) return;
-            // console.log(idElement);
-            // console.log(url);
-            // console.log(idLowongan);
-
-
-            $(this).DataTable({
-                ajax: url,
-                headers: {
-                    "X-CSRF-TOKEN": $(
-                        'meta[name="csrf-token"]'
-                    ).attr("content"),
-                },
-                scrollX: true,
+@section('page_script')
+<script>
+    $('.table').each(function () {
+        $(this).DataTable({
+            ajax: {
+                url: "{{ $urlGetData }}",
                 type: 'GET',
-                columns: [
-                    @can('only.lkm') {
-                        data: "check"
-                    },
-                    @endcan {
-                        data: "DT_RowIndex",
-                        name: 'nomor'
-                    },
-                    {
-                        data: null,
-                        name: 'combined_column',
-                        render: function(data, type, row) {
-                            return data.mahasiswa.namamhs + '<br>' + (data.mahasiswa.nim);
-                        }
-                    },
-                    {
-                        data: "tgl_daftar",
-                        name: 'tanggal_daftar'
-                    },
-                    {
-                        data: "mahasiswa.nohpmhs",
-                        name: 'nohp'
-                    },
-
-                    {
-                        data: "mahasiswa.emailmhs",
-                        name: 'email'
-                    },
-                    {
-                        data: function(data, type, row) {
-                            return data.mahasiswa.prodi.namaprodi;
-                        },
-                        name: 'prodi'
-                    },
-                    {
-                        data: function(data, type, row) {
-                            return data.mahasiswa.fakultas.namafakultas;
-                        },
-                        name: 'fakultas'
-                    },
-                    {
-                        data: function(data, type, row) {
-                            return data.mahasiswa.univ.namauniv;
-                        },
-                        name: 'univ'
-                    },
-                    {
-                        data: "status"
-                    },
-                    {
-                        data: "action"
-                    }
-                ],
-                fixedColumns: {
-                    left: 3,
-                    right: 2
-                },
-            });
+                data: {type: $(this).attr('id')}
+            },
+            scrollX: true,
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            destroy: true,
+            drawCallback: function( settings, json ) {
+                let total = this.api().data().count();
+                $('#total_' + $(this).attr('id')).text(total);
+                $('#total-' + $(this).attr('id')).text(total);
+            },
+            columns: [
+                { data: "DT_RowIndex" },
+                { data: "namamhs" },
+                { data: "nohpmhs" },
+                { data: "emailmhs" },
+                { data: "tanggaldaftar" },
+                { data: "namaprodi" },
+                { data: "namafakultas" },
+                { data: "namauniv" },
+                { data: "current_step" },
+                { data: "action" },
+            ]
         });
+    });
 
-        $(document).ready(function() {
-            $('.form-select').select2();
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+    });
+
+    function detailInfo(e) {
+        let offcanvas = $('#detail_pelamar_offcanvas');
+        offcanvas.offcanvas('show');
+        btnBlock(offcanvas);
+
+        $.ajax({
+            url: "{{ $urlDetailPelamar }}?data_id=" + e.attr('data-id'),
+            type: "GET",
+            success: function (response) {
+                btnBlock(offcanvas, false);
+                response = response.data;
+                $('#container_detail_pelamar').html(response.view);
+                $('#change_status').attr('data-id', response.id_pendaftar);
+                $('#change_status').attr('data-default', response.current_step);
+                $('#change_status').val(response.current_step).change();
+            }
         });
+    }
 
-        jQuery(function() {
-            jQuery('.showSingle').click(function() {
-                let idElement = $(this).attr('target');
-
-                jQuery('.targetDiv').hide('.cnt');
-                jQuery("#div" + idElement).slideToggle();
-
-                // console.log(idElement);
-            });
-        });
-
-        function myFunction() {
-            var dots = document.getElementById("dots");
-            var moreText = document.getElementById("more");
-            var btnText = document.getElementById("myBtn");
-            https: //meet.google.com/bqa-trxd-gkg
-
-                if (dots.style.display === "none") {
-                    dots.style.display = "inline";
-                    btnText.innerHTML = "Lebih Banyak";
-                    moreText.style.display = "none";
-                } else {
-                    dots.style.display = "none";
-                    btnText.innerHTML = "Lebih Sedikit";
-                    moreText.style.display = "inline";
-                }
-        }
-
-
-        $('.display').DataTable({
-            responsive: true
-        });
-
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
-        });
-
-        document.getElementById("back").addEventListener("click", () => {
-            history.back();
-        });
-    </script>
-
-    <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-    <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-    <script src="{{ asset('app-assets/vendor/libs/tagify/tagify.js') }}"></script>
-    <script src="{{ asset('app-assets/js/forms-tagify.js') }}"></script>
-    <script src="{{ asset('app-assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-    <script src="{{ asset('app-assets/js/forms-extras.js') }}"></script>
-    @endsection
+    $('#detail_pelamar_offcanvas').on('hidden.bs.offcanvas', function () {
+        $('#container_detail_pelamar').html(null);
+        $('#change_status').removeAttr('data-id');
+    });
+</script>
+@endsection

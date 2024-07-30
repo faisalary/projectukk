@@ -5,12 +5,11 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\KonfigurasiController;
-use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\KelolaPenggunaController;
 use App\Http\Controllers\MitraPerusahaanController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\KelolaSemuaPenggunaController;
-use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
+use App\Http\Controllers\JadwalSeleksiAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +52,7 @@ Route::prefix('/apply-lowongan')->name('apply_lowongan')->group(function () {
     Route::get('/lamar/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'lamar'])->name('.detail.lamar')->middleware('auth');
     Route::get('/persentase/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'persentase'])->name('persentase.index')->middleware('auth');
     Route::post('/apply/{id}', [App\Http\Controllers\ApplyLowonganFakultasController::class, 'apply'])->name('.apply')->middleware('auth');
-});  
+});
 
 Route::middleware('auth')->group(function () {
     require __DIR__ . '/master_data.php';
@@ -157,6 +156,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'update'])->name('mandiri.update');
         Route::get('/edit/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'edit'])->name('mandiri.edit');
         Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMandiriController::class, 'status'])->name('mandiri.status');
+    });
+
+    Route::prefix('jadwal-seleksi-lkm')->name('jadwal_seleksi_lkm')->controller(JadwalSeleksiAdminController::class)->group(function () {
+        Route::get('/', 'listMitra');
+        Route::get('get-mitra', 'getListMitra')->name('.get_mitra');
+
+        Route::get('mitra/{id}', 'index')->name('.list_lowongan');
+        Route::get('get-data/{id}', 'getData')->name('.get_data');
+        
+        Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
+
+        Route::get('detail/{id_lowongan}/mahasiswa/{id_pendaftaran}', 'detailMahasiswa')->name('.detail_mahasiswa');
     });
 
 

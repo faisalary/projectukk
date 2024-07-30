@@ -124,7 +124,7 @@ class LowonganMagangController extends Controller
         if ($request->ajax()) {
             $this->getPendaftarMagang(function ($query) use ($id, $request) {
                 return $query->where('id_lowongan', $id)->where('id_pendaftaran', $request->data_id);
-            });
+            }); 
 
             $data['pendaftar'] = $this->my_pendaftar_magang->first();
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
@@ -185,8 +185,7 @@ class LowonganMagangController extends Controller
         $request->validate(['type' => 'required|' . $inArray]);
 
         $this->getPendaftarMagang(function ($query) use ($id, $request) {
-            $query = $query->join('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
-            ->where('pendaftaran_magang.id_lowongan', $id);
+            $query = $query->where('pendaftaran_magang.id_lowongan', $id);
 
             if ($request->type == 'all_rejected') {
                 $query = $query->whereIn('current_step', [

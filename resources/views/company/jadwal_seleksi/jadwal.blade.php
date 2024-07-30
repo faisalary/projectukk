@@ -7,8 +7,9 @@
 <div class="row">
     <div class="col-md-9 col-12">
         @if (isset($urlBack))
-        <a href="{{ $urlBack }}" class="btn btn-outline-primary my-2 p-3 mb-4">
-            <i class="bi bi-arrow-left" style="font-size: medium;"> Kembali </i>
+        <a href="{{ $urlBack }}" class="btn btn-outline-primary mb-3">
+            <i class="ti ti-arrow-left"></i>
+            Kembali
         </a>
         @endif
         <div class="col-md-9 col-12">
@@ -45,7 +46,7 @@
 
     function loadData() {
         $('#table-jadwal').DataTable({
-            ajax: "{{ route('jadwal_seleksi.get_data') }}",
+            ajax: "{{ $urlGetData }}",
             serverSide: false,
             processing: true,
             deferRender: true,

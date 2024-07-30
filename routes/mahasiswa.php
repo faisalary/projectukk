@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
+use App\Http\Controllers\SimpanLowonganController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
@@ -16,14 +17,9 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
-Route::prefix('mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
+Route::prefix('data-mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/show', 'show')->name('.show');
-    Route::post('/store', 'store')->name('.store');
-    Route::post('/update{id}', 'update')->name('.update');
-    Route::get('/edit{id}', 'edit')->name('.edit');
-    Route::post('/status/{id}', 'status')->name('.status');
-    Route::get('/doc/{file}', 'doc')->name('.doc');
+    Route::get('/get-data', 'getDataTable')->name('.get_data');
 });
 
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
@@ -129,5 +125,10 @@ Route::prefix('kegiatan-saya')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
+    });
+
+    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('save/{id}', 'simpanLowongan')->name('.save');
     });
 });
