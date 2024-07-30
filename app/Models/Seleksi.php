@@ -14,7 +14,7 @@ class Seleksi extends Model
     protected $table = 'seleksi_lowongan';
     public $timestamps = false;
     protected $fillable = [
-        'id_email_tamplate',
+        'id_email_template',
         'start_date',
         'end_date',
         'tahapan_seleksi',

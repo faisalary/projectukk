@@ -15,24 +15,32 @@ class MenuHelper
             $getUserPermission = $user->roles[0]->permissions->pluck('name')->toArray();
             $getUserRole = $user->roles[0]->name;
             $data = self::menuFilter($data, $getUserPermission, $getUserRole);
-            // $data = self::specialCase($data);
             Cache::forever('data_menu_'. $user->roles[0]->name, $data);
         }
 
         $data = Cache::get('data_menu_'. $user->roles[0]->name);
+        $data = self::specialCase($data);
         $result = self::menuMaker($data);
 
         return $result;
     }
 
     private static function specialCase($data) {
+        $user = auth()->user();
+        if ($user->hasRole('Dosen') && !$user->can('permission:data_mahasiswa_magang_kaprodi.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
+            $data = array_filter($data, function($item) {
+                return (isset($item['name']) && $item['name'] != 'Pembimbing Akademik') && (isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view');
+            });
+        }
         return $data;
     }
 
     private static function menuFilter($data, $getUserPermission, $getUserRole = null) {
         foreach ($data as $key => $value) {
             if (isset($value['type']) && $value['type'] == 'menu-header') {
-                if ($value['role'] != $getUserRole) {
+                if (is_array($value['role']) && !in_array($getUserRole, $value['role'])) {
+                    unset($data[$key]);
+                } else if (is_string($value['role']) && $value['role'] != $getUserRole) {
                     unset($data[$key]);
                 }
             } else if (isset($value['submenu'])) {
@@ -105,8 +113,8 @@ class MenuHelper
         return [
             [
                 'type' => 'menu-header',
-                'name' => 'Dashboard LKM',
-                'role' => 'LKM'
+                'name' => 'Dashboard Admin',
+                'role' => ['Super Admin', 'LKM']
             ],
             [
                 'name' => 'Dashboard',
@@ -150,7 +158,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Jadwal Seleksi',
-                'route' => 'jadwal_seleksi',
+                'route' => 'jadwal_seleksi_lkm',
                 'icon' => 'ti-clock',
                 'permission' => 'jadwal_seleksi_lkm.view'
             ],
@@ -344,6 +352,17 @@ class MenuHelper
                 'route' => 'mahasiswa_magang_dosen',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_mahasiswa_magang_dosen.view'
+            ],
+            [
+                'type' => 'menu-header',
+                'name' => 'Pembimbing Akademik',
+                'role' => 'Dosen'
+            ],
+            [
+                'name' => 'Kelola Mahasiswa',
+                'route' => 'kelola_mhs_pemb_akademik',
+                'icon' => 'ti-users',
+                'permission' => 'kelola_mhs_pemb_akademik.view'
             ],
             //kaprodi
             [

@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between">
-    <h4 class="fw-bold">Jadwal Seleksi</h4>
+    <h4 class="fw-bold"><span class="text-muted fw-light">Lowongan Magang /</span> Informasi Mitra</h4>
     
 </div>
 <div class="row mt-2">
@@ -38,7 +38,7 @@
 
     function table_master_prodi() {
         var table = $('#table-mitra').DataTable({
-            ajax: "{{ route('jadwal_seleksi_lkm.get_mitra') }}",
+            ajax: "{{ route('lowongan.informasi.get_mitra') }}",
             serverSide: false,
             processing: true,
             deferRender: true,

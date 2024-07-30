@@ -38,19 +38,14 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
             });
         }
 
-        $validSteps = [
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_1 => 1,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_2 => 2,
-            PendaftaranMagangStatusEnum::APRROVED_SELEKSI_TAHAP_3 => 3,
-        ];
-
         $rejectSteps = [
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3
         ];
 
-        $datatables = datatables()->of($this->pendaftaran_magang->get())
+        $datatables = datatables()->of($this->pendaftaran_magang)
         ->addIndexColumn()
         ->editColumn('namamhs', function ($data) {
             $result = '<div class="d-flex flex-column align-items-start">';
@@ -61,15 +56,15 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
         })
         ->editColumn('namaindustri', fn ($data) => '<span class="text-nowrap">'.$data->namaindustri.'</span>')
         ->editColumn('intern_position', fn ($data) => '<span class="text-nowrap">'.$data->intern_position.'</span>')
-        ->editColumn('file_document_mitra', function ($data) use ($validSteps, $rejectSteps) {
+        ->editColumn('file_document_mitra', function ($data) use ($rejectSteps) {
             $result = '<div class="d-flex flex-column align-items-center">';
 
             if ($data->file_document_mitra == null) {
                 $result .= '<span>-</span>';
-            } elseif (isset($validSteps[$data->current_step]) && ($data->tahapan_seleksi + 1) == $validSteps[$data->current_step]) {
-                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="btn btn-primary btn-sm">Bukti Penerimaan.pdf</a>';
+            } elseif (isset($this->valid_steps[$data->current_step]) && ($data->tahapan_seleksi + 1) <= $this->valid_steps[$data->current_step]) {
+                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penerimaan.pdf</a>';
             } elseif (in_array($data->current_step, $rejectSteps)) {
-                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="btn btn-primary btn-sm">Bukti Penolakan.pdf</a>';
+                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penolakan.pdf</a>';
             }
 
             $result .= '</div>';

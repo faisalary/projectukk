@@ -95,11 +95,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-sm btn-outline-primary me-2" onclick="setDateConfirm($(this));" data-id="{{ $data->id_lowongan }}">
-                    <i class="ti ti-edit me-2"></i>
-                    Tanggal Batas Konfirmasi
-                </button>
-                <a href="{{ route('informasi_lowongan.detail', $data->id_lowongan) }}" class="btn btn-sm btn-outline-warning">
+                <a href="{{ route('lowongan.informasi.detail', $data->id_lowongan) }}" class="btn btn-sm btn-outline-warning">
                     <i class="ti ti-eye me-2"></i>
                     Lihat Kandidat
                 </a>

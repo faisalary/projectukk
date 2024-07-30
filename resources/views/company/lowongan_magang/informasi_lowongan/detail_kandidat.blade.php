@@ -113,7 +113,9 @@
         </div>
         @endforeach
     </div>
-    @include('lowongan_magang/informasi_lowongan/components/modal')
+
+    @include('company/lowongan_magang/components/modal_detail_pelamar')
+
 </div>
 @endsection
 
@@ -178,5 +180,53 @@
         $('#container_detail_pelamar').html(null);
         $('#change_status').removeAttr('data-id');
     });
+
+    function changeStatus(e) {
+        if (e.val() == e.attr('data-default') || e.val() == null) return;
+
+        if (e.val() == "{{ $last_seleksi }}" || e.val() == "rejected") {
+            let modal = $('#modal-upload-file');
+            let form = modal.find('form');
+    
+            if (e.val() == "{{ $last_seleksi }}") modal.find('.modal-title').text('Berkas Penerimaan');
+            else if (e.val() == "rejected") modal.find('.modal-title').text('Berkas Penolakan');
+
+            form.attr('action', "{{ route('informasi_lowongan.update_status', ['id' => ':id']) }}".replace(':id', e.attr('data-id')));
+            form.prepend('<input type="hidden" name="status" value="' + e.val() + '">');
+            modal.modal('show');
+        } else {
+            $.ajax({
+                url: "{{ route('informasi_lowongan.update_status', ['id' => ':id']) }}".replace(':id', e.attr('data-id')),
+                type: "POST",
+                data: {_token: "{{ csrf_token() }}", status: e.val()},
+                success: function (response) {
+                    response = response.data;
+                    $('#change_status').attr('data-id', response.id_pendaftar);
+                    $('#change_status').attr('data-default', response.current_step);
+
+                    $('.table').each(function () {
+                        $(this).DataTable().ajax.reload();
+                    });
+                }
+            });
+        }
+    }
+
+    function afterUploadBerkas(response) {
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+
+        $('#modal-upload-file').modal('hide');
+        $('#detail_pelamar_offcanvas').offcanvas('hide');
+    }
+
+    $('#modal-upload-file').on("hide.bs.modal", function() {
+        $(this).find('form').attr('action', '');
+        $(this).find('form').find('input[name="status"]').remove();
+        $('#change_status').val($('#change_status').attr('data-default')).change();
+    });
+
+
 </script>
 @endsection

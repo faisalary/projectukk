@@ -143,6 +143,25 @@ function btnBlock(element, bool = true) {
     }
 }
 
+function sectionBlock(element, bool = true) {
+    if (bool) {
+        element.block({
+            message: '<div class="spinner-border text-light" role="status"></div>',
+            css: {
+                backgroundColor: 'transparent',
+                color: '#fff',
+                border: '0'
+            },
+            overlayCSS: {
+                opacity: 0.5,
+                backgroundColor: '#fff'
+            }
+        });
+    } else {
+        element.unblock();
+    }
+}
+
 function pageBlock(bool = true) {
     if (bool) {
         $.blockUI({

@@ -30,5 +30,5 @@
 </div>
 @endforeach
 @else
-<h2>Kosong, seperti otakmu.</h2>
+<h2>Kosong</h2>
 @endif
