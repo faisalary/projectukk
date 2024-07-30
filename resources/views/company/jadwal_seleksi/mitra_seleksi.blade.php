@@ -4,37 +4,23 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-md-9 col-12">
-        <h4 class="fw-bold">Jadwal Seleksi</h4>
-    </div>
-    <div class="col-md-3 col-12 mb-3 float-end d-flex justify-content-end">
-        <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran" style="width: 95% !important;">
-            <option value="1">2023/2024 Genap</option>
-            <option value="2">2023/2024 Ganjil</option>
-            <option value="3">2022/2023 Genap</option>
-            <option value="4">2022/2023 Ganjil</option>
-            <option value="5">2021/2022 Genap</option>
-            <option value="6">2021/2022 Ganjil</option>
-        </select>
-    </div>
+<div class="d-flex justify-content-between">
+    <h4 class="fw-bold">Jadwal Seleksi</h4>
+    
 </div>
-
-
-
 <div class="row mt-2">
     <div class="col-12">
         <div class="card">
             <div class="card-datatable table-responsive">
-                <table class="table" id="table-informasi-mitra">
+                <table class="table" id="table-mitra">
                     <thead>
                         <tr>
-                            <th>NOMOR</th>
-                            <th>NAMA</th>
-                            <th>TOTAL LOWONGAN</th>
-                            <th>TOTAL PELAMAR</th>
-                            <th>STATUS KERJASAMA</th>
-                            <th>AKSI</th>
+                            <th>NO</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Total Lowongan</th>
+                            <th>Total Pelamar</th>
+                            <th class="text-center">STATUS Kerjasama</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                 </table>
@@ -46,31 +32,26 @@
 
 @section('page_script')
 <script>
-    var table = $('#table-informasi-mitra').DataTable({
-        ajax: "{{route('jadwal_seleksi.show')}}",
-        serverSide: false,
-        processing: true,
-        deferRender: true,
-        type: 'GET',
-        columns: [{
-                data: "DT_RowIndex"
-            },
-            {
-                data: "namaindustri"
-            },
-            {
-                data: "total_lowongan"
-            },
-            {
-                data: "total_pelamar"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "action"
-            }
-        ]
+    $(document).ready(function() {
+        table_master_prodi();
     });
+
+    function table_master_prodi() {
+        var table = $('#table-mitra').DataTable({
+            ajax: "{{ route('jadwal_seleksi_lkm.get_mitra') }}",
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            destroy: true,
+            columns: [
+                { data: "DT_RowIndex" },
+                { data: "namaindustri" },
+                { data: "total_lowongan" },
+                { data: "total_pelamar" },
+                { data: "statuskerjasama" },
+                { data: "action" }
+            ]
+        });
+    }
 </script>
 @endsection

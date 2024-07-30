@@ -73,7 +73,7 @@ Route::prefix('anggota-tim')->name('pegawaiindustri')->controller(PegawaiIndustr
     Route::post('/status/{id}', 'status')->name('.status');
 });
 
-Route::prefix('jadwal-seleksi')->name('jadwal_seleksi')->controller(JadwalSeleksiController::class)->group(function () {
+Route::prefix('jadwal-seleksi-mitra')->name('jadwal_seleksi')->controller(JadwalSeleksiController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('detail/{id}', 'detail')->name('.detail');

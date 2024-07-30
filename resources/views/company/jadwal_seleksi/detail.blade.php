@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="d-flex justify-content-start">
-    <a href="{{ route('jadwal_seleksi') }}" class="btn btn-outline-primary">
+    <a href="{{ $urlBack }}" class="btn btn-outline-primary">
         <i class="ti ti-arrow-left"></i>
         <span class="ms-2">Kembali</span>
     </a>
@@ -28,9 +28,11 @@
             @endfor
         </ul>
     </div>
+    @if(isset($isMitra) && $isMitra == true)
     <div class="text-end">
         <button class="btn btn-primary" id="buatJadwalBtn">Buat Jadwal</button>
     </div>
+    @endif
 </div>
 <div class="row">
     <div class="col-12">
@@ -59,7 +61,9 @@
     </div>
 </div>
 
+@if (isset($isMitra) && $isMitra == true)
 @include('company/jadwal_seleksi/components/modal')
+@endif
 @endsection
 
 @section('page_script')
@@ -67,14 +71,42 @@
     $(document).ready(function () {
         loadData();
 
+        @if (isset($isMitra) && $isMitra == true)
         $(".flatpickr-date-custom").flatpickr({
             enableTime: true,
             altInput: true,
             altFormat: 'j F Y, H:i',
             dateFormat: 'Y-m-d H:i'
         });
+        @endif
     });
 
+    function loadData() {
+        $('.table').each(function () {
+            $(this).DataTable({
+                ajax: {
+                    url: `{{ $urlGetData }}`,
+                    type: 'GET',
+                    data: {
+                        tahap: $(this).attr('id')
+                    }
+                },
+                serverSide: false,
+                processing: true,
+                deferRender: true,
+                type: 'GET',
+                destroy: true,
+                columns: [
+                    { data: 'DT_RowIndex' },
+                    { data: 'namamhs', name: 'namamhs' },
+                    { data: 'tanggalpelaksaan', name: 'tanggalpelaksaan' },
+                    { data: 'action', name: 'action' },
+                ]
+            });
+        });
+    }
+
+    @if (isset($isMitra) && $isMitra == true)
     $('#buatJadwalBtn').on('click', function () {
         let modal = $("#modalTambahJadwal");
         let tabActive = $('.nav-link.active').attr('data-bs-target').replace('#navs-pills-', '');
@@ -175,36 +207,9 @@
         });
     }
 
-    function loadData() {
-        $('.table').each(function () {
-            $(this).DataTable({
-                ajax: {
-                    url: `{{ $urlGetData }}`,
-                    type: 'GET',
-                    data: {
-                        tahap: $(this).attr('id')
-                    }
-                },
-                serverSide: false,
-                processing: true,
-                deferRender: true,
-                type: 'GET',
-                destroy: true,
-                drawCallback: function () {
-                    initSelect2();
-                },
-                columns: [
-                    { data: 'DT_RowIndex' },
-                    { data: 'namamhs', name: 'namamhs' },
-                    { data: 'tanggalpelaksaan', name: 'tanggalpelaksaan' },
-                    { data: 'action', name: 'action' },
-                ]
-            });
-        });
-    }
-
     function afterSetJadwal(response) {
         $('#modalTambahJadwal').modal('hide');
-    }
+    }   
+    @endif
 </script>
 @endsection
