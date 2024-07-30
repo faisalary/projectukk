@@ -11,7 +11,6 @@ use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\SeleksiRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
@@ -40,7 +39,8 @@ class JadwalSeleksiController extends Controller
 
     public function index(Request $request)
     {
-        return view('company.jadwal_seleksi.jadwal');
+        $urlGetData = route('jadwal_seleksi.get_data');
+        return view('company.jadwal_seleksi.jadwal', compact('urlGetData'));
     }
 
     public function getData(Request $request) {
@@ -65,7 +65,8 @@ class JadwalSeleksiController extends Controller
 
         return datatables()->of($lowongan)
         ->addColumn('card', function ($data) {
-            $result = view('company/jadwal_seleksi/components/card_list_lowongan', compact('data'))->render();
+            $urlAction = route('jadwal_seleksi.detail', $data->id_lowongan);
+            $result = view('company/jadwal_seleksi/components/card_list_lowongan', compact('data', 'urlAction'))->render();
             return $result;
         })
         ->rawColumns(['card'])
@@ -77,10 +78,12 @@ class JadwalSeleksiController extends Controller
         $lowongan = $this->lowongan_magang->first();
         $urlGetData = route('jadwal_seleksi.get_data_detail', $id);
         $urlSetJadwal = route('jadwal_seleksi.set_jadwal', ['id' => $id]);
+        $urlBack = route('jadwal_seleksi');
+        $isMitra = true;
 
         $lastSelection = $lowongan->tahapan_seleksi + 1;
 
-        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData', 'urlSetJadwal', 'lastSelection'));
+        return view('company.jadwal_seleksi.detail', compact('lowongan', 'urlGetData', 'urlSetJadwal', 'urlBack', 'lastSelection', 'isMitra'));
     }
 
     public function getDetailData(Request $request, $id) {
