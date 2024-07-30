@@ -1,4 +1,4 @@
-<div class="card border cursor-pointer my-2" onclick="window.location.href=`{{ route('jadwal_seleksi.detail', $data->id_lowongan) }}`">
+<div class="card border cursor-pointer my-2" onclick="window.location.href=`{{ $urlAction }}`">
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <div class="d-flex justify-content-start">

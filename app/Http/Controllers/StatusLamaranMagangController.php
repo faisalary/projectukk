@@ -147,13 +147,15 @@ class StatusLamaranMagangController extends Controller
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2:
-            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:  
-            case PendaftaranMagangStatusEnum::APPROVED_PENAWARAN:                      
+            case PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3:                                   
                 if ($this->lamaran_magang[0]->current_step == array_search(($this->lamaran_magang[0]->tahapan_seleksi + 1), $this->valid_step)) {
                     $data[3]['active'] = true;
                 } else {
                     $data[2]['active'] = true;
                 }
+                break;
+            case PendaftaranMagangStatusEnum::APPROVED_PENAWARAN: 
+                $data[4]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
             case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:      
@@ -166,16 +168,14 @@ class StatusLamaranMagangController extends Controller
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1:
             case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2:
-            case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3:
-            case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:      
-                if ($this->lamaran_magang[0]->current_step == array_search(($this->lamaran_magang[0]->tahapan_seleksi + 1), $this->rejected_step)) {
-                    $data[3]['active'] = true;
-                    $data[3]['isReject'] = true;
-                } else {
-                    $data[2]['active'] = true;
-                    $data[2]['isReject'] = true;
-                }
-                break;                          
+            case PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3:            
+                $data[2]['active'] = true;
+                $data[2]['isReject'] = true;
+                break;   
+            case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:
+                $data[4]['active'] = true;
+                $data[4]['isReject'] = true;
+            break;
             default:
                 # code...
                 break;
