@@ -31,7 +31,7 @@
                             </div>
                             <div class="row mt-5">
                                 <div class="col-4">
-                                    <p><i class="ti ti-users me-2"></i>{{ $lowongan->kuota }}</p>
+                                    <p><i class="ti ti-users me-2"></i>{{ $lowongan->kuota }} Orang</p>
                                     <p><i class="ti ti-briefcase me-2"></i>{{ $lowongan->pelaksanaan }}</p>
                                     <p><i class="ti ti-calendar-time me-2"></i>{{ implode(' dan ', json_decode($lowongan->durasimagang)) }}</p>
                                 </div>

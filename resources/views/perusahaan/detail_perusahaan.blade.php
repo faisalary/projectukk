@@ -18,16 +18,21 @@
 
     <div class="card mb-5">
         <div class="card-body"> 
-            <div class="row">
-                <div class="col-2 text-left">
-                    <figure class="image" style="border-radius: 0%;"><img style="border-radius: 0%; width:200px;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload">
-                    </figure>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <div class="text-center" style="overflow: hidden; width: 100px; height: 100px;">
+                        @if ($detail->image)
+                        <img src="{{ asset('storage/'. $detail->image) }}" alt="user-avatar" class="d-block" width="100">
+                        @else
+                        <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="user-avatar" class="d-block" width="100">
+                        @endif
+                    </div>
+                    <div class="d-flex flex-column justify-content-center ms-3">
+                        <h4 class="mb-1">{{ $detail->namaindustri }}</h4>
+                        <span>{{ $detail->kategori_industri }}</span>
+                    </div>
                 </div>
-                <div class="col-4 ">
-                    <h2 class="mb-1">{{$detail->namaindustri}}</h2>
-                    <p>{{$detail->kategori_industri ?? ''}}</p>
-                </div>
-                <div class="col-6 text-end">
+                <div class="">
                     <button type="button" class="btn btn-outline-dark waves-effect me-3" onclick="changeColor(this)" data-bs-toggle="modal" data-bs-target="#modalbagikan" data-bs-placement="bottom" data-bs-original-title="Bagikan">
                         <i class="ti ti-share me-1"></i>Bagikan
                     </button>

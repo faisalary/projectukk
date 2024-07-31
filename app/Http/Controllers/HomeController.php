@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function detailLowongan($id) {
         $lowongan = LowonganMagang::select(
             'id_lowongan', 'intern_position', 'industri.namaindustri', 'industri.image', 'industri.description as deskripsi_industri',
-            'pelaksanaan', 'durasimagang', 'lokasi', 'nominal_salary', 'created_at', 'jenjang',
+            'pelaksanaan', 'durasimagang', 'lokasi', 'nominal_salary', 'created_at', 'jenjang', 'kuota',
             'gender', 'statusaprove', 'keterampilan', 'deskripsi', 'requirements', 'benefitmagang',
             'tahapan_seleksi'
         )

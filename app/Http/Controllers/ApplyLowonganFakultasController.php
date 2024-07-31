@@ -79,7 +79,7 @@ class ApplyLowonganFakultasController extends Controller
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();
 
-        $urlBack = route('apply_lowongan.detail', ['id' => $id]);
+        $urlBack = route('apply_lowongan');
 
         return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
     }
