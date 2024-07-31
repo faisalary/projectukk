@@ -125,7 +125,7 @@ Route::prefix('kegiatan-saya')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
-        Route::put('/tolakLamaran', 'tolakLamaran')->name('.tolak_lamaran');
+        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
     });
 
     Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
