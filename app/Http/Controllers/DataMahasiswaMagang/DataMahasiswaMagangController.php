@@ -18,6 +18,13 @@ class DataMahasiswaMagangController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
             PendaftaranMagangStatusEnum::APPROVED_PENAWARAN => 4,
         ];
+
+        $this->reject_steps = [
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3
+        ];
     }
 
     public function index() {
@@ -33,26 +40,13 @@ class DataMahasiswaMagangController extends Controller
                     ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
                     ->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
             });
-        } else if ($request->type == 'ditolak') {
+        } else if ($request->type == 'belum_magang') {
             $this->getPendaftaranMagang(function ($query) {
                 return $query->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
                     ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
-                    ->whereIn('pendaftaran_magang.current_step', [
-                        PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
-                        PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
-                        PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-                        PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-                        PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-                        PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
-                    ]);
+                    ->where('pendaftaran_magang.current_step', '!=', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
             });
         }
-
-        $rejectSteps = [
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-        ];
 
         $datatables = datatables()->of($this->pendaftaran_magang)
         ->addIndexColumn()
@@ -65,12 +59,12 @@ class DataMahasiswaMagangController extends Controller
         })
         ->editColumn('namaindustri', fn ($data) => '<span class="text-nowrap">'.$data->namaindustri.'</span>')
         ->editColumn('intern_position', fn ($data) => '<span class="text-nowrap">'.$data->intern_position.'</span>')
-        ->editColumn('file_document_mitra', function ($data) use ($rejectSteps) {
+        ->editColumn('file_document_mitra', function ($data) {
             $result = '<div class="d-flex flex-column align-items-center">';
 
             if (isset($this->valid_steps[$data->current_step]) && ($data->tahapan_seleksi + 1) <= $this->valid_steps[$data->current_step]) {
                 $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penerimaan.pdf</a>';
-            } elseif (in_array($data->current_step, $rejectSteps)) {
+            } elseif (in_array($data->current_step, $this->reject_steps)) {
                 $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penolakan.pdf</a>';
             } elseif ($data->file_document_mitra == null) {
                 $result .= '<span>-</span>';
@@ -150,7 +144,7 @@ class DataMahasiswaMagangController extends Controller
             '<th class="text-nowrap">Indeks Nilai</th>'
         ];
 
-        $ditolak = [
+        $belum_magang = [
             '<th class="text-nowrap">No</th>',
             '<th class="text-nowrap">Nama/Nim</th>',
             '<th class="text-nowrap">Program Studi</th>',
@@ -175,7 +169,7 @@ class DataMahasiswaMagangController extends Controller
             {data: 'indeks_nilai_akhir'}
         ]";
 
-        $columnsDitolak = "[
+        $columnsBelumMagang = "[
             {data: 'DT_RowIndex'},
             {data: 'namamhs'},
             {data: 'namaprodi'},
@@ -189,9 +183,9 @@ class DataMahasiswaMagangController extends Controller
             'title',
             'urlGetData',
             'diterima', 
-            'ditolak', 
+            'belum_magang', 
             'columnsDiterima', 
-            'columnsDitolak'
+            'columnsBelumMagang'
         );
     }
  
