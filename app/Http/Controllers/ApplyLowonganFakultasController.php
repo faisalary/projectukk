@@ -15,6 +15,7 @@ use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\PekerjaanTersimpan;
 use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
@@ -24,6 +25,9 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
+        $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
+        ->get()->pluck('id_lowongan')->toArray();
+
         $data['lowongan'] = LowonganMagang::select(
             'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
         )
@@ -75,7 +79,7 @@ class ApplyLowonganFakultasController extends Controller
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();
 
-        $urlBack = route('apply_lowongan.detail', ['id' => $id]);
+        $urlBack = route('apply_lowongan');
 
         return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
     }

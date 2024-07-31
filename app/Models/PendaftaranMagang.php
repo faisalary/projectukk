@@ -24,6 +24,8 @@ class PendaftaranMagang extends Model
         'bukti_doc',
         'portofolio',
         'reason_aplicant',
+        'reason_reject',
+        'file_document_mitra',
 
     ];
     public $timestamps = false;

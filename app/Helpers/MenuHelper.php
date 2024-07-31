@@ -158,7 +158,7 @@ class MenuHelper
             ],
             [
                 'name' => 'Jadwal Seleksi',
-                'route' => 'jadwal_seleksi',
+                'route' => 'jadwal_seleksi_lkm',
                 'icon' => 'ti-clock',
                 'permission' => 'jadwal_seleksi_lkm.view'
             ],

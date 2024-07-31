@@ -6,7 +6,7 @@
     }
 @endphp
 <ul class="dropdown-menu dropdown-menu-end">
-    <li>
+    {{-- <li>
         <a class="dropdown-item" href="{{ $url }}">
             <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
@@ -25,7 +25,7 @@
     </li>
     <li>
         <div class="dropdown-divider"></div>
-    </li>
+    </li> --}}
     @can('dashboard.dashboard_admin')
         <li>
             <a class="dropdown-item" href="{{ route('dashboard_admin') }}">
@@ -42,6 +42,22 @@
             </a>
         </li>
     @endcan
+    @can('approval_mhs_doswal.view')
+        <li>
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard Dosen</span>
+            </a>
+        </li>
+    @endcan
+    @can('approval_mhs_kaprodi.view')
+        <li>
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa_kaprodi') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard Kaprodi</span>
+            </a>
+        </li>
+    @endcan
     <li>
         <a class="dropdown-item"
             href="{{ $url }}">
@@ -49,11 +65,11 @@
             <span class="align-middle">Profil</span>
         </a>
     </li>
-    <li>
+    {{-- <li>
         <a class="dropdown-item" href="/pengaturan">
             <i class="ti ti-settings me-2 ti-sm"></i>
             <span class="align-middle">Pengaturan Akun</span>
-        </a>
+        </a> --}}
     </li>
     <li>
         <div class="dropdown-divider"></div>

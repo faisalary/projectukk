@@ -17,8 +17,12 @@
                         </div>
                     </div>
                     <div class="ms-2">
-                        <a href="javascript:void(0)" onclick="myFunction(this)" class="text-primary">
-                            <i class="fa fa-bookmark-o" style="font-size: 25px;"></i>
+                        <a onclick="myFunction(event, $(this));" data-id="{{$l['id_lowongan']}}" class="text-primary cursor-pointer">
+                            @if (in_array($l['id_lowongan'], $lowongan_tersimpan))
+                            <i class="fa-solid fa-bookmark" style="font-size: 25px;"></i>    
+                            @else
+                            <i class="fa-regular fa-bookmark" style="font-size: 25px;"></i>    
+                            @endif
                         </a>
                     </div>
                 </div>
