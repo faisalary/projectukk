@@ -71,8 +71,8 @@ class KelolaMahasiswaPemAkademikController extends Controller
                     return '-'; // Set berkas_akhir to a dash
                 })
                 ->addColumn('aksi', function ($row) {
-                    return "<a href='/input/nilai/akademik' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> 
-                            <a href='/view/logbook' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a>";
+                    return "<div class='d-flex justify-content-center'><a href='/input/nilai/akademik' class='btn-icon text-warning'><i class='tf-icons ti ti-clipboard-list'></i></a> 
+                            <a href='/view/logbook' class='btn-icon text-info'><i class='tf-icons ti ti-book'></i></a></div>";
                 })
                 ->rawColumns(['aksi'])
                 ->make(true);

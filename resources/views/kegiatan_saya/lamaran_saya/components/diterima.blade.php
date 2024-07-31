@@ -1,81 +1,60 @@
-<div class="alert alert-dark alert-dismissible" role="alert">
-    Anda hanya bisa menerima satu tawaran lowongan magang!
-</div>
-@if ($approved->count() == 0)
-<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: 
-auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 25%;">
+@if($approved->count() == 0)
+<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
 <div class="sec-title mt-5 mb-4 text-center">
-    <h4>Anda belum memiliki Lowongan Magang yang Diterima</h4>
+    <h4>Anda tidak memiliki lamaran yang diterima!</h4>
 </div>
 @else
-@foreach ($approved as $item)
-<div class="card mt-2">
+@foreach($approved as $item)
+<div class="cursor-pointer card mt-4" onclick="window.location.href='{{ route('lamaran_saya.detail', $item->id_pendaftaran) }}'">
     <div class="card-body">
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            Anda harus mengkonfirmasi Mulai Magang untuk menerima tawaran!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            Anda akan dinyatakan mengundurkan diri jika melebihi batas konfirmasi
-            penerimaan tanggal
-            {{ $item->lowongan_magang->date_confirm_closing?->format('d F Y') }}!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan) }}" style="color:#4B4B4B">
-            <div class="row mb-2">
-                <div class="col-2">
-                    <figure class="image mx-1" style="border-radius: 0%;"><img style="border-radius: 0%; width: 120px;" src="{{ $item->img ?? '\assets\images\no-pictures.png' }}" alt="Logo">
-                    </figure>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-start">
+                <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
+                    @if ($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
+                    @else
+                        <img src="{{ asset('assets/images/no-pictures.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('assets/images/no-pictures.png') }}">
+                    @endif
                 </div>
-                <div class="col-10 d-flex justify-content-between">
-                    <div>
-                        <h5>{{ $item->lowongan_magang->intern_position }}</h5>
-                        <p>{{ $item->lowongan_magang->industri->namaindustri }}</p>
-                    </div>
-                    <div>
-                        <span class="badge bg-label-{{ $item->color }} me-1 text-end">{{ $item->step }}</span>
-                    </div>
+                <div class="d-flex flex-column justify-content-center ms-2">
+                    <h4 class="mb-1">{{$item->intern_position}}</h4>
+                    <p class="mb-0">{{$item->namaindustri}}</p>
                 </div>
             </div>
-            <div class="text-left mb-2">
-                <p>{{ $item->lowongan_magang->deskripsi }}</p>
+            <div>
+                {!! $item->status_badge !!}
             </div>
-        </a>
-        <div class="text-left">
-            @if ($item->current_step == 'diterima')
-            <button type="button" class="btn btn-success waves-effect me-2" disabled data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{ $item->lowongan_magang->intern_position }}" data-industri="{{ $item->lowongan_magang->industri->namaindustri }}" onclick="mulai($(this))">Mulai Magang
-            </button>
-            @else
-            <button type="button" data-id="{{ $item->nim }}" data-lowongan="{{ $item->lowongan_magang->id_lowongan }}" onclick="tolak($(this))" class="btn btn-danger waves-effect" data-bs-toggle="modal">Mengundurkan Diri
-            </button>
-            <button type="button" class="btn btn-success waves-effect me-2" data-bs-toggle="modal" data-bs-target="#modalMulai" data-id="{{ $item->id_pendaftaran }}" data-lowongan="{{ $item->lowongan_magang->intern_position }}" data-industri="{{ $item->lowongan_magang->industri->namaindustri }}" onclick="mulai($(this))">Mulai Magang
-            </button>
-            @endif
+        </div>
+        <div class="my-3">
+            <p>{{$item->deskripsi}}</p>
         </div>
         <hr />
-        <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-between">
-                <div class="col-6">
-                    <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                        {{ $item->lowongan_magang->lokasi }}</span>
-                    @if (empty($item->lowongan_magang->nominal_salary))
-                    <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak
-                        Berbayar</span>
+        <div class="d-flex justify-content-between mt-2">
+            <div class="d-flex justify-content start">
+                <div class="d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-map-pin" style="font-size: medium;"></i>
+                    {{ implode(', ', json_decode($item->lokasi)) }}
+                </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    @if(empty($item->lowongan_magang->nominal_salary))
+                    <i class="me-2 ti ti-currency-dollar" style="font-size: medium;"></i> 
+                    Tidak Berbayar
                     @else
-                    <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Berbayar</span>
+                    <i class="me-2 ti ti-currency-dollar" style="font-size: medium;"></i> 
+                    {{ $item->nominal_salary }}
                     @endif
-                    <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i>
-                        {{ $item->lowongan_magang->durasimagang }}</span>
-                    <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i>
-                        {{ $item->lowongan_magang->kuota }}
-                        Kuota Penerimaan</span>
                 </div>
-                <div class="col-6">
-                    <div class="text-end" style="font-size: medium; color : #4EA971">
-                        Lamaran terkirim pada
-                        {{ $item->tanggaldaftar?->format('d F Y') }}
-                    </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-calendar-time" style="font-size: medium;"></i>
+                    {{ implode(', ', json_decode($item->durasimagang)) }}
                 </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-users" style="font-size: medium;"></i>
+                    {{ $item->kuota }} Kuota Penerimaan
+                </div>
+            </div>
+            <div class="d-flex justify-content-end text-primary">
+                Lamaran terkirim pada&ensp;<b>{{($item->tanggaldaftar?->format('d F Y')) }}</b>
             </div>
         </div>
     </div>

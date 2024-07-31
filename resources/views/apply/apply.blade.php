@@ -31,10 +31,10 @@
             <h4>Informasi Data Diri</h4>
             <div class="d-flex justify-content-between mt-4">
                 <div class="text-center" style="overflow: hidden; width: 100px; height: 100px;">
-                @if ($mahasiswaprodi->informasiprib?->profile_picture ?? '')
-                    <img src="{{ url('storage/' .$mahasiswaprodi->informasiprib?->profile_picture??'app-assets/img/avatars/14.png') }}" alt="profile-image" class="d-block" width="100" alt="img">
+                @if ($mahasiswa->profile_picture)
+                    <img src="{{ asset('storage/' . $mahasiswa->profile_picture) }}" alt="profile-image" class="d-block" width="100" alt="img">
                 @else
-                    <img src="{{ url('app-assets/img/avatars/14.png')}}" alt="user-avatar" class="d-block" width="100">
+                    <img src="{{ asset('app-assets/img/avatars/user.png')}}" alt="user-avatar" class="d-block" width="100">
                 @endif
                 </div>
                 <div class="d-flex flex-column">

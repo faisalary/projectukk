@@ -42,6 +42,22 @@
             </a>
         </li>
     @endcan
+    @can('approval_mhs_doswal.view')
+        <li>
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard Dosen</span>
+            </a>
+        </li>
+    @endcan
+    @can('approval_mhs_kaprodi.view')
+        <li>
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa_kaprodi') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard Kaprodi</span>
+            </a>
+        </li>
+    @endcan
     <li>
         <a class="dropdown-item"
             href="{{ $url }}">

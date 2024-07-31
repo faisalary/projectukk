@@ -24,7 +24,6 @@
                         data-bs-target="#navs-pills-justified-pending" aria-controls="navs-pills-justified-pending"
                         aria-selected="true">
                         <i class="tf-icons ti ti-clock ti-xs me-1"></i> Pending
-                        {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">2</span> --}}
                     </button>
                 </li>
                 <li class="nav-item">
@@ -32,7 +31,6 @@
                         data-bs-target="#navs-pills-justified-verified" aria-controls="navs-pills-justified-verified"
                         aria-selected="false">
                         <i class="tf-icons ti ti-user-check ti-xs me-1"></i> Verified
-                        {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">4</span> --}}
                     </button>
                 </li>
                 <li class="nav-item">
@@ -40,7 +38,6 @@
                         data-bs-target="#navs-pills-justified-rejected" aria-controls="navs-pills-justified-rejected"
                         aria-selected="false">
                         <i class="tf-icons ti ti-user-x ti-xs me-1"></i> Rejected
-                        {{-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-success ms-1">1</span> --}}
                     </button>
                 </li>
             </ul>
@@ -76,6 +73,11 @@
         $(document).ready(function () {
             loadData();
         });
+
+        $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+        });
+
 
         function afterAction(response) {
             $('#modalTambahMitra').modal('hide');

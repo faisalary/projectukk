@@ -1,138 +1,70 @@
-@if ($penawaran->count() == 0)
-    <img src="\assets\images\nothing.svg" alt="no-data"
-        style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
-    <div class="sec-title mt-5 mb-4 text-center">
-        <h4>Anda belum memiliki Lowongan Magang pada tahap Penawaran</h4>
-    </div>
+@if($penawaran->count() == 0)
+<img src="\assets\images\nothing.svg" alt="no-data" style="display: flex; margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%;  width: 28%;">
+<div class="sec-title mt-5 mb-4 text-center">
+    <h4>Anda tidak memiliki lamaran yang ditawarkan!</h4>
+</div>
 @else
-    @foreach ($penawaran as $item)
-        <div class="card mt-2">
-            <div class="card-body">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    Lakukan konfirmasi penerimaan sebelum tanggal
-                    {{ $item->lowongan_magang->date_confirm_closing?->format('d F Y') }}!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <a href="{{ url('kegiatan-saya/detail', $item->id_lowongan) }}" style="color:#4B4B4B">
-                    <div class="row mb-2">
-                        <div class="col-2">
-                            <figure class="image mx-1" style="border-radius: 0%;"><img
-                                    style="border-radius: 0%; width: 120px;"
-                                    src="{{ $item->img ?? '\assets\images\no-pictures.png' }}" alt="Logo">
-                            </figure>
-                        </div>
-                        <div class="col-10 d-flex justify-content-between">
-                            <div>
-                                <h5>{{ $item->lowongan_magang->intern_position }}</h5>
-                                <p>{{ $item->lowongan_magang->industri->namaindustri }}</p>
-                            </div>
-                            <div>
-                                <span
-                                    class="badge bg-label-{{ $item->color }} me-1 text-end">{{ $item->step }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-left mb-2">
-                        <p>{{ $item->lowongan_magang->deskripsi }}</p>
-                    </div>
-                </a>
-                <div class="text-left">
-                    <button type="button" data-id="{{ $item->nim }}"
-                        data-lowongan="{{ $item->lowongan_magang->id_lowongan }}" onclick="ambil($(this))"
-                        class="btn btn-success waves-effect me-2" data-bs-toggle="modal">Ambil Tawaran
-                    </button>
-                    <button type="button" data-id="{{ $item->nim }}"
-                        data-lowongan="{{ $item->lowongan_magang->id_lowongan }}" onclick="tolak($(this))"
-                        class="btn btn-danger waves-effect" data-bs-toggle="modal">Tolak Tawaran
-                    </button>
-                </div>
-                <hr />
-                <div class="row mt-2">
-                    <div class="col-12 d-flex justify-content-between">
-                        <div class="col-6">
-                            <span> <i class="ti ti-map-pin" style="font-size: medium;"></i>
-                                {{ $item->lowongan_magang->lokasi }}</span>
-                            @if (empty($item->lowongan_magang->nominal_salary))
-                                <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i> Tidak
-                                    Berbayar</span>
-                            @else
-                                <span> <i class="ti ti-currency-dollar ms-3" style="font-size: medium;"></i>
-                                    Berbayar</span>
-                            @endif
-                            <span> <i class="ti ti-calendar-time ms-3" style="font-size: medium;"></i>
-                                {{ $item->lowongan_magang->durasimagang }}</span>
-                            <span> <i class="ti ti-users ms-3" style="font-size: medium;"></i>
-                                {{ $item->lowongan_magang->kuota }}
-                                Kuota Penerimaan</span>
-                        </div>
-                        <div class="col-6">
-                            <div class="text-end" style="font-size: medium; color : #4EA971">
-                                Lamaran terkirim pada
-                                {{ $item->tanggaldaftar?->format('d F Y') }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+@foreach($penawaran as $item)
+<div class="cursor-pointer card mt-4" onclick="window.location.href='{{ route('lamaran_saya.detail', $item->id_pendaftaran) }}'">
+    <div class="card-body">
+        <div class="d-flex justify-content-start">
+            <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
+                @if ($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
+                @else
+                    <img src="{{ asset('assets/images/no-pictures.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('assets/images/no-pictures.png') }}">
+                @endif
+            </div>
+            <div class="d-flex flex-column justify-content-center ms-2">
+                <h4 class="mb-1">{{$item->intern_position}}</h4>
+                <p class="mb-0">{{$item->namaindustri}}</p>
             </div>
         </div>
-    @endforeach
+        <div class="my-3">
+            <p>{{$item->deskripsi}}</p>
+        </div>
+        <div class="d-flex justify-content-start my-3">
+            <a data-id="{{ $item->id_pendaftaran }}" 
+                data-status="approved"
+                onclick="approvalTawaran(event, $(this));"
+                class="text-white btn btn-primary me-2">Ambil Tawaran
+            </a>
+            <a data-id="{{ $item->id_pendaftaran }}" 
+                data-status="rejected"
+                onclick="approvalTawaran(event, $(this));"
+                class="text-white btn btn-danger">Tolak Tawaran
+            </a>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between mt-2">
+            <div class="d-flex justify-content start">
+                <div class="d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-map-pin" style="font-size: medium;"></i>
+                    {{ implode(', ', json_decode($item->lokasi)) }}
+                </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    @if(empty($item->lowongan_magang->nominal_salary))
+                    <i class="me-2 ti ti-currency-dollar" style="font-size: medium;"></i> 
+                    Tidak Berbayar
+                    @else
+                    <i class="me-2 ti ti-currency-dollar" style="font-size: medium;"></i> 
+                    {{ $item->nominal_salary }}
+                    @endif
+                </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-calendar-time" style="font-size: medium;"></i>
+                    {{ implode(', ', json_decode($item->durasimagang)) }}
+                </div>
+                <div class="ms-3 d-flex justify-content-start align-items-center">
+                    <i class="me-2 ti ti-users" style="font-size: medium;"></i>
+                    {{ $item->kuota }} Kuota Penerimaan
+                </div>
+            </div>
+            <div class="d-flex justify-content-end text-primary">
+                Lamaran terkirim pada&ensp;<b>{{($item->tanggaldaftar?->format('d F Y')) }}</b>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endif
-{{-- Modal Mulai Magang --}}
-@section('page_script')
-    @if ($penawaran->count() == 0  && isset($item))
-        <script>
-            function tolak(e) {
-                const nim = e.attr('data-id');
-                const lowongan = e.attr('data-lowongan');
-
-                sweetAlertConfirm({
-                    title: 'Apakah Anda yakin?',
-                    text: `Anda akan menolak lowongan magang {{ $item->lowongan_magang->intern_position }} dari {{ $item->lowongan_magang->industri->namaindustri }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Saya Yakin',
-                    cancelButtonText: 'Batal'
-                }, function() {
-                    $.ajax({
-                        url: "{{ route('lamaran_saya.tolak_lamaran') }}",
-                        type: "PUT",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            nim: nim,
-                            lowongan: lowongan
-                        },
-                        success: function(response) {
-                            if (response.data.status === 'success') {
-                                showSweetAlert({
-                                    title: 'Berhasil!',
-                                    text: response.data.message,
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            } else {
-                                showSweetAlert({
-                                    title: 'Gagal!',
-                                    text: response.data.message,
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Gagal!',
-                                text: 'Terjadi kesalahan saat memproses data',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    });
-                });
-            }
-        </script>
-    @endif
-@endsection
