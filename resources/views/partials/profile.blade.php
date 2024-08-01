@@ -26,14 +26,14 @@
     <li>
         <div class="dropdown-divider"></div>
     </li> --}}
-    @can('dashboard.dashboard_admin')
+    @hasanyrole(['Super Admin', 'LKM'])
         <li>
             <a class="dropdown-item" href="{{ route('dashboard_admin') }}">
                 <i class="ti ti-database me-2 ti-sm"></i>
                 <span class="align-middle">Dashboard Admin</span>
             </a>
         </li>
-    @endcan
+    @else
     @can('dashboard.dashboard_mitra')
         <li>
             <a class="dropdown-item" href="{{ route('dashboard_company') }}">
@@ -58,6 +58,7 @@
             </a>
         </li>
     @endcan
+    @endhasanyrole
     <li>
         <a class="dropdown-item"
             href="{{ $url }}">
