@@ -24,7 +24,7 @@
             <table class="table" id="table-akademik">
                 <thead>
                     <tr>
-                        <th>NOMOR</th>
+                        <th>NO</th>
                         <th>NAMA</th>
                         <th>PROGRAM STUDI</th>
                         <th>POSISI MAGANG</th>
@@ -34,7 +34,7 @@
                         <th>BERKAS AKHIR MAGANG</th>
                         <th>NILAI AKHIR</th>
                         <th>INDEKS</th>
-                        <th>AKSI</th>
+                        <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -80,6 +80,7 @@
 <script>
     $(document).ready(function() {
         $('#table-akademik').DataTable({
+            scrollX: true,
             processing: true,
             serverSide: true,
             ajax: {

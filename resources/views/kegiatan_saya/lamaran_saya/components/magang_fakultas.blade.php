@@ -14,13 +14,13 @@
     <li class="nav-item">
         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-terima" aria-controls="navs-pills-justified-terima" aria-selected="false">
             <i class="ti ti-clipboard-check"></i>
-            Terima Tawaran
+            Diterima
         </button>
     </li>
     <li class="nav-item">
         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tolak" aria-controls="navs-pills-justified-tolak" aria-selected="false">
             <i class="ti ti-clipboard-x"></i>
-            Tolak Tawaran
+            Ditolak
         </button>
     </li>
 </ul>
@@ -35,6 +35,7 @@
                     <option value="Tahap 1">Tahap 1</option>
                     <option value="Tahap 2">Tahap 2</option>
                     <option value="Tahap 3">Tahap 3</option>
+                    <option value="Ditolak">Ditolak</option>
                 </select>
             </div>
         </div>
@@ -43,12 +44,18 @@
         </div>
     </div>
     <div class="tab-pane fade" id="navs-pills-justified-penawaran" role="tabpanel">
-        @include('kegiatan_saya.lamaran_saya.components.penawaran')
+        <div id="container-penawaran">
+            @include('kegiatan_saya.lamaran_saya.components.penawaran')
+        </div>
     </div>
     <div class="tab-pane fade" id="navs-pills-justified-terima" role="tabpanel">
-        @include('kegiatan_saya.lamaran_saya.components.diterima')
+        <div id="container-diterima">
+            @include('kegiatan_saya.lamaran_saya.components.diterima')
+        </div>
     </div>
     <div class="tab-pane fade" id="navs-pills-justified-tolak" role="tabpanel">
-        @include('kegiatan_saya.lamaran_saya.components.ditolak')
+        <div id="container-ditolak">
+            @include('kegiatan_saya.lamaran_saya.components.ditolak')
+        </div>
     </div>
 </div>

@@ -70,6 +70,8 @@ Route::middleware('auth')->group(function () {
         Route::post('store' , 'store')->name('.store');
         Route::get('edit/{id}' , 'edit')->name('.edit');
         Route::post('update/{id}' , 'update')->name('.update');
+        Route::post('update-status/{id}' , 'updateStatus')->name('.update_status');
+        Route::post('reset-password/{id}' , 'resetPassword')->name('.reset_password');
     });
 
     Route::prefix('kelola-semua-pengguna')->name('kelola_semua_pengguna')->controller(KelolaSemuaPenggunaController::class)->group(function () {
