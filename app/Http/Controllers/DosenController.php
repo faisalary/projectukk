@@ -160,12 +160,12 @@ class DosenController extends Controller
             return Response::errorCatch($e);
         }
     }
-    
+
     public function import (Request $request){
         $data = $request->file('import');
         $namafile = $data-> getClientOriginalName();
         $data->move('DosenData', $namafile);
-        Excel::import(new DosenImport, \public_path('/DosenData/'.$namafile));
-        return \redirect()->back();
+        Excel::import(new DosenImport($request->id_univ, $request->id_fakultas), \public_path('/DosenData/'.$namafile));
+        return response()->json(['message' => 'Import Success', 'error' => false, 'url' => url('/master/dosen')], 200);
     }
 }
