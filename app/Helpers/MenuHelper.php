@@ -335,6 +335,12 @@ class MenuHelper
                 'icon' => 'ti-building',
                 'permission' => 'profile_perusahaan.view'
             ],
+            [
+                'name' => 'Assign Pembimbing',
+                'route' => 'assign_pembimbing',
+                'icon' => 'ti-clipboard-list',
+                'permission' => 'assign_pembimbing.view'
+            ],
             //dosen
             [
                 'type' => 'menu-header',

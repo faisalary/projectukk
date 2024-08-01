@@ -1,0 +1,193 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use stdClass;
+use Exception;
+use App\Helpers\Response;
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\JenisMagang;
+use App\Models\ProgramStudi;
+use App\Models\SeleksiTahap;
+use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
+use Illuminate\Support\Carbon;
+use App\Models\BahasaMahasiswa;
+use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use App\Enums\LowonganMagangStatusEnum;
+use Yajra\DataTables\Facades\DataTables;
+use App\Enums\PendaftaranMagangStatusEnum;
+use App\Http\Requests\LowonganMagangRequest;
+use App\Models\MhsMagang;
+use App\Models\PegawaiIndustri;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
+class AssignPembimbingController extends Controller
+{
+    
+    /** 
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $data['pegawai'] = $this->getPegawaiIndustri()->my_pegawai_industri;
+        $data['prodi'] = ProgramStudi::all();
+        $data['posisi'] = LowonganMagang::select('intern_position', 'id_lowongan')->get();
+        return view('company.assign_pembimbing.index', $data);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+
+    public function show(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:assigned,unassigned',
+        ]);
+        
+        $this->getPendaftarMagang(function ($query) use ($request) {
+
+            $query = $query->leftJoin('mhs_magang', 'pendaftaran_magang.id_pendaftaran', '=', 'mhs_magang.id_pendaftaran');
+            $query = $query->leftJoin('pegawai_industri', 'mhs_magang.id_peg_industri', '=', 'pegawai_industri.id_peg_industri');
+
+            if($request->type == 'assigned') {
+                $query = $query->whereNotNull('mhs_magang.id_peg_industri');
+            } else {
+                $query = $query->whereNull('mhs_magang.id_peg_industri');
+            }
+
+            if($request->filter != ''){
+                $filter = explode('&', $request->filter);
+                foreach ($filter as $key => $value) {
+                    $filter = explode('=', $value);
+                    $query = $query->where($filter[0], $filter[1]);
+                }
+            }
+
+            $query = $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+
+            $query->my_pendaftar_magang = $query->select(
+                'pendaftaran_magang.*',
+                'mhs_magang.id_peg_industri',
+                'mhs_magang.id_mhsmagang',
+                'pegawai_industri.namapeg',
+                'pegawai_industri.nohppeg',
+                'pegawai_industri.id_peg_industri',
+                'pendaftaran_magang.file_document_mitra',
+                'program_studi.namaprodi',
+                'program_studi.id_prodi',
+                'mahasiswa.namamhs',
+                'mahasiswa.nim',
+            );
+
+            return $query;
+        });
+       
+        return DataTables::of($this->my_pendaftar_magang)
+            ->addIndexColumn()
+            ->addColumn('tanggal_magang', function ($row) {
+                $result = '<div class="text-start">';
+
+                $result .= '<span class="text-muted text-nowrap">Tanggal Mulai:</span><br>';
+                $result .= '<span>' . Carbon::parse($row->startdate_magang)->format('d F Y') . '</span><br>';
+                $result .= '<span class="text-muted text-nowrap">Tanggal Berakhir:</span><br>';
+                $result .= '<span>' . Carbon::parse($row->enddate_magang)->format('d F Y') . '</span>';
+
+                $result .= '</div>';
+                return  $result;
+            })
+            ->editColumn('namamhs', function ($data) {
+                $result = '<div class="text-nowrap">';
+                $result .= '<span class="fw-bolder text-unwrap">' .$data->namamhs. '</span><br>';
+                $result .= '<span>' .$data->nim. '</span><br>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->addColumn('pembimbing_lapangan', function ($data) {
+                if(!$data->id_peg_industri) return '<div class="text-nowrap">-</div>';
+                $result = '<div class="text-nowrap">';
+                $result .= '<span>' .$data->namapeg . '</span><br>';
+                $result .= '<span class="fw-bolder text-unwrap">' .$data->nohppeg . '</span><br>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->addColumn('bukti_penerimaan', function ($data) {
+                if(!$data->file_document_mitra) return '<div class="text-nowrap">-</div>';
+                $result = '<div class="text-nowrap">';
+                $result .= '<a href="' . url($data->file_document_mitra) . '" target="_blank" class="text-primary">Bukti Penerimaan</a>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->rawColumns(['namamhs', 'tanggal_magang', 'pembimbing_lapangan', 'bukti_penerimaan'])
+            ->make(true);
+    }
+
+    public function assignPemLapangan(Request $request) {
+
+        $request->validate([
+            'id_mhsmagang' => 'required|array|exists:mhs_magang,id_mhsmagang',
+            'id_peg_industri' => 'required|exists:pegawai_industri,id_peg_industri'
+        ], [
+            'id_peg_industri.required' => 'Pilih pembimbing lapangan',
+            'id_mhsmagang.array' => 'Data tidak valid',
+            'id_peg_industri.exists' => 'Pembimbing tidak ditemukan',
+            'id_mhsmagang.exists' => 'Data tidak ditemukan',
+            'id_mhsmagang.required' => 'Data tidak valid'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            MhsMagang::whereIn('id_mhsmagang', $request->id_mhsmagang)->update([
+                'id_peg_industri' => $request->id_peg_industri
+            ]);
+
+            DB::commit();
+            return Response::success(null, 'Berhasil assign pembimbing lapangan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
+    }
+   
+    private function getPegawaiIndustri($additional = null){
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+        $this->my_pegawai_industri = PegawaiIndustri::where('id_industri', $pegawaiIndustri->id_industri);
+        if ($additional) $this->my_pegawai_industri = $additional($this->my_pegawai_industri);
+        
+        $this->my_pegawai_industri = $this->my_pegawai_industri->get();
+
+        return $this;
+    }
+
+
+    private function getPendaftarMagang($additional = null){
+        $user = auth()->user();
+        $pegawaiIndustri = $user->pegawai_industri;
+
+        $this->my_pendaftar_magang = PendaftaranMagang::with(['lowongan_magang' => function ($query) {
+            $query->select('id_lowongan', 'intern_position'); 
+        }])
+        ->join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
+        ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
+        ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->whereHas('lowongan_magang', function ($query) use ($pegawaiIndustri) {
+            $query->where('id_industri', $pegawaiIndustri->id_industri);
+        });
+
+        if ($additional) $this->my_pendaftar_magang = $additional($this->my_pendaftar_magang);
+        $this->my_pendaftar_magang = $this->my_pendaftar_magang->get();
+        
+        return $this;
+    }
+}
