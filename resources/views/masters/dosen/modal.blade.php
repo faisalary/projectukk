@@ -144,7 +144,28 @@
                 action="{{ route('dosen.import') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <input type="file" class="form-control" id="basic-default-upload-file" required=""
+                    <div class="row">
+                        <div class="col mb-2 form-group">
+                            <label for="id_univ" class="form-label">Universitas</label>
+                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas">
+                                <option value="" disabled selected>Pilih Universitas</option>
+                                @foreach ($universitas as $u)
+                                    <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2 form-group">
+                            <label for="id_fakultas" class="form-label">Fakultas</label>
+                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas">
+                                <option value="" disabled selected>Pilih Fakultas</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <input type="file" class="form-control mt-2" id="basic-default-upload-file" required=""
                         name="import">
                 </div>
                 <div class="modal-footer">
