@@ -231,10 +231,10 @@
                     </div>
                     <div class="d-flex justify-content-start" style="margin-top:1.7rem !important;">
                         <div class="col-auto mx-2">
-                            <img src="{{ url('front/assets/img/Surabaya.png') }}" class="img-fluid" alt="surabaya">
+                            <img src="{{ url('front/assets/img/surabaya.png') }}" class="img-fluid" alt="surabaya">
                         </div>
                         <div class="col-auto" style="margin-left: 1.7rem !important;">
-                            <img src="{{ url('front/assets/img/Medan.png') }}" class="img-fluid" alt="medan">
+                            <img src="{{ url('front/assets/img/medan.png') }}" class="img-fluid" alt="medan">
                         </div>
                     </div>
                 </div>

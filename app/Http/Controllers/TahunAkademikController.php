@@ -31,8 +31,11 @@ class TahunAkademikController extends Controller
      */
     public function store(TahunAkademikRequest $request)
     {
-        // dd($request->all());
         try {
+            // Set all other academic years to inactive
+            TahunAkademik::query()->update(['status' => false]);
+
+            // Create new academic year
             $tahun = TahunAkademik::create([
                 'tahun' => $request->tahun,
                 'semester' => $request->semester,
@@ -54,22 +57,20 @@ class TahunAkademikController extends Controller
      */
     public function show()
     {
-        $tahun = TahunAkademik::orderBy('tahun', 'asc')->get();
+        $tahunAkademiks = TahunAkademik::orderBy('tahun', 'asc')->get();
 
-        return DataTables::of($tahun)
+        return DataTables::of($tahunAkademiks)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
-                }
+                return $row->status ?
+                    "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>" :
+                    "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
             })
             ->addColumn('pendaftaran_magang', function ($row) {
                 return Carbon::parse($row->startdate_daftar)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_daftar)->format('d M Y');
             })
             ->addColumn('pengumpulan_berkas', function ($row) {
-                return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp; ' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
+                return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
             })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
@@ -77,11 +78,11 @@ class TahunAkademikController extends Controller
 
                 $url = route('thn-akademik.status', $row->id_year_akademik);
                 $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal' data-id='{$row->id_year_akademik}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
+            <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
                 return $btn;
             })
-            ->rawColumns(['pendaftaran_magang', 'pengumpulan_berkas', 'action', 'status'])   
+            ->rawColumns(['pendaftaran_magang', 'pengumpulan_berkas', 'action', 'status'])
             ->make(true);
     }
 
@@ -103,12 +104,18 @@ class TahunAkademikController extends Controller
             $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
             if (!$tahun) return Response::error(null, 'Tahun Akademik not found!');
 
+            // Set all other academic years to inactive if the current one is set to active
+            if ($request->status) {
+                TahunAkademik::query()->update(['status' => false]);
+            }
+
             $tahun->tahun = $request->tahun;
             $tahun->semester = $request->semester;
             $tahun->startdate_daftar = Carbon::parse($request->startdate_daftar)->format('Y-m-d');
             $tahun->enddate_daftar = Carbon::parse($request->enddate_daftar)->format('Y-m-d');
             $tahun->startdate_pengumpulan_berkas = Carbon::parse($request->startdate_pengumpulan_berkas)->format('Y-m-d');
             $tahun->enddate_pengumpulan_berkas = Carbon::parse($request->enddate_pengumpulan_berkas)->format('Y-m-d');
+            $tahun->status = $request->status;
             $tahun->save();
 
             return Response::success(null, 'Tahun Akademik successfully Updated!');
@@ -125,6 +132,11 @@ class TahunAkademikController extends Controller
         try {
             $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
             if (!$tahun) return Response::error(null, 'Tahun Akademik not found!');
+
+            // Set all other academic years to inactive if the current one is set to active
+            if (!$tahun->status) {
+                TahunAkademik::query()->update(['status' => false]);
+            }
 
             $tahun->status = !$tahun->status;
             $tahun->save();
