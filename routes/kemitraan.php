@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignPembimbingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
 use App\Http\Controllers\MitraJadwalController;
@@ -103,6 +104,12 @@ Route::prefix('profile-perusahaan')->name('profile_company')->controller(Profile
     Route::get('/', 'index');
     Route::post('/{id}', 'update')->name('.update');
     Route::get('/edit/{id}', 'edit')->name('.edit');
+});
+
+Route::prefix('assign-pembimbing')->name('assign_pembimbing')->controller(AssignPembimbingController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::post('assign-pembimbing-lapangan', 'assignPemLapangan')->name('.assign_pem_lapangan');
 });
 
 Route::prefix('company')->group(function () {
