@@ -20,7 +20,11 @@
             <div class="card-body p-5">
                 <div class="d-flex justify-content-start">
                     <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
-                        <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
+                        @if ($data->profile_picture)
+                        <img src="{{ asset('storage/' . $data->profile_picture) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
+                        @else
+                        <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri">    
+                        @endif
                     </div>
                     <div class="d-flex flex-column justify-content-center ms-4">
                         <h2 class="fw-bolder mb-1">{{ $data->namamhs }}</h2>

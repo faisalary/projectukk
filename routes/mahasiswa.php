@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
@@ -63,10 +63,10 @@ Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController
     Route::post('update-data', 'update')->name('.update_data');
 
     Route::post('update-informasi-tambahan', 'updateInfoTambahan')->name('.update_info_tambahan');
-    
+
     Route::post('update-pendidikan', 'updatePendidikan')->name('.update_pendidikan');
     Route::post('delete-pendidikan/{id}', 'deletePendidikan')->name('.delete_pendidikan');
-    
+
     Route::post('update-keahlian', 'updateKeahlian')->name('.update_keahlian');
 
     Route::post('update-experience', 'updateExperience')->name('.update_experience');
@@ -125,6 +125,7 @@ Route::prefix('kegiatan-saya')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
     });
 
     Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {

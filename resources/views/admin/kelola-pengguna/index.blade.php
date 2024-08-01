@@ -27,6 +27,7 @@
                         <th style="min-width: 125px;">NAMA</th>
                         <th>EMAIL</th>
                         <th style="text-align: center;">Role</th>
+                        <th style="text-align: center;">Status</th>
                         <th style="text-align: center;">AKSI</th>
                     </tr>
                 </thead>
@@ -47,13 +48,18 @@
             { data: "name" },
             { data: "email" },
             { data: "roles" },
+            { data: "status" },
             { data: "action" }
         ]
     });
 
     function afterAction(response) {
-        $('#table-pengguna').DataTable().ajax.reload();
+        afterUpdateStatus(response)
         $('#modalTambahUser').modal('hide');
+    }
+
+    function afterUpdateStatus(response) {
+        $('#table-pengguna').DataTable().ajax.reload();
     }
 
     function edit(e) {
@@ -79,6 +85,37 @@
                 $('#name').val(response.name);
                 $('#email').val(response.email);
                 $('#role').val(response.role).change();
+            }
+        });
+    }
+
+    function resetPassword(e) {
+        $.ajax({
+            url: "{{ route('kelola_pengguna.reset_password', ['id' => ':id']) }}".replace(':id', e.attr('data-id')),
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            success: function(response) {
+                if (!response.error) {
+                    showSweetAlert({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success'
+                    });
+                } else {
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                let res = xhr.responseJSON;
+                showSweetAlert({
+                    title: 'Gagal!',
+                    text: res.message,
+                    icon: 'error'
+                });
             }
         });
     }

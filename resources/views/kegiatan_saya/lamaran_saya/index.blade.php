@@ -55,27 +55,77 @@
 
 @section('page_script')
 <script>
-    $(document).ready(function () {
-        // loadData();
+    $(document).on('change', '#filter_lowongan', function () {
+        loadData({
+            component: 'proses-seleksi',
+            filter: $(this).val()
+        });
     });
 
-    $(document).on('change', '#filter_lowongan', function () {
+    function approvalTawaran(event, e) {
+        event.stopPropagation();
+
+        let text = 'Ingin menerima lowongan ini?';
+        if (e.attr('data-status') == 'rejected') text = 'Ingin menolak lowongan ini?';
+
+        sweetAlertConfirm({
+            title: 'Apakah anda yakin?',
+            text: text,
+            icon: 'warning',
+            confirmButtonText: 'Ya, saya yakin!',
+            cancelButtonText: 'Batal'
+        }, function () {
+            $.ajax({
+                url: "{{ route('lamaran_saya.approval_penawaran', ['id' => ':id']) }}".replace(':id', e.attr('data-id')),
+                type: "POST",
+                data: { status: e.attr('data-status') },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (!response.error) {
+                        loadData({component: 'penawaran'});
+                        loadData({component: 'diterima'});
+                        loadData({component: 'ditolak'});
+
+                        showSweetAlert({
+                            title: 'Berhasil!',
+                            text: 'Penawaran berhasil ' + (e.attr('data-status') == 'rejected' ? 'ditolak' : 'diterima') + '!',
+                            icon: 'success'
+                        });
+                    } else {
+                        showSweetAlert({
+                            title: 'Gagal!',
+                            text: response.message,
+                            icon: 'error'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    let res = xhr.responseJSON;
+                    showSweetAlert({
+                        title: 'Gagal!',
+                        text: res.message,
+                        icon: 'error'
+                    });
+                }
+            });
+        });
+    }
+
+    function loadData(data) {
         $.ajax({
             url: `{{ route('lamaran_saya') }}`,
             type: 'GET',
             data: {
-                component: 'proses-seleksi',
-                filter: $(this).val()
+                component: data.component,
+                filter: data.filter
             },
             success: function (response) {
                 response = response.data;
-                $('#container-proses-seleksi').html(response.view);
+                $('#container-' + data.component).html(response.view);
             }
         });
-    });
-
-    function loadData() {
-        
     }
 </script>
 @endsection

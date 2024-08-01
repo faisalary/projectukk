@@ -16,15 +16,15 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-ditolak" aria-controls="navs-pills-ditolak" aria-selected="false" tabindex="-1">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-belum_magang" aria-controls="navs-pills-belum_magang" aria-selected="false" tabindex="-1">
                     <i class="ti ti-user-x"></i>
-                    Ditolak
+                    Belum Magang
                 </button>
             </li>
         </ul>
     </div>
     <div class="tab-content px-0">
-        @foreach (['diterima', 'ditolak'] as $key => $item)
+        @foreach (['diterima', 'belum_magang'] as $key => $item)
         <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-{{ $item }}" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center my-4">
                 <span class="text-muted">Filter Berdasarkan: </span>
@@ -65,8 +65,8 @@
     $('.table').each(function () {
         let columns = {!! $view['columnsDiterima'] !!};
 
-        if ($(this).attr('id') == 'ditolak') {
-            columns = {!! $view['columnsDitolak'] !!};
+        if ($(this).attr('id') == 'belum_magang') {
+            columns = {!! $view['columnsBelumMagang'] !!};
         }
 
         let attrDatatable = {
@@ -83,7 +83,7 @@
             @endif
         };
 
-        if ($(this).attr('id') == 'ditolak') {
+        if ($(this).attr('id') == 'belum_magang') {
             delete attrDatatable.columnDefs;
             delete attrDatatable.select;
         }
