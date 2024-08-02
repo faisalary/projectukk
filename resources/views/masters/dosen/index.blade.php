@@ -83,7 +83,7 @@
     }
 
     function afterAction(response) {
-        $('#modal-dosen').modal('hide');
+        $('#modal-import, #modal-dosen').modal('hide');
         afterUpdateStatus(response);
     }
 

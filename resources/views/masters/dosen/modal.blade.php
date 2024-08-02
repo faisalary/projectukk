@@ -141,7 +141,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="default-form" id="" name="import" method="POST"
-                action="{{ route('dosen.import') }}" enctype="multipart/form-data">
+                action="{{ route('dosen.import') }}" enctype="multipart/form-data" function-callback="afterAction">
                 @csrf
                 <div class="modal-body">
                     <div class="row">

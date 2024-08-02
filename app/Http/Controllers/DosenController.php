@@ -166,6 +166,6 @@ class DosenController extends Controller
         $namafile = $data-> getClientOriginalName();
         $data->move('DosenData', $namafile);
         Excel::import(new DosenImport($request->id_univ, $request->id_fakultas), \public_path('/DosenData/'.$namafile));
-        return response()->json(['message' => 'Import Success', 'error' => false, 'url' => url('/master/dosen')], 200);
+        return response()->json(['message' => 'Import Success', 'error' => false], 200);
     }
 }
