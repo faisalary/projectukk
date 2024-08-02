@@ -32,13 +32,13 @@ class DosenRequest extends FormRequest
             'kode_dosen' => ['required', 'string', 'max:255', 'unique:dosen,kode_dosen'],
             'namadosen' => ['required', 'string'],
             'nohpdosen' => ['required', 'string', 'max:255', 'phone:id'],
-            'emaildosen' => ['required', 'string', 'max:255', 'email', 'unique:dosen,emaildosen'],
+            'emaildosen' => ['required', 'string', 'max:255', 'email', 'unique:dosen,emaildosen', 'unique:users,email'],
         ];
         
         if (isset($this->id)) {
             $validate['nip'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'nip')];
             $validate['kode_dosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'kode_dosen')];
-            $validate['emaildosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'emaildosen')];
+            $validate['emaildosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'emaildosen'), Rule::unique('users')->ignore($this->id, 'email')];
         }  
 
         return $validate;
