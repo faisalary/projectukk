@@ -26,9 +26,12 @@ class MahasiswaRequest extends FormRequest
      */
     public function rules(): array
     {
-        $nim = ['required', 'string','max:15','unique:mahasiswa'];
+        $nim = ['required', 'string','max:15','unique:mahasiswa,nim'];
+        $email = ['required', 'string', 'max:255', 'unique:mahasiswa,emailmhs', 'unique:users,email'];
+
         if (isset($this->id)) {
-            array_push($nim, Rule::unique('mahasiswa')->ignore($this->id, 'nim'));
+            $nim = ['required', 'string', 'max:15', Rule::unique('mahasiswa')->ignore($this->id, 'nim')];
+            $email = ['required', 'string', 'max:255', Rule::unique('mahasiswa')->ignore($this->id, 'emailmhs'), Rule::unique('users')->ignore($this->id, 'email')];
         }  
         return [
             'nim' => $nim,
@@ -57,7 +60,7 @@ class MahasiswaRequest extends FormRequest
             }],
             'namamhs' => ['required', 'string', 'max:255'],
             'alamatmhs' => ['required', 'string', 'max:255'],
-            'emailmhs' => ['required', 'string', 'max:255'],
+            'emailmhs' => $email,
             'nohpmhs' => ['required', 'phone:id'],
             'eprt' => ['required', 'numeric',],
             'tak' => ['required', 'numeric',],
