@@ -23,6 +23,7 @@
                             <th>NOMOR</th>
                             <th>JENIS MAGANG</th>
                             <th>DURASI MAGANG</th>
+                            <th>DESKRIPSI MAGANG</th>
                             <th>DOKUMEN UPLOAD</th>
                             <th>BERKAS AKHIR</th>
                             <th class="text-center">STATUS</th>
@@ -48,6 +49,7 @@
         deferRender: true,
         type: 'GET',
         destroy: true,
+        scrollX: true,
         columns: [{
                 data: "DT_RowIndex"
             },
@@ -58,6 +60,10 @@
             {
                 data: 'durasimagang',
                 name: 'durasi_magang'
+            },
+            {
+                data: 'desc',
+                name: 'desc'
             },
             {
                 data: 'status_upload',

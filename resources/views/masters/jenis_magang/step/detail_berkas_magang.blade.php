@@ -5,7 +5,7 @@
     </div>
     <div class="row g-3 form-repeater">
         <div data-repeater-list="berkas">
-            @if (isset($jenismagang))
+            @if (isset($jenismagang) && count($jenismagang->berkas_magang) > 0)
             @foreach ($jenismagang->berkas_magang as $key => $item)
             <div class="border-bottom" data-repeater-item data-callback="afterShown">
                 <input type="hidden" class="id_berkas" name="berkas[][id_berkas_magang]" value="{{ $item->id_berkas_magang }}">

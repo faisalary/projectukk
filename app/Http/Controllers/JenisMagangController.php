@@ -59,6 +59,7 @@ class JenisMagangController extends Controller
                 'namajenis' => $request->namajenis,
                 'durasimagang' => $request->durasimagang,
                 'id_year_akademik' => $request->id_year_akademik,
+                'desc' => $request->desc,
                 'status' => true,
             ]);
 
@@ -147,8 +148,9 @@ class JenisMagangController extends Controller
 
         $jenismagang = JenisMagang::where('id_jenismagang', $id)->first();
         $tahun = TahunAkademik::all();
+        $urlBack = route('jenismagang');
 
-        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun'));
+        return view('masters.jenis_magang.modal', compact('jenismagang', 'tahun', 'urlBack'));
     }
 
     /**
@@ -176,6 +178,7 @@ class JenisMagangController extends Controller
             $jenismagang->namajenis = $request->namajenis;
             $jenismagang->durasimagang = $request->durasimagang;
             $jenismagang->id_year_akademik = $request->id_year_akademik;
+            $jenismagang->desc = $request->desc;
             $jenismagang->save();
 
             $berkasToDelete = $jenismagang->berkas_magang()->whereNotIn('id_berkas_magang', collect($request->berkas)->pluck('id_berkas_magang')->toArray())->get();
