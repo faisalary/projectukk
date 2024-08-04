@@ -16,18 +16,18 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 mb-2 form-group">
-                            <label for="email" class="form-label">Email Mitra</label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Email" />
+                            <label for="email" class="form-label">Email Penanggung Jawab</label>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Email Penanggung Jawab" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 mb-2 form-group">
-                            <label for="contact_person" class="form-label">Contact Person</label>
-                            <input type="text" id="contact_person" name="contact_person" class="form-control" placeholder="Contact Person" />
+                            <label for="contact_person" class="form-label">No HP Penanggung Jawab</label>
+                            <input type="text" id="contact_person" name="contact_person" class="form-control" placeholder="No HP Penanggung Jawab" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 mb-2 form-group">
-                            <label for="penanggung_jawab" class="form-label">Penanggung Jawab</label>
-                            <input type="text" id="penanggung_jawab" name="penanggung_jawab" class="form-control" placeholder="Penanggung Jawab" />
+                            <label for="penanggung_jawab" class="form-label">Nama Penanggung Jawab</label>
+                            <input type="text" id="penanggung_jawab" name="penanggung_jawab" class="form-control" placeholder="Nama Penanggung Jawab" />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 mb-2 form-group">
@@ -53,9 +53,8 @@
                             <label for="statuskerjasama" class="form-label">Pilih Status Kerjasama</label>
                             <select class="form-control select2" id="statuskerjasama" name="statuskerjasama" data-placeholder="Pilih Status Kerjasama">
                                 <option disabled selected>Pilih Status Kerjasama</option>
-                                <option value="Ya">Ya</option>
+                                <option value="Iya">Iya</option>
                                 <option value="Tidak">Tidak</option>
-                                <option value="Internal Telyu">Internal Tel-u</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>

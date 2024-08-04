@@ -80,7 +80,6 @@
                                         <option disabled selected value="">Pilih Status Kerjasama</option>
                                         <option value="Iya" @selected(old('statuskerjasama') == 'Iya')>Iya</option>
                                         <option value="Tidak" @selected(old('statuskerjasama') == 'Tidak')>Tidak</option>
-                                        <option value="Internal Tel-u" @selected(old('statuskerjasama') == 'Internal Tel-u')>Internal Tel-u</option>
                                     </select>
                                     @error('statuskerjasama')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
