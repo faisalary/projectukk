@@ -8,7 +8,7 @@
             <select name="id_jenismagang" id="id_jenismagang" class="select2 form-select" data-placeholder="Jenis Magang">
                 <option value="" disabled selected>Jenis Magang</option>
                 @foreach ($jenismagang as $j)
-                <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }}</option>
+                <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }} ({{ $j->durasimagang }})</option>
                 @endforeach
             </select>
             <div class="invalid-feedback"></div>
