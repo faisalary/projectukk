@@ -324,7 +324,7 @@ class MenuHelper
                 'permission' => 'anggota_tim.view'
             ],
             [
-                'name' => 'Jadwal Seleksi',
+                'name' => 'Proses Seleksi',
                 'route' => 'jadwal_seleksi',
                 'icon' => 'ti-clock',
                 'permission' => 'jadwal_seleksi_mitra.view'

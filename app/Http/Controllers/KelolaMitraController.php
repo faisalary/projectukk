@@ -41,28 +41,53 @@ class KelolaMitraController extends Controller
     public function store(CompanyReg $request)
     {
         try{
-            DB::beginTransaction();   
+            DB::beginTransaction();
+            $code = Str::random(64);
+
+            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+            if ($passwordResetToken) {
+                DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            }
+
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $code,
+                'created_at' => now(),
+            ]);
+
+            $admin = User::create([
+                'name' => $request->namaindustri,
+                'username' => $request->namaindustri,
+                'email' => $request->email,
+                'password' => Hash::make(Str::random(12)),
+            ]);
+            $admin->assignRole('Mitra');
+
             $industri = Industri::create([
                 'namaindustri' => $request->namaindustri,
-                'email' => $request->email,
-                'notelpon' => $request->contact_person,
-                'penanggung_jawab' => $request->penanggung_jawab,
                 'alamatindustri'=> $request->alamat,
                 'description'=> $request->deskripsi,
                 'kategori_industri' => $request->kategori_industri,
                 'statuskerjasama' => $request->statuskerjasama,
-                'status' => true,
+                'statusapprove' => 1,
             ]);
-        
-            $code = Str::random(64);
-            $admin = User::create([
-                'name' => 'Mitra',
-                'username' => $request->namaindustri,
-                'email' => $request->email,
-                'password' => Hash::make($industri->penanggung_jawab),
+
+            $administratorIndustri = PegawaiIndustri::create([
+                'id_industri' => $industri->id_industri,
+                'namapeg' => $request->penanggung_jawab,
+                'nohppeg' => $request->contact_person,
+                'emailpeg' => $request->email,
+                'jabatan' => 'Administrator',
+                'statuspeg' => true,
+                'id_user' => $admin->id
             ]);
-            $admin->assignRole('LKM');
-                
+
+            $industri->penanggung_jawab = $administratorIndustri->id_peg_industri;
+            $industri->save();
+
+            $url = route('register.set-password', ['token' => $code]);
+            dispatch(new SendMailJob($request->email, new VerifyEmail($url)));
+            
             DB::commit();
             return Response::success(null, 'Industri successfully Created!');
         } catch (Exception $e) {
@@ -165,6 +190,9 @@ class KelolaMitraController extends Controller
     {
         $industri = Industri::with('penanggungJawab')->where('id_industri', $id)->first();
         $industri->penanggung_jawab = $industri->penanggungJawab->namapeg;
+        $industri->email = $industri->penanggungJawab->emailpeg;
+        $industri->contact_person = $industri->penanggungJawab->nohppeg;
+
         unset($industri->penanggungJawab);
         return $industri;
     }
@@ -172,19 +200,35 @@ class KelolaMitraController extends Controller
     public function update(CompanyReg $request, $id)
     {
         try {
-            $industri = Industri::where('id_industri', $id)->first();       
+            DB::beginTransaction();
+
+            $industri = Industri::where('id_industri', $id)->first();
+            if (!$industri) return Response::error(null, 'Not Found.');
+            $penanggungJawab = PegawaiIndustri::where('id_peg_industri', $industri->penanggung_jawab)->first();
+            $user = User::where('id', $penanggungJawab->id_user)->first();
+
+
+            $user->name = $request->namaindustri;
+            $user->username = $request->namaindustri;
+            $user->email = $request->email;
+            $user->save();
+
             $industri->namaindustri = $request->namaindustri;
-            $industri->email = $request->email;
-            $industri->notelpon = $request->contact_person;
-            $industri->penanggung_jawab = $request->penanggung_jawab;
             $industri->alamatindustri = $request->alamat;
             $industri->description = $request->deskripsi;
             $industri->kategori_industri = $request->kategori_industri;
             $industri->statuskerjasama = $request->statuskerjasama;
             $industri->save();
 
+            $penanggungJawab->namapeg = $request->penanggung_jawab;
+            $penanggungJawab->nohppeg = $request->contact_person;
+            $penanggungJawab->emailpeg = $request->email;
+            $penanggungJawab->save();
+
+            DB::commit();
             return Response::success(null, 'Data Successfully Updated!');
         } catch (Exception $e) {
+            DB::rollBack();
             return Response::errorCatch($e);
         }
     }
