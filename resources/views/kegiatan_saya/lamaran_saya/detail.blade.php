@@ -56,7 +56,7 @@
                             <span class="ms-2">{{ $pelamar->kuota }} Kuota Penerimaan</span>
                         </div>
                         <div class="d-flex justify-content-start mt-4">
-                            <a href="#" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('lamaran_saya.detail_lowongan', $pelamar->id_pendaftaran) }}" class="btn btn-sm btn-outline-primary">
                                 <i class="ti ti-eye"></i>
                                 <span class="ms-2">Lihat Detail Pekerjaan</span>
                             </a>

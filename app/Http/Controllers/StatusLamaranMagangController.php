@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Industri;
 use App\Helpers\Response;
+use App\Models\MhsMagang;
 use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusStepEnum;
-use App\Models\MhsMagang;
 
 class StatusLamaranMagangController extends Controller
 {
@@ -111,6 +112,22 @@ class StatusLamaranMagangController extends Controller
         $pelamar->lowongan_tersedia = ($pelamar->enddate > Carbon::now()) ? true : false;
 
         return view('kegiatan_saya.lamaran_saya.detail', compact('pelamar'));
+    }
+
+    public function detailLowongan($id) {
+        $pendaftar = PendaftaranMagang::where('id_pendaftaran', $id)->first();
+        $lowongan = LowonganMagang::select(
+            'id_lowongan', 'intern_position', 'industri.namaindustri', 'industri.image', 'industri.description as deskripsi_industri',
+            'pelaksanaan', 'durasimagang', 'lokasi', 'nominal_salary', 'created_at', 'jenjang', 'kuota',
+            'gender', 'statusaprove', 'keterampilan', 'deskripsi', 'requirements', 'benefitmagang',
+            'tahapan_seleksi'
+        )
+        ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+        ->where('id_lowongan', $pendaftar->id_lowongan)->first()->dataTambahan('program_studi');
+        if (!$lowongan) abort(404);
+
+        $urlBack = route('lamaran_saya.detail', $id);
+        return view('kegiatan_saya/lamaran_saya/detail_lowongan', compact('lowongan', 'urlBack'));
     }
 
     private function getDataLamaran($additionalBeforeGet = null)
