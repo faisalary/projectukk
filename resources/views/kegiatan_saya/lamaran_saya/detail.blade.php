@@ -80,8 +80,10 @@
                     <span class="fw-semibold">Portofolio</span>
                 </div>
                 <div class="col-12 d-flex justify-content-start">
-                    <i class="ti ti-file-symlink"></i>
-                    <span class="ms-2">anfkwankfnwakfnwakfwajfkjaw.pdf</span>
+                    <a href="{{ asset('storage/' . $pelamar->portofolio) }}" target="_blank" class="text-primary d-flex align-items-center">
+                        <i class="ti ti-file-symlink me-2"></i>
+                        {{ str_replace('portofolio/', '', $pelamar->portofolio) }}
+                    </a>
                 </div>
             </div>
         </div>

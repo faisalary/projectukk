@@ -13,7 +13,7 @@
         </a>
         @endif
         <div class="col-md-9 col-12">
-            <h4 class="fw-bold">Jadwal Seleksi</h4>
+            <h4 class="fw-bold">Proses Seleksi</h4>
         </div>
     </div>
     <div class="col-md-3 col-12 mb-3 float-end d-flex justify-content-end">
