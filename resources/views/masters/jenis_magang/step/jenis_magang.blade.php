@@ -27,6 +27,11 @@
             </select>
             <div class="invalid-feedback"></div>
         </div>
+        <div class="col-12 form-group">
+            <label for="desc" class="form-label">Deskripsi<span class="text-danger">*</span></label>
+            <textarea class="form-control" name="desc" id="desc" rows="4"></textarea>
+            <div class="invalid-feedback"></div>
+        </div>
         <div class="col-12 d-flex justify-content-between">
             <button type="button" class="btn btn-label-secondary" disabled>
                 <i class="ti ti-arrow-left me-sm-1 me-0"></i>

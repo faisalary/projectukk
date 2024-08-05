@@ -12,7 +12,7 @@
 </div>
 <div class="d-flex justify-content-between mt-3">
     <h4>
-        <span class="text-muted">Jadwal Seleksi&ensp;/&ensp;</span>
+        <span class="text-muted">Proses Seleksi&ensp;/&ensp;</span>
         <span>Posisi {{ $lowongan->intern_position }}</span>
     </h4>
 </div>

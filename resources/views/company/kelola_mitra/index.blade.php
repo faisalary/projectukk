@@ -81,7 +81,9 @@
 
         function afterAction(response) {
             $('#modalTambahMitra').modal('hide');
-            $('#datatables-kelas').DataTable().ajax.reload();
+            $('.table').each(function () {
+                $(this).DataTable().ajax.reload();
+            });
         }
 
         function loadData() {
@@ -145,7 +147,7 @@
                 success: function(response) {
                     $('#nama').val(response.namaindustri);
                     $('#email').val(response.email);
-                    $('#contact_person').val(response.notelpon);
+                    $('#contact_person').val(response.contact_person);
                     $('#penanggung_jawab').val(response.penanggung_jawab);
                     $('#alamat').val(response.alamatindustri);
                     $('#deskripsi').val(response.description);
