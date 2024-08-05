@@ -83,7 +83,7 @@
     }
 
     $("#modal-mahasiswa").on("hide.bs.modal", function() {
-        $("#modal-title").html("Tambah Prodi");
+        $("#modal-title").html("Tambah Mahasiswa");
         $("#modal-button").html("Save Data");
     });
 

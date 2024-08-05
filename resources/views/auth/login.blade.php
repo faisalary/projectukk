@@ -76,16 +76,6 @@
                             <span>Create an account</span>
                         </a>
                     </p>
-                    <div class="divider my-4">
-                        <div class="divider-text">or</div>
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                        <div class="btn mb-3 d-grid w-100">
-                            <a href="#" class="theme-btn social-btn-two google-btn custom-btn-style "><i class="fab fa-google"></i> Log In via Gmail</a>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
