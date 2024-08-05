@@ -32,13 +32,13 @@ class DosenRequest extends FormRequest
             'kode_dosen' => ['required', 'string', 'max:255', 'unique:dosen,kode_dosen'],
             'namadosen' => ['required', 'string'],
             'nohpdosen' => ['required', 'string', 'max:255', 'phone:id'],
-            'emaildosen' => ['required', 'string', 'max:255', 'email', 'unique:dosen,emaildosen'],
+            'emaildosen' => ['required', 'string', 'max:255', 'email', 'unique:dosen,emaildosen', 'unique:users,email'],
         ];
         
         if (isset($this->id)) {
             $validate['nip'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'nip')];
             $validate['kode_dosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'kode_dosen')];
-            $validate['emaildosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'emaildosen')];
+            $validate['emaildosen'] = ['required', 'integer', Rule::unique('dosen')->ignore($this->id, 'emaildosen'), Rule::unique('users')->ignore($this->id, 'email')];
         }  
 
         return $validate;
@@ -50,9 +50,13 @@ class DosenRequest extends FormRequest
             'nip.required' => 'NIP harus diisi',
             'nip.integer' => 'NIP harus berupa angka',
             'id_univ.required' => 'Pilih universitas',
+            'id_univ.exists' => 'Universitas tidak ditemukan',
             'id_fakultas.required' => 'Pilih fakultas',
+            'id_fakultas.exists' => 'Fakultas tidak ditemukan',
             'id_prodi.required' => 'Pilih prodi',
+            'id_prodi.exists' => 'Prodi tidak ditemukan',
             'kode_dosen.required' => 'Kode Dosen harus diisi',
+            'kode_dosen.unique' => 'Kode Dosen sudah terdaftar',
             'namadosen.required' => 'Namael harus diisi',
             'nohpdosen.required' => 'No HP harus diisi',
             'emaildosen.required' => 'Email harus diisi',

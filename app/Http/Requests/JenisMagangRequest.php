@@ -42,6 +42,7 @@ class JenisMagangRequest extends FormRequest
                         'namajenis' => ['required'],
                         'durasimagang' => ['required', 'in:1 Semester,2 Semester'],
                         'id_year_akademik' => ['required', 'exists:tahun_akademik,id_year_akademik'],
+                        'desc' => ['required'],
                     ];
                     $validate = array_merge($validate, $addValidate);
                 default:
@@ -65,6 +66,7 @@ class JenisMagangRequest extends FormRequest
             'durasimagang.in' => 'Durasi Magang tidak valid!',
             'id_year_akademik.required' => 'Tahun Akademik harus dipilih!',
             'id_year_akademik.exists' => 'Tahun Akademik tidak valid!',
+            'desc.required' => 'Deskripsi harus diisi!',
             'berkas.*.namaberkas.required' => 'Berkas Magang harus diisi!',
             'berkas.*.statusupload.required' => 'Status Upload harus dipilih!',
             'berkas.*.statusupload.in' => 'Status Upload tidak valid!',

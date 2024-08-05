@@ -11,7 +11,7 @@
     </a>
 </div>
 <div class="d-flex justify-content-start mt-3">
-    <h4><span class="text-muted">Jadwal Seleksi</span>&ensp;/&ensp;Detail Mahasiswa</h4>
+    <h4><span class="text-muted">Proses Seleksi</span>&ensp;/&ensp;Detail Mahasiswa</h4>
 </div>
 
 <div class="row">

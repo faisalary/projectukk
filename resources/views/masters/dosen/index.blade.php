@@ -64,6 +64,7 @@
 
     function getDataSelect(e) {
         let idElement = e.attr('data-after');
+        let modalId = e.closest('.modal').attr('id'); // ID modal
         $.ajax({
             url: `{{ route('dosen') }}`,
             type: 'GET',
@@ -72,17 +73,17 @@
                 section: idElement
             },
             success: function (response) {
-                $(`#${idElement}`).find('option:not([disabled])').remove();
-                $(`#${idElement}`).val(null).trigger('change');
+                $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
+                $(`#${modalId} #${idElement}`).val(null).trigger('change');
                 $.each(response.data, function () {
-                    $(`#${idElement}`).append(new Option(this.name, this.id));
+                    $(`#${modalId} #${idElement}`).append(new Option(this.name, this.id));
                 });
             }
         });
     }
 
     function afterAction(response) {
-        $('#modal-dosen').modal('hide');
+        $('#modal-import, #modal-dosen').modal('hide');
         afterUpdateStatus(response);
     }
 
@@ -94,7 +95,7 @@
         $("#modal-title").html("Tambah Dosen");
     });
 
-    
+
     function edit(e) {
         let id = e.attr('data-id');
 

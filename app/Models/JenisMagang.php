@@ -11,7 +11,7 @@ class JenisMagang extends Model
     use HasUuids;
 
     protected $table = 'jenis_magang';
-    protected $fillable = ['namajenis', 'durasimagang', 'id_year_akademik', 'status'];
+    protected $fillable = ['namajenis', 'durasimagang', 'id_year_akademik', 'desc', 'status'];
     protected $primaryKey = 'id_jenismagang';
     protected $keyType = 'string';
     public $timestamps = false;

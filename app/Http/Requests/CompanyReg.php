@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use App\Models\Industri;
+use App\Models\PegawaiIndustri;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyReg extends FormRequest
@@ -23,17 +26,27 @@ class CompanyReg extends FormRequest
     {
         $validate = [
             'namaindustri' => 'required|string|min:5|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email|unique:pegawai_industri,emailpeg',
             'contact_person' => 'required',
             'penanggung_jawab' => 'required',
             'alamat' => 'required',
             'deskripsi' => 'required',
             'kategori_industri' => 'required|in:Internal,Eksternal',
-            'statuskerjasama' => 'required|in:Ya,Tidak,Internal Telyu',
+            'statuskerjasama' => 'required|in:Iya,Tidak',
         ];
 
         if ($this->id) {
-            $validate['email'] = 'required|email|unique:users,id_industri,' . $this->id . ',id';
+            $validate['email'] = ['required', 'email', function ($attribute, $value, $fail) {
+                $industri = Industri::where('id_industri', $this->id)->first();
+                if (!$industri) $fail('Not Found.');
+                
+                $pegawaiIndustri = PegawaiIndustri::where('id_peg_industri', '!=', $industri->penanggung_jawab)->where('emailpeg', $value)->count();
+                if ($pegawaiIndustri > 0) $fail('Email sudah terdaftar');
+
+                $pegawaiIndustri = PegawaiIndustri::where('id_peg_industri', $industri->penanggung_jawab)->first();
+                $user = User::where('id', '!=', $pegawaiIndustri->id_user)->where('email', $value)->count();
+                if ($user > 0) $fail('Email sudah terdaftar');
+            }];
         }
 
         return $validate;

@@ -56,7 +56,7 @@
                             <span class="ms-2">{{ $pelamar->kuota }} Kuota Penerimaan</span>
                         </div>
                         <div class="d-flex justify-content-start mt-4">
-                            <a href="#" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('lamaran_saya.detail_lowongan', $pelamar->id_pendaftaran) }}" class="btn btn-sm btn-outline-primary">
                                 <i class="ti ti-eye"></i>
                                 <span class="ms-2">Lihat Detail Pekerjaan</span>
                             </a>
@@ -72,6 +72,14 @@
                         <div class="mt-2">
                             {!! $pelamar->status_badge !!}
                         </div>
+                        @if (in_array($pelamar->current_step, ['approved_penawaran', 'rejected_screening', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2', 'rejected_seleksi_tahap_3']))
+                            <a href="{{ asset('storage/' . $pelamar->file_document_mitra) }}" target="_blank" class="text-primary mt-2">
+                                <small class="d-flex align-items-center">
+                                    <i class="ti ti-file-symlink me-2"></i>
+                                    Berkas {{ in_array($pelamar->current_step, ['rejected_screening', 'rejected_seleksi_tahap_1', 'rejected_seleksi_tahap_2', 'rejected_seleksi_tahap_3']) ? 'Penolakan' : 'Penerimaan' }}
+                                </small>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -80,8 +88,12 @@
                     <span class="fw-semibold">Portofolio</span>
                 </div>
                 <div class="col-12 d-flex justify-content-start">
-                    <i class="ti ti-file-symlink"></i>
-                    <span class="ms-2">anfkwankfnwakfnwakfwajfkjaw.pdf</span>
+                    <a href="{{ asset('storage/' . $pelamar->portofolio) }}" target="_blank" class="text-primary">
+                        <small class="d-flex align-items-center">
+                            <i class="ti ti-file-symlink me-2"></i>
+                            {{ str_replace('portofolio/', '', $pelamar->portofolio) }}
+                        </small>
+                    </a>
                 </div>
             </div>
         </div>
