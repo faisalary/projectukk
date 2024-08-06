@@ -94,10 +94,12 @@ class mahasiswaController extends Controller
         ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas');
-        if ($request->fakultas != null) {
-            $mahasiswa->where("mahasiswa.id_fakultas", $request->fakultas);
-        } else if ($request->univ !=null) {
-            $mahasiswa->where("mahasiswa.id_univ", $request->univ);
+        if ($request->id_prodi != null) {
+            $mahasiswa->where("mahasiswa.id_prodi", $request->id_prodi);
+        } else if ($request->id_fakultas != null) {
+            $mahasiswa->where("mahasiswa.id_fakultas", $request->id_fakultas);
+        } else if ($request->id_univ !=null) {
+            $mahasiswa->where("mahasiswa.id_univ", $request->id_univ);
         }
         $mahasiswa = $mahasiswa->with("univ", "prodi","fakultas")->orderBy('nim', "asc")->get();
 
