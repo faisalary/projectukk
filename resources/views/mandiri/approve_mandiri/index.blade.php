@@ -30,17 +30,12 @@
         <ul class="nav nav-pills mb-3" role="tablist">
             <li class="nav-item">
                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="true">
-                    <i class="tf-icons ti ti-clock ti-xs me-1"></i> Tertunda
+                    <i class="tf-icons ti ti-clock ti-xs me-1"></i> Belum Approval
                 </button>
             </li>
             <li class="nav-item">
-                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-disetujui" aria-controls="navs-pills-justified-disetujui" aria-selected="false">
-                    <i class="tf-icons ti ti-clipboard-check ti-xs me-1"></i> Disetujui
-                </button>
-            </li>
-            <li class="nav-item">
-                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-ditolak" aria-controls="navs-pills-justified-ditolak" aria-selected="false">
-                    <i class="tf-icons ti ti-clipboard-x ti-xs me-1"></i> Ditolak
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-done" aria-controls="navs-pills-justified-disetujui" aria-selected="false">
+                    <i class="tf-icons ti ti-list-check ti-xs me-1"></i> Sudah Approval
                 </button>
             </li>
         </ul>
@@ -52,23 +47,25 @@
             </div>
         </div>
         <div class="tab-content p-0">
-            @foreach (['tertunda', 'disetujui', 'ditolak'] as $key => $item)
+            @foreach (['tertunda', 'done'] as $key => $item)
             <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">
                 <div class="card-datatable table-responsive">
                     <table class="table" id="{{ $item }}">
                         <thead>
                             <tr>
                                 <th>NOMOR</th>
-                                <th style="min-width: 140px;">DATA MAHASISWA</th>
-                                <th style="min-width: 140px;">PROGRAM STUDI</th>
-                                <th style="min-width: 140px;">JENIS MAGANG</th>
-                                <th style="min-width: 170px;">PERUSAHAAN + POSISI</th>
+                                <th>DATA MAHASISWA</th>
+                                <th>PROGRAM STUDI</th>
+                                <th>JENIS MAGANG</th>
+                                <th>PERUSAHAAN + POSISI</th>
                                 <th>TANGGAL MAGANG</th>
-                                <th style="min-width: 120px;">JABATAN YANG DITUJU</th>
                                 <th>KONTAK PERUSAHAAN</th>
                                 <th>ALAMAT PERUSAHAAN</th>
                                 <th>DOKUMEN PENGAJUAN</th>
-                                <th>AKSI</th>
+                                <th class="text-center">STATUS</th>
+                                @if ($item == 'tertunda')
+                                <th class="text-center">AKSI</th>
+                                @endif
                             </tr>
                         </thead>
                     </table>
@@ -86,7 +83,28 @@
 
 @section('page_script')
 <script>
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+    });    
+
     $('.table').each(function () {
+        let column = [
+            { data: 'DT_RowIndex' },
+            { data: 'namamhs' },
+            { data: 'namaprodi' },
+            { data: 'namajenis' },
+            { data: 'intern_position' },
+            { data: 'tgl_magang' },
+            { data: 'contact_perusahaan' },
+            { data: 'alamatindustri' },
+            { data: 'dokumen_spm' },
+            { data: 'current_step' }
+        ];
+
+        if ($(this).attr('id') == 'tertunda') {
+            column.push({ data: 'action' });
+        }
+
         $(this).DataTable({
             ajax: "{{ route('pengajuan_magang.show') }}?status=" + $(this).attr('id'),
             serverSide: false,
@@ -95,126 +113,40 @@
             type: 'GET',
             destroy: true,
             scrollX: true,
-            columns: [{
-                    data: 'DT_RowIndex'
-                },
-                {
-                    data: null,
-                    name: 'combined_column',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.namamhs + '<br>' + data.mahasiswa.nim;
-                    }
-                },
-                {
-                    data: null,
-                    name: 'combined_column1',
-                    render: function(data, type, row) {
-                        return data.mahasiswa.prodi.namaprodi;
-                    }
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null
-                },
-                {
-                    data: null,
-                    name: 'tanggal_magang',
-                    render: function(data, type, row) {
-                        var startDate = new Date(data.startdate);
-                        var endDate = new Date(data.enddate);
-                        var formattedStartDate = startDate.toISOString().split('T')[0];
-                        var formattedEndDate = endDate.toISOString().split('T')[0];
-                        return '<strong>Tanggal Mulai:</strong>' + '<br>' + formattedStartDate + '<br>' +
-                            '<strong>Tanggal Akhir:</strong>' + '<br>' + formattedEndDate;
-                    }
-                },
-                {
-                    data: 'jabatan',
-                    name: 'jabatan'
-                },
-                {
-                    data: null,
-                    name: 'kontak_perusahaan',
-                    render: function(data, type, row) {
-                        return data.email + '<br>' + data.nohp;
-                    }
-                },
-                {
-                    data: 'alamat_industri',
-                    name: 'alamat_industri'
-                },
-                {
-                    data: null
-                },
-                {
-                    data: 'aksi',
-                    name: 'aksi'
-                }
-
-            ]
+            columns: column
         });
     });
 
     function approved(e) {
+        $('#modalpersetujuanspm').modal('show');
+        let url = `{{ route('pengajuan_magang.approved', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
+        $('#modalpersetujuanspm form').attr('action', url);
+    }
 
-        $('#modalapprove').modal('show');
-        var approveUrl = '{{ url("mandiri/approve-mandiri/approved") }}/' + e.attr('data-id');
-        $('#modalapprove form').attr('action', approveUrl);
+    function afterApprove(response) {
+        let modal = $('#modalpersetujuanspm');
+        modal.find('form').attr('action', '');
+        modal.modal('hide');
 
-        $('#approve-confirm-button').on('click', function() {
-
-            $.ajax({
-                url: approveUrl,
-                type: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                    if (!response.error) {
-                        alert('berhasil');
-                    } else {
-                        alert('tidak berhasil');
-                    }
-                }
-            });
-
-            $('#modalapprove').modal('hide');
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
         });
-        }
+    }
 
-        function rejected(e) {
-            $('#modalreject').modal('show');
-            var rejectedUrl = '{{ url("mandiri/approve-mandiri/rejected") }}/' + e.attr('data-id');
+    function rejected(e) {
+        $('#modalreject').modal('show');
+        let url = `{{ route('pengajuan_magang.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
+        $('#modalreject form').attr('action', url);
+    }
 
-            $('#rejected-confirm-button').on('click', function() {
-                var alasan = $('#alasan').val();
+    function afterReject(response) {
+        let modal = $('#modalreject');
+        modal.find('form').attr('action', '');
+        modal.modal('hide');
 
-                $.ajax({
-                    url: rejectedUrl,
-                    type: "POST",
-                    data: {
-                        alasan: alasan,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (!response.error) {
-                            alert('berhasil');
-                        } else {
-                            alert('tidak berhasil');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-
-                $('#modalreject').modal('hide');
-            });
-        }
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
+    }
 </script>
 @endsection

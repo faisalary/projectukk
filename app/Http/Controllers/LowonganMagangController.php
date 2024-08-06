@@ -143,7 +143,7 @@ class LowonganMagangController extends Controller
         $data['lowongan'] = $this->my_lowongan_magang->first();
 
         $data['tab'] = [
-            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI],
+            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM],
         ];
 
         $data['listStatus'] = [];
@@ -171,7 +171,7 @@ class LowonganMagangController extends Controller
     public function getDataDetailInformasi(Request $request, $id) {
         $lowongan = $this->my_lowongan_magang->first();
 
-        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
         for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
             $inArray .= ',' . array_search($i, $this->valid_step);
         }
