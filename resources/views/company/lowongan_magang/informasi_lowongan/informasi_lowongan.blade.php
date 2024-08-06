@@ -1,6 +1,11 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
+<style>
+    .select2-selection__clear{
+        display: none;
+    }
+</style>
 @endsection
 
 @section('content')

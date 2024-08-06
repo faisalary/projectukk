@@ -229,7 +229,7 @@ class StatusLamaranMagangController extends Controller
             ['title' => '2', 'desc' => 'Screening', 'active' => false, 'isReject' => false],
             ['title' => '3', 'desc' => 'Seleksi', 'active' => false, 'isReject' => false],
             ['title' => '4', 'desc' => 'Penawaran', 'active' => false, 'isReject' => false],
-            ['title' => '5', 'desc' => 'Diterima/Ditolak', 'active' => false, 'isReject' => false],
+            ['title' => '5', 'desc' => 'Diterima', 'active' => false, 'isReject' => false],
         ];
 
         switch ($this->lamaran_magang[0]->current_step) {
@@ -271,8 +271,8 @@ class StatusLamaranMagangController extends Controller
                 $data[2]['isReject'] = true;
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_PENAWARAN:
-                $data[4]['active'] = true;
-                $data[4]['isReject'] = true;
+                $data[3]['active'] = true;
+                $data[3]['isReject'] = true;
             break;
             default:
                 # code...
