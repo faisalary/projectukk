@@ -11,9 +11,9 @@
                     @endif
                     <div class="text-end">
                         <p>Batas Melamar 13 Juli 2023</p>
-                        <button type="button" class="btn btn-outline-primary">
+                        {{-- <button type="button" class="btn btn-outline-primary" disabled>
                             Buka dihalaman baru
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="mt-4">
@@ -42,9 +42,6 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
-            <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
-        </div>
         <div class="row mt-4">
             <div class="col py-3">
                 <h4>Deskripsi Pekerjaan</h4>
@@ -64,6 +61,9 @@
                     @endforeach
                 </ul>
             </div>
+        </div>
+        <div class="row mt-3">
+            <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
         </div>
         <div class="row border-top">
             <div class="col py-3">

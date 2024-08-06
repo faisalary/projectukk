@@ -78,7 +78,18 @@ class DosenController extends Controller
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'dosen.id_fakultas')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'dosen.id_prodi');
 
-        return DataTables::of($dosen->orderBy('nip', "asc")->get())
+        // Filtering
+        if ($request->id_prodi_filter != null) {
+            $dosen->where("dosen.id_prodi", $request->id_prodi_filter);
+        } else if ($request->id_fakultas_filter != null) {
+            $dosen->where("dosen.id_fakultas", $request->id_fakultas_filter);
+        } else if ($request->id_univ_filter != null) {
+            $dosen->where("dosen.id_univ", $request->id_univ_filter);
+        }
+
+        $dosen = $dosen->with('univ', 'prodi', 'fakultas')->orderBy('nip', "asc")->get();
+
+        return DataTables::of($dosen)
             ->addIndexColumn()
             ->editColumn('id_univ', function ($data) {
                 $result = '<span class="fw-bolder text-nowrap">' .$data->namauniv. '</span><br>';
@@ -161,11 +172,11 @@ class DosenController extends Controller
         }
     }
 
-    public function import (Request $request){
+    public function import(Request $request){
         $data = $request->file('import');
-        $namafile = $data-> getClientOriginalName();
+        $namafile = $data->getClientOriginalName();
         $data->move('DosenData', $namafile);
-        Excel::import(new DosenImport($request->id_univ, $request->id_fakultas), \public_path('/DosenData/'.$namafile));
+        Excel::import(new DosenImport($request->id_univ, $request->id_fakultas, $request->id_prodi), public_path('/DosenData/' . $namafile));
         return response()->json(['message' => 'Import Success', 'error' => false], 200);
     }
 }
