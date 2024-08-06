@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use stdClass;
 use Exception;
 use App\Helpers\Response;
+use App\Jobs\SendMailJob;
 use App\Models\Education;
+use App\Models\MhsMagang;
 use App\Models\Experience;
 use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
@@ -14,16 +16,16 @@ use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
+use App\Mail\EmailJadwalSeleksi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
-use App\Models\MhsMagang;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class LowonganMagangController extends Controller
 {
@@ -71,7 +73,7 @@ class LowonganMagangController extends Controller
             $total_pelamar = $item->total_pelamar;
 
             $item->total_pelamar = $total_pelamar->count();
-            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI)->count();
+            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
             $countProsesSeleksi = 0;
             $countPenawaran = 0;
@@ -123,7 +125,7 @@ class LowonganMagangController extends Controller
 
         if ($request->ajax()) {
             $this->getPendaftarMagang(function ($query) use ($id, $request) {
-                return $query->where('id_lowongan', $id)->where('id_pendaftaran', $request->data_id);
+                return $query->where('pendaftaran_magang.id_lowongan', $id)->where('pendaftaran_magang.id_pendaftaran', $request->data_id);
             }); 
 
             $data['pendaftar'] = $this->my_pendaftar_magang->first();
@@ -146,7 +148,7 @@ class LowonganMagangController extends Controller
             'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM],
         ];
 
-        $data['listStatus'] = [];
+        $data['listStatus'][] = ['value' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM, 'label' => 'Screening'];
         for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) { 
             $data['tab']['tahap_' . $i] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'icon' => 'ti ti-device-desktop-analytics', 'table' => array_search($i, $this->valid_step)];
             $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
@@ -244,20 +246,21 @@ class LowonganMagangController extends Controller
     public function updateStatusPelamar(Request $request, $id) {
         try {
             $this->getPendaftarMagang(function ($query) use ($id) {
-                return $query->where('id_pendaftaran', $id);
+                return $query->leftJoin('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+                    ->where('pendaftaran_magang.id_pendaftaran', $id);
             });
 
             $pendaftar = $this->my_pendaftar_magang->first()->load('lowongan_magang');
             if (!$pendaftar) return Response::error(null, 'Pendaftaran Not Found');
 
-            $lowongan = $pendaftar->lowongan_magang;
+            // $lowongan = $pendaftar->lowongan_magang;
 
-            $listStatus = [];
-            for ($i = 0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
+            $listStatus[] = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
+            for ($i = 0; $i < ($pendaftar->tahapan_seleksi + 1); $i++) { 
                 $listStatus[] = array_search($i, $this->valid_step);
             }
 
-            $last_seleksi = array_search(($lowongan->tahapan_seleksi + 1), $this->valid_step);
+            $last_seleksi = array_search(($pendaftar->tahapan_seleksi + 1), $this->valid_step);
             array_push($listStatus, 
                 $last_seleksi,
                 'rejected'
@@ -279,7 +282,7 @@ class LowonganMagangController extends Controller
 
             $statusPicked = $request->status;
             if ($request->status == 'rejected') {
-                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_LKM) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
                 } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1;
@@ -294,6 +297,9 @@ class LowonganMagangController extends Controller
                 'current_step' => $statusPicked,
                 'file_document_mitra' => $file
             ]);
+
+            $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
+            dispatch(new SendMailJob($pendaftar->emailmhs, new EmailJadwalSeleksi($pendaftar)));
             
             return Response::success([
                 'id_pendaftar' => $pendaftar->id_pendaftaran,
@@ -590,9 +596,9 @@ class LowonganMagangController extends Controller
         ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
-        ->whereHas('lowongan_magang', function ($query) use ($pegawaiIndustri) {
-            $query->where('id_industri', $pegawaiIndustri->id_industri);
-        });
+        ->leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->where('lowongan_magang.id_industri', $pegawaiIndustri->id_industri);
+
         if ($additional) $this->my_pendaftar_magang = $additional($this->my_pendaftar_magang);
         $this->my_pendaftar_magang = $this->my_pendaftar_magang->get();
         
