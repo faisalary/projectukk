@@ -59,12 +59,12 @@
 <script>
 
     $(document).ready(function () {
-        loadData();
+        load_tabel_dosen();
     });
 
     function getDataSelect(e) {
         let idElement = e.attr('data-after');
-        let modalId = e.closest('.modal').attr('id'); // ID modal
+        let modalId = e.closest('.modals').attr('id'); // ID modal
         $.ajax({
             url: `{{ route('dosen') }}`,
             type: 'GET',
@@ -94,6 +94,17 @@
     $("#modal-dosen").on("hide.bs.modal", function() {
         $("#modal-title").html("Tambah Dosen");
     });
+
+    $(document).on('submit', '#filter', function(e) {
+        const offcanvasFilter = $('#modalSlide');
+        e.preventDefault();
+        load_tabel_dosen();
+        $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $(this).find('#id_univ :selected').text() +
+            ', Fakultas: ' + $(this).find('#id_fakultas :selected').text() + ', Prodi: ' + $(this).find('#id_prodi :selected').text());
+        offcanvasFilter.offcanvas('hide');
+    });
+
+
 
 
     function edit(e) {
@@ -129,9 +140,24 @@
         });
     }
 
-    function loadData() {
+    function load_tabel_dosen() {
         var table = $('#table-master-dosen').DataTable({
-            ajax: "{{ route('dosen.show') }}",
+            // ajax: "{{ route('dosen.show') }}",
+            ajax: {
+                url: "{{ route('dosen.show') }}",
+                type: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                data: function(d) {
+                    var frm_data = $('#filter').serializeArray();
+                    $.each(frm_data, function(key, val) {
+                        d[val.name] = val.value;
+                    });
+                }
+            },
             serverSide: false,
             processing: true,
             // deferRender: true,
