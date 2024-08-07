@@ -1,4 +1,4 @@
-<!-- {{-- Modal Reject --}}
+{{-- Modal Reject --}}
 <div class="modal fade" id="modalreject" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -6,24 +6,28 @@
                 <h5 class="modal-title" id="modalreject">Alasan Penolakan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="alasan" class="form-label">Alasan Penolakan</label>
-                        <textarea class="form-control" id="alasan" placeholder="Alasan Penolakan"></textarea>
+            <form class="default-form" action="" function-callback="afterReject">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-2 form-group">
+                            <label for="alasan" class="form-label">Alasan Penolakan</label>
+                            <textarea class="form-control" name="alasan" id="alasan" rows="4" placeholder="Alasan Penolakan"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="rejected-confirm-button" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 
 
-<div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade" id="modalapprove" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,7 +39,6 @@
                 @csrf
                 <input type="hidden" name="nim" value="{{ $nim ?? '' }}">
                 <div class="modal-body">
-
                     <div class="row">
                         <div class="col mb-0">
                             <label for="formFile" class="form-label">Unggah Surat Pengantar Magang</label>
@@ -47,76 +50,78 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="card-subtitle text-muted mb-3">Tipe File: PDF. Maximum upload file size :
-                            2 MB.</div>
-                        <small class="text-muted">Note: Ketika mengirim SPM, secara otomatis pengajuan
-                            SPM akan disetujui dan berpindah ke tab disetujui!</small>
+                        <div class="card-subtitle text-muted mb-3">Tipe File: PDF. Maximum upload file size : 2 MB.</div>
+                        <small class="text-muted">Note: Ketika mengirim SPM, secara otomatis pengajuan SPM akan disetujui dan berpindah ke tab disetujui!</small>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
-</div> -->
+</div> --}}
 
 
 <!-- Modal Penolakan -->
-<div class="modal fade" id="modalpenolakan" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade" id="modalpenolakan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body pt-0 pb-0">
-            <h4 class="text-center">Alasan Penolakan Pengajuan Magang</h4>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label for="nameWithTitle" class="form-label">Alasan Penolakan Pengajuan</label>
-                        <textarea type="text" class="form-control" placeholder="Masukkan alasan penolakan"></textarea>
+            <form action="" function-callback="after">
+                @csrf
+                <div class="modal-body pt-0 pb-0">
+                    <h4 class="text-center">Alasan Penolakan Pengajuan Magang</h4>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameWithTitle" class="form-label">Alasan Penolakan Pengajuan</label>
+                            <textarea type="text" class="form-control" placeholder="Masukkan alasan penolakan"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Batal
-                </button>
-                <button type="button" class="btn btn-success">Kirim</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Batal
+                    </button>
+                    <button type="button" class="btn btn-success">Kirim</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Modal Persetujuan SPM -->
 <div class="modal fade" id="modalpersetujuanspm" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body pt-0 pb-0">
-                <h4 class="text-center">Persetujuan pengajuan SPM dan Pengiriman SPM</h4>
-                <div class="row">
-                    <div class="col mb-3">
-                        <label class="form-label" for="berkas">Unggah Surat Pengantar Magang</label>
-                        <input class="form-control" type="file" id="formFile">
-                        <p style="font-size: smaller; padding-top:10px;">Allowed PDF, JPG, PNG, JPEG. Max size of 1 Mb</p>
+            <form class="default-form" action="" function-callback="afterApprove">
+                @csrf
+                <div class="modal-body pt-0 pb-0">
+                    <h4 class="text-center">Persetujuan Pengajuan Magang</h4>
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="form-label" for="berkas">Unggah Surat Pengantar Magang</label>
+                            <input class="form-control" type="file" name="file">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <p style="font-size: smaller; padding-top:10px;">Allowed PDF, JPG, PNG, JPEG. Max size of 2 Mb</p>
                     </div>
-                    <p class="mb-0" style="font-size: smaller;">Note: Ketika mengirim SPM, secara otomatis pengajuan SPM akan disetujui dan berpindah ke tab disetujui!</p>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Batal
-                </button>
-                <button type="button" class="btn btn-success">Kirim</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Modal Persetujuan Pengajuan Magang -->
+{{-- <!-- Modal Persetujuan Pengajuan Magang -->
 <div class="modal fade" id="modalpersetujuanmagang" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -149,7 +154,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="modalSlide" aria-labelledby="offcanvasAddUserLabel">
     <div class="offcanvas-header">

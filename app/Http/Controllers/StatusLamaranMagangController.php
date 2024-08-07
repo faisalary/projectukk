@@ -235,9 +235,10 @@ class StatusLamaranMagangController extends Controller
         switch ($this->lamaran_magang[0]->current_step) {
             case PendaftaranMagangStatusEnum::PENDING:
             case PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL:
+                case PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI:
                 $data[0]['active'] = true;
                 break;
-            case PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI:
+            case PendaftaranMagangStatusEnum::APPROVED_BY_LKM:
                 $data[1]['active'] = true;
                 break;
             case PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1:
@@ -255,6 +256,7 @@ class StatusLamaranMagangController extends Controller
                 break;
             case PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL:
             case PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI:
+            case PendaftaranMagangStatusEnum::REJECTED_BY_LKM:
                 $data[0]['active'] = true;
                 $data[0]['isReject'] = true;
                 break;
