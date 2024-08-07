@@ -96,7 +96,7 @@ Route::prefix('master')->group(function () {
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');
-        Route::get('/show', 'show')->name('dosen.show');
+        Route::post('/show', 'show')->name('dosen.show');
         Route::post('/store', 'store')->name('dosen.store');
         Route::post('/update/{id}', 'update')->name('dosen.update');
         Route::get('/edit/{id}', 'edit')->name('dosen.edit');

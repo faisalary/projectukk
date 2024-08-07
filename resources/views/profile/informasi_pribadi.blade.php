@@ -31,7 +31,7 @@
                   <button id="unduhProfileBtn" class="btn btn-secondary buttons-collection btn-label-success ms-4 mt-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
                     <span>
                       <i class="ti ti-download me-sm-1"></i> 
-                      <span class="d-none d-sm-inline-block">Unduh Profile</span>
+                      <span class="d-none d-sm-inline-block">Unduh CV</span>
                     </span>
                   </button>
                 </div>

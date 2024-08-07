@@ -1,6 +1,11 @@
 @extends('partials.vertical_menu')
 
 @section('page_style')
+  <style>
+    .tooltip .tooltip-inner {
+        max-width: 800px !important;
+    }
+  </style>
 @endsection
 
 
@@ -60,14 +65,16 @@
 <script>
     function getDataSelect(e) {
         let idElement = e.attr('data-after');
+        let modalId = e.closest('.modals').attr('id');
+        console.log(idElement, modalId)
         $.ajax({
             url: `{{ route('mahasiswa') }}?type=${idElement}&selected=` + e.val(),
             type: 'GET',
             success: function (response) {
-                $(`#${idElement}`).find('option:not([disabled])').remove();
-                $(`#${idElement}`).val(null).trigger('change');
+                $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
+                $(`#${modalId} #${idElement}`).val(null).trigger('change');
                 $.each(response.data, function () {
-                    $(`#${idElement}`).append(new Option(this.text, this.id));
+                    $(`#${modalId} #${idElement}`).append(new Option(this.text, this.id));
                 });
             }
         });
@@ -78,7 +85,7 @@
     }
 
     function afterAction(response) {
-        $('#modal-mahasiswa').modal('hide');
+        $('#modal-mahasiswa, #modal-import').modal('hide');
         afterUpdateStatus(response);
     }
 
@@ -134,16 +141,18 @@
         const offcanvasFilter = $('#modalSlide');
         e.preventDefault();
         table_master_mahasiswa();
-        $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $('#univ :selected').text() +
-            ', Fakultas: ' + $('#fakultas :selected').text() + ', Prodi: ' + $('#prodi :selected').text());
+        $('#tooltip-filter').attr('data-bs-original-title', 'Universitas: ' + $(this).find('#id_univ :selected').text() +
+            ', Fakultas: ' + $(this).find('#id_fakultas :selected').text() + ', Prodi: ' + $(this).find('#id_prodi :selected').text());
         offcanvasFilter.offcanvas('hide');
     });
 
     $('.data-reset').on('click', function() {
-        $('#univ').val(null).trigger('change');
-        $('#fakultas').val(null).trigger('change');
-        $('#prodi').val(null).trigger('change');
+        const form = $(this).closest('form'); 
+        form.find('#id_univ').val(null).trigger('change'); 
+        form.find('#id_fakultas').val(null).trigger('change'); 
+        form.find('#id_prodi').val(null).trigger('change'); 
     });
+
 
     function table_master_mahasiswa() {
         var table = $('#table-master-mahasiswa').DataTable({
