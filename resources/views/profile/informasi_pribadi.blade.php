@@ -79,17 +79,55 @@
   $(document).ready(function () {
     formRepeaterCustom = initFormRepeaterCustom();
 
-    // $.ajax({
-    //   url: `{{ route('profile.get_data') }}`,
-    //   type: 'GET',
-    //   data: { section: 'completeness_percentage' },
-    //   success: function (response) {
-    //     $('#progress_bar').css('width', response.data.percentage + '%');
-    //     $('#progress_bar').attr('aria-valuenow', response.data.percentage);
-    //     $('#percentage_progress').text(response.data.percentage + '%');
-    //   }
-    // });
+    const ids = ["citizenships", "countries", "provinces", "id_kota"];
+    ids.forEach(function(item) {
+        if (item != "id_kota") {
+            $('#' + item).on('change', function() {
+                var value = $(this).val();
+                var type = item;
+                var targetId = $(this).data('target-dropdown');
 
+                if(value != '' && value != null) {
+                $.ajax({
+                    url: `{{ route('wilayah.child') }}`,
+                    data: {
+                        type: type,
+                        id: value,
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    method: 'POST',
+                    success: function(data) {
+                        var options = data.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            };
+                        });
+                        options.unshift({
+                            id: '',
+                            text: 'Pilih'
+                        });
+                        $(targetId).empty();
+                        initSelect2(targetId, options);
+
+                        if (type === 'citizenships' && value === 'WNI') {
+                            $('#countries').val(1).trigger('change');
+                            $('#countries').prop('disabled', true);
+                        } else if (type === 'citizenships' && value === 'WNA') {
+                            $('#countries').val('').trigger('change').prop('disabled', false);
+                            $('#kota_id, #provinces').val('').trigger('change').prop('disabled', true).empty();
+                        } else if (type === 'countries' && value != '') {
+                            $('#provinces').val('').trigger('change').prop('disabled', false);
+                            $('#kota_id').val('').trigger('change').prop('disabled', true).empty();
+                        } else if (type === 'provinces' && value != '') {
+                            $('#kota_id').val('').trigger('change').prop('disabled', false);
+                        }
+                    }
+                });
+                }
+            });
+        }
+    });
   });
 
   $('#changePicture').on('change', function (event) {
@@ -166,6 +204,9 @@
     $(this).find('form').find('input[name="data_id"]').remove();
     $(this).find('form').find('a[id="sertif_open"]').unwrap();
     $(this).find('form').find('a[id="sertif_open"]').remove();
+    $('#countries').prop('disabled', true).empty();
+    $('#provinces').prop('disabled', true).empty();
+    $('#kota_id').prop('disabled', true).empty();
   });
 
   document.getElementById('unduhProfileBtn').addEventListener('click', function() {

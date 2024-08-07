@@ -31,20 +31,27 @@ function initAllComponents() {
     initFormRepeater();
 }
 
-function initSelect2(element = null) {
-
-    if (element != null) {
-        if ($(element).hasClass("select2-hidden-accessible")) {
-            $(element).select2("destroy");
-        }
-        $(element).select2({
+function initSelect2(element = null, data = null) {
+    let options = 
+        {
             tags: $(element).attr('data-tags') === 'true' ?? false,
             allowClear: true,
             placeholder: $(element).attr('data-placeholder') ?? null,
             dropdownAutoWidth: true,
             width: '100%',
             dropdownParent: $(element).parent(),
-        });
+        }
+    ;
+
+    if(data != null) {
+        options['data'] = data;
+    }
+
+    if (element != null) {
+        if ($(element).hasClass("select2-hidden-accessible")) {
+            $(element).select2("destroy");
+        }
+        $(element).select2(options);
         return;
     }
 

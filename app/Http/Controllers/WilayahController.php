@@ -28,7 +28,7 @@ class WilayahController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:wilayah.view');
+        $this->middleware('permission:wilayah.view', ['except' => ['getChildren']]);
     }
     /**
      * Display a listing of the resource.
@@ -135,6 +135,19 @@ class WilayahController extends Controller
 
         return $datatables->rawColumns(['aksi'])
         ->make(true);
+    }
+
+    public function getChildren(Request $request)
+    {
+        if($request->type == 'provinces'){
+            $wilayah = WilayahKota::where('province_id', $request->id);
+        }elseif($request->type == 'countries'){
+            $wilayah = WilayahProvinsi::where('country_id', $request->id);
+        }else{
+            $wilayah = new WilayahNegara();
+        }
+
+        return $wilayah->get();
     }
 
     public function edit(string $id)

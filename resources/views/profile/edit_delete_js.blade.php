@@ -95,6 +95,31 @@
               });
             }
           }
+          if(key == 'countries'){
+            if(value == 1){
+              $('#citizenships').val('WNI').trigger('change');
+            } else {
+              $('#citizenships').val('WNA').trigger('change');
+            }
+
+            let checkDataProcess = setInterval(checkData, 400);
+
+            function checkData() {
+              if (!$('#kota_id').val()) {
+                if (!$('#provinces').val()) {
+                  if (!$('#countries').val()) {
+                      $('ntries#cou').val(response.countries).trigger('change');
+                  }else{
+                    $('#provinces').val(response.provinces).trigger('change');
+                  }
+                }else{
+                  $('#kota_id').val(response.kota_id).trigger('change');
+                }
+              }else{
+                clearInterval(checkDataProcess);
+              }
+            };
+          }
         });
       }
     });

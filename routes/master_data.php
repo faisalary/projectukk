@@ -115,6 +115,7 @@ Route::prefix('master')->group(function () {
     Route::prefix('wilayah')->controller(WilayahController::class)->group(function () {
         Route::get('/', 'index')->name('wilayah');
         Route::get('show', 'show')->name('wilayah.show');
+        Route::post('/child', 'getChildren')->name('wilayah.child');
         // Route::get('/show/{id}', 'show')->name('wilayah.show');
         Route::post('/store', 'store')->name('wilayah.store');
         Route::post('/update/{id}', 'update')->name('wilayah.update');
