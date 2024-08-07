@@ -71,8 +71,6 @@ class LowonganMagangController extends Controller
 
         $lowongan_magang = $lowonganMagang->map(function ($item) use ($rejected) {
             $total_pelamar = $item->total_pelamar;
-
-            $item->total_pelamar = $total_pelamar->count();
             $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
             $countProsesSeleksi = 0;
@@ -94,6 +92,8 @@ class LowonganMagangController extends Controller
 
             $item->approved = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
             $item->rejected = $countRejected;
+
+            $item->total_pelamar = $item->screening + $item->proses_seleksi + $item->penawaran + $item->approved + $item->rejected;
 
             return $item;
         });
