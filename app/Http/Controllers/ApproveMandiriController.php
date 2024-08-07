@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\PengajuanMandiri;
-use Yajra\DataTables\Facades\DataTables;
 use Exception;
+use App\Helpers\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
-use Illuminate\Support\Facades\DB;
-use App\Models\Mahasiswa;
+use App\Models\PendaftaranMagang;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class ApproveMandiriController extends Controller
 {
@@ -22,118 +23,139 @@ class ApproveMandiriController extends Controller
      */
     public function index()
     {
-        $mandiri = PengajuanMandiri::all();
-        $mahasiswa = Mahasiswa::all();
-        return view('mandiri.approve_mandiri.index', compact('mandiri','mahasiswa'));
+        return view('mandiri.approve_mandiri.index');
     }
-
-    // public function show(Request $request)
-    // {
-    //     $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi")->orderBy('id_pengajuan', "asc");
-        
-    //     if($request->type){
-    //         $mandiri = $mandiri->where('status', $request->type);
-    //     }
-       
-    // return DataTables::of($mandiri->get())
-    //     ->addIndexColumn()
-    //     ->make(true);
-    // }
 
     public function show(Request $request)
     {
-        $mandiri = PengajuanMandiri::with("mahasiswa", "mahasiswa.prodi");
-        if ($request->status == 'tertunda') $mandiri = $mandiri->where('status_approve', '0');
-        elseif ($request->status == 'disetujui') $mandiri = $mandiri->where('status_approve', '1');
-        elseif ($request->status == 'ditolak') $mandiri = $mandiri->where('status_approve', '2');
+        $request->validate(['status' => 'required|in:tertunda,done']);
 
-        return DataTables::of($mandiri->orderBy('id_pengajuan', "asc")->get())
+        $pengajuan = PendaftaranMagang::select(
+                'pendaftaran_magang.*', 'mahasiswa.namamhs', 'mahasiswa.nim', 'industri.namaindustri',
+                'lowongan_magang.intern_position', 'mhs_magang.startdate_magang',  'mhs_magang.enddate_magang',
+                'industri.email as email_industri', 'industri.alamatindustri', 'industri.notelpon as telepon_industri', 'program_studi.namaprodi',
+                'jenis_magang.namajenis'
+            )
+            ->leftJoin('mahasiswa', 'mahasiswa.nim', 'pendaftaran_magang.nim')
+            ->leftJoin('program_studi', 'program_studi.id_prodi', 'mahasiswa.id_prodi')
+            ->leftJoin('mhs_magang', 'mhs_magang.id_pendaftaran', 'pendaftaran_magang.id_pendaftaran')
+            ->leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', 'pendaftaran_magang.id_lowongan')
+            ->join('industri', 'industri.id_industri', 'lowongan_magang.id_industri')
+            ->join('jenis_magang', 'jenis_magang.id_jenismagang', 'lowongan_magang.id_jenismagang');
+
+        if ($request->status == 'tertunda') $pengajuan = $pengajuan->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
+        else if ($request->status == 'done') $pengajuan = $pengajuan->whereIn('current_step', [
+            PendaftaranMagangStatusEnum::APPROVED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3
+        ]);
+
+        return datatables()->of($pengajuan->get())
             ->addIndexColumn()
-            ->addColumn('aksi', function ($id) {
-                $btn = "<a onclick='approved($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusapprove=''>
-                        <i class='btn-icon ti ti-file-check text-success'></i>
-                        </a>
-                        <a onclick='rejected($(this))' class='btn-icon' data-id='{$id->id_pengajuan}' data-statusrejected=''>
-                        <i class='btn-icon ti ti-file-x text-danger'></i>
-                        </a>";
-                return $btn;
+            ->editColumn('namamhs', function ($x) {
+                $result = '<div class="d-flex flex-column align-items-start">';
+                $result .= '<span class="fw-bolder">' .$x->namamhs. '</span>';
+                $result .= '<small>' .$x->nim. '</small>';
+                $result .= '</div>';
+
+                return $result;
             })
-            ->rawColumns(['aksi'])
+            ->editColumn('intern_position', fn ($x) => $x->namaindustri .'&ensp;-&ensp;'. $x->intern_position)
+            ->addColumn('tgl_magang', function ($x) {
+                $result = '<div class="d-flex flex-column align-items-start">';
+                $result .= '<span class="text-nowrap">Tanggal Mulai : </span>';
+                $result .= '<span class="text-nowrap fw-bolder">' . (($x->startdate_magang) ? Carbon::parse($x->startdate_magang)->format('d F Y') : '-') . '</span>';
+                $result .= '<span class="text-nowrap">Tanggal Berakhir : </span>';
+                $result .= '<span class="text-nowrap fw-bolder">' . (($x->enddate_magang) ? Carbon::parse($x->enddate_magang)->format('d F Y') : '-') . '</span>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->addColumn('contact_perusahaan', function ($x) {
+                $result = '<div class="d-flex flex-column align-items-start">';
+                $result .= '<span class="fw-bolder">' .$x->email_industri. '</span>';
+                $result .= '<span>' .$x->telepon_industri. '</span>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->editColumn('dokumen_spm', fn ($x) => (isset($x->dokumen_spm) && $x->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_LKM) ? '<a href="'.url('storage/'. $x->dokumen_spm).'" target="_blank">Dokumen SPM</a>' : '-')
+            ->editColumn('current_step', function ($x) {
+                $step = PendaftaranMagangStatusEnum::getWithLabel($x->current_step);
+                return '<span class="badge bg-label-' . $step['color'] . '">' . $step['title'] . '</span>';
+            })
+            ->addColumn('action', function ($x) {
+                $result = '<div class="d-flex justify-content-center">';
+                $result .= '<a class="cursor-pointer mx-1 text-primary" onclick="approved($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-check"></i></a>';
+                $result .= '<a class="cursor-pointer mx-1 text-danger" onclick="rejected($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
+                $result .= '</div>';
+
+                return $result;
+            })
+            ->rawColumns(['namamhs', 'intern_position', 'tgl_magang', 'contact_perusahaan', 'dokumen_spm', 'current_step', 'action'])
             ->make(true);
     }
-
-    
-    // public function approved($id)
-    // {
-    //     try {
-    //         DB::beginTransaction(); 
-    //         $data = PengajuanMandiri::find($id);
-            
-
-    //         if (!$data) {
-    //             throw new \Exception('Data not found.');
-    //         }
-    //         $data->statusapprove = 1;
-    //         $data->save();
-
-    //         return response()->json([
-    //             'error' => false,
-    //             'message' => 'Persetujuan berhasil.',
-    //         ]);
-    //         } catch (\Exception $e) {
-    //             DB::rollBack();
-
-    //             return response()->json([
-    //                 'error' => true,
-    //                 'message' => $e->getMessage(),
-    //         ]);
-    //     }
-    // }
     
     public function approved(Request $request, $id)
     {
-        // $request->file('dokumen_spm')->store('post');
-        try {
+        $request->validate([
+            'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
+        ], [
+            'file.required' => 'Surat Pengantar Magang harus diisi',
+            'file.mimes' => 'Surat Pengantar Magang harus berupa PDF, JPG, JPEG, PNG',
+            'file.max' => 'Surat Pengantar Magang maksimal 2 MB',
+        ]);
 
-            if (!empty($request->file('dokumen_spm'))){
-                $file = $request->file('dokumen_spm');
-                $filename = $file->getClientOriginalName();
-                $file->move(public_path('public/post'),$filename);
-                $dokumen_spm['dokumen_spm'] = $filename;
-                
-                $spm = PengajuanMandiri::findorfail($id);
-                $spm->dokumen_spm = $filename;
-                $spm->statusapprove = 1;
-                $spm->save();
-                
+        try {
+            $data = PendaftaranMagang::where('id_pendaftaran', $id)->first();
+            if ($data->current_step != PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                return Response::error(null, 'Invalid.', 403);
             }
 
-            
+            $file = null;
+            if ($request->hasFile('file')) {
+                $file = Storage::put('dokumen_spm', $request->file('file'));
+            }
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Template successfully Created!',
-                
-            ]);
-             
-            
+            $data->dokumen_spm = $file;
+            $data->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
+            $data->save();
+
+            return Response::success(null, 'Berhasil mengirim Surat Pengantar Magang.');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
-
-        
     }
     
     public function rejected($id, Request $request)
     {
-        $data=PengajuanMandiri::find($id);
-        $data->statusapprove='2';
-        $data->save();
-        $alasan = $request->input('alasan');
-        return redirect()->back();
+        $request->validate([
+            'alasan' => 'required|string',
+        ], [
+            'alasan.required' => 'Alasan ditolak harus diisi',
+        ]);
+
+        try {
+            $data = PendaftaranMagang::where('id_pendaftaran', $id)->first();
+            if ($data->current_step != PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                return Response::error(null, 'Invalid.', 403);
+            }
+
+            $data->current_step = PendaftaranMagangStatusEnum::REJECTED_BY_LKM;
+            $data->reason_reject = $request->alasan;
+            $data->save();
+
+            return Response::success(null, 'Berhasil menolak pengajuan.');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
 }

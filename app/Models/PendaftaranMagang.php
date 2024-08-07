@@ -26,6 +26,7 @@ class PendaftaranMagang extends Model
         'reason_aplicant',
         'reason_reject',
         'file_document_mitra',
+        'dokumen_spm',
 
     ];
     public $timestamps = false;
