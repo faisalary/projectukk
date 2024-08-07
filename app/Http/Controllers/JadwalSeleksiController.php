@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Seleksi;
 use App\Helpers\Response;
+use App\Jobs\SendMailJob;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
+use App\Mail\EmailJadwalSeleksi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -193,7 +195,9 @@ class JadwalSeleksiController extends Controller
         try {
             //code...
             $this->getPendaftaranMagang(function ($query) use ($id) {
-                return $query->where('id_pendaftaran', $id);
+                return $query->join('mahasiswa', 'pendaftaran_magang.nim', '=', 'mahasiswa.nim')
+                    ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')
+                    ->where('id_pendaftaran', $id);
             });
 
             $pendaftar = $this->pendaftaran_magang->first();
@@ -231,7 +235,7 @@ class JadwalSeleksiController extends Controller
                     $data['file_document_mitra'] = $file;
                 }
             } else if ($request->status == 'rejected') {
-                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
+                if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_LKM) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
                 } else if ($pendaftar->current_step == PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1;
@@ -252,6 +256,8 @@ class JadwalSeleksiController extends Controller
 
             $pendaftar->update($data);
 
+            $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
+            dispatch(new SendMailJob($pendaftar->emailmhs, new EmailJadwalSeleksi($pendaftar)));
 
             return Response::success(null, 'Success');
         } catch (\Exception $e) {
