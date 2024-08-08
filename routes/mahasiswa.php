@@ -13,7 +13,7 @@ use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('show', 'show')->name('.show');
-    Route::post('/approved/{id}', 'approved')->name('.approved');
+    Route::post('approved', 'approved')->name('.approved');
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
