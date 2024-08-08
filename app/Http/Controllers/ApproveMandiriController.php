@@ -54,7 +54,10 @@ class ApproveMandiriController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
         ]);
 
         return datatables()->of($pengajuan->get())

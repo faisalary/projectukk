@@ -192,6 +192,8 @@
         modal.find('form').attr('action', '');
         modal.modal('hide');
 
+        $('input.dt-checkboxes').prop('checked', false);
+
         $('.table').each(function () {
             $(this).DataTable().ajax.reload();
         });
