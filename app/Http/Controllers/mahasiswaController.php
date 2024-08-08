@@ -94,10 +94,12 @@ class mahasiswaController extends Controller
         ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas');
-        if ($request->fakultas != null) {
-            $mahasiswa->where("mahasiswa.id_fakultas", $request->fakultas);
-        } else if ($request->univ !=null) {
-            $mahasiswa->where("mahasiswa.id_univ", $request->univ);
+        if ($request->id_prodi != null) {
+            $mahasiswa->where("mahasiswa.id_prodi", $request->id_prodi);
+        } else if ($request->id_fakultas != null) {
+            $mahasiswa->where("mahasiswa.id_fakultas", $request->id_fakultas);
+        } else if ($request->id_univ !=null) {
+            $mahasiswa->where("mahasiswa.id_univ", $request->id_univ);
         }
         $mahasiswa = $mahasiswa->with("univ", "prodi","fakultas")->orderBy('nim', "asc")->get();
 
@@ -202,8 +204,49 @@ class mahasiswaController extends Controller
     public function import (Request $request){
         $data = $request->file('import');
         $namafile = $data-> getClientOriginalName();
-        $data->move('MhsData', $namafile);
-        Excel::import(new MhsImport, \public_path('/MhsData/'.$namafile));
-        return \redirect()->back();
+        $data->move('MhsData', $namafile);       
+
+        $import = new MhsImport(
+            $request->id_univ,
+            $request->id_fakultas,
+            $request->id_prodi,
+            $request->kode_dosen,            
+        );
+
+        $filePath = public_path('/MhsData/' . $namafile);
+        $expectedHeaders = array_values($import->fields);                      
+
+        if (!$import->checkHeaders($filePath, $expectedHeaders)) {
+            return response()->json([
+                'message' => 'Header tidak sesuai. Mohon untuk menggunakan template yang telah disediakan.',
+                'error' => true
+            ], 400);
+        }        
+
+        try {
+            Excel::import($import, public_path('/MhsData/' . $namafile));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            foreach ($failures as $failure) {
+                $import->onFailure($failure);
+            }
+        }
+        
+        $data = $import->getResults();                     
+        session(['import_results' => $data]);
+    
+        return response()->json([
+            'message' => 'Sebelum disimpan, data di preview',
+            'error' => false,
+            'url' => route('mahasiswa.preview'),
+            'showConfirmButton' => false,
+            'icon' => 'info',
+            'title' => 'Informasi'
+        ], 200);
+    }
+
+    public function preview (){        
+        $data = session('import_results');                  
+        return view('masters.mahasiswa.preview', compact('data'));
     }
 }

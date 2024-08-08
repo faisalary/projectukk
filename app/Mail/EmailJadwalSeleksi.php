@@ -2,68 +2,41 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
-use App\Models\email_template;
 use Illuminate\Http\Request;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use App\Models\email_template;
+use App\Models\PendaftaranMagang;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EmailJadwalSeleksi extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $user;
-    public $subjek;
-    // public $pathToFile;
+    
+    public $namamhs;
+    public $label_step;
+    public $namaindustri;
+    public $intern_position;
 
     /**
      * Create a new message instance.
      * 
      * @return void
      */
-    public function __construct($user,$subjek)
-    {
-        $this->user = $user;
-        $this->subjek = $subjek;
+    public function __construct(PendaftaranMagang $pendaftar) {
+        $this->namamhs = $pendaftar->namamhs;
+        $this->label_step = $pendaftar->label_step;
+        $this->namaindustri = $pendaftar->namaindustri;
+        $this->intern_position = $pendaftar->intern_position;
     }
 
-    /**
-     * Get the message envelope.
-     * @return $this
-     */
-    public function build(Request $request)
+    public function build()
     {
-        // $email = email_template::where('id_email_template', $request->subjek)->first();
-        return $this->subject($this->subjek)
-                    ->view('email.email_jadwalseleksi');
+        return $this
+            ->subject('Lolos Seleksi')
+            ->markdown('email.jadwal_seleksi');
     }
-    // public function envelope(): Envelope
-    // {
-    //     return new Envelope(
-    //         subject: 'Email Jadwal Seleksi',
-    //     );
-    // }
-
-    // /**
-    //  * Get the message content definition.
-    //  */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'view.name',
-    //     );
-    // }
-
-    // /**
-    //  * Get the attachments for the message.
-    //  *
-    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-    //  */
-    // public function attachments(): array
-    // {
-    //     return [];
-    // }
 }
