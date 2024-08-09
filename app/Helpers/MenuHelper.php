@@ -287,6 +287,11 @@ class MenuHelper
                         'route' => 'pembimbing-lapangan-mandiri',
                         'permission' => 'pembimbing_lapangan_mandiri.view'
                     ],
+                    [
+                        'name' => 'Wilayah',
+                        'route' => 'wilayah',
+                        'permission' => 'wilayah.view'
+                    ]
                 ]
             ],
             // mitra

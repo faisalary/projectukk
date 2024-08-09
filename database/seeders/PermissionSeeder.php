@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
             'jenis_magang.view',
             'dosen.view',
             'mahasiswa.view',
+            'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
             'komponen_penilaian.view',
