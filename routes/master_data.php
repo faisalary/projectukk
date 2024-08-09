@@ -93,6 +93,7 @@ Route::prefix('master')->group(function () {
         Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('mahasiswa.list_fakultas');
         Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('mahasiswa.list_prodi');
         Route::post('/import', 'import')->name('mahasiswa.import');
+        Route::get('/preview', 'preview')->name('mahasiswa.preview');
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');

@@ -218,10 +218,12 @@ function showSweetAlert(config) {
     title = config.title ?? '';
     text = config.text ?? 'The action was executed successfully.';
     icon = config.icon ?? 'success';
+    showConfirmButton = config.showConfirmButton ?? true
 
     return Swal.fire({
         html: '<h3>' + title + '</h3><p>' + text + '</p>',
         icon: icon,
+        showConfirmButton: showConfirmButton,
         customClass: {
             confirmButton: 'btn btn-primary'
         }
@@ -254,19 +256,25 @@ function store_data(content, button) {
         cache: false,
         success: function (response) {
             btnBlock(button, false);
-            if (!response.error) {
+            if (!response.error) {                
                 if (
                     (response.data == null) ||
                     (response.data != null && !response.data.ignore_alert)
                 ) {
                     showSweetAlert({
-                        title: 'Berhasil!',
+                        title: response.title ?? 'Berhasil!',
                         text: response.message,
-                        icon: 'success'
+                        icon: response.icon ?? 'success',
+                        showConfirmButton: response.showConfirmButton
                     });
+                    setTimeout(() => {
+                        if(response.url) {
+                            location = response.url
+                        }
+                    }, 1500);
                 }
 
-                if (typeof window[callback] === "function") window[callback](response);
+                if (typeof window[callback] === "function") window[callback](response);               
             } else {
                 showSweetAlert({
                     title: 'Gagal!',
@@ -350,9 +358,10 @@ $(document).on('click', '.update-status', function () {
             success: function (response) {
                 if (!response.error) {
                     showSweetAlert({
-                        title: 'Berhasil!',
+                        title: response.title ?? 'Berhasil!',
                         text: response.message,
-                        icon: 'success'
+                        icon: response.icon ?? 'success',
+                        showConfirmButton: response.showConfirmButton
                     });
 
                     if (typeof window[dataFunction] === "function") window[dataFunction](response);
