@@ -108,7 +108,7 @@
               if (!$('#kota_id').val()) {
                 if (!$('#provinces').val()) {
                   if (!$('#countries').val()) {
-                      $('ntries#cou').val(response.countries).trigger('change');
+                      $('#countries').val(response.countries).trigger('change');
                   }else{
                     $('#provinces').val(response.provinces).trigger('change');
                   }

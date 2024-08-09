@@ -38,61 +38,39 @@ class WilayahController extends Controller
         return view('masters.wilayah.index');
     }
 
+    public function create($type)
+    {
+        if($type == 'province'){
+            $wilayah = WilayahNegara::all();
+        }elseif($type == 'city'){
+            $wilayah = WilayahProvinsi::all();
+        }
+
+        return $wilayah ?? '';
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CompanyReg $request)
+    public function store(Request $request)
     {
         try{
             DB::beginTransaction();
-            $code = Str::random(64);
 
-            $passwordResetToken = DB::table('password_reset_tokens')->where('email', $request->email)->first();
-            if ($passwordResetToken) {
-                DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            if($request->type == 'province'){
+                $wilayah = new WilayahProvinsi();
+                $wilayah->country_id = $request->parent;
+            }elseif($request->type == 'city'){
+                $wilayah = new WilayahKota();
+                $wilayah->province_id = $request->parent;
+            }else{
+                $wilayah = new WilayahNegara();
             }
-
-            DB::table('password_reset_tokens')->insert([
-                'email' => $request->email,
-                'token' => $code,
-                'created_at' => now(),
-            ]);
-
-            $admin = User::create([
-                'name' => $request->namaindustri,
-                'username' => $request->namaindustri,
-                'email' => $request->email,
-                'password' => Hash::make(Str::random(12)),
-            ]);
-            $admin->assignRole('Mitra');
-
-            $industri = Industri::create([
-                'namaindustri' => $request->namaindustri,
-                'alamatindustri'=> $request->alamat,
-                'description'=> $request->deskripsi,
-                'kategori_industri' => $request->kategori_industri,
-                'statuskerjasama' => $request->statuskerjasama,
-                'statusapprove' => 1,
-            ]);
-
-            $administratorIndustri = PegawaiIndustri::create([
-                'id_industri' => $industri->id_industri,
-                'namapeg' => $request->penanggung_jawab,
-                'nohppeg' => $request->contact_person,
-                'emailpeg' => $request->email,
-                'jabatan' => 'Administrator',
-                'statuspeg' => true,
-                'id_user' => $admin->id
-            ]);
-
-            $industri->penanggung_jawab = $administratorIndustri->id_peg_industri;
-            $industri->save();
-
-            $url = route('register.set-password', ['token' => $code]);
-            dispatch(new SendMailJob($request->email, new VerifyEmail($url)));
             
+            $wilayah->name = $request->name;
+            $wilayah->save();
             DB::commit();
-            return Response::success(null, 'Industri successfully Created!');
+            return Response::success(['type' => $request->type], 'Wilayah successfully Created!');
         } catch (Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
@@ -107,17 +85,20 @@ class WilayahController extends Controller
     {
         if($request->type == 'provinces'){
             $wilayah = WilayahProvinsi::with('negara');
+            $type = 'province';
         }elseif($request->type == 'cities'){
             $wilayah = WilayahKota::with('provinsi');
+            $type = 'city';
         }else{
             $wilayah = new WilayahNegara();
+            $type = 'country';
         }
 
         $datatables = DataTables::of($wilayah->get())
         ->addIndexColumn()
-        ->addColumn('aksi', function ($id){
+        ->addColumn('aksi', function ($id) use($type){
             $btn = "<div class='d-flex justify-content-center'>";
-            $btn .= "<a data-bs-toggle='modal' data-id='{$id->id_industri}' onclick=edit($(this)) class='mx-1 text-warning cursor-pointer'><i class='ti ti-edit' ></i>";
+            $btn .= "<a data-bs-toggle='modal' data-id='{$id->id}' data-type='{$type}' onclick=edit($(this)) class='mx-1 text-warning cursor-pointer'><i class='ti ti-edit' ></i>";
             $btn .= "</div>";
 
             return $btn;
@@ -150,72 +131,41 @@ class WilayahController extends Controller
         return $wilayah->get();
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
-        $industri = Industri::with('penanggungJawab')->where('id_industri', $id)->first();
-        $industri->penanggung_jawab = $industri->penanggungJawab->namapeg;
-        $industri->email = $industri->penanggungJawab->emailpeg;
-        $industri->contact_person = $industri->penanggungJawab->nohppeg;
+        if(request()->type == 'province'){
+            $wilayah = WilayahProvinsi::where('id', $id)->select('id', 'name','country_id as parent')->first();
+        }elseif(request()->type == 'city'){
+            $wilayah = WilayahKota::where('id', $id)->select('id', 'name','province_id as parent')->first();
+        }else{
+            $wilayah = WilayahNegara::where('id', $id)->first();
+        }
 
-        unset($industri->penanggungJawab);
-        return $industri;
+        return $wilayah ?? '';
     }
 
-    public function update(CompanyReg $request, $id)
+    public function update(Request $request)
     {
         try {
             DB::beginTransaction();
+            if($request->type == 'province'){
+                $wilayah = WilayahProvinsi::where('id', $request->id)->first();
+                $wilayah->country_id = $request->parent;
+            }elseif($request->type == 'city'){
+                $wilayah = WilayahKota::where('id', $request->id)->first();
+                $wilayah->province_id = $request->parent;
+            }else{
+                $wilayah = WilayahNegara::where('id', $request->id)->first();
+            }
 
-            $industri = Industri::where('id_industri', $id)->first();
-            if (!$industri) return Response::error(null, 'Not Found.');
-            $penanggungJawab = PegawaiIndustri::where('id_peg_industri', $industri->penanggung_jawab)->first();
-            $user = User::where('id', $penanggungJawab->id_user)->first();
-
-
-            $user->name = $request->namaindustri;
-            $user->username = $request->namaindustri;
-            $user->email = $request->email;
-            $user->save();
-
-            $industri->namaindustri = $request->namaindustri;
-            $industri->alamatindustri = $request->alamat;
-            $industri->description = $request->deskripsi;
-            $industri->kategori_industri = $request->kategori_industri;
-            $industri->statuskerjasama = $request->statuskerjasama;
-            $industri->save();
-
-            $penanggungJawab->namapeg = $request->penanggung_jawab;
-            $penanggungJawab->nohppeg = $request->contact_person;
-            $penanggungJawab->emailpeg = $request->email;
-            $penanggungJawab->save();
+            $wilayah->name = $request->name;
+            $wilayah->save();
 
             DB::commit();
-            return Response::success(null, 'Data Successfully Updated!');
+            return Response::success(['type' => $request->type, 'edit' => true], 'Data Successfully Updated!');
         } catch (Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
         }
     }
-
-    public function status($id)
-    {
-        try {
-            $industri = Industri::where('id_industri', $id)->first();
-            $industri->status = ($industri->status) ? false : true;
-            $industri->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Status successfully Updated!',
-                'table' => '#table-kelola-mitra3'
-            ]);
-        
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
 }

@@ -116,11 +116,10 @@ Route::prefix('master')->group(function () {
         Route::get('/', 'index')->name('wilayah');
         Route::get('show', 'show')->name('wilayah.show');
         Route::post('/child', 'getChildren')->name('wilayah.child');
-        // Route::get('/show/{id}', 'show')->name('wilayah.show');
+        Route::get('/create/{type}', 'create')->name('wilayah.create');
         Route::post('/store', 'store')->name('wilayah.store');
         Route::post('/update/{id}', 'update')->name('wilayah.update');
         Route::get('/edit/{id}', 'edit')->name('wilayah.edit');
-        Route::delete('/delete/{id}', 'destroy')->name('wilayah.delete');
     });
     Route::middleware('permission:pembimbing_lapangan_mandiri.view')->get('pembimbing-mandiri', function () {
         return view('masters.pembimbing_lapangan_mandiri.index');

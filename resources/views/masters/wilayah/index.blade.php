@@ -80,10 +80,53 @@
 
         function afterAction(response) {
             $('#modalTambahWilayah').modal('hide');
-            // $('.table').each(function () {
-            //     $(this).DataTable().ajax.reload();
-            // });
+            $('#type').val('').trigger('change');
+            if(response.data.type == 'country') {
+                loadData('countries');
+                if(response.data.edit == true){
+                    isProvincesClicked = false
+                }
+            } else if(response.data.type == 'province') {
+                loadData('provinces');
+                if(response.data.edit == true){
+                    isCitiesClicked = false
+                }
+            } else if(response.data.type == 'city') {
+                loadData('cities');
+            }
         }
+
+        $('#type').on('change', function() {
+            let type = $(this).val();
+            if(type != null){
+                let label = $(this).find('option:selected').text();
+                let url = `{{ route('wilayah.create', ['type' => ':type']) }}`.replace(':type', type);
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: function(data) {
+                        if(type == 'country') {
+                            $('#parent-col').hide();
+                        } else {
+                            $('#parent-label').html(label);
+                            $('#parent-col').show();
+                            var options = data.map(function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                            });
+                            options.unshift({
+                                id: '',
+                                text: 'Pilih ' + label
+                            });
+                            $('#parent-select').empty();
+                            initSelect2('#parent-select', options);
+                        }
+                    }
+                });
+            }
+        });
 
         const button1 = document.getElementById('provinces-tab');
         const button2 = document.getElementById('cities-tab');
@@ -128,28 +171,51 @@
         }
 
         function edit(e) {
-            let id = e.attr('data-id');
+            let id = $(e).data('id');
+            let type = $(e).data('type');
+            let url = `{{ route('wilayah.edit', ['id' => ':id']) }}`.replace(':id', id)+'?type='+type;
             let action = `{{ route('wilayah.update', ['id' => ':id']) }}`.replace(':id', id);
-            let url = `{{ route('wilayah.edit', ['id' => ':id']) }}`.replace(':id', id);
-            let modal = $('#modalTambahWilayah');
-
-            modal.find('.modal-title').html("Edit Wilayah");
-            modal.find('form').attr('action', action);
-            modal.modal('show');
-
             $.ajax({
                 type: 'GET',
                 url: url,
-                success: function(response) {
-                    $('#name').val(response.name);
-                    $('#statuskerjasama').val(response.statuskerjasama).trigger('change');
+                success: function(data) {
+                    $('#modalTambahWilayah').find('.modal-title').html('Edit Wilayah');
+                    $('#modalTambahWilayah').find('input[name="id"]').val(data.id);
+                    $('#modalTambahWilayah').find('form').attr('action', action);
+                    $('#type-col').hide();
+                    $('#type').val(type).trigger('change');
+                    $('#name').val(data.name);
+                    if(type === 'country') {
+                        $('#parent-col').hide();
+                    }else{
+                            let checkDataProcess = setInterval(checkData, 400);
+
+                            function checkData() {
+                            if (!$('#parent-select').val()) {
+                                if (!$('#type').val()) {
+                                    $('#type').val(type).trigger('change');
+                                }else{
+                                    $('#parent-select').val(data.parent).trigger('change');
+                                }
+                            }else{
+                                clearInterval(checkDataProcess);
+                            }
+                        }
+                    }
+                    $('#modalTambahWilayah').modal('show');
                 }
             });
         }
 
         $(".modal").on("hide.bs.modal", function() {
-            let dataLabel = $(this).find('.modal-title').attr('data-label');
-            $(this).find('.modal-title').html(dataLabel);
+            $('#parent-col').hide();
+            $('#parent-select').empty();
+            $('#type').val('').trigger('change').prop('disabled', false);
+            $('#type-col').show();
+            $('#name').val('');
+            $('#modalTambahWilayah').find('input[name="id"]').val('');
+            $('#modalTambahWilayah').find('.modal-title').html('Tambah Wilayah');
+            $('#modalTambahWilayah').find('form').attr('action', '{{ route("wilayah.store") }}');
         });
     </script>
 @endsection
