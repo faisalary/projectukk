@@ -135,7 +135,7 @@
                         </tbody>
                     </table> --}}
                 </div>
-                <div class="border-bottom mt-3 card accordion-item">
+                <div class="border-bottom mt-3 border accordion-item rounded">
                     <h4 class="accordion-header mb-0" id="headingOne">
                         <button class="accordion-button fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
                             Riwayat Pendidikan
@@ -159,7 +159,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="border-bottom mt-3 card accordion-item">
+                <div class="border-bottom mt-3 border rounded accordion-item">
                     <h4 class="accordion-header mb-0" id="headingTwo">
                         <button class="accordion-button fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
                             Pengalaman
