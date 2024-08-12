@@ -93,4 +93,9 @@ class Mahasiswa extends Model
     {
         return $this->belongsToMany(LowonganMagang::class, 'pekerjaan_tersimpans', 'nim', 'id_lowongan');
     }
+
+    public function kota()
+    {
+        return $this->belongsTo(WilayahKota::class, 'kota_id', 'id');
+    }
 }

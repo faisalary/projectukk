@@ -596,9 +596,12 @@ class LowonganMagangController extends Controller
         ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->leftJoin('reg_regencies', 'reg_regencies.id', '=', 'mahasiswa.kota_id')
+        ->leftJoin('reg_provinces', 'reg_provinces.id', '=', 'reg_regencies.province_id')
+        ->leftJoin('reg_countries', 'reg_countries.id', '=', 'reg_provinces.country_id')
         ->leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
-        ->where('lowongan_magang.id_industri', $pegawaiIndustri->id_industri);
-
+        ->where('lowongan_magang.id_industri', $pegawaiIndustri->id_industri)
+        ->select('lowongan_magang.*', 'pendaftaran_magang.*', 'mahasiswa.*', 'universitas.*', 'fakultas.*', 'program_studi.*', 'reg_regencies.name as kota', 'reg_provinces.name as provinsi', 'reg_countries.name as negara');
         if ($additional) $this->my_pendaftar_magang = $additional($this->my_pendaftar_magang);
         $this->my_pendaftar_magang = $this->my_pendaftar_magang->get();
         

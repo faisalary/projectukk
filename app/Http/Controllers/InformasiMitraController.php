@@ -136,8 +136,12 @@ class InformasiMitraController extends Controller
                 ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
                 ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
                 ->leftJoin('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+                ->leftJoin('reg_regencies', 'reg_regencies.id', '=', 'mahasiswa.kota_id')
+                ->leftJoin('reg_provinces', 'reg_provinces.id', '=', 'reg_regencies.province_id')
+                ->leftJoin('reg_countries', 'reg_countries.id', '=', 'reg_provinces.country_id')
                 ->where('id_lowongan', $id)
-                ->where('id_pendaftaran', $request->data_id);
+                ->where('id_pendaftaran', $request->data_id)
+                ->select('pendaftaran_magang.*', 'mahasiswa.*', 'universitas.*', 'fakultas.*', 'program_studi.*', 'reg_regencies.name as kota', 'reg_provinces.name as provinsi', 'reg_countries.name as negara');
 
             $data['pendaftar'] = $my_pendaftar_magang->first();
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();

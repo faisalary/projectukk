@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\IndustriController;
 use App\Http\Controllers\mahasiswaController;
@@ -92,6 +93,7 @@ Route::prefix('master')->group(function () {
         Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('mahasiswa.list_fakultas');
         Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('mahasiswa.list_prodi');
         Route::post('/import', 'import')->name('mahasiswa.import');
+        Route::get('/preview', 'preview')->name('mahasiswa.preview');
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');
@@ -110,6 +112,15 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('komponen-penilaian.edit');
         Route::post('status/{id}', 'status')->name('komponen-penilaian.status');
         Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('komponen-penilaian.list_fakultas');
+    });
+    Route::prefix('wilayah')->controller(WilayahController::class)->group(function () {
+        Route::get('/', 'index')->name('wilayah');
+        Route::get('show', 'show')->name('wilayah.show');
+        Route::post('/child', 'getChildren')->name('wilayah.child');
+        Route::get('/create/{type}', 'create')->name('wilayah.create');
+        Route::post('/store', 'store')->name('wilayah.store');
+        Route::post('/update/{id}', 'update')->name('wilayah.update');
+        Route::get('/edit/{id}', 'edit')->name('wilayah.edit');
     });
     Route::middleware('permission:pembimbing_lapangan_mandiri.view')->get('pembimbing-mandiri', function () {
         return view('masters.pembimbing_lapangan_mandiri.index');
