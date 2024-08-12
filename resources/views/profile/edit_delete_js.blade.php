@@ -34,6 +34,10 @@
       success: function (response) {
         response = response.data;
 
+        if (response['countries'] === null) {
+          overlay.remove();
+        }
+
         $.each(response, function (key, value) {
           
           if (value == null) return;
