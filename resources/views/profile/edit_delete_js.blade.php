@@ -11,6 +11,15 @@
     }
 
     modal.modal('show');
+    
+    let overlay = $(`
+        <div class="modal-overlay">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    `);
+    modal.find('.modal-content').append(overlay);
 
     let data = { section: dataTarget };
     if (dataId != null) {
@@ -24,6 +33,10 @@
       data: data,
       success: function (response) {
         response = response.data;
+
+        if (response['countries'] === null) {
+          overlay.remove();
+        }
 
         $.each(response, function (key, value) {
           
@@ -117,11 +130,15 @@
                 }
               }else{
                 clearInterval(checkDataProcess);
+                overlay.remove();
               }
             };
           }
         });
-      }
+      },
+        error: function () {
+            overlay.remove();
+        }
     });
   }
 
