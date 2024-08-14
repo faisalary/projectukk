@@ -274,18 +274,6 @@ Route::get('/view/logbook', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
 });
 
-Route::get('/kelola/mahasiswa/magang', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.index');
-});
-
-Route::get('/kelola/mahasiswa-magang/input', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.modal');
-});
-
-Route::get('/logbook/mahasiswa', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
-});
-
 Route::get('/verifikasi/akun', function () {
     return view('partials_auth.verifikasi_akun');
 });

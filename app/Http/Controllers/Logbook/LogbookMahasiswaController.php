@@ -8,7 +8,6 @@ use Carbon\CarbonPeriod;
 use App\Helpers\Response;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;

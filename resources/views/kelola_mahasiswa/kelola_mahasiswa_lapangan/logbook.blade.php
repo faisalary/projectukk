@@ -1,44 +1,16 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-    .select2-container .select2-selection--single .select2-selection__rendered {
-        padding-right: 86px !important;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        right: 10px !important;
-    }
-
-    .select2-container .select2-selection--single .select2-selection__rendered {
-        overflow: visible !important;
-    }
-
-    .form-check-success .form-check-input:checked,
-    .form-check-success .form-check-input[type=checkbox]:indeterminate {
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-
-    .light-style .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 2.25rem;
-        color: #4EA971 !important;
-        padding-left: 0.875rem;
-    }
-</style>
 @endsection
 
-@section('main')
-<div class="row">
-    <div class="">
-        <a href="/kelola/mahasiswa/magang" type="button" class="btn btn-outline-success mb-3 waves-effect">
-            <span class="ti ti-arrow-left me-2"></span>Kembali
-        </a>
-    </div>
-    <div class="col-10">
-        <h4 class="fw-bold"><span class="text-muted fw-light">Kelola Mahasiswa /</span> Detail Logbook Leonie Artaputri</h4>
-    </div>
+@section('content')
+<div class="d-flex justify-content-start">
+    <a href="{{ route('kelola_magang_pemb_lapangan') }}" class="btn btn-outline-primary mb-3 waves-effect">
+        <span class="ti ti-arrow-left me-2"></span>Kembali
+    </a>
+</div>
+<div class="d-flex justify-content-start">
+    <h4 class="fw-bold"><span class="text-muted fw-light">Kelola Mahasiswa /</span> Detail Logbook {{ $mahasiswa->namamhs }}</h4>
 </div>
 <div class="card">
     <div class="card-body">
@@ -46,21 +18,23 @@
             <div class="row">
                 <div class="col-10">
                     <div class="d-flex align-items-left">
-                        <img class="img-fluid rounded" src="../../app-assets/img/avatars/15.png" height="80" width="80" alt="User avatar" />
+                        <div class="text-center my-4" style="overflow: hidden; width: 80px; height: 80px;">
+                            @if ($mahasiswa->profile_picture)
+                                <img src="{{ asset('storage/' . $mahasiswa->profile_picture) }}" alt="user-avatar" class="d-block" width="80" id="image_industri">
+                            @else
+                                <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="100" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
+                            @endif
+                        </div>
                         <span class="pt-3">
-                            <h4 class="mb-2 ms-3">Leonie Artaputri</h4>
-                            <h6 class="ms-3">UI/UX Design</h6>
+                            <h4 class="mb-2 ms-3">{{ $mahasiswa->namamhs }}</h4>
+                            <h6 class="ms-3">{{ $mahasiswa->intern_position }}</h6>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="d-flex mt-4">
-            <div style="min-width: 360px;">
-                {{--Jika status ditolak--}}
-                <!-- <div style="max-width: 360px;"> -->
-
+            <div class="col-4">
                 <div class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 15px; margin-right: 10px; height: fit-content !important;">
                     <div class="d-flex justify-content-between">
                         <div class="col-7">
@@ -83,249 +57,120 @@
                         </div>
                     </div>
                     <div class="border-bottom mt-3 mb-3"></div>
-                    <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 10px;">
-                        <div class="row">
-                            <div class="col-7">
-                                <div class="form-check form-check-success text-start ps-0">
-                                    <input name="customRadioSuccess" class="form-check-input ms-1 mt-2" type="radio" value="" id="customRadioSuccess" checked="" style="font-size: x-large;">
-                                    <label class="form-check-label ms-2 ms-3" for="customRadioSuccess">
-                                        <h6 class="mb-1">Minggu Ke 1</h6>
-                                        <p class="mb-0" style="font-size: small;">2 - 7 Januari 2023</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-2 p-0">
-                                <span class='badge bg-label-warning '> Belum Disetujui</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 10px;">
-                        <div class="row">
-                            <div class="col-7">
-                                <div class="form-check form-check-success text-start ps-0">
-                                    <input name="customRadioSuccess" class="form-check-input ms-1 mt-2" type="radio" value="" id="customRadioSuccess" style="font-size: x-large;">
-                                    <label class="form-check-label ms-2 ms-3" for="customRadioSuccess">
-                                        <h6 class="mb-1">Minggu Ke 2</h6>
-                                        <p class="mb-0" style="font-size: small;">2 - 7 Januari 2023</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-2 p-0">
-                                <span class='badge bg-label-warning '> Belum Disetujui</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 10px;">
-                        <div class="row">
-                            <div class="col-7">
-                                <div class="form-check form-check-success text-start ps-0">
-                                    <input name="customRadioSuccess" class="form-check-input ms-1 mt-2" type="radio" value="" id="customRadioSuccess" style="font-size: x-large;">
-                                    <label class="form-check-label ms-2 ms-3" for="customRadioSuccess">
-                                        <h6 class="mb-1">Minggu Ke 3</h6>
-                                        <p class="mb-0" style="font-size: small;">2 - 7 Januari 2023</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-2 p-0">
-                                <span class='badge bg-label-warning '> Belum Disetujui</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 10px;">
-                        <div class="row">
-                            <div class="col-7">
-                                <div class="form-check form-check-success text-start ps-0">
-                                    <input name="customRadioSuccess" class="form-check-input ms-1 mt-2" type="radio" value="" id="customRadioSuccess" style="font-size: x-large;">
-                                    <label class="form-check-label ms-2 ms-3" for="customRadioSuccess">
-                                        <h6 class="mb-1">Minggu Ke 4</h6>
-                                        <p class="mb-0" style="font-size: small;">2 - 7 Januari 2023</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-2 p-0">
-                                <span class='badge bg-label-warning '> Belum Disetujui</span>
-                            </div>
-                        </div>
+                    <div id="container-left-card">
+                        @include('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/left_card_week')
                     </div>
                 </div>
-
-                {{--Jika status ditolak--}}
-                <!-- <div class="text-start" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 15px; margin-right: 10px; height: fit-content !important; margin-top: 25px;">
-                    <h6>Alasan penolakan logbook :</h6>
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                </div> -->
+                <div id="container-rejected-reason"></div>
             </div>
-
-            <div>
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="mb-0 mt-2">Logbook Minggu Ke-1 Januari 2023</h5>
-                    <div>
-                    <button type="submit" class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#modalalert"><i class="ti ti-check ms-0 me-1"></i>Setujui</button>
-                    <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDitolak"><i class="ti ti-x ms-0 me-1"></i>Tolak</button>
-                    </div>
-                </div>
-                <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                                <img src="../assets/images/smile.png" alt="">
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Senin</h6>
-                                <p class="fw-normal mb-0">2 Januari 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                    <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.
-                        Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
-                        mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                    <hr>
-                    <b style="margin-top: 15px;">Alasan Logbook Ditolak :</b>
-                    <p style="color: #23314B; margin-top:10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.</p>
-                </div>
-                <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                                <img src="../assets/images/smile.png" alt="">
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Senin</h6>
-                                <p class="fw-normal mb-0">2 Januari 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                    <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.
-                        Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
-                        mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                </div>
-
-                <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                                <img src="../assets/images/smile.png" alt="">
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Senin</h6>
-                                <p class="fw-normal mb-0">2 Januari 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                    <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.
-                        Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
-                        mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                </div>
-
-                <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                                <img src="../assets/images/smile.png" alt="">
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Senin</h6>
-                                <p class="fw-normal mb-0">2 Januari 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                    <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.
-                        Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
-                        mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                </div>
-
-                <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                                <img src="../assets/images/smile.png" alt="">
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Senin</h6>
-                                <p class="fw-normal mb-0">2 Januari 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                    <p style="color: #23314B">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                        iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh
-                        tincidunt.
-                        Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus
-                        mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                </div>
-            </div>
+            <div class="col" id="container-detail-logbook-weekly"></div>
         </div>
-
-        <!-- Modal Alert-->
-        <div class="modal fade" id="modalalert" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center pb-0">
-                        <img src="../../app-assets/img/alert.png" alt="">
-                        <h5 class="modal-title" id="modal-title">Apakah logbook mahasiswa sedah sesuai dengan yang dikerjakan?</h5>
-                        <p>Status logbook akan otomatis berubah!</p>
-                        <div class="swal2-html-container" id="swal2-html-container" style="display: block;"></div>
-                    </div>
-                    <div class="modal-footer" style="display: flex; justify-content:center;">
-                        <button type="submit" id="modal-button" class="btn btn-success">Ya, Sudah</button>
-                        <button type="submit" id="modal-button" class="btn btn-danger">Batal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Ditolak-->
-        <div class="modal fade" id="modalDitolak" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom">
-                        <h5 class="modal-title" id="modalDitolak">Anda Menolak Logbook 2 Januari 2023, Silahkan Memberikan Komentar !!!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body pt-3">
-                        <div class="row">
-                            <div class="col mb-0">
-                                <label for="defaultFormControlInput" class="form-label pb-1">Komentar <span class="text-danger">*</span> </label>
-                                <textarea class="form-control" id="defaultFormControlInput" placeholder="Tulis komentar disini" aria-describedby="defaultFormControlHelp"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success">Kirim Komentar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        @include('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/modal')
     </div>
 </div>
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
+<script>
+    $(document).ready(function () {
+        loadData();
+    });
+
+    function getLogbook(e) {
+        let dataId = e.attr('data-id');
+        $('input[name="selected_logbook"]').prop('checked', false);
+        e.find('input[name="selected_logbook"]').prop('checked', true);
+
+        loadData();
+    }
+
+    function loadData() {
+        let getSelectedLogbook = $(`input[name="selected_logbook"]:checked`).val();
+        let detailLogbookWeekly = $('#container-detail-logbook-weekly');
+
+        if (!getSelectedLogbook) return;
+
+        sectionBlock(detailLogbookWeekly);
+        $.ajax({
+            url: `{{ route('kelola_magang_pemb_lapangan.logbook', $mahasiswa->id_mhsmagang) }}`,
+            data: {
+                section: 'get_logbook_week',
+                data_id: getSelectedLogbook
+            },
+            type: "GET",
+            success: function (response) {
+                detailLogbookWeekly.html(response.data.view_content);
+                $('#container-rejected-reason').html(response.data.view_rejected_reason);
+
+                sectionBlock(detailLogbookWeekly, false);
+            }
+        });
+    }
+
+    $(document).on('click', '#btn-approve', function () {
+        let dataId = $(this).attr('data-id');
+
+        sweetAlertConfirm({
+            title: 'Apakah logbook mahasiswa sudah sesuai dengan yang dikerjakan?',
+            text: 'Status logbook akan otomatis berubah!',
+            icon: 'warning',
+            confirmButtonText: 'Ya, Sudah',
+            cancelButtonText: 'Batal',
+        }, function () {
+            $.ajax({
+                url: `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId),
+                type: "POST",
+                data: { _token: "{{ csrf_token() }}", status: 'approved' },
+                success: function (response) {
+                    $('#container-left-card').html(response.data.view_left_card);
+                    $('#container-detail-logbook-weekly').html(response.data.view_logbook);
+
+                    showSweetAlert({
+                        title: 'Berhasil',
+                        text: response.message,
+                        icon: 'success',
+                    });
+                }
+            });
+        });
+    });
+
+    $(document).on('click', '#btn-reject', function () {
+        let dataId = $(this).attr('data-id');
+        let modal = $('#modalDitolak');
+        let form = modal.find('form');
+
+        form.attr('action', `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId))
+        form.find('input[name="status"]').val('rejected');
+        modal.modal('show');
+    });
+
+    function afterApprovalLogbook(response) {
+        $('#container-left-card').html(response.data.view_left_card);
+        $('#container-rejected-reason').html(response.data.view_rejected_reason);
+        $('#container-detail-logbook-weekly').html(response.data.view_logbook);
+        $('#modalDitolak').modal('hide');
+    }
+
+    $(document).on('click', '.show_hide_new', function() {
+        let siblingsFake = $(this).siblings('.sibling-fake');
+        let siblingsReal = $(this).siblings('.sibling-real');
+        
+        let dataShortened = $(this).attr('data-shortened');
+
+        if (dataShortened == 'true') {
+            siblingsFake.addClass('d-none');
+            siblingsReal.removeClass('d-none');
+
+            $(this).text('Show Less');
+            $(this).attr('data-shortened', 'false');
+        } else {
+            siblingsFake.removeClass('d-none');
+            siblingsReal.addClass('d-none');
+
+            $(this).text('Show More');
+            $(this).attr('data-shortened', 'true');
+        }
+    });
+</script>
 @endsection

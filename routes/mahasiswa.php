@@ -85,6 +85,18 @@ Route::prefix('unduh-profile')->name('unduh-profile.')->group(function () {
 // kegiatan saya -> landing page
 
 Route::prefix('kegiatan-saya')->group(function () {
+    Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail_lowongan');
+        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
+    });
+
+    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('save/{id}', 'simpanLowongan')->name('.save');
+    });
+
     Route::prefix('logbook')->name('logbook')->controller(LogbookLogbookMahasiswaController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
@@ -131,18 +143,4 @@ Route::middleware('role:Mahasiswa')->group(function () {
     // Route::get('/lowongan-pekerjaan-tersimpan', function () {
     //     return view('program_magang.lowongan_pekerjaan_tersimpan');
     // });
-});
-
-Route::prefix('kegiatan-saya')->group(function () {
-    Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('detail/{id}', 'detail')->name('.detail');
-        Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail_lowongan');
-        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
-    });
-
-    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::post('save/{id}', 'simpanLowongan')->name('.save');
-    });
 });

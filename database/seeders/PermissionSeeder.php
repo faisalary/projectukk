@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class PermissionSeeder extends Seeder
 {
@@ -59,7 +60,9 @@ class PermissionSeeder extends Seeder
             'assign_pembimbing.view',
         ];
 
-        $permission['Pembimbing Lapangan'] = [];
+        $permission['Pembimbing Lapangan'] = [
+            'kelola_magang_pemb_lapangan.view'
+        ];
         $permission['Mahasiswa'] = [];
         $permission['Dosen'] = [
             // approval mahasiswa
@@ -84,5 +87,7 @@ class PermissionSeeder extends Seeder
 
         $permission['Super Admin'] = array_merge($permission['Super Admin'], $permission['LKM']);
         $role->syncPermissions($permission['Super Admin']);
+
+        Artisan::call('cache:clear');
     }
 }
