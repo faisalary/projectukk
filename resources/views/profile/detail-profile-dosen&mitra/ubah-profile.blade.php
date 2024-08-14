@@ -1,4 +1,4 @@
-<div class="modal fade" id="largeModal">
+<div class="modal fade modals" id="largeModal">
     <div class="modal-dialog modal-lg  modal-dialog-centered">
         @if (auth()->user()->hasRole('Dosen'))
         <div class="modal-content">
@@ -10,26 +10,28 @@
             <h4>Informasi Pribadi</h4>
             <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem;">
                 <div>
-                    <label for="changeuniv" class="form-label">Universitas</label>
-                    <select class="form-select select2" id="changeuniv" name="changeuniv" data-placeholder="Pilih Universitas" onchange="getDataSelect($(this));" data-after="changefakultas">
+                    <label for="id_univ" class="form-label">Universitas</label>
+                    <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ_import">
                         <option value="" disabled selected>Pilih Universitas</option>
                         @foreach ($universitas as $u)
-                            <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
+                            <option value="{{ $u->id_univ }}" {{ ($dosen->namauniv === $u->namauniv) ? "selected" : "" }}>{{ $u->namauniv }}</option>
                         @endforeach
                     </select>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div>
-                    <label for="changefakultas" class="form-label">Fakultas</label>
-                    <select class="form-select select2" id="changefakultas" name="changefakultas" onchange="getDataSelect($(this));" data-after="changeProdi" data-placeholder="Pilih Fakultas" style="width: 100%; height: 4rem;">
+                    <label for="id_fakultas" class="form-label">Fakultas</label>
+                    <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas_import">
                         <option value="" disabled selected>Pilih Fakultas</option>
                     </select>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div>
-                    <label for="changeProdi">Program Studi
-                        <span class="text-danger">*</span>
-                    </label>
-                    <br>
-                    <input type="text" id="changeProdi" placeholder="Masukkan program studi" style="width: 100%;  height: 3rem;" class="px-2 rounded border">
+                    <label for="id_prodi" class="form-label">Prodi</label>
+                    <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id_prodi_import">
+                        <option value="" disabled selected>Pilih Prodi</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div>
                     <label for="changeNIP">NIP
