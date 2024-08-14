@@ -13,12 +13,12 @@
                 <large class="text">{{ $pendaftar->headliner }}</large>
             </div>
             <div class="ms-auto">
-                <button class="rounded-circle me-2 btn-label-success btn-icon">
+                <a href="mailto:{{ $pendaftar->emailmhs }}" class="rounded-circle me-2 btn-label-success btn-icon">
                     <i class="ti ti-mail"></i>
-                </button>
-                <button class="rounded-circle btn-label-success btn-icon">
+                </a>
+                <a href="tel:{{ $pendaftar->nohpmhs }}"class="rounded-circle btn-label-success btn-icon">
                     <i class="ti ti-phone-call"></i>
-                </button>
+                </a>
             </div>
         </div>
     </div>
