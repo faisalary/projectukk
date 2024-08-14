@@ -300,6 +300,8 @@ class LogbookMahasiswaController extends LogbookController
             $logbook_day[] = $logbookDay;
         }
 
+        if (in_array($logbookWeek->status, [LogbookWeeklyStatus::PENDING, LogbookWeeklyStatus::APPROVED])) $canApply = false;
+
         return [
             'logbook_day' => collect($logbook_day)->sortBy('date'),
             'can_apply' => $canApply

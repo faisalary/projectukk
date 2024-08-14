@@ -56,13 +56,12 @@
             <div id="container-left-card" class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;  height: fit-content !important; background-color:white">
                 @include('logbook.components.left_card_detail')
             </div>
-            <!-- <div class="fw-bold mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;height: fit-content !important; background-color:white;">
+            @if (isset($data->alasan_tolak))
+            <div class="fw-bold mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;height: fit-content !important; background-color:white;">
                 <p>Alasan penolakan logbook :</p>
-                <p class="fw-normal">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque
-                    dignissimos adipisci
-                    debitis quam consequatur totam molestias magnam excepturi nihil officia, minus ipsam?
-                    Adipisci eum quibusdam fugiat aliquid consequuntur sed.</p>
-            </div> -->
+                <p class="fw-normal">{{ $data->alasan_tolak }}</p>
+            </div>
+            @endif
         </div>
         <div class="col-8">
             <div id="container-logbook-daily">
@@ -168,6 +167,7 @@
                 btnBlock(e, false);
 
                 $('#container-left-card').html(response.data.view_left_card);
+                $('#btn-apply').attr('disabled', 'disabled');
 
                 showSweetAlert({
                     icon: 'success',

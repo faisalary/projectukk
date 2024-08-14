@@ -48,10 +48,10 @@
 @endforeach
 @if ($can_apply)
 <div class="mt-5">
-    <button type="button" onclick="applyLogbook($(this));" class="btn btn-primary w-100">Ajukan Logbook</button>
+    <button type="button" id="btn-apply" onclick="applyLogbook($(this));" class="btn btn-primary w-100">Ajukan Logbook</button>
 </div>
 @else
 <div class="mt-5">
-    <button type="button" class="btn btn-primary w-100" disabled>Ajukan Logbook</button>
+    <button type="button" id="btn-apply" class="btn btn-primary w-100" disabled>Ajukan Logbook</button>
 </div>
 @endif

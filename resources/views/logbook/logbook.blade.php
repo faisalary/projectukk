@@ -1,6 +1,20 @@
 @extends('partials.horizontal_menu')
 
 @section('page_style')
+<style>
+    .flatpickr-day.flatpickr-disabled.inRange {
+        color: #a5a3ae !important;
+        background: none !important;
+        border: 1px solid transparent !important;
+    }
+
+    .flatpickr-day.flatpickr-disabled.week.selected {
+        color: #a5a3ae !important;
+        background: none !important;
+        border: 1px solid transparent !important;
+        box-shadow: none !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -85,40 +99,37 @@
     function createLogbook() {
         let modal = $('#modal_logbook');
 
-        let startDate = `{{ $data->startdate_magang }}`;
-        let endDate = `{{ $data->enddate_magang }}`;
+        let startDate = new Date(`{{ $data->startdate_magang }}`);
+        let endDate = new Date(`{{ $data->enddate_magang }}`);
+
+        const formatDate = (date) => {
+            let day = ("0" + date.getDate()).slice(-2);
+            let month = ("0" + (date.getMonth() + 1)).slice(-2);
+            let year = date.getFullYear();
+            return `${day}-${month}-${year}`;
+        };
+
+        const funcDate = (selectedDates, dateStr, instance) => {
+            let start_date = new Date(selectedDates[0]);
+            let day = start_date.getDay();
+            start_date.setDate(start_date.getDate() - day);
+
+            let end_date = new Date(start_date);
+            end_date.setDate(start_date.getDate() + 6);
+
+            if (end_date > endDate) end_date = endDate;
+
+            const formattedDateRange = `${formatDate(start_date)} to ${formatDate(end_date)}`;
+            instance.input.value = formattedDateRange;
+        }
 
         $('#range_date').flatpickr({
-            mode: "range",
+            plugins: [new weekSelect({})],
             enableTime: false,
             minDate: startDate,
             maxDate: endDate,
-            onChange: function(selectedDates, dateStr, instance) {
-                if (selectedDates.length === 1) {
-                    const selectedDate = selectedDates[0];
-                    const dayOfWeek = selectedDate.getDay();
-
-                    const daysUntilSunday = 6 - dayOfWeek;
-                    
-                    const nextSunday = new Date(selectedDate.getTime() + daysUntilSunday * 24 * 60 * 60 * 1000);
-                    const prevSunday = new Date(selectedDate.getTime() - dayOfWeek * 24 * 60 * 60 * 1000);
-
-                    const minDate = new Date(Math.max(prevSunday.getTime(), new Date(startDate).getTime()));
-                    const maxDate = new Date(Math.min(nextSunday.getTime(), new Date(endDate).getTime()));
-
-                    instance.set('minDate', minDate);
-                    instance.set('maxDate', maxDate);
-                } else if (selectedDates.length === 2) {
-                    instance.set('minDate', startDate);
-                    instance.set('maxDate', endDate);
-                }
-            },
-            onClose: function(selectedDates, dateStr, instance) {
-                if (selectedDates.length === 1) {
-                    instance.set('minDate', startDate);
-                    instance.set('maxDate', endDate);
-                }
-            }
+            onChange: funcDate,
+            onClose: funcDate
         });
 
         modal.modal('show');
