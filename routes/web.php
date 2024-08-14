@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/kemitraan.php';
     require __DIR__ . '/mahasiswa.php';
     require __DIR__ . '/dosen.php';
+    require __DIR__ . '/profile.php';
 
     Route::middleware('permission:dashboard.dashboard_admin')->get('dashboard/admin', function () {
         return view('dashboard.admin.index');

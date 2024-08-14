@@ -1,7 +1,10 @@
 @php
     if (auth()->user()->hasRole('Mahasiswa')){
         $url = route('profile');
-    }else{
+    }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra')){
+        $url = route('profile_detail.informasi-pribadi');
+    }
+    else{
         $url = route('profile_company');
     }
 @endphp
