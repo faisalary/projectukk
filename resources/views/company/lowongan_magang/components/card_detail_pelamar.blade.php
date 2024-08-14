@@ -13,12 +13,12 @@
                 <large class="text">{{ $pendaftar->headliner }}</large>
             </div>
             <div class="ms-auto">
-                <button class="rounded-circle me-2 btn-label-success btn-icon">
+                <a href="mailto:{{ $pendaftar->emailmhs }}" class="rounded-circle me-2 btn-label-success btn-icon">
                     <i class="ti ti-mail"></i>
-                </button>
-                <button class="rounded-circle btn-label-success btn-icon">
+                </a>
+                <a href="tel:{{ $pendaftar->nohpmhs }}"class="rounded-circle btn-label-success btn-icon">
                     <i class="ti ti-phone-call"></i>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -42,23 +42,27 @@
     </div>
     <div class="col-3">
         <h6>Warga Negara</h6>
-        <p>WNA</p>
+        <p>@if($pendaftar->negara == null) - @else {{ $pendaftar->negara == '1' ? 'WNI' : 'WNA' }} @endif</p>
     </div>
     <div class="col-3">
         <h6>Negara</h6>
-        <p>Jamaika</p>
+        <p>{{ $pendaftar->negara ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Provisi</h6>
-        <p>Stockholm</p>
+        <p>{{ $pendaftar->provinsi ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Kota</h6>
-        <p>Birmingham</p>
+        <p>{{ $pendaftar->kota ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Kode Pos</h6>
-        <p>203044</p>
+        <p>{{ $pendaftar->kodepos ?? '-' }}</p>
+    </div>
+    <div class="col-12">
+        <h6>Alamat</h6>
+        <p>{{ $pendaftar->alamatmhs }}</p>
     </div>
 </div>
 <hr>
