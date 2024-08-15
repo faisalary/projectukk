@@ -81,13 +81,21 @@
         });
     }
 
-    function afterUpdateStatus(response) {
-        $('#table-master-mahasiswa').DataTable().ajax.reload();
+    function afterAction(response) {
+        $('#largeModal').modal('hide');
     }
 
-    function afterAction(response) {
-        $('#modal-mahasiswa, #modal-import').modal('hide');
-        afterUpdateStatus(response);
-    }
+    $("#largeModal").on("hide.bs.modal", function() {
+        const univ = {{$dosen->namauniv}}
+        const fakultas = {{$dosen->namafakultas}}
+        const prodi = {{$dosen->namaprodi}}
+        const nama = {{$dosen->namadosen}}
+        const nohp = {{$dosen->nohpdosen}}
+        const email = {{$dosen->emaildosen}}
+
+        $('#id_univ').val(univ);
+
+        $('#largeModal').modal('hide');
+    });
 </script>
 @endsection
