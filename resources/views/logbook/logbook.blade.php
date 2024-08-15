@@ -110,17 +110,19 @@
         };
 
         const funcDate = (selectedDates, dateStr, instance) => {
-            let start_date = new Date(selectedDates[0]);
-            let day = start_date.getDay();
-            start_date.setDate(start_date.getDate() - day);
-
-            let end_date = new Date(start_date);
-            end_date.setDate(start_date.getDate() + 6);
-
-            if (end_date > endDate) end_date = endDate;
-
-            const formattedDateRange = `${formatDate(start_date)} to ${formatDate(end_date)}`;
-            instance.input.value = formattedDateRange;
+            if (selectedDates.length > 0) {
+                let start_date = new Date(selectedDates[0]);
+                let day = start_date.getDay();
+                start_date.setDate(start_date.getDate() - day);
+    
+                let end_date = new Date(start_date);
+                end_date.setDate(start_date.getDate() + 6);
+    
+                if (end_date > endDate) end_date = endDate;
+    
+                const formattedDateRange = `${formatDate(start_date)} to ${formatDate(end_date)}`;
+                instance.input.value = formattedDateRange;
+            }
         }
 
         $('#range_date').flatpickr({

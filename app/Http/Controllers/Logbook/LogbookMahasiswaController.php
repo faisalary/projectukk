@@ -35,7 +35,7 @@ class LogbookMahasiswaController extends LogbookController
             'id_pendaftaran' => $data['data']->id_pendaftaran,
         ])->first();
 
-        $data['logbook_week'] = $logbook?->logbookWeek->transform(function ( $logbookWeek) {
+        $data['logbook_week'] = $logbook?->logbookWeek()->orderBy('start_date', 'asc')->get()->transform(function ( $logbookWeek) {
             $logbookWeek->status = $this->getStatusLogbookWeek($logbookWeek);
             return $logbookWeek;
         }) ?: [];
@@ -146,7 +146,9 @@ class LogbookMahasiswaController extends LogbookController
             
             DB::commit();
 
-            $logbook_week = LogbookWeek::where('id_logbook', $logbook->id_logbook)->get()->transform(function ($item) {
+            $logbook_week = LogbookWeek::where('id_logbook', $logbook->id_logbook)
+            ->orderBy('start_date', 'asc')
+            ->get()->transform(function ($item) {
                 $item->status = $this->getStatusLogbookWeek($item);
                 return $item;
             });

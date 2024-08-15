@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="d-flex justify-content-start">
-    <a href="{{ route('kelola_magang_pemb_lapangan') }}" class="btn btn-outline-primary mb-3 waves-effect">
+    <a href="{{ $urlBack }}" class="btn btn-outline-primary mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
 </div>
@@ -58,14 +58,16 @@
                     </div>
                     <div class="border-bottom mt-3 mb-3"></div>
                     <div id="container-left-card">
-                        @include('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/left_card_week')
+                        @include('kelola_mahasiswa/logbook/components/left_card_week')
                     </div>
                 </div>
                 <div id="container-rejected-reason"></div>
             </div>
             <div class="col" id="container-detail-logbook-weekly"></div>
         </div>
-        @include('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/modal')
+        @if (isset($isPembLapangan) && $isPembLapangan == true)
+        @include('kelola_mahasiswa/logbook/components/modal')
+        @endif
     </div>
 </div>
 @endsection
@@ -85,17 +87,18 @@
     }
 
     function loadData() {
-        let getSelectedLogbook = $(`input[name="selected_logbook"]:checked`).val();
+        let getSelectedLogbook = $(`input[name="selected_logbook"]:checked`);
         let detailLogbookWeekly = $('#container-detail-logbook-weekly');
 
         if (!getSelectedLogbook) return;
 
         sectionBlock(detailLogbookWeekly);
         $.ajax({
-            url: `{{ route('kelola_magang_pemb_lapangan.logbook', $mahasiswa->id_mhsmagang) }}`,
+            url: `{{ $url_get }}`,
             data: {
                 section: 'get_logbook_week',
-                data_id: getSelectedLogbook
+                data_id: getSelectedLogbook.val(),
+                week: getSelectedLogbook.attr('data-week')
             },
             type: "GET",
             success: function (response) {
@@ -107,6 +110,28 @@
         });
     }
 
+    $(document).on('click', '.show_hide_new', function() {
+        let siblingsFake = $(this).siblings('.sibling-fake');
+        let siblingsReal = $(this).siblings('.sibling-real');
+        
+        let dataShortened = $(this).attr('data-shortened');
+
+        if (dataShortened == 'true') {
+            siblingsFake.addClass('d-none');
+            siblingsReal.removeClass('d-none');
+
+            $(this).text('Show Less');
+            $(this).attr('data-shortened', 'false');
+        } else {
+            siblingsFake.removeClass('d-none');
+            siblingsReal.addClass('d-none');
+
+            $(this).text('Show More');
+            $(this).attr('data-shortened', 'true');
+        }
+    });
+
+    @if (isset($isPembLapangan) && $isPembLapangan == true)
     $(document).on('click', '#btn-approve', function () {
         let dataId = $(this).attr('data-id');
 
@@ -151,26 +176,6 @@
         $('#container-detail-logbook-weekly').html(response.data.view_logbook);
         $('#modalDitolak').modal('hide');
     }
-
-    $(document).on('click', '.show_hide_new', function() {
-        let siblingsFake = $(this).siblings('.sibling-fake');
-        let siblingsReal = $(this).siblings('.sibling-real');
-        
-        let dataShortened = $(this).attr('data-shortened');
-
-        if (dataShortened == 'true') {
-            siblingsFake.addClass('d-none');
-            siblingsReal.removeClass('d-none');
-
-            $(this).text('Show Less');
-            $(this).attr('data-shortened', 'false');
-        } else {
-            siblingsFake.removeClass('d-none');
-            siblingsReal.addClass('d-none');
-
-            $(this).text('Show More');
-            $(this).attr('data-shortened', 'true');
-        }
-    });
+    @endif
 </script>
 @endsection

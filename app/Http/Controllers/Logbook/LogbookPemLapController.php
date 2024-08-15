@@ -51,12 +51,14 @@ class LogbookPemLapController extends LogbookController
 
     public function viewLogbook(Request $request, $id)
     {
+        $isPembLapangan = true;
         if ($request->ajax()) {
             if ($request->section == 'get_logbook_week') {
                 $data = LogbookDay::where('id_logbook_week', $request->data_id)->get();
                 $logbook_week = LogbookWeek::select('week', 'id_logbook_week', 'status', 'alasan_tolak')->where('id_logbook_week', $request->data_id)->first();
-                $result['view_content'] = view('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/detail_logbook_weekly', compact('data', 'logbook_week'))->render();
-                $result['view_rejected_reason'] = view('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/rejected_reason', ['logbook_week' => $logbook_week])->render();
+                $week = $request->week;
+                $result['view_content'] = view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', compact('data', 'logbook_week', 'isPembLapangan', 'week'))->render();
+                $result['view_rejected_reason'] = view('kelola_mahasiswa/logbook/components/rejected_reason', ['logbook_week' => $logbook_week])->render();
             } else {
                 return Response::error(null, 'Invalid Request', 400);
             }
@@ -76,9 +78,13 @@ class LogbookPemLapController extends LogbookController
         ->whereHas('logbook', function ($q) use ($id) {
             $q->where('id_mhsmagang', $id);
         })
-        ->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->get();
+        ->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->orderBy('start_date', 'asc')
+        ->get();
 
-        return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook', $data);
+        $data['isPembLapangan'] = $isPembLapangan;
+        $data['url_get'] = route('kelola_magang_pemb_lapangan.logbook', $id);
+        $data['urlBack'] = route('kelola_magang_pemb_lapangan');
+        return view('kelola_mahasiswa.logbook.logbook', $data);
     }
 
     public function approval(Request $request, $id)
@@ -106,16 +112,16 @@ class LogbookPemLapController extends LogbookController
             $listLogbookWeek = LogbookWeek::select('id_logbook_week', 'week', 'status', 'start_date', 'end_date')
             ->whereHas('logbook', function ($q) use ($logbookWeek) {
                 $q->where('id_mhsmagang', $logbookWeek->logbook->id_mhsmagang);
-            })->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->get();
+            })->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->orderBy('start_date', 'asc')->get();
 
             $logbookDaily = LogbookDay::where('id_logbook_week', $id)->get();
             return Response::success([
-                'view_left_card' => view('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/left_card_week', [
+                'view_left_card' => view('kelola_mahasiswa/logbook/components/left_card_week', [
                     'list_week' => $listLogbookWeek,
                     'checked' => $id
                 ])->render(),
-                'view_rejected_reason' => view('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/rejected_reason', ['logbook_week' => $logbookWeek])->render(),
-                'view_logbook' => view('kelola_mahasiswa/kelola_mahasiswa_lapangan/components/detail_logbook_weekly', [
+                'view_rejected_reason' => view('kelola_mahasiswa/logbook/components/rejected_reason', ['logbook_week' => $logbookWeek])->render(),
+                'view_logbook' => view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', [
                     'logbook_week' => $logbookWeek,
                     'data' => $logbookDaily,
                 ])->render()

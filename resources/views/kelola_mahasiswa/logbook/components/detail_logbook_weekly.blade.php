@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between mb-3">
-    <h5 class="my-auto">Logbook Minggu Ke-{{ $logbook_week->week }}</h5>
-    @if ($logbook_week->status == App\Enums\LogbookWeeklyStatus::PENDING)
+    <h5 class="my-auto">Logbook Minggu Ke-{{ $week }}</h5>
+    @if ($logbook_week->status == App\Enums\LogbookWeeklyStatus::PENDING && (isset($isPembLapangan) && $isPembLapangan == true))
     <div class="d-flex justify-content-center">
         <button type="button" id="btn-approve" data-id="{{ $logbook_week->id_logbook_week }}" class="btn btn-primary me-1"><i class="ti ti-check ms-0 me-1"></i>Setujui</button>
         <button type="button" id="btn-reject" data-id="{{ $logbook_week->id_logbook_week }}" class="btn btn-danger"><i class="ti ti-x ms-0 me-1"></i>Tolak</button>
