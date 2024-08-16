@@ -90,7 +90,7 @@
         let getSelectedLogbook = $(`input[name="selected_logbook"]:checked`);
         let detailLogbookWeekly = $('#container-detail-logbook-weekly');
 
-        if (!getSelectedLogbook) return;
+        if (!getSelectedLogbook.val()) return;
 
         sectionBlock(detailLogbookWeekly);
         $.ajax({
@@ -134,6 +134,7 @@
     @if (isset($isPembLapangan) && $isPembLapangan == true)
     $(document).on('click', '#btn-approve', function () {
         let dataId = $(this).attr('data-id');
+        let week = $(this).attr('data-week');
 
         sweetAlertConfirm({
             title: 'Apakah logbook mahasiswa sudah sesuai dengan yang dikerjakan?',
@@ -145,7 +146,7 @@
             $.ajax({
                 url: `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId),
                 type: "POST",
-                data: { _token: "{{ csrf_token() }}", status: 'approved' },
+                data: { _token: "{{ csrf_token() }}", status: 'approved', week: week },
                 success: function (response) {
                     $('#container-left-card').html(response.data.view_left_card);
                     $('#container-detail-logbook-weekly').html(response.data.view_logbook);
@@ -162,11 +163,13 @@
 
     $(document).on('click', '#btn-reject', function () {
         let dataId = $(this).attr('data-id');
+        let week = $(this).attr('data-week');
         let modal = $('#modalDitolak');
         let form = modal.find('form');
 
         form.attr('action', `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId))
         form.find('input[name="status"]').val('rejected');
+        form.find('input[name="week"]').val(week);
         modal.modal('show');
     });
 

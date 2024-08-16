@@ -1,5 +1,5 @@
 <div class="d-flex">
-    {!! $data->status !!}
+    {!! $data->label_status !!}
 </div>
 <div class="d-flex align-items-center mt-1 mb-3">
     <h5 class="mb-0">{{ Carbon\Carbon::parse($data->start_date)->format('d') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($data->end_date)->format('d F Y') }}</h5>

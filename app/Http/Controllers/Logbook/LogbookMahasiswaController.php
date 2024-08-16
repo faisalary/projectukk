@@ -75,7 +75,7 @@ class LogbookMahasiswaController extends LogbookController
         $data['logbook_day'] = $logbook_daily['logbook_day'];
         $data['can_apply'] = $logbook_daily['can_apply'];
 
-        $data['data']->status = $this->getStatusLogbookWeek($data['data']);;
+        $data['data']->label_status = $this->getStatusLogbookWeek($data['data']);;
         
         return view('logbook.logbook_detail', $data);
     }
@@ -259,7 +259,8 @@ class LogbookMahasiswaController extends LogbookController
 
             $logbookWeekly->status = $this->getStatusLogbookWeek($logbookWeekly);
             return Response::success([
-                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeekly])->render()
+                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeekly])->render(),
+                'view_detail' => view('logbook.components.card_daily', ['data' => $logbookWeekly, 'logbook_day' => $logbookWeekly->logbookDay, 'can_apply' => false])->render()
             ], 'Logbook successfully applied!');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
