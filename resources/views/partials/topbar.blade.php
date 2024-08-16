@@ -39,7 +39,7 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="/logbook" class="menu-link">
+                                <a href="{{ route('logbook') }}" class="menu-link">
                                     <div data-i18n="Logbook Mahasiswa">Logbook Mahasiswa</div>
                                 </a>
                             </li>

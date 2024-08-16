@@ -40,6 +40,18 @@ class StatusLamaranMagangController extends Controller
     public function index(Request $request) {
 
         if ($request->ajax()) {
+            if ($request->section == 'get_data_tgl_default') {
+                $this->getDataLamaran(function ($query) use ($request) {
+                    return $query->where('pendaftaran_magang.id_pendaftaran', $request->data_id);
+                });
+
+                $lamaran_magang = $this->lamaran_magang->first();
+
+                return (object) [
+                    'mulai_magang' => $lamaran_magang->mulai_magang,
+                    'selesai_magang' => $lamaran_magang->selesai_magang
+                ];
+            }
             return self::getDataCard($request);
         }
 
@@ -72,7 +84,9 @@ class StatusLamaranMagangController extends Controller
 
     public function approvalPenawaran(Request $request, $id) {
         $request->validate([
-            'status' => 'required|in:approved,rejected' 
+            'status' => 'required|in:approved,rejected',
+            'startdate' => 'required_if:status,approved',
+            'enddate' => 'required_if:status,approved'
         ]);
 
         try {
@@ -91,7 +105,11 @@ class StatusLamaranMagangController extends Controller
             $pendaftaran->save();
 
             if ($request->status == 'approved') {
-                MhsMagang::create(['id_pendaftaran' => $pendaftaran->id_pendaftaran]);
+                MhsMagang::create([
+                    'id_pendaftaran' => $pendaftaran->id_pendaftaran,
+                    'startdate_magang' => $request->startdate,
+                    'enddate_magang' => $request->enddate,
+                ]);
             }
 
             DB::commit();

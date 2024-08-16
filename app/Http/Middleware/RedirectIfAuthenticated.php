@@ -29,6 +29,8 @@ class RedirectIfAuthenticated
                     $url = RouteServiceProvider::DOSEN;
                 } elseif(Auth::user()->can('approval_mhs_kaprodi.view')) {
                     $url = RouteServiceProvider::KAPRODI;
+                } elseif(Auth::user()->can('kelola_magang_pemb_lapangan.view')) {
+                    $url = RouteServiceProvider::PEMB_LAPANGAN;
                 } else {
                     $url = RouteServiceProvider::LANDINGPAGE;
                 }

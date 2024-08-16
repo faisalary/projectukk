@@ -2,29 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use stdClass;
-use Exception;
 use App\Helpers\Response;
-use App\Models\Education;
-use App\Models\Experience;
-use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
-use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
-use App\Models\BahasaMahasiswa;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Crypt;
-use App\Enums\LowonganMagangStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
 use App\Enums\PendaftaranMagangStatusEnum;
-use App\Http\Requests\LowonganMagangRequest;
 use App\Models\MhsMagang;
 use App\Models\PegawaiIndustri;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class AssignPembimbingController extends Controller
 {
@@ -34,7 +22,14 @@ class AssignPembimbingController extends Controller
      */
     public function index(Request $request)
     {
-        $data['pegawai'] = $this->getPegawaiIndustri()->my_pegawai_industri;
+        $data['pegawai'] = $this->getPegawaiIndustri(function ($query) {
+            return $query->whereHas('user', function ($q) {
+                $q->whereHas('roles', function ($q2) {
+                    $q2->where('name', 'Pembimbing Lapangan');
+                });
+            });
+        })->my_pegawai_industri;
+        
         $data['prodi'] = ProgramStudi::all();
         $data['posisi'] = LowonganMagang::select('intern_position', 'id_lowongan')->get();
         return view('company.assign_pembimbing.index', $data);

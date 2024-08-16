@@ -9,11 +9,12 @@ use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\StatusLamaranMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
+use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('show', 'show')->name('.show');
-    Route::post('/approved/{id}', 'approved')->name('.approved');
+    Route::post('approved', 'approved')->name('.approved');
     Route::post('/rejected/{id}', 'rejected')->name('.rejected');
 });
 
@@ -82,11 +83,34 @@ Route::prefix('unduh-profile')->name('unduh-profile.')->group(function () {
 });
 
 // kegiatan saya -> landing page
+
+Route::prefix('kegiatan-saya')->group(function () {
+    Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('detail/{id}', 'detail')->name('.detail');
+        Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail_lowongan');
+        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
+    });
+
+    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('save/{id}', 'simpanLowongan')->name('.save');
+    });
+
+    Route::prefix('logbook')->name('logbook')->controller(LogbookLogbookMahasiswaController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('detail/{id}', 'detail')->name('.detail');
+
+        Route::post('create-logbook', 'storeCreateLogbook')->name('.create');
+        Route::post('create-logbook-daily/{id_logbook_week}', 'storeLogbookDaily')->name('.create_logbook_daily');
+        Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
+
+        Route::post('apply-logbook/{id_logbook_week}', 'applyLogbook')->name('.apply_logbook');
+    });
+});
+
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki
 Route::middleware('role:Mahasiswa')->group(function () {
-    Route::get('/logbook', function () {
-        return view('logbook.logbook', ['active_menu' => 'logbook']);
-    });
 
     Route::get('/logbook-detail', function () {
         return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
@@ -119,18 +143,4 @@ Route::middleware('role:Mahasiswa')->group(function () {
     // Route::get('/lowongan-pekerjaan-tersimpan', function () {
     //     return view('program_magang.lowongan_pekerjaan_tersimpan');
     // });
-});
-
-Route::prefix('kegiatan-saya')->group(function () {
-    Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('detail/{id}', 'detail')->name('.detail');
-        Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail_lowongan');
-        Route::post('/approval-penawaran/{id}', 'approvalPenawaran')->name('.approval_penawaran');
-    });
-
-    Route::prefix('lowongan-tersimpan')->name('lowongan_tersimpan')->controller(SimpanLowonganController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::post('save/{id}', 'simpanLowongan')->name('.save');
-    });
 });

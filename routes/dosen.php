@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprovalMahasiswaController;
 use App\Http\Controllers\ApprovalMahasiswaKaprodiController;
+use App\Http\Controllers\Logbook\KelolaMahasiswaPemAkademikController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangDosenController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangKaprodiController;
-use App\Http\Controllers\KelolaMahasiswaPemAkademikController;
 
 // Dosen Wali
 Route::prefix('approval-mahasiswa')->name('approval_mahasiswa')->controller(ApprovalMahasiswaController::class)->group(function () {
@@ -36,4 +36,5 @@ Route::prefix('data-mahasiswa-magang-kaprodi')->name('mahasiswa_magang_kaprodi')
 Route::prefix('kelola-mahasiswa')->name('kelola_mhs_pemb_akademik')->controller(KelolaMahasiswaPemAkademikController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('get-data', 'getData')->name('.get_data');
+    Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
 });

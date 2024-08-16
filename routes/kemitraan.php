@@ -6,6 +6,7 @@ use App\Http\Controllers\KelolaMitraController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\InformasiMitraController;
+use App\Http\Controllers\Logbook\LogbookPemLapController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
 use App\Http\Controllers\PegawaiIndustriController;
@@ -127,6 +128,14 @@ Route::prefix('company')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
         Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
     });
+});
+
+Route::prefix('kelola-mahasiswa-magang')->name('kelola_magang_pemb_lapangan')->controller(LogbookPemLapController::class)->group(function () {
+    Route::get('/', 'viewList');
+    Route::get('get-data', 'getData')->name('.get_data');
+    Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
+    Route::post('logbook/approval/{id}', 'approval')->name('.approval');
+    Route::get('input-nilai', 'viewInputNilai')->name('.input_nilai');
 });
 
 Route::middleware('permission:dashboard.dashboard_mitra')->get('dashboard/company', function () {
