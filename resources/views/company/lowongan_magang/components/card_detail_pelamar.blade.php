@@ -131,3 +131,32 @@
 @foreach ($language as $item)
 <span class='badge rounded-pill bg-label-primary mx-1'>{{ $item->bahasa }}</span>
 @endforeach
+<hr>
+<h5>Dokumen Pendukung</h5>
+<div class="card-body">
+    <div class="d-flex flex-column" id="container-dokumen-pendukung">
+        @foreach ($dokumen_pendukung as $key => $item)
+            <div class="{{ count($dokumen_pendukung) != ($key+1) ? 'border-bottom mb-3 pb-3' : '' }}">
+                <div class="d-flex justify-content-start mb-1">
+                    <h6 class="mb-0">{{ $item->nama_sertif }}</h6>
+                </div>
+                <p class="mb-1" style="font-size: small">{{ $item->penerbit }}</p>
+                <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</p>
+                <a class="text-primary" href="{{ url('storage/'.$item->file_sertif) }}" target="_blank">Dokumen.pdf</a>
+                <p class="mb-1">{{ $item->deskripsi }}</p>
+            </div>
+        @endforeach
+    </div>
+</div>
+<hr>
+<h5>Dokumen Persyaratan</h5>
+<div class="card-body">
+    <div class="d-flex flex-column" id="container-dokumen-pendukung">
+        <div class="mb-3 pb-3">
+            <div class="d-flex justify-content-start mb-1">
+                <h6 class="mb-0">Portofolio</h6>
+            </div>
+            <a class="text-primary" href="{{ url('storage/'.$pendaftar->portofolio) }}" target="_blank">Portofolio.pdf</a>
+        </div>
+    </div>
+</div>
