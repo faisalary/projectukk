@@ -30,15 +30,39 @@ class LogbookMahasiswaController extends LogbookController
         $data['data'] = $this->pendaftaran->first();
         if ($data['data'] == null) return abort(403);
 
-        $logbook = Logbook::with('logbookWeek.logbookDay')->where([
+        $logbook = Logbook::where([
             'id_mhsmagang' => $data['data']->id_mhsmagang,
             'id_pendaftaran' => $data['data']->id_pendaftaran,
         ])->first();
 
-        $data['logbook_week'] = $logbook?->logbookWeek()->orderBy('start_date', 'asc')->get()->transform(function ( $logbookWeek) {
-            $logbookWeek->status = $this->getStatusLogbookWeek($logbookWeek);
-            return $logbookWeek;
-        }) ?: [];
+        $current_month = ($request->current_month)? ($request->current_month + 1) : Carbon::now()->month;
+        $data['logbook_week'] = [];
+        if ($logbook) {
+            $data['logbook_week'] = LogbookWeek::with('logbookDay')->where('id_logbook', $logbook->id_logbook)
+            ->where(function ($query) use ($current_month) {
+                $query->whereMonth('start_date', $current_month)->orWhereMonth('end_date', $current_month);
+            })
+            ->orderBy('start_date', 'asc')
+            ->get()->transform(function ( $logbookWeek) {
+                $logbookWeek->status = $this->getStatusLogbookWeek($logbookWeek);
+                return $logbookWeek;
+            });
+        }
+
+        if ($request->ajax()) {
+            $result = null;
+            if ($request->section == 'get_logbook_week') {
+                $result['view_card_weekly'] = view('logbook/components/card_weekly', $data)->render();
+            } else {
+                return Response::error(null, 'Invalid');
+            }
+            return Response::success($result, 'Success');
+        }
+
+        $data['list_month'] = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $data['list_month'][] = date('F', mktime(0, 0, 0, $i, 1));
+        }
 
         return view('logbook.logbook', $data);
     }
@@ -92,6 +116,7 @@ class LogbookMahasiswaController extends LogbookController
 
                 if (isset($endDate) && $startDate->gt($endDate)) $fail('Range date tidak valid');
             }],
+            'current_month' => ['required', 'numeric', 'min:0', 'max:11']
         ]);
 
         try {
@@ -147,6 +172,9 @@ class LogbookMahasiswaController extends LogbookController
             DB::commit();
 
             $logbook_week = LogbookWeek::where('id_logbook', $logbook->id_logbook)
+            ->where(function ($query) use ($request) {
+                $query->whereMonth('start_date', ($request->current_month + 1))->orWhereMonth('end_date', ($request->current_month + 1));
+            })
             ->orderBy('start_date', 'asc')
             ->get()->transform(function ($item) {
                 $item->status = $this->getStatusLogbookWeek($item);
@@ -185,7 +213,7 @@ class LogbookMahasiswaController extends LogbookController
                 'activity' => $request->activity
             ]);
 
-            $logbookWeek->status = $this->getStatusLogbookWeek($logbookWeek);
+            $logbookWeek->label_status = $this->getStatusLogbookWeek($logbookWeek);
             $logbookWeek = $logbookWeek->load('logbookDay');
 
             $logbook_daily = $this->getLogbookDaily($logbookWeek);
@@ -194,7 +222,7 @@ class LogbookMahasiswaController extends LogbookController
             $can_apply = $logbook_daily['can_apply'];
 
             return Response::success([
-                'view' => view('logbook/components/card_daily', compact('logbook_day', 'can_apply'))->render(),
+                'view' => view('logbook/components/card_daily', ['data' => $logbookWeek, 'logbook_day' => $logbook_day, 'can_apply' => $can_apply])->render(),
                 'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render()
             ], 'Logbook daily ditambahkan');
         } catch (\Exception $e) {
@@ -219,14 +247,14 @@ class LogbookMahasiswaController extends LogbookController
             $logbookDaily->save();
 
             $logbookWeek = $logbookDaily->logbookWeek;
-            $logbookWeek->status = $this->getStatusLogbookWeek($logbookWeek);
+            $logbookWeek->label_status = $this->getStatusLogbookWeek($logbookWeek);
             $logbook_daily = $this->getLogbookDaily($logbookWeek->load('logbookDay'));
 
             $logbook_day = $logbook_daily['logbook_day'];
             $can_apply = $logbook_daily['can_apply'];
 
             return Response::success([
-                'view' => view('logbook/components/card_daily', compact('logbook_day', 'can_apply'))->render(),
+                'view' => view('logbook/components/card_daily', ['data' => $logbookWeek, 'logbook_day' => $logbook_day, 'can_apply' => $can_apply])->render(),
                 'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render()
             ], 'Logbook daily diupdate');
         } catch (\Exception $e) {
@@ -257,7 +285,7 @@ class LogbookMahasiswaController extends LogbookController
             $logbookWeekly->status = 1;
             $logbookWeekly->save();
 
-            $logbookWeekly->status = $this->getStatusLogbookWeek($logbookWeekly);
+            $logbookWeekly->label_status = $this->getStatusLogbookWeek($logbookWeekly);
             return Response::success([
                 'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeekly])->render(),
                 'view_detail' => view('logbook.components.card_daily', ['data' => $logbookWeekly, 'logbook_day' => $logbookWeekly->logbookDay, 'can_apply' => false])->render()

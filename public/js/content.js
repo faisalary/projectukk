@@ -66,7 +66,7 @@ function initSelect2(element = null, data = null) {
 
         $(this).select2({
             tags: $(this).attr('data-tags') === 'true' ?? false,
-            allowClear: true,
+            allowClear: $(this).attr('data-allow-clear') === 'true' ?? false,
             placeholder: $(this).attr('data-placeholder') ?? null,
             dropdownAutoWidth: true,
             width: '100%',
