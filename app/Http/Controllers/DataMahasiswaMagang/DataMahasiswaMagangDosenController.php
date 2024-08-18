@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\DataMahasiswaMagang;
 
-use App\Enums\PendaftaranMagangStatusEnum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
 {
@@ -66,9 +67,9 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
             ->addColumn('tanggalmagang', function ($data) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span>Tanggal Mulai:</span>';
-                $result .= '<span class="fw-semibold">' .$data->startdate. '</span>';
+                $result .= '<span class="fw-semibold">' . ($data->startdate_magang == null ? '-' : Carbon::parse($data->startdate_magang)->format('d M Y')) . '</span>';
                 $result .= '<span>Tanggal Berakhir:</span>';
-                $result .= '<span class="fw-semibold">' .$data->enddate. '</span>';
+                $result .= '<span class="fw-semibold">' . ($data->enddate_magang == null ? '-' : Carbon::parse($data->enddate_magang)->format('d M Y')) . '</span>';
                 $result .= '</div>';
     
                 return $result;

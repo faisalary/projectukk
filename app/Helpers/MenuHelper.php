@@ -346,6 +346,18 @@ class MenuHelper
                 'icon' => 'ti-clipboard-list',
                 'permission' => 'assign_pembimbing.view'
             ],
+            //pemb lapangan
+            [
+                'type' => 'menu-header',
+                'name' => 'Pembimbing Lapangan',
+                'role' => 'Pembimbing Lapangan'
+            ],
+            [
+                'name' => 'Kelola Mahasiswa',
+                'route' => 'kelola_magang_pemb_lapangan',
+                'icon' => 'ti-users',
+                'permission' => 'kelola_magang_pemb_lapangan.view'
+            ],
             //dosen
             [
                 'type' => 'menu-header',

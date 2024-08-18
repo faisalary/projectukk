@@ -64,8 +64,8 @@ border-radius: 5px;
 .btn-primary.disabled,
 .btn-primary:disabled {
 	color: #fff !important;
-	background-color: #008cff !important;
-	border-color: #008cff !important;
+	background-color: #66c089 !important;
+	border-color: #66c089 !important;
 	box-shadow: none !important;
 }
 
