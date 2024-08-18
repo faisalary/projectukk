@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Logbook;
 
-use App\Enums\LogbookWeeklyStatus;
 use App\Helpers\Response;
+use App\Models\MhsMagang;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
+use App\Models\NilaiPemblap;
 use Illuminate\Http\Request;
+use App\Models\KomponenNilai;
+use App\Enums\LogbookWeeklyStatus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class LogbookPemLapController extends LogbookController
 {
@@ -38,7 +43,7 @@ class LogbookPemLapController extends LogbookController
         })
         ->addColumn('aksi', function ($x) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= '<a class="cursor-pointer mx-1 text-warning"><i class="ti ti-clipboard-list"></i></a>';
+            $result .= '<a class="cursor-pointer mx-1 text-warning" href="'.route('kelola_magang_pemb_lapangan.input_nilai', $x->id_mhsmagang).'"><i class="ti ti-clipboard-list"></i></a>';
             $result .= '<a class="cursor-pointer mx-1 text-info" href="'.route('kelola_magang_pemb_lapangan.logbook', $x->id_mhsmagang).'"><i class="ti ti-book"></i></a>';
             $result .= '<a class="cursor-pointer mx-1 text-danger"><i class="ti ti-circle-x"></i></a>';
             $result .= '</div>';
@@ -133,9 +138,83 @@ class LogbookPemLapController extends LogbookController
         }
     }
 
-    public function viewInputNilai()
+    public function viewInputNilai($id)
     {
-        return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.modal');
+        $user = auth()->user();
+        $pegawai = $user->pegawai_industri;
+        $data['mhs_magang'] = MhsMagang::select('id_mhsmagang', 'jenis_magang')->where('id_peg_industri', $pegawai->id_peg_industri)->where('id_mhsmagang', $id)->first();
+        if (!$data['mhs_magang']) return Response::error(null, 'Mahasiswa not found', 404);
+
+        $data['data_nilai'] = NilaiPemblap::select('id_kompnilai', 'nilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
+        ->where('id_mhsmagang', $id)->get();
+
+        if (empty($data['data_nilai'])) {
+            $data['data_nilai'] = KomponenNilai::select('id_kompnilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
+            ->where('scored_by', 2)
+            ->where('id_jenismagang', $data['mhs_magang']->jenis_magang)
+            ->where('status', 1)->get();
+        }
+        
+        return view('kelola_mahasiswa/penilaian/index', $data);
+    }
+
+    public function storeNilai(Request $request, $id)
+    {
+        $request->validate([
+            'id.*' => 'required',
+            'nilai.*' => 'required'
+        ], [
+            'id.*.required' => 'Invalid.',
+            'nilai.*.required' => 'Nilai wajib diisi.'
+        ]);
+
+        try {
+            $user = auth()->user();
+            $pegawai = $user->pegawai_industri;
+
+            $mhs_magang = MhsMagang::where('id_peg_industri', $pegawai->id_peg_industri)->where('id_mhsmagang', $id)->first();
+            if (!$mhs_magang) return Response::error(null, 'Mahasiswa not found', 404);
+
+            $kompNilai = KomponenNilai::where('scored_by', 2)
+            ->where('id_jenismagang', $mhs_magang->jenis_magang)
+            ->where('status', 1)->get();
+
+            DB::beginTransaction();
+
+            $errors = [];
+            foreach ($request->id_kompnilai as $key => $value) {
+                $komp_nilai = $kompNilai->where('id_kompnilai', $value)->first();
+                if (!$komp_nilai) return Response::error(null, 'Invalid.');
+                
+                if ($komp_nilai->nilai_max < $request->nilai[$key]) {
+                    $errors['nilai.' . $key] = ['Nilai tidak boleh lebih dari ' . $komp_nilai->nilai_max];
+                }
+
+                NilaiPemblap::updateOrCreate([
+                    'id_mhsmagang' => $id,
+                    'id_kompnilai' => $value
+                ], [
+                    'nilai' => $request->nilai[$key],
+                    'oleh' => $user->name,
+                    'dateinputnilai' => now(),
+                    'aspek_penilaian' => $komp_nilai->aspek_penilaian,
+                    'nilai_max' => $komp_nilai->nilai_max,
+                    'deskripsi_penilaian' => $komp_nilai->deskripsi_penilaian
+                ]);
+            }
+
+            if (!empty($errors)) {
+                DB::rollBack();
+                return Response::errorValidate($errors, 'Gagal menyimpan nilai');
+            };
+
+            // dd('masuk');
+            DB::commit();
+            return Response::success(null, 'Berhasil menyimpan nilai.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     private function getMyPendaftarMagang($additional = null)
