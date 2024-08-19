@@ -64,6 +64,10 @@ class LogbookMahasiswaController extends LogbookController
             $data['list_month'][] = date('F', mktime(0, 0, 0, $i, 1));
         }
 
+        $data['total_days'] = CarbonPeriod::create($data['data']->startdate_magang, $data['data']->enddate_magang)->count();
+        $data['filled_days'] = self::filledDays($data['logbook_week']);
+        $data['percentage']= self::percentage($data['filled_days'], $data['total_days']);
+        
         return view('logbook.logbook', $data);
     }
 
@@ -98,8 +102,9 @@ class LogbookMahasiswaController extends LogbookController
         $logbook_daily = $this->getLogbookDaily($data['data']);
         $data['logbook_day'] = $logbook_daily['logbook_day'];
         $data['can_apply'] = $logbook_daily['can_apply'];
+        $data['percentage'] = $logbook_daily['percentage'];
 
-        $data['data']->label_status = $this->getStatusLogbookWeek($data['data']);;
+        $data['data']->label_status = $this->getStatusLogbookWeek($data['data']);
         
         return view('logbook.logbook_detail', $data);
     }
@@ -220,10 +225,12 @@ class LogbookMahasiswaController extends LogbookController
             
             $logbook_day = $logbook_daily['logbook_day'];
             $can_apply = $logbook_daily['can_apply'];
+            $percentage = $logbook_daily['percentage'];
 
             return Response::success([
                 'view' => view('logbook/components/card_daily', ['data' => $logbookWeek, 'logbook_day' => $logbook_day, 'can_apply' => $can_apply])->render(),
-                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render()
+                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render(),
+                'view_percentage' => view('logbook/components/percentage', ['percentage' => $percentage])->render()
             ], 'Logbook daily ditambahkan');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
@@ -252,10 +259,12 @@ class LogbookMahasiswaController extends LogbookController
 
             $logbook_day = $logbook_daily['logbook_day'];
             $can_apply = $logbook_daily['can_apply'];
+            $percentage = $logbook_daily['percentage'];
 
             return Response::success([
                 'view' => view('logbook/components/card_daily', ['data' => $logbookWeek, 'logbook_day' => $logbook_day, 'can_apply' => $can_apply])->render(),
-                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render()
+                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render(),
+                'view_percentage' => view('logbook/components/percentage', ['percentage' => $percentage])->render()
             ], 'Logbook daily diupdate');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
@@ -333,14 +342,32 @@ class LogbookMahasiswaController extends LogbookController
 
         if (in_array($logbookWeek->status, [LogbookWeeklyStatus::PENDING, LogbookWeeklyStatus::APPROVED])) $canApply = false;
 
-        return [
+        $data = [
             'logbook_day' => collect($logbook_day)->sortBy('date'),
             'can_apply' => $canApply
         ];
+
+        $totalDays = 7;
+        $filledDays = $data['logbook_day']->whereNotNull('activity')->count();
+        $data['percentage'] = self::percentage($filledDays, $totalDays);
+
+        return $data;
     }
 
     private function getStatusLogbookWeek(LogbookWeek $logbook) {
         $status = LogbookWeeklyStatus::getWithLabel($logbook->status);
         return '<span class="badge bg-label-' .$status['color']. '">' .$status['title']. '</span>';
+    }
+
+    private static function percentage($filledDays = 1, $totalDays = 100) {
+        return floor(($filledDays / $totalDays) * 100);
+    }
+
+    private static function filledDays($logbook_week) {
+        $filledDays = 0;
+        foreach ($logbook_week as $logbook) {
+            $filledDays += $logbook->logbookDay->whereNotNull('activity')->count();
+        }
+        return $filledDays;
     }
 }

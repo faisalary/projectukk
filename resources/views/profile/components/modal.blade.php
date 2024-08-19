@@ -158,7 +158,7 @@
                         </div>
                         <div class="mb-3 col-md-6 form-group">
                             <label for="alamatmhs" class="form-label">Kode Pos</label>
-                            <input class="form-control" type="text" id="kodepos" name="kodepos" placeholder="Postal Code" />
+                            <input class="form-control" type="text" id="kodepos" name="kodepos" placeholder="Postal Code" data-filter='[0-9]{0,10}' />
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-6 form-group">
@@ -238,6 +238,10 @@
                                         <button type="button" class="btn btn-outline-primary waves-effect" data-repeater-create="">
                                             <span class="align-middle">Tambah</span>
                                         </button>
+                                        <div class="form-group" id="hidden-sosmedmhs">
+                                            <input type="hidden" disabled name="sosmedmhs_"/>
+                                            <div class="invalid-feedback mt-2"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
