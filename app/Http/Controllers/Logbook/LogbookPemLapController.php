@@ -10,6 +10,7 @@ use App\Models\NilaiPemblap;
 use Illuminate\Http\Request;
 use App\Models\KomponenNilai;
 use App\Enums\LogbookWeeklyStatus;
+use App\Models\NilaiMutu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +24,10 @@ class LogbookPemLapController extends LogbookController
     public function getData()
     {
         $this->getMyPendaftarMagang(function ($query) {
-            return $query->select('mhs_magang.id_mhsmagang', 'mahasiswa.namamhs', 'program_studi.namaprodi', 'lowongan_magang.intern_position', 'lowongan_magang.durasimagang', 'jenis_magang.namajenis')
+            return $query->select(
+                'mhs_magang.id_mhsmagang', 'mahasiswa.namamhs', 'program_studi.namaprodi', 'lowongan_magang.intern_position', 
+                'lowongan_magang.durasimagang', 'jenis_magang.namajenis', 'mhs_magang.nilai_lap', 'mhs_magang.indeks_nilai_lap'
+            )
             ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
             ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
             ->leftJoin('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang');
@@ -32,8 +36,8 @@ class LogbookPemLapController extends LogbookController
         return datatables()->of($this->pendaftaran)
         ->addIndexColumn()
         ->editColumn('durasimagang', fn ($x) => implode(' dan ', json_decode($x->durasimagang)))
-        ->addColumn('nilai_akhir', fn ($x) => '85')
-        ->addColumn('indeks', fn ($x) => 'A')
+        ->addColumn('nilai_akhir', fn ($x) => '<div class="text-center">' . $x->nilai_lap . '</div>')
+        ->addColumn('indeks', fn ($x) => '<div class="text-center">' . $x->indeks_nilai_lap . '</div>')
         ->addColumn('status', function () {
             $result = '<div class="d-flex justify-content-center">';
             $result .= '<span class="badge bg-label-primary">Aktif</span>';
@@ -183,6 +187,7 @@ class LogbookPemLapController extends LogbookController
             DB::beginTransaction();
 
             $errors = [];
+            $total = 0;
             foreach ($request->id_kompnilai as $key => $value) {
                 $komp_nilai = $kompNilai->where('id_kompnilai', $value)->first();
                 if (!$komp_nilai) return Response::error(null, 'Invalid.');
@@ -202,6 +207,8 @@ class LogbookPemLapController extends LogbookController
                     'nilai_max' => $komp_nilai->nilai_max,
                     'deskripsi_penilaian' => $komp_nilai->deskripsi_penilaian
                 ]);
+
+                $total += $request->nilai[$key];
             }
 
             if (!empty($errors)) {
@@ -209,7 +216,14 @@ class LogbookPemLapController extends LogbookController
                 return Response::errorValidate($errors, 'Gagal menyimpan nilai');
             };
 
-            // dd('masuk');
+            $nilaiMutu = NilaiMutu::where('nilaimin', '<=', $total)
+            ->where('nilaimax', '>=', $total)->where('status', 1)
+            ->first();
+
+            $mhs_magang->indeks_nilai_lap = $nilaiMutu->nilaimutu;
+            $mhs_magang->nilai_lap = $total;
+            $mhs_magang->save();
+
             DB::commit();
             return Response::success(null, 'Berhasil menyimpan nilai.');
         } catch (\Exception $e) {
