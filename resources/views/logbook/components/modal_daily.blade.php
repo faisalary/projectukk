@@ -38,6 +38,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-danger">Jadikan Hari Libur</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

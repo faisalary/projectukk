@@ -118,6 +118,11 @@
         modal.modal('show');
     }
 
+    function changeLogbookType(e){
+        console.log(e);
+        console.log(e.data('date'));
+    }
+
     function afterCreateLogbookday(response) {
         let modal = $('#modalEditJadwal');
         $('#container-logbook-daily').html(response.data.view);
