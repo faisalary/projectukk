@@ -9,6 +9,7 @@
             <form class="default-form" action="" function-callback="afterApprovalLogbook">
                 @csrf
                 <input type="hidden" name="status">
+                <input type="hidden" name="week">
                 <div class="modal-body pt-3">
                     <div class="row">
                         <div class="col mb-0 form-group">

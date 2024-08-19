@@ -385,10 +385,6 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
     color: var(--bs-primary) !important;
 }
 
-.menu-toggle::after {
-    top: 40% !important;
-}
-
 .text-primary {
     color: var(--bs-primary) !important;
 }

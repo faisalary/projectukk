@@ -88,8 +88,6 @@
 <script>
     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
-
-        console.log($(this).attr('id'));
         
         if ($(this).attr('id') == 'btn-tertunda') {
             $('#approval-container').removeClass('d-none');
@@ -148,6 +146,9 @@
             type: 'GET',
             destroy: true,
             scrollX: true,
+            rowGroup: {
+                dataSrc: 'namaindustri'
+            },
             columns: column,
             columnDefs: columnDefs,
             select: select

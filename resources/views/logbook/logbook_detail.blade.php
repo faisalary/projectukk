@@ -167,7 +167,7 @@
                 btnBlock(e, false);
 
                 $('#container-left-card').html(response.data.view_left_card);
-                $('#btn-apply').attr('disabled', 'disabled');
+                $('#container-logbook-daily').html(response.data.view_detail);
 
                 showSweetAlert({
                     icon: 'success',
