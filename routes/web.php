@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/kemitraan.php';
     require __DIR__ . '/mahasiswa.php';
     require __DIR__ . '/dosen.php';
+    require __DIR__ . '/profile.php';
 
     Route::middleware('permission:dashboard.dashboard_admin')->get('dashboard/admin', function () {
         return view('dashboard.admin.index');
@@ -272,18 +273,6 @@ Route::prefix('/input/nilai/akademik')->group(function () {
 
 Route::get('/view/logbook', function () {
     return view('kelola_mahasiswa.kelola_mahasiswa_akademik.view_logbook');
-});
-
-Route::get('/kelola/mahasiswa/magang', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.index');
-});
-
-Route::get('/kelola/mahasiswa-magang/input', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.modal');
-});
-
-Route::get('/logbook/mahasiswa', function () {
-    return view('kelola_mahasiswa.kelola_mahasiswa_lapangan.logbook');
 });
 
 Route::get('/verifikasi/akun', function () {

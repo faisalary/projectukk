@@ -66,7 +66,47 @@
         event.stopPropagation();
 
         let text = 'Ingin menerima lowongan ini?';
-        if (e.attr('data-status') == 'rejected') text = 'Ingin menolak lowongan ini?';
+        let url = "{{ route('lamaran_saya.approval_penawaran', ['id' => ':id']) }}".replace(':id', e.attr('data-id'))
+
+        if (e.attr('data-status') == 'approved') {
+            let modal = $('#modalDiterima');
+
+            $.ajax({
+                url: `{{ route('lamaran_saya') }}?section=get_data_tgl_default`,
+                type: 'GET',
+                data: {
+                    section: 'get_data_tgl_default',
+                    data_id: e.attr('data-id')
+                },
+                success: function (response) {
+                    let startDate = modal.find('form').find('input[name="startdate"]');
+                    let endDate = modal.find('form').find('input[name="enddate"]');
+                    startDate.val(response.mulai_magang);
+                    endDate.val(response.selesai_magang);
+
+                    startDate.flatpickr({
+                        altInput: true,
+                        altFormat: 'j F Y',
+                        dateFormat: 'Y-m-d',
+                        defaultDate: response.mulai_magang
+                    });
+
+                    endDate.flatpickr({
+                        altInput: true,
+                        altFormat: 'j F Y',
+                        dateFormat: 'Y-m-d',
+                        defaultDate: response.selesai_magang
+                    });
+                }
+            });
+
+            modal.find('form').attr('action', url);
+            modal.find('form').prepend(`<input type="hidden" name="status" value="approved">`);
+            modal.modal('show');
+            return;
+        } else {
+            text = 'Ingin menolak lowongan ini?'
+        }
 
         sweetAlertConfirm({
             title: 'Apakah anda yakin?',
@@ -76,7 +116,7 @@
             cancelButtonText: 'Batal'
         }, function () {
             $.ajax({
-                url: "{{ route('lamaran_saya.approval_penawaran', ['id' => ':id']) }}".replace(':id', e.attr('data-id')),
+                url: url,
                 type: "POST",
                 data: { status: e.attr('data-status') },
                 headers: {
@@ -113,6 +153,16 @@
         });
     }
 
+    function afterAction(response) {
+        let modal = $('#modalDiterima');
+
+        loadData({component: 'penawaran'});
+        loadData({component: 'diterima'});
+        loadData({component: 'ditolak'});
+
+        modal.modal('hide');
+    }
+
     function loadData(data) {
         $.ajax({
             url: `{{ route('lamaran_saya') }}`,
@@ -127,5 +177,10 @@
             }
         });
     }
+
+    $('#modalDiterima').on('hide.bs.modal', function () {
+        $(this).find('form').find('input[name="status"]').remove();
+        $(this).find('form').attr('action', '');
+    });
 </script>
 @endsection

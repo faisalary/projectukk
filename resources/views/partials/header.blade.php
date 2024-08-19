@@ -1,3 +1,13 @@
+@php
+    if (auth()->user()->hasRole('Mahasiswa')){
+        $url = route('profile');
+    }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra')){
+        $url = route('profile_detail.informasi-pribadi');
+    }
+    else{
+        $url = route('profile_company');
+    }
+@endphp
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -246,7 +256,7 @@
                         <div class="dropdown-divider"></div>
                     </li> --}}
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);">
+                        <a class="dropdown-item" href="{{$url}}">
                             <i class="ti ti-user-check me-2 ti-sm"></i>
                             <span class="align-middle">My Profile</span>
                         </a>

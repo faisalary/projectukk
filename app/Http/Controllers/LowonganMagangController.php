@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use stdClass;
 use Exception;
+use App\Models\Sertif;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
 use App\Models\Education;
@@ -71,8 +72,6 @@ class LowonganMagangController extends Controller
 
         $lowongan_magang = $lowonganMagang->map(function ($item) use ($rejected) {
             $total_pelamar = $item->total_pelamar;
-
-            $item->total_pelamar = $total_pelamar->count();
             $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
             $countProsesSeleksi = 0;
@@ -94,6 +93,8 @@ class LowonganMagangController extends Controller
 
             $item->approved = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
             $item->rejected = $countRejected;
+
+            $item->total_pelamar = $item->screening + $item->proses_seleksi + $item->penawaran + $item->approved + $item->rejected;
 
             return $item;
         });
@@ -131,8 +132,9 @@ class LowonganMagangController extends Controller
             $data['pendaftar'] = $this->my_pendaftar_magang->first();
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
             $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
-            $data['skills'] = json_decode($data['pendaftar']->skills, true);
+            $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
             $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
+            $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([

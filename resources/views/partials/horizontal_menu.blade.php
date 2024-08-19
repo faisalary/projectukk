@@ -329,6 +329,7 @@
         <script src="{{ url('app-assets/vendor/libs/dropzone/dropzone.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
         <script src="{{ url('app-assets/js/monthpicker.js') }}"></script>
+        <script src="{{ url('app-assets/js/weekpicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/pickr/pickr.js') }}"></script>
         <script src="{{ url('app-assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
