@@ -20,11 +20,13 @@
         <h4>{{$lowongandetail->intern_position}}</h4>
     </div>
 
+    @if($persentase < 80)
     <div class="alert alert-warning alert-dismissible" role="alert">
         <i class="ti ti-alert-triangle ti-xs"></i>
-        <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Silahkan melakukan pengisian data dengan minimal kelengkapan 70% untuk melanjutkan proses melamar pekerjaan</span>
+        <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Silahkan melakukan pengisian data dengan minimal kelengkapan 80% untuk melanjutkan proses melamar pekerjaan</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    @endif
 
     <div class="card">
         <div class="card-body">
@@ -62,13 +64,13 @@
                 <div class="d-flex flex-column" style="flex: 0 0 auto;width: 20%;">
                     <div class="d-flex justify-content-between">
                         <h6 class="mb-1">Kelengkapan</h6>
-                        <h6 class="mb-1">20%</h6>
+                        <h6 class="mb-1">{{$persentase}}%</h6>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" style="width: {{$persentase}}%" role="progressbar" aria-valuenow="{{$persentase}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    @if(isset($persentase) && $persentase !== 100)
-                    <a href="{{url('mahasiswa/profile/pribadi', Auth::user()->nim)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
+                    @if(isset($persentase) && $persentase != 100)
+                    <a href="{{url('profile?lamaran='.$urlId)}}" class="btn btn-outline-success btn-label-success mt-2" type="button">Lengkapi Profile</a>
                     @endif
                 </div>
             </div>
