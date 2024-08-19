@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('mahasiswa', function (Blueprint $table) {
-            $table->integer('kota_id')->nullable()->after('alamatmhs');
+            if (!Schema::hasColumn('mahasiswa', 'kota_id')) {
+                $table->integer('kota_id')->nullable()->after('alamatmhs');
+            }
             $table->foreign('kota_id')->references('id')->on('reg_regencies');
             $table->string('kodepos')->nullable()->after('kota_id');
         });
