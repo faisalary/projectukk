@@ -21,19 +21,23 @@ class Mahasiswa extends Model
         'alamatmhs', 
         'emailmhs', 
         'nohpmhs', 
-        'kelas',
         'status',
         'eprt',
         'ipk',
         'tak',
         'sosmed',
         'url_sosmed',
-        'lok_magang',
         'skills',
         'bahasa',
         'tunggakan_bpp',
         'kode_dosen',
     ];
+
+    protected $hidden = [
+        'kelas',
+        'lok_magang',
+    ];
+    
     protected $keyType = 'string';
     protected $primaryKey = 'nim';
     public $timestamps = false;

@@ -13,18 +13,18 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="sec-title mt-4 mb-4">
+            @if (request()->has('lamaran') && request()->lamaran != null)
+                <a href="{{ 'apply-lowongan/lamar/'.request()->lamaran }}" class="btn btn-outline-primary mb-4">
+                    <i class="ti ti-arrow-left me-2 text-primary"></i>
+                    Kembali ke lamaran
+                </a>
+            @endif
             <div class="row">
                 <div class="col-6 pe-5">
                     <h4>Profil Saya</h4>
                 </div>
-                <div class="col-4 ps-5 pe-0">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="text-start">Kelengkapan Profil</h6>
-                        <h6 class="text-end" id="percentage_progress">0%</h6>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" id="progress_bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                <div class="col-4 ps-5 pe-0" id="percentage_container">
+                    @include('profile.components.percentage')
                 </div>
                 <!-- untuk unduh profile, diarahkan ke halaman unduh-profile/{nim} -->
                 <div class="col-2 text-end ps-0">
@@ -158,45 +158,67 @@
     $('#imgPreview2').attr('default-src', resourceGambar);
     $('#container-info-detail').html(response.view)
     $('#modalEditInformasi').modal('hide');
+    updatePercentage()
   }
 
   function afterActionInfoTambahan(response) {
     response = response.data
     $('#container-informasi-tambahan').html(response.view)
     $('#modalEditInformasiTambahan').modal('hide');
+    updatePercentage()
   }
 
   function afterActionEducation(response) {
     $('#modalTambahPendidikan').modal('hide');
     afterDeletePendidikan(response);
+    updatePercentage()
   }
 
   function afterDeletePendidikan(response) {
     $('#container-pendidikan').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionSkill(response) {
     $('#modalTambahKeahlian').modal('hide');
     $('#container-keahlian').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionExperience(response) {
     $('#modalTambahPengalaman').modal('hide');
     afterDeleteExperience(response);
+    updatePercentage()
   }
 
   function afterDeleteExperience(response) {
     $('#container-pengalaman').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionDokumen(response) {
     $('#modalTambahDokumen').modal('hide');
     afterDeleteDokumen(response);
+    updatePercentage()
   }
 
   function afterDeleteDokumen(response) {
     $('#container-dokumen-pendukung').html(response.data.view);
+    updatePercentage()
   }
+
+function updatePercentage() {
+   $.ajax({
+      url: `{{ route('profile.percentage') }}`,
+      method: 'GET',
+      success: function (response) {
+        $('#percentage_container').html(response.data.view);
+        $(function () {
+          $('[data-bs-toggle="tooltip"]').tooltip()
+        })
+      }
+    });
+}
 
   $('.modal').on('hide.bs.modal', function () {
     let modalTitle = $(this).find('.modal-title');

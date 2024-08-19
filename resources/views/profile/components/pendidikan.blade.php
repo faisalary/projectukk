@@ -6,7 +6,7 @@
                 <i class="ti ti-plus fw-bolder"></i>
             </a>
         </div>
-        <div class="card-body pb-0" id="container-pendidikan">
+        <div class="card-body" id="container-pendidikan">
             @include('profile/components/timeline_pendidikan')
         </div>
     </div>
