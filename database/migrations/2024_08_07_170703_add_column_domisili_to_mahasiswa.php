@@ -17,9 +17,11 @@ return new class extends Migration
             DB::unprepared($sql1);
         }
         Schema::table('mahasiswa', function (Blueprint $table) {
-            $table->integer('kota_id')->nullable()->after('alamatmhs');
+            if (!Schema::hasColumn('mahasiswa', 'kota_id')) {
+                $table->integer('kota_id')->nullable()->after('alamatmhs');
+                $table->string('kodepos')->nullable()->after('kota_id');
+            }
             $table->foreign('kota_id')->references('id')->on('reg_regencies');
-            $table->string('kodepos')->nullable()->after('kota_id');
         });
     }
 
