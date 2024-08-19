@@ -7,6 +7,7 @@
             </div>
             <form class="default-form" action="{{ route('logbook.create') }}" function-callback="afterCreateLogbook">
                 @csrf
+                <input type="hidden" name="current_month">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-2 form-group">
