@@ -83,14 +83,15 @@
                 <form class="default-form" action="{{ route('apply_lowongan.apply', ['id' => $lowongandetail->id_lowongan]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                         <h4>Portofolio</h4>
-                        <div class="mt-3">
+                        <div class="mt-3 form-group">
                             <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
                             @if(isset($persentase) && ($magang != null || $persentase < 70)) 
                                 <input class="form-control" type="file" id="formFile" name="porto" disabled>
                             @else
                                 <input class="form-control" type="file" id="formFile" name="porto">
                             @endif
-                            <p class="mt-1" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 5 MB</p>
+                            <p class="mt-1 mb-0" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 5 MB</p>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <h4 class="mt-4">Mengapa Saya Harus Diterima</h4>
                         <div class="mt-3">

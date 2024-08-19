@@ -93,7 +93,7 @@ class ApplyLowonganFakultasController extends Controller
     public function apply(Request $request, $id)
     {
         $request->validate([
-            'porto' => 'required|mimes:pdf|max:5000',
+            'porto' => 'mimes:pdf|max:5000',
             'reason' => 'required|string|max:1000'
         ], [
             'porto.mimes' => 'File harus berupa pdf',
