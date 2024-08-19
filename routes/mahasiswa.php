@@ -75,6 +75,8 @@ Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController
 
     Route::post('update-dokumen', 'updateDokumenPendukung')->name('.update_dokumen');
     Route::post('delete-dokumen/{id}', 'deleteDokumen')->name('.delete_dokumen');
+
+    Route::get('percentage', 'getPercentage')->name('.percentage');
 });
 
 // route untuk ke hlm. unduh cv

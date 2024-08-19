@@ -35,16 +35,8 @@
                 </div>
 
                 <div class="mt-3">
-                    <div class="card-body" style="width: 400px !important; ">
-                        <div class="text-light row small fw-semibold">
-                            <div class="col-6"> Kelengkapan Logbook</div>
-                            <div class="col-6 text-end">75%</div>
-                        </div>
-                        <div class="demo-vertical-spacing text-end">
-                            <div class="progress text-end">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+                    <div class="card-body" style="width: 400px !important;" id="container-percentage">
+                        @include('logbook.components.percentage')
                     </div>
                 </div>
             </div>
@@ -130,6 +122,7 @@
         let modal = $('#modalEditJadwal');
         $('#container-logbook-daily').html(response.data.view);
         $('#container-left-card').html(response.data.view_left_card);
+        $('#container-percentage').html(response.data.view_percentage);
         modal.modal('hide');
     }
 
