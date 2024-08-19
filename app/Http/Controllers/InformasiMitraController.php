@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sertif;
+use App\Models\Industri;
 use App\Helpers\Response;
 use App\Models\Education;
 use App\Models\Experience;
@@ -12,7 +14,6 @@ use App\Models\BahasaMahasiswa;
 use App\Models\PendaftaranMagang;
 use App\Enums\LowonganMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusEnum;
-use App\Models\Industri;
 
 class InformasiMitraController extends Controller
 {
@@ -95,7 +96,7 @@ class InformasiMitraController extends Controller
             $total_pelamar = $item->total_pelamar;
 
             $item->total_pelamar = $total_pelamar->count();
-            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI)->count();
+            $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
             $countProsesSeleksi = 0;
             $countPenawaran = 0;
@@ -146,8 +147,9 @@ class InformasiMitraController extends Controller
             $data['pendaftar'] = $my_pendaftar_magang->first();
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
             $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
-            $data['skills'] = json_decode($data['pendaftar']->skills, true);
+            $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
             $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
+            $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
@@ -160,7 +162,7 @@ class InformasiMitraController extends Controller
         $data['lowongan'] = LowonganMagang::with('total_pelamar')->where('id_lowongan', $id)->first();
 
         $data['tab'] = [
-            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI],
+            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM],
         ];
 
         $data['listStatus'] = [];
@@ -189,7 +191,7 @@ class InformasiMitraController extends Controller
     {
         $lowongan =  LowonganMagang::where('id_lowongan', $id)->first();
 
-        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+        $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
         for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
             $inArray .= ',' . array_search($i, $this->valid_step);
         }

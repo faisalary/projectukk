@@ -11,7 +11,9 @@
                 <p class="fw-normal mb-0">{{ Carbon\Carbon::parse($item->date)->format('d F Y') }}</p>
             </div>
         </div>
+        @if (in_array($data->status, [App\Enums\LogbookWeeklyStatus::NOT_YET_APPLIED, App\Enums\LogbookWeeklyStatus::REJECTED]))
         <a class='cursor-pointer text-warning' data-id="{{ $item->id_logbook_day }}" onclick="editLogbookDay($(this))"><i class='ti ti-edit ti-md'></i></a>
+        @endif
     </div>
     <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
     <div class="text-block">

@@ -68,15 +68,12 @@
     </div>
 
     <div class="my-4 d-flex justify-content-between">
-        <h4>Logbook Mahasiswa - Januari</h4>
+        <h4>Logbook Mahasiswa - <span id="selected_month">{{ Carbon\Carbon::now()->format('F') }}</span></h4>
         <div class="col-2">
-            <select class="select2 form-select" data-placeholder="Silahkan Pilih Bulan">
-                <option value="">Silahkan Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
+            <select class="select2 form-select" onchange="filter();" id="select_month" data-placeholder="Silahkan Pilih Bulan">
+                @foreach ($list_month as $key => $item)
+                    <option value="{{ $key }}" {{ ($key + 1) == Carbon\Carbon::now()->format('m') ? 'selected' : '' }}>{{ $item }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -96,6 +93,25 @@
 
 @section('page_script')
 <script>
+    var filterData;
+    function filter() {
+        filterData = $('#select_month').val();
+        $('#selected_month').html($('#select_month').find(':selected').text());
+
+        loadData();
+    }
+
+    function loadData() {
+        $.ajax({
+            url: `{{ route('logbook') }}`,
+            type: 'GET',
+            data: { section: 'get_logbook_week', current_month: filterData },
+            success: function (response) {
+                $('#container-logbook-week').html(response.data.view_card_weekly);
+            },
+        })
+    }
+
     function createLogbook() {
         let modal = $('#modal_logbook');
 
@@ -134,6 +150,10 @@
             onClose: funcDate
         });
 
+        let current_month = $('#select_month').val();
+        $('#selected_month').html($('#select_month').find(':selected').text());
+
+        modal.find('input[name="current_month"]').val(current_month);
         modal.modal('show');
     };
 

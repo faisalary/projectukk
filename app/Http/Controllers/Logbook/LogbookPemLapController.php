@@ -92,6 +92,7 @@ class LogbookPemLapController extends LogbookController
         $request->validate([
             'status' => 'required|in:approved,rejected',
             'rejected_reason' => 'required_if:status,rejected',
+            'week' => 'required',
         ]);
 
         try {
@@ -124,6 +125,7 @@ class LogbookPemLapController extends LogbookController
                 'view_logbook' => view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', [
                     'logbook_week' => $logbookWeek,
                     'data' => $logbookDaily,
+                    'week' => $request->week
                 ])->render()
             ], 'Berhasil menyetujui logbook');
         } catch (\Exception $e) {
