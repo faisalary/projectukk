@@ -6,7 +6,7 @@
 @section('content')
 <div class="row mb-2">
     <div class="">
-        <a href="/kelola/mahasiswa/magang" type="button" class="btn btn-outline-primary mb-3 waves-effect">
+        <a href="{{ route('kelola_magang_pemb_lapangan') }}" type="button" class="btn btn-outline-primary mb-3 waves-effect">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
@@ -99,6 +99,7 @@
             let form = $('.default-form');
             form.find('#btn-submit-form').attr('type', 'submit');
             form.submit();
+            form.find('#btn-submit-form').attr('type', 'button');
         });
     });
 

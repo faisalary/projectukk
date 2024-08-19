@@ -162,10 +162,11 @@ class LogbookPemLapController extends LogbookController
     {
         $request->validate([
             'id.*' => 'required',
-            'nilai.*' => 'required'
+            'nilai.*' => 'required|integer'
         ], [
             'id.*.required' => 'Invalid.',
-            'nilai.*.required' => 'Nilai wajib diisi.'
+            'nilai.*.required' => 'Nilai wajib diisi.',
+            'nilai.*.integer' => 'Nilai harus berupa bilangan bulat.'
         ]);
 
         try {
