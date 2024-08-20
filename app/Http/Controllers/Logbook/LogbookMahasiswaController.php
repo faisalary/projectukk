@@ -105,6 +105,7 @@ class LogbookMahasiswaController extends LogbookController
         $data['percentage'] = $logbook_daily['percentage'];
 
         $data['data']->label_status = $this->getStatusLogbookWeek($data['data']);
+        $data['data']['emoticon'] = $data['data']->logbookDay->where('activity', '!=', 'Libur');
         
         return view('logbook.logbook_detail', $data);
     }
@@ -220,6 +221,7 @@ class LogbookMahasiswaController extends LogbookController
 
             $logbookWeek->label_status = $this->getStatusLogbookWeek($logbookWeek);
             $logbookWeek = $logbookWeek->load('logbookDay');
+            $logbookWeek['emoticon'] = $logbookWeek->logbookDay->where('activity', '!=', 'Libur');
 
             $logbook_daily = $this->getLogbookDaily($logbookWeek);
             
@@ -232,6 +234,56 @@ class LogbookMahasiswaController extends LogbookController
                 'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render(),
                 'view_percentage' => view('logbook/components/percentage', ['percentage' => $percentage])->render()
             ], 'Logbook daily ditambahkan');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function changeLogbookType(Request $request, $id_logbook_week)
+    {
+        try {
+            $user = auth()->user();
+
+            $logbookWeek = LogbookWeek::where('id_logbook_week', $id_logbook_week)->first();
+
+            $date = Carbon::parse($request->date);
+            if (!$logbookWeek) return Response::error(null, 'Logbook Week Not Found');
+            if ($date->lt($logbookWeek->start_date) || $date->gt($logbookWeek->end_date)) return Response::error(null, 'Tidak valid');
+            // if (!in_array($request->emoticon, [1, 2, 3, 4, 5])) return Response::error(null, 'Pilih mood anda pada hari ini.');
+
+            if(LogbookDay::where('id_logbook_week', $id_logbook_week)->where('date', $date->format('Y-m-d'))->count() > 0) {
+                if($request->type == 'libur') {
+                    LogbookDay::where('id_logbook_week', $id_logbook_week)->where('date', $date->format('Y-m-d'))->update([
+                        'emoticon' => '4',
+                        'activity' => 'Libur'
+                    ]);
+                } else {
+                    LogbookDay::where('id_logbook_week', $id_logbook_week)->where('date', $date->format('Y-m-d'))->delete();
+                }
+            }else{
+                LogbookDay::create([
+                    'id_logbook_week' => $id_logbook_week,
+                    'date' => $date->format('Y-m-d'),
+                    'emoticon' => '4',
+                    'activity' => 'Libur'
+                ]);
+            }
+
+            $logbookWeek->label_status = $this->getStatusLogbookWeek($logbookWeek);
+            $logbookWeek = $logbookWeek->load('logbookDay');
+            $logbookWeek['emoticon'] = $logbookWeek->logbookDay->where('activity', '!=', 'Libur');
+            
+            $logbook_daily = $this->getLogbookDaily($logbookWeek);
+            
+            $logbook_day = $logbook_daily['logbook_day'];
+            $can_apply = $logbook_daily['can_apply'];
+            $percentage = $logbook_daily['percentage'];
+
+            return Response::success([
+                'view' => view('logbook/components/card_daily', ['data' => $logbookWeek, 'logbook_day' => $logbook_day, 'can_apply' => $can_apply])->render(),
+                'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeek])->render(),
+                'view_percentage' => view('logbook/components/percentage', ['percentage' => $percentage])->render()
+            ], 'Logbook berhasil diubah');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
@@ -255,6 +307,8 @@ class LogbookMahasiswaController extends LogbookController
 
             $logbookWeek = $logbookDaily->logbookWeek;
             $logbookWeek->label_status = $this->getStatusLogbookWeek($logbookWeek);
+            $logbookWeek['emoticon'] = $logbookWeek->logbookDay->where('activity', '!=', 'Libur');
+
             $logbook_daily = $this->getLogbookDaily($logbookWeek->load('logbookDay'));
 
             $logbook_day = $logbook_daily['logbook_day'];
@@ -295,6 +349,7 @@ class LogbookMahasiswaController extends LogbookController
             $logbookWeekly->save();
 
             $logbookWeekly->label_status = $this->getStatusLogbookWeek($logbookWeekly);
+            $logbookWeekly['emoticon'] = $logbookWeekly->logbookDay->where('activity', '!=', 'Libur');
             return Response::success([
                 'view_left_card' => view('logbook/components/left_card_detail', ['data' => $logbookWeekly])->render(),
                 'view_detail' => view('logbook.components.card_daily', ['data' => $logbookWeekly, 'logbook_day' => $logbookWeekly->logbookDay, 'can_apply' => false])->render()

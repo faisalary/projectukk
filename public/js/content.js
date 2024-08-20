@@ -220,14 +220,26 @@ function showSweetAlert(config) {
     text = config.text ?? 'The action was executed successfully.';
     icon = config.icon ?? 'success';
     showConfirmButton = config.showConfirmButton ?? true
+    confirmButtonText = config.confirmButtonText ?? 'OK';
+    showCancelButton = config.showCancelButton ?? false
+    cancelButtonText = config.cancelButtonText ?? 'Batal';
+
+    customClass = {
+        confirmButton: 'btn btn-primary',
+    }
+
+    if(showCancelButton) {
+        customClass['cancelButton'] = 'btn btn-outline-danger';
+    }
 
     return Swal.fire({
         html: '<h3>' + title + '</h3><p>' + text + '</p>',
         icon: icon,
         showConfirmButton: showConfirmButton,
-        customClass: {
-            confirmButton: 'btn btn-primary'
-        }
+        confirmButtonText: confirmButtonText,
+        showCancelButton: showCancelButton,
+        cancelButtonText: cancelButtonText,
+        customClass: customClass,
     });
 }
 

@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-danger">Jadikan Hari Libur</button>
+                    <button type="button" class="btn btn-outline-danger" id="jadikan-libur" onclick="changeLogbookLibur($(this))">Jadikan Hari Libur</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
