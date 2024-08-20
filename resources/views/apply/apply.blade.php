@@ -24,9 +24,11 @@
     <div class="alert alert-warning alert-dismissible" role="alert">
         <i class="ti ti-alert-triangle ti-xs"></i>
         <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Silahkan melakukan pengisian data dengan minimal kelengkapan 80% untuk melanjutkan proses melamar pekerjaan</span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> --}}
     </div>
     @endif
+
+    <div id="sudah-daftar-container"></div>
 
     <div class="card">
         <div class="card-body">
@@ -77,10 +79,11 @@
         </div>
     </div>
 
-    <div class="card mt-5">
+    @if($sudahDaftar == false)
+    <div class="card mt-5" id="card-apply">
         <div class="card-body">
             <div>
-                <form class="default-form" action="{{ route('apply_lowongan.apply', ['id' => $lowongandetail->id_lowongan]) }}" method="POST" enctype="multipart/form-data">
+                <form class="default-form" action="{{ route('apply_lowongan.apply', ['id' => $lowongandetail->id_lowongan]) }}" method="POST" enctype="multipart/form-data" function-callback="afterApplyLowongan">
                     @csrf
                         <h4>Portofolio</h4>
                         <div class="mt-3 form-group">
@@ -107,6 +110,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="card mt-5">
         <div class="card-body">
@@ -171,10 +175,27 @@
         button.classList.toggle('highlight');
     }
 
+    let sudahDaftar = `
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <i class="ti ti-alert-triangle ti-xs"></i>
+            <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mengajukan lamaran untuk pekerjaan ini</span>
+        </div>
+    `;
+
+    @if($sudahDaftar == true)
+        document.getElementById("sudah-daftar-container").innerHTML = sudahDaftar;
+    @endif
+
+
     //  Button Back
     document.getElementById("back").addEventListener("click", () => {
         history.back();
     });
+
+    function afterApplyLowongan(){
+        $('#card-apply').remove();
+        $('#sudah-daftar-container').html(sudahDaftar);
+    }
 </script>
 <script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
