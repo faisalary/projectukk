@@ -56,12 +56,16 @@ class PermissionSeeder extends Seeder
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
             'jadwal_seleksi_mitra.view',
+            // profile perusahaan
             'profile_perusahaan.view',
+            'profile_perusahaan.update',
+            //-------------------
             'assign_pembimbing.view',
         ];
 
         $permission['Pembimbing Lapangan'] = [
-            'kelola_magang_pemb_lapangan.view'
+            'kelola_magang_pemb_lapangan.view',
+            'profile_perusahaan.view'
         ];
         $permission['Mahasiswa'] = [];
         $permission['Dosen'] = [
