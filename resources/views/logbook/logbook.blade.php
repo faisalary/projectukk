@@ -126,8 +126,9 @@
                 let end_date = new Date(start_date);
                 end_date.setDate(start_date.getDate() + 6);
     
+                if (start_date < startDate) start_date = startDate;
                 if (end_date > endDate) end_date = endDate;
-    
+                
                 const formattedDateRange = `${formatDate(start_date)} to ${formatDate(end_date)}`;
                 instance.input.value = formattedDateRange;
             }

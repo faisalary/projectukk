@@ -25,5 +25,14 @@ class LogbookController extends Controller
         return $this;
     }
 
+    protected function getListMonth($format = null)
+    {
+        $this->list_month = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $this->list_month[] = ($format == null) ? date('F', mktime(0, 0, 0, $i, 1)) : date($format, mktime(0, 0, 0, $i, 1));
+        }
+        return $this;
+    }
+
 
 }

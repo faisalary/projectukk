@@ -37,7 +37,7 @@ class ApprovalMahasiswaController extends Controller
         ->where('mahasiswa.kode_dosen', $dosen->kode_dosen);
 
         if ($request->section == 'approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::PENDING);
-        $array_status = [];
+        
         if ($request->section == 'sudah-approval') {
             $array_status = array_diff(PendaftaranMagangStatusEnum::getConstants(), ['pending']);
             $data = $data->whereIn('pendaftaran_magang.current_step', $array_status);
@@ -55,7 +55,7 @@ class ApprovalMahasiswaController extends Controller
             return $result;
         })
         ->editColumn('tanggaldaftar', fn ($data) => '<div class="text-center">' . Carbon::parse($data->tanggaldaftar)->format('d M Y') . '</div>')
-        ->editColumn('current_step', function ($data) use ($array_status) {
+        ->editColumn('current_step', function ($data) {
             $result = '<div class="text-center">';
 
             $getStatusLabel = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
@@ -84,7 +84,7 @@ class ApprovalMahasiswaController extends Controller
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
             'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
             'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas',
-            'pendaftaran_magang.reason_aplicant'
+            'pendaftaran_magang.reason_aplicant', 'pendaftaran_magang.portofolio'
         )
         ->join('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
         ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
