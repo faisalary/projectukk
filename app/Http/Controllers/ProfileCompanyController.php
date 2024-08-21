@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileCompanyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:profile_perusahaan.view', ['only' => ['index']]);
+        $this->middleware('permission:profile_perusahaan.update', ['only' => ['edit', 'update']]);
+    }
     /**
      * Display a listing of the resource.
      */
