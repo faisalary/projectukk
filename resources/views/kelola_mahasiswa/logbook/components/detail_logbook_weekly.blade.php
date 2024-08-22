@@ -14,9 +14,15 @@
     <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; margin-bottom: 30px;">
         <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center">
+                @if ($item->activity == 'Libur')
+                <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #070A0F80; width: 70px; height: 70px;">
+                    <img src="{{ asset('assets/images/smile.png') }}" alt="" style="filter: grayscale(80%) opacity(50%);">
+                </div>
+                @else
                 <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
                     <img src="{{ App\Enums\LogbookDailyEmot::getWithEmot($item->emoticon)['image'] }}" alt="">
                 </div>
+                @endif
                 <div class="ms-3">
                     <h6 class="mb-0">{{ Carbon\Carbon::parse($item->date)->format('l') }}</h6>
                     <p class="fw-normal mb-0">{{ Carbon\Carbon::parse($item->date)->format('d F Y') }}</p>
