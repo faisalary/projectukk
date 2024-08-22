@@ -35,7 +35,7 @@ class ProfileCompanyController extends Controller
     public function edit(string $id)
     {
         $industri = Industri::where('id_industri', $id)->first();
-        $industri->image = ($industri->image != null) ? asset('storage/' . $industri->image) : asset('app-assets/img/avatars/user.png');
+        $industri->image = ($industri->image != null) ? asset('storage/' . $industri->image) : asset('app-assets/img/avatars/building.png');
         return $industri;
     }
 
