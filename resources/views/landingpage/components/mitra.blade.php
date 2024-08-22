@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body text-start">
                     <div>
-                        <img class="img-thumbnail" src="{{ $item->image }}" style="max-height: 80px;" alt="admin.upload">
+                        <img class="img-thumbnail mb-3" src="{{ $item->image }}" style="max-height: 80px;" alt="admin.upload">
                         <h4 style="text-align: left !important; -webkit-line-clamp: 1;text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; word-break: break-word; margin: top 100px;">
                             {{ $item->namaindustri }}
                         </h4>
