@@ -64,15 +64,18 @@
 @section('page_script')
 <script>
     function getDataSelect(e) {
-        if (e.val() == null) return;
         let idElement = e.attr('data-after');
         let modalId = e.closest('.modals').attr('id');
+
+        $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
+        $(`#${modalId} #${idElement}`).val(null).trigger('change');
+
+        if (e.val() == null) return;
+        
         $.ajax({
             url: `{{ route('mahasiswa') }}?type=${idElement}&selected=` + e.val(),
             type: 'GET',
             success: function (response) {
-                $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
-                $(`#${modalId} #${idElement}`).val(null).trigger('change');
                 $.each(response.data, function () {
                     $(`#${modalId} #${idElement}`).append(new Option(this.text, this.id));
                 });
