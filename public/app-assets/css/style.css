@@ -64,8 +64,8 @@ border-radius: 5px;
 .btn-primary.disabled,
 .btn-primary:disabled {
 	color: #fff !important;
-	background-color: #008cff !important;
-	border-color: #008cff !important;
+	background-color: #66c089 !important;
+	border-color: #66c089 !important;
 	box-shadow: none !important;
 }
 
@@ -383,10 +383,6 @@ button.btn.dropdown-toggle.bs-placeholder.btn-default {
 .text-success {
     --bs-text-opacity: 1;
     color: var(--bs-primary) !important;
-}
-
-.menu-toggle::after {
-    top: 40% !important;
 }
 
 .text-primary {

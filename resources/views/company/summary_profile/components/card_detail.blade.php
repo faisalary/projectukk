@@ -6,7 +6,7 @@
                     @if ($industri->image)
                         <img src="{{ asset('storage/' . $industri->image) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
                     @else
-                        <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
+                        <img src="{{ asset('app-assets/img/avatars/building.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/building.png') }}">
                     @endif
                 </div>
 

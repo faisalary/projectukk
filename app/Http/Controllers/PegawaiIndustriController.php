@@ -86,7 +86,8 @@ class PegawaiIndustriController extends Controller
         $user = auth()->user();
         $pegawai_industri = $user->pegawai_industri;
 
-        $pegawai_industri = PegawaiIndustri::with('user')->where('id_industri', $pegawai_industri->id_peg_industri)->orderBy('namapeg', 'asc')->get();
+        $pegawai_industri = PegawaiIndustri::with('user')->where('id_industri', $pegawai_industri->id_industri)->orderBy('namapeg', 'asc')->get();
+
         return DataTables::of($pegawai_industri)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {

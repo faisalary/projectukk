@@ -63,7 +63,7 @@ class HomeController extends Controller
                 $item->created_at = Carbon::parse($item->created_at)->diffForHumans(Carbon::now());
                 $item->durasimagang = implode(' dan ', json_decode($item->durasimagang));
                 $item->lokasi = implode(', ', json_decode($item->lokasi));
-                $item->image = url('storage/' . $item->image);
+                $item->image = ($item->image) ? url('storage/' . $item->image) : asset('app-assets/img/avatars/building.png');
                 return $item;
             });
 
@@ -71,7 +71,7 @@ class HomeController extends Controller
         } else if ('container-mitra') {
             $mitra = Industri::where('statusapprove', 1)->limit(6)->get()->transform(function ( $item, $key) {
 
-                $item->image = url('storage/' . $item->image);
+                $item->image = ($item->image) ? url('storage/' . $item->image) : asset('app-assets/img/avatars/building.png');
 
                 return $item;
             });

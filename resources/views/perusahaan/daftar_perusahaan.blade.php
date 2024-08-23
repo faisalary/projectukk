@@ -1,7 +1,7 @@
 @extends('partials.horizontal_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 <style>
     .hidden {
         display: none;
@@ -84,7 +84,6 @@
 @endsection
 
 @section('content')
-
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
     <div class="d-flex justify-content-center mt-5 mb-5 mx-5">
         <div class="col-5">
@@ -96,14 +95,14 @@
         <div class="col-5 mx-2">
             <div class="input-group input-group-merge bg-white border">
                 <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
-                <select name="location" id="location" class="select2 form-select" data-placeholder="Lokasi Perusahaan">
-                    <option value disabled selected> Lokasi Perusahaan </option>
-                    <option value="Bandung">Bandung</option>
-                    <option value="Jakarta">Jakarta</option>
-                    <option value="Medan">Medan</option>
-                    <option value="Surabaya">Surabaya</option>
-                    <option value="Yogyakarta">Yogyakarta</option>
-                </select>
+                <div class="position-relative">
+                    <select name="location" id="location" class="form-select" data-placeholder="Lokasi Perusahaan">
+                        <option value disabled selected> Lokasi Perusahaan </option>
+                        @foreach ($regencies as $item)
+                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
         <div class="col-auto">
@@ -135,7 +134,13 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
-        // loadData();
+        $('#location').select2({
+            allowClear: true,
+            placeholder: $('#location').attr('data-placeholder'),
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $('#location').parent(),
+        });
     });
 
     let dataFilter = {};
@@ -171,24 +176,5 @@
             }
         });
     }
-
-    // $('.page-item').on('click', function() {
-    //     let active = $(this);
-    //     let page = active.attr('page');
-        
-    //     console.log(page);
-    //     if(page != 'prev' && page != 'next'){
-    //         active.addClass('active');
-    //         active.siblings().removeClass('active');
-
-    //         showPage(page);
-    //     }
-    // });
-
-    // function showPage(pageNumber) {
-    //     $('.page-content').hide(); 
-    //     $('.page-' + pageNumber).show(); 
-    // }
-
 </script>
 @endsection

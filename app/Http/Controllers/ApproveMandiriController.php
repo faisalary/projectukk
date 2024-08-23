@@ -54,7 +54,10 @@ class ApproveMandiriController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
         ]);
 
         return datatables()->of($pengajuan->get())
@@ -103,30 +106,35 @@ class ApproveMandiriController extends Controller
             ->make(true);
     }
     
-    public function approved(Request $request, $id)
+    public function approved(Request $request)
     {
         $request->validate([
+            'data_id' => 'required|array||exists:pendaftaran_magang,id_pendaftaran',
             'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
         ], [
+            'data_id.required' => 'Data harus dipilih',
+            'data_id.array' => 'Data harus berupa array',
+            'data_id.exists' => 'Data tidak valid',
             'file.required' => 'Surat Pengantar Magang harus diisi',
             'file.mimes' => 'Surat Pengantar Magang harus berupa PDF, JPG, JPEG, PNG',
-            'file.max' => 'Surat Pengantar Magang maksimal 2 MB',
+            'file.max' => 'Surat Pengantar Magang maksimal 2 MB'
         ]);
 
         try {
-            $data = PendaftaranMagang::where('id_pendaftaran', $id)->first();
-            if ($data->current_step != PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
-                return Response::error(null, 'Invalid.', 403);
-            }
+            $data = PendaftaranMagang::whereIn('id_pendaftaran', $request->data_id)
+                ->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI );
+
+            if ($data->count() <= 0) return Response::error(null, 'Invalid.');
 
             $file = null;
             if ($request->hasFile('file')) {
                 $file = Storage::put('dokumen_spm', $request->file('file'));
             }
 
-            $data->dokumen_spm = $file;
-            $data->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
-            $data->save();
+            $data->update([
+                'dokumen_spm' => $file,
+                'current_step' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM
+            ]);
 
             return Response::success(null, 'Berhasil mengirim Surat Pengantar Magang.');
         } catch (Exception $e) {

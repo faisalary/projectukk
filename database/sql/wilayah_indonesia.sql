@@ -1,29 +1,12 @@
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
-DROP TABLE IF EXISTS `reg_countries`;
-CREATE TABLE `reg_countries` (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- delete all from reg_regencies
+DELETE FROM `reg_regencies`;
+-- delete all from reg_provinces
+DELETE FROM `reg_provinces`;
+-- delete all from reg_countries
+DELETE FROM `reg_countries`;
 
 INSERT INTO `reg_countries` VALUES 
 (1, 'Indonesia');
-
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
-DROP TABLE IF EXISTS `reg_provinces`;
-CREATE TABLE `reg_provinces` (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  country_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  CONSTRAINT fk_country FOREIGN KEY (country_id) REFERENCES reg_countries(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `reg_provinces` VALUES
 (1, 1, 'Aceh'),
@@ -63,19 +46,6 @@ INSERT INTO `reg_provinces` VALUES
 (35, 1, 'Papua Selatan'),
 (36, 1, 'Papua Tengah'),
 (37, 1, 'Papua Pegunungan');
-
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
-DROP TABLE IF EXISTS `reg_regencies`;
-CREATE TABLE `reg_regencies` (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  province_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  CONSTRAINT fk_province FOREIGN KEY (province_id) REFERENCES reg_provinces(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `reg_regencies` VALUES
 (1, 1, 'Kab. Aceh Selatan'),

@@ -335,16 +335,28 @@ class MenuHelper
                 'permission' => 'jadwal_seleksi_mitra.view'
             ],
             [
-                'name' => 'Profile Perusahaan',
-                'route' => 'profile_company',
-                'icon' => 'ti-building',
-                'permission' => 'profile_perusahaan.view'
-            ],
-            [
                 'name' => 'Assign Pembimbing',
                 'route' => 'assign_pembimbing',
                 'icon' => 'ti-clipboard-list',
                 'permission' => 'assign_pembimbing.view'
+            ],
+            //pemb lapangan
+            [
+                'type' => 'menu-header',
+                'name' => 'Pembimbing Lapangan',
+                'role' => 'Pembimbing Lapangan'
+            ],
+            [
+                'name' => 'Kelola Mahasiswa',
+                'route' => 'kelola_magang_pemb_lapangan',
+                'icon' => 'ti-users',
+                'permission' => 'kelola_magang_pemb_lapangan.view'
+            ],
+            [
+                'name' => 'Profile Perusahaan',
+                'route' => 'profile_company',
+                'icon' => 'ti-building',
+                'permission' => 'profile_perusahaan.view'
             ],
             //dosen
             [

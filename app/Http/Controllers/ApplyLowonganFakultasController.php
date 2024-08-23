@@ -70,7 +70,15 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $nim = Auth::user()->nim;
+        $registered = PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first();
+        if($registered) {
+            $sudahDaftar = true;
+        }else{
+            $sudahDaftar = false;
+        }
+
+        $auth = Auth::user();
+        $nim = $auth->nim;
 
         $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
@@ -81,14 +89,22 @@ class ApplyLowonganFakultasController extends Controller
 
         $urlBack = route('apply_lowongan');
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
+        $urlId = $id;
+
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
+        if(PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first()) {
+            return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
+        }
+
         $request->validate([
-            'porto' => 'required|mimes:pdf|max:5000',
+            'porto' => 'mimes:pdf|max:5000',
             'reason' => 'required|string|max:1000'
         ], [
             'porto.mimes' => 'File harus berupa pdf',

@@ -1,22 +1,11 @@
-@extends('partials_admin.template')
+@extends('partials.vertical_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/tagify/tagify.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css" />
-<link rel="stylesheet" href="../../app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css" />
-<style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        color: #4EA971;
-    }
-
-    .light-style .tagify__tag .tagify__tag-text {
-        color: #4EA971 !important;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
+<link rel="stylesheet" href="{{ asset('app-assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
 @endsection
 
-@section('main')
+@section('content')
 <div class="row">
     <div class="col-md-9 col-12">
         <h4 class="fw-bold"><span class="text-muted fw-light">Kelola Mahasiswa</h4>
@@ -44,8 +33,8 @@
                         <th style="min-width:150px;">JENIS MAGANG</th>
                         <th style="min-width:100px;">NILAI AKHIR</th>
                         <th style="min-width:100px;">INDEKS</th>
-                        <th style="min-width:150px;">STATUS MAGANG</th>
-                        <th style="min-width:130px;">AKSI</th>
+                        <th style="min-width:150px;text-align:center;">STATUS MAGANG</th>
+                        <th style="min-width:130px;text-align:center;">AKSI</th>
                     </tr>
                 </thead>
             </table>
@@ -141,8 +130,6 @@
 @endsection
 
 @section('page_script')
-<script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-<script src="../../app-assets/js/forms-extras.js"></script>
 <script>
     var jsonData = [{
             "nomor": "1",
@@ -171,89 +158,35 @@
     ];
 
     var table = $('#table-lapangan').DataTable({
-        "data": jsonData,
+        ajax: `{{ route('kelola_magang_pemb_lapangan.get_data') }}`,
         scrollX: true,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "nama"
-            },
-            {
-                data: "program_studi"
-            },
-            {
-                data: "posisi_magang"
-            },
-            {
-                data: "durasi_magang"
-            },
-            {
-                data: "jenis_magang"
-            },
-            {
-                data: "nilai_akhir"
-            },
-            {
-                data: "indeks"
-            },
-            {
-                data: "status"
-            },
-            {
-                data: "aksi"
-            }
+        columns: [
+            { data: "DT_RowIndex" },
+            { data: "namamhs" },
+            { data: "namaprodi" },
+            { data: "intern_position" },
+            { data: "durasimagang" },
+            { data: "namajenis" },
+            { data: "nilai_akhir" },
+            { data: "indeks" },
+            { data: "status" },
+            { data: "aksi" }
         ],
-
-        "columnDefs": [{
-                "width": "50px",
-                "targets": 0
-            },
-            {
-                "width": "150px",
-                "targets": 1
-            },
-            {
-                "width": "150px",
-                "targets": 2
-            },
-            {
-                "width": "150px",
-                "targets": 3
-            },
-            {
-                "width": "150px",
-                "targets": 4
-            },
-            {
-                "width": "150px",
-                "targets": 5
-            },
-            {
-                "width": "100px",
-                "targets": 6
-            },
-            {
-                "width": "100px",
-                "targets": 7
-            },
-            {
-                "width": "150px",
-                "targets": 8
-            },
-            {
-                "width": "130px",
-                "targets": 9
-            }
+        columnDefs: [
+            { "width": "50px", "targets": 0 },
+            { "width": "150px", "targets": 1 },
+            { "width": "150px", "targets": 2 },
+            { "width": "150px", "targets": 3 },
+            { "width": "150px", "targets": 4 },
+            { "width": "150px", "targets": 5 },
+            { "width": "100px", "targets": 6 },
+            { "width": "100px", "targets": 7 },
+            { "width": "150px", "targets": 8 },
+            { "width": "130px", "targets": 9 }
         ],
-        fixedColumns: {
-            left: 2,
-            right: 1
-        },
+        fixedColumns: { left: 2, right: 1 },
     });
 </script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-<script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
-<script src="../../app-assets/js/forms-tagify.js"></script>
+<script src="{{ asset('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script src="{{ asset('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
 @endsection

@@ -32,7 +32,7 @@
 
 
 <!-- Modal Diterima-->
-<div class="modal fade" id="modalDiterima" tabindex="-1" aria-hidden="true">
+{{-- <div class="modal fade" id="modalDiterima" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -87,6 +87,39 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
+
+<!-- Modal Diterima-->
+<div class="modal fade" id="modalDiterima" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi Penerimaan Magang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="default-form" action="" function-callback="afterAction">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-2 mb-3">
+                        <div class="col mb-0 form-group">
+                            <label for="startdate" class="form-label">Tanggal Mulai<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date cursor-pointer" name="startdate" id="startdate" placeholder="YYYY-MM-DD" readonly="readonly">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px"></div>
+                        <div class="col mb-0 form-group">
+                            <label for="enddate" class="form-label">Tanggal Akhir<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control flatpickr-date cursor-pointer" name="enddate" id="enddate" placeholder="YYYY-MM-DD" readonly="readonly">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

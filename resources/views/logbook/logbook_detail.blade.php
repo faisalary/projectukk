@@ -1,53 +1,42 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<link rel="stylesheet" href="{{ url('../../app-assets/css/yearpicker.css') }}" />
-<style>
-    .btn-success {
-        color: #fff;
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-</style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="/logbook" type="button" class="btn btn-outline-success mt-4 mb-3 waves-effect">
+    <a href="{{ route('logbook') }}" type="button" class="btn btn-outline-primary mt-4 mb-3 waves-effect">
         <span class="ti ti-arrow-left me-2"></span>Kembali
     </a>
     <div class="col-md-10 col-12">
-        <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Kegiatan Saya / </span> Logbook Mahasiswa - Periode 20-25 Januari 2024</h4>
+        <h4 class="fw-bold"> <span class="text-muted fw-light text-xs">Kegiatan Saya / </span> Logbook Mahasiswa - Periode {{ Carbon\Carbon::parse($data->start_date)->format('d') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($data->end_date)->format('d F Y') }}</h4>
     </div>
     <div class="col-12">
         <div class="card mb-4 ">
             <div class="user-profile-header-banner">
-                <img src="../assets/logbookbg.png" alt="Banner image" class="rounded-top" width="100%" style="height: 129px !important;" />
+                <img src="{{ asset('assets/logbookbg.png') }}" alt="Banner image" class="rounded-top" width="100%" style="height: 129px !important;" />
             </div>
             <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4" style="justify-content: space-between !important;">
                 <div class="flex-shrink-0 mt-n5 mx-sm-0 mx-auto ms-0 ms-sm-5">
-                    <img src="../assets/14.png" alt="user image" class="d-block h-auto rounded user-profile-img" />
+                    <div class="text-center mb-4" style="overflow: hidden; width: 150px; height: 150px;">
+                        @if ($mahasiswa->profile_picture)
+                            <img src="{{ asset('storage/' . $mahasiswa->profile_picture) }}" alt="user-avatar" class="d-block" width="150" id="image_industri">
+                        @else
+                            <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="150" id="image_industri">
+                        @endif
+                    </div>
                     <div style="margin-top: 24px;">
-                        <h4>Leonie Artaputri</h4>
+                        <h4>{{ $mahasiswa->namamhs }}</h4>
                         <ul class="list-inline mb-0 align-items-center gap-2">
-                            <li class="mb-2">6706213878 - D3 Teknologi Komputer</li>
-                            <li>Universitas Telkom</li>
+                            <li class="mb-2">{{ $mahasiswa->nim }}&ensp;-&ensp;{{ $mahasiswa->namaprodi }}</li>
+                            <li>{{ $mahasiswa->namauniv }}</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="mt-3">
-                    <div class="card-body" style="width: 400px !important; ">
-                        <div class="text-light row small fw-semibold">
-                            <div class="col-6"> Kelengkapan Logbook</div>
-                            <div class="col-6 text-end">75%</div>
-                        </div>
-                        <div class="demo-vertical-spacing text-end">
-                            <div class="progress text-end">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+                    <div class="card-body" style="width: 400px !important;" id="container-percentage">
+                        @include('logbook.components.percentage')
                     </div>
                 </div>
             </div>
@@ -55,257 +44,222 @@
     </div>
 
     <div class="row">
-        <div class="col-3" style="padding-left: 10px; padding-right:10px;">
-            <div class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;  height: fit-content !important; background-color:white">
-                <div class="d-flex">
-                <span class="badge bg-label-warning mb-2">Belum Disetujui</span>
-                </div>
-                <div class="d-flex">
-                    <h5>20 - 25 Januari 2023</h5>
-                    <i class="ti ti-chevron-right"></i>
-                </div>
-                <div class="d-flex">
-                    <p>Minggu ke - 1</p>
-                </div>
-                <div class="d-flex">
-                    <div class="text-center">
-                        <p>Senin</p>
-                        <img src="../assets/images/sad.png" alt="">
-                    </div>
-                    <div class="text-center" style=" margin-left: 5px; ">
-                        <p>Selasa</p><img src="../assets/images/jutek.png" alt="">
-                    </div>
-                    <div class="text-center" style=" margin-left: 5px; ">
-                        <p>Rabu</p><img src="../assets/images/kyaa.png" alt="">
-                    </div>
-                    <div class="text-center" style=" margin-left: 5px; ">
-                        <p>kamis</p>
-                        <img src="../assets/images/love.png" alt="">
-                    </div>
-                    <div class=" text-center" style=" margin-left: 5px; ">
-                        <p>Jumat</p>
-                        <img src="../assets/images/smile.png" alt="">
-                    </div>
-                </div>
+        <div class="col-4" style="padding-left: 10px; padding-right:10px;">
+            <div id="container-left-card" class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;  height: fit-content !important; background-color:white">
+                @include('logbook.components.left_card_detail')
             </div>
-            <!-- <div class="fw-bold mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;height: fit-content !important; background-color:white;">
+            @if (isset($data->alasan_tolak))
+            <div class="fw-bold mt-3" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px;height: fit-content !important; background-color:white;">
                 <p>Alasan penolakan logbook :</p>
-                <p class="fw-normal">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque
-                    dignissimos adipisci
-                    debitis quam consequatur totam molestias magnam excepturi nihil officia, minus ipsam?
-                    Adipisci eum quibusdam fugiat aliquid consequuntur sed.</p>
-            </div> -->
+                <p class="fw-normal">{{ $data->alasan_tolak }}</p>
+            </div>
+            @endif
         </div>
-        <div class="col-9">
-            <div class="ps-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
-                <div class="d-flex justify-content-between mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px; ">
-                            <img src="../assets/images/smile.png" alt="">
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Senin</h6>
-                            <p class="fw-normal mb-0">2 Januari 2023</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="margin-right: 25px;">
-                        <a class='btn-icon text-warning waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#modalEditJadwal'><i class='ti ti-edit ti-md'></i></a>
-                    </div>
-                </div>
-                <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <div class="text-block">
-                    <p class="mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                        <span class="ellipsis">...</span>
-                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
-                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
-                    </p>
-                </div>
+        <div class="col-8">
+            <div id="container-logbook-daily">
+                @include('logbook.components.card_daily')
             </div>
-
-            <div class="ps-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
-                <div class="d-flex justify-content-between mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                            <img src="../assets/images/smile.png" alt="">
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Selasa</h6>
-                            <p class="fw-normal mb-0">2 Januari 2023</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="margin-right: 25px;">
-                        <a class='btn-icon text-warning waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#modalEditJadwal'><i class='ti ti-edit ti-md'></i></a>
-                    </div>
-                </div>
-                <p style="color: #B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <div class="text-block">
-                    <p class="mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                        <span class="ellipsis">...</span>
-                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
-                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="ps-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
-                <div class="d-flex justify-content-between mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #C4E2D0; width: 70px; height: 70px;">
-                            <img src="../assets/images/smile.png" alt="">
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Rabu</h6>
-                            <p class="fw-normal mb-0">2 Januari 2023</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="margin-right: 25px;">
-                        <a class='btn-icon text-warning waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#modalEditJadwal'><i class='ti ti-edit ti-md'></i></a>
-                    </div>
-                </div>
-                <p style="color:#B6BAC3; margin-top: 15px;">Kamu melakukan Pekerjaan Apa Hari Ini ?</p>
-                <div class="text-block">
-                    <p class="mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.
-                        <span class="ellipsis">...</span>
-                        <span class="content-new" style="display: none;"> Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in.</span>
-                        <a class="show_hide_new cursor-pointer" style="color:#4EA971">Show More</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="ps-4 mb-4 pe-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
-                <div class="d-flex justify-content-between mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #070A0F80; width: 70px; height: 70px;">
-                            <img src="../assets/images/smile.png" alt="" style="filter: grayscale(80%) opacity(50%);">
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Kamis</h6>
-                            <p class="fw-normal mb-0">2 Januari 2023</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a class='btn-icon text-warning waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#modalEditJadwal'><i class='ti ti-edit ti-md'></i></a>
-                    </div>
-                </div>
-                <hr>
-                <div class="text-center" style="padding: 20px; margin-bottom: 30px !important;">
-                    <button data-bs-toggle='modal' data-bs-target='#modalEditJadwal' type="button" class="btn btn-success">Buat Laporan Harian</button>
-                </div>
-            </div>
-
-            <div class="ps-4 mb-4 pe-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
-                <div class="d-flex justify-content-between mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="rounded-pill d-flex flex-column align-items-center justify-content-center" style="background-color: #070A0F80; width: 70px; height: 70px;">
-                            <img src="../assets/images/smile.png" alt="" style="filter: grayscale(80%) opacity(50%);">
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Jumat</h6>
-                            <p class="fw-normal mb-0">2 Januari 2023</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a class='btn-icon text-warning waves-effect waves-light' data-bs-toggle='modal' data-bs-target='#modalEditJadwal'><i class='ti ti-edit ti-md'></i></a>
-                    </div>
-                </div>
-                <hr>
-                <div class="text-center" style=" border-radius: 0 0 6px 6px; padding: 20px; margin-bottom: 30px !important;">
-                    <button data-bs-toggle='modal' data-bs-target='#modalEditJadwal' type="button" class="btn btn-secondary">Buat
-                        Laporan Harian</button>
-                </div>
-            </div>
-            <!-- <div class="mt-4">
-                <button type="button" class="btn btn-success" style="width: 1035px;">Ajukan Logbook</button>
-            </div> -->
         </div>
     </div>
 </div>
 
-{{-- Modal --}}
-<div class="modal fade" id="modalEditJadwal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header d-block">
-                <h4 class="modal-title text-center" id="modal-title">Laporan Harian Magang </h4>
-                <h6 class="modal-title text-center" id="modal-title">Kamis, 23 Januari 2023 </h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <label for="desc" class="form-label">Kamu melakukan pekerjan apa hari ini?</label>
-                    <textarea type="text" class="form-control" id="desc" placeholder="Tulis Disini"></textarea>
-                </div>
-                <div class="mt-4">
-                    <label for="mood" class="form-label">Silahkan pilih mood anda pada hari ini :</label>
-                    <div class="d-flex mt-1">
-                        <div class="text-center">
-                            <img id="imageOne" src="../app-assets/img/emot/happy.png" data-original-src="../app-assets/img/emot/happy.png" data-selected-src="../app-assets/img/emot/happy1.png" onclick="changeImage('imageOne')" style="cursor: pointer;" />
-                        </div>
-                        <div class="text-center">
-                            <img id="imageTwo" src="../app-assets/img/emot/love.png" data-original-src="../app-assets/img/emot/love.png" data-selected-src="../app-assets/img/emot/love1.png" onclick="changeImage('imageTwo')" style="cursor: pointer;" />
-                        </div>
-                        <div class="text-center">
-                            <img id="imageThree" src="../app-assets/img/emot/sad.png" data-original-src="../app-assets/img/emot/sad.png" data-selected-src="../app-assets/img/emot/sad1.png" onclick="changeImage('imageThree')" style="cursor: pointer;" />
-                        </div>
-                        <div class="text-center">
-                            <img id="imageFour" src="../app-assets/img/emot/frustasi.png" data-original-src="../app-assets/img/emot/frustasi.png" data-selected-src="../app-assets/img/emot/frustasi1.png" onclick="changeImage('imageFour')" style="cursor: pointer;" />
-                        </div>
-                        <div class="text-center">
-                            <img id="imageFive" src="../app-assets/img/emot/datar.png" data-original-src="../app-assets/img/emot/datar.png" data-selected-src="../app-assets/img/emot/datar1.png" onclick="changeImage('imageFive')" style="cursor: pointer;" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalalert" data-dismiss="modal">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('logbook.components.modal_daily')
+
 @endsection
 
 @section('page_script')
-<script src="{{ url('app-assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/extended-ui-sweetalert2.js') }}"></script>
-<script src="{{ url('app-assets/js/yearpicker.js') }}"></script>
 <script>
-    var lastSelectedImage = null;
+    function changeImage(e) {
+        let dataOriginalSrc = e.attr('data-original-src');
+        let dataSelectedSrc = e.attr('data-selected-src');
 
-    function changeImage(imageId) {
-        var image = document.getElementById(imageId);
+        let modal = $('#modalEditJadwal');
+        
+        $('.image-emot').each(function () {
+            $(this).attr('src', $(this).attr('data-original-src'));
+            $(this).attr('data-selected', 'false');
+        });
 
-
-        if (lastSelectedImage && lastSelectedImage !== image) {
-            lastSelectedImage.src = lastSelectedImage.getAttribute('data-original-src');
-        }
-
-
-        if (image.getAttribute('src') === image.getAttribute('data-original-src')) {
-            image.src = image.getAttribute('data-selected-src');
-        } else {
-            image.src = image.getAttribute('data-original-src');
-        }
-
-        lastSelectedImage = image;
+        e.attr('src', dataSelectedSrc);
+        e.attr('data-selected', 'true');
+        modal.find('input[name="emoticon"]').val(e.attr('data-bobot'));
     }
 
-    $(document).ready(function() {
-        $(".show_hide_new").on("click", function() {
-            var content = $(this).siblings('.content-new');
-            var ellipsis = $(this).siblings('.ellipsis');
+    $(document).on('click', '.show_hide_new', function() {
+        let siblingsFake = $(this).siblings('.sibling-fake');
+        let siblingsReal = $(this).siblings('.sibling-real');
+        
+        let dataShortened = $(this).attr('data-shortened');
 
-            content.slideToggle(100);
-            ellipsis.toggle(); // Menyembunyikan/menampilkan titik tiga
+        if (dataShortened == 'true') {
+            siblingsFake.addClass('d-none');
+            siblingsReal.removeClass('d-none');
 
-            if ($(this).text().trim() == "Show More") {
-                $(this).text("Show Less");
-            } else {
-                $(this).text("Show More");
+            $(this).text('Show Less');
+            $(this).attr('data-shortened', 'false');
+        } else {
+            siblingsFake.removeClass('d-none');
+            siblingsReal.addClass('d-none');
+
+            $(this).text('Show More');
+            $(this).attr('data-shortened', 'true');
+        }
+    });
+
+    function createLogbookDay(e) {
+        let date = e.attr('data-date');
+        let modal = $('#modalEditJadwal');
+        let form = modal.find('form');
+
+        form.attr('action', "{{ route('logbook.create_logbook_daily', $data->id_logbook_week) }}");
+        form.find('input[name="date"]').val(date);
+        modal.find('.date-formated').html(dateFormat(date));
+
+        modal.modal('show');
+    }
+
+    function changeLogbookType(e){
+        $.ajax({
+            url: `{{ route('logbook.change_type', $data->id_logbook_week) }}`,
+            type: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                date: e.attr('data-date'),
+                type: e.is(':checked') ? 'libur' : 'daily'
+            },
+            success: function (response) {
+                $('#container-logbook-daily').html(response.data.view);
+                $('#container-left-card').html(response.data.view_left_card);
+                $('#container-percentage').html(response.data.view_percentage);
             }
         });
+    }
+
+    function changeLogbookLibur(e) {
+        let modal = $('#modalEditJadwal');
+        modal.find('button').attr('disabled', true);
+
+        showSweetAlert({
+            icon: 'warning',
+            title: 'Yakin?',
+            text: 'Ini akan menghapus laporan harian yang sudah dibuat.',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `{{ route('logbook.change_type', $data->id_logbook_week) }}`,
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        date: modal.find('input[name="date"]').val(),
+                        type: 'libur'
+                    },
+                    success: function (response) {
+                        $('#container-logbook-daily').html(response.data.view);
+                        $('#container-left-card').html(response.data.view_left_card);
+                        $('#container-percentage').html(response.data.view_percentage);
+                        modal.modal('hide');
+                        modal.find('button').attr('disabled', false);
+                    },
+                    error: function (response) {
+                        modal.find('button').attr('disabled', false);
+                        showSweetAlert({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.responseJSON.message
+                        });
+                    }
+                });
+            } else {
+                modal.find('button').attr('disabled', false);
+            }
+        });
+    }
+
+    function afterCreateLogbookday(response) {
+        let modal = $('#modalEditJadwal');
+        $('#container-logbook-daily').html(response.data.view);
+        $('#container-left-card').html(response.data.view_left_card);
+        $('#container-percentage').html(response.data.view_percentage);
+        modal.modal('hide');
+    }
+
+    function editLogbookDay(e) {
+        let dataId = e.attr('data-id');
+        let modal = $('#modalEditJadwal');
+        let form = modal.find('form');
+
+        form.attr('action', "{{ route('logbook.update_logbook_daily', ['id' => ':id']) }}".replace(':id', dataId));
+
+        $.ajax({
+            url: `{{ route('logbook.detail', $data->id_logbook_week) }}`,
+            data: {'section' : 'get_logbook_daily', 'data_id' : dataId},
+            type: 'GET',
+            success: function (response) {
+                modal.find('.date-formated').html(dateFormat(response.data.date));
+                form.find('input[name="emoticon"]').val(response.data.emoticon);
+                form.find('textarea[name="activity"]').val(response.data.activity);
+                form.find('input[name="date"]').val(response.data.date);
+
+                $('.image-emot[data-bobot="'+response.data.emoticon+'"]').click();
+            }
+        });
+
+        modal.modal('show');
+    }
+
+    function applyLogbook(e) {
+        btnBlock(e);
+
+        $.ajax({
+            url: `{{ route('logbook.apply_logbook', ['id_logbook_week' => $data->id_logbook_week]) }}`,
+            type: 'POST',
+            data: { _token: "{{ csrf_token() }}" },
+            success: function (response) {
+                btnBlock(e, false);
+
+                $('#container-left-card').html(response.data.view_left_card);
+                $('#container-logbook-daily').html(response.data.view_detail);
+
+                showSweetAlert({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: response.message
+                });
+            },
+            error: function (response) {
+                btnBlock(e, false);
+                showSweetAlert({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.responseJSON.message
+                });
+            }
+
+        });
+    }
+
+    $('#modalEditJadwal').on('hide.bs.modal', function () {
+        $(this).find('.date-formated').html(null);
+        $(this).find('input[name="date"]').val(null);
+        let form = $(this).find('form');
+
+        $('.image-emot').each(function () {
+            $(this).attr('src', $(this).attr('data-original-src'));
+            $(this).attr('data-selected', 'false');
+        });
     });
+
+    function dateFormat(date) {
+        date = new Date(date);
+        return new Intl.DateTimeFormat('id-ID', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }).format(date);
+    }
 </script>
 @endsection
