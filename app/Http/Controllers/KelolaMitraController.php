@@ -122,10 +122,24 @@ class KelolaMitraController extends Controller
 
                 return $btn;
             })
-            ->editColumn('penanggung_jawab', function ($data) {
-                return $data->penanggungJawab->namapeg ?? '-';
+            ->editColumn('namaindustri', function ($data) {
+                $x = '<div class="d-flex flex-column align-items-start">';
+                $x .= '<span class="fw-bolder">' . $data->namaindustri . '</span>';
+                $x .= '<small>' . $data->email . '</small>';
+                $x .= '<small>' . $data->notelpon . '</small>';
+                $x .= '</div>';
+                return $x;
             })
-            ->rawColumns(['aksi', 'penanggung_jawab'])
+            ->editColumn('penanggung_jawab', function ($data) {
+                $data = $data->penanggungJawab;
+                $x = '<div class="d-flex flex-column align-items-start">';
+                $x .= '<span class="fw-bolder">' . $data->namapeg . '</span>';
+                $x .= '<small>' . $data->emailpeg . '</small>';
+                $x .= '<small>' . $data->nohppeg . '</small>';
+                $x .= '</div>';
+                return $x;
+            })
+            ->rawColumns(['aksi', 'namaindustri', 'penanggung_jawab'])
             ->make(true);
     }
 

@@ -59,10 +59,7 @@ class LogbookMahasiswaController extends LogbookController
             return Response::success($result, 'Success');
         }
 
-        $data['list_month'] = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $data['list_month'][] = date('F', mktime(0, 0, 0, $i, 1));
-        }
+        $data['list_month'] = $this->getListMonth()->list_month;
 
         $data['total_days'] = CarbonPeriod::create($data['data']->startdate_magang, $data['data']->enddate_magang)->count();
         $data['filled_days'] = self::filledDays($data['logbook_week']);
@@ -112,25 +109,37 @@ class LogbookMahasiswaController extends LogbookController
 
     public function storeCreateLogbook(Request $request)
     {
+        $this->getMyPendaftaranMagang(function ($query) {
+            return $query->select('mhs_magang.id_mhsmagang', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'pendaftaran_magang.id_pendaftaran')
+            ->join('mhs_magang', 'pendaftaran_magang.id_pendaftaran', '=', 'mhs_magang.id_pendaftaran');
+        });
+
+        $pendaftaran = $this->pendaftaran->first();
+
         $request->validate([
-            'range_date' => ['required', function ($attribute, $value, $fail) {
+            'range_date' => ['required', function ($attribute, $value, $fail) use ($pendaftaran) {
+                $startdate_magang = Carbon::parse($pendaftaran->startdate_magang);
+                $enddate_magang = Carbon::parse($pendaftaran->enddate_magang);
+
                 $value = explode(' to ', $value);
                 $startDate = Carbon::parse($value[0]);
+                $endDate = Carbon::parse($value[0]);
                 if (count($value) > 1) {
                     $endDate = Carbon::parse($value[1]);
                 }
 
-                if (isset($endDate) && $startDate->gt($endDate)) $fail('Range date tidak valid');
+                if (
+                    $startDate->gt($endDate) ||
+                    $startDate->lt($startdate_magang) ||
+                    $endDate->gt($enddate_magang)
+                ) {
+                    $fail('Range date tidak valid');
+                }
             }],
             'current_month' => ['required', 'numeric', 'min:0', 'max:11']
         ]);
 
         try {
-            $this->getMyPendaftaranMagang(function ($query) {
-                return $query->select('mhs_magang.id_mhsmagang', 'pendaftaran_magang.id_pendaftaran')
-                ->join('mhs_magang', 'pendaftaran_magang.id_pendaftaran', '=', 'mhs_magang.id_pendaftaran');
-            });
-
             DB::beginTransaction();
 
             $value = explode(' to ', $request->range_date);
@@ -139,8 +148,6 @@ class LogbookMahasiswaController extends LogbookController
             if (count($value) > 1) {
                 $endDate = Carbon::parse($value[1]);
             }
-
-            $pendaftaran = $this->pendaftaran->first();
 
             $logbook = Logbook::firstOrCreate([
                 'id_mhsmagang' => $pendaftaran->id_mhsmagang,

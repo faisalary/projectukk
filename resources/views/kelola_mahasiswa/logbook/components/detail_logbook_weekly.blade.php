@@ -1,3 +1,6 @@
+@if ($logbook_week->status == App\Enums\LogbookWeeklyStatus::REJECTED)
+    @include('kelola_mahasiswa/logbook/components/rejected_reason')
+@else
 <div class="d-flex justify-content-between mb-3">
     <h5 class="my-auto">Logbook Minggu Ke-{{ $week }}</h5>
     @if ($logbook_week->status == App\Enums\LogbookWeeklyStatus::PENDING && (isset($isPembLapangan) && $isPembLapangan == true))
@@ -32,3 +35,4 @@
         </p>
     </div>
 @endforeach
+@endif

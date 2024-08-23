@@ -49,9 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>NOMOR</th>
-                                    <th style="min-width: 100px;">NAMA</th>
-                                    <th>EMAIL</th>
-                                    <th style="min-width: 120px;">NOMOR TELEPON</th>
+                                    <th style="min-width: 100px;">Perusahaan</th>
                                     <th>PENANGGUNG JAWAB</th>
                                     <th>KATEGORI MITRA</th>
                                     <th>STATUS KERJASAMA</th>
@@ -101,14 +99,6 @@
                         {
                             data: 'namaindustri',
                             name: 'namaindustri'
-                        },
-                        {
-                            data: 'email',
-                            name: 'email'
-                        },
-                        {
-                            data: 'notelpon',
-                            name: 'notelpon'
                         },
                         {
                             data: 'penanggung_jawab',

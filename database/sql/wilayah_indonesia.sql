@@ -1,3 +1,10 @@
+-- delete all from reg_regencies
+DELETE FROM `reg_regencies`;
+-- delete all from reg_provinces
+DELETE FROM `reg_provinces`;
+-- delete all from reg_countries
+DELETE FROM `reg_countries`;
+
 INSERT INTO `reg_countries` VALUES 
 (1, 'Indonesia');
 

@@ -22,6 +22,10 @@ use App\Http\Requests\InformasiPengalamanReq;
 
 class ProfileMahasiswaController extends Controller
 {
+    public function __construct() {
+        
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -415,7 +419,7 @@ class ProfileMahasiswaController extends Controller
             $mahasiswa = Mahasiswa::where('id_user', $id)->first();
         }else{
             $user = auth()->user();
-            $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi');
+            $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi', 'dosen_wali');
         }
         $data['mahasiswa'] = $mahasiswa;
         $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
