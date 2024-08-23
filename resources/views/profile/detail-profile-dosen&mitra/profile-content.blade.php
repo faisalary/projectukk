@@ -1,10 +1,10 @@
-<div class="m-auto tab-pane fade show active" style="width: 65rem;" id="v-pills-informasi-pribadi" role="tabpanel" aria-labelledby="v-pills-informasi-pribadi-tab">
+<div class="m-auto tab-pane fade show active" style="width: 100%;" id="v-pills-informasi-pribadi" role="tabpanel" aria-labelledby="v-pills-informasi-pribadi-tab">
     @if (auth()->user()->hasRole('Dosen'))
-        <h2 class="mx-3 mt-4 mb-3">Profile Dosen</h2>
+        <h2 class="mx-3 mt-3 mb-3">Profile Dosen</h2>
     @elseif(auth()->user()->hasRole('Mitra'))
-        <h2 class="mx-3 mt-4 mb-3">Profile Mitra</h2>
+        <h2 class="mx-3 mt-3 mb-3">Profile Mitra</h2>
     @elseif(auth()->user()->hasRole('LKM'))
-        <h2 class="mx-3 mt-4 mb-3">Profile LKM</h2>
+        <h2 class="mx-3 mt-3 mb-3">Profile LKM</h2>
     @endif
     <div id="profile" class="border rounded mx-3 mb-4">
         <div>
@@ -30,7 +30,7 @@
             @include('profile.detail-profile-dosen&mitra.ubah-profile')
         </div>
         @if (auth()->user()->hasRole('Dosen'))
-            <div id="content_about" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));	place-content: start; 	place-items: center;" class="p-3">
+            <div id="content_about" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));	place-content: start; place-items: center;" class="p-3">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>
                         <h5>Universitas</h5>
@@ -74,7 +74,7 @@
                 </section>
             </div>   
         @elseif(auth()->user()->hasRole('Mitra'))
-            <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; 	place-items: start;" class="p-3">
+            <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; place-items: start;" class="p-3">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>
                         <h5>Nama Pegawai</h5>
@@ -97,7 +97,7 @@
                 </section>
             </div>
         @elseif(auth()->user()->hasRole('LKM'))
-            <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; 	place-items: start;" class="p-3">
+            <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; place-items: start;" class="p-3">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>
                         <h5>Email</h5>
