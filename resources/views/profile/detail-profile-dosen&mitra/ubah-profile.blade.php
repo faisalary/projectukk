@@ -33,7 +33,7 @@
                     </select>
                     <div class="invalid-feedback"></div>
                 </div>
-                <div>
+                {{-- <div>
                     <label for="changeNIP">NIP
                         <span class="text-danger">*</span>
                     </label>
@@ -46,7 +46,7 @@
                     </label>
                     <br>
                     <input type="text" id="changeKodeDosen" placeholder="Masukkan Kode Dosen" style="width: 100%;  height: 3rem;" class="px-2 rounded border">
-                </div>
+                </div> --}}
                 <div>
                     <label for="changeNamaDosen">Nama Dosen
                         <span class="text-danger">*</span>
