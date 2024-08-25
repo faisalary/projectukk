@@ -235,6 +235,7 @@
         }
     });
 
+    @if(auth()->user()->hasRole('Mahasiswa'))
     function myFunction(event, e) {
         event.stopPropagation();
         let icon = e.find('i');
@@ -259,5 +260,6 @@
             },
         });
     }
+    @endif
 </script>
 @endsection

@@ -16,6 +16,7 @@
                             <p class="mb-0">{{$l['namaindustri'] ?? ''}}</p>
                         </div>
                     </div>
+                    @if (auth()->user()->hasRole('Mahasiswa'))
                     <div class="ms-2">
                         <a onclick="myFunction(event, $(this));" data-id="{{$l['id_lowongan']}}" class="text-primary cursor-pointer">
                             @if (in_array($l['id_lowongan'], $lowongan_tersimpan))
@@ -25,6 +26,7 @@
                             @endif
                         </a>
                     </div>
+                    @endif
                 </div>
                 <div class="border"></div>
                 <div class="map-pin mt-3 mb-3">
