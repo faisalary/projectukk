@@ -28,7 +28,7 @@ class LogbookMahasiswaController extends LogbookController
         });
 
         $data['data'] = $this->pendaftaran->first();
-        if ($data['data'] == null) return abort(403);
+        if ($data['data'] == null) return view('logbook.logbook_403');
 
         $logbook = Logbook::where([
             'id_mhsmagang' => $data['data']->id_mhsmagang,
