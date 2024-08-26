@@ -118,6 +118,13 @@ class ApplyLowonganFakultasController extends Controller
             return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
         }
 
+        $auth = Auth::user();
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        if($persentase < 80) {
+            return Response::error(null, 'Data profil belum lengkap', 400);
+        }
+
         $request->validate([
             'porto' => 'mimes:pdf|max:5000',
             'reason' => 'required|string|max:1000'

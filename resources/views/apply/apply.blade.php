@@ -90,7 +90,7 @@
                         <h4>Portofolio</h4>
                         <div class="mt-3 form-group">
                             <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
-                            @if(isset($persentase) && ($magang != null || $persentase < 70)) 
+                            @if(isset($persentase) && ($magang != null || $persentase < 80)) 
                                 <input class="form-control" type="file" id="formFile" name="porto" disabled>
                             @else
                                 <input class="form-control" type="file" id="formFile" name="porto">
@@ -103,7 +103,7 @@
                             <label for="reasonTextarea" class="form-label text-secondary">Jelaskan mengapa Anda layak diterima untuk posisi ini</label>
                             <textarea class="form-control" id="reasonTextarea" name="reason" rows="5" required></textarea>
                         </div>
-                        @if(isset($persentase) && ($magang != null || $persentase < 70)) 
+                        @if(isset($persentase) && ($magang != null || $persentase < 80)) 
                             <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
                         @else
                             <button type="submit" class="btn btn-primary waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
