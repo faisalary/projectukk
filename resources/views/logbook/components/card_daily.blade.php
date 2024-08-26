@@ -41,10 +41,12 @@
                 <p class="fw-normal mb-0">{{ Carbon\Carbon::parse($item->date)->format('d F Y') }}</p>
             </div>
         </div>
+        @if (in_array($data->status, [App\Enums\LogbookWeeklyStatus::NOT_YET_APPLIED, App\Enums\LogbookWeeklyStatus::REJECTED]))
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" name="daysoff" data-date="{{ $item->date }}" onchange="changeLogbookType($(this));" @if($libur)checked @endif>
             <label class="form-check-label" for="daysoff">Hari Libur</label>
         </div>
+        @endif
     </div>
     <hr>
     <div class="text-center" style="padding: 20px; margin-bottom: 30px !important;">

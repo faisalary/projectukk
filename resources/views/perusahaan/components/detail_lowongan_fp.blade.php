@@ -62,7 +62,7 @@
                 </ul>
             </div>
         </div>
-        @if(auth()->check())
+        @if($isMahasiswa)
         <div class="row mt-3">
             <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
         </div>

@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="ms-2">
-                        @if(auth()->check())
+                        @if($isMahasiswa)
                         <a onclick="myFunction(event, $(this));" data-id="{{$l['id_lowongan']}}" class="text-primary cursor-pointer">
                             @if (in_array($l['id_lowongan'], $lowongan_tersimpan))
                             <i class="fa-solid fa-bookmark" style="font-size: 25px;"></i>    
