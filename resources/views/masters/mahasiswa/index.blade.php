@@ -66,13 +66,16 @@
     function getDataSelect(e) {
         let idElement = e.attr('data-after');
         let modalId = e.closest('.modals').attr('id');
-        console.log(idElement, modalId)
+
+        $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
+        $(`#${modalId} #${idElement}`).val(null).trigger('change');
+
+        if (e.val() == null) return;
+        
         $.ajax({
             url: `{{ route('mahasiswa') }}?type=${idElement}&selected=` + e.val(),
             type: 'GET',
             success: function (response) {
-                $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
-                $(`#${modalId} #${idElement}`).val(null).trigger('change');
                 $.each(response.data, function () {
                     $(`#${modalId} #${idElement}`).append(new Option(this.text, this.id));
                 });
@@ -104,25 +107,28 @@
 
         let action = `{{ route('mahasiswa.update', ['id' => ':id']) }}`.replace(':id', id);
         var url = `{{ route('mahasiswa.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let modal = $(`#modal-mahasiswa`);
+        let form = modal.find('form');
 
-        $("#modal-title").html("Edit Mahasiswa");
-        $("#modal-button").html("Update Data")
-        $('#modal-mahasiswa form').attr('action', action);
-        $('#modal-mahasiswa').modal('show');
+        modal.find(".modal-title").html("Edit Mahasiswa");
+        form.find('button[type="submit"]').html("Update Data")
+        form.attr('action', action);
+        modal.modal('show');
 
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response) {
                 $.each(response, function ( key, value ) {
-                    let element = $(`[name="${key}"]`);
+                    let element = form.find(`[name="${key}"]`);
+                    
                     if (element.is('select') && element.find('option').length <= 1) {
                         let interval = setInterval(() => {
                             if (element.children('option').length > 1) {
                                 element.val(value).trigger('change');
                                 clearInterval(interval);
                             }
-                        }, 10);
+                        }, 100);
                     } else if (element.is('[type="radio"]')) {
                         $(`[name="${key}"][value="${value}"]`).prop("checked", true);
                     } else {

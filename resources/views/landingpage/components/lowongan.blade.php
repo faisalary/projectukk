@@ -12,7 +12,7 @@
 </div>
 <div class="tab-content p-0">
     <div class="tab-pane fade show active" id="navs-pills-justified-terbaru" role="tabpanel">
-        <div class="row" style="margin-left: 10rem;margin-right: 10rem;">
+        <div class="row d-flex justify-content-center" style="margin-left: 10rem;margin-right: 10rem;">
             @foreach ($lowonganTerbaru as $key => $item)
                 <div class="col-4 mt-4">
                     <div class="card h-100 border">
@@ -56,7 +56,7 @@
     </div>
 
     <div class="tab-pane fade show" id="navs-pills-justified-populer" role="tabpanel">
-        <div class="row" style="margin-left: 10rem;margin-right: 10rem;">
+        <div class="row d-flex justify-content-center" style="margin-left: 10rem;margin-right: 10rem;">
             @foreach ($lowonganTerbaru as $key => $item)
                 <div class="col-4 mt-4">
                     <div class="card h-100 border">
@@ -72,14 +72,14 @@
                                     <p class="mb-0 mt-3 text-truncate" style="font-size:18px;">{{ $item->namaindustri }}</p>
                                 </div>
                             </div>
-                            <h2 class="mb-3 text-truncate">{{ $item->intern_position }}</h2>
+                            <h3 class="mb-3 text-truncate">{{ $item->intern_position }}</h3>
                             <div class="location mb-3">
                                 <i class="ti ti-map-pin"></i>
                                 <span class="ps-2 text-truncate">{{ $item->lokasi }}</span>
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-currency-dollar"></i>
-                                <span class="ps-2 text-truncate">{{ $item->nominal_salary }}</span>
+                                <span class="ps-2 text-truncate">{{ ($item->nominal_salary) ? $item->nominal_harga : 'Tidak Berbayar' }}</span>
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-calendar-time"></i>
@@ -89,9 +89,9 @@
                         </div>
                         <div class="card-footer">
                             <div class="demo-inline-spacing text-center">
-                                <a href="{{ route('apply_lowongan.detail.lamar', $item->id_lowongan) }}" class="btn btn-primary">Lamar</a>
+                                <a href="{{ route('apply_lowongan.detail.lamar', $item->id_lowongan) }}" class="btn btn-primary">Lamar</a>  
                                 <a href="{{ route('dashboard.detail-lowongan', $item->id_lowongan) }}" class="btn btn-outline-primary">Detail</a>
-                            </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
