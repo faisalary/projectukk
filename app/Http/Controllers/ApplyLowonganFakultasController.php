@@ -70,11 +70,20 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $registered = PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first();
-        if($registered) {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $registeredTwo = $registered->count() >= 2 ? true : false;
+        $registeredThis = $registered->where('id_lowongan', $id)->first();
+
+        if($registeredThis) {
             $sudahDaftar = true;
         }else{
             $sudahDaftar = false;
+        }
+
+        if($registeredTwo) {
+            $daftarDua = true;
+        }else{
+            $daftarDua = false;
         }
 
         $auth = Auth::user();
@@ -93,14 +102,20 @@ class ApplyLowonganFakultasController extends Controller
 
         $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar'));
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
-        if(PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first()) {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+
+        if($registered->where('id_lowongan', $id)->first()) {
             return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
+        }
+
+        if($registered->count() >= 2) {
+            return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
         }
 
         $request->validate([

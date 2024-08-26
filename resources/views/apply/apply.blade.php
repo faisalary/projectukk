@@ -30,6 +30,8 @@
 
     <div id="sudah-daftar-container"></div>
 
+    <div id="daftar-lebih-container"></div>
+
     <div class="card">
         <div class="card-body">
             <h4>Informasi Data Diri</h4>
@@ -79,7 +81,7 @@
         </div>
     </div>
 
-    @if($sudahDaftar == false)
+    @if($sudahDaftar == false && $daftarDua == false)
     <div class="card mt-5" id="card-apply">
         <div class="card-body">
             <div>
@@ -181,11 +183,21 @@
             <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mengajukan lamaran untuk pekerjaan ini</span>
         </div>
     `;
+        
+    let daftarDua = `
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <i class="ti ti-alert-triangle ti-xs"></i>
+            <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mendaftar pada 2 lowongan</span>
+        </div>
+    `;
 
     @if($sudahDaftar == true)
         document.getElementById("sudah-daftar-container").innerHTML = sudahDaftar;
     @endif
 
+    @if($daftarDua == true)
+        document.getElementById("daftar-lebih-container").innerHTML = daftarDua;
+    @endif
 
     //  Button Back
     document.getElementById("back").addEventListener("click", () => {
