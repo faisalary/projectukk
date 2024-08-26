@@ -18,6 +18,7 @@
                     </div>
                     @if (auth()->user()->hasRole('Mahasiswa'))
                     <div class="ms-2">
+                        @if(auth()->check())
                         <a onclick="myFunction(event, $(this));" data-id="{{$l['id_lowongan']}}" class="text-primary cursor-pointer">
                             @if (in_array($l['id_lowongan'], $lowongan_tersimpan))
                             <i class="fa-solid fa-bookmark" style="font-size: 25px;"></i>    
@@ -25,6 +26,7 @@
                             <i class="fa-regular fa-bookmark" style="font-size: 25px;"></i>    
                             @endif
                         </a>
+                        @endif
                     </div>
                     @endif
                 </div>
