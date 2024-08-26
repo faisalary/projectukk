@@ -43,7 +43,7 @@
                         <div class="col mb-2 form-group">
                             <label for="kode_dosen" class="form-label">Dosen Wali</label>
                             <select class="form-select select2" id="kode_dosen" name="kode_dosen" data-placeholder="Pilih Dosen Wali" data-select2-id="kode_dosen">
-                                <option value="" disabled selected>Pilih Prodi</option>
+                                <option value="" disabled selected>Pilih Dosen Wali</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>

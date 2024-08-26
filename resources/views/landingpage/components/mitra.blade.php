@@ -1,4 +1,4 @@
-<div class="row mx-5">
+<div class="row d-flex justify-content-center mx-5">
     @foreach ($mitra as $item)
         <div class="col-4 mt-5">
             <div class="card">
