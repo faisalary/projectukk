@@ -8,8 +8,8 @@
 <div class="d-flex">
     <p>Minggu ke - {{ $data->week }}</p>
 </div>
-<div class="d-flex {{ count($data->logbookDay) > 3 ? 'justify-content-between' : 'justify-content-start' }}">
-    @foreach ($data->logbookDay as $item)
+<div class="d-flex {{ count($data->emoticon) > 3 ? 'justify-content-between' : 'justify-content-start' }}">
+    @foreach ($data->emoticon as $item)
         <div class="d-flex flex-column mx-1 align-items-center">
             <small>{{ Carbon\Carbon::parse($item->date)->format('D') }}</small>
             <img src="{{ App\Enums\LogbookDailyEmot::getWithEmot($item->emoticon)['image'] }}">

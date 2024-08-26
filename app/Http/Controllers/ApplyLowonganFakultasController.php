@@ -25,8 +25,13 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
-        ->get()->pluck('id_lowongan')->toArray();
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
+            ->get()->pluck('id_lowongan')->toArray();
+        }else{
+            $data['lowongan_tersimpan'] = [];
+        }
 
         $data['lowongan'] = LowonganMagang::select(
             'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
@@ -70,6 +75,22 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $registeredTwo = $registered->count() >= 2 ? true : false;
+        $registeredThis = $registered->where('id_lowongan', $id)->first();
+
+        if($registeredThis) {
+            $sudahDaftar = true;
+        }else{
+            $sudahDaftar = false;
+        }
+
+        if($registeredTwo) {
+            $daftarDua = true;
+        }else{
+            $daftarDua = false;
+        }
+
         $auth = Auth::user();
         $nim = $auth->nim;
 
@@ -86,12 +107,29 @@ class ApplyLowonganFakultasController extends Controller
 
         $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId'));
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+
+        if($registered->where('id_lowongan', $id)->first()) {
+            return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
+        }
+
+        if($registered->count() >= 2) {
+            return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
+        }
+
+        $auth = Auth::user();
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        if($persentase < 80) {
+            return Response::error(null, 'Data profil belum lengkap', 400);
+        }
+
         $request->validate([
             'porto' => 'mimes:pdf|max:5000',
             'reason' => 'required|string|max:1000'

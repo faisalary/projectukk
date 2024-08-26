@@ -1,19 +1,19 @@
 @foreach($industries as $key => $i)
     <div class="col-4 mt-4">
-        <a href="{{ route('daftar_perusahaan.detail', ['id' => $i['id_industri']]) }}" style="color: #0C1019;">
+        <a href="{{ route('daftar_perusahaan.detail', ['id' => $i['id_industri']]) }}" class="text-decoration-none" style="color: var(--bs-body-color);">
             <div class="card border">
-                <div class="card-body" style="text-align: left; border-radius: 4px; flex-shrink: 0;">
-                    <div>
-                        <div class="row">
-                            <div class="col-4">
-                                <figure class="image" style="border-radius: 0%; margin-left:0px;"><img style="border-radius: 0%;" src="{{ asset('front/assets/img/icon_lowongan.png')}}" alt="admin.upload"></figure>
-                            </div>
-                            <div class="col-8">
-                                <h4 style="margin-top: 10px;">{{$i['namaindustri']}}</h4>
-                            </div>
-                        </div>
-                        <div class="mb-3"><i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>{{$i['alamatindustri']}}</div>
-                        <div class="mb-3"><i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;" style="padding-right :5px; padding-bottom:5px;"></i>10 lowongan</div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-start">
+                        <img class="img-thumbnail" src="{{ url('storage/' . $i['image']) }}" style="max-width: 80px;" alt="admin.upload">
+                        <h4 class="mt-3 ms-3">{{$i['namaindustri']}}</h4>
+                    </div>
+                    <div class="mt-3 mb-2">
+                        <i class="ti ti-map-pin" style="padding-right :5px; padding-bottom:5px;"></i>
+                        <span>{{$i['alamatindustri']}}</span>
+                    </div>
+                    <div class="mb-3">
+                        <i class="ti ti-briefcase" style="padding-right :5px; padding-bottom:5px;"></i>
+                        <span>{{ $i['lowongan_magang_count'] }} lowongan</span>
                     </div>
                 </div>
             </div>

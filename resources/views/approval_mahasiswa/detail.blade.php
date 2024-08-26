@@ -113,22 +113,11 @@
                 </div>
                 <div class="mt-3">
                     <h4>Dokumen Pendukung</h4>
-                    <div>
-                        @foreach ($data->sertifikat as $key => $item)
-                        <div class="mb-3 pb-3 {{ ($key+1) != count($data->sertifikat) ? 'border-bottom' : '' }}">
-                            <div class="d-flex justify-content-between mb-1">
-                                <h5 class="mb-0">{{ $item->nama_sertif }}</h5>
-                            </div>
-                            <p class="mb-1" style="font-size: small">{{ $item->penerbit }}</p>
-                            <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</p>
-                            <p class="mb-1">{{ $item->deskripsi }}</p>
-                            <div class="d-flex justfiy-content-start align-items-center">
-                                <a href="#" target="_blank" class="text-decoration-underline">
-                                    UI UX Website.pdf
-                                </a>
-                            </div>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-start mb-1">
+                            <h6 class="mb-0">Portofolio</h6>
                         </div>
-                        @endforeach
+                        <a class="text-primary" href="{{ url('storage/'.$data->portofolio) }}" target="_blank">Portofolio.pdf</a>
                     </div>
                 </div>
             </div>
