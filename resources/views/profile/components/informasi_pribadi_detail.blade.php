@@ -43,6 +43,13 @@
                     <span>{{ $mahasiswa->prodi->namaprodi }}</span>
                 </li>
                 <li class="mb-2 pt-1">
+                    <span class="fw-semibold me-1">Dosen Wali:</span>
+                    @php
+                        $dosen = $mahasiswa->dosen_wali;
+                    @endphp
+                    <span>{{ $dosen->kode_dosen }} | {{ $dosen->namadosen }}</span>
+                </li>
+                <li class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Angkatan:</span>
                     <span>{{ $mahasiswa->angkatan }}</span>
                 </li>
@@ -74,7 +81,33 @@
                     <span class="fw-semibold me-1">Jenis Kelamin:</span>
                     <span>{{ $mahasiswa->gender }}</span>
                 </li>
-                <li class="mb-2 pt-1">
+                <hr>
+                <h5 class="my-3">Domisili</h5>
+                @if($mahasiswa->kota_id != null)
+                <li class="mb-2">
+                    <span class="fw-semibold me-1">Warga Negara:</span>
+                    <span>{{ $mahasiswa->kota->provinsi->negara->id == '1' ? 'WNI' : 'WNA' }}</span>
+                </li>
+                <li class="mb-2">
+                    <span class="fw-semibold me-1">Negara:</span>
+                    <span>{{ $mahasiswa->kota->provinsi->negara->name }}</span>
+                </li>
+                <li class="mb-2">
+                    <span class="fw-semibold me-1">Provinsi:</span>
+                    <span>{{ $mahasiswa->kota->provinsi->name }}</span>
+                </li>
+                <li class="mb-2">
+                    <span class="fw-semibold me-1">Kota:</span>
+                    <span>{{ $mahasiswa->kota->name }}</span>
+                </li>
+                @endif
+                @if($mahasiswa->kodepos != null)
+                <li class="mb-2">
+                    <span class="fw-semibold me-1">Kode Pos:</span>
+                    <span>{{ $mahasiswa->kodepos }}</span>
+                </li>
+                @endif
+                <li class="mb-2">
                     <span class="fw-semibold me-1">Alamat:</span>
                     <span>{{ $mahasiswa->alamatmhs }}</span>
                 </li>

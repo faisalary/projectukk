@@ -22,24 +22,15 @@ use App\Http\Requests\InformasiPengalamanReq;
 
 class ProfileMahasiswaController extends Controller
 {
+    public function __construct() {
+        
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index() { 
-        // Menghitung persentase kelengkapan profil
-        // $persentase = $this->persentase($id);
-        
-        $user = auth()->user();
-        $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi');
-
-        $data['mahasiswa'] = $mahasiswa;
-        $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
-        $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-        $data['sosmed'] = SosmedTambahan::where('nim', $mahasiswa->nim)->orderBy('namaSosmed', 'asc')->get();
-        $data['bahasa'] = BahasaMahasiswa::where('nim', $mahasiswa->nim)->orderBy('bahasa', 'asc')->get();
-        $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-
+        $data = $this->getFullDataProfile();
         return view('profile.informasi_pribadi', $data);
     }
 
@@ -81,12 +72,26 @@ class ProfileMahasiswaController extends Controller
      */
     public function update(Request $request)
     {
+        if($request->citizenships != null){
+            $domisili = [
+                'attr' => 'required',
+                'message' => 'Silahkan lengkapi domisili.'
+            ];
+        }else{
+            $domisili = [
+                'attr' => 'nullable',
+                'message' => ''
+            ];
+        }
+
         $request->validate([
             'tgl_lahir' => 'required|before:today',
             'gender' => 'required|in:Laki-Laki,Perempuan',
             'headliner' => 'required',
             'image' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
             'deskripsi_diri' => 'required',
+            'kota_id' => $domisili['attr'],
+            'kodepos' => $domisili['attr'],
         ], [
             'tgl_lahir.required' => 'Tanggal lahir wajib di isi.',
             'tgl_lahir.before' => 'Tidak boleh melebihi tanggal hari ini.',
@@ -95,7 +100,9 @@ class ProfileMahasiswaController extends Controller
             'headliner.required' => 'Headliner wajib diisi.',
             'image.mimes' => 'File harus berupa JPG, PNG atau JPEG.',
             'image.max' => 'File tidak boleh lebih dari 2 MB.',
-            'deskripsi_diri.required' => 'Deskripsi wajib diisi.'
+            'deskripsi_diri.required' => 'Deskripsi wajib diisi.',
+            'kota_id.required' => $domisili['message'],
+            'kodepos.required' => $domisili['message'],
         ]);
 
         try {
@@ -116,6 +123,8 @@ class ProfileMahasiswaController extends Controller
             $mahasiswa->headliner = $request->headliner;
             $mahasiswa->deskripsi_diri = $request->deskripsi_diri;
             $mahasiswa->gender = $request->gender;
+            $mahasiswa->kota_id = $request->kota_id;
+            $mahasiswa->kodepos = $request->kodepos;
 
             $mahasiswa->profile_picture = $profile_picture;
             
@@ -340,6 +349,10 @@ class ProfileMahasiswaController extends Controller
         $mahasiswa = Mahasiswa::join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->join('program_studi', 'program_studi.id_prodi', '=', 'mahasiswa.id_prodi')
+        ->leftJoin('reg_regencies', 'reg_regencies.id', '=', 'mahasiswa.kota_id')
+        ->leftJoin('reg_provinces', 'reg_provinces.id', '=', 'reg_regencies.province_id')
+        ->leftJoin('reg_countries', 'reg_countries.id', '=', 'reg_provinces.country_id')
+        ->select('mahasiswa.*', 'universitas.namauniv', 'fakultas.namafakultas', 'program_studi.namaprodi', 'reg_regencies.id as cities', 'reg_provinces.id as provinces', 'reg_countries.id as countries')
         ->where('id_user', $user->id)->first();
 
         return $mahasiswa;
@@ -399,5 +412,75 @@ class ProfileMahasiswaController extends Controller
         ];
 
         return view('mahasiswa.cv', $data);
+    }
+
+    public static function getFullDataProfile($id = null){
+        if($id){
+            $mahasiswa = Mahasiswa::where('id_user', $id)->first();
+        }else{
+            $user = auth()->user();
+            $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi', 'dosen_wali');
+        }
+        $data['mahasiswa'] = $mahasiswa;
+        $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
+        $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['sosmed'] = SosmedTambahan::where('nim', $mahasiswa->nim)->orderBy('namaSosmed', 'asc')->get();
+        $data['bahasa'] = BahasaMahasiswa::where('nim', $mahasiswa->nim)->orderBy('bahasa', 'asc')->get();
+        $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['percentageData'] = self::countPercentage($data);
+
+        return $data;
+    }
+
+    public static function countPercentage($data){
+        $totalData = 0;
+        $totalEmptyData = 0;
+        foreach($data as $key => $value){
+            if($key == 'mahasiswa'){
+                foreach($value->toArray() as $k => $v){
+                    if($v == null || $v == ''){
+                        $totalEmptyData++;
+                        $clue[] = $k;
+                    }
+                    $totalData++;
+                }
+            }else{
+               if(is_array($value)){
+                    if(count($value) == 0){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }elseif(is_object($value)){
+                    if($value->isEmpty()){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }else{
+                    if($value == null || $value == ''){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }
+            }
+        }
+
+        $data = new \stdClass();
+        $data->percentage = floor(($totalData - $totalEmptyData) / $totalData * 100);
+        $data->totalData = $totalData;
+        $data->totalEmptyData = $totalEmptyData;
+        $data->clue = implode(', ', $clue ?? []);
+
+        return $data;
+    }
+
+    public function getPercentage(){
+        $percentageData = $this->getFullDataProfile()['percentageData'];
+        
+        return Response::success(['view' => view('profile/components/percentage', compact('percentageData'))->render()], 'Success get percentage data.');
+        
     }
 }

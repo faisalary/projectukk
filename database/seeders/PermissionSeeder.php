@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class PermissionSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permission['Super Admin'] = ['kelola_semua_pengguna.view'];
+        $permission['Super Admin'] = ['roles.view', 'kelola_semua_pengguna.view'];
         $permission['LKM'] = [
             // admin lkm 
             'dashboard.dashboard_admin',
@@ -31,7 +32,6 @@ class PermissionSeeder extends Seeder
             'logbook_magang_fakultas.view',
             'logbook_magang_mandiri.view',
             'kelola_pengguna.view',
-            'roles.view',
             // master data
             'universitas.view',
             'fakultas.view',
@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
             'jenis_magang.view',
             'dosen.view',
             'mahasiswa.view',
+            'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
             'komponen_penilaian.view',
@@ -54,11 +55,17 @@ class PermissionSeeder extends Seeder
             'kelola_lowongan_mitra.view', //
             'anggota_tim.view',
             'jadwal_seleksi_mitra.view',
+            // profile perusahaan
             'profile_perusahaan.view',
+            'profile_perusahaan.update',
+            //-------------------
             'assign_pembimbing.view',
         ];
 
-        $permission['Pembimbing Lapangan'] = [];
+        $permission['Pembimbing Lapangan'] = [
+            'kelola_magang_pemb_lapangan.view',
+            'profile_perusahaan.view'
+        ];
         $permission['Mahasiswa'] = [];
         $permission['Dosen'] = [
             // approval mahasiswa
@@ -83,5 +90,7 @@ class PermissionSeeder extends Seeder
 
         $permission['Super Admin'] = array_merge($permission['Super Admin'], $permission['LKM']);
         $role->syncPermissions($permission['Super Admin']);
+
+        Artisan::call('cache:clear');
     }
 }

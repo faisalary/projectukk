@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Enums\LowonganMagangStatusEnum;
 use App\Models\Industri;
 use App\Helpers\Response;
-use App\Models\LowonganMagang;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\LowonganMagang;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class MitraPerusahaanController extends Controller
 {
@@ -16,7 +19,10 @@ class MitraPerusahaanController extends Controller
     public function index(Request $request)
     {
 
-        $data['industries'] = Industri::where('statusapprove', 1);
+        $data['industries'] = Industri::withCount(['lowongan_magang' => function ($q) {
+            $q->where('status', 1)->where('statusaprove', LowonganMagangStatusEnum::APPROVED);
+        }])->where('statusapprove', 1);
+
         if ($request->name) {
             $data['industries'] = $data['industries']->where('namaindustri', 'like', '%' . $request->name . '%');
         }
@@ -35,6 +41,8 @@ class MitraPerusahaanController extends Controller
                 'view' => view('perusahaan/components/card_perusahaan', $data)->render(),
             ]);
         }
+
+        $data['regencies'] = DB::table('reg_regencies')->get();
 
         return view('perusahaan.daftar_perusahaan', $data);
     }

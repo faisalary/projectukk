@@ -13,18 +13,18 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="sec-title mt-4 mb-4">
+            @if (request()->has('lamaran') && request()->lamaran != null)
+                <a href="{{ 'apply-lowongan/lamar/'.request()->lamaran }}" class="btn btn-outline-primary mb-4">
+                    <i class="ti ti-arrow-left me-2 text-primary"></i>
+                    Kembali ke lamaran
+                </a>
+            @endif
             <div class="row">
                 <div class="col-6 pe-5">
                     <h4>Profil Saya</h4>
                 </div>
-                <div class="col-4 ps-5 pe-0">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="text-start">Kelengkapan Profil</h6>
-                        <h6 class="text-end" id="percentage_progress">0%</h6>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" id="progress_bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                <div class="col-4 ps-5 pe-0" id="percentage_container">
+                    @include('profile.components.percentage')
                 </div>
                 <!-- untuk unduh profile, diarahkan ke halaman unduh-profile/{nim} -->
                 <div class="col-2 text-end ps-0">
@@ -79,17 +79,55 @@
   $(document).ready(function () {
     formRepeaterCustom = initFormRepeaterCustom();
 
-    // $.ajax({
-    //   url: `{{ route('profile.get_data') }}`,
-    //   type: 'GET',
-    //   data: { section: 'completeness_percentage' },
-    //   success: function (response) {
-    //     $('#progress_bar').css('width', response.data.percentage + '%');
-    //     $('#progress_bar').attr('aria-valuenow', response.data.percentage);
-    //     $('#percentage_progress').text(response.data.percentage + '%');
-    //   }
-    // });
+    const ids = ["citizenships", "countries", "provinces", "id_kota"];
+    ids.forEach(function(item) {
+        if (item != "id_kota") {
+            $('#' + item).on('change', function() {
+                var value = $(this).val();
+                var type = item;
+                var targetId = $(this).data('target-dropdown');
 
+                if(value != '' && value != null) {
+                $.ajax({
+                    url: `{{ route('wilayah.child') }}`,
+                    data: {
+                        type: type,
+                        id: value,
+                        '_token': '{{ csrf_token() }}'
+                    },
+                    method: 'POST',
+                    success: function(data) {
+                        var options = data.map(function(item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            };
+                        });
+                        options.unshift({
+                            id: '',
+                            text: 'Pilih'
+                        });
+                        $(targetId).empty();
+                        initSelect2(targetId, options);
+
+                        if (type === 'citizenships' && value === 'WNI') {
+                            $('#countries').val(1).trigger('change');
+                            $('#countries').prop('disabled', true);
+                        } else if (type === 'citizenships' && value === 'WNA') {
+                            $('#countries').val('').trigger('change').prop('disabled', false);
+                            $('#kota_id, #provinces').val('').trigger('change').prop('disabled', true).empty();
+                        } else if (type === 'countries' && value != '') {
+                            $('#provinces').val('').trigger('change').prop('disabled', false);
+                            $('#kota_id').val('').trigger('change').prop('disabled', true).empty();
+                        } else if (type === 'provinces' && value != '') {
+                            $('#kota_id').val('').trigger('change').prop('disabled', false);
+                        }
+                    }
+                });
+                }
+            });
+        }
+    });
   });
 
   $('#changePicture').on('change', function (event) {
@@ -120,45 +158,67 @@
     $('#imgPreview2').attr('default-src', resourceGambar);
     $('#container-info-detail').html(response.view)
     $('#modalEditInformasi').modal('hide');
+    updatePercentage()
   }
 
   function afterActionInfoTambahan(response) {
     response = response.data
     $('#container-informasi-tambahan').html(response.view)
     $('#modalEditInformasiTambahan').modal('hide');
+    updatePercentage()
   }
 
   function afterActionEducation(response) {
     $('#modalTambahPendidikan').modal('hide');
     afterDeletePendidikan(response);
+    updatePercentage()
   }
 
   function afterDeletePendidikan(response) {
     $('#container-pendidikan').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionSkill(response) {
     $('#modalTambahKeahlian').modal('hide');
     $('#container-keahlian').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionExperience(response) {
     $('#modalTambahPengalaman').modal('hide');
     afterDeleteExperience(response);
+    updatePercentage()
   }
 
   function afterDeleteExperience(response) {
     $('#container-pengalaman').html(response.data.view);
+    updatePercentage()
   }
 
   function afterActionDokumen(response) {
     $('#modalTambahDokumen').modal('hide');
     afterDeleteDokumen(response);
+    updatePercentage()
   }
 
   function afterDeleteDokumen(response) {
     $('#container-dokumen-pendukung').html(response.data.view);
+    updatePercentage()
   }
+
+function updatePercentage() {
+   $.ajax({
+      url: `{{ route('profile.percentage') }}`,
+      method: 'GET',
+      success: function (response) {
+        $('#percentage_container').html(response.data.view);
+        $(function () {
+          $('[data-bs-toggle="tooltip"]').tooltip()
+        })
+      }
+    });
+}
 
   $('.modal').on('hide.bs.modal', function () {
     let modalTitle = $(this).find('.modal-title');
@@ -166,6 +226,9 @@
     $(this).find('form').find('input[name="data_id"]').remove();
     $(this).find('form').find('a[id="sertif_open"]').unwrap();
     $(this).find('form').find('a[id="sertif_open"]').remove();
+    $('#countries').prop('disabled', true).empty();
+    $('#provinces').prop('disabled', true).empty();
+    $('#kota_id').prop('disabled', true).empty();
   });
 
   document.getElementById('unduhProfileBtn').addEventListener('click', function() {

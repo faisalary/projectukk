@@ -6,6 +6,7 @@ use App\Models\Dosen;
 use App\Helpers\Response;
 use App\Models\MhsMagang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Enums\PendaftaranMagangStatusEnum;
 
@@ -71,9 +72,9 @@ class DataMahasiswaMagangKaprodiController extends DataMahasiswaMagangController
             ->addColumn('tanggalmagang', function ($data) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span>Tanggal Mulai:</span>';
-                $result .= '<span class="fw-semibold">' .$data->startdate. '</span>';
+                $result .= '<span class="fw-semibold">' . ($data->startdate_magang == null ? '-' : Carbon::parse($data->startdate_magang)->format('d M Y')) . '</span>';
                 $result .= '<span>Tanggal Berakhir:</span>';
-                $result .= '<span class="fw-semibold">' .$data->enddate. '</span>';
+                $result .= '<span class="fw-semibold">' . ($data->enddate_magang == null ? '-' : Carbon::parse($data->enddate_magang)->format('d M Y')) . '</span>';
                 $result .= '</div>';
     
                 return $result;

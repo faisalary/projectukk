@@ -19,7 +19,7 @@
                             <div class="d-flex justify-content-start">
                                 <label for="changePicture" class="btn btn-primary mx-2" id="btn-change-picture">
                                     <i class="ti ti-upload d-block pe-2"></i>
-                                    <span class="d-none d-sm-block">Unggah Baru Logo Perusahaan</span>
+                                    <span class="d-none d-sm-block">Unggah Foto Baru</span>
                                     <input type="file" id="changePicture" name="image" class="account-file-input" hidden accept="image/png, image/jpeg">
                                 </label>
                                 <button type="button" class="btn btn-white mx-2 text-danger account-image-reset" onclick="removeImage()">
@@ -113,13 +113,57 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-12 form-group">
-                            <label for="alamatmhs" class="form-label">Alamat <span style="color: red;">*</span></label>
-                            <input class="form-control" type="text" id="alamatmhs" name="alamatmhs" placeholder="jln. merdeka" disabled />
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3 col-md-12 form-group">
                             <label for="deskripsi_diri" class="form-label">Deskripsi Diri</label>
                             <textarea class="form-control" name="deskripsi_diri" id="deskripsi_diri" rows="2"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <hr>
+                        <h5 class="modal-title mb-2" id="modal-title">Domisili <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right"
+                            data-bs-original-title="JIkalau dikau tiada menemukan apa yang engkau harapkan, silahkan berkabar pada lkm" id="tooltip-filter"></i></h5>
+
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="role" class="form-label">Kewarganegaraan</label>
+                            <select id="citizenships" name="citizenships" class="select2 form-select" data-placeholder="Pilih Kewarganegaraan" 
+                            data-target-dropdown="#countries" data-allow-clear="false">
+                                <option value="" disabled selected>Pilih Kewarganegaraan</option>
+                                <option value="WNI">WNI</option>
+                                <option value="WNA">WNA</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="role" class="form-label">Negara</label>
+                            <select id="countries" name="countries" class="select2 form-select" data-placeholder="Pilih Negara" disabled 
+                            data-target-dropdown="#provinces" data-allow-clear="false">
+                                <option value="" disabled selected>Pilih Negara</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="role" class="form-label">Provinsi</label>
+                            <select id="provinces" name="provinces" class="select2 form-select" data-placeholder="Pilih Provinsi" disabled 
+                            data-target-dropdown="#kota_id" data-allow-clear="false">
+                                <option value="" disabled selected>Pilih Provinsi</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="role" class="form-label">Kota</label>
+                            <select id="kota_id" name="kota_id" class="select2 form-select" data-placeholder="Pilih Kota" disabled 
+                            data-allow-clear="false">
+                                <option value="" disabled selected>Pilih Kota</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="alamatmhs" class="form-label">Kode Pos</label>
+                            <input class="form-control" type="text" id="kodepos" name="kodepos" placeholder="Postal Code" data-filter='[0-9]{0,10}' />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3 col-md-6 form-group">
+                            <label for="alamatmhs" class="form-label">Alamat Lengkap<span style="color: red;">*</span></label>
+                            <input class="form-control" type="text" id="alamatmhs" name="alamatmhs" placeholder="jln. merdeka" disabled />
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -194,6 +238,10 @@
                                         <button type="button" class="btn btn-outline-primary waves-effect" data-repeater-create="">
                                             <span class="align-middle">Tambah</span>
                                         </button>
+                                        <div class="form-group" id="hidden-sosmedmhs">
+                                            <input type="hidden" disabled name="sosmedmhs_"/>
+                                            <div class="invalid-feedback mt-2"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

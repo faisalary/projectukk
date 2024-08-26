@@ -1,7 +1,10 @@
 @php
     if (auth()->user()->hasRole('Mahasiswa')){
         $url = route('profile');
-    }else{
+    }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra')){
+        $url = route('profile_detail.informasi-pribadi');
+    }
+    else{
         $url = route('profile_company');
     }
 @endphp
@@ -47,6 +50,14 @@
             <a class="dropdown-item" href="{{ route('approval_mahasiswa') }}">
                 <i class="ti ti-database me-2 ti-sm"></i>
                 <span class="align-middle">Dashboard Dosen</span>
+            </a>
+        </li>
+    @endcan
+    @can('kelola_magang_pemb_lapangan.view')
+        <li>
+            <a class="dropdown-item" href="{{ route('kelola_magang_pemb_lapangan') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard</span>
             </a>
         </li>
     @endcan

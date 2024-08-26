@@ -13,12 +13,12 @@
                 <large class="text">{{ $pendaftar->headliner }}</large>
             </div>
             <div class="ms-auto">
-                <button class="rounded-circle me-2 btn-label-success btn-icon">
+                <a href="mailto:{{ $pendaftar->emailmhs }}" class="rounded-circle me-2 btn-label-success btn-icon">
                     <i class="ti ti-mail"></i>
-                </button>
-                <button class="rounded-circle btn-label-success btn-icon">
+                </a>
+                <a href="tel:{{ $pendaftar->nohpmhs }}"class="rounded-circle btn-label-success btn-icon">
                     <i class="ti ti-phone-call"></i>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -42,23 +42,27 @@
     </div>
     <div class="col-3">
         <h6>Warga Negara</h6>
-        <p>WNA</p>
+        <p>@if($pendaftar->negara == null) - @else {{ $pendaftar->negara == '1' ? 'WNI' : 'WNA' }} @endif</p>
     </div>
     <div class="col-3">
         <h6>Negara</h6>
-        <p>Jamaika</p>
+        <p>{{ $pendaftar->negara ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Provisi</h6>
-        <p>Stockholm</p>
+        <p>{{ $pendaftar->provinsi ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Kota</h6>
-        <p>Birmingham</p>
+        <p>{{ $pendaftar->kota ?? '-' }}</p>
     </div>
     <div class="col-3">
         <h6>Kode Pos</h6>
-        <p>203044</p>
+        <p>{{ $pendaftar->kodepos ?? '-' }}</p>
+    </div>
+    <div class="col-12">
+        <h6>Alamat</h6>
+        <p>{{ $pendaftar->alamatmhs }}</p>
     </div>
 </div>
 <hr>
@@ -127,3 +131,32 @@
 @foreach ($language as $item)
 <span class='badge rounded-pill bg-label-primary mx-1'>{{ $item->bahasa }}</span>
 @endforeach
+<hr>
+<h5>Dokumen Pendukung</h5>
+<div class="card-body">
+    <div class="d-flex flex-column" id="container-dokumen-pendukung">
+        @foreach ($dokumen_pendukung as $key => $item)
+            <div class="{{ count($dokumen_pendukung) != ($key+1) ? 'border-bottom mb-3 pb-3' : '' }}">
+                <div class="d-flex justify-content-start mb-1">
+                    <h6 class="mb-0">{{ $item->nama_sertif }}</h6>
+                </div>
+                <p class="mb-1" style="font-size: small">{{ $item->penerbit }}</p>
+                <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</p>
+                <a class="text-primary" href="{{ url('storage/'.$item->file_sertif) }}" target="_blank">Dokumen.pdf</a>
+                <p class="mb-1">{{ $item->deskripsi }}</p>
+            </div>
+        @endforeach
+    </div>
+</div>
+<hr>
+<h5>Dokumen Persyaratan</h5>
+<div class="card-body">
+    <div class="d-flex flex-column" id="container-dokumen-pendukung">
+        <div class="mb-3 pb-3">
+            <div class="d-flex justify-content-start mb-1">
+                <h6 class="mb-0">Portofolio</h6>
+            </div>
+            <a class="text-primary" href="{{ url('storage/'.$pendaftar->portofolio) }}" target="_blank">Portofolio.pdf</a>
+        </div>
+    </div>
+</div>
