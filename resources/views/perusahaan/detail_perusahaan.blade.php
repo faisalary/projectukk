@@ -24,7 +24,7 @@
                         @if ($detail->image)
                         <img src="{{ asset('storage/'. $detail->image) }}" alt="user-avatar" class="d-block" width="100">
                         @else
-                        <img src="{{ asset('front/assets/img/icon_lowongan.png') }}" alt="user-avatar" class="d-block" width="100">
+                        <img src="{{ asset('app-assets/img/avatars/building.png') }}" alt="user-avatar" class="d-block" width="100">
                         @endif
                     </div>
                     <div class="d-flex flex-column justify-content-center ms-3">
@@ -41,15 +41,15 @@
             <div class="row mt-3">
                 <div class="col-4">
                     <h6 class="mb-0">Alamat Perusahaan</h6>
-                    <p>{{$detail->alamatindustri ?? ''}}</p>
+                    <p>{{$detail->alamatindustri ?? '-'}}</p>
                 </div>
                 <div class="col-4">
                     <h6 class="mb-0">Email</h6>
-                    <p>{{$detail->email ?? ''}}</p>
+                    <p>{{$detail->email ?? '-'}}</p>
                 </div>
                 <div class="col-4">
                     <h6 class="mb-0">Phone</h6>
-                    <p>+{{$detail->notelpon ?? ''}}</p>
+                    <p>+{{$detail->notelpon ?? '-'}}</p>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
             <div class="border-bottom mt-1">
                 <h4> Tentang Perusahaan</h4>
             </div>
-            <p class="mt-3">{!! nl2br($detail->description) !!}</p>
+            <p class="mt-3">{!! ($detail->description) ? nl2br($detail->description) : '-' !!}</p>
         </div>
     </div>
 

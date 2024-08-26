@@ -25,8 +25,15 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
-        ->get()->pluck('id_lowongan')->toArray();
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
+            ->get()->pluck('id_lowongan')->toArray();
+            $data['isMahasiswa'] = true;
+        }else{
+            $data['lowongan_tersimpan'] = [];
+            $data['isMahasiswa'] = false;
+        }
 
         $data['lowongan'] = LowonganMagang::select(
             'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
@@ -61,8 +68,15 @@ class ApplyLowonganFakultasController extends Controller
         ->where('id_lowongan', $id)
         ->where('statusaprove', 'diterima')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
 
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $isMahasiswa = true;
+        }else{
+            $isMahasiswa = false;
+        }
+
         if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
-        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan'))->render();
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa'))->render();
 
         return Response::success($data, 'Success');
     }
@@ -70,7 +84,24 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $nim = Auth::user()->nim;
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $registeredTwo = $registered->count() >= 2 ? true : false;
+        $registeredThis = $registered->where('id_lowongan', $id)->first();
+
+        if($registeredThis) {
+            $sudahDaftar = true;
+        }else{
+            $sudahDaftar = false;
+        }
+
+        if($registeredTwo) {
+            $daftarDua = true;
+        }else{
+            $daftarDua = false;
+        }
+
+        $auth = Auth::user();
+        $nim = $auth->nim;
 
         $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
@@ -81,14 +112,35 @@ class ApplyLowonganFakultasController extends Controller
 
         $urlBack = route('apply_lowongan');
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang'));
+        $urlId = $id;
+
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+
+        if($registered->where('id_lowongan', $id)->first()) {
+            return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
+        }
+
+        if($registered->count() >= 2) {
+            return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
+        }
+
+        $auth = Auth::user();
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        if($persentase < 80) {
+            return Response::error(null, 'Data profil belum lengkap', 400);
+        }
+
         $request->validate([
-            'porto' => 'required|mimes:pdf|max:5000',
+            'porto' => 'mimes:pdf|max:5000',
             'reason' => 'required|string|max:1000'
         ], [
             'porto.mimes' => 'File harus berupa pdf',

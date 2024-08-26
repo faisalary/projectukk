@@ -19,7 +19,10 @@
             </div>
         </div>
     `);
-    modal.find('.modal-content').append(overlay);
+    
+    if(dataTarget == 'modalEditInformasiPribadi'){
+      modal.find('.modal-content').append(overlay);
+    }
 
     let data = { section: dataTarget };
     if (dataId != null) {
@@ -45,7 +48,11 @@
           let element = modal.find(`[name="${key}"]`);
           if (modal.find(`div[data-repeater-list="${key}"]`).length > 0) {
             value = JSON.parse(value);
-            formRepeaterCustom.setList(value);
+
+            // formRepeaterCustom.isFirstItemUndeletable(true); //why it doesnt work?
+            if(value.length > 0){
+              formRepeaterCustom.setList(value);
+            }
 
           } else if (element.is(':radio')) {
 
@@ -212,9 +219,10 @@
           initSelect2();
           // --------------------------------------------
 
-
+          $('#hidden-sosmedmhs').find('.invalid-feedback').html(null).removeClass('d-block');
           $(this).slideDown();
       },
+      isFirstItemUndeletable: true,
       hide: function (e) {
           let confirm_ = confirm('Are you sure you want to delete this element?');
           if (!confirm_) return;

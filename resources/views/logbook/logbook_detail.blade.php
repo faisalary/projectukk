@@ -35,16 +35,8 @@
                 </div>
 
                 <div class="mt-3">
-                    <div class="card-body" style="width: 400px !important; ">
-                        <div class="text-light row small fw-semibold">
-                            <div class="col-6"> Kelengkapan Logbook</div>
-                            <div class="col-6 text-end">75%</div>
-                        </div>
-                        <div class="demo-vertical-spacing text-end">
-                            <div class="progress text-end">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+                    <div class="card-body" style="width: 400px !important;" id="container-percentage">
+                        @include('logbook.components.percentage')
                     </div>
                 </div>
             </div>
@@ -126,10 +118,71 @@
         modal.modal('show');
     }
 
+    function changeLogbookType(e){
+        $.ajax({
+            url: `{{ route('logbook.change_type', $data->id_logbook_week) }}`,
+            type: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                date: e.attr('data-date'),
+                type: e.is(':checked') ? 'libur' : 'daily'
+            },
+            success: function (response) {
+                $('#container-logbook-daily').html(response.data.view);
+                $('#container-left-card').html(response.data.view_left_card);
+                $('#container-percentage').html(response.data.view_percentage);
+            }
+        });
+    }
+
+    function changeLogbookLibur(e) {
+        let modal = $('#modalEditJadwal');
+        modal.find('button').attr('disabled', true);
+
+        showSweetAlert({
+            icon: 'warning',
+            title: 'Yakin?',
+            text: 'Ini akan menghapus laporan harian yang sudah dibuat.',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `{{ route('logbook.change_type', $data->id_logbook_week) }}`,
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        date: modal.find('input[name="date"]').val(),
+                        type: 'libur'
+                    },
+                    success: function (response) {
+                        $('#container-logbook-daily').html(response.data.view);
+                        $('#container-left-card').html(response.data.view_left_card);
+                        $('#container-percentage').html(response.data.view_percentage);
+                        modal.modal('hide');
+                        modal.find('button').attr('disabled', false);
+                    },
+                    error: function (response) {
+                        modal.find('button').attr('disabled', false);
+                        showSweetAlert({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.responseJSON.message
+                        });
+                    }
+                });
+            } else {
+                modal.find('button').attr('disabled', false);
+            }
+        });
+    }
+
     function afterCreateLogbookday(response) {
         let modal = $('#modalEditJadwal');
         $('#container-logbook-daily').html(response.data.view);
         $('#container-left-card').html(response.data.view_left_card);
+        $('#container-percentage').html(response.data.view_percentage);
         modal.modal('hide');
     }
 
@@ -148,6 +201,7 @@
                 modal.find('.date-formated').html(dateFormat(response.data.date));
                 form.find('input[name="emoticon"]').val(response.data.emoticon);
                 form.find('textarea[name="activity"]').val(response.data.activity);
+                form.find('input[name="date"]').val(response.data.date);
 
                 $('.image-emot[data-bobot="'+response.data.emoticon+'"]').click();
             }
@@ -189,6 +243,7 @@
 
     $('#modalEditJadwal').on('hide.bs.modal', function () {
         $(this).find('.date-formated').html(null);
+        $(this).find('input[name="date"]').val(null);
         let form = $(this).find('form');
 
         $('.image-emot').each(function () {

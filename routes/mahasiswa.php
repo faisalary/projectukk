@@ -75,6 +75,8 @@ Route::prefix('profile')->name('profile')->controller(ProfileMahasiswaController
 
     Route::post('update-dokumen', 'updateDokumenPendukung')->name('.update_dokumen');
     Route::post('delete-dokumen/{id}', 'deleteDokumen')->name('.delete_dokumen');
+
+    Route::get('percentage', 'getPercentage')->name('.percentage');
 });
 
 // route untuk ke hlm. unduh cv
@@ -102,6 +104,7 @@ Route::prefix('kegiatan-saya')->group(function () {
         Route::get('detail/{id}', 'detail')->name('.detail');
 
         Route::post('create-logbook', 'storeCreateLogbook')->name('.create');
+        Route::post('change-logbook-type/{id_logbook_week}', 'changeLogbookType')->name('.change_type');
         Route::post('create-logbook-daily/{id_logbook_week}', 'storeLogbookDaily')->name('.create_logbook_daily');
         Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
 

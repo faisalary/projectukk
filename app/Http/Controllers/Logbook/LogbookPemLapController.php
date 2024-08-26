@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Logbook;
 
-use App\Enums\LogbookWeeklyStatus;
 use App\Helpers\Response;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Enums\LogbookWeeklyStatus;
 
 class LogbookPemLapController extends LogbookController
 {
@@ -52,13 +53,33 @@ class LogbookPemLapController extends LogbookController
     public function viewLogbook(Request $request, $id)
     {
         $isPembLapangan = true;
+
+        $data['list_week'] = LogbookWeek::select('id_logbook_week', 'week', 'status', 'start_date', 'end_date')
+        ->whereHas('logbook', function ($q) use ($id) {
+            $q->where('id_mhsmagang', $id);
+        })
+        ->orderBy('start_date', 'asc');
+
         if ($request->ajax()) {
             if ($request->section == 'get_logbook_week') {
-                $data = LogbookDay::where('id_logbook_week', $request->data_id)->get();
-                $logbook_week = LogbookWeek::select('week', 'id_logbook_week', 'status', 'alasan_tolak')->where('id_logbook_week', $request->data_id)->first();
-                $week = $request->week;
-                $result['view_content'] = view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', compact('data', 'logbook_week', 'isPembLapangan', 'week'))->render();
-                $result['view_rejected_reason'] = view('kelola_mahasiswa/logbook/components/rejected_reason', ['logbook_week' => $logbook_week])->render();
+                if ($request->data_id == null) {
+                    $result['container_detail_logbook_weekly'] = '<h4 class="text-center">Belum di pilih</h4>';
+                } else {
+                    $logbook_week = LogbookWeek::select('week', 'id_logbook_week', 'status', 'alasan_tolak')->where('id_logbook_week', $request->data_id)->first();
+                    if ($logbook_week->status == LogbookWeeklyStatus::NOT_YET_APPLIED) {
+                        $result['container_detail_logbook_weekly'] = '<h4 class="text-center">Belum diajukan</h4>';
+                    } else {
+                        $data = LogbookDay::where('id_logbook_week', $request->data_id)->orderBy('date', 'asc')->get();
+                        $week = $request->week;
+                        $result['container_detail_logbook_weekly'] = view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', compact('data', 'logbook_week', 'isPembLapangan', 'week'))->render();
+                    }
+                }
+            } elseif ($request->section == 'get_list_week') {
+                $data['list_week'] = $data['list_week']->where(function ($query) use ($request) {
+                    $query->whereMonth('start_date', ($request->selected_month + 1))->orWhereMonth('end_date', ($request->selected_month + 1));
+                })->get();
+
+                $result['container_left_card'] = view('kelola_mahasiswa/logbook/components/left_card_week', $data)->render();
             } else {
                 return Response::error(null, 'Invalid Request', 400);
             }
@@ -73,14 +94,11 @@ class LogbookPemLapController extends LogbookController
         });
 
         $data['mahasiswa'] = $this->pendaftaran->first();
+        $data['list_week'] = $data['list_week']->where(function ($query) {
+            $query->whereMonth('start_date', now()->format('m'))->orWhereMonth('end_date', now()->format('m'));
+        })->get();
 
-        $data['list_week'] = LogbookWeek::select('id_logbook_week', 'week', 'status', 'start_date', 'end_date')
-        ->whereHas('logbook', function ($q) use ($id) {
-            $q->where('id_mhsmagang', $id);
-        })
-        ->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->orderBy('start_date', 'asc')
-        ->get();
-
+        $data['list_month'] = $this->getListMonth('M')->list_month;
         $data['isPembLapangan'] = $isPembLapangan;
         $data['url_get'] = route('kelola_magang_pemb_lapangan.logbook', $id);
         $data['urlBack'] = route('kelola_magang_pemb_lapangan');
@@ -93,6 +111,7 @@ class LogbookPemLapController extends LogbookController
             'status' => 'required|in:approved,rejected',
             'rejected_reason' => 'required_if:status,rejected',
             'week' => 'required',
+            'selected_month' => 'required|min:0|max:11',
         ]);
 
         try {
@@ -113,7 +132,12 @@ class LogbookPemLapController extends LogbookController
             $listLogbookWeek = LogbookWeek::select('id_logbook_week', 'week', 'status', 'start_date', 'end_date')
             ->whereHas('logbook', function ($q) use ($logbookWeek) {
                 $q->where('id_mhsmagang', $logbookWeek->logbook->id_mhsmagang);
-            })->where('status', '!=', LogbookWeeklyStatus::NOT_YET_APPLIED)->orderBy('start_date', 'asc')->get();
+            })
+            ->where(function ($query) use ($request) {
+                $query->whereMonth('start_date', ($request->selected_month + 1))
+                ->orWhereMonth('end_date', ($request->selected_month + 1));
+            })
+            ->orderBy('start_date', 'asc')->get();
 
             $logbookDaily = LogbookDay::where('id_logbook_week', $id)->get();
             return Response::success([

@@ -22,24 +22,15 @@ use App\Http\Requests\InformasiPengalamanReq;
 
 class ProfileMahasiswaController extends Controller
 {
+    public function __construct() {
+        
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index() { 
-        // Menghitung persentase kelengkapan profil
-        // $persentase = $this->persentase($id);
-        
-        $user = auth()->user();
-        $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi', 'kota.provinsi.negara');
-
-        $data['mahasiswa'] = $mahasiswa;
-        $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
-        $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-        $data['sosmed'] = SosmedTambahan::where('nim', $mahasiswa->nim)->orderBy('namaSosmed', 'asc')->get();
-        $data['bahasa'] = BahasaMahasiswa::where('nim', $mahasiswa->nim)->orderBy('bahasa', 'asc')->get();
-        $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
-
+        $data = $this->getFullDataProfile();
         return view('profile.informasi_pribadi', $data);
     }
 
@@ -146,7 +137,7 @@ class ProfileMahasiswaController extends Controller
 
             $mahasiswa->save();
 
-            $mahasiswa = $mahasiswa->load('univ', 'fakultas', 'prodi', 'kota.provinsi.negara');
+            $mahasiswa = $mahasiswa->load('univ', 'fakultas', 'prodi');
             
             return Response::success([
                 'view' => view('profile/components/informasi_pribadi_detail', compact('mahasiswa'))->render()
@@ -421,5 +412,75 @@ class ProfileMahasiswaController extends Controller
         ];
 
         return view('mahasiswa.cv', $data);
+    }
+
+    public static function getFullDataProfile($id = null){
+        if($id){
+            $mahasiswa = Mahasiswa::where('id_user', $id)->first();
+        }else{
+            $user = auth()->user();
+            $mahasiswa = $user->mahasiswa->load('univ', 'fakultas', 'prodi', 'dosen_wali');
+        }
+        $data['mahasiswa'] = $mahasiswa;
+        $data['skills'] = json_decode($mahasiswa->skills, true) ?? [];
+        $data['pendidikan'] = Education::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['experience'] = Experience::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['sosmed'] = SosmedTambahan::where('nim', $mahasiswa->nim)->orderBy('namaSosmed', 'asc')->get();
+        $data['bahasa'] = BahasaMahasiswa::where('nim', $mahasiswa->nim)->orderBy('bahasa', 'asc')->get();
+        $data['dokumenPendukung'] = Sertif::where('nim', $mahasiswa->nim)->orderBy('startdate', 'desc')->get();
+        $data['percentageData'] = self::countPercentage($data);
+
+        return $data;
+    }
+
+    public static function countPercentage($data){
+        $totalData = 0;
+        $totalEmptyData = 0;
+        foreach($data as $key => $value){
+            if($key == 'mahasiswa'){
+                foreach($value->toArray() as $k => $v){
+                    if($v == null || $v == ''){
+                        $totalEmptyData++;
+                        $clue[] = $k;
+                    }
+                    $totalData++;
+                }
+            }else{
+               if(is_array($value)){
+                    if(count($value) == 0){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }elseif(is_object($value)){
+                    if($value->isEmpty()){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }else{
+                    if($value == null || $value == ''){
+                        $totalEmptyData++;
+                        $clue[] = $key;
+                    }
+                    $totalData++;
+                }
+            }
+        }
+
+        $data = new \stdClass();
+        $data->percentage = floor(($totalData - $totalEmptyData) / $totalData * 100);
+        $data->totalData = $totalData;
+        $data->totalEmptyData = $totalEmptyData;
+        $data->clue = implode(', ', $clue ?? []);
+
+        return $data;
+    }
+
+    public function getPercentage(){
+        $percentageData = $this->getFullDataProfile()['percentageData'];
+        
+        return Response::success(['view' => view('profile/components/percentage', compact('percentageData'))->render()], 'Success get percentage data.');
+        
     }
 }

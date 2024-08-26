@@ -46,16 +46,8 @@
                             </div>
                         </div>
                         <div class="col-6 mt-5 d-flex justify-content-between">
-                            <div class="card-body ms-5 mt-3">
-                                <div class="d-flex justify-content-between small fw-semibold">
-                                    <span>Kelengkapan Logbook</span>
-                                    <span>75%</span>
-                                </div>
-                                <div class="demo-vertical-spacing text-end">
-                                    <div class="progress text-end">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+                            <div class="card-body ms-5 mt-3" id="percentage_container">
+                                @include('logbook.components.percentage')
                             </div>
                             <div class="pe-4">
                                 <button class="btn btn-outline-primary mt-5" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
@@ -134,8 +126,9 @@
                 let end_date = new Date(start_date);
                 end_date.setDate(start_date.getDate() + 6);
     
+                if (start_date < startDate) start_date = startDate;
                 if (end_date > endDate) end_date = endDate;
-    
+                
                 const formattedDateRange = `${formatDate(start_date)} to ${formatDate(end_date)}`;
                 instance.input.value = formattedDateRange;
             }

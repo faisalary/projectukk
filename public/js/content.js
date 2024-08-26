@@ -29,6 +29,7 @@ function initAllComponents() {
     initPopOver();
     initTooltips();
     initFormRepeater();
+    initDataFilter();
 }
 
 function initSelect2(element = null, data = null) {
@@ -219,14 +220,26 @@ function showSweetAlert(config) {
     text = config.text ?? 'The action was executed successfully.';
     icon = config.icon ?? 'success';
     showConfirmButton = config.showConfirmButton ?? true
+    confirmButtonText = config.confirmButtonText ?? 'OK';
+    showCancelButton = config.showCancelButton ?? false
+    cancelButtonText = config.cancelButtonText ?? 'Batal';
+
+    customClass = {
+        confirmButton: 'btn btn-primary',
+    }
+
+    if(showCancelButton) {
+        customClass['cancelButton'] = 'btn btn-outline-danger';
+    }
 
     return Swal.fire({
         html: '<h3>' + title + '</h3><p>' + text + '</p>',
         icon: icon,
         showConfirmButton: showConfirmButton,
-        customClass: {
-            confirmButton: 'btn btn-primary'
-        }
+        confirmButtonText: confirmButtonText,
+        showCancelButton: showCancelButton,
+        cancelButtonText: cancelButtonText,
+        customClass: customClass,
     });
 }
 
@@ -384,3 +397,29 @@ $(document).on('click', '.update-status', function () {
         });
     });
 });
+
+function initDataFilter(){
+    let inputs = document.querySelectorAll('input[data-filter]');
+    for (let input of inputs) {
+    let state = {
+        value: input.value,
+        start: input.selectionStart,
+        end: input.selectionEnd,
+        pattern: RegExp('^' + input.dataset.filter + '$')
+    };
+
+    input.addEventListener('input', event => {
+        if (state.pattern.test(input.value)) {
+        state.value = input.value;
+        } else {
+        input.value = state.value;
+        input.setSelectionRange(state.start, state.end);
+        }
+    });
+
+    input.addEventListener('keydown', event => {
+        state.start = input.selectionStart;
+        state.end = input.selectionEnd;
+    });
+    }
+}

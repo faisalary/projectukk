@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if(!Schema::hasTable('reg_provinces')){
+            $sql1 = file_get_contents(database_path('sql/wilayah_indonesia.sql'));
+            DB::unprepared($sql1);
+        }
         Schema::table('mahasiswa', function (Blueprint $table) {
             if (!Schema::hasColumn('mahasiswa', 'kota_id')) {
                 $table->integer('kota_id')->nullable()->after('alamatmhs');
