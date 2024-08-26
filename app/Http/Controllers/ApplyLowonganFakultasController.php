@@ -25,8 +25,13 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
-        ->get()->pluck('id_lowongan')->toArray();
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
+            ->get()->pluck('id_lowongan')->toArray();
+        }else{
+            $data['lowongan_tersimpan'] = [];
+        }
 
         $data['lowongan'] = LowonganMagang::select(
             'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
