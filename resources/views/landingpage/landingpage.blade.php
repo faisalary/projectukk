@@ -326,6 +326,14 @@
 <script>
     $(document).ready(function () {
         loadData('container-lowongan-magang', 'container-mitra');
+        
+        //cut location height in half
+        $('.dropdown-toggle').on('click', function () {
+            const element = document.querySelector('#bs-select-1');
+            const originalHeight = element.offsetHeight;
+            const desiredMaxHeight = originalHeight * 0.5;
+            element.style.maxHeight = `${desiredMaxHeight}px`;
+        });
     });
 
     function loadData(...type) {
@@ -340,13 +348,6 @@
         });
     }
 
-    //cut location height in half
-    $('.dropdown-toggle').on('click', function () {
-        const element = document.querySelector('#bs-select-1');
-        const originalHeight = element.offsetHeight;
-        const desiredMaxHeight = originalHeight * 0.5;
-        element.style.maxHeight = `${desiredMaxHeight}px`;
-    });
 
 </script>
 @endsection

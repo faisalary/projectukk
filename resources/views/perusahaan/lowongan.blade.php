@@ -244,7 +244,7 @@
         }
     });
 
-    @if(auth()->user()->hasRole('Mahasiswa'))
+    @if($isMahasiswa)
     function myFunction(event, e) {
         event.stopPropagation();
         let icon = e.find('i');
