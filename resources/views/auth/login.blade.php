@@ -52,11 +52,11 @@
                                     <label class="form-check-label" for="remember-me">Remember Me</label>
                                 </div>
 
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}">
+                                {{-- @if (Route::has('password.request')) --}}
+                                    <a href="{{ route('forgot-pass') }}">
                                         <small>Forgot Password?</small>
                                     </a>
-                                @endif
+                                {{-- @endif --}}
 
                             </div>
                         </div>
