@@ -47,7 +47,7 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
-        ->where('mahasiswa.id_fakultas', $dosen->id_fakultas);
+        ->where('mahasiswa.id_prodi', $dosen->id_prodi);
 
         // Filter data berdasarkan parameter tiap bagian/section
         if ($request->section == 'approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL);
