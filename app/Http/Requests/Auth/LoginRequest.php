@@ -26,9 +26,18 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        return  [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Email is required',
+            'email.email' => 'Email is not valid',
+            'password.required' => 'Password is required',
         ];
     }
 
@@ -45,7 +54,8 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => trans('The provided credentials do not match our records.'),
+                'password' => trans('The provided credentials do not match our records.'),
             ]);
         }
 
