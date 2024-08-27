@@ -72,19 +72,24 @@
                     </div>
                     <!-- Job Search Form -->
                     <div class="row mt-3">
-                        <form class="d-flex justify-content-start" action="{{ url('/search') }}" method="post">
+                        <form class="d-flex justify-content-start" action="{{ url('/apply-lowongan') }}" method="get">
                             <div class="d-flex" style="border-radius: 8px; border: 2px solid #4EA971; background: #FFF;">
                                 <div class="flex-fill">
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="ti ti-search"></i></span>
-                                        <input type="text" class="form-control" placeholder="Lowongan Magang"/>
+                                        <input type="text" name="lowongan" class="form-control" placeholder="Lowongan Magang"/>
                                     </div>
                                 </div>
                                 <div class="my-auto" style="width:0.1rem;height:25px;background-color: #4EA971"></div>
-                                <div class="flex-fill">
-                                    <div class="input-group input-group-merge">
+                                <div class="flex-fill align-self-center">
+                                    <div class="input-group input-group-merge position-relative">
                                         <span class="input-group-text"><i class="ti ti-map-pin"></i></span>
-                                        <input type="text" class="form-control" placeholder="Lokasi Magang"/>
+                                        <select id="lokasi" name="location" class="pe-3 selectpicker" data-style="btn-default" data-live-search="true" tabindex="null">
+                                            <option value="" selected disabled>Lokasi Magang</option>
+                                            @foreach ($kota as $item)
+                                                <option data-tokens="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="my-auto" style="width:0.1rem;height:25px;background-color: #4EA971"></div>
@@ -334,5 +339,15 @@
             });
         });
     }
+
+    //cut location height in half
+    $('.dropdown-toggle').on('click', function () {
+        const element = document.querySelector('#bs-select-1');
+        const originalHeight = element.offsetHeight;
+        const desiredMaxHeight = originalHeight * 0.5;
+        element.style.maxHeight = `${desiredMaxHeight}px`;
+    });
+
 </script>
 @endsection
+
