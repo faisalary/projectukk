@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
+use App\Jobs\RejectionPenawaranLowongan;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
@@ -168,6 +169,9 @@ class LowonganMagangController extends Controller
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
+        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+
+        dispatch(new RejectionPenawaranLowongan($id));
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
     }
@@ -576,6 +580,16 @@ class LowonganMagangController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ]);
+        }
+    }
+
+    public function rejectionPenawaran($id) {
+        try {
+            
+
+            return Response::success(null, 'Success');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
     }
 
