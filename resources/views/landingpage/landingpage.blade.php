@@ -45,6 +45,10 @@
         .input-group:focus-within {
             box-shadow: none;
         }
+
+        .dropdown-menu {
+            max-height: 250px !important;
+        }
     </style>
 @endsection
 
@@ -81,8 +85,8 @@
                                     </div>
                                 </div>
                                 <div class="my-auto" style="width:0.1rem;height:25px;background-color: #4EA971"></div>
-                                <div class="flex-fill align-self-center">
-                                    <div class="input-group input-group-merge position-relative">
+                                <div class="flex-fill">
+                                    <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="ti ti-map-pin"></i></span>
                                         <select id="lokasi" name="location" class="pe-3 selectpicker" data-style="btn-default" data-live-search="true" tabindex="null">
                                             <option value="" selected disabled>Lokasi Magang</option>
@@ -94,7 +98,7 @@
                                 </div>
                                 <div class="my-auto" style="width:0.1rem;height:25px;background-color: #4EA971"></div>
                                 <div class="flex-fill">
-                                    <div class="input-group input-group-merge position-relative">
+                                    <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
                                         <select name="jenis_magang" class="selectpicker pe-3" data-style="btn-default">
                                             <option value="" selected disabled>Pilih Jenis Magang</option>
@@ -326,14 +330,6 @@
 <script>
     $(document).ready(function () {
         loadData('container-lowongan-magang', 'container-mitra');
-        
-        //cut location height in half
-        $('.dropdown-toggle').on('click', function () {
-            const element = document.querySelector('#bs-select-1');
-            const originalHeight = element.offsetHeight;
-            const desiredMaxHeight = originalHeight * 0.5;
-            element.style.maxHeight = `${desiredMaxHeight}px`;
-        });
     });
 
     function loadData(...type) {
