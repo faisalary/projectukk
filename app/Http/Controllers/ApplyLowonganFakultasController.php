@@ -15,7 +15,9 @@ use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\JenisMagang;
 use App\Models\PekerjaanTersimpan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
@@ -29,8 +31,10 @@ class ApplyLowonganFakultasController extends Controller
         if ( $auth && $auth->hasRole('Mahasiswa')) {
             $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
             ->get()->pluck('id_lowongan')->toArray();
+            $data['isMahasiswa'] = true;
         }else{
             $data['lowongan_tersimpan'] = [];
+            $data['isMahasiswa'] = false;
         }
 
         $data['lowongan'] = LowonganMagang::select(
@@ -52,6 +56,9 @@ class ApplyLowonganFakultasController extends Controller
         }
 
         $data['perusahaan'] = Industri::where('statusapprove', 1)->get();
+        $data['kota'] = DB::table('reg_regencies')->get();
+        $data['filtered'] = $request->all();
+        $data['jenisMagang'] = JenisMagang::all();
 
         return view('perusahaan.lowongan', $data);
     }
@@ -66,8 +73,15 @@ class ApplyLowonganFakultasController extends Controller
         ->where('id_lowongan', $id)
         ->where('statusaprove', 'diterima')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
 
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $isMahasiswa = true;
+        }else{
+            $isMahasiswa = false;
+        }
+
         if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
-        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan'))->render();
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa'))->render();
 
         return Response::success($data, 'Success');
     }
@@ -207,6 +221,10 @@ class ApplyLowonganFakultasController extends Controller
                     $query->orWhere('pelaksanaan', $value);
                 }
             });
+        }
+
+        if ($request->jenis_magang) {
+            $data['lowongan'] = $data['lowongan']->where('id_jenismagang', $request->jenis_magang);
         }
 
         return $data;
