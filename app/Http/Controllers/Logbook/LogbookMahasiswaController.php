@@ -427,7 +427,7 @@ class LogbookMahasiswaController extends LogbookController
             'can_apply' => $canApply
         ];
 
-        $totalDays = 7;
+        $totalDays = CarbonPeriod::create($logbookWeek->start_date, $logbookWeek->end_date)->count();
         $filledDays = $data['logbook_day']->whereNotNull('activity')->count();
         $data['percentage'] = self::percentage($filledDays, $totalDays);
 

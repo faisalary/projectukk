@@ -25,6 +25,12 @@
 @endsection
 
 @section('content')
+
+{{-- tombol kembali --}}
+<a href="{{ url('lowongan-magang/informasi-lowongan') }}" class="btn btn-outline-primary mt-4 mb-3">
+    <i class="ti ti-arrow-left me-2 text-primary"></i>
+    Kembali
+</a>
 <div class="d-flex justify-content-between">
     <h4 class="fw-bold"><span class="text-muted fw-light">Informasi Lowongan / </span>{{ $lowongan->intern_position }}</h4>
     <div class="d-flex justify-content-end">

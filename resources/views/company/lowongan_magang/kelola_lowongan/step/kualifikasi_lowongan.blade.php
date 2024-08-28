@@ -94,7 +94,11 @@
         </div>
         <div class="form-group col-lg-12 col-sm-6">
             <label for="lokasi" class="form-label">Lokasi Penempatan<span class="text-danger">*</span></label>
-            <select name="lokasi[]" id="lokasi" multiple="multiple" class="select2 form-select" data-placeholder="Masukan Lokasi Pekerjaan" data-tags="true"></select>
+            <select name="lokasi[]" id="lokasi" multiple="multiple" class="select2 form-select" data-placeholder="Masukan Lokasi Pekerjaan">
+                @foreach($kota as $k)
+                    <option value="{{ $k->name }}">{{ $k->name }}</option>
+                @endforeach
+            </select>
             <div class="invalid-feedback"></div>
         </div>
         <div class="col-lg-12 col-sm-6">
@@ -111,14 +115,6 @@
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
-        </div>
-        <div class="form-group col-lg-12 col-sm-6">
-            <label for="durasimagang" class="form-label">Durasi Magang<span class="text-danger">*</span></label>
-            <select name="durasimagang[]" id="durasimagang" multiple="multiple" class="select2 form-select" data-placeholder="Pilih Durasi Magang">
-                <option value="1 Semester">1 Semester</option>
-                <option value="2 Semester">2 Semester</option>
-            </select>
-            <div class="invalid-feedback"></div>
         </div>
         <div class="form-group col-lg-12 col-sm-6">
             <label for="tahapan" class="form-label">Tahapan Magang<span class="text-danger">*</span></label>

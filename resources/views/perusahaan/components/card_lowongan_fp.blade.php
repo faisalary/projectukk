@@ -16,9 +16,8 @@
                             <p class="mb-0">{{$l['namaindustri'] ?? ''}}</p>
                         </div>
                     </div>
-                    @if (auth()->user()->hasRole('Mahasiswa'))
                     <div class="ms-2">
-                        @if(auth()->check())
+                        @if($isMahasiswa)
                         <a onclick="myFunction(event, $(this));" data-id="{{$l['id_lowongan']}}" class="text-primary cursor-pointer">
                             @if (in_array($l['id_lowongan'], $lowongan_tersimpan))
                             <i class="fa-solid fa-bookmark" style="font-size: 25px;"></i>    
@@ -28,7 +27,6 @@
                         </a>
                         @endif
                     </div>
-                    @endif
                 </div>
                 <div class="border"></div>
                 <div class="map-pin mt-3 mb-3">
@@ -45,7 +43,7 @@
                 </div>
                 <div class="briefcase mb-3" style="margin-left: 1px;">
                     <i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>
-                    {{$l['kuota'] ?? ''}} Kuota Penerimaan
+                    {{$l['kuota_terisi'] ?? ''}}/{{$l['kuota'] ?? ''}} Kuota Tersedia
                 </div>
             </div>
         </div>

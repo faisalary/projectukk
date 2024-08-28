@@ -150,6 +150,10 @@
                     @endforeach
                 </div>
             </div>
+            <div class="mt-4 border-bottom pb-4">
+                <h4>Kuota Penerimaan</h4>
+                <p>{{ $lowongandetail->kuota_terisi }}/{{ $lowongandetail->kuota }} Kuota Tersedia</p>
+            </div>
             <div class="mt-4">
                 <h4>Tentang Perusahaan</h4>
                 <div class="d-flex justify-content-start">

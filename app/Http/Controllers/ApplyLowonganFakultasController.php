@@ -15,9 +15,10 @@ use App\Models\DocumentSyarat;
 use App\Models\LowonganMagang;
 use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\Auth;
+use App\Models\JenisMagang;
 use App\Models\PekerjaanTersimpan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DokumenPendaftaranMagang;
 use App\Enums\PendaftaranMagangStatusEnum;
@@ -33,8 +34,10 @@ class ApplyLowonganFakultasController extends Controller
         if ( $auth && $auth->hasRole('Mahasiswa')) {
             $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
             ->get()->pluck('id_lowongan')->toArray();
+            $data['isMahasiswa'] = true;
         }else{
             $data['lowongan_tersimpan'] = [];
+            $data['isMahasiswa'] = false;
         }
 
         $data['lowongan'] = LowonganMagang::select(
@@ -56,6 +59,9 @@ class ApplyLowonganFakultasController extends Controller
         }
 
         $data['perusahaan'] = Industri::where('statusapprove', 1)->get();
+        $data['kota'] = DB::table('reg_regencies')->get();
+        $data['filtered'] = $request->all();
+        $data['jenisMagang'] = JenisMagang::all();
 
         return view('perusahaan.lowongan', $data);
     }
@@ -70,8 +76,17 @@ class ApplyLowonganFakultasController extends Controller
         ->where('id_lowongan', $id)
         ->where('statusaprove', 'diterima')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
 
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $isMahasiswa = true;
+        }else{
+            $isMahasiswa = false;
+        }
+
+        $kuotaPenuh = $detailLowongan->kuota_terisi / $detailLowongan->kuota == 1;
+
         if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
-        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan'))->render();
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa','kuotaPenuh'))->render();
 
         return Response::success($data, 'Success');
     }
@@ -79,6 +94,13 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
+        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+        $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
+
+        if($kuotaPenuh){
+            return redirect()->route('apply_lowongan')->with('error', 'Kuota lowongan sudah penuh');
+        }
+
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
 
@@ -97,9 +119,6 @@ class ApplyLowonganFakultasController extends Controller
         }else{
             $daftarDua = false;
         }
-
-        $mahasiswa = auth()->user()->mahasiswa;
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
 
         $magang = PendaftaranMagang::where('id_lowongan', $id)->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
 
@@ -244,6 +263,10 @@ class ApplyLowonganFakultasController extends Controller
                     $query->orWhere('pelaksanaan', $value);
                 }
             });
+        }
+
+        if ($request->jenis_magang) {
+            $data['lowongan'] = $data['lowongan']->where('id_jenismagang', $request->jenis_magang);
         }
 
         return $data;

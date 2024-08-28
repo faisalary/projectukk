@@ -7,6 +7,7 @@ use App\Models\JenisMagang;
 use Illuminate\Http\Request;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,8 @@ class HomeController extends Controller
         }
 
         $jenisMagang = JenisMagang::all();
-        return view('landingpage.landingpage', compact('jenisMagang'));
+        $kota = DB::table('reg_regencies')->get();
+        return view('landingpage.landingpage', compact('jenisMagang', 'kota'));
     }
 
 

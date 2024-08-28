@@ -94,6 +94,8 @@ Route::prefix('master')->group(function () {
         Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('mahasiswa.list_prodi');
         Route::post('/import', 'import')->name('mahasiswa.import');
         Route::get('/preview', 'preview')->name('mahasiswa.preview');
+        Route::post('/store-import', 'storeImport')->name('mahasiswa.store_import');
+        Route::post('/download_failed_data' , 'download_failed_data')->name('mahasiswa.download_failed_data');
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');
@@ -103,6 +105,9 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('dosen.edit');
         Route::post('/status/{id}', 'status')->name('dosen.status');
         Route::post('/import', 'import')->name('dosen.import');
+        Route::get('/preview', 'preview')->name('dosen.preview');
+        Route::post('/store-import', 'storeImport')->name('dosen.store_import');
+        Route::post('/download_failed_data' , 'download_failed_data')->name('dosen.download_failed_data');
     });
     Route::prefix('komponen-penilaian')->controller(KomponenPenilaianController::class)->group(function () {
         Route::get('/', 'index')->name('komponen-penilaian');
