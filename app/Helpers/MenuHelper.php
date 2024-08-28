@@ -258,6 +258,16 @@ class MenuHelper
                         'permission' => 'jenis_magang.view'
                     ],
                     [
+                        'name' => 'Posisi Magang',
+                        'route' => 'posisimagang',
+                        'permission' => 'posisi_magang.view'
+                    ],
+                    [
+                        'name' => 'Durasi Magang',
+                        'route' => 'durasimagang',
+                        'permission' => 'durasi_magang.view'
+                    ],
+                    [
                         'name' => 'Dosen',
                         'route' => 'dosen',
                         'permission' => 'dosen.view'
