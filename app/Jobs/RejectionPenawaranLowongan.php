@@ -20,7 +20,7 @@ class RejectionPenawaranLowongan implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public string|array|null $id_lowongan = null)
+    public function __construct(public LowonganMagang|string|array|null $id_lowongan = null)
     {
         $this->valid_step = [
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
@@ -37,9 +37,16 @@ class RejectionPenawaranLowongan implements ShouldQueue
     {
         $pendaftarMagang = PendaftaranMagang::query();
         $lowongan = LowonganMagang::query();
-        if ($this->id_lowongan != null) {
-            $lowongan = $lowongan->whereIn('id_lowongan', is_array($this->id_lowongan) ? $this->id_lowongan : [$this->id_lowongan])->get();
-            $pendaftarMagang = $pendaftarMagang->whereIn('id_lowongan', is_array($this->id_lowongan) ? $this->id_lowongan : [$this->id_lowongan]);
+        if ($this->lowongan != null) {
+            if (is_string($this->lowongan)) {
+                $lowongan = $lowongan->whereIn('id_lowongan', [$this->lowongan])->get();
+            } elseif (is_array($this->lowongan)) {
+                $lowongan = $lowongan->whereIn('id_lowongan', $this->lowongan)->get();
+            } elseif ($this->lowongan instanceof LowonganMagang) {
+                $lowongan = $this->lowongan;
+            }
+            
+            $pendaftarMagang = $pendaftarMagang->whereIn('id_lowongan', is_array($this->lowongan) ? $this->lowongan : [$this->lowongan]);
         } else {
             $lowongan = $lowongan->get();
         }

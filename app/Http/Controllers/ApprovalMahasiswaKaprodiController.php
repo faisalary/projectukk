@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
+use App\Models\DokumenPendaftaranMagang;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 
@@ -112,6 +113,9 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->where('pendaftaran_magang.id_pendaftaran', $id)->first();
+
+        $data['dokumen_persyaratan'] = DokumenPendaftaranMagang::join('document_syarat', 'document_syarat.id_document', '=', 'dokumen_pendaftaran_magang.id_document')
+            ->where('id_pendaftaran', $id)->get();
 
         $data['urlBack'] = route('approval_mahasiswa_kaprodi');
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
 use App\Models\PendaftaranMagang;
 use App\Enums\LowonganMagangStatusEnum;
+use App\Models\DokumenPendaftaranMagang;
 use App\Enums\PendaftaranMagangStatusEnum;
 
 class InformasiMitraController extends Controller
@@ -150,6 +151,8 @@ class InformasiMitraController extends Controller
             $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
             $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
             $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
+            $data['dokumen_syarat'] = DokumenPendaftaranMagang::join('document_syarat', 'dokumen_pendaftaran_magang.id_document', '=', 'document_syarat.id_document')
+                ->where('id_pendaftaran', $request->data_id)->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
