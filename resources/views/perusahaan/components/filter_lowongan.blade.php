@@ -23,7 +23,7 @@
                 <select name="jenis_magang" id="jenis_magang" class="select2 form-select" data-placeholder="Jenis Magang" data-allow-clear="true">
                     <option value disabled selected> Jenis Magang </option>
                     @foreach($jenisMagang as $item)
-                        <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }}</option>
+                        <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }} ({{ $item->durasimagang }})</option>
                     @endforeach
                 </select>
             </div>

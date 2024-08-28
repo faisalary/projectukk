@@ -17,6 +17,7 @@ return new class extends Migration
 
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         foreach($this->reg as $table){
             Schema::table($table, function (Blueprint $table) {
                 $table->integer('id')->autoIncrement()->change();
