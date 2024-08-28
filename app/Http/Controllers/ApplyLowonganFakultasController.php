@@ -80,8 +80,10 @@ class ApplyLowonganFakultasController extends Controller
             $isMahasiswa = false;
         }
 
+        $kuotaPenuh = $detailLowongan->kuota_terisi / $detailLowongan->kuota == 1;
+
         if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
-        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa'))->render();
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa','kuotaPenuh'))->render();
 
         return Response::success($data, 'Success');
     }
@@ -111,6 +113,12 @@ class ApplyLowonganFakultasController extends Controller
         $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
         $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+
+        $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
+
+        if($kuotaPenuh){
+            return redirect()->route('apply_lowongan')->with('error', 'Kuota lowongan sudah penuh');
+        }
 
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();

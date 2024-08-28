@@ -43,7 +43,7 @@
                 </div>
                 <div class="briefcase mb-3" style="margin-left: 1px;">
                     <i class="ti ti-users" style="margin-right: 10px;margin-bottom:5px;"></i>
-                    {{$l['kuota'] ?? ''}} Kuota Penerimaan
+                    {{$l['kuota_terisi'] ?? ''}}/{{$l['kuota'] ?? ''}} Kuota Tersedia
                 </div>
             </div>
         </div>
