@@ -15,7 +15,9 @@ use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\JenisMagang;
 use App\Models\PekerjaanTersimpan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
@@ -54,6 +56,9 @@ class ApplyLowonganFakultasController extends Controller
         }
 
         $data['perusahaan'] = Industri::where('statusapprove', 1)->get();
+        $data['kota'] = DB::table('reg_regencies')->get();
+        $data['filtered'] = $request->all();
+        $data['jenisMagang'] = JenisMagang::all();
 
         return view('perusahaan.lowongan', $data);
     }
@@ -216,6 +221,10 @@ class ApplyLowonganFakultasController extends Controller
                     $query->orWhere('pelaksanaan', $value);
                 }
             });
+        }
+
+        if ($request->jenis_magang) {
+            $data['lowongan'] = $data['lowongan']->where('id_jenismagang', $request->jenis_magang);
         }
 
         return $data;
