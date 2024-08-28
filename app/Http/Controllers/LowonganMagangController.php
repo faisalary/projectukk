@@ -432,7 +432,13 @@ class LowonganMagangController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "primary";
 
-                $btn = "<div class='d-flex justify-content-center'><a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>
+                if($row->statusaprove != 'diterima') {
+                    $edit = "<a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>";
+                }else{
+                    $edit = '';
+                }
+
+                $btn = "<div class='d-flex justify-content-center'>$edit
                         <a href='" . route('kelola_lowongan.detail' , $row->id_lowongan) . "' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
                         <a data-function='afterUpdateStatus' data-url='".route('kelola_lowongan.change_status', ['id' => $row->id_lowongan])."' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
                 return $btn;
@@ -461,6 +467,10 @@ class LowonganMagangController extends Controller
     public function edit(Request $request, $id)
     {
         $lowongan = $this->my_lowongan_magang->load('jenisMagang')->first();
+        
+        if($lowongan->statusaprove == 'diterima') {
+            return redirect()->route('kelola_lowongan');
+        }
 
         $jenismagang = JenisMagang::all();
         $tahap = $lowongan->tahapan_seleksi;
@@ -479,9 +489,10 @@ class LowonganMagangController extends Controller
     {
         $lowongan = $this->my_lowongan_magang->load('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
         if (!$lowongan) return redirect()->route('kelola_lowongan');
+        $kuotaPenuh = $lowongan->kuota_terisi / $lowongan->kuota == 1;
 
         $urlBack = route('kelola_lowongan');
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact('lowongan', 'urlBack'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact('lowongan', 'urlBack', 'kuotaPenuh'));
     }
 
     /**
