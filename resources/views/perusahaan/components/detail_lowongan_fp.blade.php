@@ -10,7 +10,9 @@
                         <img src="{{ asset('app-assets/img/avatars/14.png') }}" alt="user-avatar" class="" height="125" width="125" id="imgPreview" data-default-src="{{ asset('app-assets/img/avatars/14.png') }}">
                     @endif
                     <div class="text-end">
-                        <p>Batas Melamar 13 Juli 2023</p>
+                        {{-- <p>Batas Melamar 12 Juli 2023</p> --}}
+                        <p>Batas Melamar {{ $detailLowongan?->enddate ? \Carbon\Carbon::parse($detailLowongan->enddate)->translatedFormat('d F Y') : 'Unimited' }}</p>
+
                         {{-- <button type="button" class="btn btn-outline-primary" disabled>
                             Buka dihalaman baru
                         </button> --}}
@@ -64,8 +66,13 @@
         </div>
         @if($isMahasiswa && !$kuotaPenuh)
         <div class="row mt-3">
-            <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
+            @if (\Carbon\Carbon::now()->lessThanOrEqualTo(\Carbon\Carbon::parse($detailLowongan->enddate)) || \Carbon\Carbon::now()->isSameDay(\Carbon\Carbon::parse($detailLowongan->enddate)))
+                <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
+            @else
+                <p class="btn btn-secondary w-100">Lamar</p>
+            @endif
         </div>
+
         @endif
         <div class="row border-top">
             <div class="col py-3">
@@ -97,7 +104,7 @@
                     <b>{{ Carbon\Carbon::parse($detailLowongan->seleksi_tahap[$i]->tgl_mulai)->format('d/m/Y') }}</b> &ensp;-&ensp; <b>{{ Carbon\Carbon::parse($detailLowongan->seleksi_tahap[$i]->tgl_akhir)->format('d/m/Y') }}</b>
                 </p>
             </div>
-            @endfor 
+            @endfor
         </div>
         <div class="row border-top">
             <div class="col py-3">
@@ -107,7 +114,7 @@
         </div>
     </div>
 </div>
-@else 
+@else
 <div class="card border text-center mt-3">
     <div class="card-body">
         <figure class="m-5">
