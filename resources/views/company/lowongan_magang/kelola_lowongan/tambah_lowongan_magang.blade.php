@@ -194,5 +194,9 @@
         initSelect2();
     }
     @endif
+
+    function durasiMagang(data){
+        $('#durasimagang').val(data);
+    }
 </script>
 @endsection
