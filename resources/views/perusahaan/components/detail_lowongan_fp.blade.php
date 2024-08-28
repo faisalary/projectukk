@@ -62,9 +62,11 @@
                 </ul>
             </div>
         </div>
+        @if($isMahasiswa)
         <div class="row mt-3">
             <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>
         </div>
+        @endif
         <div class="row border-top">
             <div class="col py-3">
                 <h4>Benefit</h4>

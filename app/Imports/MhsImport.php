@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Imports;
 
 use App\Models\Dosen;
@@ -7,27 +8,21 @@ use App\Models\Mahasiswa;
 use App\Models\ProgramStudi;
 use App\Models\Universitas;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\HeadingRowImport;
-use Maatwebsite\Excel\Validators\Failure;
 
-class MhsImport implements ToCollection, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation, SkipsEmptyRows, SkipsOnFailure
+class MhsImport implements ToCollection, WithHeadingRow
 {
-    protected $id_univ;
-    protected $id_prodi;
-    protected $id_fakultas;
-    protected $kode_dosen;
-    protected $existingNim;    
-    public $duplicates;
-    public $newRecords;
-    public $validationErrors;
-    public $fields = [
+    use Importable;
+    protected Universitas $id_univ;
+    protected ProgramStudi $id_prodi;
+    protected Fakultas $id_fakultas;
+    protected Dosen $kode_dosen;
+    protected string $primaryKey = "nim";
+    protected string $model = Mahasiswa::class;
+    protected array $fields = [
         'nim' => 'nim',
         'tunggakan_bpp' => 'tunggakan_bpp',
         'ipk' => 'ipk',
@@ -39,145 +34,77 @@ class MhsImport implements ToCollection, WithBatchInserts, WithChunkReading, Wit
         'emailmhs' => 'email',
         'alamatmhs' => 'alamat'
     ];
+    protected $dataCleaning;
+    protected $newData;
+    protected $duplicatedData;
+    protected $failedData;
 
     public function __construct($id_univ, $id_fakultas, $id_prodi, $kode_dosen)
-    {        
+    {
         $this->id_univ = Universitas::findOrFail($id_univ, ['id_univ', 'namauniv']);
         $this->id_fakultas = Fakultas::findOrFail($id_fakultas, ['id_fakultas', 'namafakultas']);
         $this->id_prodi = ProgramStudi::findOrFail($id_prodi, ['id_prodi', 'namaprodi']);
         $this->kode_dosen = Dosen::where('kode_dosen', $kode_dosen)->firstOrFail(['kode_dosen', 'namadosen']);
-        $this->existingNim = $this->getAllExistingNim();
-        $this->duplicates = [];
-        $this->newRecords = [];
-        $this->validationErrors = [];
-    }
-
-    private function getAllExistingNim()
-    {
-        $existingNim = [];
-        Mahasiswa::chunk(1000, function ($mahasiswas) use (&$existingNim) {
-            foreach ($mahasiswas as $mahasiswa) {
-                $existingNim[$mahasiswa->nim] = $mahasiswa->toArray();
-            }
-        });
-        return $existingNim;
+        $this->dataCleaning = new DataCleaning(
+            $this->primaryKey,
+            $this->model,
+            array_values($this->fields),
+            array_keys($this->fields),
+            [
+                'nim' => 'required',
+                'tunggakan_bpp' => ['required', function ($attribute, $value, $fail) {
+                    if (!in_array(strtolower($value), ['iya', 'tidak'])) {
+                        $fail('Tunggakan BPP harus diisi dengan Iya atau Tidak');
+                    }
+                }],
+                'ipk' => 'required|numeric|between:0,4.00',
+                'eprt' => 'required|integer|between:310,677',
+                'tak' => 'required|integer',
+                'angkatan' => 'required|integer',
+                'namamhs' => 'required',
+                'nohpmhs' => 'required',
+                'emailmhs' => 'required|string|email',
+                'alamat' => 'required'
+            ],
+            [
+                '*.required' => 'Data Kosong',
+                '*.numeric' => 'Data Tidak Sesuai',
+                '*.integer' => 'Data Tidak Sesuai',
+                '*.between' => 'Data Tidak Sesuai',
+                '*.string' => 'Data Tidak Sesuai',
+                '*.emailmhs' => 'Data Tidak Sesuai',
+                '*.tunggakan_bpp.in' => 'Tunggakan BPP harus diisi dengan Iya atau Tidak',
+                '*.ipk.between' => 'IPK harus di antara 0 hingga 4.00', // Pesan khusus untuk IPK
+                '*.eprt.between' => 'EPRT harus di antara 310 hingga 677', // Pesan khusus untuk EPRT
+            ],
+        );
+        $this->newData = collect();
+        $this->duplicatedData = collect();
+        $this->failedData = collect();
     }
 
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
-            $nim = $row['nim'];
-        
-            if (array_key_exists($nim, $this->existingNim)) {
-                $existingRowData = $this->existingNim[$nim];
-                if (!$this->isSameRecord($existingRowData, $row)) {
-                    if (!array_key_exists($nim, $this->duplicates)) {
-                        $this->duplicates[$nim] = [
-                            'existing' => $existingRowData,
-                            'new' => []
-                        ];
-                    }
-                    $this->duplicates[$nim]['new'][] = $row->toArray();
-                }
-            } else {
-                $this->newRecords[] = $row->toArray();
-                $this->existingNim[$nim] = $row->toArray();
-            }
-        }
+        $this->dataCleaning->collection($rows);
+        $this->dataCleaning->cleanDuplicateData();
+        $this->newData = $this->dataCleaning->getNewData();
+        $this->duplicatedData = $this->dataCleaning->getDuplicatedData();
+        $this->failedData = $this->dataCleaning->getFailedData();
     }
 
-    public function batchSize(): int
-    {
-        return 1000;
-    }
-
-    public function chunkSize(): int
-    {
-        return 1000;
-    }
-
-    public function rules(): array
-    {
-        return [
-            '*.nim' => 'required',
-            '*.tunggakan_bpp' => 'required',
-            '*.ipk' => 'required|numeric|between:0,4.00',
-            '*.eprt' => 'required|integer|between:310,677',
-            '*.tak' => 'required|integer',
-            '*.angkatan' => 'required|integer',
-            '*.nama_mahasiswa' => 'required',
-            '*.no_hp' => 'required',
-            '*.email' => 'required|string|email',
-            '*.alamat' => 'required'
-        ];
-    }
-
-    public function customValidationMessages()
-    {
-        return [
-            '*.nim.required' => 'Data Kosong',
-            '*.tunggakan_bpp.required' => 'Data Kosong',
-            '*.ipk.required' => 'Data Kosong',
-            '*.ipk.numeric' => 'Data Tidak Sesuai',
-            '*.ipk.between' => 'Data Tidak Sesuai',
-            '*.eprt.required' => 'Data Kosong',
-            '*.eprt.integer' => 'Data Tidak Sesuai',
-            '*.eprt.between' => 'Data Tidak Sesuai, harus antara 310 dan 677',
-            '*.tak.required' => 'Data Kosong',
-            '*.tak.integer' => 'Data Tidak Sesuai',
-            '*.angkatan.required' => 'Data Kosong',
-            '*.angkatan.integer' => 'Data Tidak Sesuai',
-            '*.nama_mahasiswa.required' => 'Data Kosong',
-            '*.no_hp.required' => 'Data Kosong',
-            '*.email.required' => 'Data Kosong',
-            '*.email.string' => 'Data Tidak Sesuai',
-            '*.email.email' => 'Data Tidak Sesuai',
-            '*.alamat.required' => 'Data Kosong',
-        ];
-    }
-
-    private function isSameRecord($existingRecord, $newRecord): bool
-    {
-        foreach ($this->fields as $existingField => $newField) {
-            if ($existingRecord[$existingField] != $newRecord[$newField]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public function onFailure(Failure ...$failures)
-    {
-        foreach ($failures as $failure) {
-            $key = $failure->row();
-
-            if (!array_key_exists($key, $this->validationErrors)) {
-                $this->validationErrors[$key] = [
-                    'row' => $key,
-                    'values' => $failure->values(),
-                    'attributes' => []
-                ];
-            }
-
-            $this->validationErrors[$key]['attributes'][$failure->attribute()] = [
-                'attribute' => $failure->attribute(),
-                'errors' => $failure->errors()
-            ];
-        }
-    }
-
-    public function checkHeaders($filePath, $expectedHeaders)
+    public function checkHeaders($filePath)
     {
         $data = (new HeadingRowImport())->toArray($filePath);
-        $headers = $data[0][0];
-        return $headers === $expectedHeaders;
+        $headers = array_slice($data[0][0], 0, count($this->fields));
+        return $headers === array_values($this->fields);
     }
 
-    public function getResults() {
+    public function getResults(): array
+    {
         return [
-            'duplicates' => $this->duplicates,
-            'newRecords' => $this->newRecords,
-            'validationErrors' => $this->validationErrors,
+            'newData' => $this->newData,
+            'duplicatedData' => $this->duplicatedData,
+            'failedData' => $this->failedData,
             'univ' => $this->id_univ,
             'fakultas' => $this->id_fakultas,
             'prodi' => $this->id_prodi,
@@ -185,4 +112,3 @@ class MhsImport implements ToCollection, WithBatchInserts, WithChunkReading, Wit
         ];
     }
 }
-

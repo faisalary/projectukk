@@ -1,21 +1,30 @@
 <div class="auto-container" style="background-color: #F8F8F8;background-repeat: no-repeat; background-size: cover; background-image: url({{asset('assets/images/background.png')}});">
     <div class="d-flex justify-content-center mt-5 mb-5 mx-5">
-        <div class="col-5">
+        <div class="col-4 me-2">
             <div class="input-group input-group-merge border">
                 <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                 <input type="text" id="lowongan_magang" class="form-control" placeholder="Lowongan Magang">
             </div>
         </div>
-        <div class="col-5 mx-2">
+        <div class="col-3 mx-2">
+            <div class="input-group input-group-merge bg-white border">
+                <span class="input-group-text"><i class="ti ti-map-pin"></i></span>
+                <select name="location" id="location" class="select2 form-select" data-placeholder="Lokasi Magang" data-allow-clear="true">
+                    <option value disabled selected> Lokasi Magang </option>
+                    @foreach($kota as $item)
+                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-3 mx-2">
             <div class="input-group input-group-merge bg-white border">
                 <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
-                <select name="location" id="location" class="select2 form-select" data-placeholder="Lokasi Magang">
-                    <option value disabled selected> Lokasi Magang </option>
-                    <option value="Bandung">Bandung</option>
-                    <option value="Jakarta">Jakarta</option>
-                    <option value="Medan">Medan</option>
-                    <option value="Surabaya">Surabaya</option>
-                    <option value="Yogyakarta">Yogyakarta</option>
+                <select name="jenis_magang" id="jenis_magang" class="select2 form-select" data-placeholder="Jenis Magang" data-allow-clear="true">
+                    <option value disabled selected> Jenis Magang </option>
+                    @foreach($jenisMagang as $item)
+                        <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
