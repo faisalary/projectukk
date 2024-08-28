@@ -8,11 +8,12 @@ use App\Models\JenisMagang;
 use App\Models\BerkasMagang;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\JenisMagangRequest;
-use Illuminate\Support\Facades\Storage;
 
 class JenisMagangController extends Controller
 {
@@ -73,6 +74,7 @@ class JenisMagangController extends Controller
                     'nama_berkas' => $value['namaberkas'],
                     'template' => $file,
                     'status_upload' => $value['statusupload'],
+                    'due_date' => Carbon::parse($value['due_date'])->format('Y-m-d H:i:s'),
                 ]);
             }
 
@@ -202,6 +204,7 @@ class JenisMagangController extends Controller
                         'nama_berkas' => $l['namaberkas'],
                         'template' => $file,
                         'status_upload' => $l['statusupload'],
+                        'due_date' => Carbon::parse($l['due_date'])->format('Y-m-d H:i:s')
                     ]);
                 } else {
                     $file = null;
@@ -213,6 +216,7 @@ class JenisMagangController extends Controller
                         'nama_berkas' => $l['namaberkas'],
                         'template' => $file,
                         'status_upload' => $l['statusupload'],
+                        'due_date' => Carbon::parse($l['due_date'])->format('Y-m-d H:i:s')
                     ]);
                 }
             }
