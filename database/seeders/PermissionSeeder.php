@@ -46,6 +46,8 @@ class PermissionSeeder extends Seeder
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
+            'posisi_magang.view',
+            'durasi_magang.view'            
         ];
 
         $permission['Mitra'] = [

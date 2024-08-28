@@ -11,9 +11,11 @@ use App\Http\Controllers\NilaiMutuController;
 use App\Http\Controllers\JenisMagangController;
 use App\Http\Controllers\UniversitasController;
 use App\Http\Controllers\DokumenSyaratController;
+use App\Http\Controllers\DurasiMagangController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\PegawaiIndustriController;
 use App\Http\Controllers\KomponenPenilaianController;
+use App\Http\Controllers\PosisiMagangController;
 
 Route::prefix('master')->group(function () {
     Route::prefix('fakultas')->controller(FakultasController::class)->group(function () {
@@ -74,6 +76,24 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', 'update')->name('jenismagang.update');
         Route::get('/edit/{id}', 'edit')->name('jenismagang.edit');
         Route::post('/status/{id}', 'status')->name('jenismagang.status');
+    });
+    Route::prefix('posisi-magang')->controller(PosisiMagangController::class)->group(function () {
+        Route::get('/', 'index')->name('posisimagang');
+        Route::get('/create', 'create')->name('posisimagang.create');
+        Route::get('/show', 'show')->name('posisimagang.show');
+        Route::post('/store', 'store')->name('posisimagang.store');
+        Route::post('/update/{id}', 'update')->name('posisimagang.update');
+        Route::get('/edit/{id}', 'edit')->name('posisimagang.edit');  
+        Route::post('/status/{id}', 'status')->name('posisimagang.status');      
+    });
+    Route::prefix('durasi-magang')->controller(DurasiMagangController::class)->group(function () {
+        Route::get('/', 'index')->name('durasimagang');
+        Route::get('/create', 'create')->name('durasimagang.create');
+        Route::get('/show', 'show')->name('durasimagang.show');
+        Route::post('/store', 'store')->name('durasimagang.store');
+        Route::post('/update/{id}', 'update')->name('durasimagang.update');
+        Route::get('/edit/{id}', 'edit')->name('durasimagang.edit');  
+        Route::post('/status/{id}', 'status')->name('durasimagang.status');      
     });
     Route::prefix('universitas')->controller(UniversitasController::class)->group(function () {
         Route::get('/', 'index')->name('universitas');
