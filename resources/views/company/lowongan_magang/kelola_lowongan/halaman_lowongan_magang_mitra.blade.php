@@ -92,7 +92,7 @@
                                                 <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
                                             </span>
                                             <span class="mb-0 me-2">Total Lowongan:</span>
-                                            <h5 class="mb-0 me-2 text-primary">50</h5>
+                                            <h5 class="mb-0 me-2 text-primary" id="sum_total">0</h5>
                                             <span class="mb-0 me-2">Lowongan </span>
                                         </div>
                                         @break
@@ -102,7 +102,7 @@
                                                 <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
                                             </span>
                                             <span class="mb-0 me-2">Total Tertunda:</span>
-                                            <h5 class="mb-0 me-2 text-primary">50</h5>
+                                            <h5 class="mb-0 me-2 text-primary" id="sum_tertunda">0</h5>
                                             <span class="mb-0 me-2">Tertunda </span>
                                         </div>
                                         @break
@@ -112,7 +112,7 @@
                                                 <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
                                             </span>
                                             <span class="mb-0 me-2">Total Diterima:</span>
-                                            <h5 class="mb-0 me-2 text-primary">50</h5>
+                                            <h5 class="mb-0 me-2 text-primary" id="sum_diterima">0</h5>
                                             <span class="mb-0 me-2">Diterima </span>
                                         </div>
                                         @break
@@ -122,7 +122,7 @@
                                                 <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
                                             </span>
                                             <span class="mb-0 me-2">Total Ditolak:</span>
-                                            <h5 class="mb-0 me-2 text-primary">50</h5>
+                                            <h5 class="mb-0 me-2 text-primary" id="sum_ditolak">0</h5>
                                             <span class="mb-0 me-2">Ditolak </span>
                                         </div>
                                         @break
@@ -168,6 +168,10 @@
                     ajax: "{{ route('kelola_lowongan.show') }}?type=" + idElement,
                     processing: true,
                     destroy: true,
+                    drawCallback: function ( settings, json ) {
+                        let total = this.api().data().count();
+                        $('#sum_' + idElement).text(total);
+                    },
                     columns: [{
                             data: "DT_RowIndex"
                         },

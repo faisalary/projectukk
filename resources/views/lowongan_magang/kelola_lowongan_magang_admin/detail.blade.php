@@ -42,12 +42,12 @@
                             @default
                         @endswitch
                         <h6 class="fw-bolder my-2">Detail Pengajuan</h6>
-                        <small class="mb-0">Pengajuan: <b>25/08/2020</b></small>
+                        <small class="mb-0">Pengajuan: <b>{{Carbon\Carbon::parse($lowongan->created_at)->format('d/m/Y')}}</b></small>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-4">
-                        <p><i class="ti ti-users me-2"></i>{{ $lowongan->kuota }}</p>
+                        <p @if( $kuotaPenuh ) class="fw-bold text-danger" @endif><i class="ti ti-users me-2"></i>{{ $lowongan->kuota_terisi }}/{{ $lowongan->kuota }} @if( $kuotaPenuh ) (Sudah Penuh) @endif</p>
                         <p><i class="ti ti-briefcase me-2"></i>{{ $lowongan->pelaksanaan }}</p>
                         <p><i class="ti ti-calendar-time me-2"></i>{{ implode(' dan ', json_decode($lowongan->durasimagang)) }}</p>
                     </div>

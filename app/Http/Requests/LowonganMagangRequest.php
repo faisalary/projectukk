@@ -44,7 +44,6 @@ class LowonganMagangRequest extends FormRequest
                         'lokasi' => ['required', 'array', 'min:1'],
                         'startdate' => ['required'],
                         'enddate' => ['required'],
-                        'durasimagang' => ['required', 'array', 'min:1', 'in:1 Semester,2 Semester'],
                         'tahapan_seleksi' => ['required', 'in:0,1,2'],
                     ];
                     $validate = array_merge($validate, $addValidate);
@@ -54,6 +53,7 @@ class LowonganMagangRequest extends FormRequest
                         'intern_position' => ['required'],
                         'kuota' => ['required', 'integer', 'min:1'],
                         'deskripsi' => ['required'],
+                        'durasimagang' => ['required', 'array', 'min:1', 'in:1 Semester,2 Semester'],
                     ];
                     $validate = array_merge($validate, $addValidate);
                 
