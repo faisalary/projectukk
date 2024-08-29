@@ -28,7 +28,7 @@ class LogbookMahasiswaController extends LogbookController
         });
 
         $data['data'] = $this->pendaftaran->first();
-        if ($data['data'] == null) return abort(403);
+        if ($data['data'] == null) return view('logbook.logbook_403');
 
         $logbook = Logbook::where([
             'id_mhsmagang' => $data['data']->id_mhsmagang,
@@ -38,7 +38,9 @@ class LogbookMahasiswaController extends LogbookController
         $current_month = ($request->current_month)? ($request->current_month + 1) : Carbon::now()->month;
         $data['logbook_week'] = [];
         if ($logbook) {
-            $data['logbook_week'] = LogbookWeek::with('logbookDay')->where('id_logbook', $logbook->id_logbook)
+            $data['logbook_week'] = LogbookWeek::with(['logbookDay' => function($query){
+                $query->where('activity', '!=', 'Libur');
+            }])->where('id_logbook', $logbook->id_logbook)
             ->where(function ($query) use ($current_month) {
                 $query->whereMonth('start_date', $current_month)->orWhereMonth('end_date', $current_month);
             })
@@ -180,6 +182,20 @@ class LogbookMahasiswaController extends LogbookController
                 'week' => $week,
                 'start_date' => $startDate->format('Y-m-d'),
                 'end_date' => $endDate->format('Y-m-d')
+            ]);
+            
+            $logbookSunday = LogbookDay::create([
+                'id_logbook_week' => $logbookWeek->id_logbook_week,
+                'date' => $startDate->format('Y-m-d'),
+                'emoticon' => '4',
+                'activity' => 'Libur'
+            ]);
+
+            $logbookSaturday = LogbookDay::create([
+                'id_logbook_week' => $logbookWeek->id_logbook_week,
+                'date' => $endDate->format('Y-m-d'),
+                'emoticon' => '4',
+                'activity' => 'Libur'
             ]);
             
             DB::commit();
@@ -409,7 +425,7 @@ class LogbookMahasiswaController extends LogbookController
             'can_apply' => $canApply
         ];
 
-        $totalDays = 7;
+        $totalDays = CarbonPeriod::create($logbookWeek->start_date, $logbookWeek->end_date)->count();
         $filledDays = $data['logbook_day']->whereNotNull('activity')->count();
         $data['percentage'] = self::percentage($filledDays, $totalDays);
 

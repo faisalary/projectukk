@@ -30,6 +30,8 @@
 
     <div id="sudah-daftar-container"></div>
 
+    <div id="daftar-lebih-container"></div>
+
     <div class="card">
         <div class="card-body">
             <h4>Informasi Data Diri</h4>
@@ -79,7 +81,7 @@
         </div>
     </div>
 
-    @if($sudahDaftar == false)
+    @if($sudahDaftar == false && $daftarDua == false)
     <div class="card mt-5" id="card-apply">
         <div class="card-body">
             <div>
@@ -88,7 +90,7 @@
                         <h4>Portofolio</h4>
                         <div class="mt-3 form-group">
                             <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
-                            @if(isset($persentase) && ($magang != null || $persentase < 70)) 
+                            @if(isset($persentase) && ($magang != null || $persentase < 80)) 
                                 <input class="form-control" type="file" id="formFile" name="porto" disabled>
                             @else
                                 <input class="form-control" type="file" id="formFile" name="porto">
@@ -101,7 +103,7 @@
                             <label for="reasonTextarea" class="form-label text-secondary">Jelaskan mengapa Anda layak diterima untuk posisi ini</label>
                             <textarea class="form-control" id="reasonTextarea" name="reason" rows="5" required></textarea>
                         </div>
-                        @if(isset($persentase) && ($magang != null || $persentase < 70)) 
+                        @if(isset($persentase) && ($magang != null || $persentase < 80)) 
                             <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
                         @else
                             <button type="submit" class="btn btn-primary waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
@@ -146,6 +148,10 @@
                     @endforeach
                 </div>
             </div>
+            <div class="mt-4 border-bottom pb-4">
+                <h4>Kuota Penerimaan</h4>
+                <p>{{ $lowongandetail->kuota_terisi }}/{{ $lowongandetail->kuota }} Kuota Tersedia</p>
+            </div>
             <div class="mt-4">
                 <h4>Tentang Perusahaan</h4>
                 <div class="d-flex justify-content-start">
@@ -181,11 +187,21 @@
             <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mengajukan lamaran untuk pekerjaan ini</span>
         </div>
     `;
+        
+    let daftarDua = `
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <i class="ti ti-alert-triangle ti-xs"></i>
+            <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mendaftar pada 2 lowongan</span>
+        </div>
+    `;
 
     @if($sudahDaftar == true)
         document.getElementById("sudah-daftar-container").innerHTML = sudahDaftar;
     @endif
 
+    @if($daftarDua == true)
+        document.getElementById("daftar-lebih-container").innerHTML = daftarDua;
+    @endif
 
     //  Button Back
     document.getElementById("back").addEventListener("click", () => {

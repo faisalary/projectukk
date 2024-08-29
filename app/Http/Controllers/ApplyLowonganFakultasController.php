@@ -15,7 +15,9 @@ use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\JenisMagang;
 use App\Models\PekerjaanTersimpan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ApplyLowonganFakultasController extends Controller
@@ -25,8 +27,15 @@ class ApplyLowonganFakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
-        ->get()->pluck('id_lowongan')->toArray();
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $data['lowongan_tersimpan'] = PekerjaanTersimpan::select('id_lowongan')->where('nim', auth()->user()->mahasiswa->nim)
+            ->get()->pluck('id_lowongan')->toArray();
+            $data['isMahasiswa'] = true;
+        }else{
+            $data['lowongan_tersimpan'] = [];
+            $data['isMahasiswa'] = false;
+        }
 
         $data['lowongan'] = LowonganMagang::select(
             'lowongan_magang.*', 'industri.image', 'industri.namaindustri'
@@ -47,6 +56,9 @@ class ApplyLowonganFakultasController extends Controller
         }
 
         $data['perusahaan'] = Industri::where('statusapprove', 1)->get();
+        $data['kota'] = DB::table('reg_regencies')->get();
+        $data['filtered'] = $request->all();
+        $data['jenisMagang'] = JenisMagang::all();
 
         return view('perusahaan.lowongan', $data);
     }
@@ -61,8 +73,17 @@ class ApplyLowonganFakultasController extends Controller
         ->where('id_lowongan', $id)
         ->where('statusaprove', 'diterima')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
 
+        $auth = auth()->user();
+        if ( $auth && $auth->hasRole('Mahasiswa')) {
+            $isMahasiswa = true;
+        }else{
+            $isMahasiswa = false;
+        }
+
+        $kuotaPenuh = $detailLowongan->kuota_terisi / $detailLowongan->kuota == 1;
+
         if (!$detailLowongan) return Response::error(null, 'Lowongan Not Found', 404);
-        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan'))->render();
+        $data = view('perusahaan/components/detail_lowongan_fp', compact('detailLowongan','isMahasiswa','kuotaPenuh'))->render();
 
         return Response::success($data, 'Success');
     }
@@ -70,11 +91,20 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $registered = PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first();
-        if($registered) {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $registeredTwo = $registered->count() >= 2 ? true : false;
+        $registeredThis = $registered->where('id_lowongan', $id)->first();
+
+        if($registeredThis) {
             $sudahDaftar = true;
         }else{
             $sudahDaftar = false;
+        }
+
+        if($registeredTwo) {
+            $daftarDua = true;
+        }else{
+            $daftarDua = false;
         }
 
         $auth = Auth::user();
@@ -83,6 +113,12 @@ class ApplyLowonganFakultasController extends Controller
         $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
         $mahasiswa = auth()->user()->mahasiswa;
         $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+
+        $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
+
+        if($kuotaPenuh){
+            return redirect()->route('apply_lowongan')->with('error', 'Kuota lowongan sudah penuh');
+        }
 
         $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
         $magang = $pendaftaran->where('nim', $nim)->first();
@@ -93,14 +129,27 @@ class ApplyLowonganFakultasController extends Controller
 
         $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar'));
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
-        if(PendaftaranMagang::where('id_lowongan', $id)->where('nim', auth()->user()->mahasiswa->nim)->first()) {
+        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+
+        if($registered->where('id_lowongan', $id)->first()) {
             return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
+        }
+
+        if($registered->count() >= 2) {
+            return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
+        }
+
+        $auth = Auth::user();
+        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+
+        if($persentase < 80) {
+            return Response::error(null, 'Data profil belum lengkap', 400);
         }
 
         $request->validate([
@@ -180,6 +229,10 @@ class ApplyLowonganFakultasController extends Controller
                     $query->orWhere('pelaksanaan', $value);
                 }
             });
+        }
+
+        if ($request->jenis_magang) {
+            $data['lowongan'] = $data['lowongan']->where('id_jenismagang', $request->jenis_magang);
         }
 
         return $data;

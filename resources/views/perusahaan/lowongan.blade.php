@@ -140,6 +140,15 @@
         $('.dropdown-menu').on('click', function(event) {
             event.stopPropagation();
         });
+
+        @if($filtered != [])
+            $('#lowongan_magang').val("{{ $filtered['lowongan'] ?? '' }}").change();
+            $('#location').val("{{ $filtered['location'] ?? '' }}").change();
+            $('#jenis_magang').val("{{ $filtered['jenis_magang'] ?? '' }}").change();
+        @endif
+
+        //remove parent position relative and add w-75
+        $('#location, #jenis_magang').parent().removeClass('position-relative').addClass('w-75');
     });
 
     function pagination(e) {
@@ -235,6 +244,7 @@
         }
     });
 
+    @if($isMahasiswa)
     function myFunction(event, e) {
         event.stopPropagation();
         let icon = e.find('i');
@@ -259,5 +269,6 @@
             },
         });
     }
+    @endif
 </script>
 @endsection

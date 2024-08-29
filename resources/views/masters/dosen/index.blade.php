@@ -64,7 +64,13 @@
 
     function getDataSelect(e) {
         let idElement = e.attr('data-after');
-        let modalId = e.closest('.modals').attr('id'); // ID modal
+        let modalId = e.closest('.modals').attr('id');
+
+        $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
+        $(`#${modalId} #${idElement}`).val(null).trigger('change');
+
+        if (e.val() == null) return;
+        
         $.ajax({
             url: `{{ route('dosen') }}`,
             type: 'GET',
@@ -73,10 +79,8 @@
                 section: idElement
             },
             success: function (response) {
-                $(`#${modalId} #${idElement}`).find('option:not([disabled])').remove();
-                $(`#${modalId} #${idElement}`).val(null).trigger('change');
                 $.each(response.data, function () {
-                    $(`#${modalId} #${idElement}`).append(new Option(this.name, this.id));
+                    $(`#${modalId} form #${idElement}`).append(new Option(this.name, this.id));
                 });
             }
         });
@@ -104,9 +108,6 @@
         offcanvasFilter.offcanvas('hide');
     });
 
-
-
-
     function edit(e) {
         let id = e.attr('data-id');
 
@@ -124,14 +125,14 @@
             success: function(response) {
                 response = response.data
                 $.each(response, function ( key, value ) {
-                    let element = modal.find(`#${key}`);
+                    let element = modal.find('form').find(`[name="${key}"]`);
                     if (element.is('select') && element.find('option').length <= 1) {
                         let interval = setInterval(() => {
                             if (element.children('option').length > 1) {
                                 element.val(value).trigger('change');
                                 clearInterval(interval);
                             }
-                        }, 10);
+                        }, 100);
                     } else {
                         element.val(value).trigger('change');
                     }

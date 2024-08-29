@@ -97,7 +97,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                     if ($logbook_week->status == LogbookWeeklyStatus::NOT_YET_APPLIED) {
                         $result['container_detail_logbook_weekly'] = '<h4 class="text-center">Belum diajukan</h4>';
                     } else {
-                        $data = LogbookDay::where('id_logbook_week', $request->data_id)->get();
+                        $data = LogbookDay::where('id_logbook_week', $request->data_id)->orderBy('date', 'asc')->get();
                         $week = $request->week;
                         $result['container_detail_logbook_weekly'] = view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', compact('data', 'logbook_week', 'week'))->render();
                     }

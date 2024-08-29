@@ -6,7 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 col-12">
-            <h4 class="fw-bolder">Approval Mahasiswa</h4>
+            <h4 class="fw-bolder">{{ $view['title'] }}</h4>
         </div>
     </div>
     <div class="row mt-2">
@@ -22,35 +22,40 @@
                     </li>
                     <li class="nav-item">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-justified-sudah-approval" aria-controls="navs-pills-justified-sudah-approval"
+                            data-bs-target="#navs-pills-justified-sudah_approval" aria-controls="navs-pills-justified-sudah_approval"
                             aria-selected="false">
                             <i class="tf-icons ti ti-list-check ti-xs me-1"></i> Sudah Approval
                         </button>
                     </li>
-                </ul>
-                <div class="tab-content p-0">
-                    @foreach (['approval', 'sudah-approval'] as $key => $item)
-                    <div class="tab-pane fade card-datatable table-responsive {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">
-                        <table class="table" id="{{ $item }}">
-                            <thead>
-                                <tr>
-                                    <th>NO</th>
-                                    <th>NAMA</th>
-                                    <th style="text-align:center;">TANGGAL DAFTAR</th>
-                                    <th>PERUSAHAAN</th>
-                                    <th>POSISI MAGANG</th>
-                                    <th>NO. TELEPON</th>
-                                    <th style="text-align:center;">STATUS APPROVAL</th>
-                                    <th style="text-align:center;">AKSI</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    @endforeach
-                </div>
+                </ul>                                                      
             </div>
         </div>
     </div>
+
+    <div class="tab-content p-0">
+        @foreach (['approval', 'sudah_approval'] as $key => $item)
+        <div class="tab-pane fade tab-content p-0 {{ $key == 0 ? 'show active' : '' }}" id="navs-pills-justified-{{ $item }}" role="tabpanel">            
+                @if ($item == 'approval')
+                <div class="d-flex justify-content-end align-items-center mb-4">
+                    <button type="button" id="approve-mahasiswa" class="btn btn-primary text-white" onclick="approved($(this), true)">Approve Mahasiswa</button>                            
+                </div>   
+                @endif            
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                    <table class="table" id="{{ $item }}">
+                        <thead>
+                            <tr>                                
+                                @foreach ($view[$item] as $item)
+                                {!! $item !!}
+                                @endforeach
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>    
 @include('approval_mahasiswa/components/modal')
 @endsection
 
@@ -67,36 +72,60 @@
         });
     });
 
-    function loadData() {
+    function loadData() {               
         $('.table').each(function () {
-            $(this).DataTable({
-                ajax: {
-                    url: `{{ $urlGetData }}`,
-                    type: 'GET',
-                    data: { section: $(this).attr('id') }
-                },
-                serverSide: false,
-                processing: true,
-                deferRender: true,
-                destroy: true,
-                scrollX: true,
-                columns: [
-                    { data: 'DT_RowIndex' },
-                    { data: 'namamhs', name: 'namamhs' }, 
-                    { data: 'tanggaldaftar', name: 'tanggaldaftar' },
-                    { data: 'namaindustri', name: 'namaindustri' },
-                    { data: 'intern_position', name: 'intern_position' },
-                    { data: 'nohpmhs', name: 'nohpmhs' },
-                    { data: 'current_step', name: 'current_step' },
-                    { data: 'action', name: 'action' }
-                ]
-            });
-        });
+        let columns = {!! $view['columnsApproval'] !!};
+
+        if ($(this).attr('id') == 'sudah_approval') {
+            columns = {!! $view['columnsSudahApproval'] !!};
+        }
+
+        let attrDatatable = {
+            ajax: {
+                url: `{{ $view['urlGetData'] }}`,
+                type: 'GET',
+                data: { section: $(this).attr('id') }
+            },
+            serverSide: false,
+            processing: true,
+            destroy: true,
+            columns: columns,
+            columnDefs: [{!! $view['columnDefs'] ?? null !!}],
+            ordering: false,
+            scrollX: true,            
+            select: {style: 'multi', selector: 'td:first-child input:checkbox'},            
+        };
+
+        if ($(this).attr('id') == 'sudah_approval') {
+            delete attrDatatable.columnDefs;
+            delete attrDatatable.select;
+        }
+
+        $(this).DataTable(attrDatatable);
+    });
     }
 
-    function approved(e) {
-        let status = e.attr('data-status');
-        let dataId = e.attr('data-id');
+    function approved(e, isMany = false) {
+        let status = e.attr('data-status') ?? '';
+        let dataId = e.attr('data-id') ?? $('input.dt-checkboxes:checked').map(function () {return $(this).val()}).get();                       
+        let urlApproval = isMany ? `{{ $view['urlApprovals'] }}` :`{{ $view['urlApproval'] }}`.replace(':id', dataId) 
+        const data = {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            status: status,      
+            id_pendaftaran: []              
+        }        
+
+        if(isMany) {
+            if(dataId.length == 0) {
+                showSweetAlert({
+                    title: 'Invalid',
+                    text: 'Pilih mahasiswa terlebih dahulu',
+                    icon: 'warning'
+                });
+                return;
+            }      
+            data.id_pendaftaran = dataId     
+        }       
 
         sweetAlertConfirm({
             title: 'Apakah anda yakin ingin menyetujui pendaftaran magang?',
@@ -106,12 +135,9 @@
             cancelButtonText: 'Batal'
         }, function () {
             $.ajax({
-                url: `{{ $urlApproval }}`.replace(':id', dataId),
+                url: urlApproval,
                 type: "POST",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    status: status
-                },
+                data: data,
                 success: function (response) {
                     if (!response.error) {
                         showSweetAlert({
@@ -148,7 +174,7 @@
         let dataId = e.attr('data-id');
         let modal = $("#modalRejectLamaran");
 
-        modal.find('form').attr('action', `{{ $urlApproval }}`.replace(':id', dataId));
+        modal.find('form').attr('action', `{{ $view['urlApproval'] }}`.replace(':id', dataId));
         modal.find('form').prepend(`<input type="hidden" name="status" value="${status}">`);
         modal.modal('show');
     }

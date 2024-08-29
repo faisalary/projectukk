@@ -38,7 +38,7 @@
         @can('profile_perusahaan.update')
         function afterAction(response) {
             $('#container-detail-profile').html(response.data.view)
-            let resourceGambar = response.data.image ?? "{{ asset('app-assets/img/avatars/user.png') }}";
+            let resourceGambar = response.data.image ?? "{{ asset('app-assets/img/avatars/building.png') }}";
             $('#imgPreview2').attr('src', resourceGambar);
             $('#imgPreview2').attr('default-src', resourceGambar);
             $('#modalEditProfile').modal('hide');
@@ -49,14 +49,14 @@
             if (file) {
                 $('#imgPreview2').attr('src', URL.createObjectURL(file));
             } else {
-                $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/user.png') }}");
+                $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/building.png') }}");
             }
         });
 
         function removeImage() {
             $('.default-form').find('input[name="remove_image"]').remove();
             $('.default-form').prepend(`<input type="hidden" name="remove_image" value="1">`);
-            $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/user.png') }}");
+            $('#imgPreview2').attr('src', "{{ asset('app-assets/img/avatars/building.png') }}");
         }
 
         function edit() {
