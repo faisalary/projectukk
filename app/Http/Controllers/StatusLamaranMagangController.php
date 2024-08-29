@@ -17,6 +17,7 @@ class StatusLamaranMagangController extends Controller
 {
     public function __construct(){
         $this->valid_step = [
+            PendaftaranMagangStatusEnum::PENDING => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI => 0,
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
@@ -98,6 +99,10 @@ class StatusLamaranMagangController extends Controller
     
             if (!$pendaftaran) {
                 return Response::error(null, 'Pendaftaran Not Found.');
+            }
+
+            if ($this->valid_step[$pendaftaran->current_step] != ($pendaftaran->tahapan_seleksi + 1)) {
+                return Response::error(null, 'Tidak dalam tahap penawaran.');
             }
     
             DB::beginTransaction();

@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
+use App\Jobs\RejectionPenawaranLowongan;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
+use App\Models\DokumenPendaftaranMagang;
 
 class LowonganMagangController extends Controller
 {
@@ -133,8 +135,10 @@ class LowonganMagangController extends Controller
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
             $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
             $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
-            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
+            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();    
             $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
+            $data['dokumen_syarat'] = DokumenPendaftaranMagang::join('document_syarat', 'dokumen_pendaftaran_magang.id_document', '=', 'document_syarat.id_document')
+                ->where('id_pendaftaran', $request->data_id)->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
@@ -168,6 +172,11 @@ class LowonganMagangController extends Controller
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
+        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+
+        // menjalakan rejection lowongan
+        dispatch(new RejectionPenawaranLowongan($this->my_lowongan_magang));
+        // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
     }
@@ -588,6 +597,16 @@ class LowonganMagangController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ]);
+        }
+    }
+
+    public function rejectionPenawaran($id) {
+        try {
+            
+
+            return Response::success(null, 'Success');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
     }
 

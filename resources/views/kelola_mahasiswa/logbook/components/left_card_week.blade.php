@@ -12,6 +12,7 @@
                 <h6 class="mb-1">Minggu Ke {{ $loop->iteration }}</h6>
                 <p class="mb-0" style="font-size: small;">{{ Carbon\Carbon::parse($item->start_date)->format('d') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->end_date)->format('d M Y') }}</p>
             </div>
+            @if (isset($showStatus) && $showStatus == true)
             <div class="d-flex justify-content-end align-items-center">
                 @php
                     $status = App\Enums\LogbookWeeklyStatus::getWithLabel($item->status);
@@ -19,6 +20,7 @@
                 @endphp
                 {!! $item->status !!}
             </div>
+            @endif
         </div>
     </div>
 </div>

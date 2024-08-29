@@ -44,6 +44,7 @@ class RegisteredUserController extends Controller
                 $validate['name'] = 'required';
                 $validate['email'] = 'required|email|unique:users,email|unique:pegawai_industri,emailpeg';
                 $validate['notelpon'] = 'required';
+                $validate['kategori_industri'] = 'required|in:Internal,Eksternal';
                 $validate['statuskerjasama'] = 'required|in:Iya,Tidak';
             }
 
@@ -56,6 +57,8 @@ class RegisteredUserController extends Controller
                 'notelpon.required' => 'No. Telepon harus diisi',
                 'statuskerjasama.required' => 'Status Kerjasama harus dipilih.',
                 'statuskerjasama.in' => 'Status Kerjasama tidak valid.',
+                'kategori_industri.required' => 'Kategori Industri harus dipilih.',
+                'kategori_industri.in' => 'Kategori Industri tidak valid.',
                 'namaindustri.required' => 'Nama harus diisi',
                 'nim.required' => 'NIM harus di isi',
                 'nim.numeric' => 'NIM harus angka',
@@ -140,6 +143,7 @@ class RegisteredUserController extends Controller
                     'namaindustri' => $request->namaindustri,
                     'status' => 1,
                     'statusapprove' => 0,
+                    'kategori_industri' => $request->kategori_industri,
                     'statuskerjasama' => $request->statuskerjasama
                 ]);
 

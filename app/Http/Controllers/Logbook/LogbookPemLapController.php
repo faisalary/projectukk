@@ -88,6 +88,7 @@ class LogbookPemLapController extends LogbookController
                     $query->whereMonth('start_date', ($request->selected_month + 1))->orWhereMonth('end_date', ($request->selected_month + 1));
                 })->get();
 
+                $data['showStatus'] = true;
                 $result['container_left_card'] = view('kelola_mahasiswa/logbook/components/left_card_week', $data)->render();
             } else {
                 return Response::error(null, 'Invalid Request', 400);
@@ -106,6 +107,7 @@ class LogbookPemLapController extends LogbookController
         $data['list_week'] = $data['list_week']->where(function ($query) {
             $query->whereMonth('start_date', now()->format('m'))->orWhereMonth('end_date', now()->format('m'));
         })->get();
+        $data['showStatus'] = true;
 
         $data['list_month'] = $this->getListMonth('M')->list_month;
         $data['isPembLapangan'] = $isPembLapangan;
@@ -152,7 +154,8 @@ class LogbookPemLapController extends LogbookController
             return Response::success([
                 'view_left_card' => view('kelola_mahasiswa/logbook/components/left_card_week', [
                     'list_week' => $listLogbookWeek,
-                    'checked' => $id
+                    'checked' => $id,
+                    'showStatus' => true
                 ])->render(),
                 'view_rejected_reason' => view('kelola_mahasiswa/logbook/components/rejected_reason', ['logbook_week' => $logbookWeek])->render(),
                 'view_logbook' => view('kelola_mahasiswa/logbook/components/detail_logbook_weekly', [
