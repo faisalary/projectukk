@@ -38,6 +38,8 @@ class LowonganMagang extends Model
         'status',
         'alasantolak',
         'statusaprove',
+        'status_user',
+        'status_time',
         'lokasi',
         'id_year_akademik',
         'mulai_magang',
@@ -129,7 +131,7 @@ class LowonganMagang extends Model
     public function prodilowongan()
     {
         return $this->hasManyThrough(
-            ProgramStudi::class, 
+            ProgramStudi::class,
             LowonganProdi::class,
             'lowongan_prodi_id',
             'id_lowongan',

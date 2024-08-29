@@ -22,7 +22,7 @@ class LowonganMagangLkmController extends Controller
      /**
      * Display a listing of the resource.
      */
-    
+
      public function index()
      {
          return view('lowongan_magang.kelola_lowongan_magang_admin.halaman_lowongan_magang_admin');
@@ -128,7 +128,7 @@ class LowonganMagangLkmController extends Controller
             ];
             foreach ($lowongan->jenjang_pendidikan as $key => $value) {
                 $validate["prodi_" . $value] = 'required|array|min:1|exists:program_studi,id_prodi';
-                
+
                 $message["prodi_" . $value . ".required"] = 'Pilih prodi terlebih dahulu';
                 $message["prodi_" . $value . ".min"] = 'Pilih prodi terlebih dahulu';
                 $message["prodi_" . $value . ".exists"] = 'Prodi tidak valid';
@@ -152,6 +152,9 @@ class LowonganMagangLkmController extends Controller
             $lowongan->mulai_magang = Carbon::parse($request->mulai_magang)->format('Y-m-d');
             $lowongan->selesai_magang = Carbon::parse($request->selesai_magang)->format('Y-m-d');
             $lowongan->statusaprove = LowonganMagangStatusEnum::APPROVED;
+            $lowongan->status_user = json_encode([auth()->user()->id, auth()->user()->name]);
+            $lowongan->status_time = date('H:i:s Y-m-d');
+            // dd($lowongan);
             $lowongan->save();
 
             DB::commit();
@@ -176,6 +179,9 @@ class LowonganMagangLkmController extends Controller
             $data->alasantolak = $request->alasan;
             $data->statusaprove = LowonganMagangStatusEnum::REJECTED;
             $data->date_confirm_closing = date('Y-m-d');
+            $data->status_user = json_encode([auth()->user()->id, auth()->user()->name]);
+            $data->status_time = date('H:i:s Y-m-d');
+            // dd($data);
             $data->save();
             DB::commit();
 
