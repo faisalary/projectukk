@@ -87,6 +87,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
         ->whereHas('logbook', function ($q) use ($id) {
             $q->where('id_mhsmagang', $id);
         })
+        ->where('status', LogbookWeeklyStatus::APPROVED)
         ->orderBy('start_date', 'asc');
 
         if ($request->ajax()) {

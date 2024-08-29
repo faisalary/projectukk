@@ -17,6 +17,7 @@ class StatusLamaranMagangController extends Controller
 {
     public function __construct(){
         $this->valid_step = [
+            PendaftaranMagangStatusEnum::PENDING => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI => 0,
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
@@ -99,6 +100,10 @@ class StatusLamaranMagangController extends Controller
             if (!$pendaftaran) {
                 return Response::error(null, 'Pendaftaran Not Found.');
             }
+
+            if ($this->valid_step[$pendaftaran->current_step] != ($pendaftaran->tahapan_seleksi + 1)) {
+                return Response::error(null, 'Tidak dalam tahap penawaran.');
+            }
     
             DB::beginTransaction();
             $pendaftaran->current_step = ($request->status == 'approved') ? PendaftaranMagangStatusEnum::APPROVED_PENAWARAN : PendaftaranMagangStatusEnum::REJECTED_PENAWARAN;
@@ -107,6 +112,7 @@ class StatusLamaranMagangController extends Controller
             if ($request->status == 'approved') {
                 MhsMagang::create([
                     'id_pendaftaran' => $pendaftaran->id_pendaftaran,
+                    'jenis_magang' => $pendaftaran->id_jenismagang,
                     'startdate_magang' => $request->startdate,
                     'enddate_magang' => $request->enddate,
                 ]);

@@ -35,6 +35,7 @@ class JenisMagangRequest extends FormRequest
                         'berkas.*.namaberkas' => ['required'],
                         'berkas.*.statusupload' => ['required', 'in:1,0'],
                         'berkas.*.template' => ['required', 'mimes:pdf', 'max:2048'],
+                        'berkas.*.due_date' => ['required'],
                     ];
                     $validate = array_merge($validate, $addValidate);
                 case 1:
@@ -73,6 +74,7 @@ class JenisMagangRequest extends FormRequest
             'berkas.*.template.required' => 'Template harus diisi!',
             'berkas.*.template.mimes' => 'Template harus berupa PDF!',
             'berkas.*.template.max' => 'File Template tidak boleh lebih dari 2 MB!',
+            'berkas.*.due_date.required' => 'Due Date harus diisi!',
         ];
     }
 }

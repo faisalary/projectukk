@@ -31,8 +31,8 @@
                         <th style="min-width:150px;">POSISI MAGANG</th>
                         <th style="min-width:150px;">DURASI MAGANG</th>
                         <th style="min-width:150px;">JENIS MAGANG</th>
-                        <th style="min-width:100px;">NILAI AKHIR</th>
-                        <th style="min-width:100px;">INDEKS</th>
+                        <th style="min-width:100px;text-align:center;">NILAI AKHIR</th>
+                        <th style="min-width:100px;text-align:center;">INDEKS</th>
                         <th style="min-width:150px;text-align:center;">STATUS MAGANG</th>
                         <th style="min-width:130px;text-align:center;">AKSI</th>
                     </tr>

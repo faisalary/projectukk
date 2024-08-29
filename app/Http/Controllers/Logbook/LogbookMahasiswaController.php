@@ -207,7 +207,9 @@ class LogbookMahasiswaController extends LogbookController
             
             DB::commit();
 
-            $logbook_week = LogbookWeek::where('id_logbook', $logbook->id_logbook)
+            $logbook_week = LogbookWeek::with(['logbookDay' => function($query){
+                $query->where('activity', '!=', 'Libur');
+            }])->where('id_logbook', $logbook->id_logbook)
             ->where(function ($query) use ($request) {
                 $query->whereMonth('start_date', ($request->current_month + 1))->orWhereMonth('end_date', ($request->current_month + 1));
             })

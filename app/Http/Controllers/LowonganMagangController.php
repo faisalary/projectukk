@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
+use App\Jobs\RejectionPenawaranLowongan;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
+use App\Models\DokumenPendaftaranMagang;
 
 class LowonganMagangController extends Controller
 {
@@ -38,7 +40,7 @@ class LowonganMagangController extends Controller
             $this->getLowonganMagang(function ($query) use ($id) {
                 return $query->where('id_lowongan', $id);
             });
-            
+
             return $next($request);
         }, ['only' => ['setDateConfirmClosing', 'detailInformasi', 'getDataDetailInformasi', 'edit', 'detail', 'update', 'status']]);
 
@@ -127,7 +129,7 @@ class LowonganMagangController extends Controller
         if ($request->ajax()) {
             $this->getPendaftarMagang(function ($query) use ($id, $request) {
                 return $query->where('pendaftaran_magang.id_lowongan', $id)->where('pendaftaran_magang.id_pendaftaran', $request->data_id);
-            }); 
+            });
 
             $data['pendaftar'] = $this->my_pendaftar_magang->first();
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
@@ -135,6 +137,8 @@ class LowonganMagangController extends Controller
             $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
             $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
             $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
+            $data['dokumen_syarat'] = DokumenPendaftaranMagang::join('document_syarat', 'dokumen_pendaftaran_magang.id_document', '=', 'document_syarat.id_document')
+                ->where('id_pendaftaran', $request->data_id)->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
@@ -151,13 +155,13 @@ class LowonganMagangController extends Controller
         ];
 
         $data['listStatus'][] = ['value' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM, 'label' => 'Screening'];
-        for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) { 
+        for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) {
             $data['tab']['tahap_' . $i] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'icon' => 'ti ti-device-desktop-analytics', 'table' => array_search($i, $this->valid_step)];
             $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
         }
 
         $data['last_seleksi'] = array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step);
-        array_push($data['listStatus'], 
+        array_push($data['listStatus'],
             ['value' => $data['last_seleksi'], 'label' => 'Penawaran'],
             ['value' => 'rejected', 'label' => 'Ditolak'],
         );
@@ -168,6 +172,11 @@ class LowonganMagangController extends Controller
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
+        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+
+        // menjalakan rejection lowongan
+        dispatch(new RejectionPenawaranLowongan($this->my_lowongan_magang));
+        // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
     }
@@ -176,7 +185,7 @@ class LowonganMagangController extends Controller
         $lowongan = $this->my_lowongan_magang->first();
 
         $inArray = 'in:' . PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
-        for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) { 
+        for ($i=0; $i < ($lowongan->tahapan_seleksi + 1); $i++) {
             $inArray .= ',' . array_search($i, $this->valid_step);
         }
         $inArray .= ',';
@@ -228,7 +237,7 @@ class LowonganMagangController extends Controller
                 $status = ['title' => 'Penawaran', 'color' => 'info'];
             } else {
                 $status = PendaftaranMagangStatusEnum::getWithLabel($data->current_step);
-            }  
+            }
 
             return '<div class="d-flex justify-content-center"><span class="badge bg-label-' . $status['color'] . '">'. $status['title'] .'</span></div>';
         })
@@ -258,12 +267,12 @@ class LowonganMagangController extends Controller
             // $lowongan = $pendaftar->lowongan_magang;
 
             $listStatus[] = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
-            for ($i = 0; $i < ($pendaftar->tahapan_seleksi + 1); $i++) { 
+            for ($i = 0; $i < ($pendaftar->tahapan_seleksi + 1); $i++) {
                 $listStatus[] = array_search($i, $this->valid_step);
             }
 
             $last_seleksi = array_search(($pendaftar->tahapan_seleksi + 1), $this->valid_step);
-            array_push($listStatus, 
+            array_push($listStatus,
                 $last_seleksi,
                 'rejected'
             );
@@ -302,7 +311,7 @@ class LowonganMagangController extends Controller
 
             $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
             dispatch(new SendMailJob($pendaftar->emailmhs, new EmailJadwalSeleksi($pendaftar)));
-            
+
             return Response::success([
                 'id_pendaftar' => $pendaftar->id_pendaftaran,
                 'current_step' => $pendaftar->current_step
@@ -312,7 +321,7 @@ class LowonganMagangController extends Controller
         }
     }
 
-    /** 
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -384,7 +393,7 @@ class LowonganMagangController extends Controller
                 'id_industri' => $id_industri,
                 'statusaprove' => LowonganMagangStatusEnum::PENDING,
             ]);
-            
+
             foreach ($request->proses_seleksi as $key => $value) {
                 SeleksiTahap::create([
                     'id_lowongan' => $lowongan->id_lowongan,
@@ -392,7 +401,7 @@ class LowonganMagangController extends Controller
                     'deskripsi' => $value['deskripsi'],
                     'tgl_mulai' => $value['tgl_mulai'],
                     'tgl_akhir' => $value['tgl_akhir'],
-                ]);    
+                ]);
             }
 
             DB::commit();
@@ -418,14 +427,14 @@ class LowonganMagangController extends Controller
             if ($request->type == 'total') return $query;
             return $query->where('statusaprove', $request->type);
         });
-        
+
         return DataTables::of($this->my_lowongan_magang)
             ->addIndexColumn()
             ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                } else {
+                if ($row->statusaprove == "ditolak") {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
+                } else {
+                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
                 }
             })
             ->addColumn('action', function ($row) {
@@ -438,9 +447,15 @@ class LowonganMagangController extends Controller
                     $edit = '';
                 }
 
+                if($row->statusaprove == 'ditolak') {
+                    $delete = '';
+                }else{
+                    $delete = "<a data-function='afterUpdateStatus' data-url='".route('kelola_lowongan.change_status', ['id' => $row->id_lowongan])."' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a>";
+                }
+
                 $btn = "<div class='d-flex justify-content-center'>$edit
                         <a href='" . route('kelola_lowongan.detail' , $row->id_lowongan) . "' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
-                        <a data-function='afterUpdateStatus' data-url='".route('kelola_lowongan.change_status', ['id' => $row->id_lowongan])."' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
+                        $delete</div>";
                 return $btn;
             })
             ->addColumn('tanggal', function ($row) {
@@ -463,11 +478,11 @@ class LowonganMagangController extends Controller
     }
     /**
      * Show the form for editing the specified resource.
-     */ 
+     */
     public function edit(Request $request, $id)
     {
         $lowongan = $this->my_lowongan_magang->load('jenisMagang')->first();
-        
+
         if($lowongan->statusaprove == 'diterima') {
             return redirect()->route('kelola_lowongan');
         }
@@ -481,11 +496,11 @@ class LowonganMagangController extends Controller
             $lowongan->{'proses_seleksi[' . $key . '][tgl_mulai]'} = $value->tgl_mulai;
             $lowongan->{'proses_seleksi[' . $key . '][tgl_akhir]'} = $value->tgl_akhir;
         }
-        
+
         return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap', 'kota'));
     }
 
-    public function detail($id)  
+    public function detail($id)
     {
         $lowongan = $this->my_lowongan_magang->load('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
         if (!$lowongan) return redirect()->route('kelola_lowongan');
@@ -556,7 +571,7 @@ class LowonganMagangController extends Controller
                     'deskripsi' => $value['deskripsi'],
                     'tgl_mulai' => $value['tgl_mulai'],
                     'tgl_akhir' => $value['tgl_akhir'],
-                ]);    
+                ]);
             }
 
             DB::commit();
@@ -591,6 +606,16 @@ class LowonganMagangController extends Controller
         }
     }
 
+    public function rejectionPenawaran($id) {
+        try {
+
+
+            return Response::success(null, 'Success');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
     private function getLowonganMagang($additional = null){
         $user = auth()->user();
         $pegawaiIndustri = $user->pegawai_industri;
@@ -605,7 +630,7 @@ class LowonganMagangController extends Controller
     private function getPendaftarMagang($additional = null){
         $user = auth()->user();
         $pegawaiIndustri = $user->pegawai_industri;
-        
+
         $this->my_pendaftar_magang = PendaftaranMagang::join('mahasiswa', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
         ->leftJoin('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->leftJoin('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
@@ -618,7 +643,7 @@ class LowonganMagangController extends Controller
         ->select('lowongan_magang.*', 'pendaftaran_magang.*', 'mahasiswa.*', 'universitas.*', 'fakultas.*', 'program_studi.*', 'reg_regencies.name as kota', 'reg_provinces.name as provinsi', 'reg_countries.name as negara');
         if ($additional) $this->my_pendaftar_magang = $additional($this->my_pendaftar_magang);
         $this->my_pendaftar_magang = $this->my_pendaftar_magang->get();
-        
+
         return $this;
     }
 }

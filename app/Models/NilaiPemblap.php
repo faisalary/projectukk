@@ -11,7 +11,6 @@ class NilaiPemblap extends Model
     use HasUuids;
 
     protected $table = 'nilai_pemblap';
-    protected $fillable = ['nilai', 'oleh', 'dateinputnilai'];
+    protected $guarded = [];
     protected $primaryKey = 'id_nilai';
-    protected $keyType = 'string';
 }

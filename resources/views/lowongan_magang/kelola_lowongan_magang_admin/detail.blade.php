@@ -115,11 +115,30 @@
                             <b>{{ Carbon\Carbon::parse($lowongan->seleksi_tahap[$i]->tgl_mulai)->format('d/m/Y') }}</b> &ensp;-&ensp; <b>{{ Carbon\Carbon::parse($lowongan->seleksi_tahap[$i]->tgl_akhir)->format('d/m/Y') }}</b>
                         </p>
                     </div>
-                    @endfor 
+                    @endfor
                 </div>
             </div>
         </div>
     </div>
+    {{-- Bagian Komentar Penolakan --}}
+    @if ($lowongan->statusaprove == 'ditolak')
+    <div class="col" style="max-width: 25%;">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="fw-bolder">Komentar</h5>
+                <p class="" style="text-align: justify; text-justify: inter-word; hyphens: auto;">
+                    {{ $lowongan->alasantolak }}
+                </p>
+            </div>
+            <div class="card-body border-top" style="margin-top: -20px">
+                <p class="text-muted fw-semibold text-xs" style="margin: -6px 0px 10px 0px">Timestamp : {{ \Carbon\Carbon::parse($lowongan->status_time)->format('H.i - d/m/Y') }}</p>
+                <p class="text-muted fw-semibold text-xs" style="margin: -6px 0px -6px 0px">Oleh : {{ json_decode($lowongan->status_user)[1] }}</p>
+            </div>
+        </div>
+        <a href="{{route('kelola_lowongan.edit' , $lowongan->id_lowongan)}}" class="btn btn-warning w-100" style="color: #ffa754; background-color: #ffecd9; border-color: #ffa75400;"><i class="tf-icons ti ti-edit mb-1"></i>&nbsp; Perbaiki Lowongan</a>
+    </div>
+    @endif
+    {{-- Bagian Komentar Penolakan : END --}}
     @if (auth()->user()->can('kelola_lowongan_lkm.approval'))
     @include('lowongan_magang/kelola_lowongan_magang_admin/components/card_right_detail')
     @endif
