@@ -41,7 +41,7 @@
                             <td>
                                 <input type="hidden" name="id_kompnilai[{{ $key }}]" value="{{ $item->id_kompnilai }}">
                                 <div class="form-group">
-                                    <input type="text" name="nilai[{{ $key }}]" class="form-control " placeholder="85" value="{{ $item->nilai ?? '' }}"/>
+                                    <input type="text" name="nilai[{{ $key }}]" class="form-control nilai-input" placeholder="85" value="{{ $item->nilai ?? '' }}"/>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </td>
@@ -49,11 +49,11 @@
                         @endforeach
                         <tr>
                             <th class="text-center" colspan="4">TOTAL NILAI AKHIR MAGANG</th>
-                            <th class=""><input type="text" id="" class="form-control" placeholder="-" style="max-width: 150px;" disabled /></th>
+                            <th class=""><input type="text" id="nilai-akhir" class="form-control" placeholder="-" style="max-width: 150px;" disabled /></th>
                         </tr>
                         <tr>
                             <th class="text-center" colspan="4">PREDIKAT INDEX NILAI AKHIR MAGANG</th>
-                            <th class=""><input type="text" id="" class="form-control" placeholder="-" style="max-width: 150px;" disabled /></th>
+                            <th class=""><input type="text" id="index-nilai" class="form-control" placeholder="-" style="max-width: 150px;" disabled /></th>
                         </tr>
                     </tbody>
                 </table>
@@ -88,6 +88,10 @@
 
 @section('page_script')
 <script>
+    $(document).ready(function () {
+        getIndexNilai();
+    });
+
     $(document).on('click', '#btn-submit-form', function () {
         sweetAlertConfirm({
             title: 'Apakah data yang anda input sudah benar?',
@@ -102,6 +106,31 @@
             form.find('#btn-submit-form').attr('type', 'button');
         });
     });
+
+    $(document).on('keyup', '.nilai-input', function () {
+        getIndexNilai();
+    });
+
+    function getIndexNilai() {
+        let nilaiMutu = @json($nilai_mutu);
+        let totalNilai = 0;
+
+        $('.nilai-input').each(function () {
+            if ($(this).val() != '' && $(this).val() != null) {
+                totalNilai += parseFloat($(this).val());
+            }
+        });
+
+        let index = nilaiMutu.find(item => totalNilai >= item.nilaimin && totalNilai <= item.nilaimax)?.nilaimutu;
+
+        if (index != null && index != undefined) {
+            $('#nilai-akhir').val(totalNilai);
+            $('#index-nilai').val(index);
+        } else {
+            $('#nilai-akhir').val('-');
+            $('#index-nilai').val('-');
+        }
+    }
 
     function afterAction(response) {
         setTimeout(() => {

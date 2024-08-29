@@ -176,12 +176,14 @@ class LogbookPemLapController extends LogbookController
         $data['data_nilai'] = NilaiPemblap::select('id_kompnilai', 'nilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
         ->where('id_mhsmagang', $id)->get();
 
-        if (empty($data['data_nilai'])) {
+        if (count($data['data_nilai']) == 0) {
             $data['data_nilai'] = KomponenNilai::select('id_kompnilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
             ->where('scored_by', 2)
             ->where('id_jenismagang', $data['mhs_magang']->jenis_magang)
             ->where('status', 1)->get();
         }
+
+        $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
         
         return view('kelola_mahasiswa/penilaian/index', $data);
     }
