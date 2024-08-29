@@ -29,7 +29,7 @@
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-12 form-group">
+                    <div class="col-6 form-group">
                         <div class="container-label" class="d-flex mb-1 justify-content-start align-items-center">
                             <label class="form-label mb-0 me-2" for="template{{ $key }}">
                                 Upload Template<span class="text-danger">*</span>
@@ -38,11 +38,22 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <input class="form-control" name="berkas[][template]" type="file" id="template{{ $key }}">
+                        </div>
+                        <small class="text-muted">Tipe File: .PDF Maximum upload file size : 2 MB.</small>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-6 form-group">
+                        <div class="container-label" class="d-flex mb-1 justify-content-start align-items-center">
+                            <label class="form-label mb-0 me-2" for="due_date{{ $key }}">
+                                Due Date<span class="text-danger">*</span>
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <input class="form-control flatpickr-date-x cursor-pointer" placeholder="Atur Due Date" name="berkas[][due_date]" type="text" value="{{ $item->due_date }}" data-hour="{{ Carbon\Carbon::parse($item->due_date)->format('H') }}" data-minute="{{ Carbon\Carbon::parse($item->due_date)->format('i') }}" id="due_date{{ $key }}">
                             <button type="button" class="btn btn-icon ms-3 btn-outline-danger" data-repeater-delete>
                                 <i class="ti ti-trash ti-xs"></i>
                             </button>
                         </div>
-                        <small class="text-muted">Tipe File: .PDF Maximum upload file size : 2 MB.</small>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -70,17 +81,26 @@
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-12 form-group">
+                    <div class="col-6 form-group">
                         <div class="d-flex mb-1 justify-content-between align-items-center">
                             <label class="form-label mb-0" for="template">Upload Template<span class="text-danger">*</span></label>
                         </div>
                         <div class="d-flex justify-content-between">
                             <input class="form-control" name="template" type="file" id="template">
+                        </div>
+                        <small class="text-muted">Tipe File: .PDF Maximum upload file size : 2 MB.</small>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-6 form-group">
+                        <div class="d-flex mb-1 justify-content-between align-items-center">
+                            <label class="form-label mb-0" for="due_date">Due Date<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <input class="form-control flatpickr-date-x cursor-pointer" placeholder="Atur Due Date" name="due_date" type="text" id="due_date">
                             <button type="button" class="btn btn-icon ms-3 btn-outline-danger" data-repeater-delete>
                                 <i class="ti ti-trash ti-xs"></i>
                             </button>
                         </div>
-                        <small class="text-muted">Tipe File: .PDF Maximum upload file size : 2 MB.</small>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

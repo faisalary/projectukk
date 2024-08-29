@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Fakultas;
-use App\Models\ProgramStudi;
+use App\Models\Mahasiswa;
 use App\Models\Universitas;
+use App\Models\ProgramStudi;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,15 +31,16 @@ class MahasiswaRequest extends FormRequest
         $email = ['required', 'string', 'max:255', 'unique:mahasiswa,emailmhs', 'unique:users,email'];
 
         if (isset($this->id)) {
-            $nim = ['required', 'string', 'max:15', Rule::unique('mahasiswa')->ignore($this->id, 'nim')];
-            $email = ['required', 'string', 'max:255', Rule::unique('mahasiswa')->ignore($this->id, 'emailmhs'), Rule::unique('users')->ignore($this->id, 'email')];
+            $nim = ['required', 'string', 'max:15', Rule::unique('mahasiswa', 'nim')->ignore($this->id, 'nim')];
+            $mahasiswa = Mahasiswa::where('nim', $this->id)->first();
+            $email = ['required', 'string', 'max:255', Rule::unique('mahasiswa', 'emailmhs')->ignore($this->id, 'nim'), Rule::unique('users', 'email')->ignore($mahasiswa?->id_user, 'id')];
         }  
         return [
             'nim' => $nim,
             'angkatan' => ['required', 'integer'],
             'id_prodi' => ['required', 'string','max:255', function ($attribute, $value, $fail) {
                 $fakultas = Fakultas::where('id_fakultas', $this->id_fakultas)->first();
-                $prodi = $fakultas->program_studi()->where('id_prodi', $value)->first();
+                $prodi = $fakultas->program_studi()?->where('id_prodi', $value)->first();
                 if (!$prodi) {
                     $fail('Program Studi not found');
                 }
@@ -46,14 +48,14 @@ class MahasiswaRequest extends FormRequest
             'id_univ' => ['required', 'string', 'max:255', 'exists:universitas,id_univ'],
             'id_fakultas' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
                 $univ = Universitas::where('id_univ', $this->id_univ)->first();
-                $fakultas = $univ->fakultas()->where('id_fakultas', $value)->first();
+                $fakultas = $univ->fakultas()?->where('id_fakultas', $value)->first();
                 if (!$fakultas) {
                     $fail('Fakultas not found');
                 }
             }],
             'kode_dosen' => ['required', 'string', 'max:5', function ($attribute, $value, $fail) {
                 $prodi = ProgramStudi::where('id_prodi', $this->id_prodi)->first();
-                $dosen = $prodi->dosen()->where('kode_dosen', $value)->first();
+                $dosen = $prodi->dosen()?->where('kode_dosen', $value)->first();
                 if (!$dosen) {
                     $fail('Dosen not found');
                 }
@@ -61,7 +63,7 @@ class MahasiswaRequest extends FormRequest
             'namamhs' => ['required', 'string', 'max:255'],
             'alamatmhs' => ['required', 'string', 'max:255'],
             'emailmhs' => $email,
-            'nohpmhs' => ['required', 'phone:id'],
+            'nohpmhs' => ['required'],
             'eprt' => ['required', 'numeric',],
             'tak' => ['required', 'numeric',],
             'ipk' => ['required', 'regex:/^\d{1}(\.\d{0,2})?$/',],
@@ -85,6 +87,7 @@ class MahasiswaRequest extends FormRequest
             'kode_dosen.max' => 'Dosen must be 5 characters',
             'namamhs.required' => 'The name of Mahasiswa must be filled',
             'emailmhs.required' => 'The Email must be filled',
+            'emailmhs.unique' => 'The Email already exist',
             'nohpmhs.required' => 'The phone number must be filled',
             'nohpmhs.phone' => 'The phone number must be valid',
             'alamatmhs.required' => 'The address must be filled',

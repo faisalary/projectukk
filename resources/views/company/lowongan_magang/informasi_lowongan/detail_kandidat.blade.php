@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="fw-semibold">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">20 Juli 2023</span></span>
+                        <span class="fw-semibold">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">{{ $date_confirm_closing }}</span></span>
                     </div>
                 </div>
                 <div class="card-datatable table-responsive">

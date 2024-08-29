@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Mahasiswa extends Model
 {
 
-    use HasFactory, HasUuids;
+    use HasFactory;
     protected $table = 'mahasiswa';
     protected $fillable = [
         'nim', 
