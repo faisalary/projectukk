@@ -6,6 +6,7 @@ use App\Helpers\Response;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Enums\LogbookWeeklyStatus;
 
@@ -116,8 +117,12 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
         }
 
         $this->getMyMhsMagang(function ($query) use ($id) {
-            return $query->select('mahasiswa.namamhs', 'mahasiswa.profile_picture', 'lowongan_magang.intern_position', 'mhs_magang.id_mhsmagang')
+            return $query->select('mahasiswa.namamhs', 'mahasiswa.profile_picture', 'lowongan_magang.intern_position', 'mhs_magang.id_mhsmagang',
+                'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'jenis_magang.durasimagang', 'jenis_magang.namajenis', 'industri.namaindustri')
                 ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+                ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
+                ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+                ->leftJoin('pegawai_industri', 'pegawai_industri.id_peg_industri', '=', 'mhs_magang.id_peg_industri')
                 ->where('mhs_magang.id_mhsmagang', $id);
         });
 
@@ -131,6 +136,9 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
         $data['url_get'] = route('kelola_mhs_pemb_akademik.logbook', $id);
         $data['urlBack'] = route('kelola_mhs_pemb_akademik');
+
+        $data['periode_magang'] = Carbon::parse($data['mahasiswa']->startdate_magang)->translatedFormat('d F Y') . ' - ' . Carbon::parse($data['mahasiswa']->enddate_magang)->translatedFormat('d F Y');
+        
         return view('kelola_mahasiswa.logbook.logbook', $data);
     }
 
