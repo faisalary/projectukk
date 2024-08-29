@@ -11,16 +11,8 @@ class BerkasAkhirMagang extends Model
     use HasUuids;
 
     protected $table = 'berkas_akhir_magang';
-    protected $fillable = [
-        'id_lap_akhir',
-        'id_mhsmagang',
-        'berkas_file',
-        'berkas_magang',
-        'status_berkas',
-        'tgl_upload'
-    ];
+    protected $guarded = [];
     protected $primaryKey = 'id_berkas_akhir_magang';
-    protected $keyType = 'string';
     public $timestamps = false;
 
     public function laporan_akhir()

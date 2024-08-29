@@ -6,8 +6,9 @@ use App\Http\Controllers\NilaiMahasiswaController;
 use App\Http\Controllers\SimpanLowonganController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
-use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\StatusLamaranMagangController;
+use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
+use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
 
@@ -26,6 +27,9 @@ Route::prefix('data-mahasiswa-magang')->name('data_mahasiswa')->controller(DataM
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
     Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
         Route::get('/', 'viewMagangFakultas');
+        Route::get('get-data', 'getDataFakultas')->name('.get_data');
+        Route::get('detail-mhs/{id}', 'getDataMhs')->name('.detail_mhs');
+        Route::get('detail-file', 'detailFile')->name('.detail_file');
     });
     Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
         Route::get('/', 'viewMagangMandiri');
@@ -109,6 +113,11 @@ Route::prefix('kegiatan-saya')->group(function () {
         Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
 
         Route::post('apply-logbook/{id_logbook_week}', 'applyLogbook')->name('.apply_logbook');
+    });
+
+    Route::prefix('berkas-akhir')->name('berkas_akhir')->controller(BerkasMahasiswaController::class)->group(function () {
+        Route::get('/', 'viewBerkasMahasiswa');
+        Route::post('store/{id}', 'storeBerkasMahasiswa')->name('.store');
     });
 });
 
