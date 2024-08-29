@@ -155,7 +155,6 @@ class LowonganMagangLkmController extends Controller
             $lowongan->statusaprove = LowonganMagangStatusEnum::APPROVED;
             $lowongan->status_user = json_encode([auth()->user()->id, auth()->user()->name]);
             $lowongan->status_time = date('H:i:s Y-m-d');
-            // dd($lowongan);
             $lowongan->save();
 
             DB::commit();
@@ -182,7 +181,6 @@ class LowonganMagangLkmController extends Controller
             $data->date_confirm_closing = date('Y-m-d');
             $data->status_user = json_encode([auth()->user()->id, auth()->user()->name]);
             $data->status_time = date('H:i:s Y-m-d');
-            // dd($data);
             $data->save();
             DB::commit();
 
