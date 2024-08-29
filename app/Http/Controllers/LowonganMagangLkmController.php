@@ -103,8 +103,9 @@ class LowonganMagangLkmController extends Controller
         $tahunAjaran = TahunAkademik::all();
         if (!$lowongan) return redirect()->route('lowongan.kelola');
 
+        $kuotaPenuh = $lowongan->kuota_terisi / $lowongan->kuota == 1;
         $urlBack = route('lowongan.kelola');
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi', 'tahunAjaran', 'urlBack'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact( 'lowongan', 'prodi', 'tahunAjaran', 'urlBack', 'kuotaPenuh'));
     }
 
     public function approved(Request $request, $id)

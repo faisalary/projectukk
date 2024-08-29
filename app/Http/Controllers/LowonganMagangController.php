@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
+use App\Jobs\RejectionPenawaranLowongan;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
+use App\Models\DokumenPendaftaranMagang;
 
 class LowonganMagangController extends Controller
 {
@@ -133,8 +135,10 @@ class LowonganMagangController extends Controller
             $data['education'] = Education::where('nim', $data['pendaftar']->nim)->get();
             $data['experience'] = Experience::where('nim', $data['pendaftar']->nim)->get();
             $data['skills'] = json_decode($data['pendaftar']->skills, true) ?? [];
-            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();
+            $data['language'] = BahasaMahasiswa::where('nim', $data['pendaftar']->nim)->orderBy('bahasa', 'asc')->get();    
             $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
+            $data['dokumen_syarat'] = DokumenPendaftaranMagang::join('document_syarat', 'dokumen_pendaftaran_magang.id_document', '=', 'document_syarat.id_document')
+                ->where('id_pendaftaran', $request->data_id)->get();
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
@@ -168,6 +172,11 @@ class LowonganMagangController extends Controller
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
+        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+
+        // menjalakan rejection lowongan
+        dispatch(new RejectionPenawaranLowongan($this->my_lowongan_magang));
+        // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
     }
@@ -331,8 +340,8 @@ class LowonganMagangController extends Controller
     public function create(Request $request)
     {
         $jenismagang = JenisMagang::all();
-
-        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang'));
+        $kota = DB::table('reg_regencies')->select('id', 'name')->get();
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'kota'));
     }
 
     /**
@@ -432,7 +441,13 @@ class LowonganMagangController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "primary";
 
-                $btn = "<div class='d-flex justify-content-center'><a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>
+                if($row->statusaprove != 'diterima') {
+                    $edit = "<a href='" . route('kelola_lowongan.edit', ['id' => $row->id_lowongan]) . "' class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i></a>";
+                }else{
+                    $edit = '';
+                }
+
+                $btn = "<div class='d-flex justify-content-center'>$edit
                         <a href='" . route('kelola_lowongan.detail' , $row->id_lowongan) . "' class='cursor-pointer mx-1 text-primary'><i class='tf-icons ti ti-file-invoice' ></i></a>
                         <a data-function='afterUpdateStatus' data-url='".route('kelola_lowongan.change_status', ['id' => $row->id_lowongan])."' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
                 return $btn;
@@ -461,9 +476,14 @@ class LowonganMagangController extends Controller
     public function edit(Request $request, $id)
     {
         $lowongan = $this->my_lowongan_magang->load('jenisMagang')->first();
+        
+        if($lowongan->statusaprove == 'diterima') {
+            return redirect()->route('kelola_lowongan');
+        }
 
         $jenismagang = JenisMagang::all();
         $tahap = $lowongan->tahapan_seleksi;
+        $kota = DB::table('reg_regencies')->select('id', 'name')->get();
 
         foreach ($lowongan->seleksi_tahap as $key => $value) {
             $lowongan->{'proses_seleksi[' . $key . '][deskripsi]'} = $value->deskripsi;
@@ -471,16 +491,17 @@ class LowonganMagangController extends Controller
             $lowongan->{'proses_seleksi[' . $key . '][tgl_akhir]'} = $value->tgl_akhir;
         }
         
-        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap'));
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap', 'kota'));
     }
 
     public function detail($id)  
     {
         $lowongan = $this->my_lowongan_magang->load('seleksi_tahap', 'industri')->first()->dataTambahan('jenjang_pendidikan', 'program_studi');
         if (!$lowongan) return redirect()->route('kelola_lowongan');
+        $kuotaPenuh = $lowongan->kuota_terisi / $lowongan->kuota == 1;
 
         $urlBack = route('kelola_lowongan');
-        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact('lowongan', 'urlBack'));
+        return view('lowongan_magang.kelola_lowongan_magang_admin.detail', compact('lowongan', 'urlBack', 'kuotaPenuh'));
     }
 
     /**
@@ -576,6 +597,16 @@ class LowonganMagangController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ]);
+        }
+    }
+
+    public function rejectionPenawaran($id) {
+        try {
+            
+
+            return Response::success(null, 'Success');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
     }
 

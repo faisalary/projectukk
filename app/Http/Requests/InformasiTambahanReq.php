@@ -24,7 +24,7 @@ class InformasiTambahanReq extends FormRequest
         return [
             'lokasi_yg_diharapkan' => 'required|max:255|string',
             'bahasa' => 'required|array|min:1',
-            'sosmedmhs_.*.namaSosmed' => 'required|max:255',
+            'sosmedmhs_.*.namaSosmed' => 'required|max:255|in:Instagram,Linkedin,Facebook,Twitter',
             'sosmedmhs_.*.urlSosmed' => 'required',
             'sosmedmhs_' => 'required|array|min:1',
         ];
@@ -40,6 +40,7 @@ class InformasiTambahanReq extends FormRequest
             'bahasa.array' => 'Bahasa Wajib di isi.',
             'bahasa.min' => 'Bahasa Wajib di isi.',
             'sosmedmhs_.*.namaSosmed.required' => 'Pilih Sosmed',
+            'sosmedmhs_.*.namaSosmed.in' => 'Pilihan sosmed tidak valid',
             'sosmedmhs_.*.urlSosmed.required'=> 'url wajib di isi',
             'sosmedmhs_.*.urlSosmed.url'=> 'url tidak valid',
             'sosmedmhs_.required' => 'Sosmed tidak boleh kosong',

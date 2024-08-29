@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
+use App\Models\DokumenPendaftaranMagang;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 
@@ -17,11 +18,9 @@ class ApprovalMahasiswaKaprodiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        return view('approval_mahasiswa/index', [
-            'urlGetData' => route('approval_mahasiswa_kaprodi.get_data'),
-            'urlApproval' => route('approval_mahasiswa_kaprodi.approval', ['id' => ':id'])
-        ]);
+    public function index() {      
+        $view = $this->getViewDesign();          
+        return view('approval_mahasiswa/index', compact('view'));
     }
 
     /**
@@ -32,7 +31,7 @@ class ApprovalMahasiswaKaprodiController extends Controller
      */
     public function getData(Request $request) {
         // Validate the request
-        $request->validate(['section' => 'required|in:approval,sudah-approval']);
+        $request->validate(['section' => 'required|in:approval,sudah_approval']);
 
         // Get the authenticated user's dosen
         $dosen = auth()->user()->dosen;
@@ -47,13 +46,13 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
-        ->where('mahasiswa.id_fakultas', $dosen->id_fakultas);
+        ->where('mahasiswa.id_prodi', $dosen->id_prodi);
 
         // Filter data berdasarkan parameter tiap bagian/section
         if ($request->section == 'approval') $data = $data->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL);
 
         $array_status = [];
-        if ($request->section == 'sudah-approval') {
+        if ($request->section == 'sudah_approval') {
             $array_status = array_diff(PendaftaranMagangStatusEnum::getConstants(), ['pending', 'approved_by_doswal', 'rejected_by_doswal']);
             $data = $data->whereIn('pendaftaran_magang.current_step', $array_status);
         }
@@ -113,6 +112,9 @@ class ApprovalMahasiswaKaprodiController extends Controller
         ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->where('pendaftaran_magang.id_pendaftaran', $id)->first();
 
+        $data['dokumen_persyaratan'] = DokumenPendaftaranMagang::join('document_syarat', 'document_syarat.id_document', '=', 'dokumen_pendaftaran_magang.id_document')
+            ->where('id_pendaftaran', $id)->get();
+
         $data['urlBack'] = route('approval_mahasiswa_kaprodi');
 
         return view('approval_mahasiswa/detail', $data);
@@ -150,4 +152,108 @@ class ApprovalMahasiswaKaprodiController extends Controller
             return Response::errorCatch($e);
         }
     }
+
+    public function approvals(Request $request) {            
+        try {
+
+            $validate = Validator::make($request->all(), [
+                'id_pendaftaran' => 'required|array|exists:pendaftaran_magang,id_pendaftaran',                
+            ], 
+            [
+                'id_pendaftaran.array' => 'Data tidak valid',                         
+                'id_pendaftaran.required' => 'Data tidak valid',
+            ]);           
+    
+            if ($validate->fails()) {
+                if ($validate->errors()->has('status')) {
+                    return Response::error(null, 'Invalid.');
+                } else {
+                    return Response::errorValidate($validate->errors(), 'Invalid.');
+                }
+            };
+
+            foreach($request->id_pendaftaran as $idPendaftar) {
+                $pendaftaranMahasiswa = PendaftaranMagang::where('id_pendaftaran', $idPendaftar)->first();
+                if (!$pendaftaranMahasiswa) return Response::error(null, 'Pendaftaran mahasiswa tidak ditemukan.');                
+                $pendaftaranMahasiswa->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI;
+                $pendaftaranMahasiswa->save();
+            }
+        
+            $message = 'Pendaftaran mahasiswa approved.';
+            return Response::success(null, $message);
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }        
+    }
+
+    private function getViewDesign() {
+        $title = 'Approval Mahasiswa';
+        $urlGetData = route('approval_mahasiswa_kaprodi.get_data');     
+        $urlApproval = route('approval_mahasiswa_kaprodi.approval', ['id' => ':id']);
+        $urlApprovals = route('approval_mahasiswa_kaprodi.approvals');   
+
+        $sudah_approval = [
+            '<th>NO</th>',
+            '<th>NAMA</th>',
+            '<th style="text-align:center;">TANGGAL DAFTAR</th>',
+            '<th>PERUSAHAAN</th>',
+            '<th>POSISI MAGANG</th>',
+            '<th>NO. TELEPON</th>',
+            '<th style="text-align:center;">STATUS APPROVAL</th>',
+            '<th style="text-align:center;">AKSI</th>',
+        ];
+
+        $approval = [
+            '<th></th>',
+            ...$sudah_approval
+        ];
+       
+        $columns = "
+            { data: 'DT_RowIndex' },
+            { data: 'namamhs', name: 'namamhs' },
+            { data: 'tanggaldaftar', name: 'tanggaldaftar' },
+            { data: 'namaindustri', name: 'namaindustri' },
+            { data: 'intern_position', name: 'intern_position' },
+            { data: 'nohpmhs', name: 'nohpmhs' },
+            { data: 'current_step', name: 'current_step' },
+            { data: 'action', name: 'action' },
+        ";
+
+        $columnsSudahApproval= "[
+            $columns
+        ]";
+
+        $columnsApproval = "[
+            {data: null},
+            $columns
+        ]";
+
+        $columnDefs = "
+        {
+            targets: 0,
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row, meta) {
+                console.log(data);
+                return `<input type='checkbox' class='dt-checkboxes form-check-input' value='` + data.id_pendaftaran + `'>`;
+            },
+            checkboxes: {
+                selectRow: false,
+                selectAllRender: `<input type='checkbox' class='form-check-input'>`
+            }
+        },";
+
+        return compact(
+            'title',            
+            'urlGetData',
+            'urlApproval',
+            'urlApprovals',
+            'columnDefs',
+            'approval', 
+            'sudah_approval', 
+            'columnsApproval', 
+            'columnsSudahApproval'
+        );
+    }
+
 }

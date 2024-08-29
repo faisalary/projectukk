@@ -11,24 +11,8 @@ class PendaftaranMagang extends Model
     use HasUuids;
 
     protected $table = 'pendaftaran_magang';
-    protected $fillable = [
-        'tanggaldaftar',
-        'nim',
-        'current_step',
-        'approval',
-        'status_seleksi',
-        'approvetime',
-        'id_lowongan',
-        'approved_by',
-        'konfirmasi_status',
-        'bukti_doc',
-        'portofolio',
-        'reason_aplicant',
-        'reason_reject',
-        'file_document_mitra',
-        'dokumen_spm',
-
-    ];
+    protected $guarded = [];
+    
     public $timestamps = false;
     protected $primaryKey = 'id_pendaftaran';
     protected $keyType = 'string';

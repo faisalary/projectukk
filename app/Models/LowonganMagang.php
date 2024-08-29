@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PendaftaranMagangStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,6 +66,11 @@ class LowonganMagang extends Model
         static::saving(function ($model) {
             if (isset($model->jenjang_pendidikan)) unset($model->jenjang_pendidikan);
             if (isset($model->program_studi)) unset($model->program_studi);
+            if (isset($model->kuota_terisi)) unset($model->kuota_terisi);
+        });
+
+        static::retrieved(function ($model) {
+            $model->kuota_terisi = $model->total_pelamar()->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)->count();
         });
     }
 

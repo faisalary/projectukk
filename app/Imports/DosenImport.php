@@ -47,7 +47,7 @@ class DosenImport implements ToCollection, WithHeadingRow
                 'kode_dosen' => 'required|string|max:5',
                 'namadosen' => 'required|string|max:255',
                 'nohpdosen' => 'required|string|max:15',
-                'emaildosen' => 'required|string|email|max:255',
+                'emaildosen' => 'required|string|email',
             ],
             [
                 '*.required' => 'Data Kosong',
