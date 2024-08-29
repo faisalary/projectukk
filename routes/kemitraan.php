@@ -135,7 +135,8 @@ Route::prefix('kelola-mahasiswa-magang')->name('kelola_magang_pemb_lapangan')->c
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
     Route::post('logbook/approval/{id}', 'approval')->name('.approval');
-    Route::get('input-nilai', 'viewInputNilai')->name('.input_nilai');
+    Route::get('input-nilai/{id}', 'viewInputNilai')->name('.input_nilai');
+    Route::post('input-nilai/store/{id}', 'storeNilai')->name('.store_nilai');
 });
 
 Route::middleware('permission:dashboard.dashboard_mitra')->get('dashboard/company', function () {
