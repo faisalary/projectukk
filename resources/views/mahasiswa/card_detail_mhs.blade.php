@@ -1,20 +1,47 @@
 <div class="card">
     <div class="card-body p-5 accordion">
-        <div class="d-flex justify-content-start">
-            <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
-                @if ($data->profile_picture)
-                <img src="{{ asset('storage/' . $data->profile_picture) }}" alt="user-avatar" class="d-block" width="125" id="image_mahasiswa">
-                @else
-                <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_mahasiswa">
-                @endif
-            </div>
-            <div class="d-flex flex-column justify-content-center ms-4">
-                <h2 class="fw-bolder mb-2.5">{{ $data->namamhs }}</h2>
-                <h6>{{ $data->intern_position }}</h6>
-            </div>
+        <div class="d-flex justify-content-between">
+           <div class="d-flex">
+                <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
+                    @if ($data->profile_picture)
+                    <img src="{{ asset('storage/' . $data->profile_picture) }}" alt="user-avatar" class="d-block" width="125" id="image_mahasiswa">
+                    @else
+                    <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_mahasiswa">
+                    @endif
+                </div>
+                <div class="d-flex flex-column justify-content-center ms-4">
+                    <h2 class="fw-bolder">{{ $data->namamhs }}</h2>                
+                </div>
+           </div>
+
+            <div>                       
+                <button id="unduhProfileBtn" class="btn btn-lg btn-primary buttons-collection ms-4 mt-2" style="padding: 15px 45px 15px 45px" type="button" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <i class="ti ti-download me-sm-1"></i> 
+                  <span class="d-none d-sm-inline-block">Unduh CV</span>
+                </button>
+          </div>
         </div>
+         {{-- Informasi Lamaran --}}
+         <div class="row row-cols-1 row-cols-md-2 col-lg-5 col-md-8 col-sm-10 mt-2 mb-4 g-4">
+            <div class="col">
+              <h5 class="fs-5 mb-2">Lokasi Magang</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ implode(', ', json_decode($data->lokasi)) }}</h5>
+            </div>
+            <div class="col">
+              <h5 class="fs-5 mb-2">Posisi Magang</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ $data->intern_position }}</h5>
+            </div>
+            <div class="col">
+              <h5 class="fs-5 mb-2">Program Magang</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ $data->namajenis }}</h5>
+            </div>
+            <div class="col">
+              <h5 class="fs-5 mb-2">Durasi Magang</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ implode(', ', json_decode($data->durasimagang)) }}</h5>
+            </div>                    
+        </div>  
         <div class="border-bottom">
-            <h4 class="fw-semibold mt-3">Mengapa Saya harus diterima?</h4>
+            <h4 class="fw-semibold">Mengapa Saya harus diterima?</h4>
             <p>{{ $data->reason_aplicant }}</p>
         </div>
         <div class="border-bottom mt-4">
@@ -175,7 +202,13 @@
                     </div>
                     <p class="mb-1" style="font-size: small">{{ $item->penerbit }}</p>
                     <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</p>
-                    <p class="mb-1">{{ $item->deskripsi }}</p>
+                    <p class="mb-0 text-justify">
+                        <span id="headline" class="headliner">{{ \Illuminate\Support\Str::limit($item->deskripsi ?? '-', 250) }}</span>
+        
+                        @if (strlen($item->deskripsi) > 250)
+                        <u class="show-btn link-success cursor-pointer" data-deskripsi="{{$item->deskripsi ?? '-'}}">Show More</u>
+                        @endif
+                    </p>                    
                     <div class="d-flex justfiy-content-start align-items-center">
                         <a href="{{ url('storage/' . $item->file_sertif) }}" target="_blank" class="text-decoration-underline">{{ str_replace('sertifikat/', '', $item->file_sertif) }}</a>
                     </div>

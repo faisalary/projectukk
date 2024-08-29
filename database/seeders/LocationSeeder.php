@@ -14,7 +14,7 @@ class LocationSeeder extends Seeder
     {
         // DB::beginTransaction();
         try {
-            
+            Schema::disableForeignKeyConstraints();     
             $sql1 = file_get_contents(database_path('sql/wilayah_indonesia.sql'));
             DB::unprepared($sql1);
             // DB::commit();

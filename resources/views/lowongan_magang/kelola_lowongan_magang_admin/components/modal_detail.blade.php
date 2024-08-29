@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <h5 class="modal-title">Apakah Anda Yaking Menyetujui Lowongan</h5>
+                <h5 class="modal-title">Apakah Anda Yakin Menyetujui Lowongan</h5>
             </div>
             <form class="default-form" action="{{ route('lowongan.kelola.approved', ['id' => $lowongan->id_lowongan]) }}" function-callback="afterApprove">
                 @csrf
