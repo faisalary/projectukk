@@ -13,9 +13,9 @@ class BerkasAkhirMagangStatus
     public static function getWithLabel($status = null)
     {
         $data = [
-            self::PENDING => ['title' => 'Pending', 'color' => 'warning'],
-            self::APPROVED => ['title' => 'Approved', 'color' => 'success'],
-            self::REJECTED => ['title' => 'Rejected', 'color' => 'danger']
+            self::PENDING => ['title' => 'Menunggu Diverifikasi', 'color' => 'warning'],
+            self::APPROVED => ['title' => 'Lengkap', 'color' => 'success'],
+            self::REJECTED => ['title' => 'Tidak Lengkap', 'color' => 'danger']
         ];
 
         if ($status) return $data[$status];

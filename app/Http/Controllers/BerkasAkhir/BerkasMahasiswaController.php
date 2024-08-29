@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BerkasAkhir;
 
+use App\Enums\BerkasAkhirMagangStatus;
 use App\Helpers\Response;
 use App\Models\BerkasMagang;
 use Illuminate\Http\Request;
@@ -34,21 +35,32 @@ class BerkasMahasiswaController extends BerkasAkhirMagangController
 
             $berkasMagang = BerkasMagang::where('id_berkas_magang', $id)->first();
             if (!$berkasMagang) return Response::error(null, 'Berkas Magang not found');
+            $berkasAkhirMagang = BerkasAkhirMagang::where('id_mhsmagang', $pendaftaranMagang->id_mhsmagang)
+            ->where('id_berkas_magang', $berkasMagang->id_berkas_magang)->first();
 
             $file = null;
             if ($request->hasFile('file')) {
+                if (isset($berkasAkhirMagang) && Storage::exists($berkasAkhirMagang->berkas_file)) {
+                    Storage::delete($berkasAkhirMagang->berkas_file);
+                }
                 $file = $request->file('file');
                 $file = Storage::put('berkas_akhir_magang', $file);
             }
 
-            BerkasAkhirMagang::create([
-                'id_mhsmagang' => $pendaftaranMagang->id_mhsmagang,
-                'id_berkas_magang' => $berkasMagang->id_berkas_magang,
-                'berkas_file' => $file,
-                'berkas_magang' => $berkasMagang->nama_berkas,
-                'status_berkas' => 'pending',
-                'tgl_upload' => now(),
-            ]);
+            if (!isset($berkasAkhirMagang)) {
+                BerkasAkhirMagang::create([
+                    'id_mhsmagang' => $pendaftaranMagang->id_mhsmagang,
+                    'id_berkas_magang' => $berkasMagang->id_berkas_magang,
+                    'berkas_file' => $file,
+                    'berkas_magang' => $berkasMagang->nama_berkas,
+                    'status_berkas' => 'pending',
+                    'tgl_upload' => now(),
+                ]);
+            } else {
+                $berkasAkhirMagang->berkas_file = $file;
+                $berkasAkhirMagang->status_berkas = BerkasAkhirMagangStatus::PENDING;
+                $berkasAkhirMagang->save();
+            }
 
             $berkasMagang = $this->getMyBerkasMagang()->my_berkas_akhir;
             return Response::success([
@@ -63,7 +75,7 @@ class BerkasMahasiswaController extends BerkasAkhirMagangController
     {
         $pendaftaranMagang = $this->getMyMagang()->pemagang->first();
 
-        $this->my_berkas_akhir = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload')
+        $this->my_berkas_akhir = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload', 'berkas_akhir_magang.rejected_reason')
         ->leftJoin('berkas_akhir_magang', 'berkas_akhir_magang.id_berkas_magang', '=', 'berkas_magang.id_berkas_magang')
         ->where('id_jenismagang', $pendaftaranMagang->id_jenismagang);
         if ($additional != null) $additional($this->my_berkas_akhir);

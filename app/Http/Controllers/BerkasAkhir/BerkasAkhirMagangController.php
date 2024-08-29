@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BerkasAkhir;
 
+use App\Helpers\Response;
 use App\Models\Mahasiswa;
 use App\Models\BerkasMagang;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Enums\BerkasAkhirMagangStatus;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\BerkasAkhirMagang;
 
 class BerkasAkhirMagangController extends Controller
 {
@@ -35,7 +37,7 @@ class BerkasAkhirMagangController extends Controller
             ->join('mhs_magang', 'mhs_magang.id_pendaftaran', '=', 'pendaftaran_magang.id_pendaftaran');
         })->pemagang;
 
-        $berkasMagang = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.id_mhsmagang', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload')
+        $berkasMagang = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.id_berkas_akhir_magang', 'berkas_akhir_magang.id_mhsmagang', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload')
         ->leftJoin('berkas_akhir_magang', 'berkas_akhir_magang.id_berkas_magang', '=', 'berkas_magang.id_berkas_magang')
         ->whereIn('berkas_magang.id_jenismagang', $pendaftaranMagang->pluck('id_jenismagang')->toArray())->get();
 
@@ -53,7 +55,15 @@ class BerkasAkhirMagangController extends Controller
             $result = '<table class="text-nowrap"><tbody>';
             foreach ($berkasPicked as $key => $value) {
                 $result .= '<tr>';
-                $result .= '<td style="padding: 0rem;padding-top: 0.5rem;padding-bottom: 0.5rem;"><a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['file' => $value->berkas_file]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a></td>';
+
+                $result .= '<td style="padding: 0rem;padding-top: 0.5rem;padding-bottom: 0.5rem;">';
+                if (isset($value->id_berkas_akhir_magang)) {
+                    $result .= '<a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['id' => $value->id_berkas_akhir_magang]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                } else {
+                    $result .= '<a href="javascript: void(0)" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                }
+                $result .= '</td>';
+
                 $result .= '<td style="padding: 0.5rem;">:</td>';
 
                 $status_ = BerkasAkhirMagangStatus::getWithLabel($value->status_berkas);
@@ -71,7 +81,15 @@ class BerkasAkhirMagangController extends Controller
             $result = '<table class="text-nowrap"><tbody>';
             foreach ($berkasPicked as $key => $value) {
                 $result .= '<tr>';
-                $result .= '<td style="padding-top: 0.5rem;padding-bottom: 0.5rem;padding: 0rem"><a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['file' => $value->berkas_file]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a></td>';
+
+                $result .= '<td style="padding: 0rem;padding-top: 0.5rem;padding-bottom: 0.5rem;">';
+                if (isset($value->id_berkas_akhir_magang)) {
+                    $result .= '<a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['id' => $value->id_berkas_akhir_magang]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                } else {
+                    $result .= '<a href="javascript: void(0)" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                }
+                $result .= '</td>';
+
                 $result .= '<td style="padding: 0.5rem;">:</td>';
                 $result .= '<td style="padding-top: 0.5rem;padding-bottom: 0.5rem;">'.Carbon::parse($value->tgl_upload)->format('d/m/Y H:i').'</td>';
                 $result .= '</tr>';
@@ -85,7 +103,15 @@ class BerkasAkhirMagangController extends Controller
             $result = '<table class="text-nowrap"><tbody>';
             foreach ($berkasPicked as $key => $value) {
                 $result .= '<tr>';
-                $result .= '<td style="padding-top: 0.5rem;padding-bottom: 0.5rem;padding: 0rem"><a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['file' => $value->berkas_file]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a></td>';
+
+                $result .= '<td style="padding: 0rem;padding-top: 0.5rem;padding-bottom: 0.5rem;">';
+                if (isset($value->id_berkas_akhir_magang)) {
+                    $result .= '<a href="'.route('berkas_akhir_magang.fakultas.detail_file', ['id' => $value->id_berkas_akhir_magang]).'" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                } else {
+                    $result .= '<a href="javascript: void(0)" class="text-primary">'.$value->berkas_magang.'.'.explode('.', $value->berkas_file)[1].'</a>';
+                }
+                $result .= '</td>';
+
                 $result .= '<td style="padding: 0.5rem;">:</td>';
                 $result .= '<td>'.Carbon::parse($value->tgl_upload)->format('d/m/Y H:i').'</td>';
                 $result .= '</tr>';
@@ -128,12 +154,42 @@ class BerkasAkhirMagangController extends Controller
         return view('berkas_akhir_magang/magang_fakultas/components/card_detail_mhs', compact('data'))->render();
     }
 
-    public function detailFile(Request $request) {
-        if (!$request->file) return abort(403);
-        if (!Storage::has($request->file)) return abort(403);
+    public function detailFile($id) {
+        $berkas = BerkasAkhirMagang::where('id_berkas_akhir_magang', $id)->first();
+        if (!$berkas) return abort(403);
 
-        $data['data'] = $request->file;
-        return view('berkas_akhir_magang/magang_fakultas/detail_file');
+        $data['berkas'] = $berkas;
+        $data['data'] = url('storage/' . $berkas->berkas_file);
+        $data['url'] = route('berkas_akhir_magang.fakultas.approval_file', $id);
+        return view('berkas_akhir_magang/magang_fakultas/detail_file', $data);
+    }
+
+    public function approvalBerkas(Request $request, $id) {
+        $request->validate([
+            'status' => 'required|in:approve,reject',
+            'reason' => 'required_if:status,reject',
+        ], [
+            'reason.required_if' => 'Alasan penolakan harus diisi.',
+        ]);
+
+        try {
+            $berkas = BerkasAkhirMagang::join('mhs_magang', 'mhs_magang.id_mhsmagang', '=', 'berkas_akhir_magang.id_mhsmagang')
+            ->where('id_berkas_akhir_magang', $id)->first();
+            if (!$berkas) return Response::error(null, 'Berkas tidak ditemukan.');
+
+            $berkas->status_berkas = BerkasAkhirMagangStatus::APPROVED;
+            if ($request->status == 'reject') {
+                $berkas->status_berkas = BerkasAkhirMagangStatus::REJECTED;
+                $berkas->rejected_reason = $request->reason;
+            }
+            $berkas->save();
+
+            return Response::success([
+                'view' => view('berkas_akhir_magang/magang_fakultas/components/right_card_detail', compact('berkas'))->render()
+            ], 'Berhasil menyimpan data!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
 
     public function viewMagangMandiri()

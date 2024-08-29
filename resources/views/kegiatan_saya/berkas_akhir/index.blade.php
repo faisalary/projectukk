@@ -31,9 +31,10 @@
                 <input type="hidden" name="data_id">
                 <div class="modal-body py-1">
                     <div class="row">
-                        <div class="col mb-0">
+                        <div class="col mb-0 form-group">
                             <label for="formFile" class="form-label">Upload File</label>
                             <input class="form-control" type="file" name="file" id="formFile">
+                            <div class="invalid-feedback"></div>
                             <p class="pt-2" style="font-size: small;">Allowed PDF. Max size of 2 MB</p>
                         </div>
                     </div>
