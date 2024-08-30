@@ -20,7 +20,7 @@ class RejectionPenawaranLowongan implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public LowonganMagang|string|array|null $id_lowongan = null)
+    public function __construct(public LowonganMagang|string|array|null $lowongan = null)
     {
         $this->valid_step = [
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
