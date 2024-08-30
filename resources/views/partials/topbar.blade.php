@@ -65,7 +65,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/berkas/akhir" class="menu-link">
+                                <a href="{{ route('berkas_akhir') }}" class="menu-link">
                                     <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                                 </a>
                             </li>
