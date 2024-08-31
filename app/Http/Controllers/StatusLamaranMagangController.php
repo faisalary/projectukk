@@ -10,6 +10,7 @@ use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\RejectionPenawaranLowongan;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusStepEnum;
 
@@ -55,6 +56,20 @@ class StatusLamaranMagangController extends Controller
             }
             return self::getDataCard($request);
         }
+
+        $this->getDataLamaran(function ($query) {
+            return $query->select('pendaftaran_magang.id_lowongan', 'pendaftaran_magang.current_step');
+        });
+        
+        $getData = $this->lamaran_magang->whereIn('current_step', [
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3
+        ]);
+        
+        // menjalakan rejection lowongan
+        RejectionPenawaranLowongan::dispatchSync($getData->pluck('id_lowongan')->toArray());
+        // -----------------------------
 
         $this->getDataLamaran()->setUpBadgeDataLamaran();
 
