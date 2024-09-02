@@ -60,6 +60,7 @@ class PermissionSeeder extends Seeder
             'profile_perusahaan.update',
             //-------------------
             'assign_pembimbing.view',
+            'template_email.view'
         ];
 
         $permission['Pembimbing Lapangan'] = [

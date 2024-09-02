@@ -21,14 +21,19 @@ class LogbookMahasiswaController extends LogbookController
     public function index(Request $request)
     {
         $this->getMyPendaftaranMagang(function ($query) {
-            return $query->select('industri.image', 'lowongan_magang.intern_position', 'industri.namaindustri', 'mhs_magang.id_mhsmagang', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'pendaftaran_magang.id_pendaftaran')
+            return $query->select('industri.image', 'lowongan_magang.intern_position', 'industri.namaindustri', 
+            'mhs_magang.id_mhsmagang', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'jenis_magang.durasimagang',
+            'pendaftaran_magang.id_pendaftaran','jenis_magang.namajenis', 'dosen.namadosen', 'pegawai_industri.namapeg')
             ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
             ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
-            ->join('mhs_magang', 'pendaftaran_magang.id_pendaftaran', '=', 'mhs_magang.id_pendaftaran');
+            ->join('mhs_magang', 'pendaftaran_magang.id_pendaftaran', '=', 'mhs_magang.id_pendaftaran')
+            ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
+            ->leftJoin('dosen', 'dosen.nip', '=', 'mhs_magang.nip')
+            ->leftJoin('pegawai_industri', 'pegawai_industri.id_peg_industri', '=', 'mhs_magang.id_peg_industri');  
         });
 
         $data['data'] = $this->pendaftaran->first();
-        if ($data['data'] == null) return abort(403);
+        if ($data['data'] == null) return view('logbook.logbook_403');
 
         $logbook = Logbook::where([
             'id_mhsmagang' => $data['data']->id_mhsmagang,
@@ -38,7 +43,9 @@ class LogbookMahasiswaController extends LogbookController
         $current_month = ($request->current_month)? ($request->current_month + 1) : Carbon::now()->month;
         $data['logbook_week'] = [];
         if ($logbook) {
-            $data['logbook_week'] = LogbookWeek::with('logbookDay')->where('id_logbook', $logbook->id_logbook)
+            $data['logbook_week'] = LogbookWeek::with(['logbookDay' => function($query){
+                $query->where('activity', '!=', 'Libur');
+            }])->where('id_logbook', $logbook->id_logbook)
             ->where(function ($query) use ($current_month) {
                 $query->whereMonth('start_date', $current_month)->orWhereMonth('end_date', $current_month);
             })
@@ -64,6 +71,8 @@ class LogbookMahasiswaController extends LogbookController
         $data['total_days'] = CarbonPeriod::create($data['data']->startdate_magang, $data['data']->enddate_magang)->count();
         $data['filled_days'] = self::filledDays($data['logbook_week']);
         $data['percentage']= self::percentage($data['filled_days'], $data['total_days']);
+
+        $data['periode_magang'] = Carbon::parse($data['data']->startdate_magang)->translatedFormat('d F Y') . ' - ' . Carbon::parse($data['data']->enddate_magang)->translatedFormat('d F Y');
         
         return view('logbook.logbook', $data);
     }
@@ -182,9 +191,25 @@ class LogbookMahasiswaController extends LogbookController
                 'end_date' => $endDate->format('Y-m-d')
             ]);
             
+            $logbookSunday = LogbookDay::create([
+                'id_logbook_week' => $logbookWeek->id_logbook_week,
+                'date' => $startDate->format('Y-m-d'),
+                'emoticon' => '4',
+                'activity' => 'Libur'
+            ]);
+
+            $logbookSaturday = LogbookDay::create([
+                'id_logbook_week' => $logbookWeek->id_logbook_week,
+                'date' => $endDate->format('Y-m-d'),
+                'emoticon' => '4',
+                'activity' => 'Libur'
+            ]);
+            
             DB::commit();
 
-            $logbook_week = LogbookWeek::where('id_logbook', $logbook->id_logbook)
+            $logbook_week = LogbookWeek::with(['logbookDay' => function($query){
+                $query->where('activity', '!=', 'Libur');
+            }])->where('id_logbook', $logbook->id_logbook)
             ->where(function ($query) use ($request) {
                 $query->whereMonth('start_date', ($request->current_month + 1))->orWhereMonth('end_date', ($request->current_month + 1));
             })
@@ -409,7 +434,7 @@ class LogbookMahasiswaController extends LogbookController
             'can_apply' => $canApply
         ];
 
-        $totalDays = 7;
+        $totalDays = CarbonPeriod::create($logbookWeek->start_date, $logbookWeek->end_date)->count();
         $filledDays = $data['logbook_day']->whereNotNull('activity')->count();
         $data['percentage'] = self::percentage($filledDays, $totalDays);
 

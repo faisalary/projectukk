@@ -30,6 +30,8 @@
 
     <div id="sudah-daftar-container"></div>
 
+    <div id="daftar-lebih-container"></div>
+
     <div class="card">
         <div class="card-body">
             <h4>Informasi Data Diri</h4>
@@ -55,13 +57,13 @@
                 </div>
                 <div class="d-flex flex-column">
                     <h6 class="mb-0">Program Studi</h6>
-                    <p>{{$mahasiswaprodi->prodi->namaprodi}}</p>
+                    <p>{{$mahasiswa->prodi->namaprodi}}</p>
                     <h6 class="mb-0">Fakultas</h6>
-                    <p>{{$mahasiswaprodi->fakultas->namafakultas}}</p>
+                    <p>{{$mahasiswa->fakultas->namafakultas}}</p>
                 </div>
                 <div class="d-flex flex-column">
                     <h6 class="mb-0">Universitas</h6>
-                    <p>{{$mahasiswaprodi->univ->namauniv}}</p>
+                    <p>{{$mahasiswa->univ->namauniv}}</p>
                 </div>
                 <div class="d-flex flex-column" style="flex: 0 0 auto;width: 20%;">
                     <div class="d-flex justify-content-between">
@@ -79,35 +81,37 @@
         </div>
     </div>
 
-    @if($sudahDaftar == false)
+    @if($sudahDaftar == false && $daftarDua == false)
     <div class="card mt-5" id="card-apply">
         <div class="card-body">
-            <div>
-                <form class="default-form" action="{{ route('apply_lowongan.apply', ['id' => $lowongandetail->id_lowongan]) }}" method="POST" enctype="multipart/form-data" function-callback="afterApplyLowongan">
-                    @csrf
-                        <h4>Portofolio</h4>
-                        <div class="mt-3 form-group">
-                            <label for="formFile" class="form-label text-secondary">Unggah Portofolio (opsional)</label>
-                            @if(isset($persentase) && ($magang != null || $persentase < 70)) 
-                                <input class="form-control" type="file" id="formFile" name="porto" disabled>
+            <form class="default-form" action="{{ route('apply_lowongan.apply', ['id' => $lowongandetail->id_lowongan]) }}" function-callback="afterApplyLowongan">
+                @csrf
+                    <h4>Berkas Persyaratan</h4>
+                    <div class="row">
+                        @foreach ($dokumenPersyaratan as $key => $item)
+                        <div class="mt-2 col-6 form-group">
+                            <label for="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" class="form-label text-secondary">{{ ucwords(strtolower($item->namadocument)) }}</label>
+                            @if(isset($persentase) && ($magang != null || $persentase < 80)) 
+                                <input class="form-control" type="file" id="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" name="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" disabled>
                             @else
-                                <input class="form-control" type="file" id="formFile" name="porto">
+                                <input class="form-control" type="file" id="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" name="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}">
                             @endif
-                            <p class="mt-1 mb-0" style="font-size: 14px;">Mendukung tipe file PDF dan Ukuran Maksimal 5 MB</p>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <h4 class="mt-4">Mengapa Saya Harus Diterima</h4>
-                        <div class="mt-3">
-                            <label for="reasonTextarea" class="form-label text-secondary">Jelaskan mengapa Anda layak diterima untuk posisi ini</label>
-                            <textarea class="form-control" id="reasonTextarea" name="reason" rows="5" required></textarea>
-                        </div>
-                        @if(isset($persentase) && ($magang != null || $persentase < 70)) 
-                            <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
-                        @else
-                            <button type="submit" class="btn btn-primary waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
-                        @endif
-                </form>
-            </div>
+                        @endforeach
+                    </div>
+                    <h4 class="mt-4">Mengapa Saya Harus Diterima</h4>
+                    <div class="mt-3 form-group">
+                        <label for="reasonTextarea" class="form-label text-secondary">Jelaskan mengapa Anda layak diterima untuk posisi ini</label>
+                        <textarea class="form-control" id="reasonTextarea" name="reason" rows="5"></textarea>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    @if(isset($persentase) && ($magang != null || $persentase < 80)) 
+                        <button type="submit" class="btn btn-secondary waves-effect waves-light mt-3" disabled>Kirim lamaran sekarang</button>
+                    @else
+                        <button type="submit" class="btn btn-primary waves-effect waves-light mt-3">Kirim lamaran sekarang</button>
+                    @endif
+            </form>
         </div>
     </div>
     @endif
@@ -146,6 +150,10 @@
                     @endforeach
                 </div>
             </div>
+            <div class="mt-4 border-bottom pb-4">
+                <h4>Kuota Penerimaan</h4>
+                <p>{{ $lowongandetail->kuota_terisi }}/{{ $lowongandetail->kuota }} Kuota Tersedia</p>
+            </div>
             <div class="mt-4">
                 <h4>Tentang Perusahaan</h4>
                 <div class="d-flex justify-content-start">
@@ -181,11 +189,21 @@
             <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mengajukan lamaran untuk pekerjaan ini</span>
         </div>
     `;
+        
+    let daftarDua = `
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <i class="ti ti-alert-triangle ti-xs"></i>
+            <span style=" padding-left:10px; padding-top:5px; color:#322F3D;"> Anda sudah mendaftar pada 2 lowongan</span>
+        </div>
+    `;
 
     @if($sudahDaftar == true)
         document.getElementById("sudah-daftar-container").innerHTML = sudahDaftar;
     @endif
 
+    @if($daftarDua == true)
+        document.getElementById("daftar-lebih-container").innerHTML = daftarDua;
+    @endif
 
     //  Button Back
     document.getElementById("back").addEventListener("click", () => {

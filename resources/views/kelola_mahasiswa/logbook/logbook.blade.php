@@ -16,7 +16,7 @@
     <div class="card-body">
         <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; height: fit-content !important; min-width: 320px !important;">
             <div class="row">
-                <div class="col-10">
+                <div class="col-12">
                     <div class="d-flex align-items-left">
                         <div class="text-center my-4" style="overflow: hidden; width: 80px; height: 80px;">
                             @if ($mahasiswa->profile_picture)
@@ -25,10 +25,40 @@
                                 <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="100" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
                             @endif
                         </div>
-                        <span class="pt-3">
-                            <h4 class="mb-2 ms-3">{{ $mahasiswa->namamhs }}</h4>
-                            <h6 class="ms-3">{{ $mahasiswa->intern_position }}</h6>
-                        </span>
+                        <div class="row pt-3 ms-3">
+                            <h3 class="mb-4">{{ $mahasiswa->namamhs }}</h3>
+                            {{-- <div class="col-xl-8"> --}}
+                            <div class="col-8">
+                                <h5 class="mb-3">Informasi Kegiatan</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Program Magang</h6>
+                                        <span>{{ $mahasiswa->namajenis ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Durasi Magang</h6>
+                                        <span>{{ $mahasiswa->durasimagang ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Periode Kegiatan</h6>
+                                        <span>{{ $periode_magang ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <h5 class="mb-3">Informasi Tambahan</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="mb-1">Lokasi Magang</h6>
+                                        <span>{{ $mahasiswa->namaindustri ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="mb-1">Posisi</h6>
+                                        <span>{{ $mahasiswa->intern_position ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AssignPembimbingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
+use App\Http\Controllers\MasterEmailController;
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\JadwalSeleksiController;
 use App\Http\Controllers\InformasiMitraController;
-use App\Http\Controllers\Logbook\LogbookPemLapController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
 use App\Http\Controllers\PegawaiIndustriController;
+use App\Http\Controllers\AssignPembimbingController;
 use App\Http\Controllers\LowonganMagangLkmController;
+use App\Http\Controllers\Logbook\LogbookPemLapController;
 
 Route::prefix('kelola-mitra')->name('kelola_mitra')->controller(KelolaMitraController::class)->group(function () {
     Route::get('/', 'index');
@@ -120,22 +121,25 @@ Route::prefix('company')->group(function () {
         Route::get('/edit/{id}', [App\Http\Controllers\KelolaMitraController::class, 'edit']);
     });
 
-    Route::prefix('master-email')->controller()->group(function () {
-        Route::get('/', [App\Http\Controllers\MasterEmailController::class, 'index'])->name('master_email.index');
-        Route::get('/show', [App\Http\Controllers\MasterEmailController::class, 'show'])->name('master_email.show');
-        Route::post('/store', [App\Http\Controllers\MasterEmailController::class, 'store'])->name('master_email.store');
-        Route::post('/update/{id}', [App\Http\Controllers\MasterEmailController::class, 'update'])->name('master_email.update');
-        Route::get('/edit/{id}', [App\Http\Controllers\MasterEmailController::class, 'edit'])->name('master_email.edit');
-        Route::post('/status/{id}', [App\Http\Controllers\MasterEmailController::class, 'status'])->name('master_email.status');
-    });
 });
+
+Route::prefix('template-email')->name('template_email')->controller(MasterEmailController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/show', 'show')->name('.show');
+    Route::get('/create', 'create')->name('.create');
+    Route::post('/store', 'store')->name('.store');
+    Route::get('edit/{id}', 'edit')->name('.edit');
+    Route::post('update/{id}', 'update')->name('.update');
+});
+
 
 Route::prefix('kelola-mahasiswa-magang')->name('kelola_magang_pemb_lapangan')->controller(LogbookPemLapController::class)->group(function () {
     Route::get('/', 'viewList');
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
     Route::post('logbook/approval/{id}', 'approval')->name('.approval');
-    Route::get('input-nilai', 'viewInputNilai')->name('.input_nilai');
+    Route::get('input-nilai/{id}', 'viewInputNilai')->name('.input_nilai');
+    Route::post('input-nilai/store/{id}', 'storeNilai')->name('.store_nilai');
 });
 
 Route::middleware('permission:dashboard.dashboard_mitra')->get('dashboard/company', function () {

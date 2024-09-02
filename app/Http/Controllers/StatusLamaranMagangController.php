@@ -10,6 +10,7 @@ use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\RejectionPenawaranLowongan;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusStepEnum;
 
@@ -17,6 +18,7 @@ class StatusLamaranMagangController extends Controller
 {
     public function __construct(){
         $this->valid_step = [
+            PendaftaranMagangStatusEnum::PENDING => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI => 0,
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
@@ -54,6 +56,20 @@ class StatusLamaranMagangController extends Controller
             }
             return self::getDataCard($request);
         }
+
+        $this->getDataLamaran(function ($query) {
+            return $query->select('pendaftaran_magang.id_lowongan', 'pendaftaran_magang.current_step');
+        });
+        
+        $getData = $this->lamaran_magang->whereIn('current_step', [
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3
+        ]);
+        
+        // menjalakan rejection lowongan
+        RejectionPenawaranLowongan::dispatchSync($getData->pluck('id_lowongan')->toArray());
+        // -----------------------------
 
         $this->getDataLamaran()->setUpBadgeDataLamaran();
 
@@ -99,14 +115,24 @@ class StatusLamaranMagangController extends Controller
             if (!$pendaftaran) {
                 return Response::error(null, 'Pendaftaran Not Found.');
             }
+
+            if ($this->valid_step[$pendaftaran->current_step] != ($pendaftaran->tahapan_seleksi + 1)) {
+                return Response::error(null, 'Tidak dalam tahap penawaran.');
+            }
     
             DB::beginTransaction();
             $pendaftaran->current_step = ($request->status == 'approved') ? PendaftaranMagangStatusEnum::APPROVED_PENAWARAN : PendaftaranMagangStatusEnum::REJECTED_PENAWARAN;
             $pendaftaran->save();
 
             if ($request->status == 'approved') {
+                PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)
+                ->where('id_pendaftaran', '!=', $id)->update([
+                    'current_step' => PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+
                 MhsMagang::create([
                     'id_pendaftaran' => $pendaftaran->id_pendaftaran,
+                    'jenis_magang' => $pendaftaran->id_jenismagang,
                     'startdate_magang' => $request->startdate,
                     'enddate_magang' => $request->enddate,
                 ]);

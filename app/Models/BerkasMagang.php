@@ -11,16 +11,10 @@ class BerkasMagang extends Model
     use HasUuids;
 
     protected $table = 'berkas_magang';
-    protected $fillable = [
-        'nama_berkas',
-        'template',
-        'status_upload',
-        'id_jenismagang'
+    protected $guarded = [];
 
-    ];
     public $timestamps = false;
     protected $primaryKey = 'id_berkas_magang';
-    protected $keyType = 'string';
 
     public function jenis_magang()
     {

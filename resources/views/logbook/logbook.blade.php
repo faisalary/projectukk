@@ -30,7 +30,7 @@
             <div class="user-profile-header text-sm-start text-center mb-4" style="justify-content: space-between !important;">
                 <div class="flex-shrink-0 mt-n5 mx-sm-0 mx-auto ms-0 ms-sm-5">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-8">
                             <div class="text-center mb-4" style="overflow: hidden; width: 150px; height: 150px;">
                                 @if ($data->image)
                                 <img src="{{ asset('storage/' . $data->image) }}" alt="user-avatar" class="d-block" width="150" id="image_industri">
@@ -40,17 +40,39 @@
                             </div>
                             <div style="margin-top: 24px;">
                                 <h2 class="mb-1">{{ $data->intern_position }}</h2>
-                                <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
-                                    <li class="list-inline-item">{{ $data->namaindustri }}</li>
-                                </ul>
+                                <span>{{ $data->namaindustri ?? '-' }}</span>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <h4 class="mb-1">Pembimbing Akademik</h4>
+                                    <span>{{ $data->namadosen ?? '-' }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4 class="mb-1">Pembimbing Lapangan</h4>
+                                    <span>{{ $data->namapeg ?? '-' }}</span>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <h4 class="mb-1">Program Magang</h4>
+                                    <span>{{ $data->namajenis ?? '-' }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4 class="mb-1">Durasi Magang</h4>
+                                    <span>{{ $data->durasimagang ?? '-' }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4 class="mb-1">Periode Kegiatan</h4>
+                                    <span>{{ $periode_magang ?? '-' }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6 mt-5 d-flex justify-content-between">
-                            <div class="card-body ms-5 mt-3" id="percentage_container">
+                        <div class="col-md-4 mt-5 d-flex flex-column justify-content-center">
+                            <div class="me-5 mt-3" id="percentage_container">
                                 @include('logbook.components.percentage')
                             </div>
                             <div class="pe-4">
-                                <button class="btn btn-outline-primary mt-5" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
+                                <button class="btn btn-outline-primary mt-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
                             </div>
                         </div>
                     </div>

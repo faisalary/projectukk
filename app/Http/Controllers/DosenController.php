@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataFailedExport;
 use Exception;
 use App\Models\Dosen;
 use App\Models\Fakultas;
@@ -170,13 +171,117 @@ class DosenController extends Controller
         } catch (Exception $e) {
             return Response::errorCatch($e);
         }
-    }
+    }  
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
+        $validRequest = $request->validate([
+            'import' => 'required',
+            'id_univ' => 'required',
+            'id_fakultas' => 'required',
+            'id_prodi' => 'required',            
+        ], [
+            'import.required' => 'File impor wajib diunggah.',
+            'id_univ.required' => 'Universitas wajib dipilih.',
+            'id_fakultas.required' => 'Fakultas wajib dipilih.',
+            'id_prodi.required' => 'Prodi wajib dipilih.',            
+        ]);
+
         $data = $request->file('import');
         $namafile = $data->getClientOriginalName();
         $data->move('DosenData', $namafile);
-        Excel::import(new DosenImport($request->id_univ, $request->id_fakultas, $request->id_prodi), public_path('/DosenData/' . $namafile));
-        return response()->json(['message' => 'Import Success', 'error' => false], 200);
+        $import = new DosenImport(...array_slice($validRequest, 1, count($validRequest) - 1));
+        $filePath = public_path('/DosenData/' . $namafile);
+
+        if (!$import->checkHeaders($filePath)) {
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            return response()->json([
+                'message' => 'Header tidak sesuai. Mohon untuk menggunakan template yang telah disediakan.',
+                'error' => true
+            ], 400);
+        }
+
+        ($import)->import($filePath);
+
+        $data = $import->getResults();
+
+        if ($data['newData']->isEmpty() && $data['duplicatedData']->isEmpty() && $data['failedData']->isEmpty()) {
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            return response()->json([
+                'message' => 'File yang diimpor kosong atau tidak ada data yang valid. Mohon impor data dengan isian yang benar.',
+                'error' => true
+            ], 400);
+        }
+
+        session(['import_results' => $data]);
+        return response()->json([
+            'message' => 'Sebelum disimpan, data di preview',
+            'error' => false,
+            'url' => route('dosen.preview'),
+            'showConfirmButton' => false,
+            'icon' => 'info',
+            'title' => 'Informasi'
+        ], 200);
+    }
+
+    public function preview()
+    {
+        $data = session('import_results');        
+        if (!$data) return redirect()->route('dosen');
+
+        return view('masters.dosen.preview', compact('data'));
+    }
+
+    public function storeImport(Request $request)
+    {        
+        try {
+            $newData = json_decode($request->newData, true);
+
+            if (isset($request->duplicatedData)) {
+                $duplicates = [json_decode($request->duplicatedData, true)];
+                $newData = array_merge($newData, $duplicates);
+            }
+
+            foreach ($newData as $data) {
+                Dosen::updateOrCreate(
+                    ['nip' => $data['nip']],
+                    [
+                        ...$data,
+                        'id_univ' => $request->input('univ'),
+                        'id_fakultas' => $request->input('fakultas'),
+                        'id_prodi' => $request->input('prodi'),                        
+                    ]
+                );
+            }
+
+            return response()->json([
+                'message' => 'Import data dosen berhasil',
+                'error' => false,
+                'url' => route('dosen'),
+                'showConfirmButton' => false,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengimport data',
+                'error' => true,
+                'details' => $e,
+                'showConfirmButton' => true,
+            ], 500);
+        }
+    }
+
+    public function download_failed_data(Request $request)
+    {        
+        $failedData = json_decode($request->failedData, true);        
+        $export = new DataFailedExport('template-import-data-master-dosen', $failedData, 'data_failed_import_dosen');
+        return $export->download();
     }
 }

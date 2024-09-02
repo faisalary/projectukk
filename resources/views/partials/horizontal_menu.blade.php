@@ -108,6 +108,10 @@
             padding: 10px;
             background-color: white;
         }
+
+        .menu-link {
+            padding-left: 0px !important;
+        }
     </style>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->

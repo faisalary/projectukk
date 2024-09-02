@@ -101,7 +101,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_univ" class="form-label">Universitas</label>
-                        <select class="form-select select2" id="id_univ" name="id_univ_filter" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ">
+                        <select class="form-select select2" id="id_univ" name="id_univ_filter" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ_filter">
                             <option value="" disabled selected>Pilih Universitas</option>
                             @foreach ($universitas as $u)
                                 <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -113,7 +113,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_fakultas" class="form-label">Fakultas</label>
-                        <select class="form-select select2" id="id_fakultas" name="id_fakultas_filter" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas">
+                        <select class="form-select select2" id="id_fakultas" name="id_fakultas_filter" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas_filter">
                             <option value="" disabled selected>Pilih Fakultas</option>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -122,7 +122,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_prodi" class="form-label">Prodi</label>
-                        <select class="form-select select2" id="id_prodi" name="id_prodi_filter" data-placeholder="Pilih Prodi" data-select2-id="id_prodi">
+                        <select class="form-select select2" id="id_prodi" name="id_prodi_filter" data-placeholder="Pilih Prodi" data-select2-id="id_prodi_filter">
                             <option value="" disabled selected>Pilih Prodi</option>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -179,7 +179,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <input type="file" class="form-control mt-2" id="basic-default-upload-file" required=""
+                    <div class="row mt-3">
+                        <div class="col">
+                            <a href="{{ asset('template-excel/template-import-data-master-dosen-new.xlsx') }}" class="btn btn-primary w-100" id="download-template">Download Template</a>
+                        </div>
+                    </div>          
+                    <input type="file" class="form-control mt-3" id="basic-default-upload-file" required=""
                         name="import">
                 </div>
                 <div class="modal-footer">

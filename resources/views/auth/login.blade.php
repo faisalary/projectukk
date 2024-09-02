@@ -52,11 +52,11 @@
                                     <label class="form-check-label" for="remember-me">Remember Me</label>
                                 </div>
 
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}">
+                                {{-- @if (Route::has('password.request')) --}}
+                                    <a href="{{ route('forgot-pass') }}">
                                         <small>Forgot Password?</small>
                                     </a>
-                                @endif
+                                {{-- @endif --}}
 
                             </div>
                         </div>
@@ -66,6 +66,11 @@
                                 <button type="submit" class="btn btn-primary d-grid w-100">
                                     {{ __('Login') }}
                                 </button>
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <a href="{{ url('/') }}" class="btn btn-outline-primary w-100">
+                                    <i class="ti ti-arrow-left me-2 text-primary"></i> {{ __('Back to Landing page') }}
+                                </a>
                             </div>
                         </div>
                     </form>
