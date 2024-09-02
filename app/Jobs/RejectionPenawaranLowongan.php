@@ -20,10 +20,9 @@ class RejectionPenawaranLowongan implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public LowonganMagang|string|array|null $id_lowongan = null)
+    public function __construct(public mixed $lowongan = null)
     {
         $this->valid_step = [
-            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
@@ -36,23 +35,24 @@ class RejectionPenawaranLowongan implements ShouldQueue
     public function handle(): void
     {
         $pendaftarMagang = PendaftaranMagang::query();
-        $lowongan = LowonganMagang::query();
+        $lowongan = LowonganMagang::where('date_confirm_closing', '<', now()->format('Y-m-d'));
         if ($this->lowongan != null) {
             if (is_string($this->lowongan)) {
                 $lowongan = $lowongan->whereIn('id_lowongan', [$this->lowongan])->get();
             } elseif (is_array($this->lowongan)) {
                 $lowongan = $lowongan->whereIn('id_lowongan', $this->lowongan)->get();
             } elseif ($this->lowongan instanceof LowonganMagang) {
-                $lowongan = $this->lowongan;
+                $lowongan = $this->lowongan->where('date_confirm_closing', '<', now()->format('Y-m-d'))->get();
             }
-            
-            $pendaftarMagang = $pendaftarMagang->whereIn('id_lowongan', is_array($this->lowongan) ? $this->lowongan : [$this->lowongan]);
         } else {
             $lowongan = $lowongan->get();
         }
 
+        $id_lowongans = $lowongan->pluck('id_lowongan')->toArray();
+        $pendaftarMagang = $pendaftarMagang->whereIn('id_lowongan', $id_lowongans);
+
         foreach ($pendaftarMagang->get() as $key => $value) {
-            if (isset($this->valid_step[$value->current_step]) && $this->valid_step[$value->current_step] == ($lowongan->where('id_lowongan', $value->id_lowongan)[0]->tahapan_seleksi + 1)) {
+            if (isset($this->valid_step[$value->current_step]) && $this->valid_step[$value->current_step] == ($lowongan->where('id_lowongan', $value->id_lowongan)->first()->tahapan_seleksi + 1)) {
                 $value->current_step = PendaftaranMagangStatusEnum::REJECTED_PENAWARAN;
                 $value->save();
             }
