@@ -60,7 +60,7 @@
             </div>
             @endforeach
             @else
-            <div class="border-bottom" data-repeater-item>
+            <div class="border-bottom" data-repeater-item  data-callback="afterShown">
                 <div class="row my-4">
                     <div class="mb-3 col-8 form-group">
                         <label class="form-label" for="namaberkas">Berkas Magang<span class="text-danger">*</span></label>
