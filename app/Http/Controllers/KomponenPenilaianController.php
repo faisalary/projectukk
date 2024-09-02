@@ -107,8 +107,15 @@ class KomponenPenilaianController extends Controller
     public function status(string $id)
     {
         try {
-            $nilai = KomponenNilai::where('id_kompnilai', $id)->first();
+            $nilai = KomponenNilai::with('jenismagang')->where('id_kompnilai', $id)->first();
             if (!$nilai) return Response::error(null, 'Not Found.', 404);
+
+            $totalNilaiMax = KomponenNilai::where('komponen_nilai.id_jenismagang', $nilai->id_jenismagang)
+                            ->where('komponen_nilai.status', 1)
+                            ->where('scored_by', $nilai->scored_by)
+                            ->sum('nilai_max');            
+
+            if(($nilai->nilai_max + $totalNilaiMax) > 100 && !$nilai->status == true) throw new Exception("Nilai maksimal sudah 100 untuk <br>{$nilai->jenismagang->namajenis}.");
 
             $nilai->status = !$nilai->status;
             $nilai->save();
