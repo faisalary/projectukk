@@ -93,9 +93,6 @@
 @endsection
 
 @section('page_script')
-    <script src="../../app-assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="../../app-assets/js/forms-extras.js"></script>
-
     <script>
         var table = $('#table-input').DataTable({
             ajax: "{{ url('master/komponen-penilaian/show/1') }}",
@@ -142,9 +139,4 @@
             $(this).val(val);
         });
     </script>
-
-    <script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
-    <script src="../../app-assets/vendor/libs/tagify/tagify.js"></script>
-    <script src="../../app-assets/js/forms-tagify.js"></script>
 @endsection

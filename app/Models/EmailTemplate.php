@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class email_template extends Model
+class EmailTemplate extends Model
 {
-
     use HasFactory, HasUuids;
     protected $table = 'email_template';
-    protected $fillable = ['subject_email','headline_email','content_email', 'attachment'];
-    protected $keyType = 'string';
+    protected $guarded = [];
     protected $primaryKey = 'id_email_template';
     public $timestamps = false;
 }

@@ -13,11 +13,11 @@ class DataFailedExport
     protected $failedData;
     protected $fileName;
 
-    public function __construct($templateFileName, $failedData, $fileName = 'data_failed_import.xlsx')
+    public function __construct($templateFileName, $failedData, $fileName = 'data_failed_import')
     {
         $this->templateFileName = public_path('/template-excel/' . $templateFileName . '.xlsx');
         $this->failedData = $failedData;
-        $this->fileName = $fileName;
+        $this->fileName = $fileName . '.xlsx';
     }
 
     public function download()

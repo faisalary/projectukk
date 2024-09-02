@@ -219,7 +219,7 @@
                                                         <option value="Instagram">Instagram</option>
                                                         <option value="Linkedin">Linkedin</option>
                                                         <option value="Facebook">Facebook</option>
-                                                        <option value="Twiteer">Twiteer</option>
+                                                        <option value="Twitter">Twitter</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>

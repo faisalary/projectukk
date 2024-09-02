@@ -75,6 +75,17 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 mt-2 form-group">
+                                    <label for="kategori_industri" class="form-label">Kategori Mitra</label>
+                                    <select class="form-select select2 @error('kategori_industri') is-invalid @enderror" id="kategori_industri" name="kategori_industri" data-placeholder="Pilih Kategori Industri">
+                                        <option disabled selected value="">Pilih Status Kerjasama</option>
+                                        <option value="Internal" @selected(old('kategori_industri') == 'Internal')>Internal</option>
+                                        <option value="Eksternal" @selected(old('kategori_industri') == 'Eksternal')>Eksternal</option>
+                                    </select>
+                                    @error('kategori_industri')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-12 mt-2 form-group">
                                     <label for="statuskerjasama" class="form-label">Status Kerjasama</label>
                                     <select class="form-select select2 @error('statuskerjasama') is-invalid @enderror" id="statuskerjasama" name="statuskerjasama" data-placeholder="Pilih Status Kerjasama">
                                         <option disabled selected value="">Pilih Status Kerjasama</option>

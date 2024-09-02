@@ -151,12 +151,12 @@
 <hr>
 <h5>Dokumen Persyaratan</h5>
 <div class="card-body">
-    <div class="d-flex flex-column" id="container-dokumen-pendukung">
-        <div class="mb-3 pb-3">
-            <div class="d-flex justify-content-start mb-1">
-                <h6 class="mb-0">Portofolio</h6>
-            </div>
-            <a class="text-primary" href="{{ url('storage/'.$pendaftar->portofolio) }}" target="_blank">Portofolio.pdf</a>
+    <div class="row" id="container-dokumen-pendukung">
+        @foreach ($dokumen_syarat as $item)
+        <div class="col-4 mb-2">
+            <h6 class="mb-1">{{ strtoupper($item->namadocument) }}</h6>
+            <a class="text-primary" href="{{ url('storage/'.$item->file) }}" target="_blank">{{ ucwords(strtolower($item->namadocument)) }}.{{ explode('.', $item->file)[1] }}</a>
         </div>
+        @endforeach
     </div>
 </div>

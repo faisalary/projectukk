@@ -281,7 +281,7 @@ class DosenController extends Controller
     public function download_failed_data(Request $request)
     {        
         $failedData = json_decode($request->failedData, true);        
-        $export = new DataFailedExport('template-import-data-master-dosen', $failedData, 'data_failed_import_dosen.xlsx');
+        $export = new DataFailedExport('template-import-data-master-dosen', $failedData, 'data_failed_import_dosen');
         return $export->download();
     }
 }
