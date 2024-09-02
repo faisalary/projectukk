@@ -23,12 +23,13 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
             $this->getMyMhsMagang(function ($query) {
                 return $query->select(
                         'mhs_magang.id_mhsmagang', 'mahasiswa.namamhs', 'program_studi.namaprodi', 
-                        'mhs_magang.jenis_magang', 'lowongan_magang.intern_position', 'industri.namaindustri', 
+                        'jenis_magang.namajenis', 'lowongan_magang.intern_position', 'industri.namaindustri', 
                         'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
                     )
                     ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
                     ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
-                    ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri');
+                    ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')
+                    ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'mhs_magang.jenis_magang');
             });
 
             $response = DataTables::of($this->pendaftaran)
@@ -40,7 +41,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                     return $row->namaprodi ?: '-';
                 })
                 ->editColumn('jenis_magang', function ($row) {
-                    return $row->jenis_magang ?: '-';
+                    return $row->namajenis ?: '-';
                 })
                 ->editColumn('intern_position', function ($row) {
                     return $row->intern_position ?: '-';
