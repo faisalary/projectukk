@@ -340,6 +340,12 @@ class MenuHelper
                 'icon' => 'ti-clipboard-list',
                 'permission' => 'assign_pembimbing.view'
             ],
+            [
+                'name' => 'Template Email',
+                'route' => 'template_email',
+                'icon' => 'ti-mail',
+                'permission' => 'template_email.view'
+            ],
             //pemb lapangan
             [
                 'type' => 'menu-header',

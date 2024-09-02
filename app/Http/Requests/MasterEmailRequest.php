@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
+use App\Enums\TemplateEmailListProsesEnum;
+use Illuminate\Foundation\Http\FormRequest;
 
 
 class MasterEmailRequest extends FormRequest
@@ -23,19 +24,10 @@ class MasterEmailRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (isset($this->id)) {
-            return [
-                'subject_email' => ['required', 'string'],
-                'headline_email' => ['required', 'string'],
-                'content_email' => ['required', 'string','max:255'],
-                'attachment' => ['nullable', File::types(['doc', 'docx','xlsx'])->max(2000)],
-            ];    
-        }  
         return [
-            'subject_email' => ['required', 'string'],
-            'headline_email' => ['required', 'string'],
-            'content_email' => ['required', 'string','max:255'],
-            'attachment' => ['required'],
+            'proses' => 'required|in:' . implode(',', TemplateEmailListProsesEnum::getConstants()),
+            'subject_email' => ['required'],
+            'content_email' => ['required']
         ];
     }          
     
@@ -43,10 +35,10 @@ class MasterEmailRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'subject_email.required' => 'Subject must be filled',
-            'headline_email.required' => 'Headline must be filled',
-            'content_email.required' => 'Content must be filled',
-            'attachment.required' => 'Attachment must be filled'
+            'proses.required' => 'Proses harus diisi',
+            'proses.in' => 'Proses tidak valid',
+            'subject_email.required' => 'Subject harus diisi',
+            'content_email.required' => 'Content harus diisi',
         ];
     }
 }
