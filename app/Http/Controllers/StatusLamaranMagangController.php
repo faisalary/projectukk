@@ -125,6 +125,11 @@ class StatusLamaranMagangController extends Controller
             $pendaftaran->save();
 
             if ($request->status == 'approved') {
+                PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)
+                ->where('id_pendaftaran', '!=', $id)->update([
+                    'current_step' => PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+
                 MhsMagang::create([
                     'id_pendaftaran' => $pendaftaran->id_pendaftaran,
                     'jenis_magang' => $pendaftaran->id_jenismagang,
