@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('lowongan_magang', function (Blueprint $table) {
-            $table->string('status_user')->nullable();
-            $table->string('status_time')->nullable();
+        Schema::table('berkas_akhir_magang', function (Blueprint $table) {
+            $table->longText('rejected_reason')->nullable();
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('lowongan_magang', function (Blueprint $table) {
-            $table->dropColumn('status_user');
-            $table->dropColumn('status_time');
+        Schema::table('berkas_akhir_magang', function (Blueprint $table) {
+            $table->dropColumn('rejected_reason');
         });
     }
 };
