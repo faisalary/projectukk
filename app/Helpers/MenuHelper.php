@@ -273,6 +273,11 @@ class MenuHelper
                         'permission' => 'nilai_mutu.view'
                     ],
                     [
+                        'name'=> 'Nilai Akhir',
+                        'route'=>'nilai-akhir',
+                        'permission'=> 'nilai_akhir.view'
+                    ],
+                    [
                         'name' => 'Komponen Penilaian',
                         'route' => 'komponen-penilaian',
                         'permission' => 'komponen_penilaian.view'
