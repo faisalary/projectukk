@@ -121,7 +121,7 @@
         </div>
     </div>
     {{-- Bagian Komentar Penolakan --}}
-    @if ($lowongan->statusaprove == 'ditolak')
+    @if ($lowongan->statusaprove == 'ditolak' && auth()->user()->hasRole('Mitra'))
     <div class="col" style="max-width: 25%;">
         <div class="card mb-4">
             <div class="card-body">
