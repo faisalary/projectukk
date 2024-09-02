@@ -27,13 +27,17 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="default-form" action="{{ route('template_email.store') }}" function-callback="afterAction">
+                <form class="default-form" action="{{ $urlAction }}" function-callback="afterAction">
                     @csrf
-                    <input type="hidden" name="proses" value="{{ $proses }}">
                     <div class="row">
                         <div class="col-12 form-group">
                             <label for="proses">Proses</label>
-                            <input class="form-control" type="text" name="proses" id="proses" placeholder="Proses" value="{{ $proses_name }}" disabled>
+                            <select class="form-select select2" name="proses" id="proses" onchange="getListTag($(this))" data-placeholder="Pilih Proses">
+                                <option value="" selected disabled>Pilih Proses</option>
+                                @foreach ($proses as $key => $item)
+                                    <option value="{{ $key }}" {{ isset($existing) && $existing->proses == $key ? 'selected' : '' }}>{{ $item['title'] }}</option>
+                                @endforeach
+                            </select>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 form-group mt-3">
@@ -47,13 +51,8 @@
                                 <i class="ti ti-info-circle text-info"></i>&ensp;
                                 Anda bisa menggunakannya untuk kebutuhan penulisan isi email
                             </div>
-                            <div class="demo-inline-spacing mb-2">
-                                @foreach ($list_tag as $item)
-                                <button type="button" onclick="insert_shortcode($(this))" data-shortcode="{{ $item['shortCode'] }}"
-                                    class="mx-2 btn btn-xs btn-primary">
-                                    {{ $item['title'] }}
-                                </button>
-                                @endforeach
+                            <div class="demo-inline-spacing mb-2" id="container-tag">
+                                
                             </div>
                             <textarea class="form-control mt-3" name="content_email" id="content_email" rows="4">{{ $existing->content_email ?? '' }}</textarea>
                             <div class="invalid-feedback"></div>
@@ -72,14 +71,27 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
+        getListTag($('#proses'));
         $('#submit').prop('disabled', false);
     });
+
     function insert_shortcode(e) {
         tinymce.activeEditor.execCommand('mceInsertContent', false, e.data('shortcode'));
     }
 
-    function afterAction(response) {
+    function getListTag(e) {
+        let value = e.val();
 
+        $.ajax({
+            url: `{{ route('template_email.create') }}?proses=${value}`,
+            type: 'GET',
+            success: function (res) {
+                $('#container-tag').html(res.data);
+            }
+        });
+    }
+
+    function afterAction(response) {
         setTimeout(() => {
             window.location.href = "{{ route('template_email') }}";       
         }, 1500);

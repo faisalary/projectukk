@@ -13,9 +13,9 @@ class TemplateEmailListProsesEnum
     public static function getWithLabel($status = null)
     {
         $data = [
-            self::LOLOS_SELEKSI => ['title' => 'Lulus Seleksi'],
+            self::LOLOS_SELEKSI => ['title' => 'Lolos Seleksi'],
             self::PENJADWALAN_SELEKSI => ['title' => 'Penjadwalan Seleksi'],
-            self::TIDAK_LOLOS_SELEKSI => ['title' => 'Tidak Lulus Seleksi']
+            self::TIDAK_LOLOS_SELEKSI => ['title' => 'Tidak Lolos Seleksi']
         ];
 
         if ($status != null) return $data[$status];

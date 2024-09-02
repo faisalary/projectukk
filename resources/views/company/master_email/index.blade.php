@@ -4,8 +4,9 @@
 @endsection
 
 @section('content')
-<div class="d-flex justify-content-start">
-    <h4>Template Email</h4>
+<div class="d-flex mb-3 justify-content-between align-items-center">
+    <h4 class="mb-0">Template Email</h4>
+    <a href="{{ route('template_email.create') }}" class="btn btn-primary">Tambah Template Email</a>
 </div>
 <div class="row">
     <div class="col-12">
