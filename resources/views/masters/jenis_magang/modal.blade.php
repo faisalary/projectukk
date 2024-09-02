@@ -51,7 +51,7 @@
                 enableTime: true
             };
 
-            @if (isset($jenismagang))
+            @if (isset($jenismagang) && count($jenismagang->berkas_magang) > 0)
             obj.defaultDate = $(this).val();
             obj.defaultHour = $(this).attr('data-hour');
             obj.defaultMinute = $(this).attr('data-minute');
@@ -120,8 +120,11 @@
     function afterShown(e) {
         $(e).find('.container-label').find('a').remove();
         $(e).find('input.id_berkas').remove();
-        $(e).find('input.flatpickr-date-x:not(.flatpickr-input)').remove();
+        // $(e).find('input.flatpickr-input')
 
+
+
+        console.log($(e));
         let flatpickr = $(e).find(".flatpickr-date-x");
         if (flatpickr.length > 0) {
             let label = $(e).find(".form-label");
