@@ -83,12 +83,11 @@ class ApprovalMahasiswaController extends Controller
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
             'lowongan_magang.intern_position', 'lowongan_magang.lokasi', 'lowongan_magang.durasimagang', 'lowongan_magang.id_jenismagang', 'jenis_magang.namajenis', 'users.email', 'pendaftaran_magang.current_step',
             'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas',
-            'pendaftaran_magang.reason_aplicant', 'pendaftaran_magang.portofolio', 'sertifikat.*'
+            'pendaftaran_magang.reason_aplicant', 'pendaftaran_magang.portofolio'
         )
         ->join('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
         ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
-        ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'lowongan_magang.id_jenismagang')        
-        ->join('sertifikat', 'sertifikat.nim', '=', 'mahasiswa.nim')        
+        ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'lowongan_magang.id_jenismagang')                
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
         ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')

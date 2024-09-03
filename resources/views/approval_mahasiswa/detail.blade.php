@@ -22,7 +22,7 @@
 @endsection
 
 @section('page_script')
-<script>
+<script>    
     document.getElementById('unduhProfileBtn').addEventListener('click', function() {
         const nim = '{{ $data->nim }}';
         window.open('/unduh-profile/' + nim, '_blank');

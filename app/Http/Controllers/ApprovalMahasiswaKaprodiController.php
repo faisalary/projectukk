@@ -100,7 +100,7 @@ class ApprovalMahasiswaKaprodiController extends Controller
     public function detail($id) {
         $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
-            'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
+            'lowongan_magang.intern_position', 'lowongan_magang.lokasi', 'lowongan_magang.durasimagang', 'lowongan_magang.id_jenismagang', 'users.email', 'pendaftaran_magang.current_step',
             'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas',
             'pendaftaran_magang.reason_aplicant', 'pendaftaran_magang.portofolio'
         )

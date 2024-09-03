@@ -19,7 +19,7 @@
                   <i class="ti ti-download me-sm-1"></i> 
                   <span class="d-none d-sm-inline-block">Unduh CV</span>
                 </button>
-          </div>
+            </div>
         </div>
          {{-- Informasi Lamaran --}}
          <div class="row row-cols-1 row-cols-md-2 col-lg-5 col-md-8 col-sm-10 mt-2 mb-4 g-4">
