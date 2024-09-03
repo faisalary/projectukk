@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Logbook;
 
-use App\Enums\BerkasAkhirMagangStatus;
 use App\Helpers\Response;
+use App\Models\NilaiMutu;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
 use Illuminate\Http\Request;
+use App\Models\KomponenNilai;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
-use App\Enums\LogbookWeeklyStatus;
 use App\Models\BerkasAkhirMagang;
+use App\Models\NilaiPembAkademik;
+use App\Enums\LogbookWeeklyStatus;
+use App\Enums\BerkasAkhirMagangStatus;
+use App\Models\NilaiPemblap;
 
 class KelolaMahasiswaPemAkademikController extends LogbookController
 {
@@ -82,7 +86,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                 })
                 ->addColumn('aksi', function ($row) {
                     $x = "<div class='d-flex justify-content-center'>";
-                    $x .= "<a href='/input/nilai/akademik' class='btn-icon text-warning'><i class='tf-icons ti ti-clipboard-list'></i></a>";
+                    $x .= "<a href='".route('kelola_mhs_pemb_akademik.view_nilai', $row->id_mhsmagang)."' class='btn-icon text-warning'><i class='tf-icons ti ti-clipboard-list'></i></a>";
                     $x .= "<a href='" .route('kelola_mhs_pemb_akademik.logbook', $row->id_mhsmagang). "' class='btn-icon text-info'><i class='tf-icons ti ti-book'></i></a>";
                     $x .= "</div>";
 
@@ -97,6 +101,57 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function inputNilai($id, Request $request)
+    {
+
+        if ($request->ajax()) {
+            if ($request->section == 'get_nilai_pemb_lap') {
+                $nilaiLapangan = NilaiPemblap::where('id_mhsmagang', $id)->get();
+                $nilaiAkhir = $nilaiLapangan->sum('nilai');
+                $indexAkhir = NilaiMutu::select('nilaimutu')
+                ->where('nilaimin', '<=', $nilaiAkhir)
+                ->where('nilaimax', '>=', $nilaiAkhir)
+                ->where('status', 1)->first()->nilaimutu;
+
+                $result = view('kelola_mahasiswa/penilaian/components/modal_nilai_pemb_lapangan', compact('nilaiLapangan', 'nilaiAkhir', 'indexAkhir'))->render();
+            } else {
+                return Response::error(null, 'Invalid!');
+            }
+
+            return Response::success($result, 'Success.');
+        }
+
+        $this->getMyMhsMagang(function ($query) use ($id) {
+            return $query->select(
+                    'mhs_magang.id_mhsmagang', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'mahasiswa.namamhs', 
+                    'mahasiswa.nim', 'program_studi.namaprodi', 'mhs_magang.jenis_magang', 'mahasiswa.profile_picture',
+                    'jenis_magang.namajenis', 'lowongan_magang.intern_position', 'industri.namaindustri', 
+                    'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
+                )
+                ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
+                ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
+                ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')
+                ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'mhs_magang.jenis_magang')
+                ->where('mhs_magang.id_mhsmagang', $id);
+        });
+
+        $data['mahasiswa'] = $this->pendaftaran->first();
+        $data['mahasiswa']->durasimagang = json_decode($data['mahasiswa']->durasimagang, true);
+
+        $data['penilaian'] = NilaiPembAkademik::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
+        if (count($data['penilaian']) == 0) {
+            $data['penilaian'] =  KomponenNilai::select('id_kompnilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
+            ->where('scored_by', 1)
+            ->where('id_jenismagang', $data['mahasiswa']->jenis_magang)
+            ->where('status', 1)->get();
+        }
+
+        $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
+        $data['url_get_nilai_pemb_lapangan'] = route('kelola_mhs_pemb_akademik.view_nilai', ['id' => $id, 'section' => 'get_nilai_pemb_lap']);
+
+        return view('kelola_mahasiswa/penilaian/view_nilai_dosen', $data);
     }
 
     public function viewLogbook(Request $request, $id)

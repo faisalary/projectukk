@@ -16,7 +16,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-datatable table-responsive">
-                <table class="table table-striped" id="table-master-nilai-akhir">
+                <table class="table" id="table-master-nilai-akhir">
                     <thead>
                         <tr>
                             <th>NOMOR</th>
