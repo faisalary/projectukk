@@ -69,9 +69,9 @@ class TahunAkademikController extends Controller
             ->addColumn('pendaftaran_magang', function ($row) {
                 return Carbon::parse($row->startdate_daftar)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_daftar)->format('d M Y');
             })
-            ->addColumn('pengumpulan_berkas', function ($row) {
-                return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
-            })
+            // ->addColumn('pengumpulan_berkas', function ($row) {
+            //     return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
+            // })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
@@ -82,7 +82,7 @@ class TahunAkademikController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['pendaftaran_magang', 'pengumpulan_berkas', 'action', 'status'])
+            ->rawColumns(['pendaftaran_magang', 'action', 'status'])
             ->make(true);
     }
 
