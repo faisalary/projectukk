@@ -138,6 +138,9 @@
             box-shadow: none;
         }
 
+        table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled{
+            position: static;
+        }
         /* #table-master-mahasiswa-data-duplikat-baru-tab-preview tbody tr:hover {
                                             background-color: #C0C3C7;
                                         } */
@@ -202,6 +205,24 @@
                         </button>
                     </li>
                 </ul>
+                <div class="px-3 py-2 mb-3 rounded" style="background-color: #00d1e86f; display: flex; flex-direction: row; align-items: center; width: max-content; gap:1rem;">
+                    <div>
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12.5" cy="12" r="9" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12.4989 8H12.5089" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M11.5 12H12.5V16H13.5" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span style="color:#005b65; font-weight: 600;">Panduan</span>
+                        <span style="color:#005b65;" class="text-content-info"></span>
+                    </div>
+
+                </div>
                 <div class="tab-content" id="myTabContent">
                     {{-- Data Baru Tab --}}
                     <div class="tab-pane fade show active" id="new-data-tab-pane" role="tabpanel"
@@ -226,7 +247,9 @@
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>
-                                                {{ $mhs['namamhs'] }}
+                                                <span style="font-weight: 800;">
+                                                    {{ $mhs['namamhs'] }}
+                                                </span>
                                                 <br>
                                                 {{ $mhs['nim'] }}
                                             </td>
@@ -289,26 +312,11 @@
                                         <th colspan="7" class="border-start border-bottom">DATA LAMA</th>
                                     </tr>
                                     <tr style="text-align: start;">
-                                        <th style="background-color: white; width: 100%;"
-                                            class="d-flex flex-row align-content-center gap-1">
-                                            {{-- <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                data-bs-original-title="Dengan mencentang akan mengubah data lama dengan yang baru"
-                                                id="tooltip-filter">
-                                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <circle cx="12.5" cy="12" r="9" stroke="#4EA971"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M12.4989 8H12.5089" stroke="#4EA971" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M11.5 12H12.5V16H13.5" stroke="#4EA971" stroke-width="1.5"
-                                                        stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                            </button> --}}
-                                            <input type="checkbox" name="" id="semuaData">
+                                        <th style="background-color: white; width: 100%;">
+                                            <input type="checkbox" name="" id="semuaData" class="mr-3">
                                             Semua Data
                                         </th>
-                                        <th>NO</th>
+                                        <th style="width: 100rem;">NO</th>
                                         <th>NAMA/NIM</th>
                                         <th>IPK</th>
                                         <th>EPRT</th>
@@ -338,7 +346,7 @@
                                             <td style="border: 1px solid black">{{ $loop->index + 1 }}</td>
                                             <td
                                                 class="{{ isset($mhs['differences']['namamhs']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                <span class=' fw-bolder mb-2'>{{ $mhsNew['namamhs'] }}</span><br>
+                                                <span class=' fw-bolder mb-2' style="font-weight: 800;">{{ $mhsNew['namamhs'] }}</span><br>
                                                 <small class=''>{{ $mhsNew['nim'] }}</small>
                                             </td>
                                             <td
@@ -558,6 +566,32 @@
             checkboxes.forEach(checkbox => {
                 checkbox.checked = selectAllCheckbox.checked;
             });
+        });
+
+        const $infoTextElement = $('.text-content-info');
+
+        function updateInfoText(tabId) {
+            switch(tabId) {
+                case 'new-data-tab':
+                    $infoTextElement.text("Data baru adalah data bersih yang nantinya akan disimpan ke dalam sistem");
+                    break;
+                case 'duplicate-data-tab':
+                    $infoTextElement.text("Dengan mencentang checkbox, nantinya akan mengganti data lama (data yang telah disimpan di sistem) dengan yang baru (data yang saat ini sedang diimport)");
+                    break;
+                case 'failed-data-tab':
+                    $infoTextElement.text("Data gagal adalah data yang nantinya tidak akan disimpan ke dalam sistem, dan perlu untuk diperbaiki dahulu");
+                    break;
+                default:
+                    $infoTextElement.text("");
+            }
+        }
+
+        // Set initial text based on active tab
+        updateInfoText($('.nav-link.active').attr('id'));
+
+        // Update text when tab changes
+        $('button[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
+            updateInfoText($(e.target).attr('id'));
         });
 
         // checkboxes.forEach(checkbox => {

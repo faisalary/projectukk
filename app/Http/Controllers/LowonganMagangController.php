@@ -175,7 +175,7 @@ class LowonganMagangController extends Controller
         $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
 
         // menjalakan rejection lowongan
-        dispatch(new RejectionPenawaranLowongan($this->my_lowongan_magang));
+        dispatch(new RejectionPenawaranLowongan($data['lowongan']));
         // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
@@ -560,6 +560,7 @@ class LowonganMagangController extends Controller
             $lowongan->enddate = $request->enddate;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan_seleksi;
+            $lowongan->statusaprove = LowonganMagangStatusEnum::PENDING;
 
             $lowongan->save();
 
@@ -603,16 +604,6 @@ class LowonganMagangController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ]);
-        }
-    }
-
-    public function rejectionPenawaran($id) {
-        try {
-
-
-            return Response::success(null, 'Success');
-        } catch (\Exception $e) {
-            return Response::errorCatch($e);
         }
     }
 

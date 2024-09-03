@@ -273,6 +273,11 @@ class MenuHelper
                         'permission' => 'nilai_mutu.view'
                     ],
                     [
+                        'name'=> 'Nilai Akhir',
+                        'route'=>'nilai-akhir',
+                        'permission'=> 'nilai_akhir.view'
+                    ],
+                    [
                         'name' => 'Komponen Penilaian',
                         'route' => 'komponen-penilaian',
                         'permission' => 'komponen_penilaian.view'
@@ -339,6 +344,12 @@ class MenuHelper
                 'route' => 'assign_pembimbing',
                 'icon' => 'ti-clipboard-list',
                 'permission' => 'assign_pembimbing.view'
+            ],
+            [
+                'name' => 'Template Email',
+                'route' => 'template_email',
+                'icon' => 'ti-mail',
+                'permission' => 'template_email.view'
             ],
             //pemb lapangan
             [

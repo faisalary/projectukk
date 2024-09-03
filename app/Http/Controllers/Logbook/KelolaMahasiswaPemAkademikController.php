@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Logbook;
 
+use App\Enums\BerkasAkhirMagangStatus;
 use App\Helpers\Response;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Enums\LogbookWeeklyStatus;
+use App\Models\BerkasAkhirMagang;
 
 class KelolaMahasiswaPemAkademikController extends LogbookController
 {
@@ -22,13 +25,17 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
             $this->getMyMhsMagang(function ($query) {
                 return $query->select(
                         'mhs_magang.id_mhsmagang', 'mahasiswa.namamhs', 'program_studi.namaprodi', 
-                        'mhs_magang.jenis_magang', 'lowongan_magang.intern_position', 'industri.namaindustri', 
+                        'jenis_magang.namajenis', 'lowongan_magang.intern_position', 'industri.namaindustri', 
                         'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
                     )
                     ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
                     ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
-                    ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri');
+                    ->join('industri', 'lowongan_magang.id_industri', '=', 'industri.id_industri')
+                    ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'mhs_magang.jenis_magang');
             });
+
+            $berkas = BerkasAkhirMagang::where('status_berkas', BerkasAkhirMagangStatus::APPROVED)
+            ->whereIn('id_mhsmagang', $this->pendaftaran->pluck('id_mhsmagang')->toArray())->get();
 
             $response = DataTables::of($this->pendaftaran)
                 ->addIndexColumn()
@@ -39,7 +46,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                     return $row->namaprodi ?: '-';
                 })
                 ->editColumn('jenis_magang', function ($row) {
-                    return $row->jenis_magang ?: '-';
+                    return $row->namajenis ?: '-';
                 })
                 ->editColumn('intern_position', function ($row) {
                     return $row->intern_position ?: '-';
@@ -58,8 +65,20 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                 ->editColumn('indeks_nilai_akhir', function ($row) {
                     return $row->indeks_nilai_akhir ?: '-';
                 })
-                ->addColumn('berkas_akhir', function ($row) {
-                    return '-'; // Set berkas_akhir to a dash
+                ->addColumn('berkas_akhir', function ($row) use ($berkas) {
+                    $berkasPicked = $berkas->where('id_mhsmagang', $row->id_mhsmagang);
+
+                    $result = '<div class="d-flex flex-column text-nowrap justify-content-start">';
+                    if (count($berkasPicked) == 0) {
+                        $result .= '<span>-</span>';
+                    } else {
+                        foreach ($berkasPicked as $key => $value) {
+                            $result .= '<a href="' . url('storage/' . $value->berkas_file) . '" class="cursor-pointer text-primary my-1" target="_blank">' .$value->berkas_magang. '.pdf</a>';
+                        }
+                    }
+                    $result .= '</div>';
+
+                    return $result;
                 })
                 ->addColumn('aksi', function ($row) {
                     $x = "<div class='d-flex justify-content-center'>";
@@ -69,7 +88,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
                     return $x;
                 })
-                ->rawColumns(['aksi'])
+                ->rawColumns(['berkas_akhir', 'aksi'])
                 ->make(true);
 
             return $response;
@@ -117,8 +136,12 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
         }
 
         $this->getMyMhsMagang(function ($query) use ($id) {
-            return $query->select('mahasiswa.namamhs', 'mahasiswa.profile_picture', 'lowongan_magang.intern_position', 'mhs_magang.id_mhsmagang')
+            return $query->select('mahasiswa.namamhs', 'mahasiswa.profile_picture', 'lowongan_magang.intern_position', 'mhs_magang.id_mhsmagang',
+                'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'jenis_magang.durasimagang', 'jenis_magang.namajenis', 'industri.namaindustri')
                 ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+                ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
+                ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
+                ->leftJoin('pegawai_industri', 'pegawai_industri.id_peg_industri', '=', 'mhs_magang.id_peg_industri')
                 ->where('mhs_magang.id_mhsmagang', $id);
         });
 
@@ -132,6 +155,9 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
         $data['url_get'] = route('kelola_mhs_pemb_akademik.logbook', $id);
         $data['urlBack'] = route('kelola_mhs_pemb_akademik');
+
+        $data['periode_magang'] = Carbon::parse($data['mahasiswa']->startdate_magang)->translatedFormat('d F Y') . ' - ' . Carbon::parse($data['mahasiswa']->enddate_magang)->translatedFormat('d F Y');
+        
         return view('kelola_mahasiswa.logbook.logbook', $data);
     }
 

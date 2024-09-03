@@ -229,6 +229,7 @@ function updatePercentage() {
     $('#countries').prop('disabled', true).empty();
     $('#provinces').prop('disabled', true).empty();
     $('#kota_id').prop('disabled', true).empty();
+    formRepeaterCustom.find('[data-repeater-item]').slice(1).empty();    
   });
 
   document.getElementById('unduhProfileBtn').addEventListener('click', function() {

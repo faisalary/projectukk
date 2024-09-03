@@ -22,7 +22,32 @@
 @endsection
 
 @section('page_script')
-<script>
-    
+<script>    
+    document.getElementById('unduhProfileBtn').addEventListener('click', function() {
+        const nim = '{{ $data->nim }}';
+        window.open('/unduh-profile/' + nim, '_blank');
+    });  
+
+    const buttons = document.querySelectorAll('.show-btn');
+
+    buttons.forEach(button => {
+       button.addEventListener('click', showMore);
+    });
+
+    function showMore() {
+            var content = this.previousElementSibling;
+            var isShowMore = this.innerText === "Show More";
+            var deskripsi = $(this).attr("data-deskripsi");
+
+            var lessContent = deskripsi.substring(0, 250) + "...";            
+
+            if (isShowMore) {
+                content.innerHTML = deskripsi;
+                this.innerText = "Show Less";
+            } else {
+                content.innerHTML = lessContent;
+                this.innerText = "Show More";
+            }
+        }
 </script>
 @endsection

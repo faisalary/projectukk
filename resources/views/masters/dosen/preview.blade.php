@@ -138,9 +138,17 @@
             box-shadow: none;
         }
 
+        table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled{
+            position: static;
+        }
+
         /* #table-master-mahasiswa-data-duplikat-baru-tab-preview tbody tr:hover {
                                             background-color: #C0C3C7;
                                         } */
+/* 
+        .nav ~ .tab-content{
+            background-color: transparent;
+        } */
     </style>
 @endsection
 @section('content')
@@ -199,7 +207,26 @@
                         </button>
                     </li>
                 </ul>
+                <div class="px-3 py-2 mb-3 rounded" style="background-color: #00d1e86f; display: flex; flex-direction: row; align-items: center; width: max-content; gap:1rem;">
+                    <div>
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12.5" cy="12" r="9" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12.4989 8H12.5089" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M11.5 12H12.5V16H13.5" stroke="#005b65" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span style="color:#005b65; font-weight: 600;">Panduan</span>
+                        <span style="color:#005b65;" class="text-content-info"></span>
+                    </div>
+
+                </div>
                 <div class="tab-content" id="myTabContent">
+
                     {{-- Data Baru Tab --}}
                     <div class="tab-pane fade show active" id="new-data-tab-pane" role="tabpanel"
                         aria-labelledby="new-data-tab" tabindex="0">
@@ -241,7 +268,7 @@
                     {{-- Data Duplikat Tab --}}
                     <div class="tab-pane fade" id="duplicate-data-tab-pane" role="tabpanel"
                         aria-labelledby="duplicate-data-tab" tabindex="0">
-                        <div class="card-datatable table-responsive d-flex flex-column">
+                        <div class="card-datatable rounded mt-3 table-responsive d-flex flex-column">
                             <input type="hidden" name="newData" id="newData"
                                 value="{{ json_encode($data['newData']) }}">
                             <input type="hidden" name="univ" id="univ" value="{{ $data['univ']['id_univ'] }}">
@@ -249,29 +276,16 @@
                                 value="{{ $data['fakultas']['id_fakultas'] }}">
                             <input type="hidden" name="prodi" id="prodi"
                                 value="{{ $data['prodi']['id_prodi'] }}">
-                            <div>
-                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12.5" cy="12" r="9" stroke="#4EA971" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12.4989 8H12.5089" stroke="#4EA971" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M11.5 12H12.5V16H13.5" stroke="#4EA971" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-
-                            </div>
                             <table class="table border nowrap" id="table-master-mahasiswa-data-duplikat-baru-tab-preview">
                                 <thead>
                                     <tr>
-                                        <th colspan="9" class="border-bottom">DATA BARU</th>
-                                        <th colspan="7" class="border-start border-bottom">DATA LAMA</th>
+                                        <th colspan="6" class="border-bottom">DATA BARU</th>
+                                        <th colspan="6" class="border-start border-bottom">DATA LAMA</th>
                                     </tr>
                                     <tr style="text-align: start;">
-                                        <th style="background-color: white; width: 100%;"
-                                            class="d-flex flex-row align-content-center gap-1">
+                                        <th style="background-color: white; width: 100%;">
                                             <input type="checkbox" name="" id="semuaData">
-                                            Semua Data
+                                            <label for="semuaData" style="margin-left: 0.5rem;"> Semua Data</label>
                                         </th>
                                         <th>NO</th>
                                         <th>NIP</th>
@@ -282,7 +296,6 @@
                                         <th>KODE DOSEN</th>
                                         <th>NAMA DOSEN</th>
                                         <th>KONTAK</th>
-                                        <th>KETERANGAN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -463,6 +476,32 @@
         //         selectAllCheckbox.checked = Array.from(checkboxes).every(cb => cb.checked);
         //     });
         // });
+
+        const $infoTextElement = $('.text-content-info');
+
+        function updateInfoText(tabId) {
+            switch(tabId) {
+                case 'new-data-tab':
+                    $infoTextElement.text("Data baru adalah data bersih yang nantinya akan disimpan ke dalam sistem");
+                    break;
+                case 'duplicate-data-tab':
+                    $infoTextElement.text("Dengan mencentang checkbox, nantinya akan mengganti data lama (data yang telah disimpan di sistem) dengan yang baru (data yang saat ini sedang diimport)");
+                    break;
+                case 'failed-data-tab':
+                    $infoTextElement.text("Data gagal adalah data yang nantinya tidak akan disimpan ke dalam sistem, dan perlu untuk diperbaiki dahulu");
+                    break;
+                default:
+                    $infoTextElement.text("");
+            }
+        }
+
+        // Set initial text based on active tab
+        updateInfoText($('.nav-link.active').attr('id'));
+
+        // Update text when tab changes
+        $('button[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
+            updateInfoText($(e.target).attr('id'));
+        });
     </script>
 @endsection
 @endsection
