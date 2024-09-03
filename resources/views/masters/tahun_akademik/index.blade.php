@@ -39,17 +39,8 @@
 
 @section('page_script')
 <script>
-    $.ajax({
-        url:
-        type:
-        success: function (res) {   
-            let datatableData = res.datatable;
-            let otherValue = res.otherValue;
-        }
-    });
     $('#table-master-tahun-akademik').DataTable({
-        // ajax: '{{ route("thn-akademik.show") }}',
-        data: '{{ route("thn-akademik.show") }}',
+        ajax: '{{ route("thn-akademik.show") }}',
         serverSide: false,
         processing: true,
         deferRender: true,
