@@ -191,12 +191,21 @@ class KelolaMitraController extends Controller
     }
     public function rejected($id, Request $request)
     {
-        $data=Industri::find($id);
-        $data->statusapprove='2';
-        $data->save();
-        $alasan = $request->input('alasan');
-        dispatch(new SendMailJob($data->email, new RejectionNotification($alasan)));
-        return redirect()->back();
+        $request->validate(['alasan' => 'required'], ['alasan.required' => 'Alasan wajib diisi.']);
+
+        try {
+            $data=Industri::join('pegawai_industri', 'industri.penanggung_jawab', '=', 'pegawai_industri.id_peg_industri')
+            ->where('industri.id_industri', $id)->first();
+            if (!$data) return Response::error(null, 'Industri Not Found.');
+            $data->statusapprove='2';
+            $data->save();
+            $alasan = $request->input('alasan');
+            dispatch(new SendMailJob($data->emailpeg, new RejectionNotification($alasan)));
+
+            return Response::success(null, 'Berhasil menolak.');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
     
 

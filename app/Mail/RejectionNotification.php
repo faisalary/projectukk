@@ -40,12 +40,14 @@ class RejectionNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.rejected',
+            markdown: 'email.rejected',
         );
     }
 
     public function build()
     {
-        return $this->view('email.rejected');         
+        return $this
+            ->subject('Rejection Notification')
+            ->markdown('email.rejected');         
     }
 }
