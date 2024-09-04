@@ -32,6 +32,7 @@ Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(Be
         Route::get('detail-mhs/{id}', 'getDataMhs')->name('.detail_mhs');
         Route::get('detail-file/{id}', 'detailFile')->name('.detail_file');
         Route::post('approval-file/{id}', 'approvalBerkas')->name('.approval_file');
+        Route::post('adjustment-nilai/{id}', 'adjustmentNilai')->name('.adjustment_nilai');
     });
     Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
         Route::get('/', 'viewMagangMandiri');

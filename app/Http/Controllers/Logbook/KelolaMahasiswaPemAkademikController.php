@@ -36,7 +36,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                 return $query->select(
                         'mhs_magang.id_mhsmagang', 'mahasiswa.namamhs', 'program_studi.namaprodi', 
                         'jenis_magang.namajenis', 'lowongan_magang.intern_position', 'industri.namaindustri', 
-                        'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
+                        'lowongan_magang.durasimagang', 'mhs_magang.nilai_akademik', 'mhs_magang.indeks_nilai_akademik'
                     )
                     ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
                     ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
@@ -69,11 +69,11 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                     $durasimagangText = is_array($durasimagang) ? implode(' & ', $durasimagang) : $durasimagang;
                     return $durasimagangText ?: '-';
                 })
-                ->editColumn('nilai_akhir_magang', function ($row) {
-                    return $row->nilai_akhir_magang ?: '-';
+                ->editColumn('nilai_akademik', function ($row) {
+                    return $row->nilai_akademik ?: '-';
                 })
-                ->editColumn('indeks_nilai_akhir', function ($row) {
-                    return $row->indeks_nilai_akhir ?: '-';
+                ->editColumn('indeks_nilai_akademik', function ($row) {
+                    return $row->indeks_nilai_akademik ?: '-';
                 })
                 ->addColumn('berkas_akhir', function ($row) use ($berkas) {
                     $berkasPicked = $berkas->where('id_mhsmagang', $row->id_mhsmagang);
@@ -111,10 +111,9 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
     public function inputNilai($id, Request $request)
     {
-
+        $nilaiLapangan = NilaiPemblap::where('id_mhsmagang', $id)->get();
         if ($request->ajax()) {
             if ($request->section == 'get_nilai_pemb_lap') {
-                $nilaiLapangan = NilaiPemblap::where('id_mhsmagang', $id)->get();
                 $nilaiAkhir = $nilaiLapangan->sum('nilai');
                 $indexAkhir = NilaiMutu::select('nilaimutu')
                 ->where('nilaimin', '<=', $nilaiAkhir)
@@ -134,7 +133,8 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
                     'mhs_magang.id_mhsmagang', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'mahasiswa.namamhs', 
                     'mahasiswa.nim', 'program_studi.namaprodi', 'mhs_magang.jenis_magang', 'mahasiswa.profile_picture',
                     'jenis_magang.namajenis', 'lowongan_magang.intern_position', 'industri.namaindustri', 
-                    'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
+                    'lowongan_magang.durasimagang', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir',
+                    'mahasiswa.id_prodi'
                 )
                 ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
                 ->join('lowongan_magang', 'pendaftaran_magang.id_lowongan', '=', 'lowongan_magang.id_lowongan')
@@ -145,10 +145,35 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
         $data['mahasiswa'] = $this->pendaftaran->first();
         if (!$data['mahasiswa']) return abort(404);
-
+        $config = ConfigNilaiAkhir::where('id_prodi', $data['mahasiswa']->id_prodi)->where('status', 1)->first();
+        if (!$config) return abort(403);
+        
         $data['mahasiswa']->durasimagang = json_decode($data['mahasiswa']->durasimagang, true);
 
         $data['penilaian'] = NilaiPembAkademik::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
+
+        $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
+        $data['url_get_nilai_pemb_lapangan'] = route('kelola_mhs_pemb_akademik.view_nilai', ['id' => $id, 'section' => 'get_nilai_pemb_lap']);
+
+        $data['urlInputNilai'] = null;
+        if (count($nilaiLapangan) > 0) {
+            $data['urlInputNilai'] = route('kelola_mhs_pemb_akademik.view_input_nilai', ['id' => $id]);
+        }
+
+        $nilaiMutu = $data['nilai_mutu'];
+
+        $nilaiLapangan = $nilaiLapangan->sum('nilai');
+        $nilaiAkademik = $data['penilaian']->sum('nilai');
+        $hasilNilaiLapangan = isset($config) ? ($nilaiLapangan * ($config->nilai_pemb_lap / 100)) : '-';
+        $hasilNilaiAkademik = isset($config) ? ($data['penilaian']->sum('nilai') * ($config->nilai_pemb_akademik / 100)) : '-';
+        $nilaiAkhir = 0;
+
+        $nilaiMutuAkhir = '-';
+        if (isset($config)) {
+            $nilaiAkhir = ($hasilNilaiLapangan + $hasilNilaiAkademik);
+            $nilaiMutuAkhir = $nilaiMutu->where('nilaimin', '<=', $nilaiAkhir)->where('nilaimax', '>=', $nilaiAkhir)->first();
+        }
+
         if (count($data['penilaian']) == 0) {
             $data['penilaian'] =  KomponenNilai::select('id_kompnilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
             ->where('scored_by', 1)
@@ -156,9 +181,21 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
             ->where('status', 1)->get();
         }
 
-        $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
-        $data['url_get_nilai_pemb_lapangan'] = route('kelola_mhs_pemb_akademik.view_nilai', ['id' => $id, 'section' => 'get_nilai_pemb_lap']);
-        $data['urlInputNilai'] = route('kelola_mhs_pemb_akademik.view_input_nilai', ['id' => $id]);
+        $data['container_result_nilai_lap'] = view('kelola_mahasiswa/penilaian/components/result_nilai', [
+            'nilai' => $nilaiLapangan,
+            'presentaseNilai' => $config->nilai_pemb_lap ?? 0,
+            'hasil' => $hasilNilaiLapangan
+        ])->render();
+
+        $data['container_result_nilai_akademik'] = view('kelola_mahasiswa/penilaian/components/result_nilai', [
+            'nilai' => $nilaiAkademik,
+            'presentaseNilai' => $config->nilai_pemb_akademik ?? 0,
+            'hasil' => $hasilNilaiAkademik
+        ])->render();
+
+        $data['container_result_nilai_akhir'] = view('kelola_mahasiswa/penilaian/components/result_nilai', [
+            'hasil' => $nilaiAkhir . '<span class="ms-1 fw-bolder">(' .$nilaiMutuAkhir->nilaimutu. ')</span>'
+        ])->render();
 
         return view('kelola_mahasiswa/penilaian/view_nilai_dosen', $data);
     }

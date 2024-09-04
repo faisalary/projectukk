@@ -75,6 +75,8 @@ class BerkasMahasiswaController extends BerkasAkhirMagangController
     {
         $pendaftaranMagang = $this->getMyMagang()->pemagang->first();
 
+        if (!$pendaftaranMagang) return abort(403);
+
         $this->my_berkas_akhir = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload', 'berkas_akhir_magang.rejected_reason')
         ->leftJoin('berkas_akhir_magang', 'berkas_akhir_magang.id_berkas_magang', '=', 'berkas_magang.id_berkas_magang')
         ->where('id_jenismagang', $pendaftaranMagang->id_jenismagang);

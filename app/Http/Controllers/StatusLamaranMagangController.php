@@ -21,6 +21,7 @@ class StatusLamaranMagangController extends Controller
             PendaftaranMagangStatusEnum::PENDING => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI => 0,
+            PendaftaranMagangStatusEnum::APPROVED_BY_LKM => 0,
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
@@ -31,6 +32,7 @@ class StatusLamaranMagangController extends Controller
         $this->rejected_step = [
             PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
             PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
             PendaftaranMagangStatusEnum::REJECTED_SCREENING,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
