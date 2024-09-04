@@ -6,7 +6,7 @@
 @section('content')
 <div class="row mb-2">
     <div class="">
-        <a href="{{ route('kelola_magang_pemb_lapangan') }}" type="button" class="btn btn-outline-primary mb-3 waves-effect">
+        <a href="{{ route('kelola_mhs_pemb_akademik') }}" type="button" class="btn btn-outline-primary mb-3 waves-effect">
             <span class="ti ti-arrow-left me-2"></span>Kembali
         </a>
     </div>
