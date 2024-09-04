@@ -96,32 +96,32 @@
                 },
                 {
                     data: 'namamhs',
-                    name: 'mahasiswa.namamhs',
+                    name: 'namamhs',
                     defaultContent: '-'
                 },
                 {
                     data: 'namaprodi',
-                    name: 'program_studi.namaprodi',
+                    name: 'namaprodi',
                     defaultContent: '-'
                 },
                 {
                     data: 'intern_position',
-                    name: 'lowongan_magang.intern_position',
+                    name: 'intern_position',
                     defaultContent: '-'
                 },
                 {
                     data: 'namaindustri',
-                    name: 'industri.namaindustri',
+                    name: 'namaindustri',
                     defaultContent: '-'
                 },
                 {
                     data: 'durasimagang',
-                    name: 'lowongan_magang.durasimagang',
+                    name: 'durasimagang',
                     defaultContent: '-'
                 },
                 {
                     data: 'jenis_magang',
-                    name: 'mhs_magang.jenis_magang',
+                    name: 'jenis_magang',
                     defaultContent: '-'
                 },
                 {
@@ -130,13 +130,13 @@
                     defaultContent: '-'
                 },
                 {
-                    data: 'nilai_akhir_magang',
-                    name: 'mhs_magang.nilai_akhir_magang',
+                    data: 'nilai_akademik',
+                    name: 'nilai_akademik',
                     defaultContent: '0'
                 },
                 {
-                    data: 'indeks_nilai_akhir',
-                    name: 'mhs_magang.indeks_nilai_akhir',
+                    data: 'indeks_nilai_akademik',
+                    name: 'indeks_nilai_akademik',
                     defaultContent: '-'
                 },
                 {

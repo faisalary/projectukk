@@ -63,7 +63,7 @@ class KomponenPenilaianController extends Controller
 
     public function show(Request $request)
     {
-        $penilaian = KomponenNilai::select('komponen_nilai.*', 'jenis_magang.namajenis', 'jenis_magang.id_jenismagang')
+        $penilaian = KomponenNilai::select('komponen_nilai.*', 'jenis_magang.namajenis', 'jenis_magang.id_jenismagang', 'jenis_magang.durasimagang')
         ->join('jenis_magang', 'komponen_nilai.id_jenismagang', '=', 'jenis_magang.id_jenismagang');
 
         if ($request->id == 'table-akademik') {
@@ -77,7 +77,7 @@ class KomponenPenilaianController extends Controller
         return DataTables::of($penilaian->orderBy('jenis_magang.namajenis', "asc")->get())
             ->addIndexColumn()
             ->editColumn('jenis_magang', function ($row) {
-                return $row->namajenis;
+                return $row->namajenis . ' (' . $row->durasimagang . ')';
             })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {

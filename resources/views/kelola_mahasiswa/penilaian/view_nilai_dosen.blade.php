@@ -68,7 +68,11 @@
 <div class="card mt-4">
     <div class="card-body">
         <div class="d-flex justify-content-start">
+            @if ($urlInputNilai != null)
             <a href="{{ $urlInputNilai }}" class="btn btn-primary">Input Nilai</a>
+            @else
+            <a href="javascript:void(0)" class="btn btn-primary disabled">Input Nilai</a>
+            @endif
             <a href="#" class="btn ms-3 btn-outline-primary" onclick="getNilaiPembLapangan($(this));">Lihat Nilai Pembimbing Lapangan</a>
         </div>
         <div class="table-responsive border border-bottom-0 mt-4">
@@ -94,6 +98,18 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <h5 class="mt-5 mb-1">Nilai Pembimbing Lapangan</h5>
+        <div id="container_result_nilai_lap" class="table-responsive border border-bottom-0 mt-4">
+            {!! $container_result_nilai_lap !!}
+        </div>
+        <h5 class="mt-5 mb-1">Nilai Pembimbing Akademik</h5>
+        <div id="container_result_nilai_akademik" class="table-responsive border border-bottom-0 mt-4">
+            {!! $container_result_nilai_akademik !!}
+        </div>
+        <h5 class="mt-5 mb-1">Nilai Akhir</h5>
+        <div id="container_result_nilai_akhir" class="table-responsive border border-bottom-0 mt-4">
+            {!! $container_result_nilai_akhir !!}
         </div>
     </div>
 </div>

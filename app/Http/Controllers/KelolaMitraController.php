@@ -195,7 +195,7 @@ class KelolaMitraController extends Controller
         $data->statusapprove='2';
         $data->save();
         $alasan = $request->input('alasan');
-        Mail::to($data->email)->send(new RejectionNotification($alasan));
+        dispatch(new SendMailJob($data->email, new RejectionNotification($alasan)));
         return redirect()->back();
     }
     
