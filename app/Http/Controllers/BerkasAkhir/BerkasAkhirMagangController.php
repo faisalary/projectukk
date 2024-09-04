@@ -113,7 +113,12 @@ class BerkasAkhirMagangController extends Controller
                 $result .= '</td>';
 
                 $result .= '<td style="padding: 0.5rem;">:</td>';
-                $result .= '<td>'.Carbon::parse($value->tgl_upload)->format('d/m/Y H:i').'</td>';
+                $status = '<span class="badge bg-label-success">Tepat Waktu Diserahkan</span>';
+                if ($value->tgl_upload > $value->due_date) {
+                    $status = '<span class="badge bg-label-danger">Terlambat Diserahkan</span>';
+                }
+
+                $result .= '<td>'.$status.'</td>';
                 $result .= '</tr>';
             }
             $result .= '</tbody></table>';

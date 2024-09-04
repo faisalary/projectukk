@@ -647,6 +647,7 @@ class LowonganMagangController extends Controller
             $lowongan->enddate = $request->enddate;
             $lowongan->durasimagang = $request->durasimagang;
             $lowongan->tahapan_seleksi = $request->tahapan_seleksi;
+            $lowongan->statusaprove = LowonganMagangStatusEnum::PENDING;
 
             $lowongan->save();
 
@@ -690,16 +691,6 @@ class LowonganMagangController extends Controller
                 'error' => true,
                 'message' => $e->getMessage(),
             ]);
-        }
-    }
-
-    public function rejectionPenawaran($id) {
-        try {
-
-
-            return Response::success(null, 'Success');
-        } catch (\Exception $e) {
-            return Response::errorCatch($e);
         }
     }
 

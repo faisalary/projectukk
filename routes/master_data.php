@@ -8,6 +8,7 @@ use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\IndustriController;
 use App\Http\Controllers\mahasiswaController;
 use App\Http\Controllers\NilaiMutuController;
+use App\Http\Controllers\NilaiAkhirController;
 use App\Http\Controllers\JenisMagangController;
 use App\Http\Controllers\UniversitasController;
 use App\Http\Controllers\DokumenSyaratController;
@@ -55,6 +56,15 @@ Route::prefix('master')->group(function () {
         Route::post('status/{id}', 'status')->name('nilai-mutu.status');
         Route::post('/update/{id}', 'update')->name('nilai-mutu.update');
         Route::get('/edit/{id}', 'edit')->name('nilai-mutu.edit');
+    });
+    Route::prefix('nilai-akhir')->controller(NilaiAkhirController::class)->group(function(){
+        Route::get('/','index')->name('nilai_akhir');
+        Route::get('/get-data','getData')->name('nilai_akhir.show');
+        Route::post('store','store')->name('nilai_akhir.store');
+        Route::get('edit/{id}','edit')->name('nilai_akhir.edit');
+        Route::post('update/{id}','update')->name('nilai_akhir.update');
+        Route::post('change-status/{id}','changeStatus')->name('nilai_akhir.change_status');
+        Route::delete('deletee/{id}','destroy')->name('nilai_akhir.delete');
     });
 
     Route::prefix('mitra')->controller(IndustriController::class)->group(function () {

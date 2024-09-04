@@ -23,16 +23,16 @@ class TahunAkademikRequest extends FormRequest
     public function rules(): array
     {
         $validate = [
-            'tahun' => 'required|unique:tahun_akademik,tahun|numeric|digits:4',
+            'tahun' => 'required|unique:tahun_akademik,tahun',
             'semester' => 'required||in:Ganjil,Genap',
             'startdate_daftar' => 'required',
             'enddate_daftar' => 'required',
-            'startdate_pengumpulan_berkas' => 'required',
-            'enddate_pengumpulan_berkas' => 'required',
+            // 'startdate_pengumpulan_berkas' => 'required',
+            // 'enddate_pengumpulan_berkas' => 'required',
         ];
 
         if (isset($this->id)) {
-            $validate['tahun'] = 'required|unique:tahun_akademik,tahun,'.$this->id.',id_year_akademik|numeric|digits:4';
+            $validate['tahun'] = 'required|unique:tahun_akademik,tahun,'.$this->id.',id_year_akademik';
         }
 
         return $validate;

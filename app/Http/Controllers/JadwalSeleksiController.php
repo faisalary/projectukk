@@ -145,11 +145,12 @@ class JadwalSeleksiController extends Controller
     public function detailMahasiswa($id_lowongan, $id_pendaftaran) {
         $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat', 'sosmedmhs', 'bahasamhs')->select(
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
-            'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
-            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas', 'pendaftaran_magang.reason_aplicant'
+            'lowongan_magang.intern_position', 'lowongan_magang.lokasi', 'lowongan_magang.durasimagang', 'lowongan_magang.id_jenismagang', 'users.email', 'pendaftaran_magang.current_step',
+            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas', 'pendaftaran_magang.reason_aplicant', 'jenis_magang.namajenis'
         )
         ->leftJoin('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
         ->leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'lowongan_magang.id_jenismagang')        
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
         ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
