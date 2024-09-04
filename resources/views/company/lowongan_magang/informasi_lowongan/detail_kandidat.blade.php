@@ -21,6 +21,10 @@
     #more {
         display: none;
     }
+   .bootstrap-select {
+    border: #4EA971 2px solid;
+    border-radius: 0.25rem;
+   }
 </style>
 @endsection
 
@@ -31,23 +35,36 @@
     <i class="ti ti-arrow-left me-2 text-primary"></i>
     Kembali
 </a>
+{{-- multipurpose input :) --}}
+<input type="hidden" id="change_status">
+
 <div class="d-flex justify-content-between">
     <h4 class="fw-bold"><span class="text-muted fw-light">Informasi Lowongan / </span>{{ $lowongan->intern_position }}</h4>
-    <div class="d-flex justify-content-end">
-        <select class="select2 form-select" data-placeholder="Pilih Tahun Ajaran">
-            <option value="1">2023/2024 Genap</option>
-            <option value="2">2023/2024 Ganjil</option>
-            <option value="3">2022/2023 Genap</option>
-            <option value="4">2022/2023 Ganjil</option>
-            <option value="5">2021/2022 Genap</option>
-            <option value="6">2021/2022 Ganjil</option>
-        </select>
-        <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide"><i class="tf-icons ti ti-filter"></i></button>
-    </div>
 </div>
 
 <div class="col-xl-12">
     <div class="nav-align-top">
+        <div class="d-flex justify-content-between mb-3">
+            <div class="card shadow-none border border-secondary me-4">
+                <div class="card-body p-2">
+                    <div class="d-flex align-items-center justify-content-center p-3">
+                        <span class="badge p-1 bg-label-success me-2">
+                            <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
+                        </span>
+                        <span class="mb-0 me-2">Total Pelamar:</span>
+                        <h5 class="mb-0 me-2 text-primary">{{ $total_pelamar }}</h5>
+                        <span class="mb-0 me-2">Orang </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-none border border-secondary ms-4">
+                <div class="card-body p-1">
+                    <div class="d-flex align-items-center justify-content-between p-3">
+                        <span class="fw-semibold mb-0 p-2 me-2">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">{{ $date_confirm_closing }}</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul class="nav nav-pills mb-3 " role="tablist">
             @foreach ($tab as $key => $item)
             <li class="nav-item" style="font-size: small;">
@@ -63,54 +80,33 @@
         </ul>
     </div>
 
-    <div class="row cnt">
-        <div class="col-8 text-secondary mb-3">Filter Berdasarkan : <i class='tf-icons ti ti-alert-circle text-primary pb-1' data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Program Studi : D3 Rekayasa Perangkat Lunak Aplikasi, Fakultas : Ilmu Terapan, Universitas : Tel-U Jakarta, Status :  Diterima" id="tooltip-filter"></i></div>
-        <div id="div2" class="col-1 targetDiv" style="display: none;">
-            <div class="col-md-4 col-12 mb-3 d-flex align-items-center justify-content-between">
-                <select class="select2 form-select" data-placeholder="Ubah Status Kandidat">
-                </select>
-                <button class="btn btn-success waves-effect waves-light" data-bs-toggle="offcanvas" data-bs-target="#modalSlide" style="min-width: 142px;"><i class="tf-icons ti ti-checks">
-                        Terapkan</i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <div class="tab-content p-0">
         @foreach ($tab as $key => $item)
         <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="{{ $key }}" role="tabpanel">
             <div class="card">
-                <div class="d-flex align-items-center justify-content-between p-3">
-                    <div class="card shadow-none border border-secondary">
-                        <div class="card-body p-2">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <span class="badge p-2 bg-label-success me-2">
-                                    <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
-                                </span>
-                                <span class="mb-0 me-2">Total Pelamar:</span>
-                                <h5 class="mb-0 me-2 text-primary" id="total-{{ $item['table'] }}">0</h5>
-                                <span class="mb-0 me-2">Lowongan </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="fw-semibold">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">{{ $date_confirm_closing }}</span></span>
-                    </div>
-                </div>
                 <div class="card-datatable table-responsive">
-                    <table class="table" id="{{ $item['table'] }}" style="width: 100%;">
+                    @if($key == 'tahap')
+                    <div class="m-4">
+                        <select class="selectpicker" data-style="btn-default btn-outline-primary" style="border: 5px, solid, #4EA971" onchange="changeSeleksiTable($(this).val())">
+                            <option value="all_seleksi">Semua Tahap</option>
+                            @foreach($item['tahap_valid'] as $d)
+                            <option value="{{ $d['table'] }}">{{ $d['label'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+                    <table class="table @if($key == 'tahap') tahap-table @endif" id="{{ $item['table'] }}" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th class="text-center">AKSI</th>
+                                <th class="text-center">STATUS</th>
                                 <th>No</th>
                                 <th>NAMA</th>
-                                <th>NO TELEPON </th>
-                                <th>EMAIL</th>
-                                <th class="text-center">Tanggal Daftar</th>
-                                <th>PROGRAM STUDI</th>
-                                <th>FAKULTAS</th>
+                                <th>KONTAK</th>
                                 <th>UNIVERSITAS</th>
-                                <th class="text-center">STATUS</th>
-                                <th class="text-center">AKSI</th>
+                                <th>PROGRAM STUDI</th>
+                                <th class="text-center">Tanggal Daftar</th>
+                                <th class="text-center">Tanggal Seleksi</th>
                             </tr>
                         </thead>
                     </table>
@@ -127,6 +123,7 @@
 
 @section('page_script')
 <script>
+    let tahap = @json($tab['tahap']['tahap_valid']);
     $('.table').each(function () {
         $(this).DataTable({
             ajax: {
@@ -142,22 +139,55 @@
             drawCallback: function( settings, json ) {
                 let total = this.api().data().count();
                 $('#total_' + $(this).attr('id')).text(total);
-                $('#total-' + $(this).attr('id')).text(total);
             },
             columns: [
+                { data: "action" },
+                { data: "current_step" },
                 { data: "DT_RowIndex" },
                 { data: "namamhs" },
                 { data: "nohpmhs" },
-                { data: "emailmhs" },
-                { data: "tanggaldaftar" },
-                { data: "namaprodi" },
-                { data: "namafakultas" },
                 { data: "namauniv" },
-                { data: "current_step" },
-                { data: "action" },
+                { data: "namaprodi" },
+                { data: "tanggaldaftar" },
+                { data: "tanggalseleksi" },
             ]
         });
     });
+
+    function changeSeleksiTable(table) {
+        
+        $('.tahap-table').prop('id', table);
+        
+        $('.tahap-table').DataTable().destroy();
+        
+        $('.tahap-table').DataTable({
+            ajax: {
+                url: "{{ $urlGetData }}",
+                type: 'GET',
+                data: {type: table}
+            },
+            scrollX: true,
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            destroy: true,
+            drawCallback: function( settings, json ) {
+                total = this.api().data().count();
+                $('#total_all_seleksi').text(total);
+            },
+            columns: [
+                { data: "action" },
+                { data: "current_step" },
+                { data: "DT_RowIndex" },
+                { data: "namamhs" },
+                { data: "nohpmhs" },
+                { data: "namauniv" },
+                { data: "namaprodi" },
+                { data: "tanggaldaftar" },
+                { data: "tanggalseleksi" },
+            ]
+        });
+    }
 
     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
@@ -176,7 +206,6 @@
                 response = response.data;
                 $('#container_detail_pelamar').html(response.view);
                 $('#change_status').attr('data-id', response.id_pendaftar);
-                $('#change_status').attr('data-default', response.current_step);
                 $('#change_status').val(response.current_step).change();
             }
         });
@@ -185,11 +214,11 @@
     $('#detail_pelamar_offcanvas').on('hidden.bs.offcanvas', function () {
         $('#container_detail_pelamar').html(null);
         $('#change_status').removeAttr('data-id');
+        Swal.close();
+        resetChangeStatus();
     });
 
     function changeStatus(e) {
-        if (e.val() == e.attr('data-default') || e.val() == null) return;
-
         if (e.val() == "{{ $last_seleksi }}" || e.val() == "rejected") {
             let modal = $('#modal-upload-file');
             let form = modal.find('form');
@@ -208,7 +237,7 @@
                 success: function (response) {
                     response = response.data;
                     $('#change_status').attr('data-id', response.id_pendaftar);
-                    $('#change_status').attr('data-default', response.current_step);
+                    $('#detail_pelamar_offcanvas').offcanvas('hide');
 
                     $('.table').each(function () {
                         $(this).DataTable().ajax.reload();
@@ -230,9 +259,51 @@
     $('#modal-upload-file').on("hide.bs.modal", function() {
         $(this).find('form').attr('action', '');
         $(this).find('form').find('input[name="status"]').remove();
-        $('#change_status').val($('#change_status').attr('data-default')).change();
+        resetChangeStatus();
     });
 
+    function swalConfirmStatus(response, next){
+        title = response ? 'Yakin untuk meloloskan kandidat?' : 'Yakin untuk menggagalkan kandidat ke tahap selanjutnya?';
+        confirmButtonText = response ? 'Lolos' : 'Gagal';
+        customClassConfirm = response ? 'btn btn-success me-2' : 'btn btn-danger me-2';
+        customClassCancel = response ? 'btn btn-danger' : 'btn btn-success';
+        sweetAlertConfirm({
+            title: title,
+            text: 'Pastikan periksa kembali profile kandidat ',
+            icon: 'warning',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: 'Batal',
+            customClassConfirm : customClassConfirm,
+            customClassCancel : customClassCancel,
+        }, function () {
+            $('#change_status').val(next);
+            changeStatus($('#change_status'));
+        });
+    }
 
+    function screeningLulus(response) {
+        next = response ? '{{$afterScreening}}' : 'rejected';
+        swalConfirmStatus(response, next);
+    }
+
+    function seleksiLulus(e) {
+        resetChangeStatus();
+        $('#change_status').attr('data-id', e.attr('data-id'));
+        if(e.attr('data-status') == 'rejected') {
+            swalConfirmStatus(false, 'rejected');
+        } else {
+            let listStatus = @json($listStatus);
+            let current = e.attr('data-status');
+            let index = listStatus.findIndex(x => x.value == current);
+            let next = listStatus[index + 1].value;
+            swalConfirmStatus(true, next);
+        }
+    }
+
+    function resetChangeStatus() {
+        console.log('reset');
+        $('#change_status').val('');
+        $('#change_status').removeAttr('data-id');
+    }
 </script>
 @endsection

@@ -132,7 +132,7 @@
 <span class='badge rounded-pill bg-label-primary mx-1'>{{ $item->bahasa }}</span>
 @endforeach
 <hr>
-<h5>Dokumen Pendukung</h5>
+{{-- <h5>Dokumen Pendukung</h5>
 <div class="card-body">
     <div class="d-flex flex-column" id="container-dokumen-pendukung">
         @foreach ($dokumen_pendukung as $key => $item)
@@ -159,4 +159,10 @@
         </div>
         @endforeach
     </div>
+</div> --}}
+@if($pendaftar->current_step == $onScreening)
+<div class="d-flex justify-content-start">
+    <button type="button" class="btn btn-success me-2 w-25" onclick="screeningLulus(true)">Lolos</button>
+    <button type="button" class="btn btn-danger w-25" onclick="screeningLulus(false)">Gagal</button>
 </div>
+@endif

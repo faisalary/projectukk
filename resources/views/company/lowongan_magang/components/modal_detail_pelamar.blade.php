@@ -13,14 +13,6 @@
                 <i class="tf-icons ti ti-file-symlink me-2"></i>
                 Unduh Format CV
             </button>
-            <div class="col-8" style="max-width:230px;">
-                <select name="change_status" id="change_status" onchange="changeStatus($(this));" class="select2 form-select form-select-sm" data-placeholder="Ubah Status">
-                    <option value="" disabled selected>Ubah Status</option>
-                    @foreach ($listStatus as $key => $item)
-                        <option value="{{ $item['value'] }}">{{ $item['label'] }}</option>
-                    @endforeach
-                </select>
-            </div>
         </div>
     </div>
     <div class="offcanvas-body pt-1 flex-grow-0 h-100" id="container_detail_pelamar"></div>
@@ -41,6 +33,7 @@
                         <div class="col form-group">
                             <label for="date" class="form-label">Berkas<span class="text-danger">*</span></label>
                             <input type="file" class="form-control" name="file" id="file">
+                            <label class="form-label"><span class="text-small">(Harus berbentuk pdf)</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
