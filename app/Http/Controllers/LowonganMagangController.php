@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Http\Requests\LowonganMagangRequest;
 use App\Models\DokumenPendaftaranMagang;
+use App\Models\Seleksi;
 
 class LowonganMagangController extends Controller
 {
@@ -176,6 +177,7 @@ class LowonganMagangController extends Controller
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
         $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
         
+        $data['tahapValid'] = $tahap_valid;
         $data['afterScreening'] = PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1;
 
         // menjalakan rejection lowongan
@@ -183,6 +185,44 @@ class LowonganMagangController extends Controller
         // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
+    }
+
+    public function getKandidat(Request $request, $tahap) {
+        $this->getPendaftarMagang(function ($query) use ($tahap) {
+            return $query->where('current_step', $tahap);
+        });
+        $pendaftar = $this->my_pendaftar_magang;
+        $data = [];
+        foreach ($pendaftar as $key => $value) {
+            $data[$value->id_pendaftaran] = $value->namamhs;
+        }
+
+        return Response::success($data, 'Success');
+    }
+
+    public function setJadwal(Request $request, $id) {
+        try {
+            DB::beginTransaction();
+            //delete
+            foreach ($request->kandidat as $key => $value) {
+                Seleksi::updateOrCreate(
+                    [
+                        'id_pendaftaran' => $value,
+                        'tahapan_seleksi' => $request->tahapan_seleksi
+                    ],
+                    [
+                        'start_date' => Carbon::parse($request->mulai_date)->format('Y-m-d H:i:s'),
+                        'end_date' => Carbon::parse($request->selesai_date)->format('Y-m-d H:i:s')
+                    ]
+                );
+            }
+
+            DB::commit();
+            return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     public function getDataDetailInformasi(Request $request, $id) {
@@ -261,15 +301,20 @@ class LowonganMagangController extends Controller
         ->editColumn('tanggaldaftar', function ($data) {
             return '<span class="text-nowrap">' . Carbon::parse($data->tanggaldaftar)->format('d F Y') . '</span>';
         })
-        ->editColumn('tanggalseleksi', function ($data) {
+        ->editColumn('tanggalseleksi', function ($data) use ($lowongan) {
+            $seleksiDefault = SeleksiTahap::where('id_lowongan', $lowongan->id_lowongan)->get();
             $result = '<div class="d-flex flex-column align-items-start">';
-            $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap 1". '</span>';
-            $result .= '<span class="text-nowrap">' ."11 Desember 2024 - 14 Desember 2024   ". '</span>';
-            $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap 2". '</span>';
-            $result .= '<span class="text-nowrap">' ."11 Desember 2024 - 14 Desember 2024   ". '</span>';
-            $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap 3". '</span>';
-            $result .= '<span class="text-nowrap">' ."11 Desember 2024 - 14 Desember 2024   ". '</span>';
-            $result .= '</div>';
+            foreach($seleksiDefault as $key => $value) {
+                $seleksiCustom = Seleksi::where('id_pendaftaran', $data->id_pendaftaran)->where('tahapan_seleksi', $key+1);
+                if($seleksiCustom->exists()) {
+                    $seleksiCustom = $seleksiCustom->first();
+                    $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap ". ($key + 1). '</span>';
+                    $result .= '<span class="text-nowrap">' .Carbon::parse($seleksiCustom->start_date)->format('d F Y') . ' - ' . Carbon::parse($seleksiCustom->end_date)->format('d F Y') . '</span>';
+                }else{
+                    $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap ". ($key + 1). '</span>';
+                    $result .= '<span class="text-nowrap">' .Carbon::parse($value->start_date)->format('d F Y') . ' - ' . Carbon::parse($value->end_date)->format('d F Y') . '</span>';
+                }
+            }
             return $result;
         })
         ->addColumn('action', function ($data) use ($lowongan) {
@@ -283,26 +328,13 @@ class LowonganMagangController extends Controller
                 $result .= '</div>';
                 $result .= '<div class="d-flex justify-content-center">';
             }
-            $result .= '<a class="cursor-pointer text-warning me-2" onclick="detailInfo($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-mail"></i></a>';
+            $result .= '<a class="cursor-pointer text-warning me-2" onclick="emailSent($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-mail"></i></a>';
             $result .= '<a class="cursor-pointer text-primary" onclick="detailInfo($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-file-invoice"></i></a>';
             $result .= '</div>';
 
             return $result;
         });
-        
-        // for ($i = 0; $i < ($lowongan->tahapan_seleksi + 1); $i++) {
-        //     $tahap_valid[] = array_search($i, $this->valid_step);
-        // }
-        
-        // if(in_array($request->type, $tahap_valid)) {
-        //     $datatables->addColumn('total_seleksi', function ($data) use ($tahap_valid) {
-        //         $total = $this->getPendaftarMagang(function ($query) use ($data, $tahap_valid) {
-        //             return $query->whereIn('current_step', $tahap_valid)->where('pendaftaran_magang.id_lowongan', $data->id_lowongan);
-        //         });
-        //         return $total;
-        //     });
-        // }
-
+      
         return $datatables->rawColumns([
             'namamhs', 'nohpmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action', 'tanggalseleksi'
         ])

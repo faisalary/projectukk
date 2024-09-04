@@ -86,13 +86,17 @@
             <div class="card">
                 <div class="card-datatable table-responsive">
                     @if($key == 'tahap')
-                    <div class="m-4">
+                    <div class="m-4 d-flex justify-content-between">
                         <select class="selectpicker" data-style="btn-default btn-outline-primary" style="border: 5px, solid, #4EA971" onchange="changeSeleksiTable($(this).val())">
                             <option value="all_seleksi">Semua Tahap</option>
                             @foreach($item['tahap_valid'] as $d)
                             <option value="{{ $d['table'] }}">{{ $d['label'] }}</option>
                             @endforeach
                         </select>
+                        <button class="btn btn-primary" data-bs-target="#modal-send-email" data-bs-toggle="modal">
+                            <i class="tf-icons ti ti-email me-2"></i>
+                            Kirim Email
+                        </button>
                     </div>
                     @endif
                     <table class="table @if($key == 'tahap') tahap-table @endif" id="{{ $item['table'] }}" style="width: 100%;">
@@ -123,7 +127,13 @@
 
 @section('page_script')
 <script>
-    let tahap = @json($tab['tahap']['tahap_valid']);
+    $(".flatpickr-date-custom").flatpickr({
+        enableTime: true,
+        altInput: true,
+        altFormat: 'j F Y, H:i',
+        dateFormat: 'Y-m-d H:i'
+    });
+
     $('.table').each(function () {
         $(this).DataTable({
             ajax: {
@@ -304,6 +314,38 @@
         console.log('reset');
         $('#change_status').val('');
         $('#change_status').removeAttr('data-id');
+    }
+
+    function emailSent(data){
+        $('#modal-sent-email').modal('show');
+    }
+
+    function getKandidat(e){
+        let tahap = e.find(':selected').attr('data-status');
+        $.ajax({
+            url: "{{ route('informasi_lowongan.get_kandidat', ['tahap' => ':tahap']) }}".replace(':tahap', tahap),
+            type: "GET",
+            data: {
+                id_lowongan: "{{ $lowongan->id_lowongan }}",
+                tahapan_seleksi: e.val()
+            },
+            success: function (response) {
+                response = response.data;
+                $('#kandidat').empty();
+                $('#kandidat').prop('disabled', false);
+                $('#kandidat').append('<option value="">Pilih Kandidat</option>');
+                $.each(response, function (index, value) {
+                    $('#kandidat').append('<option value="' + index + '">' + value + '</option>');
+                });
+            }
+        });
+    }
+
+    function afterSetJadwal(response) {
+        $('#modal-send-email').modal('hide');
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        });
     }
 </script>
 @endsection
