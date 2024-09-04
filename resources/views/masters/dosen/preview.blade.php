@@ -138,8 +138,35 @@
             box-shadow: none;
         }
 
-        table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled{
+        table.dataTable thead > tr > th{
+            background-color: white;
+            z-index: 1;
+        }
+
+        table.dataTable thead > tr > th.sorting{
+            background-color: white;
             position: static;
+            padding: 0.5rem;
+        }
+        
+        table.dataTable thead > tr > th.sorting::after{
+            display: flex;
+            justify-content: end;
+            position: static;
+            right: 0%;
+            bottom: 0%;
+            width: 100%;
+            height: 100%;
+        }
+
+        table.dataTable thead > tr > th.sorting::before{
+            display: flex;
+            justify-content: end;
+            position: static;
+            right: 0%;
+            bottom: 0%;
+            width: 100%;
+            height: 100%;
         }
 
         /* #table-master-mahasiswa-data-duplikat-baru-tab-preview tbody tr:hover {
@@ -149,6 +176,13 @@
         .nav ~ .tab-content{
             background-color: transparent;
         } */
+
+        .tab-content{
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
     </style>
 @endsection
 @section('content')
@@ -230,7 +264,7 @@
                     {{-- Data Baru Tab --}}
                     <div class="tab-pane fade show active" id="new-data-tab-pane" role="tabpanel"
                         aria-labelledby="new-data-tab" tabindex="0">
-                        <div class="card-datatable table-responsive">
+                        <div class="table-responsive">
                             <table class="table table-striped border" id="table-master-mahasiswa-data-baru-tab-preview">
                                 <thead>
                                     <tr style="text-align: start;">
@@ -268,7 +302,7 @@
                     {{-- Data Duplikat Tab --}}
                     <div class="tab-pane fade" id="duplicate-data-tab-pane" role="tabpanel"
                         aria-labelledby="duplicate-data-tab" tabindex="0">
-                        <div class="card-datatable rounded mt-3 table-responsive d-flex flex-column">
+                        <div class="rounded table-responsive d-flex flex-column">
                             <input type="hidden" name="newData" id="newData"
                                 value="{{ json_encode($data['newData']) }}">
                             <input type="hidden" name="univ" id="univ" value="{{ $data['univ']['id_univ'] }}">
@@ -282,18 +316,18 @@
                                         <th colspan="6" class="border-bottom">DATA BARU</th>
                                         <th colspan="6" class="border-start border-bottom">DATA LAMA</th>
                                     </tr>
-                                    <tr style="text-align: start;">
-                                        <th style="background-color: white; width: 100%;">
+                                    <tr style="text-align: start; background-color: white;">
+                                        <th style="background-color: white;">
                                             <input type="checkbox" name="" id="semuaData">
-                                            <label for="semuaData" style="margin-left: 0.5rem;"> Semua Data</label>
+                                            <label for="semuaData" style="margin-left: 0.5rem; background-color: white;"> Semua Data</label>
                                         </th>
-                                        <th>NO</th>
+                                        <th style="width: 10rem;">NO</th>
                                         <th>NIP</th>
                                         <th>KODE DOSEN</th>
                                         <th>NAMA DOSEN</th>
                                         <th>KONTAK</th>
                                         <th class="border-start">NIP</th>
-                                        <th>KODE DOSEN</th>
+                                        <th style="width: 20rem;">KODE DOSEN</th>
                                         <th>NAMA DOSEN</th>
                                         <th>KONTAK</th>
                                     </tr>
@@ -423,20 +457,24 @@
 @section('page_script')
     <script>
         $(document).ready(function() {
-            $('#table-master-mahasiswa-data-baru-tab-preview').DataTable({});
+            $('#table-master-mahasiswa-data-baru-tab-preview').DataTable({
+                
+            });
             $('#table-master-mahasiswa-data-duplikat-baru-tab-preview').DataTable({
                 fixedColumns: {
                     left: 1
                 },
                 paging: false,
                 // scrollX: true
-                scrollCollapse: true,
+                // scrollCollapse: true,
                 columnDefs: [{
                     orderable: false,
                     targets: 0
                 }],
             });
-            $('#table-master-mahasiswa-data-gagal-tab-preview').DataTable({});
+            $('#table-master-mahasiswa-data-gagal-tab-preview').DataTable({
+
+            });
             $('#backBtn').click(function(e) {
                 e.preventDefault();
                 showSweetAlert({

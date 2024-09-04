@@ -138,9 +138,55 @@
             box-shadow: none;
         }
 
-        table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled{
-            position: static;
+        table.dataTable thead > tr > th{
+            background-color: white;
+            z-index: 1;
         }
+
+        table.dataTable thead > tr > th.sorting{
+            background-color: white;
+            position: static;
+            padding: 0.5rem;
+        }
+        
+        table.dataTable thead > tr > th.sorting::after{
+            display: flex;
+            justify-content: end;
+            position: static;
+            right: 0%;
+            bottom: 0%;
+            width: 100%;
+            height: 100%;
+        }
+
+        table.dataTable thead > tr > th.sorting::before{
+            display: flex;
+            justify-content: end;
+            position: static;
+            right: 0%;
+            bottom: 0%;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* #table-master-mahasiswa-data-duplikat-baru-tab-preview tbody tr:hover {
+                                            background-color: #C0C3C7;
+                                        } */
+/* 
+        .nav ~ .tab-content{
+            background-color: transparent;
+        } */
+
+        .tab-content{
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+
+        /* table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled{
+            position: static;
+        } */
         /* #table-master-mahasiswa-data-duplikat-baru-tab-preview tbody tr:hover {
                                             background-color: #C0C3C7;
                                         } */
