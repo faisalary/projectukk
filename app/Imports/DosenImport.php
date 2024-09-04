@@ -19,12 +19,13 @@ class DosenImport implements ToCollection, WithHeadingRow
     protected Fakultas $id_fakultas;
     protected ProgramStudi $id_prodi;
     protected string $primaryKey = "nip";
+    protected string $secondaryKey = "emaildosen";
     protected string $model = Dosen::class;
     protected array $fields = [
-        'nip' => 'nip', 
-        'kode_dosen' => 'kode_dosen', 
-        'namadosen' => 'nama_dosen', 
-        'nohpdosen' => 'no_telp', 
+        'nip' => 'nip',
+        'kode_dosen' => 'kode_dosen',
+        'namadosen' => 'nama_dosen',
+        'nohpdosen' => 'no_telp',
         'emaildosen' => 'email'
     ];
     protected $dataCleaning;
@@ -38,7 +39,8 @@ class DosenImport implements ToCollection, WithHeadingRow
         $this->id_fakultas = Fakultas::findOrFail($id_fakultas, ['id_fakultas', 'namafakultas']);
         $this->id_prodi = ProgramStudi::findOrFail($id_prodi, ['id_prodi', 'namaprodi']);
         $this->dataCleaning = new DataCleaning(
-            'nip',
+            $this->primaryKey,
+            $this->secondaryKey,
             $this->model,
             array_values($this->fields),
             array_keys($this->fields),
@@ -84,7 +86,7 @@ class DosenImport implements ToCollection, WithHeadingRow
 
     public function getDuplicatedData()
     {
-        return $this->duplicatedData/*->groupBy('primarykey')*/;
+        return $this->duplicatedData;
     }
 
     public function getFailedData()

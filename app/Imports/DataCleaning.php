@@ -5,15 +5,10 @@ namespace App\Imports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
-// DataCleaning class is used to clean and validate data from excel file
-// It will clean the data based on the required columns and validation rules
-// The cleaned data will be stored in $cleanedData property
-// The failed data will be stored in $failedData property
-// The cleaned data and failed data can be accessed using getCleanedData() and getFailedData() method
-
 class DataCleaning
 {
     protected $primaryKey;
+    protected $secondaryKey;
     protected $model;
     protected $excelColumns;
     protected $dbColumns;
@@ -24,9 +19,10 @@ class DataCleaning
     protected $duplicatedData;
     protected $failedData;
 
-    public function __construct($primaryKey, $model, $excelColumns, $dbColumns, $validationRules, $validationMessages)
+    public function __construct($primaryKey, $secondaryKey, $model, $excelColumns, $dbColumns, $validationRules, $validationMessages)
     {
         $this->primaryKey = $primaryKey;
+        $this->secondaryKey = $secondaryKey;
         $this->model = $model;
         $this->excelColumns = $excelColumns;
         $this->dbColumns = $dbColumns;
@@ -41,35 +37,35 @@ class DataCleaning
     public function collection(Collection $rows)
     {
         //===============[1]================
-        // Ambil data sesuai panjang excelColumns (table header) dan hilangkan baris dengan NIP null, jika nip kosong maka data akan di abaikan
+        // Filter and map rows based on primary key
         $rows = $rows->map(function ($row) {
-            if (!empty($this->primaryKey)) {
-                return $row->only($this->excelColumns);
-            }
-            return $row;
-        })->filter(function ($row) {
-            return !is_null($row[$this->primaryKey]) && $row[$this->primaryKey] !== '';
+            return $row->only($this->excelColumns);
+        })
+        ->filter(function ($row) {
+            return $this->isEmptyRow($row);
         });
+        // }) ->filter(function ($row) {
+        //     return !is_null($row[$this->primaryKey]) && $row[$this->primaryKey] !== '';
+        // });
 
         $rows = $rows->map(function ($row) {
             $mappedRow = [];
-
             foreach ($this->excelColumns as $index => $excelColumn) {
                 $dbColumn = $this->dbColumns[$index] ?? null;
                 if ($dbColumn) {
                     $mappedRow[$dbColumn] = $row[$excelColumn] ?? null;
                 }
             }
-
             return collect($mappedRow);
         });
-
-        //Di kelompokkan berdasarkan primary key
-        $groupedRows = $rows->groupBy($this->primaryKey);
+        // dd($rows);
         //===============[1]================
 
         //===============[2]================
-        // Menghilangkan duplikasi dalam setiap grup
+        // Group by primary key
+        $groupedRows = $rows->groupBy($this->primaryKey);
+
+        // Remove duplicates within each group
         $dedupedGroupedRows = $groupedRows->map(function ($group) {
             return $group->unique(function ($item) {
                 return implode('', $item->toArray());
@@ -78,41 +74,107 @@ class DataCleaning
         //===============[2]================
 
         //===============[3]================
-        //Validasi setiap kelompok (group) yang sudah di deduplikasi (dedupedGroupedRows) dengan validasi yang sudah di set dan pesan error yang sudah di set (validationRules, validationMessages)
-        $dedupedGroupedRows->each(function ($group, $primaryKeyValue) {
-            //Validasi setiap item dalam kelompok
+        $seenPrimaryKeys = [];
+        $seenSecondaryKeys = [];
+        $emailGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->secondaryKey);
+        $nimGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->primaryKey);
+
+        $dedupedGroupedRows->each(function ($group, $primaryKeyValue) use (&$seenPrimaryKeys, &$seenSecondaryKeys, $emailGroups, $nimGroups) {
+            // Validate each item in the group
             $validatedGroup = $group->map(function ($item) {
                 $validator = Validator::make($item->toArray(), $this->validationRules, $this->validationMessages);
                 return $this->addErrorMessages($item, $validator);
             });
 
-            //Jika kelompok hanya memiliki 1 item dan tidak memiliki error, maka item tersebut akan di masukkan ke cleanedData
-            if ($group->count() === 1 && !$this->hasErrors($validatedGroup->first())) {
-                $this->cleanedData->push($group->first());
+            $isDuplicate = false;
+            $duplicateMessage = '';
+
+            if (in_array($primaryKeyValue, $seenPrimaryKeys) || $nimGroups[$primaryKeyValue]->count() > 1) {
+                $isDuplicate = true;
+                $duplicateMessage .= "- Duplicate {$this->primaryKey}";
             }
-            //Jika kelompok memiliki lebih dari 1 item atau memiliki error, maka semua item dalam kelompok akan di masukkan ke failedData
-            else {                
+
+            $secondaryKeyValue = $group->first()[$this->secondaryKey];
+            if (in_array($secondaryKeyValue, $seenSecondaryKeys)) {
+                $isDuplicate = true;
+                $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "- Duplicate {$this->secondaryKey}";
+            }
+
+            // Check if the email is duplicate
+            if ($emailGroups[$secondaryKeyValue]->count() > 1) {
+                $isDuplicate = true;
+                $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "- Duplicate {$this->secondaryKey}";
+            }
+
+            if ($group->count() === 1 && !$this->hasErrors($validatedGroup->first()) && !$isDuplicate) {
+                $this->cleanedData->push($group->first());
+                $seenPrimaryKeys[] = $primaryKeyValue;
+                $seenSecondaryKeys[] = $secondaryKeyValue;
+            } else {
+                if ($isDuplicate) {
+                    $validatedGroup = $validatedGroup->map(function ($item) use ($duplicateMessage) {
+                        $item[$this->primaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->primaryKey}") ? "Duplicate {$this->primaryKey}" : "";
+                        // $item[$this->secondaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->secondaryKey}") ? "Duplicate {$this->secondaryKey}" : "";
+                        $item['duplicate_error'] = $duplicateMessage;
+                        $item['messages'] .= $item['messages'] ? "<br>" . $item['duplicate_error'] : $item['duplicate_error'];
+                        return $item;
+                    });
+                }
                 $this->failedData[$primaryKeyValue] = $validatedGroup;
             }
         });
         //===============[3]================
 
-        // add duplicate data message
-        $this->failedData = $this->failedData->map(function ($itemCollection, $primaryKey) {
-            // Jika ada lebih dari satu item di dalam collection            
-            if ($itemCollection->count() > 1) {
-                $itemCollection = $itemCollection->map(function ($item) {
-                    $item["duplicate_error"] = "Duplicate {$this->primaryKey}";
-                    $item["messages"] .= $item['messages'] ? "<br>- " . $item["duplicate_error"] : "- " . $item["duplicate_error"];
-                    return $item;
-                });
-            }
-        
-            return $itemCollection;
-        });
+        // //===============[3]================
+        // $seenPrimaryKeys = [];
+        // $seenSecondaryKeys = [];
+        // $emailGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->secondaryKey);
 
-        
-        // Flat the failedData
+        // $dedupedGroupedRows->each(function ($group, $primaryKeyValue) use (&$seenPrimaryKeys, &$seenSecondaryKeys, $emailGroups) {
+        //     // Validate each item in the group
+        //     $validatedGroup = $group->map(function ($item) {
+        //         $validator = Validator::make($item->toArray(), $this->validationRules, $this->validationMessages);
+        //         return $this->addErrorMessages($item, $validator);
+        //     });
+
+        //     $isDuplicate = false;
+        //     $duplicateMessage = '';
+
+        //     if (in_array($primaryKeyValue, $seenPrimaryKeys)) {
+        //         $isDuplicate = true;
+        //         $duplicateMessage .= "Duplicate {$this->primaryKey}";
+        //     }
+
+        //     $secondaryKeyValue = $group->first()[$this->secondaryKey];
+        //     if (in_array($secondaryKeyValue, $seenSecondaryKeys)) {
+        //         $isDuplicate = true;
+        //         $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "Duplicate {$this->secondaryKey}";
+        //     }
+
+        //     // Check if the email is duplicate
+        //     if ($emailGroups[$secondaryKeyValue]->count() > 1) {
+        //         $isDuplicate = true;
+        //         $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "Duplicate {$this->secondaryKey}";
+        //     }
+
+        //     if ($group->count() === 1 && !$this->hasErrors($validatedGroup->first()) && !$isDuplicate) {
+        //         $this->cleanedData->push($group->first());
+        //         $seenPrimaryKeys[] = $primaryKeyValue;
+        //         $seenSecondaryKeys[] = $secondaryKeyValue;
+        //     } else {
+        //         if ($isDuplicate) {
+        //             $validatedGroup = $validatedGroup->map(function ($item) use ($duplicateMessage) {
+        //                 $item['duplicate_error'] = $duplicateMessage;
+        //                 $item['messages'] .= $item['messages'] ? "<br>" . $item['duplicate_error'] : $item['duplicate_error'];
+        //                 return $item;
+        //             });
+        //         }
+        //         $this->failedData[$primaryKeyValue] = $validatedGroup;
+        //     }
+        // });
+        // //===============[3]================
+
+        // Flatten the failedData
         $flattenedFailedData = array_reduce($this->failedData->toArray(), function ($carry, $items) {
             foreach ($items as $item) {
                 $carry[] = $item;
@@ -120,16 +182,36 @@ class DataCleaning
             return $carry;
         }, []);
         $this->failedData = collect($flattenedFailedData);
+
+        // Move all instances of duplicate emails to failedData
+        $duplicateEmails = $emailGroups->filter(function ($group) {
+            return $group->count() > 1;
+        })->keys();
+
+        $this->cleanedData = $this->cleanedData->reject(function ($item) use ($duplicateEmails) {
+            if ($duplicateEmails->contains($item[$this->secondaryKey])) {
+                $item['duplicate_error'] = "Duplicate {$this->secondaryKey}";
+                $item['messages'] .= $item['messages'] ? "<br>" . $item['duplicate_error'] : $item['duplicate_error'];
+                $this->failedData->push($item);
+                return true;
+            }
+            return false;
+        });
     }
 
     public function cleanDuplicateData()
     {
-        // Mencari data yang sudah ada di database
-        $existingAllData = $this->model::whereIn($this->primaryKey, $this->cleanedData->pluck($this->primaryKey))->get()->keyBy($this->primaryKey);
+        // Check for existing data in the database
+        $existingAllData = $this->model::whereIn($this->primaryKey, $this->cleanedData->pluck($this->primaryKey))
+            ->orWhereIn($this->secondaryKey, $this->cleanedData->pluck($this->secondaryKey))
+            ->get()
+            ->keyBy($this->primaryKey);
 
         foreach ($this->cleanedData as $row) {
-            if ($existingAllData->has($row[$this->primaryKey])) {
-                $existingData = $existingAllData[$row[$this->primaryKey]];
+            if ($existingAllData->has($row[$this->primaryKey]) ||
+                $existingAllData->contains($this->secondaryKey, $row[$this->secondaryKey])) {
+                $existingData = $existingAllData[$row[$this->primaryKey]] ??
+                                $existingAllData->firstWhere($this->secondaryKey, $row[$this->secondaryKey]);
                 $differences = $this->findDifferences($existingData, $row);
                 if ($differences) {
                     $this->duplicatedData->push([
@@ -143,6 +225,7 @@ class DataCleaning
             }
         }
     }
+
     private function addErrorMessages($item, $validator)
     {
         $itemWithErrors = $item->toArray();
@@ -151,7 +234,6 @@ class DataCleaning
             $errorMessage = $validator->errors()->first($column);
             $itemWithErrors["{$column}_error"] = $errorMessage ?? "";
 
-            // Jika ada error, tambahkan ke array messages
             if ($errorMessage && !in_array("- " . $errorMessage, $messages)) {
                 $messages[] = "- " . $errorMessage;
             }
@@ -171,19 +253,35 @@ class DataCleaning
             ->isNotEmpty();
     }
 
-    private function findDifferences($existingDosen, $newData)
+    private function isEmptyRow($newData)
+    {
+        $isEmptyRow = [];
+
+        foreach ($this->excelColumns as $field) {
+            if ($newData[$field] == '' ) {
+                $isEmptyRow[$field] = true;
+            }
+        }
+
+        if (count($isEmptyRow) == count($this->excelColumns)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function findDifferences($existingData, $newData)
     {
         $differences = [];
 
         foreach ($this->dbColumns as $field) {
-            if ($existingDosen->$field != $newData[$field]) {
+            if ($existingData->$field != $newData[$field]) {
                 $differences[$field] = true;
             }
         }
 
         return $differences;
     }
-
 
     public function getCleanedData()
     {

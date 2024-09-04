@@ -47,6 +47,7 @@ class MhsImport implements ToCollection, WithHeadingRow
         $this->kode_dosen = Dosen::where('kode_dosen', $kode_dosen)->firstOrFail(['kode_dosen', 'namadosen']);
         $this->dataCleaning = new DataCleaning(
             $this->primaryKey,
+            'emailmhs',
             $this->model,
             array_values($this->fields),
             array_keys($this->fields),
