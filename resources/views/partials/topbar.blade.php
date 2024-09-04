@@ -60,7 +60,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/nilai/magang" class="menu-link">
+                                <a href="{{ route('nilai_magang') }}" class="menu-link">
                                     <div data-i18n="Nilai Magang">Nilai Magang</div>
                                 </a>
                             </li>

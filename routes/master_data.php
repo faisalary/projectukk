@@ -58,8 +58,13 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('nilai-mutu.edit');
     });
     Route::prefix('nilai-akhir')->controller(NilaiAkhirController::class)->group(function(){
-        Route::get('/','index')->name('nilai-akhir');
-        Route::get('/show','show')->name('nilai-akhir.show');
+        Route::get('/','index')->name('nilai_akhir');
+        Route::get('/get-data','getData')->name('nilai_akhir.show');
+        Route::post('store','store')->name('nilai_akhir.store');
+        Route::get('edit/{id}','edit')->name('nilai_akhir.edit');
+        Route::post('update/{id}','update')->name('nilai_akhir.update');
+        Route::post('change-status/{id}','changeStatus')->name('nilai_akhir.change_status');
+        Route::delete('deletee/{id}','destroy')->name('nilai_akhir.delete');
     });
 
     Route::prefix('mitra')->controller(IndustriController::class)->group(function () {

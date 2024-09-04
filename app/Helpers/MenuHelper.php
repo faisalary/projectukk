@@ -274,7 +274,7 @@ class MenuHelper
                     ],
                     [
                         'name'=> 'Nilai Akhir',
-                        'route'=>'nilai-akhir',
+                        'route'=>'nilai_akhir',
                         'permission'=> 'nilai_akhir.view'
                     ],
                     [

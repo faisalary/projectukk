@@ -12,6 +12,7 @@ use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
 use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
+use App\Http\Controllers\NilaiMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
@@ -148,10 +149,6 @@ Route::middleware('role:Mahasiswa')->group(function () {
     //     Route::post('/ambil/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'ambil'])->name('ambil.penawaran');
     //     Route::post('/tolak/{nim}', [App\Http\Controllers\KonfirmasiMagangController::class, 'tolak'])->name('tolak.penawaran');
     //     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
-    // });
-
-    // Route::get('/nilai/magang', function () {
-    //     return view('kegiatan_saya.nilai_magang.nilai');
     // });
 
     // Route::get('/berkas/akhir', function () {
