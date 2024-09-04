@@ -194,10 +194,16 @@ class LogbookPemLapController extends LogbookController
     public function storeNilai(Request $request, $id)
     {
         $request->validate([
-            'id.*' => 'required',
+            'id_kompnilai' => 'required|array',
+            'id_kompnilai.*' => 'required',
+            'nilai' => 'required|array',
             'nilai.*' => 'required|integer'
         ], [
-            'id.*.required' => 'Invalid.',
+            'id_kompnilai.required' => 'Invalid.',
+            'id_kompnilai.array' => 'Invalid.',
+            'id_kompnilai.*.required' => 'Invalid.',
+            'nilai.required' => 'Nilai wajib diisi.',
+            'nilai.array' => 'Nilai wajib diisi.',
             'nilai.*.required' => 'Nilai wajib diisi.',
             'nilai.*.integer' => 'Nilai harus berupa bilangan bulat.'
         ]);
@@ -231,6 +237,7 @@ class LogbookPemLapController extends LogbookController
                 ], [
                     'nilai' => $request->nilai[$key],
                     'oleh' => $user->name,
+                    'id_user' => $user->id,
                     'dateinputnilai' => now(),
                     'aspek_penilaian' => $komp_nilai->aspek_penilaian,
                     'nilai_max' => $komp_nilai->nilai_max,
