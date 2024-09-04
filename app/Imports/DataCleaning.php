@@ -9,6 +9,7 @@ class DataCleaning
 {
     protected $primaryKey;
     protected $secondaryKey;
+    protected $thirdKey;
     protected $model;
     protected $excelColumns;
     protected $dbColumns;
@@ -19,10 +20,11 @@ class DataCleaning
     protected $duplicatedData;
     protected $failedData;
 
-    public function __construct($primaryKey, $secondaryKey, $model, $excelColumns, $dbColumns, $validationRules, $validationMessages)
+    public function __construct($primaryKey, $secondaryKey, $thirdKey, $model, $excelColumns, $dbColumns, $validationRules, $validationMessages)
     {
         $this->primaryKey = $primaryKey;
         $this->secondaryKey = $secondaryKey;
+        $this->thirdKey = $thirdKey;
         $this->model = $model;
         $this->excelColumns = $excelColumns;
         $this->dbColumns = $dbColumns;
@@ -53,8 +55,8 @@ class DataCleaning
             foreach ($this->excelColumns as $index => $excelColumn) {
                 $dbColumn = $this->dbColumns[$index] ?? null;
                 if ($dbColumn) {
-                    $mappedRow[$dbColumn] = $row[$excelColumn] ?? null;
-                }
+                    $mappedRow[$dbColumn] = $dbColumn == $this->primaryKey ? (string) $row[$excelColumn] ?? null : $row[$excelColumn] ?? null;                            
+                }                
             }
             return collect($mappedRow);
         });
@@ -63,7 +65,7 @@ class DataCleaning
 
         //===============[2]================
         // Group by primary key
-        $groupedRows = $rows->groupBy($this->primaryKey);
+        $groupedRows = $rows->groupBy($this->primaryKey);        
 
         // Remove duplicates within each group
         $dedupedGroupedRows = $groupedRows->map(function ($group) {
@@ -71,15 +73,17 @@ class DataCleaning
                 return implode('', $item->toArray());
             });
         });
-        //===============[2]================
+        //===============[2]================     
 
         //===============[3]================
         $seenPrimaryKeys = [];
         $seenSecondaryKeys = [];
+        $seenThirdKeys = [];
         $emailGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->secondaryKey);
         $nimGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->primaryKey);
+        $thirdGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->thirdKey);
 
-        $dedupedGroupedRows->each(function ($group, $primaryKeyValue) use (&$seenPrimaryKeys, &$seenSecondaryKeys, $emailGroups, $nimGroups) {
+        $dedupedGroupedRows->each(function ($group, $primaryKeyValue) use (&$seenPrimaryKeys, &$seenSecondaryKeys, &$seenThirdKeys, $emailGroups, $nimGroups, $thirdGroups) {
             // Validate each item in the group
             $validatedGroup = $group->map(function ($item) {
                 $validator = Validator::make($item->toArray(), $this->validationRules, $this->validationMessages);
@@ -104,17 +108,36 @@ class DataCleaning
             if ($emailGroups[$secondaryKeyValue]->count() > 1) {
                 $isDuplicate = true;
                 $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "- Duplicate {$this->secondaryKey}";
+            }           
+            
+            if($this->thirdKey) {    
+                $thirdKeyValue = $group->first()[$this->thirdKey];
+                if (in_array($thirdKeyValue, $seenThirdKeys)) {
+                    $isDuplicate = true;
+                    $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "- Duplicate {$this->thirdKey}";
+                }          
+
+                if ($thirdGroups[$thirdKeyValue]->count() > 1) {
+                    $isDuplicate = true;
+                    $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "- Duplicate {$this->thirdKey}";
+                }
             }
 
             if ($group->count() === 1 && !$this->hasErrors($validatedGroup->first()) && !$isDuplicate) {
                 $this->cleanedData->push($group->first());
                 $seenPrimaryKeys[] = $primaryKeyValue;
                 $seenSecondaryKeys[] = $secondaryKeyValue;
+                if($this->thirdKey) { 
+                    $seenThirdKeys[] = $thirdKeyValue;
+                }
             } else {
                 if ($isDuplicate) {
                     $validatedGroup = $validatedGroup->map(function ($item) use ($duplicateMessage) {
-                        $item[$this->primaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->primaryKey}") ? "Duplicate {$this->primaryKey}" : "";
-                        // $item[$this->secondaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->secondaryKey}") ? "Duplicate {$this->secondaryKey}" : "";
+                        $item[$this->primaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->primaryKey}") ? "Duplicate {$this->primaryKey}" : $item[$this->primaryKey . '_error'];
+                        $item[$this->secondaryKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->secondaryKey}") ? "Duplicate {$this->secondaryKey}" : $item[$this->secondaryKey . '_error'];
+                        if($this->thirdKey) { 
+                            $item[$this->thirdKey . '_error'] = str_contains($duplicateMessage, "- Duplicate {$this->thirdKey}") ? "Duplicate {$this->thirdKey}" : "";
+                        }
                         $item['duplicate_error'] = $duplicateMessage;
                         $item['messages'] .= $item['messages'] ? "<br>" . $item['duplicate_error'] : $item['duplicate_error'];
                         return $item;
@@ -123,65 +146,9 @@ class DataCleaning
                 $this->failedData[$primaryKeyValue] = $validatedGroup;
             }
         });
-        //===============[3]================
+        //===============[3]================       
 
-        // //===============[3]================
-        // $seenPrimaryKeys = [];
-        // $seenSecondaryKeys = [];
-        // $emailGroups = $dedupedGroupedRows->flatten(1)->groupBy($this->secondaryKey);
-
-        // $dedupedGroupedRows->each(function ($group, $primaryKeyValue) use (&$seenPrimaryKeys, &$seenSecondaryKeys, $emailGroups) {
-        //     // Validate each item in the group
-        //     $validatedGroup = $group->map(function ($item) {
-        //         $validator = Validator::make($item->toArray(), $this->validationRules, $this->validationMessages);
-        //         return $this->addErrorMessages($item, $validator);
-        //     });
-
-        //     $isDuplicate = false;
-        //     $duplicateMessage = '';
-
-        //     if (in_array($primaryKeyValue, $seenPrimaryKeys)) {
-        //         $isDuplicate = true;
-        //         $duplicateMessage .= "Duplicate {$this->primaryKey}";
-        //     }
-
-        //     $secondaryKeyValue = $group->first()[$this->secondaryKey];
-        //     if (in_array($secondaryKeyValue, $seenSecondaryKeys)) {
-        //         $isDuplicate = true;
-        //         $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "Duplicate {$this->secondaryKey}";
-        //     }
-
-        //     // Check if the email is duplicate
-        //     if ($emailGroups[$secondaryKeyValue]->count() > 1) {
-        //         $isDuplicate = true;
-        //         $duplicateMessage .= ($duplicateMessage ? "<br>" : "") . "Duplicate {$this->secondaryKey}";
-        //     }
-
-        //     if ($group->count() === 1 && !$this->hasErrors($validatedGroup->first()) && !$isDuplicate) {
-        //         $this->cleanedData->push($group->first());
-        //         $seenPrimaryKeys[] = $primaryKeyValue;
-        //         $seenSecondaryKeys[] = $secondaryKeyValue;
-        //     } else {
-        //         if ($isDuplicate) {
-        //             $validatedGroup = $validatedGroup->map(function ($item) use ($duplicateMessage) {
-        //                 $item['duplicate_error'] = $duplicateMessage;
-        //                 $item['messages'] .= $item['messages'] ? "<br>" . $item['duplicate_error'] : $item['duplicate_error'];
-        //                 return $item;
-        //             });
-        //         }
-        //         $this->failedData[$primaryKeyValue] = $validatedGroup;
-        //     }
-        // });
-        // //===============[3]================
-
-        // Flatten the failedData
-        $flattenedFailedData = array_reduce($this->failedData->toArray(), function ($carry, $items) {
-            foreach ($items as $item) {
-                $carry[] = $item;
-            }
-            return $carry;
-        }, []);
-        $this->failedData = collect($flattenedFailedData);
+        $this->failedData = $this->failedData->flatten(1);
 
         // Move all instances of duplicate emails to failedData
         $duplicateEmails = $emailGroups->filter(function ($group) {

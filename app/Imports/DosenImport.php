@@ -20,6 +20,7 @@ class DosenImport implements ToCollection, WithHeadingRow
     protected ProgramStudi $id_prodi;
     protected string $primaryKey = "nip";
     protected string $secondaryKey = "emaildosen";
+    protected string $thirdKey = "kode_dosen";
     protected string $model = Dosen::class;
     protected array $fields = [
         'nip' => 'nip',
@@ -41,11 +42,12 @@ class DosenImport implements ToCollection, WithHeadingRow
         $this->dataCleaning = new DataCleaning(
             $this->primaryKey,
             $this->secondaryKey,
+                $this->thirdKey,
             $this->model,
             array_values($this->fields),
             array_keys($this->fields),
             [
-                'nip' => 'required|string|max:18',
+                'nip' => 'required|string|max:9',
                 'kode_dosen' => 'required|string|max:5',
                 'namadosen' => 'required|string|max:255',
                 'nohpdosen' => 'required|string|max:15',
@@ -58,7 +60,7 @@ class DosenImport implements ToCollection, WithHeadingRow
                 '*.between' => 'Data Tidak Sesuai',
                 '*.string' => 'Data Tidak Sesuai',
                 '*.email' => 'Data Tidak Sesuai',
-                'nip.max' => 'NIP maksimal 18 karakter',
+                'nip.max' => 'NIP maksimal 9 karakter',
                 'kode_dosen.max' => 'Kode Dosen maksimal 5 karakter',
                 'namadosen.max' => 'Nama Dosen maksimal 255 karakter',
                 'nohpdosen.max' => 'No Telp maksimal 15 karakter',
