@@ -23,7 +23,7 @@ class ConfigNilaiAkhirReq extends FormRequest
     public function rules(): array
     {
         $validate = [
-            'id_prodi' => ['required', 'exists:program_studi,id_prodi'],
+            'id_prodi' => ['required', 'exists:program_studi,id_prodi', 'unique:config_nilai_akhir,id_prodi'],
             'nilai_pemb_lap' => ['required', 'min:1', 'max:100', function ( $attribute, $value, $fail) {
                 if (($value + $this->nilai_pemb_akademik) > 100) $fail('Nilai pembimbing lapangan + pembimbing akademik tidak boleh melebihi 100');
             }],
