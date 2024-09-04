@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NilaiMagangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
@@ -119,6 +120,10 @@ Route::prefix('kegiatan-saya')->group(function () {
     Route::prefix('berkas-akhir')->name('berkas_akhir')->controller(BerkasMahasiswaController::class)->group(function () {
         Route::get('/', 'viewBerkasMahasiswa');
         Route::post('store/{id}', 'storeBerkasMahasiswa')->name('.store');
+    });
+
+    Route::prefix('nilai-magang')->name('nilai_magang')->controller(NilaiMagangController::class)->group(function (){
+        Route::get('/','index');
     });
 });
 
