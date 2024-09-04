@@ -43,6 +43,7 @@ class PermissionSeeder extends Seeder
             'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
+            'nilai_akhir.view',
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',

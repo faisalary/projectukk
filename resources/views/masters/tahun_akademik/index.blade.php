@@ -23,7 +23,6 @@
                             <th>TAHUN AJARAN</th>
                             <th>SEMESTER</th>
                             <th>TANGGAL PENDAFTARAN MAGANG</th>
-                            <th>TANGGAL PENGUMPULAN BERKAS</th>
                             <th class="text-center">STATUS</th>
                             <th class="text-center">AKSI</th>
                         </tr>
@@ -61,10 +60,6 @@
             {
                 data: 'pendaftaran_magang',
                 name: 'pendaftaran_magang',
-            },
-            {
-                data: 'pengumpulan_berkas',
-                name: 'pengumpulan_berkas'
             },
             {
                 data: 'status',
