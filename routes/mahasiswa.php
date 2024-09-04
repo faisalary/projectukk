@@ -12,7 +12,6 @@ use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
 use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
-use App\Http\Controllers\NilaiMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
