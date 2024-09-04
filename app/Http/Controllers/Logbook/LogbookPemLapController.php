@@ -237,6 +237,7 @@ class LogbookPemLapController extends LogbookController
                 ], [
                     'nilai' => $request->nilai[$key],
                     'oleh' => $user->name,
+                    'id_user' => $user->id,
                     'dateinputnilai' => now(),
                     'aspek_penilaian' => $komp_nilai->aspek_penilaian,
                     'nilai_max' => $komp_nilai->nilai_max,
