@@ -6,6 +6,7 @@ use App\Helpers\Response;
 use App\Models\NilaiMutu;
 use App\Models\LogbookDay;
 use App\Models\LogbookWeek;
+use App\Models\NilaiPemblap;
 use Illuminate\Http\Request;
 use App\Models\KomponenNilai;
 use Illuminate\Support\Carbon;
@@ -13,8 +14,13 @@ use Yajra\DataTables\DataTables;
 use App\Models\BerkasAkhirMagang;
 use App\Models\NilaiPembAkademik;
 use App\Enums\LogbookWeeklyStatus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use App\Enums\BerkasAkhirMagangStatus;
-use App\Models\NilaiPemblap;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\NilaiPembAkademikReq;
+use App\Models\ConfigNilaiAkhir;
+use App\Models\MhsMagang;
 
 class KelolaMahasiswaPemAkademikController extends LogbookController
 {
@@ -138,6 +144,8 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
         });
 
         $data['mahasiswa'] = $this->pendaftaran->first();
+        if (!$data['mahasiswa']) return abort(404);
+
         $data['mahasiswa']->durasimagang = json_decode($data['mahasiswa']->durasimagang, true);
 
         $data['penilaian'] = NilaiPembAkademik::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
@@ -150,8 +158,146 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
         $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
         $data['url_get_nilai_pemb_lapangan'] = route('kelola_mhs_pemb_akademik.view_nilai', ['id' => $id, 'section' => 'get_nilai_pemb_lap']);
+        $data['urlInputNilai'] = route('kelola_mhs_pemb_akademik.view_input_nilai', ['id' => $id]);
 
         return view('kelola_mahasiswa/penilaian/view_nilai_dosen', $data);
+    }
+
+    public function viewInputNilai($id)
+    {
+        $this->getMyMhsMagang(function ($query) use ($id) {
+            return $query->select('mhs_magang.id_mhsmagang', 'mhs_magang.jenis_magang')
+            ->where('mhs_magang.id_mhsmagang', $id);
+        });
+
+        $data['mahasiswa'] = $this->pendaftaran->first();
+        if (!$data['mahasiswa']) return abort(404);
+
+        $data['nilaiLapangan'] = NilaiPemblap::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
+        $data['nilaiAkhir'] = $data['nilaiLapangan']->sum('nilai');
+        $data['indexAkhir'] = NilaiMutu::select('nilaimutu')
+        ->where('nilaimin', '<=', $data['nilaiAkhir'])
+        ->where('nilaimax', '>=', $data['nilaiAkhir'])
+        ->where('status', 1)->first()->nilaimutu;
+
+        $data['penilaian'] = NilaiPembAkademik::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
+        if (count($data['penilaian']) == 0) {
+            $data['penilaian'] =  KomponenNilai::select('id_kompnilai', 'aspek_penilaian', 'deskripsi_penilaian', 'nilai_max')
+            ->where('scored_by', 1)
+            ->where('id_jenismagang', $data['mahasiswa']->jenis_magang)
+            ->where('status', 1)->get();
+        }
+
+        $data['nilai_mutu'] = NilaiMutu::select('nilaimin', 'nilaimax', 'nilaimutu')->where('status', 1)->get();
+        $data['urlBack'] = route('kelola_mhs_pemb_akademik.view_nilai', ['id' => $id]);
+        $data['urlStore'] = route('kelola_mhs_pemb_akademik.store_nilai', ['id' => $id]);
+
+        return view('kelola_mahasiswa/penilaian/view_input_nilai_dosen', $data);
+    }
+
+    public function storeNilaiPembAkademik(NilaiPembAkademikReq $request, $id) 
+    {
+        try {
+            $user = auth()->user();
+
+            $this->getMyMhsMagang(function ($query) use ($id) {
+                return $query->select(
+                    'mhs_magang.id_mhsmagang', 'mhs_magang.jenis_magang', 'mahasiswa.id_prodi'
+                )
+                ->where('mhs_magang.id_mhsmagang', $id);
+            });
+
+            $data['mahasiswa'] = $this->pendaftaran->first();
+            if (!$data['mahasiswa']) return abort(404);
+
+            $kompNilai = KomponenNilai::where('scored_by', 1)
+            ->where('id_jenismagang', $data['mahasiswa']->jenis_magang)
+            ->where('status', 1)->get();
+
+            $errors = [];
+            $total = 0;
+            foreach ($request->id_kompnilai as $key => $value) {
+                $komp_nilai = $kompNilai->where('id_kompnilai', $value)->first();
+                if (!$komp_nilai) return Response::error(null, 'Invalid.');
+                
+                if ($komp_nilai->nilai_max < $request->nilai[$key]) {
+                    $errors['nilai.' . $key] = ['Nilai tidak boleh lebih dari ' . $komp_nilai->nilai_max];
+                }
+
+                $total += $request->nilai[$key];
+            }
+
+            if (!empty($errors)) {
+                return Response::errorValidate($errors, 'Gagal menyimpan nilai');
+            };
+
+            $dataStep = Crypt::decryptString($request->data_step);
+            $config = ConfigNilaiAkhir::where('id_prodi', $data['mahasiswa']->id_prodi)->where('status', 1)->first();
+            if (!$config) return Response::error(null, 'Config Nilai Not Found!');
+            $nilaiLapangan = NilaiPemblap::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->sum('nilai');
+            $nilaiMutu = NilaiMutu::where('status', 1)->get();
+
+            $hasilNilaiLapangan = ($nilaiLapangan * ($config->nilai_pemb_lap / 100));
+            $hasilNilaiAkademik = ($total * ($config->nilai_pemb_akademik / 100));
+            $nilaiAkhir = ($hasilNilaiLapangan + $hasilNilaiAkademik);
+            $nilaiMutuAkhir = $nilaiMutu->where('nilaimin', '<=', $nilaiAkhir)->where('nilaimax', '>=', $nilaiAkhir)->first();
+
+            if ($dataStep == '1') {
+
+                return Response::success([
+                    'ignore_alert' => true,
+                    'data_step' => (int) ($dataStep + 1),
+                    'container_result_nilai_lap' => view('kelola_mahasiswa/penilaian/components/result_nilai', [
+                        'nilai' => $nilaiLapangan,
+                        'presentaseNilai' => $config->nilai_pemb_lap,
+                        'hasil' => $hasilNilaiLapangan
+                    ])->render(),
+                    'container_result_nilai_akademik' => view('kelola_mahasiswa/penilaian/components/result_nilai', [
+                        'nilai' => $total,
+                        'presentaseNilai' => $config->nilai_pemb_akademik,
+                        'hasil' => $hasilNilaiAkademik
+                    ])->render(),
+                    'container_result_nilai_akhir' => view('kelola_mahasiswa/penilaian/components/result_nilai', [
+                        'hasil' => $nilaiAkhir . '<span class="ms-1 fw-bolder">(' .$nilaiMutuAkhir->nilaimutu. ')</span>'
+                    ])->render(),
+                ], 'Valid data!');
+            }
+
+            DB::beginTransaction();
+            $total = 0;
+            foreach ($request->id_kompnilai as $key => $value) {
+                $komp_nilai = $kompNilai->where('id_kompnilai', $value)->first();
+
+                NilaiPembAkademik::updateOrCreate([
+                    'id_mhsmagang' => $id,
+                    'id_kompnilai' => $value
+                ], [
+                    'nilai' => $request->nilai[$key],
+                    'oleh' => $user->name,
+                    'dateinputnilai' => now(),
+                    'aspek_penilaian' => $komp_nilai->aspek_penilaian,
+                    'nilai_max' => $komp_nilai->nilai_max,
+                    'deskripsi_penilaian' => $komp_nilai->deskripsi_penilaian
+                ]);
+
+                $total += $request->nilai[$key];
+            }
+
+            $nilaiMutu = $nilaiMutu->where('nilaimin', '<=', $total)->where('nilaimax', '>=', $total)->first();
+
+            $mhsMagang = MhsMagang::where('id_mhsmagang', $id)->first();
+            $mhsMagang->indeks_nilai_akademik = $nilaiMutu->nilaimutu;
+            $mhsMagang->nilai_akademik = $total;
+            $mhsMagang->indeks_nilai_akhir = $nilaiMutuAkhir->nilaimutu;
+            $mhsMagang->nilai_akhir_magang = $nilaiAkhir;
+            $mhsMagang->save();
+
+            DB::commit();
+            return Response::success(null, 'Berhasil menyimpan data nilai pembimbing akademik.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     public function viewLogbook(Request $request, $id)

@@ -68,7 +68,7 @@
 <div class="card mt-4">
     <div class="card-body">
         <div class="d-flex justify-content-start">
-            <a href="#" class="btn btn-primary">Input Nilai</a>
+            <a href="{{ $urlInputNilai }}" class="btn btn-primary">Input Nilai</a>
             <a href="#" class="btn ms-3 btn-outline-primary" onclick="getNilaiPembLapangan($(this));">Lihat Nilai Pembimbing Lapangan</a>
         </div>
         <div class="table-responsive border border-bottom-0 mt-4">
