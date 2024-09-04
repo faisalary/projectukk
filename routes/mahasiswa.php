@@ -12,7 +12,6 @@ use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
 use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
-use App\Http\Controllers\NilaiMagangController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
@@ -129,11 +128,11 @@ Route::prefix('kegiatan-saya')->group(function () {
 });
 
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki
-Route::middleware('role:Mahasiswa')->group(function () {
+// Route::middleware('role:Mahasiswa')->group(function () {
 
-    Route::get('/logbook-detail', function () {
-        return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
-    });
+//     Route::get('/logbook-detail', function () {
+//         return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
+//     });
 
     // Route::prefix('/kegiatan-saya')->group(function () {
     //     // Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
@@ -158,4 +157,4 @@ Route::middleware('role:Mahasiswa')->group(function () {
     // Route::get('/lowongan-pekerjaan-tersimpan', function () {
     //     return view('program_magang.lowongan_pekerjaan_tersimpan');
     // });
-});
+// });
