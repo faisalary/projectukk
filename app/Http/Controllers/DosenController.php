@@ -171,7 +171,7 @@ class DosenController extends Controller
         } catch (Exception $e) {
             return Response::errorCatch($e);
         }
-    }  
+    }
 
     public function import(Request $request)
     {
@@ -179,12 +179,12 @@ class DosenController extends Controller
             'import' => 'required',
             'id_univ' => 'required',
             'id_fakultas' => 'required',
-            'id_prodi' => 'required',            
+            'id_prodi' => 'required',
         ], [
             'import.required' => 'File impor wajib diunggah.',
             'id_univ.required' => 'Universitas wajib dipilih.',
             'id_fakultas.required' => 'Fakultas wajib dipilih.',
-            'id_prodi.required' => 'Prodi wajib dipilih.',            
+            'id_prodi.required' => 'Prodi wajib dipilih.',
         ]);
 
         $data = $request->file('import');
@@ -208,6 +208,8 @@ class DosenController extends Controller
         ($import)->import($filePath);
 
         $data = $import->getResults();
+
+        // dd($data);
 
         if ($data['newData']->isEmpty() && $data['duplicatedData']->isEmpty() && $data['failedData']->isEmpty()) {
 
@@ -234,14 +236,14 @@ class DosenController extends Controller
 
     public function preview()
     {
-        $data = session('import_results');        
+        $data = session('import_results');
         if (!$data) return redirect()->route('dosen');
 
         return view('masters.dosen.preview', compact('data'));
     }
 
     public function storeImport(Request $request)
-    {        
+    {
         try {
             $newData = json_decode($request->newData, true);
 
@@ -257,7 +259,7 @@ class DosenController extends Controller
                         ...$data,
                         'id_univ' => $request->input('univ'),
                         'id_fakultas' => $request->input('fakultas'),
-                        'id_prodi' => $request->input('prodi'),                        
+                        'id_prodi' => $request->input('prodi'),
                     ]
                 );
             }
@@ -279,9 +281,9 @@ class DosenController extends Controller
     }
 
     public function download_failed_data(Request $request)
-    {        
-        $failedData = json_decode($request->failedData, true);        
-        $export = new DataFailedExport('template-import-data-master-dosen', $failedData, 'data_failed_import_dosen');
+    {
+        $failedData = json_decode($request->failedData, true);
+        $export = new DataFailedExport('Template_Import_Dosen', $failedData, 'data_failed_import_dosen');
         return $export->download();
     }
 }

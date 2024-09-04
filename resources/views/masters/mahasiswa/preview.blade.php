@@ -439,9 +439,10 @@
                                     @foreach ($data['failedData'] as $mhsError)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td class="{{ $mhsError['namamhs_error'] ? 'onerror' : 'onsuccess' }}">
-                                                @if ($mhsError['namamhs_error'])
-                                                    <h6>{{ $mhsError['namamhs'] }}</h6>
+                                            <td class="{{ $mhsError['namamhs_error'] || $mhsError['nim_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['namamhs_error'] || $mhsError['nim_error'])                                                    
+                                                    <h6>{{ $mhsError['namamhs_error'] ? $mhsError['namamhs_error'] : $mhsError['namamhs'] }}</h6>
+                                                    <h6>{{ $mhsError['nim_error'] ? $mhsError['nim_error'] : $mhsError['nim'] }}</h6>                                                    
                                                 @else
                                                     <span class='fw-bolder mb-2'>{{ $mhsError['namamhs'] }}</span><br>
                                                     <small class=''>{{ $mhsError['nim'] }}</small>
