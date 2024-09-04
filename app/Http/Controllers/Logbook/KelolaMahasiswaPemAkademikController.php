@@ -145,7 +145,9 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
 
         $data['mahasiswa'] = $this->pendaftaran->first();
         if (!$data['mahasiswa']) return abort(404);
-
+        $config = ConfigNilaiAkhir::where('id_prodi', $data['mahasiswa']->id_prodi)->where('status', 1)->first();
+        if (!$config) return abort(403);
+        
         $data['mahasiswa']->durasimagang = json_decode($data['mahasiswa']->durasimagang, true);
 
         $data['penilaian'] = NilaiPembAkademik::where('id_mhsmagang', $data['mahasiswa']->id_mhsmagang)->get();
@@ -158,8 +160,7 @@ class KelolaMahasiswaPemAkademikController extends LogbookController
             $data['urlInputNilai'] = route('kelola_mhs_pemb_akademik.view_input_nilai', ['id' => $id]);
         }
 
-        $nilaiMutu = NilaiMutu::where('status', 1)->get();
-        $config = ConfigNilaiAkhir::where('id_prodi', $data['mahasiswa']->id_prodi)->where('status', 1)->first();
+        $nilaiMutu = $data['nilai_mutu'];
 
         $nilaiLapangan = $nilaiLapangan->sum('nilai');
         $nilaiAkademik = $data['penilaian']->sum('nilai');

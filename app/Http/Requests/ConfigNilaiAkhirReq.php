@@ -32,6 +32,25 @@ class ConfigNilaiAkhirReq extends FormRequest
             }]
         ];
 
+        if ($this->id) {
+            $validate['id_prodi'] = ['required', 'exists:program_studi,id_prodi', 'unique:config_nilai_akhir,id_prodi,' . $this->id . ',id_config_nilai_akhir'];
+        }
+
         return $validate;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'id_prodi.unique' => 'Program studi sudah ada.',
+            'id_prodi.exists' => 'Program studi tidak ditemukan.',
+            'id_prodi.required' => 'Program studi harus diisi.',
+            'nilai_pemb_lap.required' => 'Nilai pembimbing lapangan harus diisi.',
+            'nilai_pemb_lap.min' => 'Nilai pembimbing lapangan minimal 1.',
+            'nilai_pemb_lap.max' => 'Nilai pembimbing lapangan tidak boleh melebihi 100.',
+            'nilai_pemb_akademik.required' => 'Nilai pembimbing akademik harus diisi.',
+            'nilai_pemb_akademik.min' => 'Nilai pembimbing akademik minimal 1.',
+            'nilai_pemb_akademik.max' => 'Nilai pembimbing akademik tidak boleh melebihi 100.',
+        ];
     }
 }
