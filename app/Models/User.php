@@ -28,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'remember_token',
+        'foto',
+
     ];
 
     /**
@@ -56,7 +58,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function pegawai_industri(){
         return $this->hasOne(PegawaiIndustri::class, 'id_user', 'id');
     }
-
     public function dosen()
     {
         return $this->hasOne(Dosen::class, 'id_user', 'id');

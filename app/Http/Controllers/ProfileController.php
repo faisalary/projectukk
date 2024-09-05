@@ -48,7 +48,6 @@ class ProfileController extends Controller
         } else if(auth()->user()->hasRole('Mitra')) {
             $pegawai = PegawaiIndustri::select('namapeg','nohppeg','emailpeg','jabatan')
             ->where('id_user', auth()->user()->id)->first();
-            //dd($pegawai);
             return view('profile.detail-profile-dosen&mitra.index',compact('pegawai'));
         } else if(auth()->user()->hasRole('LKM')){
             return view('profile.detail-profile-dosen&mitra.index');
@@ -57,5 +56,9 @@ class ProfileController extends Controller
 
     public function ubah_password(){
         return view('profile.detail-profile-dosen&mitra.ubah-password');
+    }
+
+    public function ganti(){
+        return view('profile.detail-profile-dosen&mitra.ganti');
     }
 }

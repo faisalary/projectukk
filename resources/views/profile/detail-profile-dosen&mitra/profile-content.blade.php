@@ -11,10 +11,15 @@
             <h4 class="border-bottom mx-3 font-light text-secondary py-3">Foto Profile</h4>
         </div>
         <div class="d-flex align-items-center mx-4 my-5">
-            <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="Profile Image" class="profile-pic rounded-circle" id="initialImage">
-            <input type="file" id="imageInput" accept="image/*" style="display: none;">
-            <button id="uploadButton" class="mx-4 btn btn-success">Ganti</button>
-            <button id="deleteButton"  class="btn btn-danger">Hapus</button>
+            {{-- <img src="{{ url('storage/foto/'.$user->foto) ? isset($user->foto) : asset('app-assets/img/avatars/user.png') }}" alt="Profile Image" class="profile-pic rounded-circle" id="foto"> --}}
+            <img src="{{ isset($user->foto) ?  url('storage/foto/'.$user->foto) : asset('app-assets/img/avatars/user.png') }}" width="15%" alt="Profile Image" class="profile-pic rounded-circle" id="foto" style= "width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+            <input type="file" id="foto" accept="image/*" style="display: none;">
+            <button id="uploadButton" class="mx-4 btn btn-success" data-bs-toggle="modal" data-bs-target="#ganti">Ganti</button>
+            @include('profile.detail-profile-dosen&mitra.ganti')
+            <form action="{{route ('hapus')}}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus foto ini?');">
+                @csrf
+            <button type="submit" id="deleteButton"  class="btn btn-danger">Hapus</button>
+        </form>
         </div>
     </div>
     <div id="about" class="border rounded mx-3 mb-5">
@@ -81,8 +86,8 @@
                         <h6>{{$pegawai->namapeg}}</h6>
                     </div>
                     <div>
-                        <h5>Email</h5>
-                        <h6>{{$pegawai->emailpeg}}</h6>
+                        <h5>Jabatan</h5>
+                        <h6>{{$pegawai->jabatan}}</h6>
                     </div>
                 </section>
                 <section id="about_col_2" style="gap: 1rem; display: flex; flex-direction: column;">
@@ -91,8 +96,8 @@
                         <h6>{{$pegawai->nohppeg}}</h6>
                     </div>
                     <div>
-                        <h5>Jabatan</h5>
-                        <h6>{{$pegawai->jabatan}}</h6>
+                        <h5>Email</h5>
+                        <h6>{{$pegawai->emailpeg}}</h6>
                     </div>
                 </section>
             </div>
@@ -101,11 +106,11 @@
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>
                         <h5>Email</h5>
-                        <h6>lkm@gmail.com</h6>
+                        <h6>{{$user->email}}</h6>
                     </div>
                     <div>
                         <h5>Username</h5>
-                        <h6>LKM Fakultas</h6>
+                        <h6>{{$user->username}}</h6>
                     </div>
                 </section>
             </div>

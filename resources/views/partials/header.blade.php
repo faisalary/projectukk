@@ -227,7 +227,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                                <img src="{{ url(Auth::user()->profile_image_url ?? 'assets/images/super-admin.png') }}" alt class="h-auto rounded-circle" />
+                                <img src="{{ isset($user->foto) ?  url('storage/foto/'.$user->foto) : asset('assets/images/super-admin.png') }}" alt class="h-auto rounded-circle" />
                             </div>
                         </div>
                         <div class="flex-grow-1">

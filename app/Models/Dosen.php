@@ -32,4 +32,7 @@ class Dosen extends Model
     public function mahasiswaBimbingan() {
         return $this->hasMany(MhsMagang::class, 'nip', 'nip');
     }
+    public function ganti() {
+        return $this->hasMany(Ganti::class, 'foto', 'foto');
+    }
 }
