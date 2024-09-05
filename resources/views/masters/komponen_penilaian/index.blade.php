@@ -97,7 +97,7 @@
                 type: 'GET',
                 destroy: true,
                 rowGroup: {
-                    dataSrc: 'jenis_magang'
+                    dataSrc: 'namajenis'
                 },
                 columns: [
                     {
