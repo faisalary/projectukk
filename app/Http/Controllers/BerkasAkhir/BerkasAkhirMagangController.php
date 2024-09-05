@@ -13,6 +13,8 @@ use App\Enums\BerkasAkhirMagangStatus;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Models\BerkasAkhirMagang;
+use App\Models\MhsMagang;
+use App\Models\NilaiMutu;
 
 class BerkasAkhirMagangController extends Controller
 {
@@ -22,8 +24,19 @@ class BerkasAkhirMagangController extends Controller
         $this->middleware('permission:berkas_magang_mandiri.view', ['only' => ['viewMagangMandiri']]);
     }
 
-    public function viewMagangFakultas()
+    public function viewMagangFakultas(Request $request)
     {
+        if ($request->ajax()) { 
+            if ($request->section == 'get_data_nilai') {
+                $data = MhsMagang::select('nilai_akhir_magang', 'nilai_adjust', 'alasan_adjust')->where('id_mhsmagang', $request->data_id)->first();
+                if (!$data) return Response::error(null, 'Not Found', 404);
+            } else {
+                return Response::error(null, 'Invalid');
+            }
+
+            return Response::success($data, 'Success');
+        }
+
         $data['default_detail_mhs'] = view('berkas_akhir_magang/magang_fakultas/components/card_detail_mhs')->render();
         return view('berkas_akhir_magang.magang_fakultas.index', $data);
     }
@@ -113,19 +126,32 @@ class BerkasAkhirMagangController extends Controller
                 $result .= '</td>';
 
                 $result .= '<td style="padding: 0.5rem;">:</td>';
-                $result .= '<td>'.Carbon::parse($value->tgl_upload)->format('d/m/Y H:i').'</td>';
+                $status = '<span class="badge bg-label-success">Tepat Waktu Diserahkan</span>';
+                if ($value->tgl_upload > $value->due_date) {
+                    $status = '<span class="badge bg-label-danger">Terlambat Diserahkan</span>';
+                }
+
+                $result .= '<td>'.$status.'</td>';
                 $result .= '</tr>';
             }
             $result .= '</tbody></table>';
 
             return $result;
         })
-        ->addColumn('nilai_akhir', fn ($x) => '80')
-        ->addColumn('indeks', fn ($x) => 'A')
-        ->addColumn('alasan_pengurangan_nilai', fn ($x) => '-')
+        ->addColumn('nilai_akhir', function ($x) {
+            $result = $x->nilai_akhir_magang ?? '-';
+            if (isset($x->nilai_adjust)) $result = $x->nilai_adjust;
+            return $result;
+        })
+        ->addColumn('indeks', function ($x) {
+            $result = $x->indeks_nilai_akhir ?? '-';
+            if (isset($x->indeks_nilai_adjust)) $result = $x->indeks_nilai_adjust;
+            return $result;
+        })
+        ->addColumn('alasan_pengurangan_nilai', fn ($x) => $x->alasan_adjust)
         ->addColumn('aksi', function ($x) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= '<a href="#" class="cursor-pointer text-warning"><i class="ti ti-clipboard-list"></i></a>';
+            $result .= '<a href="javascript: void(0)" onclick="adjustmentNilai($(this))" data-id="'.$x->id_mhsmagang.'" class="cursor-pointer text-warning"><i class="ti ti-clipboard-list"></i></a>';
             $result .= '</div>';
 
             return $result;
@@ -187,6 +213,39 @@ class BerkasAkhirMagangController extends Controller
             return Response::success([
                 'view' => view('berkas_akhir_magang/magang_fakultas/components/right_card_detail', compact('berkas'))->render()
             ], 'Berhasil menyimpan data!');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
+    }
+
+    public function adjustmentNilai(Request $request, $id) 
+    {
+        $request->validate([
+            'nilai_adjust' => 'required|numeric|min:0|max:100',
+            'alasan_adjust' => 'required',
+        ], [
+            'nilai_adjust.required' => 'Nilai Adjustment harus diisi.',
+            'nilai_adjust.numeric' => 'Nilai Adjustment harus berupa angka.',
+            'nilai_adjust.min' => 'Nilai Adjustment harus >= 0.',
+            'nilai_adjust.max' => 'Nilai Adjustment harus <= 100.',
+            'alasan_adjust.required' => 'Alasan harus diisi.',
+        ]);
+
+        try {
+            $mhsMagang = MhsMagang::where('id_mhsmagang', $id)->first();
+            if (!$mhsMagang) return Response::error(null, 'Mahasiswa Not Found.');
+
+            $mhsMagang->nilai_adjust = $request->nilai_adjust;
+            $mhsMagang->alasan_adjust = $request->alasan_adjust;
+
+            $nilaiMutu = NilaiMutu::where('nilaimin', '<=', $mhsMagang->nilai_adjust)
+            ->where('nilaimax', '>=', $mhsMagang->nilai_adjust)
+            ->first();
+
+            $mhsMagang->indeks_nilai_adjust = $nilaiMutu->nilaimutu;
+            $mhsMagang->save();
+
+            return Response::success(null, 'Berhasil menyimpan data!');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }

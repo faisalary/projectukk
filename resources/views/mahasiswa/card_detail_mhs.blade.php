@@ -19,13 +19,13 @@
                   <i class="ti ti-download me-sm-1"></i> 
                   <span class="d-none d-sm-inline-block">Unduh CV</span>
                 </button>
-          </div>
+            </div>
         </div>
          {{-- Informasi Lamaran --}}
          <div class="row row-cols-1 row-cols-md-2 col-lg-5 col-md-8 col-sm-10 mt-2 mb-4 g-4">
             <div class="col">
               <h5 class="fs-5 mb-2">Lokasi Magang</h5>
-              <h5 class="fs-5 fw-normal mb-1">{{ implode(', ', json_decode($data->lokasi)) }}</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ (isset($data->lokasi)) ? implode(', ', json_decode($data->lokasi)) : '-' }}</h5>
             </div>
             <div class="col">
               <h5 class="fs-5 mb-2">Posisi Magang</h5>
@@ -37,7 +37,7 @@
             </div>
             <div class="col">
               <h5 class="fs-5 mb-2">Durasi Magang</h5>
-              <h5 class="fs-5 fw-normal mb-1">{{ implode(', ', json_decode($data->durasimagang)) }}</h5>
+              <h5 class="fs-5 fw-normal mb-1">{{ isset($data->durasimagang) ? implode(', ', json_decode($data->durasimagang)) : '-' }}</h5>
             </div>                    
         </div>  
         <div class="border-bottom">
@@ -168,9 +168,13 @@
         <div class="border-bottom mt-3">
             <h4 class="mb-3">Keahlian</h4>
             <div class="d-flex justify-content-start mb-3">
+                @if (isset($data->skills))
                 @foreach (json_decode($data->skills, true) as $item)
                     <span class="badge rounded-pill mx-1 bg-primary">{{ $item }}</span>
                 @endforeach
+                @else
+                Kosong
+                @endif
             </div>
         </div>
         <div class="my-3">
@@ -187,7 +191,7 @@
                         }
                     @endphp
                     <img src="{{ $item->link_file }}" width="150" height="auto" alt="">
-                    <a href="#" class="text-decoration-underline">{{ $item->namadocument }}</a>
+                    <a href="{{ url('storage/' . $item->file) }}" class="text-decoration-underline" target="_blank">{{ $item->namadocument }}</a>
                 </div>
             </div>
             @endforeach
@@ -230,7 +234,7 @@
                 <div class="col mt-1">
                     <div class="d-flex justify-content-start align-items-center">
                         <h5 class="mb-0">Lokasi kerja yang diharapkan&ensp;:</h5>&ensp;
-                        <span>{{ $data->lokasi_yg_diharapkan }}</span>
+                        <span>{{ $data->lokasi_yg_diharapkan ?? '-' }}</span>
                     </div>
                 </div>
             </div>

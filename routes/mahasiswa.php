@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NilaiMagangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
@@ -31,6 +32,7 @@ Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(Be
         Route::get('detail-mhs/{id}', 'getDataMhs')->name('.detail_mhs');
         Route::get('detail-file/{id}', 'detailFile')->name('.detail_file');
         Route::post('approval-file/{id}', 'approvalBerkas')->name('.approval_file');
+        Route::post('adjustment-nilai/{id}', 'adjustmentNilai')->name('.adjustment_nilai');
     });
     Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
         Route::get('/', 'viewMagangMandiri');
@@ -120,14 +122,18 @@ Route::prefix('kegiatan-saya')->group(function () {
         Route::get('/', 'viewBerkasMahasiswa');
         Route::post('store/{id}', 'storeBerkasMahasiswa')->name('.store');
     });
+
+    Route::prefix('nilai-magang')->name('nilai_magang')->controller(NilaiMagangController::class)->group(function (){
+        Route::get('/','index');
+    });
 });
 
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki
-Route::middleware('role:Mahasiswa')->group(function () {
+// Route::middleware('role:Mahasiswa')->group(function () {
 
-    Route::get('/logbook-detail', function () {
-        return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
-    });
+//     Route::get('/logbook-detail', function () {
+//         return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
+//     });
 
     // Route::prefix('/kegiatan-saya')->group(function () {
     //     // Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
@@ -145,10 +151,6 @@ Route::middleware('role:Mahasiswa')->group(function () {
     //     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
     // });
 
-    // Route::get('/nilai/magang', function () {
-    //     return view('kegiatan_saya.nilai_magang.nilai');
-    // });
-
     // Route::get('/berkas/akhir', function () {
     //     return view('kegiatan_saya.berkas_akhir.index');
     // });
@@ -156,4 +158,4 @@ Route::middleware('role:Mahasiswa')->group(function () {
     // Route::get('/lowongan-pekerjaan-tersimpan', function () {
     //     return view('program_magang.lowongan_pekerjaan_tersimpan');
     // });
-});
+// });
