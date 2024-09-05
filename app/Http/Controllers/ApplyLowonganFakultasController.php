@@ -130,7 +130,7 @@ class ApplyLowonganFakultasController extends Controller
             $daftarDua = false;
         }
 
-        $magang = PendaftaranMagang::where('id_lowongan', $id)->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
+        $magang = $registered->where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->first();
 
         $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
