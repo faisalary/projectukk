@@ -40,22 +40,14 @@ class RejectionNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.rejected',
+            markdown: 'email.rejected',
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 
     public function build()
     {
-        return $this->view('email.rejected');         
+        return $this
+            ->subject('Rejection Notification')
+            ->markdown('email.rejected');         
     }
 }

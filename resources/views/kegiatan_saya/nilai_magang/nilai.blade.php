@@ -1,33 +1,9 @@
-@extends('partials_mahasiswa.template')
+@extends('partials.horizontal_menu')
 
 @section('page_style')
-<link rel="stylesheet" href="../../app-assets/vendor/libs/sweetalert2/sweetalert2.css" />
-<style>
-    .nav~.tab-content {
-        background: none !important;
-    }
-
-    .nav-pills .nav-link.active,
-    .nav-pills .nav-link.active:hover,
-    .nav-pills .nav-link.active:focus {
-        background-color: #4EA971 !important;
-        color: #fff;
-    }
-
-    .nav-pills .nav-link:not(.active):hover,
-    .nav-pills .nav-link:not(.active):focus {
-        color: #4EA971 !important;
-    }
-
-    .btn-success {
-        color: #fff;
-        background-color: #4EA971 !important;
-        border-color: #4EA971 !important;
-    }
-</style>
 @endsection
 
-@section('main')
+@section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="col-md-12 col-12 mt-3">
         <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Nilai Magang</h4>
@@ -67,10 +43,20 @@
                                         <th>Nilai</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach ($nilai_pemb_lapangan as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->aspek_penilaian }}</td>
+                                        <td>{{ $item->deskripsi_penilaian }}</td>
+                                        <td>{{ $item->nilai }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th class="text-center" colspan="3">Total Nilai</th>
-                                        <th>50</th>
+                                        <th>{{ $nilai_pemb_lapangan->sum('nilai') }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -93,10 +79,20 @@
                                         <th>Nilai</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach ($nilai_pemb_akademik as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->aspek_penilaian }}</td>
+                                        <td>{{ $item->deskripsi_penilaian }}</td>
+                                        <td>{{ $item->nilai }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-center" colspan="3">Nilai Akhir</th>
-                                        <th>50</th>
+                                        <th class="text-center" colspan="3">Total Nilai</th>
+                                        <th>{{ $nilai_pemb_akademik->sum('nilai') }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -115,36 +111,52 @@
                                         <th>NOMOR</th>
                                         <th>JENIS PEMBIMBING</th>
                                         <th>NAMA PEMBIMBING</th>
-                                        <th>BOBOT</th>
-                                        <th>Nilai</th>
+                                        <th style="text-align: center;">BOBOT</th>
+                                        <th style="text-align: center;">Nilai</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
-                                    <!-- Terjadi jika ada pengurangan nilai olek admin lkm -->
-                                    <!-- <tr>
-                                        <th class="text-center" colspan="4">PENGURANGAN NILAI OLEH ADMIN LKM</th>
-                                        <th>10</th>
-                                    </tr> -->
                                     <tr>
-                                        <th class="text-center" colspan="4">Nilai Akhir</th>
-                                        <th>50</th>
+                                        <td class="text-center">1</td>
+                                        <td>Pembimbing Lapangan</td>
+                                        <td>{{ $dos_pemb_lapangan }}</td>
+                                        <td style="text-align: center;">{{ isset($config_nilai_akhir) ? ($config_nilai_akhir->nilai_pemb_lap . '%') : 'Not Yet Set' }}</td>
+                                        <td style="text-align: center;">{{ (isset($config_nilai_akhir)) ? ($nilai_pemb_lapangan->sum('nilai') * ($config_nilai_akhir->nilai_pemb_lap / 100)) : 'Not Yet Set' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="text-center" colspan="4">Indeks Nilai Akhir</th>
-                                        <th>A</th>
+                                        <td class="text-center">2</td>
+                                        <td>Pembimbing Akademik</td>
+                                        <td>{{ $dos_pemb_akademik }}</td>
+                                        <td style="text-align: center;">{{ isset($config_nilai_akhir) ? ($config_nilai_akhir->nilai_pemb_akademik . '%') : 'Not Yet Set' }}</td>
+                                        <td style="text-align: center;">{{ (isset($config_nilai_akhir)) ?  ($nilai_pemb_akademik->sum('nilai') * ($config_nilai_akhir->nilai_pemb_akademik / 100)) : 'Not Yet Set' }}</td>
+                                    </tr>
+                                    @if (isset($mhs_magang->nilai_adjust))
+                                    <tr>
+                                        <td class="text-center fw-bolder" colspan="4">PENGURANGAN NILAI OLEH ADMIN LKM</td>
+                                        <td class="text-center fw-bolder">{{ $mhs_magang->nilai_adjust }}</td>
+                                    </tr>
+                                    @endif
+                                    <tr>
+                                        <td class="text-center fw-bolder" colspan="4">Nilai Akhir</td>
+                                        <td class="text-center fw-bolder">{{ $mhs_magang->nilai_akhir_magang }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center fw-bolder" colspan="4">Indeks Nilai Akhir</td>
+                                        <td class="text-center fw-bolder">{{ $mhs_magang->indeks_nilai_akhir }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>
-                <!-- Terjadi jika ada pengurangan nilai olek admin lkm -->
-                <!-- <div class="card mt-3">
+                @if (isset($mhs_magang->alasan_adjust))
+                <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="text-danger">Komentar Pengurangan Nilai : </h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis lacinia erat in auctor. In venenatis nisl vel nisl laoreet, in feugiat nibh tincidunt. Donec fermentum interdum nunc, ac viverra tellus molestie in. Suspendisse blandit maximus mauris, vitae pharetra risus gravida eu. </p>
+                        <p>{{ $mhs_magang->alasan_adjust }}</p>
                     </div>
-                </div> -->
+                </div>    
+                @endif
             </div>
         </div>
     </div>
@@ -152,120 +164,4 @@
 @endsection
 
 @section('page_script')
-<script>
-    var jsonData = [{
-            "nomor": "1",
-            "aspek_penilain": "Komunikasi, Adaptasi, Kerjasama",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai": "70"
-        },
-        {
-            "nomor": "2",
-            "aspek_penilain": "Disiplin dan Tanggung Jawab dalam pengerjaan tugas",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai": "30"
-        },
-        {
-            "nomor": "3",
-            "aspek_penilain": "Kemampuan/Skill Mahasiswa Sesuai (memenuhi) posisi magang",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai": "30"
-        },
-    ];
-    var table = $('#table-pembimbing-lapangan').DataTable({
-        "data": jsonData,
-        "paging": false,
-        "ordering": false,
-        "info": false,
-        "searching": false,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "aspek_penilain"
-            },
-            {
-                data: "deskripsi_aspek_penilain"
-            },
-            {
-                data: "nilai"
-            }
-        ],
-    });
-
-    var jsonData = [{
-            "nomor": "1",
-            "aspek_penilain": "Buku Laporan Akhir <li>Penulisan dan Tata Bahasa</li><li>Latar Belakang dan Tujuan</li><li>Uraian Mengenai Permasalahan dan Solusinya</li> ",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai": "70"
-        },
-        {
-            "nomor": "2",
-            "aspek_penilain": "Presentasi dan Tanya Jawab <li>Mahasiswa Mempresentasikan Ruang Lingkup Pekerjaan selama Magang</li> <li>Dosen memberi nilai terkait tingkat kesulitan dan ruang lingkup magang untuk dijadikan dasar penilaian</li>",
-            "deskripsi_aspek_penilain": "Evaluasi kemampuan magang dalam menyampaikan ide, bertanya, dan menjelaskan secara jelas dan efektif.",
-            "nilai": "30"
-        },
-    ];
-    var table = $('#table-pembimbing-akademik').DataTable({
-        "data": jsonData,
-        "paging": false,
-        "ordering": false,
-        "info": false,
-        "searching": false,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "aspek_penilain"
-            },
-            {
-                data: "deskripsi_aspek_penilain"
-            },
-            {
-                data: "nilai"
-            }
-        ],
-    });
-
-    var jsonData = [{
-            "nomor": "1",
-            "jenis_pembimbing": "Pembimbing Lapangan ",
-            "nama_pembimbing": "Elly Suanggi, S.Kom., M.Kom.",
-            "bobot": "60%",
-            "nilai": "80"
-        },
-        {
-            "nomor": "2",
-            "jenis_pembimbing": "Pembimbing Akademik",
-            "nama_pembimbing": "Dr. Evi Kumahasia, S.Kom., M.Kom.",
-            "bobot": "40%",
-            "nilai": "30"
-        },
-    ];
-    var table = $('#table-nilai-akhir').DataTable({
-        "data": jsonData,
-        "paging": false,
-        "ordering": false,
-        "info": false,
-        "searching": false,
-        columns: [{
-                data: "nomor"
-            },
-            {
-                data: "jenis_pembimbing"
-            },
-            {
-                data: "nama_pembimbing"
-            },
-            {
-                data: "bobot"
-            },
-            {
-                data: "nilai"
-            }
-        ],
-    });
-</script>
-<script src="../../app-assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="../../app-assets/js/extended-ui-sweetalert2.js"></script>
 @endsection

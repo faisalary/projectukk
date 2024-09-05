@@ -29,6 +29,10 @@ Route::controller(HomeController::class)->name('dashboard')->group(function () {
     Route::get('detail-lowongan/{id}', 'detailLowongan')->name('.detail-lowongan');
 });
 
+Route::get('/forgot-pass', function () {
+    return view('errors.forgot-password');
+})->name('forgot-pass');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth'])->name('dashboard.user');
 //admin
 // Route::get('/dashboard-admin/{id}', [App\Http\Controllers\DashboardMitraController::class, 'index'])->middleware(['auth'])->name('dashboard.admin');

@@ -122,10 +122,24 @@ class KelolaMitraController extends Controller
 
                 return $btn;
             })
-            ->editColumn('penanggung_jawab', function ($data) {
-                return $data->penanggungJawab->namapeg ?? '-';
+            ->editColumn('namaindustri', function ($data) {
+                $x = '<div class="d-flex flex-column align-items-start">';
+                $x .= '<span class="fw-bolder">' . $data->namaindustri . '</span>';
+                $x .= '<small>' . $data->email . '</small>';
+                $x .= '<small>' . $data->notelpon . '</small>';
+                $x .= '</div>';
+                return $x;
             })
-            ->rawColumns(['aksi', 'penanggung_jawab'])
+            ->editColumn('penanggung_jawab', function ($data) {
+                $data = $data->penanggungJawab;
+                $x = '<div class="d-flex flex-column align-items-start">';
+                $x .= '<span class="fw-bolder">' . $data->namapeg . '</span>';
+                $x .= '<small>' . $data->emailpeg . '</small>';
+                $x .= '<small>' . $data->nohppeg . '</small>';
+                $x .= '</div>';
+                return $x;
+            })
+            ->rawColumns(['aksi', 'namaindustri', 'penanggung_jawab'])
             ->make(true);
     }
 
@@ -177,12 +191,21 @@ class KelolaMitraController extends Controller
     }
     public function rejected($id, Request $request)
     {
-        $data=Industri::find($id);
-        $data->statusapprove='2';
-        $data->save();
-        $alasan = $request->input('alasan');
-        Mail::to($data->email)->send(new RejectionNotification($alasan));
-        return redirect()->back();
+        $request->validate(['alasan' => 'required'], ['alasan.required' => 'Alasan wajib diisi.']);
+
+        try {
+            $data=Industri::join('pegawai_industri', 'industri.penanggung_jawab', '=', 'pegawai_industri.id_peg_industri')
+            ->where('industri.id_industri', $id)->first();
+            if (!$data) return Response::error(null, 'Industri Not Found.');
+            $data->statusapprove='2';
+            $data->save();
+            $alasan = $request->input('alasan');
+            dispatch(new SendMailJob($data->emailpeg, new RejectionNotification($alasan)));
+
+            return Response::success(null, 'Berhasil menolak.');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
+        }
     }
     
 

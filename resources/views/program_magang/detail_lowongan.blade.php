@@ -22,7 +22,7 @@
                                 @if ($lowongan->image)
                                     <img src="{{ asset('storage/' . $lowongan->image) }}" alt="user-avatar" style="max-width:170px; max-height: 140px" id="imgPreview">
                                 @else
-                                    <img src="{{ asset('app-assets/img/avatars/14.png') }}" alt="user-avatar" class="" height="125" width="125" id="imgPreview" data-default-src="{{ asset('app-assets/img/avatars/14.png') }}">
+                                    <img src="{{ asset('app-assets/img/avatars/building.png') }}" alt="user-avatar" class="" height="125" width="125" id="imgPreview" data-default-src="{{ asset('app-assets/img/avatars/building.png') }}">
                                 @endif
                                 <div class="ms-4">
                                     <h2 class="fw-bolder mb-0">{{$lowongan?->namaindustri ?? ''}}</h2>

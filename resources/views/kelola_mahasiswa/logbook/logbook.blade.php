@@ -16,7 +16,7 @@
     <div class="card-body">
         <div style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 20px; height: fit-content !important; min-width: 320px !important;">
             <div class="row">
-                <div class="col-10">
+                <div class="col-12">
                     <div class="d-flex align-items-left">
                         <div class="text-center my-4" style="overflow: hidden; width: 80px; height: 80px;">
                             @if ($mahasiswa->profile_picture)
@@ -25,45 +25,66 @@
                                 <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="100" id="image_industri" data-default-src="{{ asset('app-assets/img/avatars/user.png') }}">
                             @endif
                         </div>
-                        <span class="pt-3">
-                            <h4 class="mb-2 ms-3">{{ $mahasiswa->namamhs }}</h4>
-                            <h6 class="ms-3">{{ $mahasiswa->intern_position }}</h6>
-                        </span>
+                        <div class="row pt-3 ms-3">
+                            <h3 class="mb-4">{{ $mahasiswa->namamhs }}</h3>
+                            {{-- <div class="col-xl-8"> --}}
+                            <div class="col-8">
+                                <h5 class="mb-3">Informasi Kegiatan</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Program Magang</h6>
+                                        <span>{{ $mahasiswa->namajenis ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Durasi Magang</h6>
+                                        <span>{{ $mahasiswa->durasimagang ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="mb-1">Periode Kegiatan</h6>
+                                        <span>{{ $periode_magang ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <h5 class="mb-3">Informasi Tambahan</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="mb-1">Lokasi Magang</h6>
+                                        <span>{{ $mahasiswa->namaindustri ?? '-' }}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="mb-1">Posisi</h6>
+                                        <span>{{ $mahasiswa->intern_position ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex mt-4">
             <div class="col-4">
-                <div class="text-center" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 15px; margin-right: 10px; height: fit-content !important;">
-                    <div class="d-flex justify-content-between">
-                        <div class="col-7">
-                            <p class="fw-bold mb-0 mt-2 me-2">Silahkan Pilih Bulan</p>
+                <div class="" style="border: 1px solid #D3D6DB; border-radius: 6px; padding: 15px; margin-right: 10px; height: fit-content !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="col">
+                            <p class="fw-bold mb-0">Silahkan Pilih Bulan</p>
                         </div>
-                        <div class="col-5"> <select class="select2 form-select text-outline-success" data-placeholder="Filter Status">
-                                <option value="1">Januari</option>
-                                <option value="2">Februari</option>
-                                <option value="3">Maret</option>
-                                <option value="4">April</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Juni</option>
-                                <option value="7">Juli</option>
-                                <option value="8">Agustus</option>
-                                <option value="9">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
+                        <div class="col-4">
+                            <select class="select2 form-select" id="selected_month" onchange="getListWeek($(this))" data-placeholder="Filter Status">
+                                @foreach ($list_month as $key => $item)
+                                <option value="{{ $key }}" {{ ($key + 1) == Carbon\Carbon::now()->format('m') ? 'selected' : '' }}>{{ $item }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="border-bottom mt-3 mb-3"></div>
-                    <div id="container-left-card">
+                    <div id="container_left_card">
                         @include('kelola_mahasiswa/logbook/components/left_card_week')
                     </div>
                 </div>
-                <div id="container-rejected-reason"></div>
             </div>
-            <div class="col" id="container-detail-logbook-weekly"></div>
+            <div class="col" id="container_detail_logbook_weekly"></div>
         </div>
         @if (isset($isPembLapangan) && $isPembLapangan == true)
         @include('kelola_mahasiswa/logbook/components/modal')
@@ -75,37 +96,50 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
-        loadData();
+        getLogbook();
     });
 
-    function getLogbook(e) {
-        let dataId = e.attr('data-id');
-        $('input[name="selected_logbook"]').prop('checked', false);
-        e.find('input[name="selected_logbook"]').prop('checked', true);
+    function getLogbook(e = null) {
+        if (e != null) {
+            $('input[name="selected_logbook"]').prop('checked', false);
+            e.find('input[name="selected_logbook"]').prop('checked', true);
+        }
 
-        loadData();
+        let selected = $(`input[name="selected_logbook"]:checked`);
+        // if (!selected.val()) return;
+        
+        sectionBlock($('#container_detail_logbook_weekly'));
+        loadData({
+            section: 'get_logbook_week',
+            data_id: selected.val(),
+            week: selected.attr('data-week')
+        }).then(function (res) {
+            if (res.code >= 200) {
+                // success
+            }
+        });
+
+        sectionBlock($('#container_detail_logbook_weekly', false));
     }
 
-    function loadData() {
-        let getSelectedLogbook = $(`input[name="selected_logbook"]:checked`);
-        let detailLogbookWeekly = $('#container-detail-logbook-weekly');
+    function getListWeek(e) {
+        loadData({
+            section: 'get_list_week',
+            selected_month: e.val()
+        }).then(function (res) {
+            if (res.code >= 200) getLogbook();
+        });
+    }
 
-        if (!getSelectedLogbook.val()) return;
-
-        sectionBlock(detailLogbookWeekly);
-        $.ajax({
+    function loadData(data) {
+        return $.ajax({
             url: `{{ $url_get }}`,
-            data: {
-                section: 'get_logbook_week',
-                data_id: getSelectedLogbook.val(),
-                week: getSelectedLogbook.attr('data-week')
-            },
+            data: data,
             type: "GET",
             success: function (response) {
-                detailLogbookWeekly.html(response.data.view_content);
-                $('#container-rejected-reason').html(response.data.view_rejected_reason);
-
-                sectionBlock(detailLogbookWeekly, false);
+                $.each(response.data, function (key, value) {
+                    if (key.includes('container_')) $('#' + key).html(value);
+                });
             }
         });
     }
@@ -146,10 +180,10 @@
             $.ajax({
                 url: `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId),
                 type: "POST",
-                data: { _token: "{{ csrf_token() }}", status: 'approved', week: week },
+                data: { _token: "{{ csrf_token() }}", status: 'approved', week: week, selected_month: $('#selected_month').val()},
                 success: function (response) {
-                    $('#container-left-card').html(response.data.view_left_card);
-                    $('#container-detail-logbook-weekly').html(response.data.view_logbook);
+                    $('#container_left_card').html(response.data.view_left_card);
+                    $('#container_detail_logbook_weekly').html(response.data.view_logbook);
 
                     showSweetAlert({
                         title: 'Berhasil',
@@ -164,19 +198,26 @@
     $(document).on('click', '#btn-reject', function () {
         let dataId = $(this).attr('data-id');
         let week = $(this).attr('data-week');
+        let selected_month = $('#selected_month').val();
         let modal = $('#modalDitolak');
         let form = modal.find('form');
 
+        console.log(selected_month);
+        
+
         form.attr('action', `{{ route('kelola_magang_pemb_lapangan.approval', ['id' => ':id']) }}`.replace(':id', dataId))
+        modal.find('.modal-title').text('Anda Menolak Logbook Minggu ke-' + week + ', Silahkan Memberikan Komentar!');
         form.find('input[name="status"]').val('rejected');
         form.find('input[name="week"]').val(week);
+        form.find('input[name="selected_month"]').val(selected_month);
         modal.modal('show');
     });
 
     function afterApprovalLogbook(response) {
-        $('#container-left-card').html(response.data.view_left_card);
-        $('#container-rejected-reason').html(response.data.view_rejected_reason);
-        $('#container-detail-logbook-weekly').html(response.data.view_logbook);
+        $('#container_left_card').html(response.data.view_left_card);
+        // $('#container_rejected_reason').html(response.data.view_rejected_reason);
+        $('#container_detail_logbook_weekly').html(response.data.view_logbook);
+        $('#modalDitolak').find('.modal-title').text('');
         $('#modalDitolak').modal('hide');
     }
     @endif

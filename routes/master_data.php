@@ -8,6 +8,7 @@ use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\IndustriController;
 use App\Http\Controllers\mahasiswaController;
 use App\Http\Controllers\NilaiMutuController;
+use App\Http\Controllers\NilaiAkhirController;
 use App\Http\Controllers\JenisMagangController;
 use App\Http\Controllers\UniversitasController;
 use App\Http\Controllers\DokumenSyaratController;
@@ -56,6 +57,15 @@ Route::prefix('master')->group(function () {
         Route::post('/update/{id}', 'update')->name('nilai-mutu.update');
         Route::get('/edit/{id}', 'edit')->name('nilai-mutu.edit');
     });
+    Route::prefix('nilai-akhir')->controller(NilaiAkhirController::class)->group(function(){
+        Route::get('/','index')->name('nilai_akhir');
+        Route::get('/get-data','getData')->name('nilai_akhir.show');
+        Route::post('store','store')->name('nilai_akhir.store');
+        Route::get('edit/{id}','edit')->name('nilai_akhir.edit');
+        Route::post('update/{id}','update')->name('nilai_akhir.update');
+        Route::post('change-status/{id}','changeStatus')->name('nilai_akhir.change_status');
+        Route::delete('deletee/{id}','destroy')->name('nilai_akhir.delete');
+    });
 
     Route::prefix('mitra')->controller(IndustriController::class)->group(function () {
         Route::get('/', 'index')->name('mitra');
@@ -94,6 +104,8 @@ Route::prefix('master')->group(function () {
         Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('mahasiswa.list_prodi');
         Route::post('/import', 'import')->name('mahasiswa.import');
         Route::get('/preview', 'preview')->name('mahasiswa.preview');
+        Route::post('/store-import', 'storeImport')->name('mahasiswa.store_import');
+        Route::post('/download_failed_data' , 'download_failed_data')->name('mahasiswa.download_failed_data');
     });
     Route::prefix('dosen')->controller(DosenController::class)->group(function () {
         Route::get('/', 'index')->name('dosen');
@@ -103,6 +115,9 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('dosen.edit');
         Route::post('/status/{id}', 'status')->name('dosen.status');
         Route::post('/import', 'import')->name('dosen.import');
+        Route::get('/preview', 'preview')->name('dosen.preview');
+        Route::post('/store-import', 'storeImport')->name('dosen.store_import');
+        Route::post('/download_failed_data' , 'download_failed_data')->name('dosen.download_failed_data');
     });
     Route::prefix('komponen-penilaian')->controller(KomponenPenilaianController::class)->group(function () {
         Route::get('/', 'index')->name('komponen-penilaian');

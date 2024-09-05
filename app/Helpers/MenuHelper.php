@@ -27,7 +27,7 @@ class MenuHelper
 
     private static function specialCase($data) {
         $user = auth()->user();
-        if ($user->hasRole('Dosen') && !$user->can('permission:data_mahasiswa_magang_kaprodi.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
+        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && !$user->can('permission:data_mahasiswa_magang_kaprodi.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
             $data = array_filter($data, function($item) {
                 return (isset($item['name']) && $item['name'] != 'Pembimbing Akademik') && (isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view');
             });
@@ -273,6 +273,11 @@ class MenuHelper
                         'permission' => 'nilai_mutu.view'
                     ],
                     [
+                        'name'=> 'Nilai Akhir',
+                        'route'=>'nilai_akhir',
+                        'permission'=> 'nilai_akhir.view'
+                    ],
+                    [
                         'name' => 'Komponen Penilaian',
                         'route' => 'komponen-penilaian',
                         'permission' => 'komponen_penilaian.view'
@@ -335,16 +340,16 @@ class MenuHelper
                 'permission' => 'jadwal_seleksi_mitra.view'
             ],
             [
-                'name' => 'Profile Perusahaan',
-                'route' => 'profile_company',
-                'icon' => 'ti-building',
-                'permission' => 'profile_perusahaan.view'
-            ],
-            [
                 'name' => 'Assign Pembimbing',
                 'route' => 'assign_pembimbing',
                 'icon' => 'ti-clipboard-list',
                 'permission' => 'assign_pembimbing.view'
+            ],
+            [
+                'name' => 'Template Email',
+                'route' => 'template_email',
+                'icon' => 'ti-mail',
+                'permission' => 'template_email.view'
             ],
             //pemb lapangan
             [
@@ -357,6 +362,30 @@ class MenuHelper
                 'route' => 'kelola_magang_pemb_lapangan',
                 'icon' => 'ti-users',
                 'permission' => 'kelola_magang_pemb_lapangan.view'
+            ],
+            [
+                'name' => 'Profile Perusahaan',
+                'route' => 'profile_company',
+                'icon' => 'ti-building',
+                'permission' => 'profile_perusahaan.view'
+            ],
+            //kaprodi
+            [
+                'type' => 'menu-header',
+                'name' => 'Kaprodi',
+                'role' => 'Kaprodi'
+            ],
+            [
+                'name' => 'Approval Mahasiswa Kaprodi',
+                'route' => 'approval_mahasiswa_kaprodi',
+                'icon' => 'ti-briefcase',
+                'permission' => 'approval_mhs_kaprodi.view'
+            ],
+            [
+                'name' => 'Data Mahasiswa Magang',
+                'route' => 'mahasiswa_magang_kaprodi',
+                'icon' => 'ti-file-analytics',
+                'permission' => 'data_mahasiswa_magang_kaprodi.view'
             ],
             //dosen
             [
@@ -379,32 +408,14 @@ class MenuHelper
             [
                 'type' => 'menu-header',
                 'name' => 'Pembimbing Akademik',
-                'role' => 'Dosen'
+                'role' => ['Kaprodi', 'Dosen']
             ],
             [
                 'name' => 'Kelola Mahasiswa',
                 'route' => 'kelola_mhs_pemb_akademik',
                 'icon' => 'ti-users',
                 'permission' => 'kelola_mhs_pemb_akademik.view'
-            ],
-            //kaprodi
-            [
-                'type' => 'menu-header',
-                'name' => 'Kaprodi',
-                'role' => 'Kaprodi'
-            ],
-            [
-                'name' => 'Approval Mahasiswa Kaprodi',
-                'route' => 'approval_mahasiswa_kaprodi',
-                'icon' => 'ti-briefcase',
-                'permission' => 'approval_mhs_kaprodi.view'
-            ],
-            [
-                'name' => 'Data Mahasiswa Magang',
-                'route' => 'mahasiswa_magang_kaprodi',
-                'icon' => 'ti-file-analytics',
-                'permission' => 'data_mahasiswa_magang_kaprodi.view'
-            ],
+            ]
         ];
     }
 }

@@ -43,6 +43,13 @@
                     <span>{{ $mahasiswa->prodi->namaprodi }}</span>
                 </li>
                 <li class="mb-2 pt-1">
+                    <span class="fw-semibold me-1">Dosen Wali:</span>
+                    @php
+                        $dosen = $mahasiswa->dosen_wali;
+                    @endphp
+                    <span>{{ $dosen->kode_dosen }} | {{ $dosen->namadosen }}</span>
+                </li>
+                <li class="mb-2 pt-1">
                     <span class="fw-semibold me-1">Angkatan:</span>
                     <span>{{ $mahasiswa->angkatan }}</span>
                 </li>

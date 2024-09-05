@@ -13,6 +13,7 @@ Route::prefix('approval-mahasiswa')->name('approval_mahasiswa')->controller(Appr
     Route::get('get-data', 'getData')->name('.get_data')->middleware('permission:approval_mhs_doswal.view');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::post('approval/{id}', 'approval')->name('.approval');
+    Route::post('approvals', 'approvals')->name('.approvals');
 });
 Route::prefix('data-mahasiswa-magang-dosen')->name('mahasiswa_magang_dosen')->controller(DataMahasiswaMagangDosenController::class)->group(function () {
     Route::get('/', 'index');
@@ -25,6 +26,7 @@ Route::prefix('approval-mahasiswa-kaprodi')->name('approval_mahasiswa_kaprodi')-
     Route::get('get-data', 'getData')->name('.get_data')->middleware('permission:approval_mhs_kaprodi.view');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::post('approval/{id}', 'approval')->name('.approval');
+    Route::post('approvals', 'approvals')->name('.approvals');
 });
 
 Route::prefix('data-mahasiswa-magang-kaprodi')->name('mahasiswa_magang_kaprodi')->controller(DataMahasiswaMagangKaprodiController::class)->group(function () {
@@ -37,4 +39,7 @@ Route::prefix('kelola-mahasiswa')->name('kelola_mhs_pemb_akademik')->controller(
     Route::get('/', 'index');
     Route::get('get-data', 'getData')->name('.get_data');
     Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
+    Route::get('input-nilai/{id}', 'inputNilai')->name('.view_nilai');
+    Route::get('view-input-nilai/{id}', 'viewInputNilai')->name('.view_input_nilai');
+    Route::post('store-nilai/{id}', 'storeNilaiPembAkademik')->name('.store_nilai');
 });

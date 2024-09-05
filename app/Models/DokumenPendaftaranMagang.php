@@ -11,11 +11,6 @@ class DokumenPendaftaranMagang extends Model
     use HasUuids;
 
     protected $table = 'dokumen_pendaftaran_magang';
-    protected $fillable = [
-        'file',
-        'date_time',
-        'status',
-    ];
+    protected $guarded = [];
     protected $primaryKey = 'id_doc_pendaftaran';
-    protected $keyType = 'string';
 }

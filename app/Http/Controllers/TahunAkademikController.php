@@ -41,8 +41,8 @@ class TahunAkademikController extends Controller
                 'semester' => $request->semester,
                 'startdate_daftar' => $request->startdate_daftar,
                 'enddate_daftar' => $request->enddate_daftar,
-                'startdate_pengumpulan_berkas' => $request->startdate_pengumpulan_berkas,
-                'enddate_pengumpulan_berkas' => $request->enddate_pengumpulan_berkas,
+                // 'startdate_pengumpulan_berkas' => $request->startdate_pengumpulan_berkas,
+                // 'enddate_pengumpulan_berkas' => $request->enddate_pengumpulan_berkas,
                 'status' => true,
             ]);
 
@@ -67,11 +67,11 @@ class TahunAkademikController extends Controller
                     "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>Inactive</div></div>";
             })
             ->addColumn('pendaftaran_magang', function ($row) {
-                return Carbon::parse($row->startdate_daftar)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_daftar)->format('d M Y');
+                return (($row->startdate_daftar) ? Carbon::parse($row->startdate_daftar)->format('d M Y') : '') . '&ensp;-&ensp;' . (($row->enddate_daftar) ? Carbon::parse($row->enddate_daftar)->format('d M Y') : '');
             })
-            ->addColumn('pengumpulan_berkas', function ($row) {
-                return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
-            })
+            // ->addColumn('pengumpulan_berkas', function ($row) {
+            //     return Carbon::parse($row->startdate_pengumpulan_berkas)->format('d M Y') . '&ensp;-&ensp;' . Carbon::parse($row->enddate_pengumpulan_berkas)->format('d M Y');
+            // })
             ->addColumn('action', function ($row) {
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "success";
@@ -82,7 +82,7 @@ class TahunAkademikController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['pendaftaran_magang', 'pengumpulan_berkas', 'action', 'status'])
+            ->rawColumns(['pendaftaran_magang', 'action', 'status'])
             ->make(true);
     }
 
@@ -104,18 +104,12 @@ class TahunAkademikController extends Controller
             $tahun = TahunAkademik::where('id_year_akademik', $id)->first();
             if (!$tahun) return Response::error(null, 'Tahun Akademik not found!');
 
-            // Set all other academic years to inactive if the current one is set to active
-            if ($request->status) {
-                TahunAkademik::query()->update(['status' => false]);
-            }
-
             $tahun->tahun = $request->tahun;
             $tahun->semester = $request->semester;
             $tahun->startdate_daftar = Carbon::parse($request->startdate_daftar)->format('Y-m-d');
             $tahun->enddate_daftar = Carbon::parse($request->enddate_daftar)->format('Y-m-d');
-            $tahun->startdate_pengumpulan_berkas = Carbon::parse($request->startdate_pengumpulan_berkas)->format('Y-m-d');
-            $tahun->enddate_pengumpulan_berkas = Carbon::parse($request->enddate_pengumpulan_berkas)->format('Y-m-d');
-            $tahun->status = $request->status;
+            // $tahun->startdate_pengumpulan_berkas = Carbon::parse($request->startdate_pengumpulan_berkas)->format('Y-m-d');
+            // $tahun->enddate_pengumpulan_berkas = Carbon::parse($request->enddate_pengumpulan_berkas)->format('Y-m-d');
             $tahun->save();
 
             return Response::success(null, 'Tahun Akademik successfully Updated!');

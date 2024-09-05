@@ -1,7 +1,7 @@
 <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar"
     style="background-color: #FFF !important;">
     <div class="container-xxl">
-        <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+        <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-0">
             <a href="/" class="app-brand-link gap-2">
                 <img src="{{ url('/app-assets/img/Talentern.svg') }}">
             </a>
@@ -13,7 +13,7 @@
 
         <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0"
             style="box-shadow: none;">
-            <div class="container-xxl d-flex h-100" style="width: 62rem;">
+            <div class="container-xxl d-md-flex h-100 w-100 pe-0">
                 <ul class="menu-inner">
 
                     <!-- Lowongan Magang -->
@@ -60,12 +60,12 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/nilai/magang" class="menu-link">
+                                <a href="{{ route('nilai_magang') }}" class="menu-link">
                                     <div data-i18n="Nilai Magang">Nilai Magang</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/berkas/akhir" class="menu-link">
+                                <a href="{{ route('berkas_akhir') }}" class="menu-link">
                                     <div data-i18n="Berkas Akhir Magang">Berkas Akhir Magang</div>
                                 </a>
                             </li>
@@ -125,9 +125,7 @@
 
                     <li class="menu-item">
                         <a href="#footer" class="menu-link">
-                            <u>
-                                <div data-i18n="Kontak Kami">Kontak Kami</div>
-                            </u>
+                            <div data-i18n="Kontak Kami">Kontak Kami</div>
                         </a>
                     </li>
 
@@ -142,7 +140,8 @@
             </a>    
         </div>
 
-        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        {{-- <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse"> --}}
+            <div class="d-flex align-items-center">
             <!-- Login dan Daftar -->
             @if (!auth()->check())
                 <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -153,13 +152,13 @@
             @else
                 <ul class="navbar-nav flex-row align-items-center ms-auto">
                     <!-- Notification -->
-                    <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-1">
+                    {{-- <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-1">
                         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                             <i class="ti ti-bell ti-md"></i>
                             <span class="badge bg-danger rounded-pill badge-notifications">5</span>
                         </a>
                         @include('partials.notification')
-                    </li>
+                    </li> --}}
                     <!--/ Notification -->
                     <!-- User -->
                     <li class="nav-item navbar-dropdown dropdown-user dropdown">

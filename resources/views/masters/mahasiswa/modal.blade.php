@@ -43,7 +43,7 @@
                         <div class="col mb-2 form-group">
                             <label for="kode_dosen" class="form-label">Dosen Wali</label>
                             <select class="form-select select2" id="kode_dosen" name="kode_dosen" data-placeholder="Pilih Dosen Wali" data-select2-id="kode_dosen">
-                                <option value="" disabled selected>Pilih Prodi</option>
+                                <option value="" disabled selected>Pilih Dosen Wali</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -279,12 +279,12 @@
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>    
+                    </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <a href="{{ asset('template-excel/template-import-data-master-mahasiswa.xlsx') }}" class="btn btn-primary w-100" id="download-template">Download Template</a>
+                            <a href="{{ asset('template-excel/Template_Import_Mahasiswa.xlsx') }}" class="btn btn-primary w-100" id="download-template">Download Template</a>
                         </div>
-                    </div>                 
+                    </div>
                     <input type="file" class="form-control mt-3" id="basic-default-upload-file" required=""
                         name="import">
                 </div>

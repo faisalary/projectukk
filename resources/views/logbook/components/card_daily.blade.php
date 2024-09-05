@@ -1,5 +1,5 @@
 @foreach ($logbook_day as $item)
-@if (isset($item->id_logbook_day))
+@if (isset($item->id_logbook_day) && $item->activity != "Libur")
 <div class="px-4 mb-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
     <div class="d-flex justify-content-between mt-4">
         <div class="d-flex align-items-center">
@@ -29,6 +29,7 @@
     </div>
 </div>
 @else
+@php($libur = (isset($item->id_logbook_day) && $item->activity == "Libur"))
 <div class="ps-4 mb-4 pe-4" style="border: 1px solid #D3D6DB; border-radius: 6px; background-color:white;">
     <div class="d-flex justify-content-between mt-4">
         <div class="d-flex align-items-center">
@@ -40,10 +41,20 @@
                 <p class="fw-normal mb-0">{{ Carbon\Carbon::parse($item->date)->format('d F Y') }}</p>
             </div>
         </div>
+        @if (in_array($data->status, [App\Enums\LogbookWeeklyStatus::NOT_YET_APPLIED, App\Enums\LogbookWeeklyStatus::REJECTED]))
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" name="daysoff" data-date="{{ $item->date }}" onchange="changeLogbookType($(this));" @if($libur)checked @endif>
+            <label class="form-check-label" for="daysoff">Hari Libur</label>
+        </div>
+        @endif
     </div>
     <hr>
     <div class="text-center" style="padding: 20px; margin-bottom: 30px !important;">
-        <button type="button" class="btn btn-primary" onclick="createLogbookDay($(this));" data-date="{{ $item->date }}">Buat Laporan Harian</button>
+        @if ($libur)
+            <h5 class="text-secondary">Hari Libur</h5>
+        @else
+            <button type="button" class="btn btn-primary" onclick="createLogbookDay($(this));" data-date="{{ $item->date }}">Buat Laporan Harian</button>
+        @endif
     </div>
 </div>
 @endif

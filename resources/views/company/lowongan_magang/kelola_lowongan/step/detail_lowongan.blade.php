@@ -5,14 +5,15 @@
     <div class="row g-3">
         <div class="col-lg-12 col-sm-6 form-group">
             <label class="form-label" for="id_jenismagang">Jenis Magang<span class="text-danger">*</span></label>
-            <select name="id_jenismagang" id="id_jenismagang" class="select2 form-select" data-placeholder="Jenis Magang">
+            <select name="id_jenismagang" id="id_jenismagang" class="select2 form-select" data-placeholder="Jenis Magang" onchange="durasiMagang($(this).find(':selected').data('durasi'))">
                 <option value="" disabled selected>Jenis Magang</option>
                 @foreach ($jenismagang as $j)
-                <option value="{{ $j->id_jenismagang }}">{{ $j->namajenis }} ({{ $j->durasimagang }})</option>
+                <option value="{{ $j->id_jenismagang }}" data-durasi="{{ $j->durasimagang }}">{{ $j->namajenis }} ({{ $j->durasimagang }})</option>
                 @endforeach
             </select>
             <div class="invalid-feedback"></div>
         </div>
+        <input type="hidden" name="durasimagang[]" id="durasimagang">
         <div class="col-lg-12 col-sm-6 form-group">
             <label class="form-label" for="intern_position">Posisi<span class="text-danger">*</span></label>
             <input type="text" name="intern_position" id="intern_position" class="form-control" placeholder="Masukan Posisi Pekerjaan" />

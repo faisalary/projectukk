@@ -1,82 +1,117 @@
 <?php
+
 namespace App\Imports;
 
 use App\Models\Dosen;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
+use App\Models\Fakultas;
+use App\Models\ProgramStudi;
+use App\Models\Universitas;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\HeadingRowImport;
 
-class DosenImport implements ToModel, WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation, SkipsEmptyRows
+class DosenImport implements ToCollection, WithHeadingRow
 {
-    protected $id_univ;
-    protected $id_fakultas;
-    protected $id_prodi;
-    protected $existingNip;
+    use Importable;
+    protected Universitas $id_univ;
+    protected Fakultas $id_fakultas;
+    protected ProgramStudi $id_prodi;
+    protected string $primaryKey = "nip";
+    protected string $secondaryKey = "emaildosen";
+    protected string $thirdKey = "kode_dosen";
+    protected string $model = Dosen::class;
+    protected array $fields = [
+        'nip' => 'nip',
+        'kode_dosen' => 'kode_dosen',
+        'namadosen' => 'nama_dosen',
+        'nohpdosen' => 'no_telp',
+        'emaildosen' => 'email'
+    ];
+    protected $dataCleaning;
+    protected $newData;
+    protected $duplicatedData;
+    protected $failedData;
 
-    public function __construct($id_univ, $id_fakultas, $id_prodi) {
-        $this->id_univ = $id_univ;
-        $this->id_fakultas = $id_fakultas;
-        $this->id_prodi = $id_prodi;
-        $this->existingNip = $this->getAllExistingNip();
-    }
-
-    private function getAllExistingNip()
+    public function __construct($id_univ, $id_fakultas, $id_prodi)
     {
-        $existingNip = [];
-        Dosen::chunk(100, function ($dosens) use (&$existingNip) {
-            foreach ($dosens as $dosen) {
-                $existingNip[] = $dosen->nip;
-            }
-        });
-        return $existingNip;
+        $this->id_univ = Universitas::findOrFail($id_univ, ['id_univ', 'namauniv']);
+        $this->id_fakultas = Fakultas::findOrFail($id_fakultas, ['id_fakultas', 'namafakultas']);
+        $this->id_prodi = ProgramStudi::findOrFail($id_prodi, ['id_prodi', 'namaprodi']);
+        $this->dataCleaning = new DataCleaning(
+            $this->primaryKey,
+            $this->secondaryKey,
+                $this->thirdKey,
+            $this->model,
+            array_values($this->fields),
+            array_keys($this->fields),
+            [
+                'nip' => 'required|string|max:9',
+                'kode_dosen' => 'required|string|max:5',
+                'namadosen' => 'required|string|max:255',
+                'nohpdosen' => 'required|string|max:15',
+                'emaildosen' => 'required|string|email',
+            ],
+            [
+                '*.required' => 'Data Kosong',
+                '*.numeric' => 'Data Tidak Sesuai',
+                '*.integer' => 'Data Tidak Sesuai',
+                '*.between' => 'Data Tidak Sesuai',
+                '*.string' => 'Data Tidak Sesuai',
+                '*.email' => 'Data Tidak Sesuai',
+                'nip.max' => 'NIP maksimal 9 karakter',
+                'kode_dosen.max' => 'Kode Dosen maksimal 5 karakter',
+                'namadosen.max' => 'Nama Dosen maksimal 255 karakter',
+                'nohpdosen.max' => 'No Telp maksimal 15 karakter',
+                'emaildosen.max' => 'Email maksimal 255 karakter',
+            ]
+        );
+        $this->newData = collect();
+        $this->duplicatedData = collect();
+        $this->failedData = collect();
     }
 
-    public function model(array $row)
+    public function collection(Collection $rows)
     {
-        // Debugging: Log the row to verify data
-        // dd($row, $row['nip']);
-
-        $nip = $row['nip'];
-
-        if (in_array($nip, $this->existingNip)) {
-            return null;
-        }
-
-        $this->existingNip[] = $nip;
-
-        return new Dosen([
-            'id_univ' => $this->id_univ,
-            'id_fakultas' => $this->id_fakultas,
-            'id_prodi' => $this->id_prodi,
-            'nip' => $nip,
-            'kode_dosen' => $row['kode_dosen'],
-            'namadosen' => $row['nama_dosen'],
-            'nohpdosen' => $row['no_telp'],
-            'emaildosen' => $row['email'],
-        ]);
+        $this->dataCleaning->collection($rows);
+        $this->dataCleaning->cleanDuplicateData();
+        $this->newData = $this->dataCleaning->getNewData();
+        $this->duplicatedData = $this->dataCleaning->getDuplicatedData();
+        $this->failedData = $this->dataCleaning->getFailedData();
     }
 
-    public function batchSize(): int
+    public function getNewData()
     {
-        return 100;
+        return $this->newData;
     }
 
-    public function chunkSize(): int
+    public function getDuplicatedData()
     {
-        return 100;
+        return $this->duplicatedData;
     }
 
-    public function rules(): array
+    public function getFailedData()
+    {
+        return $this->failedData;
+    }
+
+    public function checkHeaders($filePath)
+    {
+        $data = (new HeadingRowImport())->toArray($filePath);
+        $headers = array_slice($data[0][0], 0, count($this->fields));
+        return $headers === array_values($this->fields);
+    }
+
+    public function getResults(): array
     {
         return [
-            '*.nip' => 'required|numeric|digits_between:1,18',
-            '*.kode_dosen' => 'required|string|max:5',
-            '*.nama_dosen' => 'required|string|max:255',
-            '*.no_telp' => 'required|numeric|digits_between:1,15',
-            '*.email' => 'required|string|email|max:255',
+            'newData' => $this->newData,
+            'duplicatedData' => $this->duplicatedData,
+            'failedData' => $this->failedData,
+            'univ' => $this->id_univ,
+            'fakultas' => $this->id_fakultas,
+            'prodi' => $this->id_prodi,
         ];
     }
 }

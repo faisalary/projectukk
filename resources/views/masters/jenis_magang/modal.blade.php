@@ -43,6 +43,23 @@
 @section('page_script')
 <script>
     $(document).ready(function () {
+        $(".flatpickr-date-x").each(function () {
+            let obj = {
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i',
+                enableTime: true
+            };
+
+            @if (isset($jenismagang) && count($jenismagang->berkas_magang) > 0)
+            obj.defaultDate = $(this).val();
+            obj.defaultHour = $(this).attr('data-hour');
+            obj.defaultMinute = $(this).attr('data-minute');
+            @endif
+
+            $(this).flatpickr(obj);
+        });
+
         @if (isset($jenismagang))
         loadDataEdit();
         @endif
@@ -103,6 +120,26 @@
     function afterShown(e) {
         $(e).find('.container-label').find('a').remove();
         $(e).find('input.id_berkas').remove();
+        // $(e).find('input.flatpickr-input')
+
+
+
+        console.log($(e));
+        let flatpickr = $(e).find(".flatpickr-date-x");
+        if (flatpickr.length > 0) {
+            let label = $(e).find(".form-label");
+            let random = Math.random().toString(36).substring(2, 10);
+    
+            label.attr('for', flatpickr.attr('id') + random);
+            flatpickr.attr('id', flatpickr.attr('id') + random);
+    
+            $(e).find(".flatpickr-date-x").flatpickr({
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i',
+                enableTime: true
+            });
+        }
     }
 
     @if (isset($jenismagang))

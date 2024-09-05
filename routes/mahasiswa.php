@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\NilaiMagangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
 use App\Http\Controllers\SimpanLowonganController;
 use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
-use App\Http\Controllers\BerkasAkhirMagangController;
 use App\Http\Controllers\StatusLamaranMagangController;
+use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
+use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
 use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
 
@@ -26,6 +28,11 @@ Route::prefix('data-mahasiswa-magang')->name('data_mahasiswa')->controller(DataM
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
     Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
         Route::get('/', 'viewMagangFakultas');
+        Route::get('get-data', 'getDataFakultas')->name('.get_data');
+        Route::get('detail-mhs/{id}', 'getDataMhs')->name('.detail_mhs');
+        Route::get('detail-file/{id}', 'detailFile')->name('.detail_file');
+        Route::post('approval-file/{id}', 'approvalBerkas')->name('.approval_file');
+        Route::post('adjustment-nilai/{id}', 'adjustmentNilai')->name('.adjustment_nilai');
     });
     Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
         Route::get('/', 'viewMagangMandiri');
@@ -104,19 +111,29 @@ Route::prefix('kegiatan-saya')->group(function () {
         Route::get('detail/{id}', 'detail')->name('.detail');
 
         Route::post('create-logbook', 'storeCreateLogbook')->name('.create');
+        Route::post('change-logbook-type/{id_logbook_week}', 'changeLogbookType')->name('.change_type');
         Route::post('create-logbook-daily/{id_logbook_week}', 'storeLogbookDaily')->name('.create_logbook_daily');
         Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
 
         Route::post('apply-logbook/{id_logbook_week}', 'applyLogbook')->name('.apply_logbook');
     });
+
+    Route::prefix('berkas-akhir')->name('berkas_akhir')->controller(BerkasMahasiswaController::class)->group(function () {
+        Route::get('/', 'viewBerkasMahasiswa');
+        Route::post('store/{id}', 'storeBerkasMahasiswa')->name('.store');
+    });
+
+    Route::prefix('nilai-magang')->name('nilai_magang')->controller(NilaiMagangController::class)->group(function (){
+        Route::get('/','index');
+    });
 });
 
 // baru grouping route yang berhubungan dengan mahasiswa, belum dikerjakan/diperbaiki
-Route::middleware('role:Mahasiswa')->group(function () {
+// Route::middleware('role:Mahasiswa')->group(function () {
 
-    Route::get('/logbook-detail', function () {
-        return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
-    });
+//     Route::get('/logbook-detail', function () {
+//         return view('logbook.logbook_detail', ['active_menu' => 'logbook']);
+//     });
 
     // Route::prefix('/kegiatan-saya')->group(function () {
     //     // Route::get('/lamaran-saya', [App\Http\Controllers\KonfirmasiMagangController::class, 'index'])->name('lamaran_saya.index');
@@ -134,10 +151,6 @@ Route::middleware('role:Mahasiswa')->group(function () {
     //     Route::post('/status/{id}', [App\Http\Controllers\KonfirmasiMagangController::class, 'status'])->name('lamaran_saya.status');
     // });
 
-    // Route::get('/nilai/magang', function () {
-    //     return view('kegiatan_saya.nilai_magang.nilai');
-    // });
-
     // Route::get('/berkas/akhir', function () {
     //     return view('kegiatan_saya.berkas_akhir.index');
     // });
@@ -145,4 +158,4 @@ Route::middleware('role:Mahasiswa')->group(function () {
     // Route::get('/lowongan-pekerjaan-tersimpan', function () {
     //     return view('program_magang.lowongan_pekerjaan_tersimpan');
     // });
-});
+// });

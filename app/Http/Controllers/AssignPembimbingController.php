@@ -66,10 +66,12 @@ class AssignPembimbingController extends Controller
 
             $query = $query->where('current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
 
-            $query->my_pendaftar_magang = $query->select(
+            $query = $query->select(
                 'pendaftaran_magang.*',
                 'mhs_magang.id_peg_industri',
                 'mhs_magang.id_mhsmagang',
+                'mhs_magang.startdate_magang',
+                'mhs_magang.enddate_magang',
                 'pegawai_industri.namapeg',
                 'pegawai_industri.nohppeg',
                 'pegawai_industri.id_peg_industri',
@@ -89,9 +91,9 @@ class AssignPembimbingController extends Controller
                 $result = '<div class="text-start">';
 
                 $result .= '<span class="text-muted text-nowrap">Tanggal Mulai:</span><br>';
-                $result .= '<span>' . Carbon::parse($row->startdate_magang)->format('d F Y') . '</span><br>';
+                $result .= '<span>' . (($row->startdate_magang) ? Carbon::parse($row->startdate_magang)->format('d F Y') : '-') . '</span><br>';
                 $result .= '<span class="text-muted text-nowrap">Tanggal Berakhir:</span><br>';
-                $result .= '<span>' . Carbon::parse($row->enddate_magang)->format('d F Y') . '</span>';
+                $result .= '<span>' . (($row->enddate_magang) ? Carbon::parse($row->enddate_magang)->format('d F Y') : '-') . '</span>';
 
                 $result .= '</div>';
                 return  $result;

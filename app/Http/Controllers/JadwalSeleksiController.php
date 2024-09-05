@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\DokumenPendaftaranMagang;
 
 class JadwalSeleksiController extends Controller
 {
@@ -142,18 +143,22 @@ class JadwalSeleksiController extends Controller
     }
 
     public function detailMahasiswa($id_lowongan, $id_pendaftaran) {
-        $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat')->select(
+        $data['data'] = Mahasiswa::with('education', 'experience', 'sertifikat', 'sosmedmhs', 'bahasamhs')->select(
             'mahasiswa.*', 'pendaftaran_magang.tanggaldaftar', 'industri.namaindustri', 
-            'lowongan_magang.intern_position', 'users.email', 'pendaftaran_magang.current_step',
-            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas'
+            'lowongan_magang.intern_position', 'lowongan_magang.lokasi', 'lowongan_magang.durasimagang', 'lowongan_magang.id_jenismagang', 'users.email', 'pendaftaran_magang.current_step',
+            'pendaftaran_magang.id_pendaftaran', 'universitas.namauniv', 'fakultas.namafakultas', 'pendaftaran_magang.reason_aplicant', 'jenis_magang.namajenis'
         )
-        ->join('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
-        ->join('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->leftJoin('pendaftaran_magang', 'mahasiswa.nim', '=', 'pendaftaran_magang.nim')
+        ->leftJoin('lowongan_magang', 'lowongan_magang.id_lowongan', '=', 'pendaftaran_magang.id_lowongan')
+        ->join('jenis_magang', 'jenis_magang.id_jenismagang', '=', 'lowongan_magang.id_jenismagang')        
         ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri')
         ->join('users', 'mahasiswa.id_user', '=', 'users.id')
         ->join('universitas', 'universitas.id_univ', '=', 'mahasiswa.id_univ')
         ->join('fakultas', 'fakultas.id_fakultas', '=', 'mahasiswa.id_fakultas')
         ->where('pendaftaran_magang.id_pendaftaran', $id_pendaftaran)->first();
+
+        $data['dokumen_persyaratan'] = DokumenPendaftaranMagang::join('document_syarat', 'document_syarat.id_document', '=', 'dokumen_pendaftaran_magang.id_document')
+            ->where('id_pendaftaran', $id_pendaftaran)->get();
 
         $data['urlBack'] = route('jadwal_seleksi.detail', $id_lowongan);
 

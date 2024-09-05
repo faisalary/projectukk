@@ -28,18 +28,18 @@ class UserSeeder extends Seeder
             $administrator->assignRole('Super Admin');
         }
 
-        $mitra = User::firstOrNew([
-            'email' => 'mitra@gmail.com',
-            'username' => 'Mitra'
-        ], [
-            'name' => 'Mitra',
-            'password' => bcrypt('password'),
-        ]);
+        // $mitra = User::firstOrNew([
+        //     'email' => 'mitra@gmail.com',
+        //     'username' => 'Mitra'
+        // ], [
+        //     'name' => 'Mitra',
+        //     'password' => bcrypt('password'),
+        // ]);
 
-        if (!$mitra->exists) {
-            $mitra->save();
-            $mitra->assignRole('Mitra');
-        }
+        // if (!$mitra->exists) {
+        //     $mitra->save();
+        //     $mitra->assignRole('Mitra');
+        // }
         
     }
 }

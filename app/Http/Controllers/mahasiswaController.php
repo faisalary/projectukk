@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataFailedExport;
 use Exception;
 use App\Models\User;
 use App\Models\Dosen;
@@ -145,7 +146,7 @@ class mahasiswaController extends Controller
                 return $btn;
             })
             ->rawColumns([
-                'action', 'status', 'name', 'univ_fakultas', 'tunggakan_bpp', 
+                'action', 'status', 'name', 'univ_fakultas', 'tunggakan_bpp',
                 'ipk', 'eprt', 'tak', 'angkatan', 'contact'
             ])
             ->make(true);
@@ -164,7 +165,7 @@ class mahasiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(MahasiswaRequest $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -175,7 +176,7 @@ class mahasiswaController extends Controller
                 'name' => $request->namamhs,
                 'email' => $request->emailmhs
             ]);
-            
+
             DB::commit();
             return Response::success(null, 'Mahasiswa successfully Add!');
         } catch (Exception $e) {
@@ -183,7 +184,7 @@ class mahasiswaController extends Controller
             return Response::errorCatch($e);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -201,40 +202,59 @@ class mahasiswaController extends Controller
         }
     }
 
-    public function import (Request $request){
+    public function import(Request $request)
+    {
+        $validRequest = $request->validate([
+            'import' => 'required',
+            'id_univ' => 'required',
+            'id_fakultas' => 'required',
+            'id_prodi' => 'required',
+            'kode_dosen' => 'required',
+        ], [
+            'import.required' => 'File impor wajib diunggah.',
+            'id_univ.required' => 'Universitas wajib dipilih.',
+            'id_fakultas.required' => 'Fakultas wajib dipilih.',
+            'id_prodi.required' => 'Prodi wajib dipilih.',
+            'kode_dosen.required' => 'Dosen Wali wajib dipilih.',
+        ]);
+
         $data = $request->file('import');
-        $namafile = $data-> getClientOriginalName();
-        $data->move('MhsData', $namafile);       
-
-        $import = new MhsImport(
-            $request->id_univ,
-            $request->id_fakultas,
-            $request->id_prodi,
-            $request->kode_dosen,            
-        );
-
+        $namafile = $data->getClientOriginalName();
+        $data->move('MhsData', $namafile);
+        $import = new MhsImport(...array_slice($validRequest, 1, count($validRequest) - 1));
         $filePath = public_path('/MhsData/' . $namafile);
-        $expectedHeaders = array_values($import->fields);                      
 
-        if (!$import->checkHeaders($filePath, $expectedHeaders)) {
+        if (!$import->checkHeaders($filePath)) {
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
             return response()->json([
                 'message' => 'Header tidak sesuai. Mohon untuk menggunakan template yang telah disediakan.',
                 'error' => true
             ], 400);
-        }        
-
-        try {
-            Excel::import($import, public_path('/MhsData/' . $namafile));
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            foreach ($failures as $failure) {
-                $import->onFailure($failure);
-            }
         }
-        
-        $data = $import->getResults();                     
+
+        ($import)->import($filePath);
+
+        $data = $import->getResults();
+
+        // dd($data);
+
+        if ($data['newData']->isEmpty() && $data['duplicatedData']->isEmpty() && $data['failedData']->isEmpty()) {
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            return response()->json([
+                'message' => 'File yang diimpor kosong atau tidak ada data yang valid. Mohon impor data dengan isian yang benar.',
+                'error' => true
+            ], 400);
+        }
+
         session(['import_results' => $data]);
-    
         return response()->json([
             'message' => 'Sebelum disimpan, data di preview',
             'error' => false,
@@ -245,8 +265,57 @@ class mahasiswaController extends Controller
         ], 200);
     }
 
-    public function preview (){        
-        $data = session('import_results');                  
+    public function preview()
+    {
+        $data = session('import_results');
+        if (!$data) return redirect()->route('mahasiswa');
+
         return view('masters.mahasiswa.preview', compact('data'));
+    }
+
+    public function storeImport(Request $request)
+    {
+        try {
+            $records = json_decode($request->newData, true);
+
+            if (isset($request->duplicatedData)) {
+                $duplicates = [json_decode($request->duplicatedData, true)];
+                $records = array_merge($records, $duplicates);
+            }
+
+            foreach ($records as $record) {
+                Mahasiswa::updateOrCreate(
+                    ['nim' => $record['nim']],
+                    [
+                        ...$record,
+                        'id_univ' => $request->input('univ'),
+                        'id_fakultas' => $request->input('fakultas'),
+                        'id_prodi' => $request->input('prodi'),
+                        'kode_dosen' => $request->input('dosen_wali')
+                    ]
+                );
+            }
+
+            return response()->json([
+                'message' => 'Import data mahasiswa berhasil',
+                'error' => false,
+                'url' => route('mahasiswa'),
+                'showConfirmButton' => false,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengimport data',
+                'error' => true,
+                'details' => $e->getMessage(),
+                'showConfirmButton' => true,
+            ], 500);
+        }
+    }
+
+    public function download_failed_data(Request $request)
+    {
+        $failedData = json_decode($request->failedData, true);
+        $export = new DataFailedExport('Template_Import_Mahasiswa', $failedData, 'data_failed_import_mahasiswa');
+        return $export->download();
     }
 }
