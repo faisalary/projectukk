@@ -53,7 +53,8 @@ class HomeController extends Controller
         if ($type == 'container-lowongan-magang') {
             $lowongan = LowonganMagang::select(
                 'id_lowongan', 'intern_position', 'industri.namaindustri', 'industri.image', 
-                'created_at', 'lokasi', 'nominal_salary', 'durasimagang', 'gender', 'lowongan_magang.statusaprove'
+                'created_at', 'lokasi', 'nominal_salary', 'durasimagang', 'gender', 'lowongan_magang.statusaprove',
+                'lowongan_magang.startdate', 'lowongan_magang.enddate'
             )
             ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri');
 
@@ -61,7 +62,9 @@ class HomeController extends Controller
             // $lowonganTerpopuler = $lowongan->
             // ------------------------------------
 
-            $lowonganTerbaru = $lowongan->where('lowongan_magang.statusaprove', 'diterima')->limit(6)->orderBy('created_at', 'desc')->get()->transform(function ( $item, $key) {
+            $lowonganTerbaru = $lowongan->where('lowongan_magang.statusaprove', 'diterima')
+            ->whereDate('lowongan_magang.startdate', '<=', Carbon::now())->whereDate('lowongan_magang.enddate', '>=', Carbon::now())
+            ->limit(6)->orderBy('created_at', 'desc')->get()->transform(function ( $item, $key) {
                 $item->created_at = Carbon::parse($item->created_at)->diffForHumans(Carbon::now());
                 $item->durasimagang = implode(' dan ', json_decode($item->durasimagang));
                 $item->lokasi = implode(', ', json_decode($item->lokasi));
