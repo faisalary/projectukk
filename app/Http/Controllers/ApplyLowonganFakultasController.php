@@ -130,7 +130,17 @@ class ApplyLowonganFakultasController extends Controller
             $daftarDua = false;
         }
 
-        $magang = PendaftaranMagang::where('id_lowongan', $id)->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
+        $magang = PendaftaranMagang::where('id_lowongan', $id)->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])
+        ->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
 
         $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
