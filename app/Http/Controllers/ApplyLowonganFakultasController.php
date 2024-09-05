@@ -104,7 +104,17 @@ class ApplyLowonganFakultasController extends Controller
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
 
-        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)->get();
+        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
+        ->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])->get();
         $registeredTwo = $registered->count() >= 2 ? true : false;
         $registeredThis = $registered->where('id_lowongan', $id)->first();
 
