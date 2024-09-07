@@ -201,9 +201,23 @@ class LowonganMagangController extends Controller
     }
 
     public function setJadwal(Request $request, $id) {
+        $request->validate([
+            'tahapan_seleksi' => 'required|numeric',
+            'kandidat' => 'required|array',
+            'kandidat.*' => 'required|uuid',
+            'mulai_date' => 'required|date',
+            'selesai_date' => 'required|date',
+        ],[
+            'kandidat.required' => 'Kandidat tidak boleh kosong',
+            'kandidat.*.required' => 'Kandidat tidak boleh kosong',
+            'kandidat.*.uuid' => 'Kandidat tidak valid',
+            'mulai_date.required' => 'Tanggal mulai tidak boleh kosong',
+            'selesai_date.required' => 'Tanggal selesai tidak boleh kosong',
+            'tahapan_seleksi.required' => 'Tahapan seleksi tidak boleh kosong',
+        ]);
+
         try {
             DB::beginTransaction();
-            //delete
             foreach ($request->kandidat as $key => $value) {
                 Seleksi::updateOrCreate(
                     [

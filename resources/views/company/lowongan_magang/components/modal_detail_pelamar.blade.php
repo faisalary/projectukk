@@ -157,6 +157,10 @@
                             <select name="kandidat[]" id="kandidat" multiple="multiple" class="select2 form-select" data-placeholder="Pilih Kandidat" data-tags="true" disabled>
                                 <option disabled selected class="text-danger mt-1">Pilih Kandidat</option>
                             </select>
+                            <div class="form-check form-check-inline mt-1" style="display: none;">
+                                <input class="form-check-input" type="checkbox" id="pilih-semua" value="" />
+                                <label class="form-check-label small text-secondary" for="pilih-semua">Semua Kandidat <span id="pilih-semua-label"></span></label>
+                            </div>  
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 mb-3 form-group">

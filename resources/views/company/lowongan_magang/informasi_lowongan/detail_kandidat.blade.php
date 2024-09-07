@@ -93,7 +93,7 @@
                             <option value="{{ $d['table'] }}">{{ $d['label'] }}</option>
                             @endforeach
                         </select>
-                        <button class="btn btn-primary" data-bs-target="#modal-send-email" data-bs-toggle="modal">
+                        <button class="btn btn-primary text-start" data-bs-target="#modal-send-email" data-bs-toggle="modal">
                             <i class="tf-icons ti ti-email me-2"></i>
                             Kirim Email
                         </button>
@@ -272,6 +272,11 @@
         resetChangeStatus();
     });
 
+    $('modal-send-email').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+        getKandidat(null);
+    });
+
     function swalConfirmStatus(response, next){
         title = response ? 'Yakin untuk meloloskan kandidat?' : 'Yakin untuk menggagalkan kandidat ke tahap selanjutnya?';
         confirmButtonText = response ? 'Lolos' : 'Gagal';
@@ -320,7 +325,17 @@
         $('#modal-sent-email').modal('show');
     }
 
-    function getKandidat(e){
+    function getKandidat(e = null){
+        if(e.val() == null){
+            $('#kandidat').html('<option disabled selected class="text-danger mt-1">Pilih Kandidat</option>');
+            $('#kandidat').prop('disabled', true);
+            $('#mulai_date').val('');
+            $('#selesai_date').val('');
+            $('#pilih-semua').prop('checked', false);
+            $('#pilih-semua').parent('.form-check').hide();
+            $('#pilih-semua-label').html('');
+            return;
+        }
         let tahap = e.find(':selected').attr('data-status');
         $.ajax({
             url: "{{ route('informasi_lowongan.get_kandidat', ['tahap' => ':tahap']) }}".replace(':tahap', tahap),
@@ -337,9 +352,24 @@
                 $.each(response, function (index, value) {
                     $('#kandidat').append('<option value="' + index + '">' + value + '</option>');
                 });
+                total = $('#kandidat').find('option').length - 1;
+                $('#pilih-semua-label').html(e.find(':selected').text()+" <span class='text-primary'>("+total+" Kandidat)</span>");
+                $('#pilih-semua').parent('.form-check').show();
+
             }
         });
     }
+
+    $('#pilih-semua').on('click', function(){
+        console.log('jancuk')
+        if($(this).is(':checked')){
+            $('#kandidat').find('option').prop('selected', true).change();
+            $('#kandidat').find('option').eq(0).prop('selected', false).change();
+        } else {
+            $('#kandidat').find('option').prop('selected', false).change();
+        }
+        
+    });
 
     function afterSetJadwal(response) {
         $('#modal-send-email').modal('hide');
