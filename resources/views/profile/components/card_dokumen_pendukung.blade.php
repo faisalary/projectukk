@@ -13,7 +13,11 @@
         </div>
     </div>
     <p class="mb-1" style="font-size: small">{{ $item->penerbit }}</p>
+    @if ($item->enddate == null)
+    <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;Sekarang</p>
+    @else
     <p class="mb-1">{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</p>
+    @endif
     <p class="mb-1">{{ $item->deskripsi }}</p>
     <div class="d-flex justfiy-content-start align-items-center">
         <a href="{{ url('storage/'.$item->file_sertif) }}" target="_blank">

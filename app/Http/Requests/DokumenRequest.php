@@ -27,7 +27,7 @@ class DokumenRequest extends FormRequest
             'file_sertif' =>  'required|file|max:2000|mimes:doc,docx,pdf,png,jpeg,jpg',
             'link_sertif' => 'required|url',
             'startdate' => 'required',
-            'enddate' => 'required',
+            'enddate' => 'nullable',
             'deskripsi' => 'required|max:255|string'
         ];
 
