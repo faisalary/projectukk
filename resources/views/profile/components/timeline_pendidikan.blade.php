@@ -16,7 +16,7 @@
                 </div>
             </div>
             <p class="mb-1">{{ $item->tingkat }}</p>
-            <p class="mb-1">Nilai: {{ $item->nilai }}</p>
+            <p class="mb-1">Nilai Akhir: {{ $item->nilai }}</p>
             <small>{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</small>
         </div>
     </li>
