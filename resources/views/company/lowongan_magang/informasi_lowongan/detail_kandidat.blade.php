@@ -334,6 +334,18 @@
             $('#pilih-semua').prop('checked', false);
             $('#pilih-semua').parent('.form-check').hide();
             $('#pilih-semua-label').html('');
+            $('#mulai_date').flatpickr({
+                enableTime: true,
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i',
+            });
+            $('#selesai_date').flatpickr({
+                enableTime: true,
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i',
+            });
             return;
         }
         let tahap = e.find(':selected').attr('data-status');
@@ -377,5 +389,25 @@
             $(this).DataTable().ajax.reload();
         });
     }
+
+    $('#mulai_date').on('change', function(){
+         $('#selesai_date').flatpickr({
+                enableTime: true,
+                altInput: true,
+                altFormat: 'j F Y, H:i',
+                dateFormat: 'Y-m-d H:i',
+                minDate: $('#mulai_date').val(),
+          });
+    });
+
+    $('#selesai_date').on('change', function(){
+        $('#mulai_date').flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'j F Y, H:i',
+            dateFormat: 'Y-m-d H:i',
+            maxDate: $('#selesai_date').val(),
+        });
+    });
 </script>
 @endsection
