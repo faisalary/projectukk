@@ -75,17 +75,21 @@
                 <h4 class="modal-title mx-auto" id="modalreject">Alasan Penolakan</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body py-2">
-                <div class="row">
-                    <div class="col mb-2">
-                        <label for="alasan" class="form-label">Alasan Penolakan</label>
-                        <textarea class="form-control" id="alasan" rows="4" placeholder="Alasan Penolakan"></textarea>
+            <form class="default-form" action="" function-callback="afterReject">
+                @csrf
+                <div class="modal-body py-2">
+                    <div class="row">
+                        <div class="col mb-2 form-group">
+                            <label for="alasan" class="form-label">Alasan Penolakan</label>
+                            <textarea class="form-control" name="alasan" id="alasan" rows="4" placeholder="Alasan Penolakan"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="rejected-confirm-button" class="btn btn-primary">Simpan</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

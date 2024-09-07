@@ -1,29 +1,35 @@
-<div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal-adjustment-nilai" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="mx-auto">Pengurangan Nilai Akhir Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <h5 class="text-center mb-3" id="modalCenterTitle">Pengurangan Nilai Akhir Mahasiswa</h5>
-                <div class="row">
-                    <div class="col-12 mb-3">
-                        <label for="nilai-akhir" class="form-label">Nilai Akhir Mahasiswa</label>
-                        <input type="text" id="nilai-akhir" class="form-control" placeholder="90" disabled />
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label for="nilai" class="form-label">Pengurangan Nilai</label>
-                        <input type="text" id="nilai" class="form-control" placeholder="10" />
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label for="alasan" class="form-label">Alasan Pengurangan Nilai</label>
-                        <textarea type="text" id="alasan" class="form-control" placeholder="Masukkan alasan pengurangan nilai"></textarea>
+            <form action="" class="default-form" function-callback="afterAction">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3 form-group">
+                            <label for="nilai_akhir_magang" class="form-label">Nilai Akhir Mahasiswa</label>
+                            <input type="text" name="nilai_akhir_magang" id="nilai_akhir_magang" class="form-control" disabled />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12 mb-3 form-group">
+                            <label for="nilai_adjust" class="form-label">Pengurangan Nilai</label>
+                            <input type="text" name="nilai_adjust" id="nilai_adjust" class="form-control" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12 mb-3 form-group">
+                            <label for="alasan_adjust" class="form-label">Alasan Pengurangan Nilai</label>
+                            <textarea type="text" name="alasan_adjust" rows="4" id="alasan_adjust" class="form-control" placeholder="Masukkan alasan pengurangan nilai"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Simpan Perubahan</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary me-0">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

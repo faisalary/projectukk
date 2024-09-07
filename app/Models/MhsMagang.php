@@ -11,24 +11,9 @@ class MhsMagang extends Model
     use HasUuids;
 
     protected $table = 'mhs_magang';
-    protected $fillable = [
-        'id_pendaftaran',
-        'nip',
-        'nilai_akhir_magang',
-        'indeks_nilai_akhir',
-        'id_pengajuan',
-        'jenis_magang',
-        'id_pbb',
-        'id_peg_industri',
-        'nilai_lap',
-        'nilai_akademik',
-        'startdate_magang',
-        'enddate_magang',
-        'nilai_adjust',
-        'alasan_adjust'
-    ];
+    protected $guarded = [];
     protected $primaryKey = 'id_mhsmagang';
-    protected $keyType = 'string';
+    
     public $timestamps = false;
     protected $casts = [
         'startdate_magang' => 'datetime',

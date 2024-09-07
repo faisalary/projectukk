@@ -21,6 +21,7 @@ class MhsImport implements ToCollection, WithHeadingRow
     protected Fakultas $id_fakultas;
     protected Dosen $kode_dosen;
     protected string $primaryKey = "nim";
+    protected string $secondaryKey = "emailmhs";
     protected string $model = Mahasiswa::class;
     protected array $fields = [
         'nim' => 'nim',
@@ -47,11 +48,14 @@ class MhsImport implements ToCollection, WithHeadingRow
         $this->kode_dosen = Dosen::where('kode_dosen', $kode_dosen)->firstOrFail(['kode_dosen', 'namadosen']);
         $this->dataCleaning = new DataCleaning(
             $this->primaryKey,
+            $this->secondaryKey,
+            '',
+
             $this->model,
             array_values($this->fields),
             array_keys($this->fields),
             [
-                'nim' => 'required',
+                'nim' => 'required|string|max:18',
                 'tunggakan_bpp' => ['required', function ($attribute, $value, $fail) {
                     if (!in_array(strtolower($value), ['iya', 'tidak'])) {
                         $fail('Tunggakan BPP harus diisi dengan Iya atau Tidak');
@@ -61,8 +65,8 @@ class MhsImport implements ToCollection, WithHeadingRow
                 'eprt' => 'required|integer|between:310,677',
                 'tak' => 'required|integer',
                 'angkatan' => 'required|integer',
-                'namamhs' => 'required|string',
-                'nohpmhs' => 'required|string',
+                'namamhs' => 'required|string|max:255',
+                'nohpmhs' => 'required|string|max:15',
                 'emailmhs' => 'required|string|email',
                 'alamatmhs' => 'required|string'
             ],
@@ -76,6 +80,9 @@ class MhsImport implements ToCollection, WithHeadingRow
                 '*.tunggakan_bpp.in' => 'Tunggakan BPP harus diisi dengan Iya atau Tidak',
                 '*.ipk.between' => 'IPK harus di antara 0 hingga 4.00', // Pesan khusus untuk IPK
                 '*.eprt.between' => 'EPRT harus di antara 310 hingga 677', // Pesan khusus untuk EPRT
+                'nim.max' => 'NIM maksimal 18 karakter',
+                'namamhs.max' => 'Nama Mahasiswa maksimal 255 karakter',
+                'nohpmhs.max' => 'No Telp maksimal 15 karakter',
             ],
         );
         $this->newData = collect();
