@@ -25,9 +25,9 @@ class DokumenRequest extends FormRequest
             'nama_sertif' => 'required|max:255|min:3',
             'penerbit' => 'required|max:255|min:3',
             'file_sertif' =>  'required|file|max:2000|mimes:doc,docx,pdf,png,jpeg,jpg',
-            'link_sertif' => 'required|url',
+            'link_sertif' => 'required|url|max:255',
             'startdate' => 'required',
-            'enddate' => 'required',
+            'enddate' => 'nullable',
             'deskripsi' => 'required|max:255|string'
         ];
 
@@ -48,8 +48,8 @@ class DokumenRequest extends FormRequest
             'deskripsi.required' => 'Masukkan Deskripsi',
             'file_sertif.max' => 'File tidak boleh lebih dari 2000 KB',
             'file_sertif.mimes' => 'File harus berupa doc, docx, pdf, png, jpeg, jpg',
-            'link_sertif.url' => 'Masukkan link dengan benar'
-
+            'link_sertif.url' => 'Masukkan link dengan benar',
+            'link_sertif.max' => 'Link tidak boleh lebih dari 255 karakter',
         ];
     }
 }

@@ -434,7 +434,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-6 form-group">
-                            <label for="enddate" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
+                            <label for="enddate" class="form-label">Tanggal Kadaluwarsa</label>
                             <input type="enddate" id="enddate" name="enddate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>
