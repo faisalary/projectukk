@@ -19,8 +19,8 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <div class="row border-bottom pb-4">
-                <div class="col-6">
+            <div class="row mx-2 border-bottom pb-4">
+                <div class="col-6 px-0">
                     <div class="d-flex justify-content-start">
                         <div class="text-center" style="overflow: hidden; width: 100px; height: 100px;">
                             @if ($pelamar->image)
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-6 px-0">
                     <div class="d-flex flex-column justify-content-end align-items-end">
                         <span>Lamaran terkirim pada <span class="fw-semibold">{{ Carbon\Carbon::parse($pelamar->tanggaldaftar)->format('d F Y') }}</span></span>
                         @if (!$pelamar->lowongan_tersedia)
@@ -83,17 +83,29 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-12 mb-2">
-                    <span class="fw-semibold">Portofolio</span>
+            <div class="row mx-2 mt-3">
+                @if($pelamar->reason_reject)
+                <div class="col-12 px-0 mb-2">
+                    <div class="alert alert-danger">
+                        <small class="mb-1 fw-bolder">Alasan Ditolak:</small><br>
+                        <small class="mb-1">{{ $pelamar->reason_reject }}</small>
+                    </div>
                 </div>
-                <div class="col-12 d-flex justify-content-start">
-                    <a href="{{ asset('storage/' . $pelamar->portofolio) }}" target="_blank" class="text-primary">
-                        <small class="d-flex align-items-center">
-                            <i class="ti ti-file-symlink me-2"></i>
-                            {{ str_replace('portofolio/', '', $pelamar->portofolio) }}
-                        </small>
-                    </a>
+                @endif
+                <div class="col-12 px-0 mb-2">
+                    <h5 class="mb-1">Berkas Persyaratan</h5>
+                </div>
+                <div class="row">
+                    @foreach ($dokumen_pendaftaran as $item)
+                    <div class="col-4 my-1 px-0">
+                        <a href="{{ asset('storage/' . $item->file) }}" target="_blank" class="text-primary">
+                            <small class="d-flex align-items-center">
+                                <i class="ti ti-file-symlink me-2"></i>
+                                {{ $item->namadocument }}
+                            </small>
+                        </a>  
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
