@@ -35,7 +35,7 @@
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-currency-dollar"></i>
-                                <span class="ps-2 text-truncate">{{ ($item->nominal_salary) ? $item->nominal_harga : 'Tidak Berbayar' }}</span>
+                                <span class="ps-2 text-truncate">{{ ($item->nominal_salary) ? number_format($item->nominal_salary, 2, ",", ".") : 'Tidak Berbayar' }}</span>
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-calendar-time"></i>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-currency-dollar"></i>
-                                <span class="ps-2 text-truncate">{{ ($item->nominal_salary) ? $item->nominal_harga : 'Tidak Berbayar' }}</span>
+                                <span class="ps-2 text-truncate">{{ ($item->nominal_salary) ? number_format($item->nominal_salary, 2, ",", ".") : 'Tidak Berbayar' }}</span>
                             </div>
                             <div class="location mb-3">
                                 <i class="ti ti-calendar-time"></i>

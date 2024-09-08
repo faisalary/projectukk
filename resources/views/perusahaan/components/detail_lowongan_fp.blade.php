@@ -10,12 +10,7 @@
                         <img src="{{ asset('app-assets/img/avatars/14.png') }}" alt="user-avatar" class="" height="125" width="125" id="imgPreview" data-default-src="{{ asset('app-assets/img/avatars/14.png') }}">
                     @endif
                     <div class="text-end">
-                        {{-- <p>Batas Melamar 12 Juli 2023</p> --}}
                         <p>Batas Melamar {{ $detailLowongan?->enddate ? \Carbon\Carbon::parse($detailLowongan->enddate)->translatedFormat('d F Y') : 'Unimited' }}</p>
-
-                        {{-- <button type="button" class="btn btn-outline-primary" disabled>
-                            Buka dihalaman baru
-                        </button> --}}
                     </div>
                 </div>
                 <div class="mt-4">
