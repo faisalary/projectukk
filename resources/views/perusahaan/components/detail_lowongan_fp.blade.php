@@ -24,7 +24,7 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col-4 my-auto">
-                        <p><i class="ti ti-users me-2"></i>{{ $detailLowongan->kuota }}</p>
+                        <p @if( $kuotaPenuh ) class="fw-bold text-danger" @endif><i class="ti ti-users me-2"></i>{{ $detailLowongan->kuota_terisi }}/{{ $detailLowongan->kuota }} @if( $kuotaPenuh ) (Sudah Penuh) @endif</p>
                         <p><i class="ti ti-briefcase me-2"></i>{{ $detailLowongan->pelaksanaan }}</p>
                         <p><i class="ti ti-calendar-time me-2"></i>{{ implode(' dan ', json_decode($detailLowongan->durasimagang)) }}</p>
                     </div>
@@ -64,7 +64,7 @@
                 </ul>
             </div>
         </div>
-        @if($isMahasiswa)
+        @if($isMahasiswa && !$kuotaPenuh)
         <div class="row mt-3">
             @if (\Carbon\Carbon::now()->lessThanOrEqualTo(\Carbon\Carbon::parse($detailLowongan->enddate)) || \Carbon\Carbon::now()->isSameDay(\Carbon\Carbon::parse($detailLowongan->enddate)))
                 <a href="{{ route('apply_lowongan.detail.lamar', ['id' => $detailLowongan->id_lowongan]) }}" class="btn btn-primary w-100">Lamar</a>

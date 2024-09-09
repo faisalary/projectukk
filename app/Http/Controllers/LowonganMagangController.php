@@ -331,8 +331,8 @@ class LowonganMagangController extends Controller
     public function create(Request $request)
     {
         $jenismagang = JenisMagang::all();
-
-        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang'));
+        $kota = DB::table('reg_regencies')->select('id', 'name')->get();
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'kota'));
     }
 
     /**
@@ -464,6 +464,7 @@ class LowonganMagangController extends Controller
 
         $jenismagang = JenisMagang::all();
         $tahap = $lowongan->tahapan_seleksi;
+        $kota = DB::table('reg_regencies')->select('id', 'name')->get();
 
         foreach ($lowongan->seleksi_tahap as $key => $value) {
             $lowongan->{'proses_seleksi[' . $key . '][deskripsi]'} = $value->deskripsi;
@@ -471,7 +472,7 @@ class LowonganMagangController extends Controller
             $lowongan->{'proses_seleksi[' . $key . '][tgl_akhir]'} = $value->tgl_akhir;
         }
         
-        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap'));
+        return view('company.lowongan_magang.kelola_lowongan.tambah_lowongan_magang', compact('jenismagang', 'lowongan', 'tahap', 'kota'));
     }
 
     public function detail($id)  

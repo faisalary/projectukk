@@ -61,10 +61,10 @@ class MhsImport implements ToCollection, WithHeadingRow
                 'eprt' => 'required|integer|between:310,677',
                 'tak' => 'required|integer',
                 'angkatan' => 'required|integer',
-                'namamhs' => 'required',
-                'nohpmhs' => 'required',
+                'namamhs' => 'required|string',
+                'nohpmhs' => 'required|string',
                 'emailmhs' => 'required|string|email',
-                'alamat' => 'required'
+                'alamatmhs' => 'required|string'
             ],
             [
                 '*.required' => 'Data Kosong',
@@ -72,7 +72,7 @@ class MhsImport implements ToCollection, WithHeadingRow
                 '*.integer' => 'Data Tidak Sesuai',
                 '*.between' => 'Data Tidak Sesuai',
                 '*.string' => 'Data Tidak Sesuai',
-                '*.emailmhs' => 'Data Tidak Sesuai',
+                '*.email' => 'Data Tidak Sesuai',
                 '*.tunggakan_bpp.in' => 'Tunggakan BPP harus diisi dengan Iya atau Tidak',
                 '*.ipk.between' => 'IPK harus di antara 0 hingga 4.00', // Pesan khusus untuk IPK
                 '*.eprt.between' => 'EPRT harus di antara 310 hingga 677', // Pesan khusus untuk EPRT

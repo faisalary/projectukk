@@ -88,10 +88,10 @@
                                 <div class="flex-fill">
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="ti ti-map-pin"></i></span>
-                                        <select id="lokasi" name="location" class="pe-3 selectpicker" data-style="btn-default" data-live-search="true" tabindex="null">
-                                            <option value="" selected disabled>Lokasi Magang</option>
+                                        <select id="lokasi" name="location" class="pe-3 selectpicker" data-style="btn-default" data-live-search="true" tabindex="null" data-allow-clear="true">
+                                            <option value="" selected>Lokasi Magang</option>
                                             @foreach ($kota as $item)
-                                                <option data-tokens="{{ $item->name }}">{{ $item->name }}</option>
+                                                <option>{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,10 +100,10 @@
                                 <div class="flex-fill">
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="ti ti-calendar-time"></i></span>
-                                        <select name="jenis_magang" class="selectpicker pe-3" data-style="btn-default">
+                                        <select name="jenis_magang" class="selectpicker pe-3" data-style="btn-default" data-allow-clear="true">
                                             <option value="" selected disabled>Pilih Jenis Magang</option>
                                             @foreach ($jenisMagang as $item)
-                                                <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }}</option>
+                                                <option value="{{ $item->id_jenismagang }}">{{ $item->namajenis }} ({{ $item->durasimagang }})</option>
                                             @endforeach
                                         </select>
                                     </div>
