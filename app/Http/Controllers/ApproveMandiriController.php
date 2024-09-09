@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
@@ -43,21 +44,15 @@ class ApproveMandiriController extends Controller
             ->join('industri', 'industri.id_industri', 'lowongan_magang.id_industri')
             ->join('jenis_magang', 'jenis_magang.id_jenismagang', 'lowongan_magang.id_jenismagang');
 
-        if ($request->status == 'tertunda') $pengajuan = $pengajuan->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI);
-        else if ($request->status == 'done') $pengajuan = $pengajuan->whereIn('current_step', [
-            PendaftaranMagangStatusEnum::APPROVED_BY_LKM,
-            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
-            PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
-            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
-            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        if ($request->status == 'tertunda') $pengajuan = $pengajuan->whereIn('current_step', [
+            PendaftaranMagangStatusEnum::PENDING,
+            PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+        ]);
+        else if ($request->status == 'done') $pengajuan = $pengajuan->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::PENDING,
+            PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
         ]);
 
         return datatables()->of($pengajuan->get())
@@ -122,22 +117,32 @@ class ApproveMandiriController extends Controller
 
         try {
             $data = PendaftaranMagang::whereIn('id_pendaftaran', $request->data_id)
-                ->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI );
+            ->whereIn('current_step', [
+                PendaftaranMagangStatusEnum::PENDING,
+                PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+            ])->get();
 
-            if ($data->count() <= 0) return Response::error(null, 'Invalid.');
+            if (count($data) <= 0) return Response::error(null, 'Invalid.');
+
+            DB::beginTransaction();
 
             $file = null;
             if ($request->hasFile('file')) {
                 $file = Storage::put('dokumen_spm', $request->file('file'));
             }
 
-            $data->update([
-                'dokumen_spm' => $file,
-                'current_step' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM
-            ]);
+            $user = auth()->user();
+            foreach ($data as $key => $value) {
+                $value->dokumen_spm = $file;
+                $value->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
+                $value->saveHistoryApproval()->save();
+            }
 
+            DB::commit();
             return Response::success(null, 'Berhasil mengirim Surat Pengantar Magang.');
         } catch (Exception $e) {
+            DB::rollBack();
             return Response::errorCatch($e);
         }
     }
@@ -151,13 +156,28 @@ class ApproveMandiriController extends Controller
         ]);
 
         try {
-            $data = PendaftaranMagang::where('id_pendaftaran', $id)->first();
-            if ($data->current_step != PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI) {
-                return Response::error(null, 'Invalid.', 403);
-            }
+            $data = PendaftaranMagang::whereIn('current_step', [
+                PendaftaranMagangStatusEnum::PENDING,
+                PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+            ])->where('id_pendaftaran', $id)->first();
+
+            if (!$data) return Response::error(null, 'Invalid.');
+
+            $user = auth()->user();
+            $history_approval_ = json_decode($data->history_approval, true);
+            $history_approval = [
+                'id_user' => $user->id,
+                'name' => $user->name,
+                'time' => now()->format('Y-m-d H:i:s'),
+                'status' => PendaftaranMagangStatusEnum::REJECTED_BY_LKM
+            ];
+
+            array_push($history_approval_, $history_approval);
 
             $data->current_step = PendaftaranMagangStatusEnum::REJECTED_BY_LKM;
             $data->reason_reject = $request->alasan;
+            $data->history_approval = json_encode($history_approval_);
             $data->save();
 
             return Response::success(null, 'Berhasil menolak pengajuan.');

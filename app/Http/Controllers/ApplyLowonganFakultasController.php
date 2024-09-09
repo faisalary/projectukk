@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LowonganMagangStatusEnum;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Industri;
@@ -94,7 +95,11 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)
+        ->where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+
+        if (!$lowongandetail) return redirect()->back();
+
         $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
 
         if($kuotaPenuh){
@@ -159,6 +164,9 @@ class ApplyLowonganFakultasController extends Controller
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
 
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)->where('id_lowongan', $id)->first();
+        if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
+
         $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
         ->whereNotIn('current_step', [
             PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
@@ -185,8 +193,6 @@ class ApplyLowonganFakultasController extends Controller
             return Response::error(null, 'Data profil belum lengkap', 400);
         }
 
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
-        if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
         $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
         $validateData = ['reason' => 'required|string'];

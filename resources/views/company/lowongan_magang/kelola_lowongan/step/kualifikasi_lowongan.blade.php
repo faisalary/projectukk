@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="form-group col-lg-12 col-sm-6">
-            <label for="tahapan" class="form-label">Tahapan Magang<span class="text-danger">*</span></label>
+            <label for="tahapan" class="form-label">Berapa Tahap Seleksi Magang?<span class="text-danger">*</span></label>
             <div class="col mt-2">
                 <div class="form-check form-check-inline">
                     <input name="tahapan_seleksi" id="tahapan_1" class="form-check-input" type="radio" value="0" />

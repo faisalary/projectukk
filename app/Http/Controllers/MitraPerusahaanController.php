@@ -50,7 +50,7 @@ class MitraPerusahaanController extends Controller
     public function show(Request $request, $id)
     {
         $data['detail'] = Industri::where('id_industri', $id)->first();
-        $data['lowongan'] = LowonganMagang::where('id_industri', $id);
+        $data['lowongan'] = LowonganMagang::where('id_industri', $id)->where('statusaprove', LowonganMagangStatusEnum::APPROVED);
 
         if ($request->name) {
             $data['lowongan'] = $data['lowongan']->where('intern_position', 'like', '%' .$request->name. '%');

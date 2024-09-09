@@ -33,6 +33,8 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/detail/{id}', 'detailInformasi')->name('.detail');
         Route::get('/get-data/{id}', 'getDataDetailInformasi')->name('.get_data');
         Route::post('update-status/{id}', 'updateStatusPelamar')->name('.update_status');
+        Route::get('get-kandidat/{tahap}', 'getKandidat')->name('.get_kandidat');
+        Route::post('set-jadwal/{id}', 'setJadwal')->name('.set_jadwal');
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');
