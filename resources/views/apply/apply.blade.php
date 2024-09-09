@@ -90,7 +90,7 @@
                     <div class="row">
                         @foreach ($dokumenPersyaratan as $key => $item)
                         <div class="mt-2 col-6 form-group">
-                            <label for="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" class="form-label text-secondary">{{ ucwords(strtolower($item->namadocument)) }}</label>
+                            <label for="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" class="form-label text-secondary">{{ $item->namadocument }}</label>
                             @if(isset($persentase) && ($magang != null || $persentase < 80)) 
                                 <input class="form-control" type="file" id="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" name="{{ str_replace(' ', '_', strtolower($item->namadocument)) }}" disabled>
                             @else

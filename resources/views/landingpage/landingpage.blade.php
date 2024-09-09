@@ -58,7 +58,7 @@
             <div class="d-flex justify-content-start">
                 <div class="col-4 mx-5 mb-4 mt-5">
                     <div class="title-box wow animate__animated animate__fadeInUp" data-wow-delay="1000ms">
-                        <h1 class="mb-4 text-start" style="font-size: 40px;">Selamat Datang Di Websites → <span class="text-primary">Talentern</span></h1>
+                        <h1 class="mb-4 text-start" style="font-size: 40px;">Selamat Datang Di <br> → <span class="text-primary">Talentern</span></h1>
                         <p class="text-start" style="font-size: 18px; color:#4F4F4F;">Tingkatkan peluangmu dengan mencari
                             lowongan magang yang sesuai dengan passionmu dan manfaatkan kemudahan dalam melamar pekerjaan
                             magang yang kamu idamkan.

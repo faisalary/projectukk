@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Jobs\RejectionPenawaranLowongan;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusStepEnum;
+use App\Models\DokumenPendaftaranMagang;
 
 class StatusLamaranMagangController extends Controller
 {
@@ -151,13 +152,19 @@ class StatusLamaranMagangController extends Controller
     public function detail($id) {
         $mahasiswa = auth()->user()->mahasiswa;
 
-        $pelamar = $this->getDataLamaran(function ($query) use ($id) {
-            return $query->where('pendaftaran_magang.id_pendaftaran', $id);
+        $data['pelamar'] = $this->getDataLamaran(function ($query) use ($id, $mahasiswa) {
+            return $query->where('pendaftaran_magang.id_pendaftaran', $id)->where('pendaftaran_magang.nim', $mahasiswa->nim);
         })->setUpStepStatusLamaran()->setUpBadgeDataLamaran()->lamaran_magang->first();
 
-        $pelamar->lowongan_tersedia = ($pelamar->enddate > Carbon::now()) ? true : false;
+        if (!$data['pelamar']) return redirect()->route('lamaran_saya');
 
-        return view('kegiatan_saya.lamaran_saya.detail', compact('pelamar'));
+        $data['pelamar']->lowongan_tersedia = ($data['pelamar']->enddate > Carbon::now()) ? true : false;
+
+        $data['dokumen_pendaftaran'] = DokumenPendaftaranMagang::select('document_syarat.namadocument', 'dokumen_pendaftaran_magang.file')
+        ->join('document_syarat', 'document_syarat.id_document', 'dokumen_pendaftaran_magang.id_document')
+        ->where('dokumen_pendaftaran_magang.id_pendaftaran', $data['pelamar']->id_pendaftaran)->get();
+
+        return view('kegiatan_saya.lamaran_saya.detail', $data);
     }
 
     public function detailLowongan($id) {
@@ -270,6 +277,8 @@ class StatusLamaranMagangController extends Controller
 
     private function setUpStepStatusLamaran()
     {
+        if (count($this->lamaran_magang) == 0) return $this;
+
         $data = [
             ['title' => '1', 'desc' => 'Pra-seleksi oleh internal', 'active' => false, 'isReject' => false],
             ['title' => '2', 'desc' => 'Screening', 'active' => false, 'isReject' => false],
@@ -330,6 +339,8 @@ class StatusLamaranMagangController extends Controller
     }
 
     private function setUpBadgeDataLamaran() {
+
+        if (count($this->lamaran_magang) == 0) return $this;
 
         $this->lamaran_magang->transform(function ($item) {
             if ($item->current_step == array_search(($item->tahapan_seleksi + 1), $this->valid_step)) {

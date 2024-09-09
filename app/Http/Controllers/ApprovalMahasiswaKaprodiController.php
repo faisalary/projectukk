@@ -145,7 +145,7 @@ class ApprovalMahasiswaKaprodiController extends Controller
                 $pendaftaranMahasiswa->reason_reject = $request->reason;
                 $message = 'Pendaftaran mahasiswa rejected.';
             }
-            $pendaftaranMahasiswa->save();
+            $pendaftaranMahasiswa->saveHistoryApproval()->save();
 
             return Response::success(null, $message);
         } catch (\Exception $e) {
