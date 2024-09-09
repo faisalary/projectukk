@@ -27,7 +27,17 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-12 my-1 form-group">
-                            <label for="prodi" class="form-label">Nama Prodi</label>
+                            <label for="jenjang" class="form-label">Jenjang</label>
+                            <select class="form-select select2" id="jenjang" name="jenjang" data-placeholder="Pilih Fakultas">
+                                <option disabled selected value="">Pilih Jenjang</option>
+                                <option value="D3">D3</option>
+                                <option value="D4">D4</option>
+                                <option value="S1">S1</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12 my-1 form-group">
+                            <label for="namaprodi" class="form-label">Nama Prodi</label>
                             <input type="text" name="namaprodi" id="namaprodi" class="form-control" placeholder="Nama Prodi" />
                             <div class="invalid-feedback"></div>
                         </div>

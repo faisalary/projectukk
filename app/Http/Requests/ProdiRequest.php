@@ -25,6 +25,7 @@ class ProdiRequest extends FormRequest
             'id_univ' => ['required', 'exists:universitas,id_univ'],
             'id_fakultas' => ['required', 'exists:fakultas,id_fakultas'],
             'namaprodi' => ['required', 'string', 'max:255'],
+            'jenjang' => ['required', 'in:D3,D4,S1'],
         ];
     }
 
@@ -34,6 +35,8 @@ class ProdiRequest extends FormRequest
             'id_univ.required' => 'Pilih Universitas!',
             'id_fakultas.required' => 'Pilih Fakultas!',
             'namaprodi.required' => 'Masukkan Nama Prodi!',
+            'jenjang.required' => 'Pilih Jenjang!',
+            'jenjang.in' => 'Jenjang tidak valid!'
         ];
     }
 }
