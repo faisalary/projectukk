@@ -258,6 +258,11 @@ class MenuHelper
                         'permission' => 'jenis_magang.view'
                     ],
                     [
+                        'name' => 'Igracias',
+                        'route' => 'igracias',
+                        'permission' => 'igracias.view'
+                    ],
+                    [
                         'name' => 'Posisi Magang',
                         'route' => 'posisimagang',
                         'permission' => 'posisi_magang.view'
@@ -267,16 +272,16 @@ class MenuHelper
                         'route' => 'durasimagang',
                         'permission' => 'durasi_magang.view'
                     ],
-                    [
-                        'name' => 'Dosen',
-                        'route' => 'dosen',
-                        'permission' => 'dosen.view'
-                    ],
-                    [
-                        'name' => 'Mahasiswa',
-                        'route' => 'mahasiswa',
-                        'permission' => 'mahasiswa.view'
-                    ],
+                    // [
+                    //     'name' => 'Dosen',
+                    //     'route' => 'igracias.dosen',
+                    //     'permission' => 'igracias.dosen.view'
+                    // ],
+                    // [
+                    //     'name' => 'Mahasiswa',
+                    //     'route' => 'igracias.mahasiswa',
+                    //     'permission' => 'igracias.mahasiswa.view'
+                    // ],
                     [
                         'name' => 'Nilai Mutu',
                         'route' => 'nilai-mutu',

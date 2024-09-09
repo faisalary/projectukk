@@ -38,8 +38,8 @@ class PermissionSeeder extends Seeder
             'program_studi.view',
             'tahun_akademik.view',
             'jenis_magang.view',
-            'dosen.view',
-            'mahasiswa.view',
+            // 'igracias.dosen.view',
+            // 'igracias.mahasiswa.view',
             'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
@@ -47,7 +47,8 @@ class PermissionSeeder extends Seeder
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
             'posisi_magang.view',
-            'durasi_magang.view'            
+            'durasi_magang.view',
+            'igracias.view'            
         ];
 
         $permission['Mitra'] = [

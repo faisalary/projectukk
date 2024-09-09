@@ -24,40 +24,40 @@ class mahasiswaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:mahasiswa.view');
+        $this->middleware('permission:igracias.view');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        if ($request->type) {
-            switch ($request->type) {
-                case 'id_fakultas':
-                    $data = Fakultas::select('namafakultas as text', 'id_fakultas as id')->where('id_univ', $request->selected)->get();
-                    break;
-                case 'id_prodi':
-                    $data = ProgramStudi::select('namaprodi as text', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
-                    break;
-                case 'kode_dosen':
-                    $data = Dosen::where('id_prodi', $request->selected)->get()->transform(function ($item) {
-                        $result = new \stdClass();
-                        $result->text = $item->kode_dosen . ' | ' . $item->namadosen;
-                        $result->id = $item->kode_dosen;
-                        return $result;
-                    });
-                    break;
-                default:
-                    # code...
-                    break;
-            }
-            return Response::success($data, 'Success');
-        }
+    // public function index(Request $request)
+    // {
+    //     if ($request->type) {
+    //         switch ($request->type) {
+    //             case 'id_fakultas':
+    //                 $data = Fakultas::select('namafakultas as text', 'id_fakultas as id')->where('id_univ', $request->selected)->get();
+    //                 break;
+    //             case 'id_prodi':
+    //                 $data = ProgramStudi::select('namaprodi as text', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
+    //                 break;
+    //             case 'kode_dosen':
+    //                 $data = Dosen::where('id_prodi', $request->selected)->get()->transform(function ($item) {
+    //                     $result = new \stdClass();
+    //                     $result->text = $item->kode_dosen . ' | ' . $item->namadosen;
+    //                     $result->id = $item->kode_dosen;
+    //                     return $result;
+    //                 });
+    //                 break;
+    //             default:
+    //                 # code...
+    //                 break;
+    //         }
+    //         return Response::success($data, 'Success');
+    //     }
 
-        $universitas = Universitas::all();
-        return view('masters.mahasiswa.index', compact('universitas'));
-    }
+    //     $universitas = Universitas::all();
+    //     return view('masters.mahasiswa.index', compact('universitas'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -73,6 +73,7 @@ class mahasiswaController extends Controller
     public function store(MahasiswaRequest $request)
     {
         try {
+            
             DB::beginTransaction();
             Mahasiswa::create($request->validated());
             DB::commit();
@@ -139,7 +140,7 @@ class mahasiswaController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "primary";
 
-                $url = route('mahasiswa.status', $row->nim);
+                $url = route('igracias.mahasiswa.status', $row->nim);
                 $btn = "<div class='d-flex justify-content-center'><a data-bs-toggle='modal' data-id='{$row->nim}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
                 <a data-url='{$url}' class='cursor-pointer mx-1 update-status text-{$color}' data-function='afterUpdateStatus'><i class='tf-icons ti {$icon}'></i></a></div>";
 
@@ -256,7 +257,7 @@ class mahasiswaController extends Controller
         return response()->json([
             'message' => 'Sebelum disimpan, data di preview',
             'error' => false,
-            'url' => route('mahasiswa.preview'),
+            'url' => route('igracias.mahasiswa.preview'),
             'showConfirmButton' => false,
             'icon' => 'info',
             'title' => 'Informasi'
@@ -266,7 +267,7 @@ class mahasiswaController extends Controller
     public function preview()
     {
         $data = session('import_results');                
-        if (!$data) return redirect()->route('mahasiswa');
+        if (!$data) return redirect()->route('igracias.mahasiswa');
 
         return view('masters.mahasiswa.preview', compact('data'));
     }
@@ -297,7 +298,7 @@ class mahasiswaController extends Controller
             return response()->json([
                 'message' => 'Import data mahasiswa berhasil',
                 'error' => false,
-                'url' => route('mahasiswa'),
+                'url' => route('igracias'),
                 'showConfirmButton' => false,
             ], 200);
         } catch (Exception $e) {
