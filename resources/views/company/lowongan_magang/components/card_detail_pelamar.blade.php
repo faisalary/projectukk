@@ -161,7 +161,7 @@
     </div>
 </div>
 @if($pendaftar->current_step == ($onScreening ?? false))
-<div class="d-flex justify-content-start">
+<div class="d-flex justify-content-start mt-4">
     <button type="button" class="btn btn-success me-2 w-25" onclick="screeningLulus(true)">Lolos</button>
     <button type="button" class="btn btn-danger w-25" onclick="screeningLulus(false)">Gagal</button>
 </div>
