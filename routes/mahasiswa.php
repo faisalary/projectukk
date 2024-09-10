@@ -97,7 +97,7 @@ Route::prefix('unduh-profile')->name('unduh-profile.')->group(function () {
 
 // kegiatan saya -> landing page
 
-Route::prefix('kegiatan-saya')->group(function () {
+Route::prefix('kegiatan-saya')->middleware('role:Mahasiswa')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
