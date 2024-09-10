@@ -333,12 +333,12 @@ class MenuHelper
                 'icon' => 'ti-users',
                 'permission' => 'anggota_tim.view'
             ],
-            [
-                'name' => 'Proses Seleksi',
-                'route' => 'jadwal_seleksi',
-                'icon' => 'ti-clock',
-                'permission' => 'jadwal_seleksi_mitra.view'
-            ],
+            // [
+            //     'name' => 'Proses Seleksi',
+            //     'route' => 'jadwal_seleksi',
+            //     'icon' => 'ti-clock',
+            //     'permission' => 'jadwal_seleksi_mitra.view'
+            // ],
             [
                 'name' => 'Assign Pembimbing',
                 'route' => 'assign_pembimbing',
