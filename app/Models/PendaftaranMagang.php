@@ -53,4 +53,9 @@ class PendaftaranMagang extends Model
     {
         return $this->hasOne(MhsMagang::class, 'id_pendaftaran');
     }
+
+    public function seleksi_lowongan()
+    {
+        return $this->hasMany(Seleksi::class, 'id_pendaftaran', 'id_pendaftaran');
+    }
 }

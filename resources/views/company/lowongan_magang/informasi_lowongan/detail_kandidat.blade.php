@@ -12,21 +12,6 @@
         padding-left: 15px;
     }
 
-    .light-style .select2-container--default .select2-selection
-    {
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        background-color: #fff;
-        border: 3px solid var(--bs-primary);
-        border-radius: 0.375rem;
-    }
-
-    .select2-container--default.select2-container--focus 
-    .select2-selection, 
-    .select2-container--default.select2-container--open 
-    .select2-selection {
-        border-color: var(--bs-primary) !important;
-    }
-
     h6,
     .h6 {
         font-size: 0.9375rem;
@@ -100,7 +85,7 @@
                 <div class="card-datatable table-responsive">
                     @if($key == 'tahap')
                     <div class="m-4 d-flex justify-content-between">
-                        <div class="col-2">
+                        <div class="col-2" id="container-filter-seleksi">
                             <select class="form-select select2" onchange="changeSeleksiTable($(this).val())">
                                 <option value="all_seleksi">Semua Tahap</option>
                                 @foreach($item['tahap_valid'] as $d)
@@ -109,7 +94,7 @@
                             </select>
                         </div>
                         <button class="btn btn-primary text-start" data-bs-target="#modal-send-email" data-bs-toggle="modal">
-                            <i class="tf-icons ti ti-email me-2"></i>
+                            <i class="ti ti-mail me-2"></i>
                             Kirim Email
                         </button>
                     </div>
@@ -142,6 +127,18 @@
 
 @section('page_script')
 <script>
+    $(document).ready(function () {
+        $('#container-filter-seleksi .select2-container--default .select2-selection').css({
+            'border': '3px solid var(--bs-primary)',
+            'border-radius': '0.375rem',
+            'background-color': '#fff'
+        });
+        $(`#container-filter-seleksi .select2-container--default.select2-container--focus 
+        .select2-selection, 
+        .select2-container--default.select2-container--open 
+        .select2-selection`).css({'border-color': 'var(--bs-primary)'});
+    });
+
     $(".flatpickr-date-custom").flatpickr({
         enableTime: true,
         altInput: true,

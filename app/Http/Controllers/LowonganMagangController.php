@@ -229,6 +229,7 @@ class LowonganMagangController extends Controller
                     ]
                 );
             }
+            dispatch(new SendMailIndustri(auth()->user(), 'penjadwalan_seleksi', $request->kandidat));
 
             DB::commit();
             return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
@@ -388,7 +389,7 @@ class LowonganMagangController extends Controller
 
             $file = null;
             $statusPicked = $request->status;
-            if (($statusPicked == $last_seleksi) && $request->hasFile('file')) {
+            if (($statusPicked == $last_seleksi || $statusPicked == 'rejected') && $request->hasFile('file')) {
                 $file = Storage::put('berkas_mitra', $request->file('file'));
             }
 
@@ -404,18 +405,20 @@ class LowonganMagangController extends Controller
                 }
             }
 
-            $pendaftar->update([
-                'current_step' => $statusPicked,
-                'file_document_mitra' => $file
-            ]);
+            $pendaftar->current_step = $statusPicked;
+            $pendaftar->file_document_mitra = $file;
+
+            $pendaftar->saveHistoryApproval()->save();
 
             $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
             $proses = TemplateEmailListProsesEnum::LOLOS_SELEKSI;
             if ($statusPicked == $last_seleksi) {
                 $proses = TemplateEmailListProsesEnum::DITERIMA_MAGANG;
+            } else if ($request->status == 'rejected') {
+                $proses = TemplateEmailListProsesEnum::TIDAK_LOLOS_SELEKSI;
             }
 
-            dispatch(new SendMailIndustri(auth()->user(), $pendaftar->emailmhs, $proses, $id));
+            dispatch(new SendMailIndustri(auth()->user(), $proses, $id));
 
             return Response::success([
                 'id_pendaftar' => $pendaftar->id_pendaftaran,

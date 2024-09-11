@@ -53,6 +53,7 @@ class TemplateEmailListProsesEnum
             $email = $emailTemplate->where('proses', $value['proses'])->first();
             if ($email) {
                 $this->data[$key]['template'] = [
+                    'id_template' => $email->id_email_template,
                     'subject' => $email->subject_email,
                     'content' => $email->content_email
                 ];
@@ -98,12 +99,12 @@ class TemplateEmailListProsesEnum
         if ($proses == self::LOLOS_SELEKSI) {
 
         } else if ($proses == self::PENJADWALAN_SELEKSI) {
-            $listTag[] = ['title' => 'Mulai Seleksi', 'shortCode' => '[[MulaiSeleksi]]'];
-            $listTag[] = ['title' => 'Selesai Seleksi', 'shortCode' => '[[SelesaiSeleksi]]'];
+            $listTag[] = ['title' => 'Mulai Seleksi', 'shortCode' => '[[MulaiSeleksi]]', 'columnName' => 'start_date'];
+            $listTag[] = ['title' => 'Selesai Seleksi', 'shortCode' => '[[SelesaiSeleksi]]', 'columnName' => 'end_date'];
         } else if ($proses == self::DITERIMA_MAGANG) {
             
         } else if ($proses == self::TIDAK_LOLOS_SELEKSI) {
-            $listTag[] = ['title' => 'Alasan Tidak Lolos', 'shortCode' => '[[AlasanTidakLolos]]'];
+            
         }
 
         return $listTag;
