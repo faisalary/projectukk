@@ -47,7 +47,7 @@
             <ul class="nav nav-pills mb-1" role="tablist">
                 <li class="nav-item" style="font-size: small;">
                     <button type="button" class="nav-link active" target="2" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-tertunda" aria-controls="navs-pills-justified-tertunda" aria-selected="false" style="padding: 8px 9px;">
-                        <i class="tf-icons ti ti-clock ti-clock me-1"></i> Tertunda
+                        <i class="tf-icons ti ti-clock ti-clock me-1"></i> Menunggu Persetujuan
                     </button>
                 </li>
                 <li class="nav-item" style="font-size: small;">

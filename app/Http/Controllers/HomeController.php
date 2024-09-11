@@ -53,7 +53,7 @@ class HomeController extends Controller
         if ($type == 'container-lowongan-magang') {
             $lowongan = LowonganMagang::select(
                 'id_lowongan', 'intern_position', 'industri.namaindustri', 'industri.image', 
-                'created_at', 'lokasi', 'nominal_salary', 'durasimagang', 'gender', 'lowongan_magang.statusaprove',
+                'created_at', 'lokasi', 'lowongan_magang.nominal_salary', 'durasimagang', 'gender', 'lowongan_magang.statusaprove',
                 'lowongan_magang.startdate', 'lowongan_magang.enddate'
             )
             ->join('industri', 'industri.id_industri', '=', 'lowongan_magang.id_industri');

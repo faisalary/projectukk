@@ -4,6 +4,24 @@
         max-width: 200px !important; 
         position: relative !important;
     }
+
+    #table-sent-email {
+        width: 100%;
+        border: 2px solid #f0f0f0;
+    }
+
+    #table-sent-email th {
+        background-color: #f0f0f0;
+        border: 2px solid #f0f0f0;
+    }
+
+    #table-sent-email td {
+        border: 2px solid #f0f0f0;
+    }
+
+    .position-relative {
+        padding: 0px !important;
+    }
 </style>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="detail_pelamar_offcanvas" style="width: 45%;">
     <div class="offcanvas-header">
@@ -13,14 +31,6 @@
                 <i class="tf-icons ti ti-file-symlink me-2"></i>
                 Unduh Format CV
             </button>
-            <div class="col-8" style="max-width:230px;">
-                <select name="change_status" id="change_status" onchange="changeStatus($(this));" class="select2 form-select form-select-sm" data-placeholder="Ubah Status">
-                    <option value="" disabled selected>Ubah Status</option>
-                    @foreach ($listStatus as $key => $item)
-                        <option value="{{ $item['value'] }}">{{ $item['label'] }}</option>
-                    @endforeach
-                </select>
-            </div>
         </div>
     </div>
     <div class="offcanvas-body pt-1 flex-grow-0 h-100" id="container_detail_pelamar"></div>
@@ -41,6 +51,7 @@
                         <div class="col form-group">
                             <label for="date" class="form-label">Berkas<span class="text-danger">*</span></label>
                             <input type="file" class="form-control" name="file" id="file">
+                            <label class="form-label"><span class="text-small">(Harus berbentuk pdf)</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -106,5 +117,94 @@
                 <button type="submit" class="btn btn-success">Terapkan</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-send-email" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="modal-title">Buat Jadwal Seleksi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="default-form" method="POST" action="{{ route('informasi_lowongan.set_jadwal', $lowongan->id_lowongan   ) }}" function-callback="afterSetJadwal">
+                @csrf
+                <input type="hidden" name="tahapan_seleksi">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3 form-group">
+                            <label for="tahapan_seleksi" class="form-label">Tahap Seleksi</label>
+                            <select class="form-select select2 disable" name="tahapan_seleksi" id="tahapan_seleksi" data-placeholder="Pilih Jenis Tahap" onchange="getKandidat($(this))">
+                                <option disabled selected class="text-danger mt-1">Pilih Jenis Tahap</option>
+                                @foreach($tahapValid as $d)
+                                    <option value="{{ $loop->iteration }}" data-status="{{ $d['table'] }}">{{ $d['label'] }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-6 mb-3 form-group">
+                            <label for="mulai_date" class="form-label">Mulai</label>
+                            <input type="text" class="form-control flatpickr-date-custom cursor-pointer" name="mulai_date" placeholder="Mulai" id="mulai_date" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-6 mb-3 form-group">
+                            <label for="selesai_date" class="form-label">Selesai</label>
+                            <input type="text" class="form-control flatpickr-date-custom cursor-pointer" name="selesai_date" placeholder="Selesai" id="selesai_date" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12 mb-3 form-group">
+                            <label for="seleksi" class="form-label">Kandidat</label>
+                            <select name="kandidat[]" id="kandidat" multiple="multiple" class="select2 form-select" data-placeholder="Pilih Kandidat" data-tags="true" disabled>
+                                <option disabled selected class="text-danger mt-1">Pilih Kandidat</option>
+                            </select>
+                            <div class="form-check form-check-inline mt-1" style="display: none;">
+                                <input class="form-check-input" type="checkbox" id="pilih-semua" value="" />
+                                <label class="form-check-label small text-secondary" for="pilih-semua">Semua Kandidat <span id="pilih-semua-label"></span></label>
+                            </div>  
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12 mb-3 form-group">
+                            <label for="seleksi" class="form-label">Subjek Email</label>
+                            <select class="form-select select2" id="subjek" name="subjek" data-placeholder="Pilih Subjek Email">
+                                <option disabled selected class="text-danger mt-1">Pilih Subjek Email!</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-sent-email" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">Detail Email Terkirim</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{-- <div class="table-responsive"> --}}
+                    <table id="table-sent-email">
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Subjek Email</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Undangan Interview</td>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider modal-sent-email-tr">
+                        </tbody>
+                    </table>
+                {{-- </div> --}}
+            </div>
+        </div>
     </div>
 </div>

@@ -302,7 +302,7 @@ class ProfileMahasiswaController extends Controller
                 'nama_sertif' => $request->nama_sertif,
                 'penerbit' => $request->penerbit,
                 'startdate'=> Carbon::createFromFormat('F Y', $request->startdate)->format('Y-m') . '-01',
-                'enddate' => Carbon::createFromFormat('F Y', $request->enddate)->format('Y-m') . '-01',
+                'enddate' => ($request->enddate) ? (Carbon::createFromFormat('F Y', $request->enddate)->format('Y-m') . '-01') : null,
                 'file_sertif' => $file,
                 'link_sertif' => $request->link_sertif,
                 'deskripsi' => $request->deskripsi
