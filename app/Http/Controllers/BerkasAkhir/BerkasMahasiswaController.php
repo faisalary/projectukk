@@ -30,7 +30,7 @@ class BerkasMahasiswaController extends BerkasAkhirMagangController
 
         try {
             $pendaftaranMagang = $this->getMyMagang(function ($q) {
-                return $q->join('mhs_magang', 'mhs_magang.id_pendaftaran', '=', 'pendaftaran_magang.id_pendaftaran');
+                return $q->select('mhs_magang.id_mhsmagang')->join('mhs_magang', 'mhs_magang.id_pendaftaran', '=', 'pendaftaran_magang.id_pendaftaran');
             })->pemagang->first();
 
             $berkasMagang = BerkasMagang::where('id_berkas_magang', $id)->first();
@@ -73,12 +73,24 @@ class BerkasMahasiswaController extends BerkasAkhirMagangController
 
     private function getMyBerkasMagang($additional = null) 
     {
-        $pendaftaranMagang = $this->getMyMagang()->pemagang->first();
+        $pendaftaranMagang = $this->getMyMagang(function ($q) {
+            return $q->select('lowongan_magang.id_jenismagang', 'mhs_magang.id_mhsmagang')->join('mhs_magang', 'mhs_magang.id_pendaftaran', '=', 'pendaftaran_magang.id_pendaftaran');
+        })->pemagang->first();
 
         if (!$pendaftaranMagang) return abort(403);
 
-        $this->my_berkas_akhir = BerkasMagang::select('berkas_magang.*', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload', 'berkas_akhir_magang.rejected_reason')
-        ->leftJoin('berkas_akhir_magang', 'berkas_akhir_magang.id_berkas_magang', '=', 'berkas_magang.id_berkas_magang')
+        $this->my_berkas_akhir = BerkasMagang::select(
+            'berkas_magang.*', 'berkas_akhir_magang.berkas_file', 'berkas_akhir_magang.berkas_magang', 
+            'berkas_akhir_magang.status_berkas', 'berkas_akhir_magang.tgl_upload', 'berkas_akhir_magang.rejected_reason',
+            'berkas_akhir_magang.id_mhsmagang'
+        )
+        ->leftJoin('berkas_akhir_magang', function($join) use ($pendaftaranMagang) {
+            $join->on('berkas_akhir_magang.id_berkas_magang', '=', 'berkas_magang.id_berkas_magang')
+                ->where(function($query) use ($pendaftaranMagang) {
+                    $query->where('berkas_akhir_magang.id_mhsmagang', '=', $pendaftaranMagang->id_mhsmagang)
+                        ->orWhereNull('berkas_akhir_magang.id_mhsmagang');
+                });
+        })
         ->where('id_jenismagang', $pendaftaranMagang->id_jenismagang);
         if ($additional != null) $additional($this->my_berkas_akhir);
         $this->my_berkas_akhir = $this->my_berkas_akhir->get();
