@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('dokumen_pendaftaran_magang', function (Blueprint $table) {
-            $table->foreign('id_pendaftaran')->references('id_pendaftaran')->on('pendaftaran_magang')->onDelete('cascade');
+        Schema::table('program_studi', function (Blueprint $table) {
+            $table->string('jenjang', 10)->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('dokumen_pendaftaran_magang', function (Blueprint $table) {
-            $table->dropForeign(['id_pendaftaran']);
+        Schema::table('program_studi', function (Blueprint $table) {
+            $table->dropColumn('jenjang');
         });
     }
 };

@@ -43,6 +43,7 @@ class ProdiController extends Controller
                 'id_fakultas' => $request->id_fakultas,
                 'id_univ' => $request->id_univ,
                 'namaprodi' => $request->namaprodi,
+                'jenjang' => $request->jenjang
             ]);
     
             return Response::success(null, 'Data Created!');
@@ -70,6 +71,9 @@ class ProdiController extends Controller
 
         return DataTables::of($prodi)
             ->addIndexColumn()
+            ->editColumn('namaprodi', function ($x) {
+                return '<span>' . $x->namaprodi . '<span class="ms-2 fw-bolder">(' . $x->jenjang . ')</span>' . '</span>';
+            })
             ->editColumn('status', function ($prodi) {
                 if ($prodi->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";
@@ -87,7 +91,7 @@ class ProdiController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['namaprodi', 'status', 'action'])
 
             // ->json();
             ->make(true);
@@ -113,6 +117,7 @@ class ProdiController extends Controller
             $prodi->id_univ = $request->id_univ;
             $prodi->id_fakultas = $request->id_fakultas;
             $prodi->namaprodi = $request->namaprodi;
+            $prodi->jenjang = $request->jenjang;
             $prodi->save();
 
             return Response::success(null, 'Data successfully Updated!');

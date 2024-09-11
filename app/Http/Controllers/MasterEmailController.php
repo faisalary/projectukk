@@ -29,7 +29,7 @@ class MasterEmailController extends Controller
     {
         if ($request->ajax()) {
             if (in_array($request->proses, array_values(TemplateEmailListProsesEnum::getConstants()))) {
-                $listTag = self::getListTag($request->proses);
+                $listTag = TemplateEmailListProsesEnum::getListTag($request->proses);
                 $data['list_tag'] = $listTag;
                 $result = view('company/master_email/components/list_tag', $data)->render();
             }
@@ -37,7 +37,7 @@ class MasterEmailController extends Controller
             return Response::success($result, 'Success.');
         }
 
-        $data['proses'] = TemplateEmailListProsesEnum::getWithLabel();
+        $data['proses'] = TemplateEmailListProsesEnum::_getWithLabel();
         $data['urlAction'] = route('template_email.store');
 
         return view('company/master_email/form', $data);
@@ -57,7 +57,7 @@ class MasterEmailController extends Controller
                 'proses' => $request->proses,
                 'id_industri' => $peg_industri->id_industri,
                 'subject_email' => $request->subject_email,
-                'headline_email' => TemplateEmailListProsesEnum::getWithLabel($request->proses)['title'],
+                'headline_email' => TemplateEmailListProsesEnum::_getWithLabel($request->proses)['title'],
                 'content_email' => $request->content_email,
             ]);
 
@@ -82,7 +82,7 @@ class MasterEmailController extends Controller
         return datatables()->of($email)
             ->addIndexColumn()
             ->editColumn('proses', function ($x) {
-                return TemplateEmailListProsesEnum::getWithLabel($x->proses)['title'];
+                return TemplateEmailListProsesEnum::_getWithLabel($x->proses)['title'];
             })
             ->editColumn('subject_email', function ($x) {
                 return $x->subject_email ?? '<span class="fst-italic">- Not Yet Set -</span>';
@@ -103,13 +103,13 @@ class MasterEmailController extends Controller
 
         $data['existing'] = EmailTemplate::where('id_email_template', $id)
         ->where('id_industri', $peg_industri->id_industri)->first();
-        $data['proses'] = TemplateEmailListProsesEnum::getWithLabel();
+        $data['proses'] = TemplateEmailListProsesEnum::_getWithLabel();
         $data['urlAction'] = route('template_email.update', $id);
 
         return view('company/master_email/form', $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(MasterEmailRequest $request, $id)
     {
         try {
             $user = auth()->user();
@@ -120,7 +120,7 @@ class MasterEmailController extends Controller
                 $email->update([
                     'proses' => $request->proses,
                     'subject_email' => $request->subject_email,
-                    'headline_email' => TemplateEmailListProsesEnum::getWithLabel($request->proses)['title'],
+                    'headline_email' => TemplateEmailListProsesEnum::_getWithLabel($request->proses)['title'],
                     'content_email' => $request->content_email
                 ]);
             }
@@ -129,28 +129,5 @@ class MasterEmailController extends Controller
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }
-    }
-
-    private function getListTag($proses = null)
-    {
-
-        $listTag = [
-            ['title' => 'Nama Peserta', 'shortCode' => '[[NamaPeserta]]'],
-            ['title' => 'NIM', 'shortCode' => '[[NIM]]'],
-            ['title' => 'Perusahaan', 'shortCode' => '[[Perusahaan]]'],
-            ['title' => 'Tahap Seleksi', 'shortCode' => '[[TahapSeleksi]]'],
-            ['title' => 'Posisi Magang', 'shortCode' => '[[PosisiMagang]]'],
-            ['title' => 'Durasi Magang', 'shortCode' => '[[DurasiMagang]]']
-        ];
-        if ($proses == TemplateEmailListProsesEnum::LOLOS_SELEKSI) {
-
-        } else if ($proses == TemplateEmailListProsesEnum::PENJADWALAN_SELEKSI) {
-            $listTag[] = ['title' => 'Mulai Seleksi', 'shortCode' => '[[MulaiSeleksi]]'];
-            $listTag[] = ['title' => 'Selesai Seleksi', 'shortCode' => '[[SelesaiSeleksi]]'];
-        } else if ($proses == TemplateEmailListProsesEnum::TIDAK_LOLOS_SELEKSI) {
-            $listTag[] = ['title' => 'Alasan Tidak Lolos', 'shortCode' => '[[AlasanTidakLolos]]'];
-        }
-
-        return $listTag;
     }
 }

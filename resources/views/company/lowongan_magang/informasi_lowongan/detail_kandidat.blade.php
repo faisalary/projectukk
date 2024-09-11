@@ -42,26 +42,24 @@
     <h4 class="fw-bold"><span class="text-muted fw-light">Informasi Lowongan / </span>{{ $lowongan->intern_position }}</h4>
 </div>
 
-<div class="col-xl-12">
+<div class="col-xl-12 mt-3">
     <div class="nav-align-top">
         <div class="d-flex justify-content-between mb-3">
-            <div class="card shadow-none border border-secondary me-4">
-                <div class="card-body p-2">
-                    <div class="d-flex align-items-center justify-content-center p-3">
-                        <span class="badge p-1 bg-label-success me-2">
-                            <i class="ti ti-briefcase" style="font-size: 12pt;"></i>
+            <div class="card shadow-none border border-secondary">
+                <div class="card-body py-2 px-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <span class="badge bg-label-primary p-2 me-2">
+                            <i class="ti ti-users" style="font-size: 12pt;"></i>
                         </span>
-                        <span class="mb-0 me-2">Total Pelamar:</span>
-                        <h5 class="mb-0 me-2 text-primary">{{ $total_pelamar }}</h5>
-                        <span class="mb-0 me-2">Orang </span>
+                        <span class="mb-0 me-2">Total Pelamar :</span>
+                        <h5 class="mb-0 me-2 text-primary" id="set_total_pelamar">0</h5>
+                        <span class="mb-0 me-2">Orang</span>
                     </div>
                 </div>
             </div>
-            <div class="card shadow-none border border-secondary ms-4">
-                <div class="card-body p-1">
-                    <div class="d-flex align-items-center justify-content-between p-3">
-                        <span class="fw-semibold mb-0 p-2 me-2">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;<span class="text-primary">{{ $date_confirm_closing }}</span></span>
-                    </div>
+            <div class="card shadow-none border border-secondary">
+                <div class="card-body py-2 px-3 d-flex align-items-center">
+                    <span class="fw-semibold px-2 my-auto me-2">Batas Konfirmasi Penerimaan&nbsp;:&nbsp;{!! $date_confirm_closing !!}</span>
                 </div>
             </div>
         </div>
@@ -87,14 +85,16 @@
                 <div class="card-datatable table-responsive">
                     @if($key == 'tahap')
                     <div class="m-4 d-flex justify-content-between">
-                        <select class="selectpicker" data-style="btn-default btn-outline-primary" style="border: 5px, solid, #4EA971" onchange="changeSeleksiTable($(this).val())">
-                            <option value="all_seleksi">Semua Tahap</option>
-                            @foreach($item['tahap_valid'] as $d)
-                            <option value="{{ $d['table'] }}">{{ $d['label'] }}</option>
-                            @endforeach
-                        </select>
+                        <div class="col-2" id="container-filter-seleksi">
+                            <select class="form-select select2" onchange="changeSeleksiTable($(this).val())">
+                                <option value="all_seleksi">Semua Tahap</option>
+                                @foreach($item['tahap_valid'] as $d)
+                                <option value="{{ $d['table'] }}">{{ $d['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button class="btn btn-primary text-start" data-bs-target="#modal-send-email" data-bs-toggle="modal">
-                            <i class="tf-icons ti ti-email me-2"></i>
+                            <i class="ti ti-mail me-2"></i>
                             Kirim Email
                         </button>
                     </div>
@@ -127,6 +127,18 @@
 
 @section('page_script')
 <script>
+    $(document).ready(function () {
+        $('#container-filter-seleksi .select2-container--default .select2-selection').css({
+            'border': '3px solid var(--bs-primary)',
+            'border-radius': '0.375rem',
+            'background-color': '#fff'
+        });
+        $(`#container-filter-seleksi .select2-container--default.select2-container--focus 
+        .select2-selection, 
+        .select2-container--default.select2-container--open 
+        .select2-selection`).css({'border-color': 'var(--bs-primary)'});
+    });
+
     $(".flatpickr-date-custom").flatpickr({
         enableTime: true,
         altInput: true,
