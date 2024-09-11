@@ -8,9 +8,9 @@ use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangDosenController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangKaprodiController;
 
 // Dosen Wali
-Route::prefix('approval-mahasiswa')->name('approval_mahasiswa')->controller(ApprovalMahasiswaController::class)->group(function () {
-    Route::get('/', 'index')->middleware('permission:approval_mhs_doswal.view');
-    Route::get('get-data', 'getData')->name('.get_data')->middleware('permission:approval_mhs_doswal.view');
+Route::prefix('approval-mahasiswa')->name('approval_mahasiswa_doswal')->controller(ApprovalMahasiswaController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('get-data', 'getData')->name('.get_data');
     Route::get('detail/{id}', 'detail')->name('.detail');
     Route::post('approval/{id}', 'approval')->name('.approval');
     Route::post('approvals', 'approvals')->name('.approvals');

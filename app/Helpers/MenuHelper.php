@@ -27,11 +27,32 @@ class MenuHelper
 
     private static function specialCase($data) {
         $user = auth()->user();
-        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && !$user->can('permission:data_mahasiswa_magang_kaprodi.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
+        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && count($user->dosen->mahasiswaBimbingan) == 0) {
             $data = array_filter($data, function($item) {
-                return (isset($item['name']) && $item['name'] != 'Pembimbing Akademik') && (isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view');
+                $result = false;
+                if (isset($item['type']) && $item['type'] == 'menu-header' && $item['name'] != 'Pembimbing Akademik') {
+                    $result = true;
+                } else if (!isset($item['type']) && isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view') {
+                    $result = true;
+                }
+
+                return $result;
             });
         }
+
+        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && count($user->dosen->mahasiswaDiampu) == 0) {
+            $data = array_filter($data, function($item) {
+                $result = false;
+                if (isset($item['type']) && $item['type'] == 'menu-header' && $item['name'] != 'Dosen Wali') {
+                    $result = true;
+                } else if (!isset($item['type']) && isset($item['permission']) && !in_array($item['permission'], ['approval_mhs_doswal.view', 'data_mahasiswa_magang_dosen.view'])) {
+                    $result = true;
+                }
+
+                return $result;
+            });
+        }
+
         return $data;
     }
 
@@ -373,7 +394,7 @@ class MenuHelper
             [
                 'type' => 'menu-header',
                 'name' => 'Kaprodi',
-                'role' => 'Kaprodi'
+                'role' => ['Kaprodi', 'Dosen']
             ],
             [
                 'name' => 'Approval Mahasiswa Kaprodi',
@@ -382,7 +403,7 @@ class MenuHelper
                 'permission' => 'approval_mhs_kaprodi.view'
             ],
             [
-                'name' => 'Data Mahasiswa Magang',
+                'name' => 'Data Mahasiswa Kaprodi',
                 'route' => 'mahasiswa_magang_kaprodi',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_mahasiswa_magang_kaprodi.view'
@@ -390,17 +411,17 @@ class MenuHelper
             //dosen
             [
                 'type' => 'menu-header',
-                'name' => 'Dosen',
-                'role' => 'Dosen'
+                'name' => 'Dosen Wali',
+                'role' => ['Kaprodi', 'Dosen']
             ],
             [
-                'name' => 'Approval Mahasiswa',
-                'route' => 'approval_mahasiswa',
+                'name' => 'Approval Mahasiswa Dosen',
+                'route' => 'approval_mahasiswa_doswal',
                 'icon' => 'ti-briefcase',
                 'permission' => 'approval_mhs_doswal.view'
             ],
             [
-                'name' => 'Data Mahasiswa Magang',
+                'name' => 'Data Mahasiswa Dosen',
                 'route' => 'mahasiswa_magang_dosen',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_mahasiswa_magang_dosen.view'

@@ -77,7 +77,9 @@ class PermissionSeeder extends Seeder
         ];
         $permission['Kaprodi'] = [
             'approval_mhs_kaprodi.view',
-            'data_mahasiswa_magang_kaprodi.view'
+            'data_mahasiswa_magang_kaprodi.view',
+            'approval_mhs_doswal.view',
+            'data_mahasiswa_magang_dosen.view'
         ];
 
         foreach ($permission as $key => $value) {
