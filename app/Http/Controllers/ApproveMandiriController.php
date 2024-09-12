@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
 
@@ -17,7 +18,10 @@ class ApproveMandiriController extends Controller
 {
     public function __construct()
     {
-       
+       $this->middleware(function ( $request, $next) {
+            Cache::forget('pengajuan_magang_count');
+            return $next($request);
+       })->only(['approved', 'rejected']);
     }
     /**
      * Display a listing of the resource.
@@ -140,7 +144,16 @@ class ApproveMandiriController extends Controller
             }
 
             DB::commit();
-            return Response::success(null, 'Berhasil menyetujui Pengajuan Magang.');
+
+            $result['pengajuan_magang_count'] = Cache::remember('pengajuan_magang_count', 30, function () {
+                return PendaftaranMagang::whereIn('current_step', [
+                    PendaftaranMagangStatusEnum::PENDING,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+                ])->count();
+            });
+
+            return Response::success($result, 'Berhasil menyetujui Pengajuan Magang.');
         } catch (Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
@@ -180,7 +193,14 @@ class ApproveMandiriController extends Controller
             $data->history_approval = json_encode($history_approval_);
             $data->save();
 
-            return Response::success(null, 'Berhasil menolak pengajuan.');
+            $result['pengajuan_magang_count'] = Cache::remember('pengajuan_magang_count', 30, function () {
+                return PendaftaranMagang::whereIn('current_step', [
+                    PendaftaranMagangStatusEnum::PENDING,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+                ])->count();
+            });
+            return Response::success($result, 'Berhasil menolak pengajuan.');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }

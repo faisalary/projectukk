@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 class MenuHelper
 {
 
-    public static function getInstance()
+    public static function getInstance($additional = null)
     {
         $user = auth()->user();
         if (!Cache::has('data_menu_'. $user->roles[0]->name)) {
@@ -20,7 +20,8 @@ class MenuHelper
 
         $data = Cache::get('data_menu_'. $user->roles[0]->name);
         $data = self::specialCase($data);
-        $result = self::menuMaker($data);
+
+        $result = self::menuMaker($data, $additional);
 
         return $result;
     }
@@ -81,7 +82,7 @@ class MenuHelper
         return $data;
     }
 
-    private static function menuMaker($data)
+    private static function menuMaker($data, $additional = null)
     {
         $menu = '';
         foreach ($data as $key => $value) {
@@ -123,6 +124,9 @@ class MenuHelper
                 $menu .= '<a href="' . route($value['route']) . '" class="menu-link">';
                 $menu .= '<i class="menu-icon tf-icons ti ' . $value['icon'] . '"></i>';
                 $menu .= '<div>' . $value['name'] . '</div>';
+                if (isset($additional[$value['route'] . '_count']) && $additional[$value['route'] . '_count'] > 0) {
+                    $menu .= '<div id="'. $value['route'] . '_count' .'" class="badge bg-label-primary rounded-pill ms-auto">' . $additional[$value['route'] . '_count'] . '</div>';
+                }
                 $menu .= '</a>';
                 $menu .= '</li>';
             }

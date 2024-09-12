@@ -199,6 +199,8 @@
 
         $('input.dt-checkboxes').prop('checked', false);
 
+        settingBadgeCount(response.data.pengajuan_magang_count);
+
         $('.table').each(function () {
             $(this).DataTable().ajax.reload();
         });
@@ -215,9 +217,19 @@
         modal.find('form').attr('action', '');
         modal.modal('hide');
 
+        settingBadgeCount(response.data.pengajuan_magang_count);
+
         $('.table').each(function () {
             $(this).DataTable().ajax.reload();
         });
+    }
+
+    function settingBadgeCount(total) {
+        if (total > 0) {
+            $('#pengajuan_magang_count').html(total);
+        } else {
+            $('#pengajuan_magang_count').attr('hidden', true);
+        }
     }
 </script>
 @endsection
