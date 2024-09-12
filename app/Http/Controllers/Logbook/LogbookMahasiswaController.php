@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Logbook;
 
 use App\Enums\LogbookWeeklyStatus;
 use App\Models\Logbook;
+use App\Models\PrintLogbook;
 use Carbon\CarbonPeriod;
 use App\Helpers\Response;
 use App\Models\LogbookDay;
@@ -73,8 +74,9 @@ class LogbookMahasiswaController extends LogbookController
         $data['percentage']= self::percentage($data['filled_days'], $data['total_days']);
 
         $data['periode_magang'] = Carbon::parse($data['data']->startdate_magang)->translatedFormat('d F Y') . ' - ' . Carbon::parse($data['data']->enddate_magang)->translatedFormat('d F Y');
-        
-        return view('logbook.logbook', $data);
+        $data['print_logbook'] = LogbookDay::select('activity','emoticon','date')->get();
+
+        return view('logbook.logbook',$data);
     }
 
     public function detail(Request $request, $id)
@@ -456,5 +458,11 @@ class LogbookMahasiswaController extends LogbookController
             $filledDays += $logbook->logbookDay->whereNotNull('activity')->count();
         }
         return $filledDays;
+    }
+
+    public function printLogbook()
+    {
+        $print_logbook = LogbookDay::select('activity','emoticon','date')->get();
+        return view('logbook.logbook_print',compact('print_logbook'));
     }
 }
