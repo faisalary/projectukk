@@ -118,6 +118,7 @@ Route::prefix('kegiatan-saya')->middleware('role:Mahasiswa')->group(function () 
         Route::post('change-logbook-type/{id_logbook_week}', 'changeLogbookType')->name('.change_type');
         Route::post('create-logbook-daily/{id_logbook_week}', 'storeLogbookDaily')->name('.create_logbook_daily');
         Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
+        Route::get('print_logbook','printLogbook')->name('.print_logbook');
 
         Route::post('apply-logbook/{id_logbook_week}', 'applyLogbook')->name('.apply_logbook');
     });
