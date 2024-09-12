@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Helpers\Response;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -11,7 +10,6 @@ use App\Models\PendaftaranMagang;
 use App\Models\DokumenPendaftaranMagang;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
-use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ApprovalMahasiswaController extends Controller
 {

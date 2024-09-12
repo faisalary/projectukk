@@ -12,6 +12,15 @@ class DataMahasiswaMagangDosenController extends DataMahasiswaMagangController
     public function __construct()
     {
         parent::__construct();
+
+        $this->middleware(function ( $request, $next ) {
+            $user = auth()->user();
+            if (!$user->can('permission:data_mahasiswa_magang_dosen.view') && count($user->dosen->mahasiswaDiampu) == 0) {
+                abort(403);
+            }
+
+            return $next($request);
+        })->only(['index', 'getData']);
     }
 
     public function index() {

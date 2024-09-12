@@ -27,6 +27,7 @@ class MenuHelper
 
     private static function specialCase($data) {
         $user = auth()->user();
+        // menu pemb akademik akan muncul ketika mempunyai mahasiswa yang dibimbing
         if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && count($user->dosen->mahasiswaBimbingan) == 0) {
             $data = array_filter($data, function($item) {
                 $result = false;
@@ -40,7 +41,8 @@ class MenuHelper
             });
         }
 
-        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && count($user->dosen->mahasiswaDiampu) == 0) {
+        // menu dosen wali akan muncul ketika mempunyai mahasiswa yang diampu
+        if ($user->hasAnyRole(['Kaprodi']) && count($user->dosen->mahasiswaDiampu) == 0) {
             $data = array_filter($data, function($item) {
                 $result = false;
                 if (isset($item['type']) && $item['type'] == 'menu-header' && $item['name'] != 'Dosen Wali') {

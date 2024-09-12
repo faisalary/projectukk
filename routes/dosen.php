@@ -30,8 +30,8 @@ Route::prefix('approval-mahasiswa-kaprodi')->name('approval_mahasiswa_kaprodi')-
 });
 
 Route::prefix('data-mahasiswa-magang-kaprodi')->name('mahasiswa_magang_kaprodi')->controller(DataMahasiswaMagangKaprodiController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('get-data', 'getData')->name('.get_data');
+    Route::get('/', 'index')->middleware('permission:data_mahasiswa_magang_kaprodi.view');
+    Route::get('get-data', 'getData')->name('.get_data')->middleware('permission:data_mahasiswa_magang_kaprodi.view');
     Route::post('assign-pembimbing-akademik', 'assignPemAkademik')->name('.assign_pem_akademik');
 });
 
