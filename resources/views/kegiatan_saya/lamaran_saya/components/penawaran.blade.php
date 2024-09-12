@@ -12,7 +12,7 @@
                 @if ($item->image)
                     <img src="{{ asset('storage/' . $item->image) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
                 @else
-                    <img src="{{ asset('assets/images/no-pictures.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('assets/images/no-pictures.png') }}">
+                    <img src="{{ asset('app-assets/img/avatars/building.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri" data-default-src="{{ asset('assets/images/no-pictures.png') }}">
                 @endif
             </div>
             <div class="d-flex flex-column justify-content-center ms-2">
