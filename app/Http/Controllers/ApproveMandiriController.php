@@ -57,7 +57,7 @@ class ApproveMandiriController extends Controller
 
         return datatables()->of($pengajuan->get())
             ->addIndexColumn()
-            ->editColumn('namamhs', function ($x) {
+            ->addColumn('nama', function ($x) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span class="fw-bolder">' .$x->namamhs. '</span>';
                 $result .= '<small>' .$x->nim. '</small>';
@@ -65,7 +65,7 @@ class ApproveMandiriController extends Controller
 
                 return $result;
             })
-            ->editColumn('intern_position', fn ($x) => $x->namaindustri .'&ensp;-&ensp;'. $x->intern_position)
+            ->addColumn('posisi_magang', fn ($x) => $x->namaindustri .'&ensp;-&ensp;'. $x->intern_position)
             ->addColumn('tgl_magang', function ($x) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span class="text-nowrap">Tanggal Mulai : </span>';
@@ -91,13 +91,13 @@ class ApproveMandiriController extends Controller
             })
             ->addColumn('action', function ($x) {
                 $result = '<div class="d-flex justify-content-center">';
-                $result .= '<a class="cursor-pointer mx-1 text-primary" onclick="approved($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-check"></i></a>';
-                $result .= '<a class="cursor-pointer mx-1 text-danger" onclick="rejected($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
+                $result .= '<a class="cursor-pointer mx-1 text-primary" onclick="approved($(this));" data-namamhs="' . $x->namamhs .'" data-nim="' . $x->nim . '" data-position="' . $x->intern_position . '" data-industri="' . $x->namaindustri . '" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-check"></i></a>';
+                $result .= '<a class="cursor-pointer mx-1 text-danger" onclick="rejected($(this));" data-namamhs="' . $x->namamhs .'" data-nim="' . $x->nim . '" data-position="' . $x->intern_position . '" data-industri="' . $x->namaindustri . '" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
                 $result .= '</div>';
 
                 return $result;
             })
-            ->rawColumns(['namamhs', 'intern_position', 'tgl_magang', 'contact_perusahaan', 'dokumen_spm', 'current_step', 'action'])
+            ->rawColumns(['nama', 'posisi_magang', 'tgl_magang', 'contact_perusahaan', 'dokumen_spm', 'current_step', 'action'])
             ->make(true);
     }
     
@@ -105,7 +105,7 @@ class ApproveMandiriController extends Controller
     {
         $request->validate([
             'data_id' => 'required|array||exists:pendaftaran_magang,id_pendaftaran',
-            'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
+            // 'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
         ], [
             'data_id.required' => 'Data harus dipilih',
             'data_id.array' => 'Data harus berupa array',
@@ -127,20 +127,20 @@ class ApproveMandiriController extends Controller
 
             DB::beginTransaction();
 
-            $file = null;
-            if ($request->hasFile('file')) {
-                $file = Storage::put('dokumen_spm', $request->file('file'));
-            }
+            // $file = null;
+            // if ($request->hasFile('file')) {
+            //     $file = Storage::put('dokumen_spm', $request->file('file'));
+            // }
 
             $user = auth()->user();
             foreach ($data as $key => $value) {
-                $value->dokumen_spm = $file;
+                // $value->dokumen_spm = $file;
                 $value->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
                 $value->saveHistoryApproval()->save();
             }
 
             DB::commit();
-            return Response::success(null, 'Berhasil mengirim Surat Pengantar Magang.');
+            return Response::success(null, 'Berhasil menyetujui Pengajuan Magang.');
         } catch (Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
