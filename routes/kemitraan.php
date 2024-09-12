@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelolaMitraController;
 use App\Http\Controllers\MasterEmailController;
+// 2 ini
 use App\Http\Controllers\MitraJadwalController;
 use App\Http\Controllers\JadwalSeleksiController;
+// kyknya gak kepake ya?
 use App\Http\Controllers\InformasiMitraController;
 use App\Http\Controllers\LowonganMagangController;
 use App\Http\Controllers\ProfileCompanyController;
@@ -33,6 +35,8 @@ Route::prefix('lowongan-magang')->controller(LowonganMagangController::class)->g
         Route::get('/detail/{id}', 'detailInformasi')->name('.detail');
         Route::get('/get-data/{id}', 'getDataDetailInformasi')->name('.get_data');
         Route::post('update-status/{id}', 'updateStatusPelamar')->name('.update_status');
+        Route::get('get-kandidat/{tahap}', 'getKandidat')->name('.get_kandidat');
+        Route::post('set-jadwal/{id}', 'setJadwal')->name('.set_jadwal');
     });
     Route::prefix('kelola-lowongan')->name('kelola_lowongan')->group(function () {
         Route::get('/', 'index');
@@ -76,15 +80,15 @@ Route::prefix('anggota-tim')->name('pegawaiindustri')->controller(PegawaiIndustr
     Route::post('/status/{id}', 'status')->name('.status');
 });
 
-Route::prefix('jadwal-seleksi-mitra')->name('jadwal_seleksi')->controller(JadwalSeleksiController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('get-data', 'getData')->name('.get_data');
-    Route::get('detail/{id}', 'detail')->name('.detail');
-    Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
-    Route::get('detail/{id_lowongan}/mahasiswa/{id_pendaftaran}', 'detailMahasiswa')->name('.detail_mahasiswa');
-    Route::post('detail/{id}/set-jadwal', 'setJadwal')->name('.set_jadwal');
-    Route::post('detail/approval/{id}', 'approval')->name('.approval');
-});
+// Route::prefix('jadwal-seleksi-mitra')->name('jadwal_seleksi')->controller(JadwalSeleksiController::class)->group(function () {
+//     Route::get('/', 'index');
+//     Route::get('get-data', 'getData')->name('.get_data');
+//     Route::get('detail/{id}', 'detail')->name('.detail');
+//     Route::get('detail/get-data/{id}', 'getDetailData')->name('.get_data_detail');
+//     Route::get('detail/{id_lowongan}/mahasiswa/{id_pendaftaran}', 'detailMahasiswa')->name('.detail_mahasiswa');
+//     Route::post('detail/{id}/set-jadwal', 'setJadwal')->name('.set_jadwal');
+//     Route::post('detail/approval/{id}', 'approval')->name('.approval');
+// });
 
 // Route::prefix('jadwal-seleksi')->group(function () {
 

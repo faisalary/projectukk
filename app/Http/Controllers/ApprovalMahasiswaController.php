@@ -106,7 +106,8 @@ class ApprovalMahasiswaController extends Controller
         try {
             $validate = Validator::make($request->all(), [
                 'status' => 'required|in:approved,rejected',
-                'reason' => 'required_if:status,rejected'
+                // 'reason' => 'required_if:status,rejected',
+                'reason' => 'nullable',
             ], ['reason.required_if' => 'Alasan harus diisi.']);
     
             if ($validate->fails()) {
@@ -127,7 +128,7 @@ class ApprovalMahasiswaController extends Controller
                 $pendaftaranMahasiswa->reason_reject = $request->reason;
                 $message = 'Pendaftaran mahasiswa rejected.';
             }
-            $pendaftaranMahasiswa->save();
+            $pendaftaranMahasiswa->saveHistoryApproval()->save();
 
             return Response::success(null, $message);
         } catch (\Exception $e) {

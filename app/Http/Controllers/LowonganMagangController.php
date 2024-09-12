@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use stdClass;
 use Exception;
 use App\Models\Sertif;
+use App\Models\Seleksi;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
 use App\Models\Education;
-use App\Models\MhsMagang;
 use App\Models\Experience;
+use App\Mail\MailContainer;
 use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
+use App\Jobs\SendMailIndustri;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
-use App\Mail\EmailJadwalSeleksi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\RejectionPenawaranLowongan;
+use App\Models\DokumenPendaftaranMagang;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Enums\TemplateEmailListProsesEnum;
 use App\Http\Requests\LowonganMagangRequest;
-use App\Models\DokumenPendaftaranMagang;
 
 class LowonganMagangController extends Controller
 {
@@ -50,6 +51,14 @@ class LowonganMagangController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
         ];
+
+        $this->rejected = [
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ];
     }
 
     public function indexInformasi(Request $request) {
@@ -63,16 +72,7 @@ class LowonganMagangController extends Controller
 
         $lowonganMagang = $this->my_lowongan_magang;
 
-        $rejected = [
-            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
-            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
-        ];
-
-        $lowongan_magang = $lowonganMagang->map(function ($item) use ($rejected) {
+        $lowongan_magang = $lowonganMagang->map(function ($item) {
             $total_pelamar = $item->total_pelamar;
             $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
@@ -85,7 +85,7 @@ class LowonganMagangController extends Controller
                     $countProsesSeleksi++;
                 } else if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) == $this->valid_step[$data->current_step]) {
                     $countPenawaran++;
-                } else if (in_array($data->current_step, $rejected)) {
+                } else if (in_array($data->current_step, $this->rejected)) {
                     $countRejected++;
                 }
             }
@@ -126,6 +126,7 @@ class LowonganMagangController extends Controller
 
     public function detailInformasi(Request $request, $id) {
 
+        //for detail pelamar card
         if ($request->ajax()) {
             $this->getPendaftarMagang(function ($query) use ($id, $request) {
                 return $query->where('pendaftaran_magang.id_lowongan', $id)->where('pendaftaran_magang.id_pendaftaran', $request->data_id);
@@ -139,24 +140,23 @@ class LowonganMagangController extends Controller
             $data['dokumen_pendukung'] = Sertif::where('nim', $data['pendaftar']->nim)->orderBy('startdate', 'desc')->get();
             $data['dokumen_syarat'] = DokumenPendaftaranMagang::join('document_syarat', 'dokumen_pendaftaran_magang.id_document', '=', 'document_syarat.id_document')
                 ->where('id_pendaftaran', $request->data_id)->get();
+            $data['onScreening'] = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
 
             $view = view('company/lowongan_magang/components/card_detail_pelamar', $data)->render();
             return Response::success([
                 'view' => $view,
                 'id_pendaftar' => $data['pendaftar']->id_pendaftaran,
-                'current_step' => $data['pendaftar']->current_step
+                'current_step' => $data['pendaftar']->current_step,
             ], 'Success');
         }
 
+        //for table
         $data['lowongan'] = $this->my_lowongan_magang->first();
-
-        $data['tab'] = [
-            'screening' => ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM],
-        ];
+        $data['total_pelamar'] = $data['lowongan']->total_pelamar->count();
 
         $data['listStatus'][] = ['value' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM, 'label' => 'Screening'];
         for ($i = 0; $i < ($data['lowongan']->tahapan_seleksi + 1); $i++) {
-            $data['tab']['tahap_' . $i] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'icon' => 'ti ti-device-desktop-analytics', 'table' => array_search($i, $this->valid_step)];
+            $tahap_valid[] = ['label' => 'Seleksi Tahap ' . ($i + 1), 'table' => array_search($i, $this->valid_step)];
             $data['listStatus'][] = ['value' => array_search($i, $this->valid_step), 'label' => 'Seleksi Tahap ' . ($i + 1)];
         }
 
@@ -166,19 +166,77 @@ class LowonganMagangController extends Controller
             ['value' => 'rejected', 'label' => 'Ditolak'],
         );
 
+        $data['tab']['screening'] = ['label' => 'Screening', 'icon' => 'ti ti-files', 'table' => PendaftaranMagangStatusEnum::APPROVED_BY_LKM];
+        $data['tab']['tahap'] = ['label' => 'Seleksi', 'icon' => 'ti ti-device-desktop-analytics', 'table' => 'all_seleksi', 'tahap_valid' => $tahap_valid];
         $data['tab']['penawaran'] = ['label' => 'Penawaran', 'icon' => 'ti ti-writing-sign', 'table' => array_search(($data['lowongan']->tahapan_seleksi + 1), $this->valid_step)];
         $data['tab']['diterima'] = ['label' => 'Diterima', 'icon' => 'ti ti-user-check', 'table' => PendaftaranMagangStatusEnum::APPROVED_PENAWARAN];
         $data['tab']['ditolak'] = ['label' => 'Ditolak', 'icon' => 'ti ti-user-x', 'table' => 'all_rejected'];
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
-        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+        $data['date_confirm_closing'] = isset($data['lowongan']->date_confirm_closing) ? ('<span class="text-primary">' . Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y') . '</span>') : '<span class="text-danger">Belum Diatur</span>';
+        
+        $data['tahapValid'] = $tahap_valid;
+        $data['afterScreening'] = PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1;
 
         // menjalakan rejection lowongan
-        dispatch(new RejectionPenawaranLowongan($data['lowongan']));
+        RejectionPenawaranLowongan::dispatchSync($data['lowongan']);
         // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
+    }
+
+    public function getKandidat(Request $request, $tahap) {
+        $this->getPendaftarMagang(function ($query) use ($tahap) {
+            return $query->where('current_step', $tahap);
+        });
+        $pendaftar = $this->my_pendaftar_magang;
+        $data = [];
+        foreach ($pendaftar as $key => $value) {
+            $data[$value->id_pendaftaran] = $value->namamhs;
+        }
+
+        return Response::success($data, 'Success');
+    }
+
+    public function setJadwal(Request $request, $id) {
+        $request->validate([
+            'tahapan_seleksi' => 'required|numeric',
+            'kandidat' => 'required|array',
+            'kandidat.*' => 'required|uuid',
+            'mulai_date' => 'required|date',
+            'selesai_date' => 'required|date',
+        ],[
+            'kandidat.required' => 'Kandidat tidak boleh kosong',
+            'kandidat.*.required' => 'Kandidat tidak boleh kosong',
+            'kandidat.*.uuid' => 'Kandidat tidak valid',
+            'mulai_date.required' => 'Tanggal mulai tidak boleh kosong',
+            'selesai_date.required' => 'Tanggal selesai tidak boleh kosong',
+            'tahapan_seleksi.required' => 'Tahapan seleksi tidak boleh kosong',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            foreach ($request->kandidat as $key => $value) {
+                Seleksi::updateOrCreate(
+                    [
+                        'id_pendaftaran' => $value,
+                        'tahapan_seleksi' => $request->tahapan_seleksi
+                    ],
+                    [
+                        'start_date' => Carbon::parse($request->mulai_date)->format('Y-m-d H:i:s'),
+                        'end_date' => Carbon::parse($request->selesai_date)->format('Y-m-d H:i:s')
+                    ]
+                );
+            }
+            dispatch(new SendMailIndustri(auth()->user(), 'penjadwalan_seleksi', $request->kandidat));
+
+            DB::commit();
+            return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     public function getDataDetailInformasi(Request $request, $id) {
@@ -192,12 +250,13 @@ class LowonganMagangController extends Controller
         $inArray .= implode(',', [
             array_search(($lowongan->tahapan_seleksi + 1), $this->valid_step),
             PendaftaranMagangStatusEnum::APPROVED_PENAWARAN,
-            'all_rejected'
+            'all_rejected',
+            'all_seleksi'
         ]);
 
+        $tahap = $lowongan->tahapan_seleksi;
         $request->validate(['type' => 'required|' . $inArray]);
-
-        $this->getPendaftarMagang(function ($query) use ($id, $request) {
+        $this->getPendaftarMagang(function ($query) use ($id, $request, $tahap) {
             $query = $query->where('pendaftaran_magang.id_lowongan', $id);
 
             if ($request->type == 'all_rejected') {
@@ -208,14 +267,19 @@ class LowonganMagangController extends Controller
                     PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
                     PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
                 ]);
-            } else {
+            }elseif($request->type == 'all_seleksi') {
+                for ($i = 0; $i < ($tahap + 1); $i++) {
+                    $tahap_valid[] = array_search($i, $this->valid_step);
+                }
+                $query = $query->whereIn('current_step', $tahap_valid);
+            }else{
                 $query = $query->where('current_step', $request->type);
             }
 
             return $query;
         });
 
-        return datatables()->of($this->my_pendaftar_magang)
+        $datatables = datatables()->of($this->my_pendaftar_magang)
         ->addIndexColumn()
         ->editColumn('namamhs', function ($data) {
             $result = '<div class="d-flex flex-column align-items-start">';
@@ -224,14 +288,6 @@ class LowonganMagangController extends Controller
             $result .= '</div>';
             return $result;
         })
-        ->editColumn('nohpmhs', fn ($data) => '<span class="text-nowrap">' . $data->nohpmhs . '</span>')
-        ->editColumn('emailmhs', fn ($data) => '<span class="text-nowrap">' . $data->emailmhs . '</span>')
-        ->editColumn('tanggaldaftar', function ($data) {
-            return '<span class="text-nowrap">' . Carbon::parse($data->tanggaldaftar)->format('d F Y') . '</span>';
-        })
-        ->editColumn('namaprodi', fn ($data) => '<span class="text-nowrap">' . $data->namaprodi . '</span>')
-        ->editColumn('namafakultas', fn ($data) => '<span class="text-nowrap">' . $data->namafakultas . '</span>')
-        ->editColumn('namauniv', fn ($data) => '<span class="text-nowrap">' . $data->namauniv . '</span>')
         ->editColumn('current_step', function ($data) {
             if ($data->current_step == array_search(($data->tahapan_seleksi + 1), $this->valid_step)) {
                 $status = ['title' => 'Penawaran', 'color' => 'info'];
@@ -241,15 +297,60 @@ class LowonganMagangController extends Controller
 
             return '<div class="d-flex justify-content-center"><span class="badge bg-label-' . $status['color'] . '">'. $status['title'] .'</span></div>';
         })
-        ->addColumn('action', function ($data) {
+        ->editColumn('nohpmhs', function ($data) {
+            $result = '<div class="d-flex flex-column align-items-start">';
+            $result .= '<span class="text-nowrap">' . $data->nohpmhs . '</span>';
+            $result .= '<span class="text-nowrap">' .$data->emailmhs. '</span>';
+            $result .= '</div>';
+            return $result;
+        })
+        ->editColumn('namaprodi', fn ($data) => '<span class="text-nowrap">' . $data->namaprodi . '</span>')
+        ->editColumn('namauniv', function ($data) {
+            $result = '<div class="d-flex flex-column align-items-start">';
+            $result .= '<span class="text-nowrap">' . $data->namauniv . '</span>';
+            $result .= '<span class="text-nowrap">' .$data->namafakultas. '</span>';
+            $result .= '</div>';
+            return $result;
+        })
+        ->editColumn('tanggaldaftar', function ($data) {
+            return '<span class="text-nowrap">' . Carbon::parse($data->tanggaldaftar)->format('d F Y') . '</span>';
+        })
+        ->editColumn('tanggalseleksi', function ($data) use ($lowongan) {
+            $seleksiDefault = SeleksiTahap::where('id_lowongan', $lowongan->id_lowongan)->get();
+            $result = '<div class="d-flex flex-column align-items-start">';
+            foreach($seleksiDefault as $key => $value) {
+                $seleksiCustom = Seleksi::where('id_pendaftaran', $data->id_pendaftaran)->where('tahapan_seleksi', $key+1);
+                if($seleksiCustom->exists()) {
+                    $seleksiCustom = $seleksiCustom->first();
+                    $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap ". ($key + 1). '</span>';
+                    $result .= '<span class="text-nowrap">' .Carbon::parse($seleksiCustom->start_date)->format('d F Y') . ' - ' . Carbon::parse($seleksiCustom->end_date)->format('d F Y') . '</span>';
+                }else{
+                    $result .= '<span class="fw-semibold text-nowrap mt-1">' ."Tahap ". ($key + 1). '</span>';
+                    $result .= '<span class="text-nowrap">' .Carbon::parse($value->start_date)->format('d F Y') . ' - ' . Carbon::parse($value->end_date)->format('d F Y') . '</span>';
+                }
+            }
+            return $result;
+        })
+        ->addColumn('action', function ($data) use ($lowongan) {
+            for ($i = 0; $i < ($lowongan->tahapan_seleksi + 1); $i++) {
+                $tahap_valid[] = array_search($i, $this->valid_step);
+            }
             $result = '<div class="d-flex justify-content-center">';
+            if(in_array($data->current_step, $tahap_valid)) {
+                $result .= '<a class="cursor-pointer text-primary me-2" onclick="seleksiLulus($(this))" data-id="'.$data->id_pendaftaran.'" data-status="'.$data->current_step.'"><i class="ti ti-circle-check"></i></a>';
+                $result .= '<a class="cursor-pointer text-danger" onclick="seleksiLulus($(this))" data-id="'.$data->id_pendaftaran.'" data-status="rejected"><i class="ti ti-circle-x"></i></a>';
+                $result .= '</div>';
+                $result .= '<div class="d-flex justify-content-center">';
+            }
+            $result .= '<a class="cursor-pointer text-warning me-2" onclick="emailSent($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-mail"></i></a>';
             $result .= '<a class="cursor-pointer text-primary" onclick="detailInfo($(this))" data-id="'.$data->id_pendaftaran.'"><i class="ti ti-file-invoice"></i></a>';
             $result .= '</div>';
 
             return $result;
-        })
-        ->rawColumns([
-            'namamhs', 'nohpmhs', 'emailmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action'
+        });
+      
+        return $datatables->rawColumns([
+            'namamhs', 'nohpmhs', 'tanggaldaftar', 'namaprodi', 'namafakultas', 'namauniv', 'current_step', 'action', 'tanggalseleksi'
         ])
         ->make(true);
     }
@@ -287,11 +388,11 @@ class LowonganMagangController extends Controller
             }
 
             $file = null;
-            if ($request->hasFile('file')) {
+            $statusPicked = $request->status;
+            if (($statusPicked == $last_seleksi || $statusPicked == 'rejected') && $request->hasFile('file')) {
                 $file = Storage::put('berkas_mitra', $request->file('file'));
             }
 
-            $statusPicked = $request->status;
             if ($request->status == 'rejected') {
                 if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_LKM) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
@@ -304,13 +405,20 @@ class LowonganMagangController extends Controller
                 }
             }
 
-            $pendaftar->update([
-                'current_step' => $statusPicked,
-                'file_document_mitra' => $file
-            ]);
+            $pendaftar->current_step = $statusPicked;
+            $pendaftar->file_document_mitra = $file;
+
+            $pendaftar->saveHistoryApproval()->save();
 
             $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
-            dispatch(new SendMailJob($pendaftar->emailmhs, new EmailJadwalSeleksi($pendaftar)));
+            $proses = TemplateEmailListProsesEnum::LOLOS_SELEKSI;
+            if ($statusPicked == $last_seleksi) {
+                $proses = TemplateEmailListProsesEnum::DITERIMA_MAGANG;
+            } else if ($request->status == 'rejected') {
+                $proses = TemplateEmailListProsesEnum::TIDAK_LOLOS_SELEKSI;
+            }
+
+            dispatch(new SendMailIndustri(auth()->user(), $proses, $id));
 
             return Response::success([
                 'id_pendaftar' => $pendaftar->id_pendaftaran,

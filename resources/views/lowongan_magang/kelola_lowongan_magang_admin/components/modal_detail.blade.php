@@ -21,19 +21,20 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="mulai_magang">Mulai Magang<span class="text-danger">*</span></label>
-                            <input type="text" name="mulai_magang" id="mulai_magang" class="form-control flatpickr-date">
+                            <input type="text" name="mulai_magang" id="mulai_magang" class="form-control flatpickr-date cursor-pointer">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group col-6">
                             <label for="selesai_magang">Akhir Magang<span class="text-danger">*</span></label>
-                            <input type="text" name="selesai_magang" id="selesai_magang" class="form-control flatpickr-date">
+                            <input type="text" name="selesai_magang" id="selesai_magang" class="form-control flatpickr-date cursor-pointer">
                             <div class="invalid-feedback"></div>
                         </div>
+                        <div class="mt-3"></div>
                         @foreach ($lowongan->jenjang_pendidikan as $key => $item)
                         <div class="form-group col-12 mb-3">
                             <label for="prodi-{{ $item }}" class="form-label">Masukkan Program Studi relevan - {{ $item }}<span class="text-danger">*</span></label>
                             <select class="form-select select2" id="prodi-{{ $item }}" name="prodi_{{ $item }}[]" multiple="multiple" data-placeholder="Pilih Prodi">
-                                @foreach($prodi as $p)
+                                @foreach($prodi->where('jenjang', $item) as $p)
                                 <option value="{{$p->id_prodi}}">{{$p->namaprodi}}</option>
                                 @endforeach
                             </select>

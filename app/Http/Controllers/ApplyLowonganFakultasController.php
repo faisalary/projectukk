@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LowonganMagangStatusEnum;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Industri;
@@ -94,7 +95,11 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)
+        ->where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+
+        if (!$lowongandetail) return redirect()->back();
+
         $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
 
         if($kuotaPenuh){
@@ -104,7 +109,17 @@ class ApplyLowonganFakultasController extends Controller
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
 
-        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)->get();
+        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
+        ->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])->get();
         $registeredTwo = $registered->count() >= 2 ? true : false;
         $registeredThis = $registered->where('id_lowongan', $id)->first();
 
@@ -120,7 +135,17 @@ class ApplyLowonganFakultasController extends Controller
             $daftarDua = false;
         }
 
-        $magang = PendaftaranMagang::where('id_lowongan', $id)->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
+        $magang = PendaftaranMagang::where('id_lowongan', $id)->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])
+        ->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
 
         $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
@@ -138,6 +163,9 @@ class ApplyLowonganFakultasController extends Controller
     {
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
+
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)->where('id_lowongan', $id)->first();
+        if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
 
         $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
         ->whereNotIn('current_step', [
@@ -165,8 +193,6 @@ class ApplyLowonganFakultasController extends Controller
             return Response::error(null, 'Data profil belum lengkap', 400);
         }
 
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
-        if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
         $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
         $validateData = ['reason' => 'required|string'];

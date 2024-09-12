@@ -106,6 +106,41 @@
         });
     }
 
+    function adjustmentNilai(e) {
+        let dataId = e.attr('data-id');
+        let modal = $('#modal-adjustment-nilai');
+
+        modal.modal('show');
+        let urlAction = `{{ route('berkas_akhir_magang.fakultas.adjustment_nilai', ['id' => ':id']) }}`.replace(':id', dataId);
+
+        $.ajax({
+            url: `{{ route('berkas_akhir_magang.fakultas') }}`,
+            type: `GET`,
+            data: { section: 'get_data_nilai', data_id: dataId },
+            success: function (res) {
+                modal.find('form').attr('action', urlAction);
+                $.each(res.data, function ( key, value ) {
+                    modal.find('form').find(`[name=${key}]`).val(value).change();
+                });
+            },
+            error: function (err) {
+                showSweetAlert({
+                    type: 'error',
+                    title: 'Gagal',
+                    text: err.responseJSON.message
+                });
+            }
+        });
+    }
+
+    function afterAction(response) {
+        let modal = $('#modal-adjustment-nilai');
+        $('.table').each(function () {
+            $(this).DataTable().ajax.reload();
+        }); 
+        modal.modal('hide');
+    }
+
     function viewMhs(e) {
         let dataId = e.attr('data-id');
         let modal = $('#modalDetail');

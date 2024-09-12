@@ -119,16 +119,16 @@
                                     <tr>
                                         <td class="text-center">1</td>
                                         <td>Pembimbing Lapangan</td>
-                                        <td>{{ $nilai_pemb_lapangan->first()->oleh }}</td>
-                                        <td style="text-align: center;">{{ $config_nilai_akhir->nilai_pemb_lap }}%</td>
-                                        <td style="text-align: center;">{{ ($nilai_pemb_lapangan->sum('nilai') * ($config_nilai_akhir->nilai_pemb_lap / 100)) }}</td>
+                                        <td>{{ $dos_pemb_lapangan }}</td>
+                                        <td style="text-align: center;">{{ isset($config_nilai_akhir) ? ($config_nilai_akhir->nilai_pemb_lap . '%') : 'Not Yet Set' }}</td>
+                                        <td style="text-align: center;">{{ (isset($config_nilai_akhir)) ? ($nilai_pemb_lapangan->sum('nilai') * ($config_nilai_akhir->nilai_pemb_lap / 100)) : 'Not Yet Set' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">2</td>
                                         <td>Pembimbing Akademik</td>
-                                        <td>{{ $nilai_pemb_akademik->first()->oleh }}</td>
-                                        <td style="text-align: center;">{{ $config_nilai_akhir->nilai_pemb_akademik }}%</td>
-                                        <td style="text-align: center;">{{ ($nilai_pemb_akademik->sum('nilai') * ($config_nilai_akhir->nilai_pemb_akademik / 100)) }}</td>
+                                        <td>{{ $dos_pemb_akademik }}</td>
+                                        <td style="text-align: center;">{{ isset($config_nilai_akhir) ? ($config_nilai_akhir->nilai_pemb_akademik . '%') : 'Not Yet Set' }}</td>
+                                        <td style="text-align: center;">{{ (isset($config_nilai_akhir)) ?  ($nilai_pemb_akademik->sum('nilai') * ($config_nilai_akhir->nilai_pemb_akademik / 100)) : 'Not Yet Set' }}</td>
                                     </tr>
                                     @if (isset($mhs_magang->nilai_adjust))
                                     <tr>

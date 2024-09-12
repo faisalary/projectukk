@@ -10,7 +10,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-12 form-group">
-                            <label for="reason">Alasan penolakan data pendaftaran mahasiswa (Opsional)<span style="color: red;">*</span></label>
+                            <label for="reason">Alasan penolakan data pendaftaran mahasiswa (Opsional)</label>
                             <textarea class="form-control" name="reason" id="reason" rows="4"></textarea>
                             <div class="invalid-feedback"></div>
                         </div>

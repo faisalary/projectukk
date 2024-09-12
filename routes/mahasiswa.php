@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApproveMandiriController;
 use App\Http\Controllers\NilaiMahasiswaController;
 use App\Http\Controllers\SimpanLowonganController;
-use App\Http\Controllers\LogBookMahasiswaController;
 use App\Http\Controllers\ProfileMahasiswaController;
 use App\Http\Controllers\StatusLamaranMagangController;
 use App\Http\Controllers\BerkasAkhir\BerkasMahasiswaController;
 use App\Http\Controllers\BerkasAkhir\BerkasAkhirMagangController;
 use App\Http\Controllers\DataMahasiswaMagang\DataMahasiswaMagangController;
-use App\Http\Controllers\Logbook\LogbookMahasiswaController as LogbookLogbookMahasiswaController;
+use App\Http\Controllers\Logbook\LogbookLKMController;
+use App\Http\Controllers\Logbook\LogbookMahasiswaController;
 
 Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveMandiriController::class)->group(function () {
     Route::get('/', 'index');
@@ -32,6 +32,7 @@ Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(Be
         Route::get('detail-mhs/{id}', 'getDataMhs')->name('.detail_mhs');
         Route::get('detail-file/{id}', 'detailFile')->name('.detail_file');
         Route::post('approval-file/{id}', 'approvalBerkas')->name('.approval_file');
+        Route::post('adjustment-nilai/{id}', 'adjustmentNilai')->name('.adjustment_nilai');
     });
     Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
         Route::get('/', 'viewMagangMandiri');
@@ -50,14 +51,18 @@ Route::prefix('nilai-mahasiswa')->name('nilai_mahasiswa')->controller(NilaiMahas
     });
 });
 
-Route::prefix('logbook-mahasiswa')->name('logbook_magang')->controller(LogBookMahasiswaController::class)->group(function () {
+Route::prefix('logbook-mahasiswa')->name('logbook_magang')->controller(LogbookLKMController::class)->group(function () {
     Route::prefix('magang-fakultas')->name('.fakultas')->group(function () {
-        Route::get('/', 'viewMagangFakultas');
-        Route::get('detail', 'detailMagangFakultas')->name('.detail');
-        Route::get('view', 'showMagangFakultas')->name('.view');
+        Route::get('/', 'viewList');
+        Route::get('get-data', 'getData')->name('.get_data');
+        Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
     });
-
-    Route::prefix('magang-mandiri')->name('.mandiri')->group(function () {
+    
+    //dummy
+    Route::prefix('magang-mandiri')->name('.mandiri')->controller(App\Http\Controllers\LogBookMahasiswaController::class)->group(function () {
+        Route::get('/', 'viewList');
+        Route::get('get-data', 'getData')->name('.get_data');
+        Route::get('logbook/{id}', 'viewLogbook')->name('.logbook');
         Route::get('/', 'viewMagangMandiri');
         Route::get('detail', 'detailMagangMandiri')->name('.detail');
         Route::get('view', 'showMagangMandiri')->name('.view');
@@ -92,7 +97,7 @@ Route::prefix('unduh-profile')->name('unduh-profile.')->group(function () {
 
 // kegiatan saya -> landing page
 
-Route::prefix('kegiatan-saya')->group(function () {
+Route::prefix('kegiatan-saya')->middleware('role:Mahasiswa')->group(function () {
     Route::prefix('status-lamaran-magang')->name('lamaran_saya')->controller(StatusLamaranMagangController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
@@ -105,7 +110,7 @@ Route::prefix('kegiatan-saya')->group(function () {
         Route::post('save/{id}', 'simpanLowongan')->name('.save');
     });
 
-    Route::prefix('logbook')->name('logbook')->controller(LogbookLogbookMahasiswaController::class)->group(function () {
+    Route::prefix('logbook')->name('logbook')->controller(LogbookMahasiswaController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('detail/{id}', 'detail')->name('.detail');
 

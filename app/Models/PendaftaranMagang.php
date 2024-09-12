@@ -15,11 +15,27 @@ class PendaftaranMagang extends Model
     
     public $timestamps = false;
     protected $primaryKey = 'id_pendaftaran';
-    protected $keyType = 'string';
-    protected $casts = [
-        'tanggaldaftar' => 'datetime',
-        'approvetime' => 'datetime'
-    ];
+
+    protected $casts = ['tanggaldaftar' => 'datetime'];
+
+
+    /**
+     * Set value current step first.
+     */
+    public function saveHistoryApproval()
+    {
+        $user = auth()->user();
+        $history = json_decode($this->history_approval, true) ?? [];
+        $history_approval = [
+            'id_user' => $user->id,
+            'name' => $user->name,
+            'time' => now()->format('Y-m-d H:i:s'),
+            'status' => $this->current_step
+        ];
+        array_push($history, $history_approval);
+        $this->history_approval = json_encode($history);
+        return $this;
+    }
 
     public function lowongan_magang()
     {
@@ -36,5 +52,10 @@ class PendaftaranMagang extends Model
     public function mahasiswa_magang()
     {
         return $this->hasOne(MhsMagang::class, 'id_pendaftaran');
+    }
+
+    public function seleksi_lowongan()
+    {
+        return $this->hasMany(Seleksi::class, 'id_pendaftaran', 'id_pendaftaran');
     }
 }

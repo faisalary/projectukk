@@ -63,7 +63,8 @@ class KomponenPenilaianController extends Controller
 
     public function show(Request $request)
     {
-        $penilaian = KomponenNilai::select('komponen_nilai.*', 'jenis_magang.namajenis', 'jenis_magang.id_jenismagang')
+        // $penilaian = KomponenNilai::select('komponen_nilai.*', 'jenis_magang.namajenis', 'jenis_magang.id_jenismagang', 'jenis_magang.durasimagang')
+        $penilaian = KomponenNilai::select('komponen_nilai.*', DB::raw('CONCAT(jenis_magang.namajenis, " (", jenis_magang.durasimagang,")") as namajenis'))
         ->join('jenis_magang', 'komponen_nilai.id_jenismagang', '=', 'jenis_magang.id_jenismagang');
 
         if ($request->id == 'table-akademik') {
@@ -74,11 +75,8 @@ class KomponenPenilaianController extends Controller
             return Response::error(null, 'Not Found.', 404);
         }
 
-        return DataTables::of($penilaian->orderBy('jenis_magang.namajenis', "asc")->get())
+        return DataTables::of($penilaian->orderBy('namajenis', "asc")->get())
             ->addIndexColumn()
-            ->editColumn('jenis_magang', function ($row) {
-                return $row->namajenis;
-            })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
                     return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>Active</div></div>";

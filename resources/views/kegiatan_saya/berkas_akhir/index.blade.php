@@ -8,11 +8,6 @@
     <div class="col-md-12 col-12 mt-3">
         <h4 class="fw-bold"><span class="text-muted fw-light">Kegiatan Saya /</span> Berkas Akhir Magang</h4>
     </div>
-
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        Mohon unggah dokumen di bawah ini sebelum tanggal 28 Juni 2024!
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <div id="container-berkas">
         @include('kegiatan_saya/berkas_akhir/components/card')
     </div>

@@ -1,3 +1,11 @@
+@if($pendaftar->current_step == ($onScreening ?? false))
+<div class="bg-white" style="position: sticky; top: 0; z-index:1;">
+    <div class="alert alert-warning mb-0" role="alert">
+        <i class="ti ti-alert-triangle ti-xs"></i>
+        <span style="padding-left:10px; padding-top:5px; color:#322F3D;"> Scroll ke bawah untuk membaca secara seksama dan menindaklanjuti.</span>
+    </div>
+</div>
+@endif
 <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center">
     <div class="text-center my-4" style="overflow: hidden; width: 100px; height: 100px;">
         @if ($pendaftar->profile_picture)
@@ -160,3 +168,10 @@
         @endforeach
     </div>
 </div>
+@if($pendaftar->current_step == ($onScreening ?? false))
+<hr>
+<div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-success me-2 w-100" onclick="screeningLulus(true)">Lolos</button>
+    <button type="button" class="btn btn-danger w-100" onclick="screeningLulus(false)">Gagal</button>
+</div>
+@endif
