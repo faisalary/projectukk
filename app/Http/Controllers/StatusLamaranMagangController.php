@@ -10,15 +10,19 @@ use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\RejectionPenawaranLowongan;
 use App\Enums\PendaftaranMagangStatusEnum;
 use App\Enums\PendaftaranMagangStatusStepEnum;
+use App\Models\DokumenPendaftaranMagang;
 
 class StatusLamaranMagangController extends Controller
 {
     public function __construct(){
         $this->valid_step = [
+            PendaftaranMagangStatusEnum::PENDING => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL => 0,
             PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI => 0,
+            PendaftaranMagangStatusEnum::APPROVED_BY_LKM => 0,
             PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1 => 0,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1 => 1,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
@@ -29,6 +33,7 @@ class StatusLamaranMagangController extends Controller
         $this->rejected_step = [
             PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
             PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
             PendaftaranMagangStatusEnum::REJECTED_SCREENING,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
             PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
@@ -54,6 +59,20 @@ class StatusLamaranMagangController extends Controller
             }
             return self::getDataCard($request);
         }
+
+        $this->getDataLamaran(function ($query) {
+            return $query->select('pendaftaran_magang.id_lowongan', 'pendaftaran_magang.current_step');
+        });
+        
+        $getData = $this->lamaran_magang->whereIn('current_step', [
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3
+        ]);
+        
+        // menjalakan rejection lowongan
+        RejectionPenawaranLowongan::dispatchSync($getData->pluck('id_lowongan')->toArray());
+        // -----------------------------
 
         $this->getDataLamaran()->setUpBadgeDataLamaran();
 
@@ -99,14 +118,24 @@ class StatusLamaranMagangController extends Controller
             if (!$pendaftaran) {
                 return Response::error(null, 'Pendaftaran Not Found.');
             }
+
+            if ($this->valid_step[$pendaftaran->current_step] != ($pendaftaran->tahapan_seleksi + 1)) {
+                return Response::error(null, 'Tidak dalam tahap penawaran.');
+            }
     
             DB::beginTransaction();
             $pendaftaran->current_step = ($request->status == 'approved') ? PendaftaranMagangStatusEnum::APPROVED_PENAWARAN : PendaftaranMagangStatusEnum::REJECTED_PENAWARAN;
             $pendaftaran->save();
 
             if ($request->status == 'approved') {
+                PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)
+                ->where('id_pendaftaran', '!=', $id)->update([
+                    'current_step' => PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+                ]);
+
                 MhsMagang::create([
                     'id_pendaftaran' => $pendaftaran->id_pendaftaran,
+                    'jenis_magang' => $pendaftaran->id_jenismagang,
                     'startdate_magang' => $request->startdate,
                     'enddate_magang' => $request->enddate,
                 ]);
@@ -123,13 +152,19 @@ class StatusLamaranMagangController extends Controller
     public function detail($id) {
         $mahasiswa = auth()->user()->mahasiswa;
 
-        $pelamar = $this->getDataLamaran(function ($query) use ($id) {
-            return $query->where('pendaftaran_magang.id_pendaftaran', $id);
+        $data['pelamar'] = $this->getDataLamaran(function ($query) use ($id, $mahasiswa) {
+            return $query->where('pendaftaran_magang.id_pendaftaran', $id)->where('pendaftaran_magang.nim', $mahasiswa->nim);
         })->setUpStepStatusLamaran()->setUpBadgeDataLamaran()->lamaran_magang->first();
 
-        $pelamar->lowongan_tersedia = ($pelamar->enddate > Carbon::now()) ? true : false;
+        if (!$data['pelamar']) return redirect()->route('lamaran_saya');
 
-        return view('kegiatan_saya.lamaran_saya.detail', compact('pelamar'));
+        $data['pelamar']->lowongan_tersedia = ($data['pelamar']->enddate > Carbon::now()) ? true : false;
+
+        $data['dokumen_pendaftaran'] = DokumenPendaftaranMagang::select('document_syarat.namadocument', 'dokumen_pendaftaran_magang.file')
+        ->join('document_syarat', 'document_syarat.id_document', 'dokumen_pendaftaran_magang.id_document')
+        ->where('dokumen_pendaftaran_magang.id_pendaftaran', $data['pelamar']->id_pendaftaran)->get();
+
+        return view('kegiatan_saya.lamaran_saya.detail', $data);
     }
 
     public function detailLowongan($id) {
@@ -242,6 +277,8 @@ class StatusLamaranMagangController extends Controller
 
     private function setUpStepStatusLamaran()
     {
+        if (count($this->lamaran_magang) == 0) return $this;
+
         $data = [
             ['title' => '1', 'desc' => 'Pra-seleksi oleh internal', 'active' => false, 'isReject' => false],
             ['title' => '2', 'desc' => 'Screening', 'active' => false, 'isReject' => false],
@@ -302,6 +339,8 @@ class StatusLamaranMagangController extends Controller
     }
 
     private function setUpBadgeDataLamaran() {
+
+        if (count($this->lamaran_magang) == 0) return $this;
 
         $this->lamaran_magang->transform(function ($item) {
             if ($item->current_step == array_search(($item->tahapan_seleksi + 1), $this->valid_step)) {

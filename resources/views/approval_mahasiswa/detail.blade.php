@@ -16,118 +16,38 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body p-5">
-                <div class="d-flex justify-content-start">
-                    <div class="text-center" style="overflow: hidden; width: 125px; height: 125px;">
-                        @if ($data->profile_picture)
-                        <img src="{{ asset('storage/' . $data->profile_picture) }}" alt="user-avatar" class="d-block" width="125" id="image_industri">
-                        @else
-                        <img src="{{ asset('app-assets/img/avatars/user.png') }}" alt="user-avatar" class="d-block" width="125" id="image_industri">    
-                        @endif
-                    </div>
-                    <div class="d-flex flex-column justify-content-center ms-4">
-                        <h2 class="fw-bolder mb-1">{{ $data->namamhs }}</h2>
-                        <h6>{{ $data->intern_position }}</h6>
-                    </div>
-                </div>
-                <div class="border-bottom">
-                    <h4 class="fw-semibold mt-5">Mengapa Saya harus diterima?</h4>
-                    <p>{{ $data->reason_aplicant }}</p>
-                </div>
-                <div class="border-bottom mt-3">
-                    <h4 class="fw-semibold">Informasi Pribadi</h4>
-                    <h5 class="mb-1">Deskripsi Diri</h5>
-                    <p>{{ $data->deskripsi_diri }}</p>
-                    <table class="mb-3" style="width:100%;">
-                        <tbody>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">NIM</span> : {{ $data->nim }}</td>
-                                <td class="pb-2"><span class="fw-bolder">TAK</span> : {{ $data->tak }}</td>  
-                            </tr>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">Universitas</span> : {{ $data->namauniv }}</td>
-                                <td class="pb-2"><span class="fw-bolder">Email</span> : {{ $data->email }}</td>
-                            </tr>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">Fakultas</span> : {{ $data->namafakultas }}</td>
-                                <td class="pb-2"><span class="fw-bolder">No. Telp</span> : {{ $data->nohpmhs }}</td>
-                            </tr>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">Angkatan</span> : {{ $data->angkatan }}</td>
-                                <td class="pb-2"><span class="fw-bolder">Jenis Kelamin</span> : {{ $data->gender }}</td>
-                            </tr>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">IPK</span> : {{ $data->ipk }}</td>
-                                <td class="pb-2"><span class="fw-bolder">Alamat</span> : {{ $data->alamatmhs }}</td>
-                            </tr>
-                            <tr>
-                                <td class="pb-2"><span class="fw-bolder">EPRT</span> : {{ $data->eprt }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="border-bottom mt-3">
-                    <h4>Pendidikan</h4>
-                    <ul class="timeline ps-3 mb-0">
-                        @foreach ($data->education as $key => $item)
-                        <li class="ps-5 timeline-item timeline-item-transparent {{ ($key+1) == count($data->education) ? 'border-0' : '' }}">
-                            <span class="timeline-point timeline-point-primary"></span>
-                            <div class="timeline-event pe-0">
-                                <div class="timeline-header mb-2">
-                                    <h5 class="fw-bolder mb-0">{{ $item->name_intitutions }}</h5>
-                                </div>
-                                <p class="mb-1">{{ $item->tingkat }}</p>
-                                <p class="mb-1">{{ $item->nilai }}</p>
-                                <small>{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</small>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="border-bottom mt-3">
-                    <h4>Pengalaman</h4>
-                    <ul class="timeline ps-3 mb-0">
-                        @foreach ($data->experience as $key => $item)
-                        <li class="ps-5 timeline-item timeline-item-transparent {{ ($key+1) == count($data->experience) ? 'border-0' : '' }}">
-                            <span class="timeline-point timeline-point-primary"></span>
-                            <div class="timeline-event pe-0">
-                                <div class="timeline-header mb-2">
-                                    <h5 class="fw-bolder mb-0">{{ $item->name_intitutions }}</h5>
-                                </div>
-                                <p class="mb-1">{{ $item->posisi }}</p>
-                                <small>{{ Carbon\Carbon::parse($item->startdate)->format('F Y') }}&ensp;-&ensp;{{ Carbon\Carbon::parse($item->enddate)->format('F Y') }}</small>
-                                <p>{{ $item->deskripsi }}</p>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="border-bottom mt-3">
-                    <h4 class="mb-3">Keahlian</h4>
-                    <div class="d-flex justify-content-start mb-3">
-                        @foreach (json_decode($data->skills, true) as $item)
-                        <span class="badge rounded-pill mx-1 bg-primary">{{ $item }}</span>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <h4>Dokumen Pendukung</h4>
-                    <div class="d-flex flex-column">
-                        <div class="d-flex justify-content-start mb-1">
-                            <h6 class="mb-0">Portofolio</h6>
-                        </div>
-                        <a class="text-primary" href="{{ url('storage/'.$data->portofolio) }}" target="_blank">Portofolio.pdf</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('mahasiswa/card_detail_mhs')
     </div>
 </div>
 @endsection
 
 @section('page_script')
-<script>
-    
+<script>    
+    document.getElementById('unduhProfileBtn').addEventListener('click', function() {
+        const nim = '{{ $data->nim }}';
+        window.open('/unduh-profile/' + nim, '_blank');
+    });  
+
+    const buttons = document.querySelectorAll('.show-btn');
+
+    buttons.forEach(button => {
+       button.addEventListener('click', showMore);
+    });
+
+    function showMore() {
+            var content = this.previousElementSibling;
+            var isShowMore = this.innerText === "Show More";
+            var deskripsi = $(this).attr("data-deskripsi");
+
+            var lessContent = deskripsi.substring(0, 250) + "...";            
+
+            if (isShowMore) {
+                content.innerHTML = deskripsi;
+                this.innerText = "Show Less";
+            } else {
+                content.innerHTML = lessContent;
+                this.innerText = "Show More";
+            }
+        }
 </script>
 @endsection

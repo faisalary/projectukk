@@ -37,19 +37,6 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col-12 d-flex justify-content-between">
-                            <div class="form-group">
-                                <label for="startdate_pengumpulan_berkas" class="form-label">Tanggal Mulai Pengumpulan Berkas<span style="color: red;">*</span></label>
-                                <input type="text" class="form-control flatpickr-date" id="startdate_pengumpulan_berkas" name="startdate_pengumpulan_berkas" placeholder="YYYY-MM-DD" readonly="readonly">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="mt-5" style="text-align: center; background-color: black; width: 14px; height: 1px; margin: 0 20px"></div>
-                            <div class="form-group">
-                                <label for="enddate_pengumpulan_berkas" class="form-label">Tanggal Akhir Pengumpulan Berkas<span style="color: red;">*</span></label>
-                                <input type="text" class="form-control flatpickr-date" id="enddate_pengumpulan_berkas" name="enddate_pengumpulan_berkas" placeholder="YYYY-MM-DD" readonly="readonly">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

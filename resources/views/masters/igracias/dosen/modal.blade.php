@@ -181,9 +181,9 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <a href="{{ asset('template-excel/template-import-data-master-dosen.xlsx') }}" class="btn btn-primary w-100" id="download-template">Download Template</a>
+                            <a href="{{ asset('template-excel/Template_Import_Dosen.xlsx') }}" class="btn btn-primary w-100" id="download-template">Download Template</a>
                         </div>
-                    </div>          
+                    </div>
                     <input type="file" class="form-control mt-3" id="basic-default-upload-file" required=""
                         name="import">
                 </div>

@@ -44,27 +44,27 @@
             </a>
         </li>
     @endcan
-    @can('approval_mhs_doswal.view')
+    @canany(['approval_mhs_kaprodi.view', 'data_mahasiswa_magang_kaprodi.view'])
         <li>
-            <a class="dropdown-item" href="{{ route('approval_mahasiswa') }}">
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa_kaprodi') }}">
+                <i class="ti ti-database me-2 ti-sm"></i>
+                <span class="align-middle">Dashboard Kaprodi</span>
+            </a>
+        </li>
+    @endcanany
+    @canany(['approval_mhs_doswal.view', 'data_mahasiswa_magang_dosen.view'])
+        <li>
+            <a class="dropdown-item" href="{{ route('approval_mahasiswa_doswal') }}">
                 <i class="ti ti-database me-2 ti-sm"></i>
                 <span class="align-middle">Dashboard Dosen</span>
             </a>
         </li>
-    @endcan
+    @endcanany
     @can('kelola_magang_pemb_lapangan.view')
         <li>
             <a class="dropdown-item" href="{{ route('kelola_magang_pemb_lapangan') }}">
                 <i class="ti ti-database me-2 ti-sm"></i>
                 <span class="align-middle">Dashboard</span>
-            </a>
-        </li>
-    @endcan
-    @can('approval_mhs_kaprodi.view')
-        <li>
-            <a class="dropdown-item" href="{{ route('approval_mahasiswa_kaprodi') }}">
-                <i class="ti ti-database me-2 ti-sm"></i>
-                <span class="align-middle">Dashboard Kaprodi</span>
             </a>
         </li>
     @endcan

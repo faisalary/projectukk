@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\MasterEmailRequest;
-use App\Models\email_template;
 use Exception;
+use App\Helpers\Response;
 use Illuminate\Http\Request;
+use App\Models\EmailTemplate;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MasterEmailRequest;
+use App\Enums\TemplateEmailListProsesEnum;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class MasterEmailController extends Controller
@@ -17,16 +19,28 @@ class MasterEmailController extends Controller
      */
     public function index()
     {
-        $email = email_template::all();
         return view('company.master_email.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            if (in_array($request->proses, array_values(TemplateEmailListProsesEnum::getConstants()))) {
+                $listTag = TemplateEmailListProsesEnum::getListTag($request->proses);
+                $data['list_tag'] = $listTag;
+                $result = view('company/master_email/components/list_tag', $data)->render();
+            }
+
+            return Response::success($result, 'Success.');
+        }
+
+        $data['proses'] = TemplateEmailListProsesEnum::_getWithLabel();
+        $data['urlAction'] = route('template_email.store');
+
+        return view('company/master_email/form', $data);
     }
 
     /**
@@ -34,35 +48,22 @@ class MasterEmailController extends Controller
      */
     public function store(MasterEmailRequest $request)
     {
-        // return $request->file('attachment')->store('post');
         try {
+            $user = auth()->user();
+            $peg_industri = $user->pegawai_industri;
 
-            $email = email_template::create([
+            $email = EmailTemplate::create(
+            [
+                'proses' => $request->proses,
+                'id_industri' => $peg_industri->id_industri,
                 'subject_email' => $request->subject_email,
-                'headline_email' => $request->headline_email,
+                'headline_email' => TemplateEmailListProsesEnum::_getWithLabel($request->proses)['title'],
                 'content_email' => $request->content_email,
-                'attachment' => $request->attachment->store('post'),
-                'status' => true,
             ]);
-            return response()->json([
-                'error' => false,
-                'message' => 'Template successfully Created!',
-                'modal' => '#modal-email',
-                'table' => '#table-master-email'
-            ]);
-             
-            if ($request->file('attachment')){
-                $file = $request->file('attachment');
-                $filename = $file->getClientOriginalName();
-                $file->move(public_path('public/post'),$filename);
-                $attachment['attachment'] = $filename;
-            }
-            
+
+            return Response::success(null, 'Berhasil menyimpan template email.');
         } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::errorCatch($e);
         }
 
         
@@ -73,100 +74,60 @@ class MasterEmailController extends Controller
      */
     public function show()
     {
-        $email = email_template::orderBy('subject_email', 'asc')->get();
+        $user = auth()->user();
+        $peg_industri = $user->pegawai_industri;
 
-        return DataTables::of($email)
+        $email = EmailTemplate::where('id_industri', $peg_industri->id_industri)->get();
+
+        return datatables()->of($email)
             ->addIndexColumn()
-            ->editColumn('status', function ($row) {
-                if ($row->status == 1) {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-danger'>" . "Inactive" . "</div></div>";
-                } else {
-                    return "<div class='text-center'><div class='badge rounded-pill bg-label-success'>" . "Active" . "</div></div>";
-                }
+            ->editColumn('proses', function ($x) {
+                return TemplateEmailListProsesEnum::_getWithLabel($x->proses)['title'];
             })
-            ->addColumn('attachment', function ($row) {
-                return "<a href='" . asset('storage/'.$row->attachment) . "' data-id='{$row->id_email_template}'>Attachment</a>";
+            ->editColumn('subject_email', function ($x) {
+                return $x->subject_email ?? '<span class="fst-italic">- Not Yet Set -</span>';
             })
-            
-            ->addColumn('action', function ($row) {
-                $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
-                $color = ($row->status) ? "danger" : "success";
-
-                $url = route('master-email.status', $row->id_email_template);
-                $btn = "<a data-bs-toggle='modal' data-id='{$row->id_email_template}' onclick=edit($(this)) class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-edit' ></i>
-                <a data-url='{$url}' class='btn-icon update-status text-{$color} waves-effect waves-light'><i class='tf-icons ti {$icon}'></i></a>";
-
-                return $btn;
+            ->addColumn('aksi', function ($x) {
+                $result = '<div class="d-flex justify-content-center">';
+                $result .= '<a class="cursor-pointer mx-1 text-warning" href="'.route('template_email.edit', ['id' => $x->id_email_template]).'"><i class="ti ti-edit"></i></a>';
+                $result .= '</div>';
+                return $result;
             })
-            ->rawColumns(['action', 'status','attachment'])
-
+            ->rawColumns(['proses', 'subject_email', 'aksi'])
             ->make(true);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $email = email_template::where('id_email_template', $id)->first();
-        return $email;
+    public function edit($id) {
+        $user = auth()->user();
+        $peg_industri = $user->pegawai_industri;
+
+        $data['existing'] = EmailTemplate::where('id_email_template', $id)
+        ->where('id_industri', $peg_industri->id_industri)->first();
+        $data['proses'] = TemplateEmailListProsesEnum::_getWithLabel();
+        $data['urlAction'] = route('template_email.update', $id);
+
+        return view('company/master_email/form', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(MasterEmailRequest $request, string $id)
+    public function update(MasterEmailRequest $request, $id)
     {
         try {
-            $email = email_template::where('id_email_template', $id)->first();
+            $user = auth()->user();
+            $peg_industri = $user->pegawai_industri;
 
-            $email->subject_email = $request->subject_email;
-            $email->headline_email = $request->headline_email;
-            $email->content_email = $request->content_email;
-            if (!empty($request->attachment)) {
-                $email->attachment = $request->attachment->store('post');
+            $email = EmailTemplate::where('id_email_template', $id)->where('id_industri', $peg_industri->id_industri)->first();
+            if ($email) {
+                $email->update([
+                    'proses' => $request->proses,
+                    'subject_email' => $request->subject_email,
+                    'headline_email' => TemplateEmailListProsesEnum::_getWithLabel($request->proses)['title'],
+                    'content_email' => $request->content_email
+                ]);
             }
-            
-            $email->save();
 
-            return response()->json([
-                'error' => false,
-                'message' => 'Email Template successfully Updated!',
-                'modal' => '#modal-email',
-                'table' => '#table-master-email'
-            ]);
-
-            
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-            ]);
+            return Response::success(null, 'Berhasil mengupdate template email.');
+        } catch (\Exception $e) {
+            return Response::errorCatch($e);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function status(string $id)
-    {
-        try {
-            $email = email_template::where('id_email_template', $id)->first();
-            $email->status = ($email->status) ? false : true;
-            $email->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Status Universitas successfully Updated!',
-                'modal' => '#modal-email',
-                'table' => '#table-master-email'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => true,
-                
-            ]);
-        }
-    }
-
 }

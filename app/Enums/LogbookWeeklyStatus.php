@@ -14,7 +14,7 @@ class LogbookWeeklyStatus
     public static function getWithLabel($status = null)
     {
         $data = [
-            self::NOT_YET_APPLIED => ['title' => 'Belum diajukan', 'color' => 'warning'],
+            self::NOT_YET_APPLIED => ['title' => 'Belum diajukan', 'color' => 'secondary'],
             self::PENDING => ['title' => 'Belum disetujui', 'color' => 'warning'],
             self::APPROVED => ['title' => 'Disetujui', 'color' => 'success'],
             self::REJECTED => ['title' => 'Ditolak', 'color' => 'danger'],

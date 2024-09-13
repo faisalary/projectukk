@@ -147,7 +147,7 @@ class mahasiswaController extends Controller
                 return $btn;
             })
             ->rawColumns([
-                'action', 'status', 'name', 'univ_fakultas', 'tunggakan_bpp', 
+                'action', 'status', 'name', 'univ_fakultas', 'tunggakan_bpp',
                 'ipk', 'eprt', 'tak', 'angkatan', 'contact'
             ])
             ->make(true);
@@ -177,7 +177,7 @@ class mahasiswaController extends Controller
                 'name' => $request->namamhs,
                 'email' => $request->emailmhs
             ]);
-            
+
             DB::commit();
             return Response::success(null, 'Mahasiswa successfully Add!');
         } catch (Exception $e) {
@@ -185,7 +185,7 @@ class mahasiswaController extends Controller
             return Response::errorCatch($e);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -241,6 +241,8 @@ class mahasiswaController extends Controller
 
         $data = $import->getResults();
 
+        // dd($data);
+
         if ($data['newData']->isEmpty() && $data['duplicatedData']->isEmpty() && $data['failedData']->isEmpty()) {
 
             if (file_exists($filePath)) {
@@ -273,7 +275,7 @@ class mahasiswaController extends Controller
     }
 
     public function storeImport(Request $request)
-    {        
+    {
         try {
             $records = json_decode($request->newData, true);
 
@@ -312,9 +314,9 @@ class mahasiswaController extends Controller
     }
 
     public function download_failed_data(Request $request)
-    {        
-        $failedData = json_decode($request->failedData, true);        
-        $export = new DataFailedExport('template-import-data-master-mahasiswa', $failedData, 'data_failed_import_mahasiswa');
+    {
+        $failedData = json_decode($request->failedData, true);
+        $export = new DataFailedExport('Template_Import_Mahasiswa', $failedData, 'data_failed_import_mahasiswa');
         return $export->download();
     }
 }

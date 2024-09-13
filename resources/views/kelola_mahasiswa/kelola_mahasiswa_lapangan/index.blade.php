@@ -31,8 +31,8 @@
                         <th style="min-width:150px;">POSISI MAGANG</th>
                         <th style="min-width:150px;">DURASI MAGANG</th>
                         <th style="min-width:150px;">JENIS MAGANG</th>
-                        <th style="min-width:100px;">NILAI AKHIR</th>
-                        <th style="min-width:100px;">INDEKS</th>
+                        <th style="min-width:100px;text-align:center;">NILAI AKHIR</th>
+                        <th style="min-width:100px;text-align:center;">INDEKS</th>
                         <th style="min-width:150px;text-align:center;">STATUS MAGANG</th>
                         <th style="min-width:130px;text-align:center;">AKSI</th>
                     </tr>
@@ -131,32 +131,6 @@
 
 @section('page_script')
 <script>
-    var jsonData = [{
-            "nomor": "1",
-            "nama": "Arvin Bagaskara",
-            "program_studi": "D3 Sistem Informasi",
-            "posisi_magang": "UI/UX Designer",
-            "durasi_magang": "2 Semester",
-            "jenis_magang": "Magang Fakultas",
-            "nilai_akhir": "85",
-            "indeks": "A",
-            "status": "<span class='badge bg-label-success'>Aktif</span>",
-            "aksi": "<a href='/kelola/mahasiswa-magang/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/logbook/mahasiswa' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDipulangkan'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-        },
-        {
-            "nomor": "2",
-            "nama": "Arvin Bagaskara",
-            "program_studi": "D3 Sistem Informasi",
-            "posisi_magang": "UI/UX Designer",
-            "durasi_magang": "2 Semester",
-            "jenis_magang": "Magang Fakultas",
-            "nilai_akhir": "85",
-            "indeks": "A",
-            "status": "<span class='badge bg-label-danger'>Non-Aktif</span>",
-            "aksi": "<a href='/kelola/mahasiswa-magang/input' class='btn-icon text-warning waves-effect waves-light'><i class='tf-icons ti ti-clipboard-list'></i></a> <a href='/logbook/mahasiswa' class='btn-icon text-info waves-effect waves-light'><i class='tf-icons ti ti-book'></i></a><a data-bs-toggle='modal' data-bs-target='#modalDipulangkan'  class='btn-icon text-danger waves-effect waves-light'><i class='tf-icons ti ti-circle-x'></i></a>"
-        },
-    ];
-
     var table = $('#table-lapangan').DataTable({
         ajax: `{{ route('kelola_magang_pemb_lapangan.get_data') }}`,
         scrollX: true,

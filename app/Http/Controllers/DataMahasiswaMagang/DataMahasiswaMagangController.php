@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\DataMahasiswaMagang;
 
+use App\Helpers\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Models\MhsMagang;
 
 class DataMahasiswaMagangController extends Controller
 {
@@ -35,19 +39,27 @@ class DataMahasiswaMagangController extends Controller
     }
 
     public function getDataTable(Request $request) {
-        if ($request->type == 'diterima') {
-            $this->getPendaftaranMagang(function ($query) {
-                return $query->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
-                    ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
-                    ->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
-            });
-        } else if ($request->type == 'belum_magang') {
-            $this->getPendaftaranMagang(function ($query) {
-                return $query->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
-                    ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang')
-                    ->where('pendaftaran_magang.current_step', '!=', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
-            });
-        }
+        $request->validate(['type' => ['required', 'in:diterima,belum_magang,belum_spm']]);
+
+        $this->getPendaftaranMagang(function ($query) use ($request) {
+            $query = $query->select(
+                'pendaftaran_magang.id_pendaftaran', 'pendaftaran_magang.current_step', 'lowongan_magang.tahapan_seleksi', 'mahasiswa.namamhs', 'mahasiswa.nim', 'program_studi.namaprodi', 'jenis_magang.namajenis', 'industri.namaindustri', 
+                'lowongan_magang.intern_position', 'mhs_magang.startdate_magang', 'mhs_magang.enddate_magang', 'pendaftaran_magang.file_document_mitra', 
+                'pendaftaran_magang.dokumen_spm', 'pegawai_industri.namapeg', 'pegawai_industri.emailpeg', 'dosen.namadosen', 'dosen.nip', 'mhs_magang.nilai_akhir_magang', 'mhs_magang.indeks_nilai_akhir'
+            )
+                ->join('program_studi', 'mahasiswa.id_prodi', '=', 'program_studi.id_prodi')
+                ->join('jenis_magang', 'lowongan_magang.id_jenismagang', '=', 'jenis_magang.id_jenismagang');
+                
+            if ($request->type == 'diterima') {
+                $query = $query->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+            } else if ($request->type == 'belum_magang') {
+                $query = $query->where('pendaftaran_magang.current_step', '!=', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN);
+            } else if ($request->type == 'belum_spm') {
+                $query = $query->where('pendaftaran_magang.current_step', PendaftaranMagangStatusEnum::APPROVED_PENAWARAN)
+                ->whereNull('pendaftaran_magang.dokumen_spm');
+            }
+            return $query;
+        });
 
         $datatables = datatables()->of($this->pendaftaran_magang)
         ->addIndexColumn()
@@ -60,15 +72,19 @@ class DataMahasiswaMagangController extends Controller
         })
         ->editColumn('namaindustri', fn ($data) => '<span class="text-nowrap">'.$data->namaindustri.'</span>')
         ->editColumn('intern_position', fn ($data) => '<span class="text-nowrap">'.$data->intern_position.'</span>')
-        ->editColumn('file_document_mitra', function ($data) {
+        ->addColumn('file_document', function ($data) {
             $result = '<div class="d-flex flex-column align-items-center">';
 
             if (isset($this->valid_steps[$data->current_step]) && ($data->tahapan_seleksi + 1) <= $this->valid_steps[$data->current_step]) {
-                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penerimaan.pdf</a>';
+                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap text-primary">Bukti Penerimaan.pdf</a>';
             } elseif (in_array($data->current_step, $this->reject_steps)) {
-                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap">Bukti Penolakan.pdf</a>';
+                $result .= '<a href="' .asset('storage/' . $data->file_document_mitra). '" target="_blank" class="text-nowrap text-primary">Bukti Penolakan.pdf</a>';
             } elseif ($data->file_document_mitra == null) {
                 $result .= '<span>-</span>';
+            }
+
+            if ($data->dokumen_spm) {
+                $result .= '<a href="' .url('storage/' . $data->dokumen_spm). '" target="_blank" class="text-nowrap text-primary">Dokumen SPM.pdf</a>';
             }
 
             $result .= '</div>';
@@ -105,9 +121,56 @@ class DataMahasiswaMagangController extends Controller
 
 
         return $datatables->rawColumns([
-            'namamhs', 'namaindustri', 'intern_position', 'file_document_mitra', 'tanggalmagang', 
+            'namamhs', 'namaindustri', 'intern_position', 'file_document', 'tanggalmagang', 
             'pembimbing_lapangan', 'pembimbing_akademik'
         ])->make(true);
+    }
+
+    public function uploadSPM(Request $request) {
+        $request->validate([
+            'id_pendaftaran' => 'required|array|exists:pendaftaran_magang,id_pendaftaran',
+            'dokumen' => ['required', 'mimes:pdf'],
+            'mulai_magang' => ['required'],
+            'selesai_magang' => ['required', function ($attribute, $value, $fail) use ($request) {
+                if (isset($request->mulai_magang) && isset($value)) {
+                    $startDate = Carbon::parse($request->mulai_magang);
+                    $endDate = Carbon::parse($value);
+                    if ($startDate->gt($endDate)) {
+                        $fail('Tanggal Selesai Magang harus setelah tanggal Mulai Magang');
+                    }
+                }
+            }]
+        ], [
+            'id_pendaftaran.required' => 'Pendaftaran harus dipilih',
+            'dokumen.mimes' => 'File harus berformat PDF',
+            'dokumen.required' => 'File harus diunggah',
+            'mulai_magang.required' => 'Mulai Magang harus diisi',
+            'selesai_magang.required' => 'Selesai Magang harus diisi'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $file = null;
+            if ($request->hasFile('dokumen')) {
+                $file = Storage::put('dokumen_spm', $request->dokumen);
+            }
+
+            PendaftaranMagang::whereIn('id_pendaftaran', $request->id_pendaftaran)->update([
+                'dokumen_spm' => $file, 
+            ]);
+
+            MhsMagang::whereIn('id_pendaftaran', $request->id_pendaftaran)->update([
+                'startdate_magang' => Carbon::parse($request->mulai_magang)->format('Y-m-d'),
+                'enddate_magang' => Carbon::parse($request->selesai_magang)->format('Y-m-d'),
+            ]);
+
+            DB::commit();
+            return Response::success(null, 'Berhasil mengunggah dokumen SPM');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Response::errorCatch($e);
+        }
     }
 
     protected function getPendaftaranMagang($additional = null) {
@@ -127,8 +190,30 @@ class DataMahasiswaMagangController extends Controller
 
     private function getViewDesign() {
         $title = 'Data Mahasiswa Magang';
-
         $urlGetData = route('data_mahasiswa.get_data');
+        $isLKM = true;
+
+        $listTable = ['diterima', 'belum_magang', 'belum_spm'];
+        $listTab = [
+            '<li class="nav-item" role="presentation">
+                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-diterima" aria-controls="navs-pills-diterima" aria-selected="true">
+                    <i class="ti ti-user-check"></i>
+                    Diterima
+                </button>
+            </li>',
+            '<li class="nav-item" role="presentation">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-belum_magang" aria-controls="navs-pills-belum_magang" aria-selected="false" tabindex="-1">
+                    <i class="ti ti-user-x"></i>
+                    Belum Magang
+                </button>
+            </li>',
+            '<li class="nav-item" role="presentation">
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-belum_spm" aria-controls="navs-pills-belum_spm" aria-selected="false" tabindex="-1">
+                    <i class="ti ti-upload"></i>
+                    Belum Upload SPM
+                </button>
+            </li>'
+        ];
 
         $diterima = [
             '<th class="text-nowrap">No</th>',
@@ -155,6 +240,16 @@ class DataMahasiswaMagangController extends Controller
             '<th class="text-nowrap text-center">Dokumen</th>'
         ];
 
+        $belum_spm = [
+            '<th class="text-nowrap">No</th>',
+            '<th class="text-nowrap">Nama/Nim</th>',
+            '<th class="text-nowrap">Program Studi</th>',
+            '<th class="text-nowrap">Jenis Magang</th>',
+            '<th class="text-nowrap">Nama Perusahaan</th>',
+            '<th class="text-nowrap">Posisi Magang</th>',
+            '<th class="text-nowrap text-center">Dokumen</th>'
+        ];
+
         $columnsDiterima = "[
             {data: 'DT_RowIndex'},
             {data: 'namamhs'},
@@ -163,7 +258,7 @@ class DataMahasiswaMagangController extends Controller
             {data: 'namaindustri'},
             {data: 'intern_position'},
             {data: 'tanggalmagang'},
-            {data: 'file_document_mitra'},
+            {data: 'file_document'},
             {data: 'pembimbing_lapangan'},
             {data: 'pembimbing_akademik'},
             {data: 'nilai_akhir_magang'},
@@ -177,16 +272,46 @@ class DataMahasiswaMagangController extends Controller
             {data: 'namajenis'},
             {data: 'namaindustri'},
             {data: 'intern_position'},
-            {data: 'file_document_mitra'}
+            {data: 'file_document'}
         ]";
+
+        $columnsBelumSPM = "[
+            {data: 'DT_RowIndex'},
+            {data: 'namamhs'},
+            {data: 'namaprodi'},
+            {data: 'namajenis'},
+            {data: 'namaindustri'},
+            {data: 'intern_position'},
+            {data: 'file_document'}
+        ]";
+
+        $columnDefs = "
+        {
+            targets: 0,
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row, meta) {
+                return `<input type='checkbox' class='dt-checkboxes form-check-input' value='` + row.id_pendaftaran + `'>`;
+            },
+            checkboxes: {
+                selectRow: false,
+                selectAllRender: `<input type='checkbox' class='form-check-input'>`
+            }
+        }";
 
         return compact(
             'title',
             'urlGetData',
+            'isLKM',
+            'listTable',
+            'listTab',
             'diterima', 
             'belum_magang', 
+            'belum_spm', 
             'columnsDiterima', 
-            'columnsBelumMagang'
+            'columnsBelumMagang',
+            'columnsBelumSPM',
+            'columnDefs'
         );
     }
  

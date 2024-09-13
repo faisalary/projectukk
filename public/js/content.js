@@ -106,10 +106,12 @@ function initFormRepeater() {
             var formLabel = $(this).find('.form-label, .form-check-label');
 
             fromControl.each(function (i) {
-                var id = 'form-repeater-' + row + '-' + col;
-                $(fromControl[i]).attr('id', id);
-                $(formLabel[i]).attr('for', id);
-                col++;
+                if (!$(this).hasClass('flatpickr-date')) {
+                    var id = 'form-repeater-' + row + '-' + col;
+                    $(fromControl[i]).attr('id', id);
+                    $(formLabel[i]).attr('for', id);
+                    col++;
+                }
             });
 
             row++;
@@ -117,7 +119,6 @@ function initFormRepeater() {
             // fix select2
             initSelect2();
             // --------------------------------------------
-
 
             $(this).slideDown();
         },
@@ -196,6 +197,9 @@ function sweetAlertConfirm(config, callback) {
     icon = config.icon ?? 'warning';
     confirmButtonText = config.confirmButtonText ?? 'Yes, I do!';
     cancelButtonText = config.cancelButtonText ?? 'No, cancel!';
+    reverseButton = config.reverseButton ?? false;
+    customClassConfirm = config.customClassConfirm ?? 'btn btn-primary me-3';
+    customClassCancel = config.customClassCancel ?? 'btn btn-label-secondary';
 
     return Swal.fire({
         html: '<h3>' + title + '</h3><p>' + text + '</p>',
@@ -204,10 +208,11 @@ function sweetAlertConfirm(config, callback) {
         confirmButtonText: confirmButtonText,
         cancelButtonText: cancelButtonText,
         customClass: {
-            confirmButton: 'btn btn-primary me-3',
-            cancelButton: 'btn btn-label-secondary'
+            confirmButton: customClassConfirm,
+            cancelButton: customClassCancel
         },
-        buttonsStyling: false
+        buttonsStyling: false,
+        reverseButtons: reverseButton
     }).then(function (result) {
         if (result.isConfirmed) callback();
     });

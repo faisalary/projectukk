@@ -83,8 +83,11 @@
     </script>
 
     <script>
+        let formRepeater;
         $('.table').each(function () {
             let dataId = $(this).attr('id');
+
+            formRepeater = $('.form-repeater');
 
             $(this).DataTable({
                 ajax: "{{ route('komponen-penilaian.show') }}?id=" + dataId,
@@ -94,7 +97,7 @@
                 type: 'GET',
                 destroy: true,
                 rowGroup: {
-                    dataSrc: 'jenis_magang'
+                    dataSrc: 'namajenis'
                 },
                 columns: [
                     {
@@ -170,6 +173,7 @@
             modal.find('#container-add-row').show();
             modal.find(".modal-title").html("Tambah Komponen Nilai");
             modal.find('form').attr('action', "{{ route('komponen-penilaian.store') }}");
+            formRepeater.find('[data-repeater-item]').slice(1).empty();                 
         });
     </script>
 @endsection

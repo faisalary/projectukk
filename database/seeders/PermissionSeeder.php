@@ -43,6 +43,7 @@ class PermissionSeeder extends Seeder
             'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
+            'nilai_akhir.view',
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
@@ -63,6 +64,7 @@ class PermissionSeeder extends Seeder
             'profile_perusahaan.update',
             //-------------------
             'assign_pembimbing.view',
+            'template_email.view'
         ];
 
         $permission['Pembimbing Lapangan'] = [
@@ -78,7 +80,9 @@ class PermissionSeeder extends Seeder
         ];
         $permission['Kaprodi'] = [
             'approval_mhs_kaprodi.view',
-            'data_mahasiswa_magang_kaprodi.view'
+            'data_mahasiswa_magang_kaprodi.view',
+            'approval_mhs_doswal.view',
+            'data_mahasiswa_magang_dosen.view'
         ];
 
         foreach ($permission as $key => $value) {

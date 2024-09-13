@@ -99,10 +99,10 @@
     $('.table').each(function () {
         let column = [
             { data: 'DT_RowIndex' },
-            { data: 'namamhs' },
+            { data: 'nama' },
             { data: 'namaprodi' },
             { data: 'namajenis' },
-            { data: 'intern_position' },
+            { data: 'posisi_magang' },
             { data: 'tgl_magang' },
             { data: 'contact_perusahaan' },
             { data: 'alamatindustri' },
@@ -128,7 +128,7 @@
                     searchable: false,
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        return `<input type='checkbox' class='dt-checkboxes form-check-input' value='${row.id_pendaftaran}'>`;
+                        return `<input type='checkbox' class='dt-checkboxes form-check-input' data-namamhs='${row.namamhs}' data-nim='${row.nim}' data-position='${row.intern_position}' data-industri='${row.namaindustri}' value='${row.id_pendaftaran}'>`;
                     },
                     checkboxes: {
                         selectRow: false,
@@ -171,6 +171,7 @@
 
         selectedValue.each(function() {
             modal.find('form').prepend('<input type="hidden" name="data_id[]" value="' + $(this).val() + '">');
+            modal.find('#container-list-mhs').prepend(`<div class="list-group-item ps-1"><span>${$(this).attr('data-position')} (${$(this).attr('data-industri')})</span><br><small> ${$(this).attr('data-namamhs')} (${$(this).attr('data-nim')})</small></div>`);
         });
 
         modal.find('form').attr('action', `{{ route('pengajuan_magang.approved') }}`);
@@ -178,7 +179,9 @@
     }
 
     function approved(e) {
+        $('#modalpersetujuanspm').find('#container-list-mhs').prepend(`<div class="list-group-item ps-1"><span>${e.attr('data-position')} (${e.attr('data-industri')})</span><br><small> ${e.attr('data-namamhs')} (${e.attr('data-nim')})</small></div>`);
         $('#modalpersetujuanspm').modal('show');
+
 
         $('#modalpersetujuanspm form').attr('action', `{{ route('pengajuan_magang.approved') }}`);
         $('#modalpersetujuanspm form').prepend('<input type="hidden" name="data_id[]" value="' + e.attr('data-id') + '">');
@@ -186,6 +189,7 @@
 
     $('#modalpersetujuanspm').on('hide.bs.modal', function() {
         $(this).find('form').find('input[name="data_id[]"]').remove();
+        $(this).find('#container-list-mhs').html(null);
     });
 
     function afterApprove(response) {
@@ -194,6 +198,8 @@
         modal.modal('hide');
 
         $('input.dt-checkboxes').prop('checked', false);
+
+        settingBadgeCount(response.data.pengajuan_magang_count);
 
         $('.table').each(function () {
             $(this).DataTable().ajax.reload();
@@ -211,9 +217,19 @@
         modal.find('form').attr('action', '');
         modal.modal('hide');
 
+        settingBadgeCount(response.data.pengajuan_magang_count);
+
         $('.table').each(function () {
             $(this).DataTable().ajax.reload();
         });
+    }
+
+    function settingBadgeCount(total) {
+        if (total > 0) {
+            $('#pengajuan_magang_count').html(total);
+        } else {
+            $('#pengajuan_magang_count').attr('hidden', true);
+        }
     }
 </script>
 @endsection

@@ -97,24 +97,19 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="mx-auto">Konfirmasi Persetujuan Pengajuan Magang</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="default-form" action="" function-callback="afterApprove">
                 @csrf
                 <div class="modal-body pt-0 pb-0">
-                    <h4 class="text-center">Persetujuan Pengajuan Magang</h4>
-                    <div class="row">
-                        <div class="col form-group">
-                            <label class="form-label" for="berkas">Unggah Surat Pengantar Magang</label>
-                            <input class="form-control" type="file" name="file">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <p style="font-size: smaller; padding-top:10px;">Allowed PDF, JPG, PNG, JPEG. Max size of 2 Mb</p>
-                    </div>
+                    <p class="mb-0 fw-semibold">Apakah anda yakin menyetujui pengajuan magang berikut?</p>
+                    <p>Jika disetujui, pengajuan akan langsung diteruskan ke mitra.</p>
+                    <div class="list-group list-group-flush" id="container-list-mhs"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    <button type="submit" class="btn btn-primary">Ya, Disetujui</button>
                 </div>
             </form>
         </div>

@@ -147,7 +147,7 @@
             });
         }
 
-        $(".modal").on("hide.bs.modal", function() {
+        $("#modalTambahMitra").on("hide.bs.modal", function() {
             let dataLabel = $(this).find('.modal-title').attr('data-label');
             $(this).find('.modal-title').html(dataLabel);
         });
@@ -176,6 +176,8 @@
                                 text: response.message,
                                 icon: 'success'
                             });
+
+                            settingBadgeCount(response.data.kelola_mitra_count);
                         } else {
                             showSweetAlert({
                                 title: 'Gagal!',
@@ -191,38 +193,24 @@
         }
 
         function rejected(e) {
-            $('#modalreject').modal('show');
-            $('#rejected-confirm-button').on('click', function() {
-                btnBlock($(this));
-
-                var alasan = $('#alasan').val();
-
-                $.ajax({
-                    url: `{{ route('kelola_mitra.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id')),
-                    type: "POST",
-                    data: {
-                        alasan: alasan,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        btnBlock($(this), false);
-                        if (!response.error) {
-                            showSweetAlert({
-                                title: 'Berhasil!',
-                                text: response.message,
-                                icon: 'success'
-                            });
-                        } else {
-                            showSweetAlert({
-                                title: 'Gagal!',
-                                text: response.message,
-                                icon: 'error'
-                            });
-                        }
-                        $('#modalreject').modal('hide');
-                    }
-                });
-            });
+            let modal = $('#modalreject');
+            let urlAction = `{{ route('kelola_mitra.rejected', ['id' => ':id']) }}`.replace(':id', e.attr('data-id'));
+            modal.find('form').attr('action', urlAction);
+            modal.modal('show');
         }
+
+        function afterReject(res) {
+            settingBadgeCount(res.data.kelola_mitra_count);
+            loadData();
+            $('#modalreject').modal('hide');
+        }
+
+        function settingBadgeCount(total) {
+        if (total > 0) {
+            $('#kelola_mitra_count').html(total);
+        } else {
+            $('#kelola_mitra_count').attr('hidden', true);
+        }
+    }
     </script>
 @endsection

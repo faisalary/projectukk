@@ -12,7 +12,7 @@ class ProgramStudi extends Model
     public $timestamps = false;
     protected $table = 'program_studi';
     protected $primaryKey = 'id_prodi';
-    protected $fillable = [ 'id_fakultas', 'id_univ','namaprodi'];
+    protected $guarded = [];
     public $keyType = 'string';
 
     public function univ(){

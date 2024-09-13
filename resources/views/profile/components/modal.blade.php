@@ -219,7 +219,7 @@
                                                         <option value="Instagram">Instagram</option>
                                                         <option value="Linkedin">Linkedin</option>
                                                         <option value="Facebook">Facebook</option>
-                                                        <option value="Twiteer">Twiteer</option>
+                                                        <option value="Twitter">Twitter</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
@@ -277,7 +277,6 @@
                             <label for="tingkat" class="form-label">Jenis Pendidikan<span style="color: red;">*</span></label>
                             <select name="tingkat" id="tingkat" class="select2 form-select" data-placeholder="Pilih Tingkat Pendidikan">
                                 <option disabled value="" selected>Pilih Tingkat Pendidikan</option>
-                                <option value="SMP">SMP</option>
                                 <option value="SMA">SMA</option>
                                 <option value="SMK">SMK</option>
                                 <option value="D3">D3</option>
@@ -363,7 +362,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-6 form-group">
-                            <label for="jenis" class="form-label">Jenis Pekerjaan <span style="color: red;">*</span></label>
+                            <label for="jenis" class="form-label">Posisi/Level Pekerjaan <span style="color: red;">*</span></label>
                             <select name="jenis" id="jenis" class="select2 form-select" data-placeholder="Pilih Jenis Pekerjaan" data-tags="true">
                                 <option value="" disabled selected>Pilih Jenis Pekerjaan</option>
                                 <option value="Front End">Front End</option>
@@ -435,7 +434,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 col-md-6 form-group">
-                            <label for="enddate" class="form-label">Tanggal Kadaluwarsa<span style="color: red;">*</span></label>
+                            <label for="enddate" class="form-label">Tanggal Kadaluwarsa</label>
                             <input type="enddate" id="enddate" name="enddate" class="form-control month-picker" placeholder="Month" />
                             <div class="invalid-feedback"></div>
                         </div>

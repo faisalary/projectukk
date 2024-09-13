@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LowonganMagangStatusEnum;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Industri;
 use App\Helpers\Response;
 use App\Models\Education;
 use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\LowonganProdi;
+use App\Models\DocumentSyarat;
 use App\Models\LowonganMagang;
 use App\Models\InformasiPribadi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
-use App\Enums\PendaftaranMagangStatusEnum;
 use App\Models\JenisMagang;
 use App\Models\PekerjaanTersimpan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\DokumenPendaftaranMagang;
+use App\Enums\PendaftaranMagangStatusEnum;
 
 class ApplyLowonganFakultasController extends Controller
 {
@@ -91,7 +95,31 @@ class ApplyLowonganFakultasController extends Controller
     // Detail Lowongan 
     public function lamar(Request $request, $id)
     {
-        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)
+        ->where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
+
+        if (!$lowongandetail) return redirect()->back();
+
+        $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
+
+        if($kuotaPenuh){
+            return redirect()->route('apply_lowongan')->with('error', 'Kuota lowongan sudah penuh');
+        }
+
+        $user = auth()->user();
+        $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
+
+        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
+        ->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])->get();
         $registeredTwo = $registered->count() >= 2 ? true : false;
         $registeredThis = $registered->where('id_lowongan', $id)->first();
 
@@ -107,35 +135,49 @@ class ApplyLowonganFakultasController extends Controller
             $daftarDua = false;
         }
 
-        $auth = Auth::user();
-        $nim = $auth->nim;
+        $magang = PendaftaranMagang::where('id_lowongan', $id)->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])
+        ->where('nim', $mahasiswa->nim)->with('lowongan_magang', 'mahasiswa')->first();
 
-        $mahasiswaprodi = Mahasiswa::with('prodi', 'fakultas', 'univ')->first();
-        $mahasiswa = auth()->user()->mahasiswa;
-        $lowongandetail = LowonganMagang::where('id_lowongan', $id)->with('industri', 'fakultas', 'seleksi_tahap', 'mahasiswa')->first();
-
-        $kuotaPenuh = $lowongandetail->kuota_terisi / $lowongandetail->kuota == 1;
-
-        if($kuotaPenuh){
-            return redirect()->route('apply_lowongan')->with('error', 'Kuota lowongan sudah penuh');
-        }
-
-        $pendaftaran = PendaftaranMagang::where('id_lowongan', $id)->with('lowongan_magang', 'mahasiswa')->get();
-        $magang = $pendaftaran->where('nim', $nim)->first();
+        $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
 
         $urlBack = route('apply_lowongan');
 
         $urlId = $id;
 
-        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+        $persentase = ProfileMahasiswaController::getFullDataProfile()['percentageData']->percentage;
 
-        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'mahasiswaprodi', 'nim', 'pendaftaran', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua'));
+        return view('apply.apply', compact('urlBack', 'lowongandetail', 'mahasiswa', 'magang', 'persentase', 'urlId', 'sudahDaftar', 'daftarDua', 'dokumenPersyaratan'));
     }
 
     // Apply Lamran / Kirim Lamaran
     public function apply(Request $request, $id)
     {
-        $registered = PendaftaranMagang::where('nim', auth()->user()->mahasiswa->nim)->get();
+        $user = auth()->user();
+        $mahasiswa = $user->mahasiswa->load('prodi', 'fakultas', 'univ');
+
+        $lowongandetail = LowonganMagang::where('statusaprove', LowonganMagangStatusEnum::APPROVED)->where('id_lowongan', $id)->first();
+        if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
+
+        $registered = PendaftaranMagang::where('nim', $mahasiswa->nim)
+        ->whereNotIn('current_step', [
+            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
+            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
+            PendaftaranMagangStatusEnum::REJECTED_BY_LKM,
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ])->get();
 
         if($registered->where('id_lowongan', $id)->first()) {
             return Response::error(null, 'Anda sudah mendaftar pada lowongan ini', 400);
@@ -145,46 +187,64 @@ class ApplyLowonganFakultasController extends Controller
             return Response::error(null, 'Anda sudah mendaftar pada 2 lowongan', 400);
         }
 
-        $auth = Auth::user();
-        $persentase = ProfileMahasiswaController::getFullDataProfile($auth->user_id)['percentageData']->percentage;
+        $persentase = ProfileMahasiswaController::getFullDataProfile()['percentageData']->percentage;
 
         if($persentase < 80) {
             return Response::error(null, 'Data profil belum lengkap', 400);
         }
 
-        $request->validate([
-            'porto' => 'mimes:pdf|max:5000',
-            'reason' => 'required|string|max:1000'
-        ], [
-            'porto.mimes' => 'File harus berupa pdf',
-            'porto.max' => 'File melebihi 5 MB',
+        $dokumenPersyaratan = DocumentSyarat::where('id_jenismagang', $lowongandetail->id_jenismagang)->get();
+
+        $validateData = ['reason' => 'required|string'];
+        $validateMsg = [
             'reason.required' => 'Alasan pengajuan harus diisi',
-            'reason.string' => 'Alasan pengajuan harus berupa string',
-            'reason.max' => 'Alasan pengajuan maksimal 1000 karakter'
-        ]);
+        ];
+
+        foreach ($dokumenPersyaratan as $key => $value) {
+            $validateData[str_replace(' ', '_', strtolower($value->namadocument))] = 'required|mimes:pdf,jpg,jpeg,png|max:2000';
+            $validateMsg[str_replace(' ', '_', strtolower($value->namadocument)) . '.required'] = 'File '.ucwords(strtolower($value->namadocument)).' harus diisi';
+            $validateMsg[str_replace(' ', '_', strtolower($value->namadocument)) . '.mimes'] = 'File '.ucwords(strtolower($value->namadocument)).' harus berupa pdf,jpg,jpeg,png';
+            $validateMsg[str_replace(' ', '_', strtolower($value->namadocument)) . '.max'] = 'File '.ucwords(strtolower($value->namadocument)).' melebihi 2 MB';
+        }
+
+        $request->validate($validateData, $validateMsg);
 
         try {
-            $mahasiswa = auth()->user()->mahasiswa;  
-
-            $lowongandetail = LowonganMagang::where('id_lowongan', $id)->first();
-            if (!$lowongandetail) return Response::error(null, 'Lowongan Not Found', 404);
-
-            $file = null;
-            if ($request->hasFile('porto')) {
-                $file = Storage::put('portofolio', $request->porto);
-            }
+            DB::beginTransaction();
 
             $pendaftaran = PendaftaranMagang::create([
                 'id_lowongan' => $id,
                 'nim' => $mahasiswa->nim,
                 'tanggaldaftar' => now(),
                 'current_step' => PendaftaranMagangStatusEnum::PENDING,
-                'portofolio' => $file,
                 'reason_aplicant' => $request->reason
             ]);
 
+            $dokumen_persyaratan = [];
+            foreach ($dokumenPersyaratan as $key => $value) {
+                $namaFile = str_replace(' ', '_', strtolower($value->namadocument));
+                $file = null;
+                if ($request->hasFile($namaFile)) {
+                    $file = $request->file($namaFile);
+                    $file = Storage::put('file_persyaratan', $file);
+                }
+
+                $dokumen_persyaratan[] = [
+                    'id_doc_pendaftaran' => Str::orderedUuid(),
+                    'id_pendaftaran' => $pendaftaran->id_pendaftaran,
+                    'id_document' => $value->id_document,
+                    'file' => $file,
+                    'date_time' => now(),
+                    'status' => true
+                ];
+            }
+
+            DokumenPendaftaranMagang::insert($dokumen_persyaratan);
+
+            DB::commit();
             return Response::success(null, 'Lamaran berhasil dikirim!');
         } catch (Exception $e) {
+            DB::rollBack();
             return Response::errorCatch($e);
         }
     }
