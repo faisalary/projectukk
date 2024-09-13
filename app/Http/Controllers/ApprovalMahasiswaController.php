@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Helpers\Response;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -14,6 +13,17 @@ use App\Enums\PendaftaranMagangStatusEnum;
 
 class ApprovalMahasiswaController extends Controller
 {
+    public function __construct() {
+        $this->middleware(function ( $request, $next ) {
+            $user = auth()->user();
+            if (!$user->can('permission:approval_mhs_doswal.view') && count($user->dosen->mahasiswaDiampu) == 0) {
+                abort(403);
+            }
+
+            return $next($request);
+        })->only(['index', 'getData']);
+    }
+
     public function index() {      
         $view = $this->getViewDesign();          
         return view('approval_mahasiswa/index', compact('view'));
@@ -65,7 +75,7 @@ class ApprovalMahasiswaController extends Controller
         })
         ->addColumn('action', function ($data) {
             $result = '<div class="d-flex justify-content-center">';
-            $result .= "<a href='".route('approval_mahasiswa.detail', $data->id_pendaftaran)."' class='mx-1 text-primary cursor-pointer'><i class='ti ti-file-invoice'></i></a>";
+            $result .= "<a href='".route('approval_mahasiswa_doswal.detail', $data->id_pendaftaran)."' class='mx-1 text-primary cursor-pointer'><i class='ti ti-file-invoice'></i></a>";
             if ($data->current_step == PendaftaranMagangStatusEnum::PENDING) {
                 $result .= "<a onclick='approved($(this))' class='mx-1 text-success cursor-pointer' data-status='approved' data-id='$data->id_pendaftaran'><i class='ti ti-file-check'></i></a>";
                 $result .= "<a onclick='rejected($(this))' class='mx-1 text-danger cursor-pointer' data-status='rejected' data-id='$data->id_pendaftaran'><i class='ti ti-file-x'></i></a>";
@@ -97,7 +107,7 @@ class ApprovalMahasiswaController extends Controller
         $data['dokumen_persyaratan'] = DokumenPendaftaranMagang::join('document_syarat', 'document_syarat.id_document', '=', 'dokumen_pendaftaran_magang.id_document')
             ->where('id_pendaftaran', $id)->get();
 
-        $data['urlBack'] = route('approval_mahasiswa');
+        $data['urlBack'] = route('approval_mahasiswa_doswal');
 
         return view('approval_mahasiswa/detail', $data);
     }
@@ -171,9 +181,9 @@ class ApprovalMahasiswaController extends Controller
 
     private function getViewDesign() {
         $title = 'Approval Mahasiswa';
-        $urlGetData = route('approval_mahasiswa.get_data');     
-        $urlApproval = route('approval_mahasiswa.approval', ['id' => ':id']);
-        $urlApprovals = route('approval_mahasiswa.approvals');   
+        $urlGetData = route('approval_mahasiswa_doswal.get_data');     
+        $urlApproval = route('approval_mahasiswa_doswal.approval', ['id' => ':id']);
+        $urlApprovals = route('approval_mahasiswa_doswal.approvals');   
 
         $sudah_approval = [
             '<th>NO</th>',

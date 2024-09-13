@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
-use Ramsey\Uuid\Uuid;
 use App\Models\Industri;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PegawaiIndustri;
 use App\Http\Requests\CompanyReg;
 use Illuminate\Support\Facades\DB;
 use App\Mail\RejectionNotification;
 use App\Http\Controllers\Controller;
-use App\Models\PegawaiIndustri;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelolaMitraController extends Controller
@@ -26,6 +25,11 @@ class KelolaMitraController extends Controller
     public function __construct()
     {
         $this->middleware('permission:kelola_mitra.view');
+
+        $this->middleware(function ( $request, $next) {
+            Cache::forget('kelola_mitra_count');
+            return $next($request);
+        })->only(['approved', 'rejected']);
     }
     /**
      * Display a listing of the resource.
@@ -183,7 +187,11 @@ class KelolaMitraController extends Controller
             dispatch(new SendMailJob($pegawaiIndustri->emailpeg, new VerifyEmail($url)));
             DB::commit();
 
-            return Response::success(null, 'Persetujuan berhasil.');
+            $result['kelola_mitra_count'] = Cache::remember('kelola_mitra_count', 30, function () {
+                return Industri::where('statusapprove', 0)->count();
+            });
+
+            return Response::success($result, 'Persetujuan berhasil.');
         } catch (\Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
@@ -202,7 +210,11 @@ class KelolaMitraController extends Controller
             $alasan = $request->input('alasan');
             dispatch(new SendMailJob($data->emailpeg, new RejectionNotification($alasan)));
 
-            return Response::success(null, 'Berhasil menolak.');
+            $result['kelola_mitra_count'] = Cache::remember('kelola_mitra_count', 30, function () {
+                return Industri::where('statusapprove', 0)->count();
+            });
+
+            return Response::success($result, 'Berhasil menolak.');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }

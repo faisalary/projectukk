@@ -176,6 +176,8 @@
                                 text: response.message,
                                 icon: 'success'
                             });
+
+                            settingBadgeCount(response.data.kelola_mitra_count);
                         } else {
                             showSweetAlert({
                                 title: 'Gagal!',
@@ -198,8 +200,17 @@
         }
 
         function afterReject(res) {
+            settingBadgeCount(res.data.kelola_mitra_count);
             loadData();
             $('#modalreject').modal('hide');
         }
+
+        function settingBadgeCount(total) {
+        if (total > 0) {
+            $('#kelola_mitra_count').html(total);
+        } else {
+            $('#kelola_mitra_count').attr('hidden', true);
+        }
+    }
     </script>
 @endsection

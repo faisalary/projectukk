@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 class MenuHelper
 {
 
-    public static function getInstance()
+    public static function getInstance($additional = null)
     {
         $user = auth()->user();
         if (!Cache::has('data_menu_'. $user->roles[0]->name)) {
@@ -20,18 +20,42 @@ class MenuHelper
 
         $data = Cache::get('data_menu_'. $user->roles[0]->name);
         $data = self::specialCase($data);
-        $result = self::menuMaker($data);
+
+        $result = self::menuMaker($data, $additional);
 
         return $result;
     }
 
     private static function specialCase($data) {
         $user = auth()->user();
-        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && !$user->can('permission:data_mahasiswa_magang_kaprodi.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
+        // menu pemb akademik akan muncul ketika mempunyai mahasiswa yang dibimbing
+        if ($user->hasAnyRole(['Dosen', 'Kaprodi']) && count($user->dosen->mahasiswaBimbingan) == 0) {
             $data = array_filter($data, function($item) {
-                return (isset($item['name']) && $item['name'] != 'Pembimbing Akademik') && (isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view');
+                $result = false;
+                if (isset($item['type']) && $item['type'] == 'menu-header' && $item['name'] != 'Pembimbing Akademik') {
+                    $result = true;
+                } else if (!isset($item['type']) && isset($item['permission']) && $item['permission'] != 'kelola_mhs_pemb_akademik.view') {
+                    $result = true;
+                }
+
+                return $result;
             });
         }
+
+        // menu dosen wali akan muncul ketika mempunyai mahasiswa yang diampu
+        if ($user->hasAnyRole(['Kaprodi']) && count($user->dosen->mahasiswaDiampu) == 0) {
+            $data = array_filter($data, function($item) {
+                $result = false;
+                if (isset($item['type']) && $item['type'] == 'menu-header' && $item['name'] != 'Dosen Wali') {
+                    $result = true;
+                } else if (!isset($item['type']) && isset($item['permission']) && !in_array($item['permission'], ['approval_mhs_doswal.view', 'data_mahasiswa_magang_dosen.view'])) {
+                    $result = true;
+                }
+
+                return $result;
+            });
+        }
+
         return $data;
     }
 
@@ -58,7 +82,7 @@ class MenuHelper
         return $data;
     }
 
-    private static function menuMaker($data)
+    private static function menuMaker($data, $additional = null)
     {
         $menu = '';
         foreach ($data as $key => $value) {
@@ -100,6 +124,9 @@ class MenuHelper
                 $menu .= '<a href="' . route($value['route']) . '" class="menu-link">';
                 $menu .= '<i class="menu-icon tf-icons ti ' . $value['icon'] . '"></i>';
                 $menu .= '<div>' . $value['name'] . '</div>';
+                if (isset($additional[$value['route'] . '_count']) && $additional[$value['route'] . '_count'] > 0) {
+                    $menu .= '<div id="'. $value['route'] . '_count' .'" class="badge bg-label-primary rounded-pill ms-auto">' . $additional[$value['route'] . '_count'] . '</div>';
+                }
                 $menu .= '</a>';
                 $menu .= '</li>';
             }
@@ -373,7 +400,7 @@ class MenuHelper
             [
                 'type' => 'menu-header',
                 'name' => 'Kaprodi',
-                'role' => 'Kaprodi'
+                'role' => ['Kaprodi', 'Dosen']
             ],
             [
                 'name' => 'Approval Mahasiswa Kaprodi',
@@ -382,7 +409,7 @@ class MenuHelper
                 'permission' => 'approval_mhs_kaprodi.view'
             ],
             [
-                'name' => 'Data Mahasiswa Magang',
+                'name' => 'Data Mahasiswa Kaprodi',
                 'route' => 'mahasiswa_magang_kaprodi',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_mahasiswa_magang_kaprodi.view'
@@ -390,17 +417,17 @@ class MenuHelper
             //dosen
             [
                 'type' => 'menu-header',
-                'name' => 'Dosen',
-                'role' => 'Dosen'
+                'name' => 'Dosen Wali',
+                'role' => ['Kaprodi', 'Dosen']
             ],
             [
-                'name' => 'Approval Mahasiswa',
-                'route' => 'approval_mahasiswa',
+                'name' => 'Approval Mahasiswa Dosen',
+                'route' => 'approval_mahasiswa_doswal',
                 'icon' => 'ti-briefcase',
                 'permission' => 'approval_mhs_doswal.view'
             ],
             [
-                'name' => 'Data Mahasiswa Magang',
+                'name' => 'Data Mahasiswa Dosen',
                 'route' => 'mahasiswa_magang_dosen',
                 'icon' => 'ti-file-analytics',
                 'permission' => 'data_mahasiswa_magang_dosen.view'

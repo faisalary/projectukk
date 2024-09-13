@@ -23,6 +23,7 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
 Route::prefix('data-mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/get-data', 'getDataTable')->name('.get_data');
+    Route::post('upload-spm', 'uploadSPM')->name('.upload_spm');
 });
 
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {

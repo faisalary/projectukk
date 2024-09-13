@@ -24,6 +24,17 @@ use App\Models\MhsMagang;
 
 class KelolaMahasiswaPemAkademikController extends LogbookController
 {
+    public function __construct() {
+        $this->middleware(function ( $request, $next ) {
+            $user = auth()->user();
+            if (!$user->can('permission:kelola_mhs_pemb_akademik.view') && count($user->dosen->mahasiswaBimbingan) == 0) {
+                abort(403);
+            }
+
+            return $next($request);
+        })->only(['index', 'getData']);
+    }
+
     public function index()
     {
         return view('kelola_mahasiswa.index');
