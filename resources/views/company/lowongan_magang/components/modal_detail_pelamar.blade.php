@@ -163,13 +163,6 @@
                             </div>  
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-12 mb-3 form-group">
-                            <label for="seleksi" class="form-label">Subjek Email</label>
-                            <select class="form-select select2" id="subjek" name="subjek" data-placeholder="Pilih Subjek Email">
-                                <option disabled selected class="text-danger mt-1">Pilih Subjek Email!</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -23,6 +23,7 @@ Route::prefix('pengajuan-magang')->name('pengajuan_magang')->controller(ApproveM
 Route::prefix('data-mahasiswa-magang')->name('data_mahasiswa')->controller(DataMahasiswaMagangController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/get-data', 'getDataTable')->name('.get_data');
+    Route::post('upload-spm', 'uploadSPM')->name('.upload_spm');
 });
 
 Route::prefix('berkas-akhir-magang')->name('berkas_akhir_magang')->controller(BerkasAkhirMagangController::class)->group(function () {
@@ -118,6 +119,7 @@ Route::prefix('kegiatan-saya')->middleware('role:Mahasiswa')->group(function () 
         Route::post('change-logbook-type/{id_logbook_week}', 'changeLogbookType')->name('.change_type');
         Route::post('create-logbook-daily/{id_logbook_week}', 'storeLogbookDaily')->name('.create_logbook_daily');
         Route::post('update-logbook-daily/{id}', 'updateLogbookDaily')->name('.update_logbook_daily');
+        Route::get('print_logbook','printLogbook')->name('.print_logbook');
 
         Route::post('apply-logbook/{id_logbook_week}', 'applyLogbook')->name('.apply_logbook');
     });

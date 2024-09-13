@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\PendaftaranMagangStatusEnum;
 
@@ -17,7 +18,10 @@ class ApproveMandiriController extends Controller
 {
     public function __construct()
     {
-       
+       $this->middleware(function ( $request, $next) {
+            Cache::forget('pengajuan_magang_count');
+            return $next($request);
+       })->only(['approved', 'rejected']);
     }
     /**
      * Display a listing of the resource.
@@ -57,7 +61,7 @@ class ApproveMandiriController extends Controller
 
         return datatables()->of($pengajuan->get())
             ->addIndexColumn()
-            ->editColumn('namamhs', function ($x) {
+            ->addColumn('nama', function ($x) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span class="fw-bolder">' .$x->namamhs. '</span>';
                 $result .= '<small>' .$x->nim. '</small>';
@@ -65,7 +69,7 @@ class ApproveMandiriController extends Controller
 
                 return $result;
             })
-            ->editColumn('intern_position', fn ($x) => $x->namaindustri .'&ensp;-&ensp;'. $x->intern_position)
+            ->addColumn('posisi_magang', fn ($x) => $x->namaindustri .'&ensp;-&ensp;'. $x->intern_position)
             ->addColumn('tgl_magang', function ($x) {
                 $result = '<div class="d-flex flex-column align-items-start">';
                 $result .= '<span class="text-nowrap">Tanggal Mulai : </span>';
@@ -91,13 +95,13 @@ class ApproveMandiriController extends Controller
             })
             ->addColumn('action', function ($x) {
                 $result = '<div class="d-flex justify-content-center">';
-                $result .= '<a class="cursor-pointer mx-1 text-primary" onclick="approved($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-check"></i></a>';
-                $result .= '<a class="cursor-pointer mx-1 text-danger" onclick="rejected($(this));" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
+                $result .= '<a class="cursor-pointer mx-1 text-primary" onclick="approved($(this));" data-namamhs="' . $x->namamhs .'" data-nim="' . $x->nim . '" data-position="' . $x->intern_position . '" data-industri="' . $x->namaindustri . '" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-check"></i></a>';
+                $result .= '<a class="cursor-pointer mx-1 text-danger" onclick="rejected($(this));" data-namamhs="' . $x->namamhs .'" data-nim="' . $x->nim . '" data-position="' . $x->intern_position . '" data-industri="' . $x->namaindustri . '" data-id="' .$x->id_pendaftaran. '"><i class="ti ti-file-x"></i></a>';
                 $result .= '</div>';
 
                 return $result;
             })
-            ->rawColumns(['namamhs', 'intern_position', 'tgl_magang', 'contact_perusahaan', 'dokumen_spm', 'current_step', 'action'])
+            ->rawColumns(['nama', 'posisi_magang', 'tgl_magang', 'contact_perusahaan', 'dokumen_spm', 'current_step', 'action'])
             ->make(true);
     }
     
@@ -105,7 +109,7 @@ class ApproveMandiriController extends Controller
     {
         $request->validate([
             'data_id' => 'required|array||exists:pendaftaran_magang,id_pendaftaran',
-            'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
+            // 'file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048'
         ], [
             'data_id.required' => 'Data harus dipilih',
             'data_id.array' => 'Data harus berupa array',
@@ -127,20 +131,29 @@ class ApproveMandiriController extends Controller
 
             DB::beginTransaction();
 
-            $file = null;
-            if ($request->hasFile('file')) {
-                $file = Storage::put('dokumen_spm', $request->file('file'));
-            }
+            // $file = null;
+            // if ($request->hasFile('file')) {
+            //     $file = Storage::put('dokumen_spm', $request->file('file'));
+            // }
 
             $user = auth()->user();
             foreach ($data as $key => $value) {
-                $value->dokumen_spm = $file;
+                // $value->dokumen_spm = $file;
                 $value->current_step = PendaftaranMagangStatusEnum::APPROVED_BY_LKM;
                 $value->saveHistoryApproval()->save();
             }
 
             DB::commit();
-            return Response::success(null, 'Berhasil mengirim Surat Pengantar Magang.');
+
+            $result['pengajuan_magang_count'] = Cache::remember('pengajuan_magang_count', 30, function () {
+                return PendaftaranMagang::whereIn('current_step', [
+                    PendaftaranMagangStatusEnum::PENDING,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+                ])->count();
+            });
+
+            return Response::success($result, 'Berhasil menyetujui Pengajuan Magang.');
         } catch (Exception $e) {
             DB::rollBack();
             return Response::errorCatch($e);
@@ -180,7 +193,14 @@ class ApproveMandiriController extends Controller
             $data->history_approval = json_encode($history_approval_);
             $data->save();
 
-            return Response::success(null, 'Berhasil menolak pengajuan.');
+            $result['pengajuan_magang_count'] = Cache::remember('pengajuan_magang_count', 30, function () {
+                return PendaftaranMagang::whereIn('current_step', [
+                    PendaftaranMagangStatusEnum::PENDING,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_DOSWAL,
+                    PendaftaranMagangStatusEnum::APPROVED_BY_KAPRODI
+                ])->count();
+            });
+            return Response::success($result, 'Berhasil menolak pengajuan.');
         } catch (\Exception $e) {
             return Response::errorCatch($e);
         }

@@ -72,7 +72,7 @@
                                 @include('logbook.components.percentage')
                             </div>
                             <div class="pe-4">
-                                <button class="btn btn-outline-primary mt-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></button>
+                                <a class="btn btn-outline-primary mt-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false" href="{{ route('logbook.print_logbook') }}"><span><i class="ti ti-download me-sm-1"></i> <span class="d-none d-sm-inline-block">Ekspor PDF</span></span></a>
                             </div>
                         </div>
                     </div>
@@ -103,10 +103,22 @@
 </div>
 
 @include('logbook.components.modal')
+{{-- @include('logbook.logbook_print') --}}
 @endsection
 
 @section('page_script')
 <script>
+
+    function printLogbook() {
+        var print = document.getElementById('logbook_print').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = print;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+
     var filterData;
     function filter() {
         filterData = $('#select_month').val();

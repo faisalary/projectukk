@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use stdClass;
 use Exception;
 use App\Models\Sertif;
+use App\Models\Seleksi;
 use App\Helpers\Response;
 use App\Jobs\SendMailJob;
 use App\Models\Education;
-use App\Models\MhsMagang;
 use App\Models\Experience;
+use App\Mail\MailContainer;
 use App\Models\JenisMagang;
 use App\Models\ProgramStudi;
 use App\Models\SeleksiTahap;
 use Illuminate\Http\Request;
+use App\Jobs\SendMailIndustri;
 use App\Models\LowonganMagang;
 use Illuminate\Support\Carbon;
 use App\Models\BahasaMahasiswa;
-use App\Mail\EmailJadwalSeleksi;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Enums\LowonganMagangStatusEnum;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\RejectionPenawaranLowongan;
+use App\Models\DokumenPendaftaranMagang;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\PendaftaranMagangStatusEnum;
+use App\Enums\TemplateEmailListProsesEnum;
 use App\Http\Requests\LowonganMagangRequest;
-use App\Models\DokumenPendaftaranMagang;
-use App\Models\Seleksi;
 
 class LowonganMagangController extends Controller
 {
@@ -51,6 +51,14 @@ class LowonganMagangController extends Controller
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_2 => 2,
             PendaftaranMagangStatusEnum::APPROVED_SELEKSI_TAHAP_3 => 3,
         ];
+
+        $this->rejected = [
+            PendaftaranMagangStatusEnum::REJECTED_SCREENING,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
+            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
+            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN
+        ];
     }
 
     public function indexInformasi(Request $request) {
@@ -64,16 +72,7 @@ class LowonganMagangController extends Controller
 
         $lowonganMagang = $this->my_lowongan_magang;
 
-        $rejected = [
-            PendaftaranMagangStatusEnum::REJECTED_BY_DOSWAL,
-            PendaftaranMagangStatusEnum::REJECTED_BY_KAPRODI,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_1,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_2,
-            PendaftaranMagangStatusEnum::REJECTED_SELEKSI_TAHAP_3,
-            PendaftaranMagangStatusEnum::REJECTED_PENAWARAN,
-        ];
-
-        $lowongan_magang = $lowonganMagang->map(function ($item) use ($rejected) {
+        $lowongan_magang = $lowonganMagang->map(function ($item) {
             $total_pelamar = $item->total_pelamar;
             $item->screening = $total_pelamar->where('current_step', PendaftaranMagangStatusEnum::APPROVED_BY_LKM)->count();
 
@@ -86,7 +85,7 @@ class LowonganMagangController extends Controller
                     $countProsesSeleksi++;
                 } else if (isset($this->valid_step[$data->current_step]) && ($item->tahapan_seleksi + 1) == $this->valid_step[$data->current_step]) {
                     $countPenawaran++;
-                } else if (in_array($data->current_step, $rejected)) {
+                } else if (in_array($data->current_step, $this->rejected)) {
                     $countRejected++;
                 }
             }
@@ -175,13 +174,13 @@ class LowonganMagangController extends Controller
 
         $data['urlGetData'] = route('informasi_lowongan.get_data', $id);
         $data['urlDetailPelamar'] = route('informasi_lowongan.detail', $id);
-        $data['date_confirm_closing'] = Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y');
+        $data['date_confirm_closing'] = isset($data['lowongan']->date_confirm_closing) ? ('<span class="text-primary">' . Carbon::parse($data['lowongan']->date_confirm_closing)->format('d F Y') . '</span>') : '<span class="text-danger">Belum Diatur</span>';
         
         $data['tahapValid'] = $tahap_valid;
         $data['afterScreening'] = PendaftaranMagangStatusEnum::SELEKSI_TAHAP_1;
 
         // menjalakan rejection lowongan
-        dispatch(new RejectionPenawaranLowongan($data['lowongan']));
+        RejectionPenawaranLowongan::dispatchSync($data['lowongan']);
         // -----------------------------
 
         return view('company/lowongan_magang/informasi_lowongan/detail_kandidat', $data);
@@ -230,6 +229,7 @@ class LowonganMagangController extends Controller
                     ]
                 );
             }
+            dispatch(new SendMailIndustri(auth()->user(), 'penjadwalan_seleksi', $request->kandidat));
 
             DB::commit();
             return Response::success(null, 'Berhasil menetapkan jadwal seleksi!');
@@ -388,11 +388,11 @@ class LowonganMagangController extends Controller
             }
 
             $file = null;
-            if ($request->hasFile('file')) {
+            $statusPicked = $request->status;
+            if (($statusPicked == $last_seleksi || $statusPicked == 'rejected') && $request->hasFile('file')) {
                 $file = Storage::put('berkas_mitra', $request->file('file'));
             }
 
-            $statusPicked = $request->status;
             if ($request->status == 'rejected') {
                 if ($pendaftar->current_step == PendaftaranMagangStatusEnum::APPROVED_BY_LKM) {
                     $statusPicked = PendaftaranMagangStatusEnum::REJECTED_SCREENING;
@@ -405,13 +405,20 @@ class LowonganMagangController extends Controller
                 }
             }
 
-            $pendaftar->update([
-                'current_step' => $statusPicked,
-                'file_document_mitra' => $file
-            ]);
+            $pendaftar->current_step = $statusPicked;
+            $pendaftar->file_document_mitra = $file;
+
+            $pendaftar->saveHistoryApproval()->save();
 
             $pendaftar->label_step = PendaftaranMagangStatusEnum::getWithLabel($pendaftar->current_step)['title'];
-            dispatch(new SendMailJob($pendaftar->emailmhs, new EmailJadwalSeleksi($pendaftar)));
+            $proses = TemplateEmailListProsesEnum::LOLOS_SELEKSI;
+            if ($statusPicked == $last_seleksi) {
+                $proses = TemplateEmailListProsesEnum::DITERIMA_MAGANG;
+            } else if ($request->status == 'rejected') {
+                $proses = TemplateEmailListProsesEnum::TIDAK_LOLOS_SELEKSI;
+            }
+
+            dispatch(new SendMailIndustri(auth()->user(), $proses, $id));
 
             return Response::success([
                 'id_pendaftar' => $pendaftar->id_pendaftaran,

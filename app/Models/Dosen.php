@@ -11,7 +11,7 @@ class Dosen extends Model
     // use HasUuids;
 
     protected $table = 'dosen';
-    protected $guarded = [];    
+    protected $guarded = [];
     protected $primaryKey = 'nip';
     public $timestamps = false;
 
@@ -32,7 +32,8 @@ class Dosen extends Model
     public function mahasiswaBimbingan() {
         return $this->hasMany(MhsMagang::class, 'nip', 'nip');
     }
-    public function ganti() {
-        return $this->hasMany(Ganti::class, 'foto', 'foto');
+
+    public function mahasiswaDiampu() {
+        return $this->hasMany(Mahasiswa::class, 'kode_dosen', 'kode_dosen');
     }
 }

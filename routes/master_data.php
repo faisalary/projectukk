@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IgraciasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\ProdiController;
@@ -12,9 +13,12 @@ use App\Http\Controllers\NilaiAkhirController;
 use App\Http\Controllers\JenisMagangController;
 use App\Http\Controllers\UniversitasController;
 use App\Http\Controllers\DokumenSyaratController;
+use App\Http\Controllers\DurasiMagangController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\PegawaiIndustriController;
 use App\Http\Controllers\KomponenPenilaianController;
+use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\PosisiMagangController;
 
 Route::prefix('master')->group(function () {
     Route::prefix('fakultas')->controller(FakultasController::class)->group(function () {
@@ -85,6 +89,68 @@ Route::prefix('master')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('jenismagang.edit');
         Route::post('/status/{id}', 'status')->name('jenismagang.status');
     });
+    Route::prefix('igracias')->controller(IgraciasController::class)->group(function () {
+        Route::get('/', 'index')->name('igracias');
+       
+          // Mata Kuliah route
+          Route::prefix('mata-kuliah')->controller(MataKuliahController::class)->group(function () {            
+            Route::post('/show', 'show')->name('igracias.matakuliah.show');
+            Route::post('/store', 'store')->name('igracias.matakuliah.store');
+            Route::post('/update/{id}', 'update')->name('igracias.matakuliah.update');
+            Route::get('/edit/{id}', 'edit')->name('igracias.matakuliah.edit');
+            Route::post('/status/{id}', 'status')->name('igracias.matakuliah.status');
+            Route::post('/import', 'import')->name('igracias.matakuliah.import');
+            Route::get('/preview', 'preview')->name('igracias.matakuliah.preview');
+            Route::post('/store-import', 'storeImport')->name('igracias.matakuliah.store_import');
+            Route::post('/download_failed_data' , 'download_failed_data')->name('igracias.matakuliah.download_failed_data');
+        });
+
+        // Dosen route
+        Route::prefix('dosen')->controller(DosenController::class)->group(function () {            
+            Route::post('/show', 'show')->name('igracias.dosen.show');
+            Route::post('/store', 'store')->name('igracias.dosen.store');
+            Route::post('/update/{id}', 'update')->name('igracias.dosen.update');
+            Route::get('/edit/{id}', 'edit')->name('igracias.dosen.edit');
+            Route::post('/status/{id}', 'status')->name('igracias.dosen.status');
+            Route::post('/import', 'import')->name('igracias.dosen.import');
+            Route::get('/preview', 'preview')->name('igracias.dosen.preview');
+            Route::post('/store-import', 'storeImport')->name('igracias.dosen.store_import');
+            Route::post('/download_failed_data' , 'download_failed_data')->name('igracias.dosen.download_failed_data');
+        });
+
+        // Mahasiswa route
+        Route::prefix('mahasiswa')->controller(mahasiswaController::class)->group(function () {            
+            Route::post('/show', 'show')->name('igracias.mahasiswa.show');
+            Route::post('/store', 'store')->name('igracias.mahasiswa.store');
+            Route::post('/update/{id}', 'update')->name('igracias.mahasiswa.update');
+            Route::get('/edit/{id}', 'edit')->name('igracias.mahasiswa.edit');
+            Route::post('/status/{id}', 'status')->name('igracias.mahasiswa.status');
+            Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('igracias.mahasiswa.list_fakultas');
+            Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('igracias.mahasiswa.list_prodi');
+            Route::post('/import', 'import')->name('igracias.mahasiswa.import');
+            Route::get('/preview', 'preview')->name('igracias.mahasiswa.preview');
+            Route::post('/store-import', 'storeImport')->name('igracias.mahasiswa.store_import');
+            Route::post('/download_failed_data' , 'download_failed_data')->name('igracias.mahasiswa.download_failed_data');
+        });
+    });
+    Route::prefix('posisi-magang')->controller(PosisiMagangController::class)->group(function () {
+        Route::get('/', 'index')->name('posisimagang');
+        Route::get('/create', 'create')->name('posisimagang.create');
+        Route::get('/show', 'show')->name('posisimagang.show');
+        Route::post('/store', 'store')->name('posisimagang.store');
+        Route::post('/update/{id}', 'update')->name('posisimagang.update');
+        Route::get('/edit/{id}', 'edit')->name('posisimagang.edit');  
+        Route::post('/status/{id}', 'status')->name('posisimagang.status');      
+    });
+    Route::prefix('durasi-magang')->controller(DurasiMagangController::class)->group(function () {
+        Route::get('/', 'index')->name('durasimagang');
+        Route::get('/create', 'create')->name('durasimagang.create');
+        Route::get('/show', 'show')->name('durasimagang.show');
+        Route::post('/store', 'store')->name('durasimagang.store');
+        Route::post('/update/{id}', 'update')->name('durasimagang.update');
+        Route::get('/edit/{id}', 'edit')->name('durasimagang.edit');  
+        Route::post('/status/{id}', 'status')->name('durasimagang.status');      
+    });
     Route::prefix('universitas')->controller(UniversitasController::class)->group(function () {
         Route::get('/', 'index')->name('universitas');
         Route::get('/show', 'show')->name('universitas.show');
@@ -92,33 +158,7 @@ Route::prefix('master')->group(function () {
         Route::post('/status/{id}', 'status')->name('universitas.status');
         Route::post('/update/{id}', 'update')->name('universitas.update');
         Route::get('/edit/{id}', 'edit')->name('universitas.edit');
-    });
-    Route::prefix('mahasiswa')->controller(mahasiswaController::class)->group(function () {
-        Route::get('/', 'index')->name('mahasiswa');
-        Route::post('/show', 'show')->name('mahasiswa.show');
-        Route::post('/store', 'store')->name('mahasiswa.store');
-        Route::post('/update/{id}', 'update')->name('mahasiswa.update');
-        Route::get('/edit/{id}', 'edit')->name('mahasiswa.edit');
-        Route::post('/status/{id}', 'status')->name('mahasiswa.status');
-        Route::get('/list-fakultas/{id_univ}', 'list_fakultas')->name('mahasiswa.list_fakultas');
-        Route::get('/list-prodi/{id_fakultas}', 'list_prodi')->name('mahasiswa.list_prodi');
-        Route::post('/import', 'import')->name('mahasiswa.import');
-        Route::get('/preview', 'preview')->name('mahasiswa.preview');
-        Route::post('/store-import', 'storeImport')->name('mahasiswa.store_import');
-        Route::post('/download_failed_data' , 'download_failed_data')->name('mahasiswa.download_failed_data');
-    });
-    Route::prefix('dosen')->controller(DosenController::class)->group(function () {
-        Route::get('/', 'index')->name('dosen');
-        Route::post('/show', 'show')->name('dosen.show');
-        Route::post('/store', 'store')->name('dosen.store');
-        Route::post('/update/{id}', 'update')->name('dosen.update');
-        Route::get('/edit/{id}', 'edit')->name('dosen.edit');
-        Route::post('/status/{id}', 'status')->name('dosen.status');
-        Route::post('/import', 'import')->name('dosen.import');
-        Route::get('/preview', 'preview')->name('dosen.preview');
-        Route::post('/store-import', 'storeImport')->name('dosen.store_import');
-        Route::post('/download_failed_data' , 'download_failed_data')->name('dosen.download_failed_data');
-    });
+    });   
     Route::prefix('komponen-penilaian')->controller(KomponenPenilaianController::class)->group(function () {
         Route::get('/', 'index')->name('komponen-penilaian');
         Route::get('show', 'show')->name('komponen-penilaian.show');

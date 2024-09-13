@@ -38,8 +38,8 @@ class PermissionSeeder extends Seeder
             'program_studi.view',
             'tahun_akademik.view',
             'jenis_magang.view',
-            'dosen.view',
-            'mahasiswa.view',
+            // 'igracias.dosen.view',
+            // 'igracias.mahasiswa.view',
             'wilayah.view',
             // 'pegawai_industri.view',
             'nilai_mutu.view',
@@ -47,6 +47,9 @@ class PermissionSeeder extends Seeder
             'komponen_penilaian.view',
             'dokumen_syarat.view',
             'pembimbing_lapangan_mandiri.view',
+            'posisi_magang.view',
+            'durasi_magang.view',
+            'igracias.view'            
         ];
 
         $permission['Mitra'] = [
@@ -77,7 +80,9 @@ class PermissionSeeder extends Seeder
         ];
         $permission['Kaprodi'] = [
             'approval_mhs_kaprodi.view',
-            'data_mahasiswa_magang_kaprodi.view'
+            'data_mahasiswa_magang_kaprodi.view',
+            'approval_mhs_doswal.view',
+            'data_mahasiswa_magang_dosen.view'
         ];
 
         foreach ($permission as $key => $value) {

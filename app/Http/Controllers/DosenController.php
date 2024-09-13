@@ -21,28 +21,27 @@ class DosenController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:dosen.view');
+        $this->middleware('permission:igracias.view');
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         if ($request->section == 'id_fakultas') {
+    //             $data = Fakultas::select('namafakultas as name', 'id_fakultas as id')->where('id_univ', $request->selected)->get();
+    //         }
+    //         if ($request->section == 'id_prodi') {
+    //             $data = ProgramStudi::select('namaprodi as name', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
+    //         }
 
-        if ($request->ajax()) {
-            if ($request->section == 'id_fakultas') {
-                $data = Fakultas::select('namafakultas as name', 'id_fakultas as id')->where('id_univ', $request->selected)->get();
-            }
-            if ($request->section == 'id_prodi') {
-                $data = ProgramStudi::select('namaprodi as name', 'id_prodi as id')->where('id_fakultas', $request->selected)->get();
-            }
+    //         return Response::success($data, 'Success');
+    //     }
 
-            return Response::success($data, 'Success');
-        }
-
-        $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
-        return view('masters.dosen.index', compact('universitas'));
-    }
+    //     $universitas = Universitas::all(); // Gantilah dengan model dan metode sesuai dengan struktur basis data Anda
+    //     return view('masters.dosen.index', compact('universitas'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -112,7 +111,7 @@ class DosenController extends Controller
                 $icon = ($row->status) ? "ti-circle-x" : "ti-circle-check";
                 $color = ($row->status) ? "danger" : "primary";
 
-                $url = route('dosen.status', $row->nip);
+                $url = route('igracias.dosen.status', $row->nip);
                 $btn = "<div class='d-flex justfiy-content-center'><a data-bs-toggle='modal' data-id='{$row->nip}' onclick=edit($(this)) class='cursor-pointer mx-1 text-warning'><i class='tf-icons ti ti-edit' ></i>
                 <a data-url='{$url}' data-function='afterUpdateStatus' class='cursor-pointer mx-1 update-status text-{$color}'><i class='tf-icons ti {$icon}'></i></a></div>";
 
@@ -227,7 +226,7 @@ class DosenController extends Controller
         return response()->json([
             'message' => 'Sebelum disimpan, data di preview',
             'error' => false,
-            'url' => route('dosen.preview'),
+            'url' => route('igracias.dosen.preview'),
             'showConfirmButton' => false,
             'icon' => 'info',
             'title' => 'Informasi'
@@ -236,8 +235,8 @@ class DosenController extends Controller
 
     public function preview()
     {
-        $data = session('import_results');
-        if (!$data) return redirect()->route('dosen');
+        $data = session('import_results');        
+        if (!$data) return redirect()->route('igracias.dosen');
 
         return view('masters.dosen.preview', compact('data'));
     }
@@ -267,7 +266,7 @@ class DosenController extends Controller
             return response()->json([
                 'message' => 'Import data dosen berhasil',
                 'error' => false,
-                'url' => route('dosen'),
+                'url' => route('igracias'),
                 'showConfirmButton' => false,
             ], 200);
         } catch (Exception $e) {

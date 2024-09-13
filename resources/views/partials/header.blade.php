@@ -3,8 +3,7 @@
         $url = route('profile');
     }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra') || auth()->user()->hasRole('LKM')){
         $url = route('profile_detail.informasi-pribadi');
-    }
-    else{
+    }else{
         $url = route('profile_company');
     }
 @endphp
@@ -26,7 +25,7 @@
             <!--/ Style Switcher -->
 
             <!-- Notification -->
-            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+            {{-- <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="ti ti-bell ti-md"></i>
                     <span class="badge bg-danger rounded-pill badge-notifications">5</span>
@@ -215,7 +214,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <!--/ Notification -->
 
             <!-- User -->
