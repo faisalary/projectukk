@@ -72,7 +72,7 @@
         if (e.val() == null) return;
         
         $.ajax({
-            url: `{{ route('dosen') }}`,
+            url: `{{ route('igracias.dosen') }}`,
             type: 'GET',
             data: {
                 selected: e.val(),
@@ -111,8 +111,8 @@
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ route('dosen.update', ['id' => ':id']) }}`.replace(':id', id);
-        var url = `{{ route('dosen.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let action = `{{ route('igracias.dosen.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('igracias.dosen.edit', ['id' => ':id']) }}`.replace(':id', id);
         let modal = $('#modal-dosen');
 
         modal.find(".modal-title").html("Edit Dosen");
@@ -143,9 +143,9 @@
 
     function load_tabel_dosen() {
         var table = $('#table-master-dosen').DataTable({
-            // ajax: "{{ route('dosen.show') }}",
+            // ajax: "{{ route('igracias.dosen.show') }}",
             ajax: {
-                url: "{{ route('dosen.show') }}",
+                url: "{{ route('igracias.dosen.show') }}",
                 type: 'POST',
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(

@@ -73,7 +73,7 @@
         if (e.val() == null) return;
         
         $.ajax({
-            url: `{{ route('mahasiswa') }}?type=${idElement}&selected=` + e.val(),
+            url: `{{ route('igracias.mahasiswa') }}?type=${idElement}&selected=` + e.val(),
             type: 'GET',
             success: function (response) {
                 $.each(response.data, function () {
@@ -105,8 +105,8 @@
     function edit(e) {
         let id = e.attr('data-id');
 
-        let action = `{{ route('mahasiswa.update', ['id' => ':id']) }}`.replace(':id', id);
-        var url = `{{ route('mahasiswa.edit', ['id' => ':id']) }}`.replace(':id', id);
+        let action = `{{ route('igracias.mahasiswa.update', ['id' => ':id']) }}`.replace(':id', id);
+        var url = `{{ route('igracias.mahasiswa.edit', ['id' => ':id']) }}`.replace(':id', id);
         let modal = $(`#modal-mahasiswa`);
         let form = modal.find('form');
 
@@ -121,7 +121,7 @@
             success: function(response) {
                 $.each(response, function ( key, value ) {
                     let element = form.find(`[name="${key}"]`);
-                    
+                    console.log(key)
                     if (element.is('select') && element.find('option').length <= 1) {
                         let interval = setInterval(() => {
                             if (element.children('option').length > 1) {
@@ -163,7 +163,7 @@
     function table_master_mahasiswa() {
         var table = $('#table-master-mahasiswa').DataTable({
             ajax: {
-                url: "{{ url('master/mahasiswa/show') }}",
+                url: "{{ url('master/igracias/mahasiswa/show') }}",
                 type: 'POST',
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(

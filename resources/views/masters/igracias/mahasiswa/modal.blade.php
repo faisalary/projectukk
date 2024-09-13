@@ -3,16 +3,16 @@
 
         <div class="modal-content">
             <div class="modal-header text-center d-block">
-                <h5 class="modal-title" id="modal-title">Tambah Mahasiswa</h5>
+                <h5 class="modal-title capitalize-title" id="modal-title">Tambah Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="default-form" action="{{ route('mahasiswa.store') }}" function-callback="afterAction">
+            <form class="default-form" action="{{ route('igracias.mahasiswa.store') }}" function-callback="afterAction">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_univ" class="form-label">Universitas</label>
-                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ">
+                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id-univ-mahasiswa">
                                 <option value="" disabled selected>Pilih Universitas</option>
                                 @foreach ($universitas as $u)
                                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_fakultas" class="form-label">Fakultas</label>
-                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas">
+                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id-fakultas-mahasiswa">
                                 <option value="" disabled selected>Pilih Fakultas</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_prodi" class="form-label">Prodi</label>
-                            <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id_prodi">
+                            <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id-prodi-mahasiswa">
                                 <option value="" disabled selected>Pilih Prodi</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -193,7 +193,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_univ" class="form-label">Universitas</label>
-                        <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ_filter">
+                        <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id-univ-mahasiswa-filter">
                             <option value="" disabled selected>Pilih Universitas</option>
                             @foreach ($universitas as $u)
                                 <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -205,7 +205,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_fakultas" class="form-label">Fakultas</label>
-                        <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas_filter">
+                        <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id-fakultas-mahasiswa-filter">
                             <option value="" disabled selected>Pilih Fakultas</option>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -214,7 +214,7 @@
                 <div class="row">
                     <div class="col mb-2 form-group">
                         <label for="id_prodi" class="form-label">Prodi</label>
-                        <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id_prodi_filter">
+                        <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id-prodi-mahasiswa-filter">
                             <option value="" disabled selected>Pilih Prodi</option>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -229,7 +229,7 @@
     </div>
 </div>
 
-<div class="modal fade modals" id="modal-import" tabindex="-1" aria-hidden="true">
+<div class="modal fade modals" id="modal-mahasiswa-import" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
 
         <div class="modal-content">
@@ -238,13 +238,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="default-form" id="" name="import" method="POST"
-                action="{{ route('mahasiswa.import') }}" enctype="multipart/form-data" function-callback="afterAction">
+                action="{{ route('igracias.mahasiswa.import') }}" enctype="multipart/form-data" function-callback="afterAction">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_univ" class="form-label">Universitas</label>
-                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id_univ_import">
+                            <select class="form-select select2" id="id_univ" name="id_univ" onchange="getDataSelect($(this));" data-after="id_fakultas" data-placeholder="Pilih Universitas" data-select2-id="id-univ-mahasiswa-import">
                                 <option value="" disabled selected>Pilih Universitas</option>
                                 @foreach ($universitas as $u)
                                     <option value="{{ $u->id_univ }}">{{ $u->namauniv }}</option>
@@ -256,7 +256,7 @@
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_fakultas" class="form-label">Fakultas</label>
-                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id_fakultas_import">
+                            <select class="form-select select2" id="id_fakultas" name="id_fakultas" onchange="getDataSelect($(this));" data-after="id_prodi" data-placeholder="Pilih Fakultas" data-select2-id="id-fakultas-mahasiswa-import">
                                 <option value="" disabled selected>Pilih Fakultas</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -265,7 +265,7 @@
                     <div class="row">
                         <div class="col mb-2 form-group">
                             <label for="id_prodi" class="form-label">Prodi</label>
-                            <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id_prodi_import">
+                            <select class="form-select select2" id="id_prodi" name="id_prodi" onchange="getDataSelect($(this));" data-after="kode_dosen" data-placeholder="Pilih Prodi" data-select2-id="id-prodi-mahasiswa-import">
                                 <option value="" disabled selected>Pilih Prodi</option>
                             </select>
                             <div class="invalid-feedback"></div>

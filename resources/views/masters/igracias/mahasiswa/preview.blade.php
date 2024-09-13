@@ -144,20 +144,23 @@
     </style>
 @endsection
 @section('content')
-    <form name="data-import-failed" id="data-import-failed" method="POST" action="{{ route('dosen.download_failed_data') }}">
+    <form name="data-import-failed" id="data-import-failed" method="POST"
+        action="{{ route('igracias.mahasiswa.download_failed_data') }}">
         @csrf
         <input type="hidden" name="failedData" id="failedData" value="{{ json_encode($data['failedData']) }}">
     </form>
-    <form class="default-form" id="storeImport" name="storeImport" method="POST" action="{{ route('dosen.store_import') }}">
+    <form class="default-form" id="storeImport" name="storeImport" method="POST"
+        action="{{ route('igracias.mahasiswa.store_import') }}">
         @csrf
         <div class="row">
             <div class="col-md-10 col-12">
                 <h4 class="fw-bold"><span class="text-muted fw-light">Master Data /</span> <span
-                        class="text-muted fw-light">Dosen /</span> Preview</h4>
+                        class="text-muted fw-light">Mahasiswa /</span> Preview</h4>
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <h6>{{ $data['univ']['namauniv'] }}, {{ $data['fakultas']['namafakultas'] }},
-                    {{ $data['prodi']['namaprodi'] }},</h6>
+                    {{ $data['prodi']['namaprodi'] }},
+                    {{ $data['dosen_wali']['namadosen'] }}</h6>
                 <div class="d-flex align-items-center gap-3">
                     <button type="button" id="backBtn" class="btn btn-danger waves-effect waves-light">
                         Back
@@ -208,28 +211,45 @@
                                 <thead>
                                     <tr style="text-align: start;">
                                         <th>NO</th>
-                                        <th>NIP</th>
-                                        <th>KODE DOSEN</th>
-                                        <th>NAMA DOSEN</th>
+                                        <th>NAMA/NIM</th>
+                                        <th>TUNGGAKAN BPP</th>
+                                        <th>IPK</th>
+                                        <th>EPRT</th>
+                                        <th>TAK</th>
+                                        <th>ANGKATAN</th>
                                         <th>KONTAK</th>
+                                        <th>ALAMAT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data['newData'] as $index => $dosen)
+                                    @foreach ($data['newData'] as $index => $mhs)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>
-                                                {{ $dosen['nip'] }}
+                                                {{ $mhs['namamhs'] }}
+                                                <br>
+                                                {{ $mhs['nim'] }}
                                             </td>
                                             <td>
-                                                {{ $dosen['kode_dosen'] }}
+                                                {{ $mhs['tunggakan_bpp'] }}
                                             </td>
                                             <td>
-                                                {{ $dosen['namadosen'] }}
+                                                {{ $mhs['ipk'] }}
                                             </td>
                                             <td>
-                                                <span class=' fw-bolder mb-2'>{{ $dosen['nohpdosen'] }}</span><br>
-                                                <small class=''>{{ $dosen['emaildosen'] }}</small>
+                                                {{ $mhs['eprt'] }}
+                                            </td>
+                                            <td>
+                                                {{ $mhs['tak'] }}
+                                            </td>
+                                            <td>
+                                                {{ $mhs['angkatan'] }}
+                                            </td>
+                                            <td>
+                                                {{ $mhs['nohpmhs'] }}
+                                            </td>
+                                            <td>
+                                                {{ $mhs['alamatmhs'] }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -247,8 +267,9 @@
                             <input type="hidden" name="univ" id="univ" value="{{ $data['univ']['id_univ'] }}">
                             <input type="hidden" name="fakultas" id="fakultas"
                                 value="{{ $data['fakultas']['id_fakultas'] }}">
-                            <input type="hidden" name="prodi" id="prodi"
-                                value="{{ $data['prodi']['id_prodi'] }}">
+                            <input type="hidden" name="prodi" id="prodi" value="{{ $data['prodi']['id_prodi'] }}">
+                            <input type="hidden" name="dosen_wali" id="dosen_wali"
+                                value="{{ $data['dosen_wali']['kode_dosen'] }}">
                             <div>
                                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -270,64 +291,110 @@
                                     <tr style="text-align: start;">
                                         <th style="background-color: white; width: 100%;"
                                             class="d-flex flex-row align-content-center gap-1">
+                                            {{-- <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-original-title="Dengan mencentang akan mengubah data lama dengan yang baru"
+                                                id="tooltip-filter">
+                                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="12.5" cy="12" r="9" stroke="#4EA971"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12.4989 8H12.5089" stroke="#4EA971" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M11.5 12H12.5V16H13.5" stroke="#4EA971" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button> --}}
                                             <input type="checkbox" name="" id="semuaData">
                                             Semua Data
                                         </th>
                                         <th>NO</th>
-                                        <th>NIP</th>
-                                        <th>KODE DOSEN</th>
-                                        <th>NAMA DOSEN</th>
+                                        <th>NAMA/NIM</th>
+                                        <th>IPK</th>
+                                        <th>EPRT</th>
+                                        <th>TAK</th>
+                                        <th>ANGKATAN</th>
                                         <th>KONTAK</th>
-                                        <th class="border-start">NIP</th>
-                                        <th>KODE DOSEN</th>
-                                        <th>NAMA DOSEN</th>
+                                        <th>ALAMAT</th>
+                                        <th class="border-start">NAMA/NIM</th>
+                                        <th>IPK</th>
+                                        <th>EPRT</th>
+                                        <th>TAK</th>
+                                        <th>ANGKATAN</th>
                                         <th>KONTAK</th>
-                                        <th>KETERANGAN</th>
+                                        <th>ALAMAT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data['duplicatedData'] as $index => $dosen)
+                                    @foreach ($data['duplicatedData'] as $index => $mhs)
                                         @php
-                                            $dosenExisting = $dosen['existing'];
-                                            $dosenNew = $dosen['new'];
+                                            $mhsExisting = $mhs['existing'];
+                                            $mhsNew = $mhs['new'];
                                         @endphp
                                         <tr>
                                             <td class="border input-check" style="background-color: white"><input
                                                     type="checkbox" name="duplicatedData" id="data{{ $index + 1 }}"
-                                                    class="input-check checkbox" value="{{ json_encode($dosenNew) }}">
-                                            </td>
+                                                    class="input-check checkbox" value="{{ json_encode($mhsNew) }}"></td>
                                             <td style="border: 1px solid black">{{ $loop->index + 1 }}</td>
-                                            <td class="onNewSame">
-                                                {{ $dosenNew['nip'] }}
+                                            <td
+                                                class="{{ isset($mhs['differences']['namamhs']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                <span class=' fw-bolder mb-2'>{{ $mhsNew['namamhs'] }}</span><br>
+                                                <small class=''>{{ $mhsNew['nim'] }}</small>
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['kode_dosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                {{ $dosenNew['kode_dosen'] }}
+                                                class="{{ isset($mhs['differences']['ipk']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                {{ $mhsNew['ipk'] }}
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['namadosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                {{ $dosenNew['namadosen'] }}
+                                                class="{{ isset($mhs['differences']['eprt']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                {{ $mhsNew['eprt'] }}
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['nohpdosen']) || isset($dosen['differences']['emaildosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                <span class=' fw-bolder mb-2'>{{ $dosenNew['nohpdosen'] }}</span><br>
-                                                <small class=''>{{ $dosenNew['emaildosen'] }}</small>
-                                            </td>
-                                            <td class="onNewSame">
-                                                {{ $dosenExisting['nip'] }}
+                                                class="{{ isset($mhs['differences']['tak']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                {{ $mhsNew['tak'] }}
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['kode_dosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                {{ $dosenExisting['kode_dosen'] }}
+                                                class="{{ isset($mhs['differences']['angkatan']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                {{ $mhsNew['angkatan'] }}
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['namadosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                {{ $dosenExisting['namadosen'] }}
+                                                class="{{ isset($mhs['differences']['nohpmhs']) || isset($mhs['differences']['emailmhs']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                <span class=' fw-bolder mb-2'>{{ $mhsNew['nohpmhs'] }}</span><br>
+                                                <small class=''>{{ $mhsNew['emailmhs'] }}</small>
                                             </td>
                                             <td
-                                                class="{{ isset($dosen['differences']['nohpdosen']) || isset($dosen['differences']['emaildosen']) ? 'onNewDiff' : 'onNewSame' }}">
-                                                <span class=' fw-bolder mb-2'>{{ $dosenExisting['nohpdosen'] }}</span><br>
-                                                <small class=''>{{ $dosenExisting['emaildosen'] }}</small>
+                                                class="{{ isset($mhs['differences']['alamatmhs']) ? 'onNewDiff' : 'onNewSame' }}">
+                                                {{ $mhsNew['alamatmhs'] }}
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['namamhs']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                <span class=' fw-bolder mb-2'>{{ $mhsExisting['namamhs'] }}</span><br>
+                                                <small class=''>{{ $mhsExisting['nim'] }}</small>
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['ipk']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                {{ $mhsExisting['ipk'] }}
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['eprt']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                {{ $mhsExisting['eprt'] }}
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['tak']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                {{ $mhsExisting['tak'] }}
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['angkatan']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                {{ $mhsExisting['angkatan'] }}
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['nohpmhs']) || isset($mhs['differences']['emailmhs']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                <span class=' fw-bolder mb-2'>{{ $mhsExisting['nohpmhs'] }}</span><br>
+                                                <small class=''>{{ $mhsExisting['emailmhs'] }}</small>
+                                            </td>
+                                            <td
+                                                class="{{ isset($mhs['differences']['alamatmhs']) ? 'onExistingDiff' : 'onExistingSame' }}">
+                                                {{ $mhsExisting['alamatmhs'] ?? null }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -349,52 +416,86 @@
                                 <thead>
                                     <tr style="text-align: start;">
                                         <th>NO</th>
-                                        <th>NIP</th>
-                                        <th>KODE DOSEN</th>
-                                        <th>NAMA DOSEN</th>
+                                        <th>NAMA/NIM</th>
+                                        <th>TUNGGAKAN BPP</th>
+                                        <th>IPK</th>
+                                        <th>EPRT</th>
+                                        <th>TAK</th>
+                                        <th>ANGKATAN</th>
                                         <th>KONTAK</th>
+                                        <th>ALAMAT</th>
                                         <th>KETERANGAN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data['failedData'] as $dosenError)
+                                    @foreach ($data['failedData'] as $mhsError)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td class="{{ $dosenError['nip_error'] ? 'onerror' : 'onsuccess' }}">
-                                                @if ($dosenError['nip_error'])
-                                                    <h6>{{ $dosenError['nip_error'] }}</h6>
+                                            <td class="{{ $mhsError['namamhs_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['namamhs_error'])
+                                                    <h6>{{ $mhsError['namamhs'] }}</h6>
                                                 @else
-                                                    {{ $dosenError['nip'] }}
-                                                @endif
-                                            </td>
-                                            <td class="{{ $dosenError['kode_dosen_error'] ? 'onerror' : 'onsuccess' }}">
-                                                @if ($dosenError['kode_dosen_error'])
-                                                    <h6>{{ $dosenError['kode_dosen_error'] }}</h6>
-                                                @else
-                                                    {{ $dosenError['kode_dosen'] }}
-                                                @endif
-                                            </td>
-                                            <td class="{{ $dosenError['namadosen_error'] ? 'onerror' : 'onsuccess' }}">
-                                                @if ($dosenError['namadosen_error'])
-                                                    <h6>{{ $dosenError['namadosen_error'] }}</h6>
-                                                @else
-                                                    {{ $dosenError['namadosen'] }}
-                                                @endif
-                                            </td>
-                                            <td
-                                                class="{{ $dosenError['nohpdosen_error'] || $dosenError['emaildosen_error'] ? 'onerror' : 'onsuccess' }}">
-                                                @if ($dosenError['nohpdosen_error'] || $dosenError['emaildosen_error'])
-                                                <h6 class="py-2">{{ $dosenError['nohpdosen_error'] ? $dosenError['nohpdosen_error'] : $dosenError['nohpdosen'] }}</h6>
-                                                <h6 class="pb-2">{{ $dosenError['emaildosen_error'] ? $dosenError['emaildosen_error'] : $dosenError['emaildosen'] }}</h6>                                                    
-                                                @else
-                                                    <span class='fw-bolder mb-2'>{{ $dosenError['nohpdosen'] }}</span><br>
-                                                    <small class=''>{{ $dosenError['emaildosen'] }}</small>
+                                                    <span class='fw-bolder mb-2'>{{ $mhsError['namamhs'] }}</span><br>
+                                                    <small class=''>{{ $mhsError['nim'] }}</small>
                                                     <br>
                                                 @endif
                                             </td>
-                                            <td class="">
-                                                @isset($dosenError['messages'])
-                                                    {!! $dosenError['messages'] !!}
+                                            <td class="{{ $mhsError['tunggakan_bpp_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['tunggakan_bpp_error'])
+                                                    <h6>{{ $mhsError['tunggakan_bpp_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['tunggakan_bpp'] }}
+                                                @endif
+                                            </td>
+                                            <td class="{{ $mhsError['ipk_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['ipk_error'])
+                                                    <h6>{{ $mhsError['ipk_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['ipk'] }}
+                                                @endif
+                                            </td>
+                                            <td class="{{ $mhsError['eprt_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['eprt_error'])
+                                                    <h6>{{ $mhsError['eprt_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['eprt'] }}
+                                                @endif
+                                            </td>
+                                            <td class="{{ $mhsError['tak_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['tak_error'])
+                                                    <h6>{{ $mhsError['tak_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['tak'] }}
+                                                @endif
+                                            </td>
+                                            <td class="{{ $mhsError['angkatan_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['angkatan_error'])
+                                                    <h6>{{ $mhsError['angkatan_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['angkatan'] }}
+                                                @endif
+                                            </td>
+                                            <td
+                                                class="{{ $mhsError['nohpmhs_error'] || $mhsError['emailmhs_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['nohpmhs_error'] || $mhsError['emailmhs_error'])
+                                                    <h6>{{ $mhsError['nohpmhs_error'] ? $mhsError['nohpmhs_error'] : $mhsError['nohpmhs'] }}</h6>
+                                                    <h6>{{ $mhsError['emailmhs_error'] ? $mhsError['emailmhs_error'] : $mhsError['emailmhs'] }}</h6>                                                    
+                                                @else
+                                                    <span class='fw-bolder mb-2'>{{ $mhsError['nohpmhs'] }}</span><br>
+                                                    <small class=''>{{ $mhsError['emailmhs'] }}</small>
+                                                    <br>
+                                                @endif
+                                            </td>
+                                            <td class="{{ $mhsError['alamatmhs_error'] ? 'onerror' : 'onsuccess' }}">
+                                                @if ($mhsError['alamatmhs_error'])
+                                                    <h6>{{ $mhsError['alamatmhs_error'] }}</h6>
+                                                @else
+                                                    {{ $mhsError['alamatmhs'] }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @isset($mhsError['messages'])
+                                                    {!! $mhsError['messages'] !!}
                                                 @endisset
                                             </td>
                                         </tr>
@@ -424,6 +525,7 @@
                 }],
             });
             $('#table-master-mahasiswa-data-gagal-tab-preview').DataTable({});
+
             $('#backBtn').click(function(e) {
                 e.preventDefault();
                 showSweetAlert({
@@ -432,10 +534,10 @@
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Back",
-                    cancelButtonText: "Cancel",                  
+                    cancelButtonText: "Cancel",                   
                 }).then((result) => {
                     if (result.isConfirmed) {                       
-                        window.location.href = "{{ route('dosen') }}";
+                        window.location.href = "{{ route('igracias') }}";
                     } 
                 });
             });
