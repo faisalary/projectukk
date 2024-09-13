@@ -27,4 +27,8 @@ class ProgramStudi extends Model
         return $this->hasMany(Dosen::class, 'id_prodi');
     }
 
+    public function mataKuliah()
+    {
+        return $this->hasMany(MataKuliah::class, 'id_prodi');
+    }
 }
