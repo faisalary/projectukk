@@ -1,7 +1,7 @@
 @php
     if (auth()->user()->hasRole('Mahasiswa')){
         $url = route('profile');
-    }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra') || auth()->user()->hasRole('LKM')){
+    }else if(auth()->user()->hasRole('Dosen') || auth()->user()->hasRole('Mitra') || auth()->user()->hasRole('LKM') || auth()->user()->hasRole('Super Admin')){
         $url = route('profile_detail.informasi-pribadi');
     }else{
         $url = route('profile_company');
@@ -226,7 +226,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                                <img src="{{ isset($user->foto) ?  url('storage/foto/'.$user->foto) : asset('assets/images/super-admin.png') }}" alt class="h-auto rounded-circle" />
+                                <img src="{{ isset($user->foto) ?  url('storage/foto/'.$user->foto) : asset('assets/images/super-admin.png') }}" alt class="profile-pic h-auto rounded-circle" />
                             </div>
                         </div>
                         <div class="flex-grow-1">

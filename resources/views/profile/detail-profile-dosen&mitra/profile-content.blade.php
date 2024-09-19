@@ -12,30 +12,45 @@
         </div>
         <div class="d-flex align-items-center mx-4 my-5">
             {{-- <img src="{{ url('storage/foto/'.$user->foto) ? isset($user->foto) : asset('app-assets/img/avatars/user.png') }}" alt="Profile Image" class="profile-pic rounded-circle" id="foto"> --}}
+
             <img src="{{ isset($user->foto) ?  url('storage/foto/'.$user->foto) : asset('app-assets/img/avatars/user.png') }}" width="15%" alt="Profile Image" class="profile-pic rounded-circle" id="foto" style= "width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
-            <input type="file" id="foto" accept="image/*" style="display: none;">
-            <button id="uploadButton" class="mx-4 btn btn-success" data-bs-toggle="modal" data-bs-target="#ganti">Ganti</button>
-            @include('profile.detail-profile-dosen&mitra.ganti')
-            <form action="{{route ('hapus')}}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus foto ini?');">
-                @csrf
-            <button type="submit" id="deleteButton"  class="btn btn-danger">Hapus</button>
-        </form>
+            <div class="form-group">
+                <div class="d-flex mx-4 justify-content-start" id="container-change-image">
+                   <label for="changePicture" class="btn btn-primary mx-0 btn-primary" id="btn-change-picture">
+                       <i class="ti ti-upload  pe-2"></i>
+                       <span class="d-none d-sm-block">Ganti</span>
+                       <input type="file" id="changePicture" name="foto" class="form-control-file" hidden accept="image/png, image/jpeg">
+                   </label>
+                   {{-- <form action="{{route ('hapus')}}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus foto ini?');">
+                        @csrf
+                        <button type="submit" id="deleteButton"  class="btn btn-danger h-100 ms-2">Hapus</button>
+                    </form> --}}
+                    <button type="button" class="btn btn-danger mx-2" onclick="deleteImage()">
+                        <i class="ti ti-refresh-dot d-sm-none"></i>
+                        <span class="d-none d-sm-block">Hapus</span>
+                    </button>
+                    {{-- <button class="btn btn-danger h-100 ms-2" name="hapus" onclick="deleteImage()">Hapus</button> --}}
+                </div>
+                <div class="mx-4 invalid-feedback"></div>
+            </div>
+            {{-- <button id="uploadButton" class="mx-4 btn btn-success" data-bs-toggle="modal" data-bs-target="#ganti">Ganti</button> --}}
+            {{-- @include('profile.detail-profile-dosen&mitra.ganti') --}}
+
         </div>
     </div>
     <div id="about" class="border rounded mx-3 mb-5">
         <div id="header_about" class="d-flex flex-row align-items-center justify-content-between border-bottom mx-3">
             <h4 class="my-2 font-light text-secondary py-3">Informasi Pribadi</h4>
-            <button class="btn" data-bs-toggle="modal" data-bs-target="#largeModal">
+            <button class="btn" id="btn-edit-informasi" onclick="getData();">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 7H6C4.89543 7 4 7.89543 4 9V18C4 19.1046 4.89543 20 6 20H15C16.1046 20 17 19.1046 17 18V15" stroke="#FF9F43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M9 15.0002H12L20.5 6.50023C21.3284 5.6718 21.3284 4.32865 20.5 3.50023C19.6716 2.6718 18.3284 2.6718 17.5 3.50023L9 12.0002V15.0002" stroke="#FF9F43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M16 5L19 8" stroke="#FF9F43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            @include('profile.detail-profile-dosen&mitra.ubah-profile')
         </div>
         @if (auth()->user()->hasRole('Dosen'))
-            <div id="content_about" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));	place-content: start; place-items: center;" class="p-3">
+            <div id="content_about" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));	place-content: start; place-items: center;" class="p-3 ambilData">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>
                         <h5>Universitas</h5>
@@ -77,7 +92,7 @@
                         </div>
                     </div>
                 </section>
-            </div>   
+            </div>
         @elseif(auth()->user()->hasRole('Mitra'))
             <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; place-items: start;" class="p-3">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
@@ -101,7 +116,7 @@
                     </div>
                 </section>
             </div>
-        @elseif(auth()->user()->hasRole('LKM'))
+        @elseif(auth()->user()->hasAnyRole(['LKM', 'Super Admin']))
             <div id="content_about" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));	place-content: start; place-items: start;" class="p-3">
                 <section id="about_col_1" style="gap: 1rem; display: flex; flex-direction: column;">
                     <div>

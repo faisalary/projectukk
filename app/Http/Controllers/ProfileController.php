@@ -49,7 +49,7 @@ class ProfileController extends Controller
             $pegawai = PegawaiIndustri::select('namapeg','nohppeg','emailpeg','jabatan')
             ->where('id_user', auth()->user()->id)->first();
             return view('profile.detail-profile-dosen&mitra.index',compact('pegawai'));
-        } else if(auth()->user()->hasRole('LKM')){
+        } else if(auth()->user()->hasAnyRole(['LKM', 'Super Admin'])){
             return view('profile.detail-profile-dosen&mitra.index');
         }
     }

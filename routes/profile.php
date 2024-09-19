@@ -8,7 +8,8 @@ Route::prefix('profile_detail')->name('profile_detail')->controller(ProfileContr
     Route::get('/','index')->name('.informasi-pribadi');
 });
 Route::get('/ganti', [GantiController::class, 'ganti'])->name('ganti.form');
-Route::post('/ganti', [GantiController::class, 'store'])->name('ganti.store');
+Route::get('/ganti/show', [GantiController::class, 'show'])->name('ganti.show');
+Route::post('ganti/foto', [GantiController::class, 'store'])->name('ganti.store');
 
 Route::get('/ganti', [GantiController::class, 'ganti'])->name('ganti.form');
 Route::post('/update', [GantiController::class, 'update'])->name('ganti.update');
