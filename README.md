@@ -4,10 +4,10 @@
 Jadi web ini di buat untuk para mahasiswa yang ini mencari tempat magang, dan di khusus kan untuk mahasiswa SISTEM INFORMASI atau RPL 
 
 ## Fitur Yang Tersedia
-Halaman Awal
-    - Halaman Beranda
-    - Info Magang
-    - Pencarian Magang
+- Halaman Awal
+  - Halaman Beranda
+  - Info Magang
+  - Pencarian Magang
 
 ## Laravel Sponsors
 
