@@ -21,10 +21,15 @@ Jadi web ini di buat untuk para mahasiswa yang ini mencari tempat magang, dan di
 ## Akun Yang Di Gunakan
 
 1.Superadmin@gmail.com
+
   Password
+  
 2.imamdosen@gmail.com
+
   Password
+  
 3.imammahasiswa@gmail.com
+
   Password
 
 ### ERD DAN UML
